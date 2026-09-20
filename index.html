@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.header{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    padding:25px 15px;
+    text-align:center;
+}
+
+.languages{
+    position:absolute;
+    right:12px;
+    top:10px;
+}
+
+.languages button{
+    background:transparent;
+    border:1px solid #9bc8ad;
+    color:white;
+    border-radius:5px;
+    padding:5px 7px;
+    margin:2px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.languages button:hover,
+.languages button.active{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.logo{
+    width:90px;
+    max-width:25%;
+    margin-top:25px;
+}
+
+h1{
+    margin:10px 0;
+    font-size:34px;
+}
+
+.subtitle{
+    font-size:17px;
+    margin-bottom:20px;
+}
+
+.search{
+    max-width:700px;
+    margin:auto;
+    display:flex;
+    gap:8px;
+}
+
+.search input{
+    flex:1;
+    padding:14px;
+    border:0;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.search button{
+    border:0;
+    border-radius:8px;
+    padding:14px 20px;
+    background:#b7ff35;
+    color:#063d25;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:25px 15px 50px;
+}
+
+h2{
+    color:#063d25;
+    margin-top:30px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    border-left:5px solid #0b6b3d;
+}
+
+.card .icon{
+    font-size:34px;
+}
+
+.card h3{
+    color:#063d25;
+}
+
+.card p{
+    color:#555;
+    line-height:1.45;
+}
+
+.card a{
+    display:block;
+    text-align:center;
+    padding:10px;
+    background:#0b6b3d;
+    color:white;
+    text-decoration:none;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+.quick{
+    background:#063d25;
+    color:white;
+    padding:22px;
+    border-radius:14px;
+    margin-top:30px;
+}
+
+.quick a{
+    display:inline-block;
+    color:#063d25;
+    background:#b7ff35;
+    text-decoration:none;
+    padding:10px 15px;
+    border-radius:7px;
+    margin:5px;
+    font-weight:bold;
+}
+
+.flow{
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    margin-top:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+.flow-step{
+    padding:12px;
+    margin:8px 0;
+    background:#eef5f0;
+    border-radius:8px;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+@media(max-width:900px){
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .languages{
+        position:static;
+        margin-bottom:15px;
+    }
+
+    h1{
+        font-size:27px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .search{
+        flex-direction:column;
+    }
+}
+
+[dir="rtl"]{
+    text-align:right;
+}
+
+[dir="rtl"] .languages{
+    left:12px;
+    right:auto;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="languages">
+<button onclick="setLanguage('AZ')">AZ</button>
+<button onclick="setLanguage('RU')">RU</button>
+<button onclick="setLanguage('EN')">EN</button>
+<button onclick="setLanguage('TR')">TR</button>
+<button onclick="setLanguage('DE')">DE</button>
+<button onclick="setLanguage('AR')">AR</button>
+<button onclick="setLanguage('ES')">ES</button>
+<button onclick="setLanguage('FR')">FR</button>
+<button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<img src="logo.png" class="logo" alt="WORKER PRO">
+
+<h1 id="title">Работа. Знания. Производство.</h1>
+
+<div class="subtitle" id="subtitle">
+Международная промышленная платформа
+</div>
+
+<div class="search">
+<input id="searchInput"
+placeholder="Поиск: насос, станок, подшипник, запчасть...">
+
+<button onclick="searchSite()" id="searchButton">
+Поиск
+</button>
+</div>
+
+</header>
+
+<div class="container">
+
+<h2 id="mainTitle">WORKER PRO</h2>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">🏭</div>
+<h3 id="productionTitle">Производство</h3>
+<p id="productionText">
+Промышленные технологии, оборудование и производственные направления.
+</p>
+<a href="production/index.html" id="openProduction">Открыть</a>
+</div>
+
+<div class="card">
+<div class="icon">⚙️</div>
+<h3>Запчасти</h3>
+<p>Поиск промышленных запчастей и компонентов.</p>
+<a href="spare-parts/index.html">Открыть</a>
+</div>
+
+<div class="card">
+<div class="icon">🏢</div>
+<h3>Компании</h3>
+<p>Производители, поставщики и промышленные компании.</p>
+<a href="companies/index.html">Открыть</a>
+</div>
+
+<div class="card">
+<div class="icon">👷</div>
+<h3>Специалисты</h3>
+<p>Рабочие, инженеры, мастера и технические специалисты.</p>
+<a href="specialists/index.html">Открыть</a>
+</div>
+
+<div class="card">
+<div class="icon">💼</div>
+<h3>Вакансии</h3>
+<p>Промышленные вакансии и поиск специалистов.</p>
+<a href="vacancies/index.html">Открыть</a>
+</div>
+
+<div class="card">
+<div class="icon">📚</div>
+<h3>Обучение</h3>
+<p>Профессиональное обучение и технические курсы.</p>
+<a href="training/index.html">Открыть</a>
+</div>
+
+<div class="card">
+<div class="icon">🚚</div>
+<h3>Логистика</h3>
+<p>Местная и международная перевозка товаров.</p>
+<a href="transport/index.html">Открыть</a>
+</div>
+
+<div class="card">
+<div class="icon">📦</div>
+<h3>Отслеживание</h3>
+<p>Отслеживание заказов и промышленных поставок.</p>
+<a href="tracking/index.html">Открыть</a>
+</div>
+
+</div>
+
+<div class="quick">
+
+<h2 style="color:white" id="quickTitle">Быстрый доступ</h2>
+
+<a href="catalog/index.html">Каталог</a>
+<a href="products/index.html">Товары</a>
+<a href="brands/index.html">Бренды</a>
+<a href="suppliers/index.html">Поставщики</a>
+<a href="requests/index.html">Запросы</a>
+<a href="rfq/index.html">RFQ</a>
+<a href="offers/index.html">Предложения</a>
+<a href="orders/index.html">Заказы</a>
+
+</div>
+
+<div class="flow">
+
+<h2 id="flowTitle">Как работает WORKER PRO</h2>
+
+<div class="flow-step">
+1️⃣ Выберите язык и страну
+</div>
+
+<div class="flow-step">
+2️⃣ Найдите технологию, товар или запчасть
+</div>
+
+<div class="flow-step">
+3️⃣ Выберите компанию или поставщика
+</div>
+
+<div class="flow-step">
+4️⃣ Получите цену и условия
+</div>
+
+<div class="flow-step">
+5️⃣ Организуйте транспортировку
+</div>
+
+<div class="flow-step">
+6️⃣ Получите товар
+</div>
+
+</div>
+
+</div>
+
+<footer>
+WORKER PRO © 2026
+</footer>
+
+<script>
+
+const translations={
+
+RU:{
+title:"Работа. Знания. Производство.",
+subtitle:"Международная промышленная платформа",
+search:"Поиск",
+production:"Производство",
+productionText:"Промышленные технологии, оборудование и производственные направления",
+open:"Открыть",
+quick:"Быстрый доступ",
+flow:"Как работает WORKER PRO"
+},
+
+AZ:{
+title:"İş. Bilik. İstehsalat.",
+subtitle:"Beynəlxalq sənaye platforması",
+search:"Axtar",
+production:"İstehsalat",
+productionText:"Sənaye texnologiyaları, avadanlıqlar və istehsal sahələri",
+open:"Aç",
+quick:"Sürətli giriş",
+flow:"WORKER PRO necə işləyir"
+},
+
+EN:{
+title:"Work. Knowledge. Production.",
+subtitle:"International industrial platform",
+search:"Search",
+production:"Production",
+productionText:"Industrial technologies, equipment and production fields",
+open:"Open",
+quick:"Quick Access",
+flow:"How WORKER PRO works"
+},
+
+TR:{
+title:"İş. Bilgi. Üretim.",
+subtitle:"Uluslararası endüstri platformu",
+search:"Ara",
+production:"Üretim",
+productionText:"Endüstriyel teknolojiler, ekipmanlar ve üretim alanları",
+open:"Aç",
+quick:"Hızlı Erişim",
+flow:"WORKER PRO nasıl çalışır"
+},
+
+DE:{
+title:"Arbeit. Wissen. Produktion.",
+subtitle:"Internationale Industrieplattform",
+search:"Suchen",
+production:"Produktion",
+productionText:"Industrielle Technologien, Anlagen und Produktionsbereiche",
+open:"Öffnen",
+quick:"Schnellzugriff",
+flow:"So funktioniert WORKER PRO"
+},
+
+AR:{
+title:"العمل. المعرفة. الإنتاج.",
+subtitle:"منصة صناعية دولية",
+search:"بحث",
+production:"الإنتاج",
+productionText:"التقنيات والمعدات والمجالات الصناعية",
+open:"فتح",
+quick:"الوصول السريع",
+flow:"كيف تعمل WORKER PRO"
+},
+
+ES:{
+title:"Trabajo. Conocimiento. Producción.",
+subtitle:"Plataforma industrial internacional",
+search:"Buscar",
+production:"Producción",
+productionText:"Tecnologías industriales, equipos y áreas de producción",
+open:"Abrir",
+quick:"Acceso rápido",
+flow:"Cómo funciona WORKER PRO"
+},
+
+FR:{
+title:"Travail. Connaissance. Production.",
+subtitle:"Plateforme industrielle internationale",
+search:"Rechercher",
+production:"Production",
+productionText:"Technologies industrielles, équipements et domaines de production",
+open:"Ouvrir",
+quick:"Accès rapide",
+flow:"Comment fonctionne WORKER PRO"
+},
+
+IT:{
+title:"Lavoro. Conoscenza. Produzione.",
+subtitle:"Piattaforma industriale internazionale",
+search:"Cerca",
+production:"Produzione",
+productionText:"Tecnologie industriali, attrezzature e settori produttivi",
+open:"Apri",
+quick:"Accesso rapido",
+flow:"Come funziona WORKER PRO"
+}
+
+};
+
+function setLanguage(lang){
+
+localStorage.setItem("workerProLanguage",lang);
+
+const t=translations[lang]||translations.RU;
+
+document.documentElement.lang=lang.toLowerCase();
+
+document.documentElement.dir=
+lang==="AR"?"rtl":"ltr";
+
+document.getElementById("title").textContent=t.title;
+document.getElementById("subtitle").textContent=t.subtitle;
+document.getElementById("searchButton").textContent=t.search;
+
+document.getElementById("productionTitle").textContent=t.production;
+document.getElementById("productionText").textContent=t.productionText;
+document.getElementById("openProduction").textContent=t.open;
+
+document.getElementById("quickTitle").textContent=t.quick;
+document.getElementById("flowTitle").textContent=t.flow;
+
+document.querySelectorAll(".languages button").forEach(b=>{
+b.classList.remove("active");
+if(b.textContent===lang)b.classList.add("active");
+});
+
+}
+
+function searchSite(){
+
+const value=document
+.getElementById("searchInput")
+.value
+.trim();
+
+if(value){
+
+window.location.href=
+"catalog/index.html?q="+encodeURIComponent(value);
+
+}
+
+}
+
+const savedLanguage=
+localStorage.getItem("workerProLanguage")||"RU";
+
+setLanguage(savedLanguage);
+
+</script>
+
+</body>
+</html>
