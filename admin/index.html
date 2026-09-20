@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Admin</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+.top-languages {
+    background: #063d25;
+    padding: 10px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.top-languages button {
+    background: transparent;
+    color: white;
+    border: 1px solid #b7ff35;
+    border-radius: 20px;
+    padding: 7px 12px;
+    margin: 3px;
+    font-weight: bold;
+}
+
+header {
+    background: linear-gradient(135deg, #063d25, #0b6b3d);
+    color: white;
+    text-align: center;
+    padding: 40px 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+header p {
+    font-size: 17px;
+}
+
+nav {
+    background: #075b34;
+    padding: 12px;
+    text-align: center;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 8px;
+}
+
+nav a:hover {
+    color: #b7ff35;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 15px;
+}
+
+.hero {
+    background: white;
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.hero h2 {
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+}
+
+.card h3 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.card p {
+    line-height: 1.6;
+}
+
+.number {
+    font-size: 30px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.notice {
+    margin-top: 25px;
+    background: #fff8d6;
+    border-left: 5px solid #d5a900;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+footer {
+    margin-top: 40px;
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 29px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+
+    <p>Административная панель</p>
+
+</header>
+
+<nav>
+
+    <a href="../index.html">Главная</a>
+    <a href="../dashboard/index.html">Dashboard</a>
+    <a href="../companies/index.html">Компании</a>
+    <a href="../users/index.html">Пользователи</a>
+    <a href="../products/index.html">Товары</a>
+    <a href="../orders/index.html">Заказы</a>
+    <a href="../reports/index.html">Отчёты</a>
+
+</nav>
+
+<div class="container">
+
+    <div class="hero">
+
+        <h2>⚙️ Admin Panel</h2>
+
+        <p>
+            Центральный раздел управления платформой
+            WORKER PRO.
+        </p>
+
+        <p>
+            Здесь в будущем администратор сможет управлять
+            пользователями, компаниями, товарами, заказами,
+            заявками, сообщениями и другими разделами системы.
+        </p>
+
+    </div>
+
+
+    <h2>🛠️ Управление платформой</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <span class="number">👥</span>
+            <h3>Пользователи</h3>
+            <p>
+                Управление аккаунтами специалистов,
+                компаний, производителей и поставщиков.
+            </p>
+        </div>
+
+        <div class="card">
+            <span class="number">🏢</span>
+            <h3>Компании</h3>
+            <p>
+                Проверка и управление профилями компаний
+                и организаций.
+            </p>
+        </div>
+
+        <div class="card">
+            <span class="number">📦</span>
+            <h3>Товары</h3>
+            <p>
+                Управление промышленными товарами,
+                оборудованием и запчастями.
+            </p>
+        </div>
+
+        <div class="card">
+            <span class="number">📋</span>
+            <h3>Заказы</h3>
+            <p>
+                Контроль заказов, заявок и статусов
+                сделок.
+            </p>
+        </div>
+
+        <div class="card">
+            <span class="number">💬</span>
+            <h3>Сообщения</h3>
+            <p>
+                Управление сообщениями и обращениями
+                пользователей.
+            </p>
+        </div>
+
+        <div class="card">
+            <span class="number">🛡️</span>
+            <h3>Модерация</h3>
+            <p>
+                Проверка контента, компаний, товаров
+                и пользовательских публикаций.
+            </p>
+        </div>
+
+    </div>
+
+
+    <h2>📊 Система управления</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>📈 Analytics</h3>
+            <p>
+                Статистика работы платформы,
+                пользователей и активности.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📑 Reports</h3>
+            <p>
+                Системные отчёты и показатели платформы.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🚨 Alerts</h3>
+            <p>
+                Системные предупреждения и важные события.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🔐 Security</h3>
+            <p>
+                Безопасность аккаунтов и защита платформы.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        <strong>⚠️ DEMO VERSION</strong>
+
+        <p>
+            Сейчас административная панель является
+            демонстрационным интерфейсом.
+            Реальная система управления будет подключена
+            после создания базы данных и серверной части.
+        </p>
+
+    </div>
+
+    <a class="back" href="../index.html">
+        ← Вернуться на главную
+    </a>
+
+</div>
+
+
+<footer>
+
+    <h3>WORKER PRO</h3>
+
+    <p>Global Industrial Platform</p>
+
+    <p>F.S</p>
+
+</footer>
+
+<script src="../languages.js"></script>
+
+</body>
+</html>
