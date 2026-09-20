@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Advertising</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+.top-languages {
+    background: #063d25;
+    padding: 10px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.top-languages button {
+    background: transparent;
+    color: white;
+    border: 1px solid #b7ff35;
+    border-radius: 20px;
+    padding: 7px 12px;
+    margin: 3px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.top-languages button:hover {
+    background: #b7ff35;
+    color: #063d25;
+}
+
+header {
+    background: linear-gradient(135deg, #063d25, #0b6b3d);
+    color: white;
+    text-align: center;
+    padding: 42px 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+header p {
+    font-size: 17px;
+}
+
+nav {
+    background: #075b34;
+    padding: 12px;
+    text-align: center;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 8px;
+}
+
+nav a:hover {
+    color: #b7ff35;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 15px;
+}
+
+.hero {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.hero h2 {
+    color: #063d25;
+    font-size: 30px;
+}
+
+.hero p {
+    line-height: 1.7;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+}
+
+.card h3 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.card p {
+    line-height: 1.6;
+}
+
+.icon {
+    font-size: 34px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+.steps {
+    counter-reset: step;
+}
+
+.step {
+    background: white;
+    padding: 20px 20px 20px 65px;
+    margin: 14px 0;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.step::before {
+    counter-increment: step;
+    content: counter(step);
+    position: absolute;
+    left: 18px;
+    top: 18px;
+    width: 34px;
+    height: 34px;
+    background: #0b6b3d;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.notice {
+    margin-top: 25px;
+    background: #fff8d6;
+    border-left: 5px solid #d5a900;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+footer {
+    margin-top: 40px;
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 29px;
+    }
+
+    .hero {
+        padding: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+
+    <p>
+        Промышленная реклама и продвижение
+    </p>
+
+</header>
+
+<nav>
+
+    <a href="../index.html">Главная</a>
+    <a href="../companies/index.html">Компании</a>
+    <a href="../products/index.html">Товары</a>
+    <a href="../brands/index.html">Бренды</a>
+    <a href="../marketplace/index.html">Marketplace</a>
+    <a href="../pricing/index.html">Pricing</a>
+
+</nav>
+
+<div class="container">
+
+    <div class="hero">
+
+        <h2>📢 Advertising</h2>
+
+        <p>
+            Раздел рекламы WORKER PRO для производителей,
+            поставщиков, компаний и сервисных организаций.
+        </p>
+
+        <p>
+            В будущем компании смогут продвигать товары,
+            услуги, бренды и специальные предложения
+            среди пользователей промышленной платформы.
+        </p>
+
+    </div>
+
+
+    <h2>🎯 Возможности рекламы</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <span class="icon">🏢</span>
+            <h3>Реклама компании</h3>
+            <p>
+                Продвижение профиля компании и её
+                промышленной деятельности.
+            </p>
+        </div>
+
+        <div class="card">
+            <span class="icon">📦</span>
+            <h3>Реклама товаров</h3>
+            <p>
+                Продвижение оборудования, запчастей,
+                материалов и промышленных товаров.
+            </p>
+        </div>
+
+        <div class="card">
+            <span class="icon">🏷️</span>
+            <h3>Продвижение бренда</h3>
+            <p>
+                Повышение видимости промышленного
+                бренда на платформе.
+            </p>
+        </div>
+
+        <div class="card">
+            <span class="icon">🛠️</span>
+            <h3>Реклама услуг</h3>
+            <p>
+                Продвижение сервисных центров,
+                ремонта, монтажа и других услуг.
+            </p>
+        </div>
+
+        <div class="card">
+            <span class="icon">🔥</span>
+            <h3>Специальные предложения</h3>
+            <p>
+                Акции, скидки, новые поступления
+                и специальные предложения.
+            </p>
+        </div>
+
+        <div class="card">
+            <span class="icon">🌍</span>
+            <h3>Международная реклама</h3>
+            <p>
+                Возможность показывать предложения
+                пользователям из разных стран.
+            </p>
+        </div>
+
+    </div>
+
+
+    <h2>📊 Форматы размещения</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>⭐ Featured</h3>
+            <p>
+                Выделенное размещение компании,
+                товара или бренда.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📌 Sponsored</h3>
+            <p>
+                Спонсируемые позиции в каталоге
+                и поиске.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🖼️ Banner</h3>
+            <p>
+                Баннерная реклама на страницах
+                платформы.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📣 Promotion</h3>
+            <p>
+                Продвижение специальных предложений
+                и новых продуктов.
+            </p>
+        </div>
+
+    </div>
+
+
+    <h2>🔄 Как будет работать реклама</h2>
+
+    <div class="steps">
+
+        <div class="step">
+            <h3>Создание рекламной кампании</h3>
+            <p>
+                Компания создаёт рекламную кампанию
+                и выбирает объект продвижения.
+            </p>
+        </div>
+
+        <div class="step">
+            <h3>Выбор аудитории</h3>
+            <p>
+                Выбираются страна, категория,
+                промышленное направление и аудитория.
+            </p>
+        </div>
+
+        <div class="step">
+            <h3>Выбор формата</h3>
+            <p>
+                Выбирается подходящий рекламный формат
+                и период размещения.
+            </p>
+        </div>
+
+        <div class="step">
+            <h3>Запуск</h3>
+            <p>
+                После проверки реклама появляется
+                на выбранных разделах платформы.
+            </p>
+        </div>
+
+        <div class="step">
+            <h3>Аналитика</h3>
+            <p>
+                Компания получает статистику просмотров,
+                переходов и других показателей.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        <strong>⚠️ DEMO VERSION</strong>
+
+        <p>
+            Сейчас рекламная система является
+            демонстрационной. Реальные рекламные кампании,
+            платежи и аналитика будут подключаться
+            после создания серверной части платформы.
+        </p>
+
+    </div>
+
+
+    <a class="back" href="../index.html">
+        ← На главную
+    </a>
+
+</div>
+
+
+<footer>
+
+    <h3>WORKER PRO</h3>
+
+    <p>Global Industrial Platform</p>
+
+    <p>F.S</p>
+
+</footer>
+
+<script src="../languages.js"></script>
+
+</body>
+</html>
