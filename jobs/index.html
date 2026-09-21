@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Jobs</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    text-align:center;
+}
+
+.top-languages button{
+    margin:4px;
+    padding:8px 12px;
+    border:0;
+    border-radius:8px;
+    background:#fff;
+    color:#063d25;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+header{
+    background:#0b6b3d;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+header h1{
+    margin:0 0 8px;
+    font-size:30px;
+}
+
+header p{
+    margin:0;
+}
+
+nav{
+    background:#075b34;
+    padding:10px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+nav a{
+    display:inline-block;
+    color:white;
+    text-decoration:none;
+    margin:5px;
+    padding:8px 12px;
+    border-radius:7px;
+    background:rgba(255,255,255,.1);
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+.hero h2{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search{
+    max-width:800px;
+    margin:20px auto 0;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.search input{
+    flex:1;
+    min-width:220px;
+    padding:13px;
+    border:1px solid #ccc;
+    border-radius:9px;
+    font-size:16px;
+}
+
+.search button,
+.card button{
+    padding:12px 18px;
+    border:0;
+    border-radius:9px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.filters{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:20px 0;
+}
+
+.filters button{
+    padding:9px 15px;
+    border:1px solid #0b6b3d;
+    border-radius:20px;
+    background:white;
+    color:#0b6b3d;
+    cursor:pointer;
+}
+
+.filters button:hover{
+    background:#0b6b3d;
+    color:white;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card p{
+    line-height:1.5;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:12px;
+    background:#e5f5eb;
+    color:#0b6b3d;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.salary{
+    font-size:19px;
+    font-weight:bold;
+    color:#0b6b3d;
+}
+
+.location{
+    color:#555;
+}
+
+.card button{
+    width:100%;
+    margin-top:10px;
+}
+
+.info{
+    margin-top:25px;
+    padding:20px;
+    background:#eaf6ee;
+    border-left:5px solid #0b6b3d;
+    border-radius:10px;
+}
+
+.steps{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-top:20px;
+}
+
+.step{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.step strong{
+    display:block;
+    color:#0b6b3d;
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+footer{
+    margin-top:40px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+[dir="rtl"]{
+    direction:rtl;
+    text-align:right;
+}
+
+[dir="rtl"] .top-languages,
+[dir="rtl"] nav,
+[dir="rtl"] footer{
+    text-align:center;
+}
+
+@media(max-width:600px){
+    header h1{font-size:25px}
+    .container{padding:12px}
+    .hero{padding:18px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Jobs — работа и профессиональные возможности</p>
+</header>
+
+<nav>
+    <a href="../index.html">Главная</a>
+    <a href="../dashboard/index.html">Dashboard</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../specialists/index.html">Specialists</a>
+    <a href="../vacancies/index.html">Vacancies</a>
+    <a href="../training/index.html">Training</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+    <h2>Промышленные вакансии</h2>
+
+    <p>
+        WORKER PRO помогает специалистам находить работу,
+        а промышленным компаниям — квалифицированных работников.
+    </p>
+
+    <div class="search">
+        <input
+            id="searchInput"
+            type="text"
+            placeholder="Поиск вакансии, профессии или компании..."
+            oninput="searchJobs()"
+        >
+
+        <button onclick="searchJobs()">Поиск</button>
+    </div>
+</section>
+
+<div class="filters">
+    <button onclick="filterJobs('all')">Все</button>
+    <button onclick="filterJobs('cnc')">CNC</button>
+    <button onclick="filterJobs('welding')">Сварка</button>
+    <button onclick="filterJobs('engineering')">Инженеры</button>
+    <button onclick="filterJobs('maintenance')">Техобслуживание</button>
+    <button onclick="filterJobs('safety')">Безопасность</button>
+</div>
+
+<div class="grid" id="jobsGrid">
+
+    <div class="card job" data-category="cnc">
+        <span class="badge">CNC</span>
+        <h3>Оператор CNC станка</h3>
+
+        <p><strong>Компания:</strong> Industrial Machinery Group</p>
+        <p class="location">📍 Баку, Азербайджан</p>
+
+        <p>
+            Работа на CNC оборудовании, контроль деталей,
+            чтение технической документации.
+        </p>
+
+        <p class="salary">Зарплата: 1 200–1 800 AZN</p>
+
+        <button onclick="applyJob('Оператор CNC станка')">
+            Откликнуться
+        </button>
+    </div>
+
+    <div class="card job" data-category="welding">
+        <span class="badge">Сварка</span>
+        <h3>Промышленный сварщик</h3>
+
+        <p><strong>Компания:</strong> Steel Production Group</p>
+        <p class="location">📍 Сумгайыт, Азербайджан</p>
+
+        <p>
+            Сварочные работы, контроль качества соединений,
+            соблюдение требований промышленной безопасности.
+        </p>
+
+        <p class="salary">Зарплата: 1 000–1 600 AZN</p>
+
+        <button onclick="applyJob('Промышленный сварщик')">
+            Откликнуться
+        </button>
+    </div>
+
+    <div class="card job" data-category="engineering">
+        <span class="badge">Инженер</span>
+        <h3>Инженер по производству</h3>
+
+        <p><strong>Компания:</strong> Automation Technologies</p>
+        <p class="location">📍 Баку, Азербайджан</p>
+
+        <p>
+            Организация производственного процесса,
+            анализ оборудования и повышение эффективности.
+        </p>
+
+        <p class="salary">Зарплата: 1 800–2 700 AZN</p>
+
+        <button onclick="applyJob('Инженер по производству')">
+            Откликнуться
+        </button>
+    </div>
+
+    <div class="card job" data-category="maintenance">
+        <span class="badge">Maintenance</span>
+        <h3>Механик по обслуживанию</h3>
+
+        <p><strong>Компания:</strong> Industrial Service Center</p>
+        <p class="location">📍 Баку, Азербайджан</p>
+
+        <p>
+            Техническое обслуживание станков,
+            диагностика неисправностей и ремонт оборудования.
+        </p>
+
+        <p class="salary">Зарплата: 1 300–2 000 AZN</p>
+
+        <button onclick="applyJob('Механик по обслуживанию')">
+            Откликнуться
+        </button>
+    </div>
+
+    <div class="card job" data-category="safety">
+        <span class="badge">Safety</span>
+        <h3>Специалист по промышленной безопасности</h3>
+
+        <p><strong>Компания:</strong> Global Industry Group</p>
+        <p class="location">📍 Баку, Азербайджан</p>
+
+        <p>
+            Контроль требований безопасности,
+            обучение работников и анализ производственных рисков.
+        </p>
+
+        <p class="salary">Зарплата: 1 500–2 400 AZN</p>
+
+        <button onclick="applyJob('Специалист по промышленной безопасности')">
+            Откликнуться
+        </button>
+    </div>
+
+    <div class="card job" data-category="engineering">
+        <span class="badge">Инженер</span>
+        <h3>Инженер по автоматизации</h3>
+
+        <p><strong>Компания:</strong> Industrial Automation Systems</p>
+        <p class="location">📍 Гянджа, Азербайджан</p>
+
+        <p>
+            PLC, датчики, автоматические линии,
+            диагностика и настройка производственного оборудования.
+        </p>
+
+        <p class="salary">Зарплата: 1 700–2 600 AZN</p>
+
+        <button onclick="applyJob('Инженер по автоматизации')">
+            Откликнуться
+        </button>
+    </div>
+
+</div>
+
+<section class="info">
+    <h2>Что будет в рабочей версии</h2>
+
+    <p>
+        Пользователи смогут создавать профессиональный профиль,
+        загружать резюме, указывать опыт и навыки, искать вакансии,
+        отправлять отклики и общаться с компаниями.
+    </p>
+</section>
+
+<section>
+    <h2>Как работает Jobs</h2>
+
+    <div class="steps">
+
+        <div class="step">
+            <strong>1</strong>
+            Создание профиля
+        </div>
+
+        <div class="step">
+            <strong>2</strong>
+            Поиск вакансии
+        </div>
+
+        <div class="step">
+            <strong>3</strong>
+            Просмотр требований
+        </div>
+
+        <div class="step">
+            <strong>4</strong>
+            Отклик
+        </div>
+
+        <div class="step">
+            <strong>5</strong>
+            Связь с компанией
+        </div>
+
+        <div class="step">
+            <strong>6</strong>
+            Трудоустройство
+        </div>
+
+    </div>
+</section>
+
+<section class="info">
+    <h2>Связь с WORKER PRO</h2>
+
+    <p>
+        Jobs в будущем будет связан с Specialists, Companies,
+        Vacancies, Training, Languages, Verification и Messages.
+        Это позволит компаниям искать специалистов по профессии,
+        опыту, стране и навыкам.
+    </p>
+</section>
+
+</div>
+
+<footer>
+    <h3>WORKER PRO</h3>
+    <p>Глобальная промышленная платформа</p>
+    <p>© 2026 WORKER PRO — F.S</p>
+</footer>
+
+<script src="../languages.js"></script>
+
+<script>
+
+function searchJobs(){
+
+    const value =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    document.querySelectorAll(".job").forEach(item => {
+
+        const text =
+            item.innerText.toLowerCase();
+
+        item.style.display =
+            text.includes(value) ? "block" : "none";
+
+    });
+}
+
+function filterJobs(category){
+
+    document.querySelectorAll(".job").forEach(item => {
+
+        if(category === "all"){
+            item.style.display = "block";
+        }else{
+            item.style.display =
+                item.dataset.category === category
+                ? "block"
+                : "none";
+        }
+
+    });
+}
+
+function applyJob(job){
+
+    alert(
+        "Вакансия: " + job +
+        "\n\nДемо-раздел WORKER PRO.\n\n" +
+        "В рабочей версии здесь будет форма отклика, " +
+        "резюме, профиль специалиста и отправка заявки компании."
+    );
+}
+
+function setLanguage(lang){
+
+    if(lang === "AR"){
+        document.documentElement.dir = "rtl";
+    }else{
+        document.documentElement.dir = "ltr";
+    }
+
+    if(typeof window.changeLanguage === "function"){
+        window.changeLanguage(lang);
+    }
+}
+
+</script>
+
+</body>
+</html>
