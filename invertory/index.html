@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Invertory</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+}
+
+header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.languages {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.languages button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.languages button:hover {
+    background: #075b34;
+}
+
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+h2 {
+    color: #063d25;
+    margin-top: 5px;
+}
+
+.intro {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #0b6b3d;
+    margin-bottom: 5px;
+}
+
+.table-wrap {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+th,
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #e1e8e3;
+    text-align: left;
+}
+
+th {
+    background: #063d25;
+    color: white;
+}
+
+tr:hover td {
+    background: #f5faf7;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #e7f4ec;
+    color: #075b34;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.warning {
+    background: #fff4d6;
+    color: #7a5a00;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    main {
+        padding: 20px 15px 35px;
+    }
+
+    .stat strong {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Работа. Знания. Производство.</p>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+</header>
+
+<main>
+
+    <h2>Инвентарь</h2>
+
+    <div class="intro">
+        <h3>WORKER PRO Invertory</h3>
+        <p>
+            Раздел для учёта промышленного оборудования,
+            материалов, инструментов, запчастей и других
+            ресурсов компании.
+        </p>
+    </div>
+
+    <div class="summary">
+
+        <div class="stat">
+            <strong>248</strong>
+            Всего позиций
+        </div>
+
+        <div class="stat">
+            <strong>186</strong>
+            В наличии
+        </div>
+
+        <div class="stat">
+            <strong>37</strong>
+            На складе
+        </div>
+
+        <div class="stat">
+            <strong>25</strong>
+            Требуют заказа
+        </div>
+
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Наименование</th>
+                    <th>Категория</th>
+                    <th>Количество</th>
+                    <th>Склад</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Подшипник 6205</td>
+                    <td>Запчасти</td>
+                    <td>45</td>
+                    <td>Баку</td>
+                    <td>
+                        <span class="status">В наличии</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Датчик давления</td>
+                    <td>Сенсоры</td>
+                    <td>18</td>
+                    <td>Баку</td>
+                    <td>
+                        <span class="status">В наличии</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Гидравлический насос</td>
+                    <td>Насосы</td>
+                    <td>6</td>
+                    <td>Сумгаит</td>
+                    <td>
+                        <span class="status">В наличии</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Промышленный клапан</td>
+                    <td>Арматура</td>
+                    <td>12</td>
+                    <td>Баку</td>
+                    <td>
+                        <span class="status">В наличии</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Режущий инструмент CNC</td>
+                    <td>Инструменты</td>
+                    <td>9</td>
+                    <td>Гянджа</td>
+                    <td>
+                        <span class="status warning">Мало</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Электродвигатель</td>
+                    <td>Электрика</td>
+                    <td>2</td>
+                    <td>Баку</td>
+                    <td>
+                        <span class="status warning">Мало</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Защитные перчатки</td>
+                    <td>Безопасность</td>
+                    <td>120</td>
+                    <td>Сумгаит</td>
+                    <td>
+                        <span class="status">В наличии</span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="intro">
+        <h3>Будущие возможности</h3>
+
+        <p>
+            В полноценной версии компании смогут добавлять
+            собственные позиции, изменять количество,
+            указывать склад, минимальный остаток и получать
+            уведомления о необходимости пополнения.
+        </p>
+
+        <p>
+            Инвентарь сможет быть связан с каталогом,
+            заказами, поставщиками, складами и закупками.
+        </p>
+    </div>
+
+    <a class="back" href="../index.html">← На главную</a>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026
+</footer>
+
+</body>
+</html>
