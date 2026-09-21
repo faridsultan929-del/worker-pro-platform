@@ -1,0 +1,458 @@
+<!DOCTYPE html><html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WORKER PRO — Events</title><style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f3f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:6px;
+    font-size:15px;
+}
+
+.languages{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:8px 12px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:7px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 3px 12px #0001;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    margin-top:0;
+    color:#063d25;
+}
+
+.search{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.search input{
+    flex:1;
+    min-width:220px;
+    padding:13px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.search button{
+    padding:13px 20px;
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:20px 0;
+}
+
+.filters button{
+    padding:9px 14px;
+    border:0;
+    border-radius:8px;
+    background:#dfe9e3;
+    color:#123;
+    cursor:pointer;
+}
+
+.filters button:hover,
+.filters button.active{
+    background:#0b6b3d;
+    color:white;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.card h2{
+    color:#075b34;
+    margin-top:0;
+}
+
+.card p{
+    line-height:1.6;
+}
+
+.date{
+    display:inline-block;
+    padding:7px 10px;
+    border-radius:8px;
+    background:#e5f5eb;
+    color:#075b34;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.type{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#eef2ef;
+    color:#075b34;
+    font-size:12px;
+    margin-left:5px;
+}
+
+.card button{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.card button:hover{
+    background:#063d25;
+}
+
+.info{
+    margin-top:30px;
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.steps{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+.step{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 3px 10px #0001;
+}
+
+.step strong{
+    display:block;
+    font-size:22px;
+    color:#0b6b3d;
+    margin-bottom:8px;
+}
+
+.demo{
+    margin-top:25px;
+    padding:18px;
+    background:#fffbe6;
+    border-left:5px solid #b7ff35;
+    border-radius:10px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+@media(max-width:600px){
+    .logo{font-size:25px}
+    nav a{font-size:13px}
+    .container{padding:12px}
+}
+</style></head><body><header><div class="logo">WORKER PRO</div><div class="subtitle">
+Промышленные события и мероприятия
+</div><div class="languages">
+<button onclick="setLanguage('AZ')">AZ</button>
+<button onclick="setLanguage('RU')">RU</button>
+<button onclick="setLanguage('EN')">EN</button>
+<button onclick="setLanguage('TR')">TR</button>
+<button onclick="setLanguage('DE')">DE</button>
+<button onclick="setLanguage('AR')">AR</button>
+<button onclick="setLanguage('ES')">ES</button>
+<button onclick="setLanguage('FR')">FR</button>
+<button onclick="setLanguage('IT')">IT</button>
+</div></header><nav>
+<a href="../index.html">Главная</a>
+<a href="../about/index.html">О платформе</a>
+<a href="../production/index.html">Производство</a>
+<a href="../companies/index.html">Компании</a>
+<a href="../training/index.html">Обучение</a>
+<a href="../community/index.html">Сообщество</a>
+</nav><div class="container"><section class="hero"><h1>Events</h1><p>
+Промышленные выставки, конференции, семинары,
+тренинги, технические встречи и другие мероприятия
+для специалистов и компаний.
+</p><div class="search"><input
+id="searchInput"
+type="text"
+placeholder="Поиск мероприятия..."
+
+«»
+
+<button onclick="searchEvents()">Поиск</button>
+
+</div></section><div class="filters"><button class="active"
+onclick="filterEvents('all',this)">
+Все
+</button>
+
+<button onclick="filterEvents('exhibition',this)">
+Выставки
+</button><button onclick="filterEvents('conference',this)">
+Конференции
+</button><button onclick="filterEvents('training',this)">
+Обучение
+</button><button onclick="filterEvents('meeting',this)">
+Встречи
+</button></div><section class="grid"><div class="card event-card" data-type="exhibition"><div class="date">
+15 OCT 2026
+<span class="type">Выставка</span>
+</div><h2>🏭 Industrial Technology Expo</h2><p>
+Промышленное оборудование, автоматизация,
+CNC и производственные технологии.
+</p><p>
+<strong>Место:</strong> Баку
+</p><button onclick="demo('Industrial Technology Expo')">
+Подробнее
+</button></div><div class="card event-card" data-type="conference"><div class="date">
+22 OCT 2026
+<span class="type">Конференция</span>
+</div><h2>⚙️ Manufacturing Conference</h2><p>
+Современные технологии производства,
+цифровизация и промышленная автоматизация.
+</p><p>
+<strong>Формат:</strong> офлайн / онлайн
+</p><button onclick="demo('Manufacturing Conference')">
+Подробнее
+</button></div><div class="card event-card" data-type="training"><div class="date">
+05 NOV 2026
+<span class="type">Обучение</span>
+</div><h2>🦺 Industrial Safety Training</h2><p>
+Практическое обучение промышленной безопасности,
+PPE и безопасной работе с оборудованием.
+</p><p>
+<strong>Место:</strong> Баку
+</p><button onclick="demo('Industrial Safety Training')">
+Подробнее
+</button></div><div class="card event-card" data-type="meeting"><div class="date">
+12 NOV 2026
+<span class="type">Встреча</span>
+</div><h2>🤝 Supplier Meeting</h2><p>
+Встреча производителей, поставщиков и покупателей
+промышленной продукции.
+</p><p>
+<strong>Участники:</strong> компании и специалисты
+</p><button onclick="demo('Supplier Meeting')">
+Подробнее
+</button></div><div class="card event-card" data-type="exhibition"><div class="date">
+20 NOV 2026
+<span class="type">Выставка</span>
+</div><h2>🤖 Automation & Robotics</h2><p>
+Роботизация, PLC, датчики, автоматические линии
+и современные производственные системы.
+</p><p>
+<strong>Место:</strong> Стамбул
+</p><button onclick="demo('Automation & Robotics')">
+Подробнее
+</button></div><div class="card event-card" data-type="conference"><div class="date">
+03 DEC 2026
+<span class="type">Конференция</span>
+</div><h2>🌍 Global Industry Forum</h2><p>
+Международное промышленное сотрудничество,
+торговля, поставки и логистика.
+</p><p>
+<strong>Формат:</strong> международный
+</p><button onclick="demo('Global Industry Forum')">
+Подробнее
+</button></div></section><section class="info"><h2 style="color:#063d25;">
+Что будет в Events
+</h2><p>
+• календарь промышленных мероприятий;</p><p>
+• выставки и конференции;</p><p>
+• технические семинары;</p><p>
+• обучение и тренинги;</p><p>
+• встречи производителей и поставщиков;</p><p>
+• регистрация участников;</p><p>
+• информация о месте и времени;</p><p>
+• онлайн и офлайн мероприятия;</p><p>
+• уведомления о предстоящих событиях.
+</p></section><h2 style="color:#063d25;margin-top:35px;">
+Участие в мероприятии
+</h2><section class="steps"><div class="step">
+<strong>1</strong>
+Найти событие
+</div><div class="step">
+<strong>2</strong>
+Изучить информацию
+</div><div class="step">
+<strong>3</strong>
+Зарегистрироваться
+</div><div class="step">
+<strong>4</strong>
+Получить подтверждение
+</div><div class="step">
+<strong>5</strong>
+Посетить мероприятие
+</div><div class="step">
+<strong>6</strong>
+Связаться с участниками
+</div></section><div class="demo"><strong>Демо-режим:</strong>
+
+<p>
+Сейчас мероприятия являются демонстрационными.
+В будущем компании смогут добавлять свои события,
+а специалисты — находить и регистрироваться на них.
+</p></div></div><footer>
+WORKER PRO © 2026<br>
+Работа. Знания. Производство.
+</footer><script src="../languages.js"></script><script>
+
+function demo(name){
+    alert(name + ' — функция будет подключена на следующем этапе.');
+}
+
+function filterEvents(type,button){
+
+    const cards=document.querySelectorAll('.event-card');
+
+    document.querySelectorAll('.filters button')
+        .forEach(btn=>btn.classList.remove('active'));
+
+    button.classList.add('active');
+
+    cards.forEach(card=>{
+
+        if(type==='all' || card.dataset.type===type){
+            card.style.display='block';
+        }else{
+            card.style.display='none';
+        }
+
+    });
+}
+
+function searchEvents(){
+
+    const query=document
+        .getElementById('searchInput')
+        .value
+        .toLowerCase()
+        .trim();
+
+    const cards=document.querySelectorAll('.event-card');
+
+    cards.forEach(card=>{
+
+        const text=card.innerText.toLowerCase();
+
+        card.style.display=
+            text.includes(query) ? 'block' : 'none';
+
+    });
+}
+
+function setLanguage(lang){
+
+    if(typeof window.changeLanguage === "function"){
+        window.changeLanguage(lang);
+        return;
+    }
+
+    localStorage.setItem("workerProLanguage",lang);
+
+    if(lang==="AR"){
+        document.documentElement.dir="rtl";
+    }else{
+        document.documentElement.dir="ltr";
+    }
+
+}
+
+</script></body>
+</html>
