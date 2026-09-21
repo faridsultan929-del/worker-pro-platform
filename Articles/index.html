@@ -1,0 +1,477 @@
+<!DOCTYPE html><html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WORKER PRO — Articles</title><style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f7f5;
+    color: #123;
+}
+
+.header {
+    background: #063d25;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 5px 0;
+    font-size: 28px;
+}
+
+.header p {
+    margin: 5px 0 12px;
+    color: #b7ff35;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.languages button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: white;
+    color: #063d25;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.languages button:hover {
+    background: #b7ff35;
+}
+
+.nav {
+    background: #0b6b3d;
+    padding: 10px;
+    text-align: center;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    margin: 5px 8px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.hero {
+    background: white;
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.hero h2 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.search {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 15px 0;
+}
+
+.filters button {
+    border: none;
+    padding: 9px 13px;
+    border-radius: 8px;
+    background: #0b6b3d;
+    color: white;
+    cursor: pointer;
+}
+
+.filters button:hover {
+    background: #063d25;
+}
+
+.articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.article {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    border-top: 5px solid #0b6b3d;
+}
+
+.article h3 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.article .tag {
+    display: inline-block;
+    background: #e6f5eb;
+    color: #075b34;
+    padding: 5px 9px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.article p {
+    line-height: 1.5;
+}
+
+.article button {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 8px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.article button:hover {
+    background: #063d25;
+}
+
+.info {
+    margin-top: 25px;
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.info-item {
+    padding: 12px;
+    margin: 8px 0;
+    background: #eef6f1;
+    border-radius: 8px;
+}
+
+.demo {
+    margin-top: 25px;
+    padding: 18px;
+    border-radius: 12px;
+    background: #fff8d8;
+    border: 1px solid #e6d36a;
+}
+
+.footer {
+    margin-top: 30px;
+    padding: 20px;
+    text-align: center;
+    background: #063d25;
+    color: white;
+}
+
+@media(max-width:600px) {
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .container {
+        padding: 12px;
+    }
+}
+</style></head><body><div class="header"><h1>WORKER PRO</h1>
+<p>Articles / Статьи</p>
+
+<div class="languages">
+    <button onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+</div><div class="nav">
+    <a href="../index.html">Главная</a>
+    <a href="../production/index.html">Производство</a>
+    <a href="../training/index.html">Обучение</a>
+    <a href="../safety/index.html">Безопасность</a>
+    <a href="../companies/index.html">Компании</a>
+</div><div class="container"><div class="hero">
+
+    <h2>Промышленные статьи</h2>
+
+    <p>
+        Полезные статьи WORKER PRO о производстве,
+        технологиях, промышленной безопасности,
+        оборудовании, профессиях и обучении.
+    </p>
+
+    <input
+        class="search"
+        id="search"
+        type="text"
+        placeholder="Поиск статьи..."
+        onkeyup="searchArticles()"
+    >
+
+    <div class="filters">
+        <button onclick="filterArticles('all')">Все</button>
+        <button onclick="filterArticles('production')">Производство</button>
+        <button onclick="filterArticles('safety')">Безопасность</button>
+        <button onclick="filterArticles('technology')">Технологии</button>
+        <button onclick="filterArticles('equipment')">Оборудование</button>
+        <button onclick="filterArticles('training')">Обучение</button>
+    </div>
+
+</div>
+
+<div class="articles" id="articles">
+
+    <div class="article" data-category="production">
+        <span class="tag">Производство</span>
+        <h3>Основы промышленного производства</h3>
+        <p>
+            Основные этапы промышленного производства,
+            от подготовки материала до контроля готовой продукции.
+        </p>
+        <button onclick="openArticle('production')">
+            Читать
+        </button>
+    </div>
+
+    <div class="article" data-category="technology">
+        <span class="tag">Технологии</span>
+        <h3>Что такое CNC / ЧПУ</h3>
+        <p>
+            Основы работы станков с числовым программным
+            управлением и роль оператора CNC.
+        </p>
+        <button onclick="openArticle('cnc')">
+            Читать
+        </button>
+    </div>
+
+    <div class="article" data-category="safety">
+        <span class="tag">Безопасность</span>
+        <h3>Промышленная безопасность</h3>
+        <p>
+            Основные правила безопасной работы
+            на производственном предприятии.
+        </p>
+        <button onclick="openArticle('safety')">
+            Читать
+        </button>
+    </div>
+
+    <div class="article" data-category="equipment">
+        <span class="tag">Оборудование</span>
+        <h3>Техническое обслуживание оборудования</h3>
+        <p>
+            Почему регулярное обслуживание помогает
+            уменьшить простои и аварийные ситуации.
+        </p>
+        <button onclick="openArticle('maintenance')">
+            Читать
+        </button>
+    </div>
+
+    <div class="article" data-category="technology">
+        <span class="tag">Технологии</span>
+        <h3>Датчики в промышленности</h3>
+        <p>
+            Температура, давление, положение, уровень
+            и другие параметры, контролируемые датчиками.
+        </p>
+        <button onclick="openArticle('sensors')">
+            Читать
+        </button>
+    </div>
+
+    <div class="article" data-category="production">
+        <span class="tag">Производство</span>
+        <h3>Контроль качества продукции</h3>
+        <p>
+            Проверка размеров, материалов, внешнего вида
+            и соответствия техническим требованиям.
+        </p>
+        <button onclick="openArticle('quality')">
+            Читать
+        </button>
+    </div>
+
+    <div class="article" data-category="training">
+        <span class="tag">Обучение</span>
+        <h3>Как развивать промышленную профессию</h3>
+        <p>
+            Знания, практика, безопасность и технический
+            английский для профессионального роста.
+        </p>
+        <button onclick="openArticle('career')">
+            Читать
+        </button>
+    </div>
+
+    <div class="article" data-category="equipment">
+        <span class="tag">Оборудование</span>
+        <h3>Гидравлические системы</h3>
+        <p>
+            Основные элементы гидравлической системы:
+            насосы, клапаны, цилиндры и датчики.
+        </p>
+        <button onclick="openArticle('hydraulics')">
+            Читать
+        </button>
+    </div>
+
+    <div class="article" data-category="safety">
+        <span class="tag">Безопасность</span>
+        <h3>Средства индивидуальной защиты</h3>
+        <p>
+            Каска, защитные очки, перчатки, обувь,
+            защита слуха и другие средства PPE.
+        </p>
+        <button onclick="openArticle('ppe')">
+            Читать
+        </button>
+    </div>
+
+    <div class="article" data-category="training">
+        <span class="tag">Обучение</span>
+        <h3>Английский язык для рабочих</h3>
+        <p>
+            Практические английские слова и фразы
+            для общения на промышленном предприятии.
+        </p>
+        <button onclick="openArticle('english')">
+            Читать
+        </button>
+    </div>
+
+</div>
+
+<div class="info">
+
+    <h2>Будущие возможности раздела</h2>
+
+    <div class="info-item">
+        📝 Компании смогут публиковать собственные статьи.
+    </div>
+
+    <div class="info-item">
+        👷 Специалисты смогут делиться профессиональным опытом.
+    </div>
+
+    <div class="info-item">
+        🎓 Эксперты смогут создавать обучающие материалы.
+    </div>
+
+    <div class="info-item">
+        🌍 Статьи смогут публиковаться на разных языках.
+    </div>
+
+    <div class="info-item">
+        💬 Пользователи смогут комментировать и обсуждать материалы.
+    </div>
+
+</div>
+
+<div class="demo">
+    <b>DEMO:</b>
+    Сейчас статьи представлены как демонстрационный каталог.
+    Позже подключим базу данных, реальные публикации,
+    авторов, изображения, комментарии, поиск и многоязычный контент.
+</div>
+
+</div><div class="footer">
+    WORKER PRO © 2026<br>
+    Работа • Знания • Производство
+</div><script src="../languages.js"></script><script>
+
+function openArticle(type) {
+
+    const articles = {
+        production: "Основы промышленного производства",
+        cnc: "Что такое CNC / ЧПУ",
+        safety: "Промышленная безопасность",
+        maintenance: "Техническое обслуживание оборудования",
+        sensors: "Датчики в промышленности",
+        quality: "Контроль качества продукции",
+        career: "Как развивать промышленную профессию",
+        hydraulics: "Гидравлические системы",
+        ppe: "Средства индивидуальной защиты",
+        english: "Английский язык для рабочих"
+    };
+
+    alert(
+        articles[type] +
+        "\n\nПолная статья будет подключена на следующем этапе."
+    );
+}
+
+function filterArticles(category) {
+
+    const items =
+        document.querySelectorAll(".article");
+
+    items.forEach(function(item) {
+
+        if (
+            category === "all" ||
+            item.dataset.category === category
+        ) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+
+    });
+}
+
+function searchArticles() {
+
+    const value =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const items =
+        document.querySelectorAll(".article");
+
+    items.forEach(function(item) {
+
+        const text =
+            item.innerText.toLowerCase();
+
+        item.style.display =
+            text.includes(value) ? "block" : "none";
+
+    });
+}
+
+</script></body>
+</html>
