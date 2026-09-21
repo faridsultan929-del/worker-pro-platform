@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Certificates</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+.top-languages {
+    background: #063d25;
+    padding: 10px;
+    text-align: center;
+}
+
+.top-languages button {
+    margin: 3px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: white;
+    color: #063d25;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+header {
+    background: #0b6b3d;
+    color: white;
+    padding: 25px 15px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+header p {
+    margin: 8px 0 0;
+    font-size: 17px;
+}
+
+nav {
+    background: #075b34;
+    padding: 12px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 5px 8px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.hero {
+    background: white;
+    border-radius: 16px;
+    padding: 25px;
+    margin-bottom: 20px;
+    text-align: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.hero h2 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.search {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-top: 15px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.card p {
+    line-height: 1.5;
+}
+
+.badge {
+    display: inline-block;
+    background: #b7ff35;
+    color: #063d25;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.btn {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.info {
+    background: #e8f5ed;
+    border-left: 5px solid #0b6b3d;
+    padding: 18px;
+    margin-top: 25px;
+    border-radius: 8px;
+}
+
+footer {
+    margin-top: 30px;
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 26px;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 5px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Certificates — Сертификаты и документы</p>
+</header>
+
+<nav>
+    <a href="../index.html">Главная</a>
+    <a href="../catalog/index.html">Каталог</a>
+    <a href="../companies/index.html">Компании</a>
+    <a href="../products/index.html">Продукты</a>
+    <a href="../manufacturers/index.html">Производители</a>
+</nav>
+
+<div class="container">
+
+    <div class="hero">
+        <h2>Сертификаты</h2>
+        <p>
+            Раздел для промышленных сертификатов, документов
+            качества, соответствия продукции и квалификации специалистов.
+        </p>
+
+        <input
+            id="search"
+            class="search"
+            type="text"
+            placeholder="Поиск сертификата..."
+            onkeyup="searchCertificates()"
+        >
+    </div>
+
+    <div class="grid" id="certificates">
+
+        <div class="card">
+            <span class="badge">PRODUCT</span>
+            <h3>Сертификат качества</h3>
+            <p>
+                Документы, подтверждающие качество промышленной продукции
+                и соответствие установленным требованиям.
+            </p>
+            <button class="btn" onclick="openCertificate()">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">ISO</span>
+            <h3>ISO сертификаты</h3>
+            <p>
+                Сертификаты систем управления качеством,
+                производством и безопасностью.
+            </p>
+            <button class="btn" onclick="openCertificate()">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">SAFETY</span>
+            <h3>Сертификаты безопасности</h3>
+            <p>
+                Документы, связанные с промышленной безопасностью,
+                оборудованием и рабочими процессами.
+            </p>
+            <button class="btn" onclick="openCertificate()">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">PRODUCT</span>
+            <h3>Сертификат соответствия</h3>
+            <p>
+                Подтверждение соответствия продукции техническим
+                регламентам и стандартам.
+            </p>
+            <button class="btn" onclick="openCertificate()">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">SPECIALIST</span>
+            <h3>Сертификаты специалистов</h3>
+            <p>
+                Документы о квалификации, обучении, профессиональных
+                навыках и прохождении специализированных курсов.
+            </p>
+            <button class="btn" onclick="openCertificate()">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">EQUIPMENT</span>
+            <h3>Сертификаты оборудования</h3>
+            <p>
+                Документы на станки, оборудование, инструменты,
+                измерительные приборы и промышленные установки.
+            </p>
+            <button class="btn" onclick="openCertificate()">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">MATERIALS</span>
+            <h3>Сертификаты материалов</h3>
+            <p>
+                Сертификаты металлов, стали, сплавов, технических
+                материалов и комплектующих.
+            </p>
+            <button class="btn" onclick="openCertificate()">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">SUPPLIER</span>
+            <h3>Сертификаты поставщиков</h3>
+            <p>
+                Документы компаний и поставщиков, подтверждающие
+                их деятельность и качество продукции.
+            </p>
+            <button class="btn" onclick="openCertificate()">
+                Подробнее
+            </button>
+        </div>
+
+    </div>
+
+    <div class="info">
+        <h3>Как будет работать раздел</h3>
+        <p>
+            Компания сможет добавлять сертификаты к своему профилю,
+            продукции или оборудованию.
+        </p>
+        <p>
+            Пользователь сможет открыть сертификат, проверить его
+            данные и использовать информацию при выборе поставщика
+            или продукции.
+        </p>
+        <p>
+            На следующем этапе сюда можно подключить загрузку PDF,
+            проверку сертификатов и систему верификации.
+        </p>
+    </div>
+
+    <div class="info">
+        <h3>WORKER PRO</h3>
+        <p>
+            Сертификаты будут связаны с компаниями, производителями,
+            специалистами, товарами, оборудованием и заказами.
+        </p>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 WORKER PRO — Global Industrial Platform
+</footer>
+
+<script src="../languages.js"></script>
+
+<script>
+function openCertificate() {
+    alert("Раздел сертификата будет подключён на следующем этапе.");
+}
+
+function searchCertificates() {
+    const input = document.getElementById("search");
+    const filter = input.value.toLowerCase();
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+
+        if (text.includes(filter)) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+</script>
+
+</body>
+</html>
