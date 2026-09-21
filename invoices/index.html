@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Invoices</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+}
+
+header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.languages {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.languages button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.languages button:hover {
+    background: #075b34;
+}
+
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+h2 {
+    color: #063d25;
+    margin-top: 5px;
+}
+
+.intro {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.summary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.stat strong {
+    display: block;
+    font-size: 27px;
+    color: #0b6b3d;
+    margin-bottom: 5px;
+}
+
+.table-wrap {
+    background: white;
+    border-radius: 12px;
+    padding: 15px;
+    overflow-x: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 750px;
+}
+
+th,
+td {
+    padding: 14px 12px;
+    border-bottom: 1px solid #e1e8e3;
+    text-align: left;
+}
+
+th {
+    background: #063d25;
+    color: white;
+}
+
+tr:hover td {
+    background: #f5faf7;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #e7f4ec;
+    color: #075b34;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.pending {
+    background: #fff4d6;
+    color: #7a5a00;
+}
+
+.overdue {
+    background: #ffe4e4;
+    color: #9b2020;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back:hover {
+    background: #075b34;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    main {
+        padding: 20px 15px 35px;
+    }
+
+    .stat strong {
+        font-size: 24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Работа. Знания. Производство.</p>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+</header>
+
+<main>
+
+    <h2>Счета</h2>
+
+    <div class="intro">
+        <h3>WORKER PRO Invoices</h3>
+        <p>
+            Раздел для управления счетами за товары,
+            оборудование, запчасти, услуги и другие
+            промышленные операции.
+        </p>
+    </div>
+
+    <div class="summary">
+
+        <div class="stat">
+            <strong>24</strong>
+            Всего счетов
+        </div>
+
+        <div class="stat">
+            <strong>15</strong>
+            Оплачено
+        </div>
+
+        <div class="stat">
+            <strong>6</strong>
+            Ожидают оплаты
+        </div>
+
+        <div class="stat">
+            <strong>3</strong>
+            Просрочено
+        </div>
+
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>№ счёта</th>
+                    <th>Компания</th>
+                    <th>Заказ</th>
+                    <th>Сумма</th>
+                    <th>Дата</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>INV-1001</td>
+                    <td>Industrial Supplier</td>
+                    <td>ORD-2045</td>
+                    <td>2 450 AZN</td>
+                    <td>18.09.2026</td>
+                    <td>
+                        <span class="status">Оплачен</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>INV-1002</td>
+                    <td>Global Machinery</td>
+                    <td>ORD-2046</td>
+                    <td>8 700 USD</td>
+                    <td>17.09.2026</td>
+                    <td>
+                        <span class="status pending">Ожидает оплаты</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>INV-1003</td>
+                    <td>Turkey Industrial Parts</td>
+                    <td>ORD-2047</td>
+                    <td>4 850 EUR</td>
+                    <td>15.09.2026</td>
+                    <td>
+                        <span class="status">Оплачен</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>INV-1004</td>
+                    <td>Machine Parts Ltd.</td>
+                    <td>ORD-2048</td>
+                    <td>1 920 AZN</td>
+                    <td>12.09.2026</td>
+                    <td>
+                        <span class="status overdue">Просрочен</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>INV-1005</td>
+                    <td>European Equipment</td>
+                    <td>ORD-2049</td>
+                    <td>12 300 EUR</td>
+                    <td>10.09.2026</td>
+                    <td>
+                        <span class="status">Оплачен</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>INV-1006</td>
+                    <td>Industrial Pumps</td>
+                    <td>ORD-2050</td>
+                    <td>3 600 USD</td>
+                    <td>08.09.2026</td>
+                    <td>
+                        <span class="status pending">Ожидает оплаты</span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="intro">
+        <h3>Будущие возможности</h3>
+
+        <p>
+            В полноценной версии пользователь сможет создавать,
+            отправлять, получать и оплачивать счета прямо через
+            платформу WORKER PRO.
+        </p>
+
+        <p>
+            Счета будут связаны с заказами, компаниями,
+            товарами, платежами, договорами и доставкой.
+        </p>
+    </div>
+
+    <a class="back" href="../index.html">← На главную</a>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026
+</footer>
+
+</body>
+</html>
