@@ -1,0 +1,473 @@
+<!DOCTYPE html><html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WORKER PRO — Documents</title><style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f3f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:6px;
+    font-size:15px;
+}
+
+.languages{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:15px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:8px 12px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:7px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 3px 12px #0001;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    margin-top:0;
+    color:#063d25;
+}
+
+.search{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.search input{
+    flex:1;
+    min-width:220px;
+    padding:13px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+    font-size:16px;
+}
+
+.search button{
+    padding:13px 20px;
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.filters{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:20px 0;
+}
+
+.filters button{
+    padding:9px 14px;
+    border:0;
+    border-radius:8px;
+    background:#dfe9e3;
+    color:#123;
+    cursor:pointer;
+}
+
+.filters button:hover,
+.filters button.active{
+    background:#0b6b3d;
+    color:white;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.card h2{
+    color:#075b34;
+    margin-top:0;
+}
+
+.card p{
+    line-height:1.6;
+}
+
+.type{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:20px;
+    background:#e5f5eb;
+    color:#075b34;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.card button{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.card button:hover{
+    background:#063d25;
+}
+
+.upload{
+    margin-top:25px;
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.upload input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+.upload button{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:11px 18px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.steps{
+    margin-top:25px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+.step{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 3px 10px #0001;
+}
+
+.step strong{
+    display:block;
+    font-size:22px;
+    color:#0b6b3d;
+    margin-bottom:8px;
+}
+
+.demo{
+    margin-top:25px;
+    padding:18px;
+    background:#fffbe6;
+    border-left:5px solid #b7ff35;
+    border-radius:10px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+@media(max-width:600px){
+    .logo{font-size:25px}
+    nav a{font-size:13px}
+    .container{padding:12px}
+}
+</style></head><body><header><div class="logo">WORKER PRO</div><div class="subtitle">
+Промышленные документы
+</div><div class="languages">
+<button onclick="setLanguage('AZ')">AZ</button>
+<button onclick="setLanguage('RU')">RU</button>
+<button onclick="setLanguage('EN')">EN</button>
+<button onclick="setLanguage('TR')">TR</button>
+<button onclick="setLanguage('DE')">DE</button>
+<button onclick="setLanguage('AR')">AR</button>
+<button onclick="setLanguage('ES')">ES</button>
+<button onclick="setLanguage('FR')">FR</button>
+<button onclick="setLanguage('IT')">IT</button>
+</div></header><nav>
+<a href="../index.html">Главная</a>
+<a href="../companies/index.html">Компании</a>
+<a href="../products/index.html">Товары</a>
+<a href="../orders/index.html">Заказы</a>
+<a href="../contracts/index.html">Контракты</a>
+<a href="../certificates/index.html">Сертификаты</a>
+<a href="../verification/index.html">Проверка</a>
+</nav><div class="container"><section class="hero"><h1>Documents</h1><p>
+Единое пространство для хранения и управления
+документами, связанными с промышленными товарами,
+компаниями, заказами, поставками и перевозками.
+</p><div class="search"><input
+id="searchInput"
+type="text"
+placeholder="Поиск документа..."
+
+«»
+
+<button onclick="searchDocuments()">Поиск</button>
+
+</div></section><div class="filters"><button class="active"
+onclick="filterDocuments('all',this)">
+Все
+</button>
+
+<button onclick="filterDocuments('contracts',this)">
+Контракты
+</button><button onclick="filterDocuments('invoices',this)">
+Счета
+</button><button onclick="filterDocuments('certificates',this)">
+Сертификаты
+</button><button onclick="filterDocuments('delivery',this)">
+Доставка
+</button><button onclick="filterDocuments('technical',this)">
+Технические
+</button></div><section class="grid"><div class="card document-card" data-type="contracts"><span class="type">Контракт</span>
+
+<h2>📄 Контракт поставки</h2><p>
+Договор между покупателем и промышленным
+поставщиком.
+</p><p>
+<strong>Номер:</strong> CTR-1001
+</p><button onclick="demo('CTR-1001')">
+Открыть
+</button></div><div class="card document-card" data-type="invoices"><span class="type">Счёт</span>
+
+<h2>💰 Invoice WP-1001</h2><p>
+Счёт на промышленный товар.
+</p><p>
+<strong>Номер:</strong> INV-1001
+</p><button onclick="demo('INV-1001')">
+Открыть
+</button></div><div class="card document-card" data-type="certificates"><span class="type">Сертификат</span>
+
+<h2>📜 Сертификат качества</h2><p>
+Документ подтверждения качества продукции.
+</p><p>
+<strong>Номер:</strong> CERT-1001
+</p><button onclick="demo('CERT-1001')">
+Проверить
+</button></div><div class="card document-card" data-type="delivery"><span class="type">Доставка</span>
+
+<h2>🚚 Delivery Document</h2><p>
+Документы для транспортировки промышленного
+оборудования.
+</p><p>
+<strong>Номер:</strong> DEL-1001
+</p><button onclick="demo('DEL-1001')">
+Открыть
+</button></div><div class="card document-card" data-type="technical"><span class="type">Технический</span>
+
+<h2>⚙️ Technical Specification</h2><p>
+Технические характеристики оборудования
+или промышленного товара.
+</p><p>
+<strong>Номер:</strong> TECH-1001
+</p><button onclick="demo('TECH-1001')">
+Открыть
+</button></div><div class="card document-card" data-type="certificates"><span class="type">Сертификат</span>
+
+<h2>🛡️ ISO Certificate</h2><p>
+Документ системы менеджмента качества
+компании.
+</p><p>
+<strong>Номер:</strong> ISO-1001
+</p><button onclick="demo('ISO-1001')">
+Проверить
+</button></div></section><section class="upload"><h2 style="color:#063d25;">
+📤 Загрузка документа
+</h2><p>
+В будущем пользователь сможет загружать
+контракты, сертификаты, счета, технические
+документы и другие файлы.
+</p><input type="file" id="fileInput"><button onclick="uploadDemo()">
+Загрузить документ
+</button></section><h2 style="color:#063d25;margin-top:35px;">
+Работа с документами
+</h2><section class="steps"><div class="step">
+<strong>1</strong>
+Загрузка
+</div><div class="step">
+<strong>2</strong>
+Проверка
+</div><div class="step">
+<strong>3</strong>
+Хранение
+</div><div class="step">
+<strong>4</strong>
+Использование
+</div><div class="step">
+<strong>5</strong>
+Подтверждение
+</div><div class="step">
+<strong>6</strong>
+Архивирование
+</div></section><div class="demo"><strong>Демо-режим:</strong>
+
+<p>
+Сейчас документы являются демонстрационными.
+На следующем этапе раздел можно подключить к
+реальному хранилищу файлов, пользователям,
+компаниям, заказам и системе проверки документов.
+</p></div></div><footer>
+WORKER PRO © 2026<br>
+Работа. Знания. Производство.
+</footer><script src="../languages.js"></script><script>
+
+function demo(name){
+    alert(name + ' — функция будет подключена на следующем этапе.');
+}
+
+function filterDocuments(type,button){
+
+    const cards=document.querySelectorAll('.document-card');
+
+    document.querySelectorAll('.filters button')
+        .forEach(btn=>btn.classList.remove('active'));
+
+    button.classList.add('active');
+
+    cards.forEach(card=>{
+
+        if(type==='all' || card.dataset.type===type){
+            card.style.display='block';
+        }else{
+            card.style.display='none';
+        }
+
+    });
+}
+
+function searchDocuments(){
+
+    const query=document
+        .getElementById('searchInput')
+        .value
+        .toLowerCase()
+        .trim();
+
+    const cards=document.querySelectorAll('.document-card');
+
+    cards.forEach(card=>{
+
+        const text=card.innerText.toLowerCase();
+
+        card.style.display=
+            text.includes(query) ? 'block' : 'none';
+
+    });
+}
+
+function uploadDemo(){
+
+    const file=document.getElementById('fileInput').files[0];
+
+    if(!file){
+        alert('Сначала выберите документ.');
+        return;
+    }
+
+    alert(
+        'Файл "' + file.name +
+        '" выбран. Реальная загрузка будет подключена на следующем этапе.'
+    );
+}
+
+function setLanguage(lang){
+
+    if(typeof window.changeLanguage === "function"){
+        window.changeLanguage(lang);
+        return;
+    }
+
+    localStorage.setItem("workerProLanguage",lang);
+
+    if(lang==="AR"){
+        document.documentElement.dir="rtl";
+    }else{
+        document.documentElement.dir="ltr";
+    }
+
+}
+
+</script></body>
+</html>
