@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Catalog</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+}
+
+header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.languages {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.languages button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.languages button:hover {
+    background: #075b34;
+}
+
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+h2 {
+    color: #063d25;
+    margin-top: 5px;
+}
+
+.intro {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+.search-box input {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid #ccd8d1;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.search-box button {
+    border: none;
+    background: #0b6b3d;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #0b6b3d;
+}
+
+.card p {
+    line-height: 1.5;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #063d25;
+    margin: 12px 0;
+}
+
+.tag {
+    display: inline-block;
+    background: #e7f4ec;
+    color: #075b34;
+    padding: 6px 10px;
+    border-radius: 20px;
+    margin: 3px;
+    font-size: 13px;
+}
+
+.card-button {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 10px 15px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    main {
+        padding: 20px 15px 35px;
+    }
+
+    .search-box {
+        flex-direction: column;
+    }
+
+    .search-box button {
+        width: 100%;
+    }
+
+    .card {
+        padding: 17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Работа. Знания. Производство.</p>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+</header>
+
+<main>
+
+    <h2>Промышленный каталог</h2>
+
+    <div class="intro">
+        <h3>WORKER PRO Catalog</h3>
+        <p>
+            Каталог промышленных товаров, оборудования,
+            материалов, инструментов и запчастей.
+            В будущем пользователи смогут искать товары
+            от производителей и поставщиков из разных стран.
+        </p>
+    </div>
+
+    <div class="search-box">
+        <input
+            type="text"
+            placeholder="Поиск: насос, подшипник, клапан, станок..."
+        >
+        <button>Поиск</button>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>⚙️ Подшипники</h3>
+            <p>
+                Промышленные подшипники различных типов
+                и размеров для оборудования.
+            </p>
+            <span class="tag">Bearings</span>
+            <span class="tag">Parts</span>
+            <div class="price">Запрос цены</div>
+            <a class="card-button" href="#">Подробнее</a>
+        </div>
+
+        <div class="card">
+            <h3>💧 Насосы</h3>
+            <p>
+                Промышленные насосы для производства,
+                воды, масла и других рабочих сред.
+            </p>
+            <span class="tag">Pumps</span>
+            <span class="tag">Industrial</span>
+            <div class="price">Запрос цены</div>
+            <a class="card-button" href="#">Подробнее</a>
+        </div>
+
+        <div class="card">
+            <h3>🔧 Клапаны</h3>
+            <p>
+                Промышленные клапаны и арматура
+                для различных производственных систем.
+            </p>
+            <span class="tag">Valves</span>
+            <span class="tag">Equipment</span>
+            <div class="price">Запрос цены</div>
+            <a class="card-button" href="#">Подробнее</a>
+        </div>
+
+        <div class="card">
+            <h3>📡 Датчики</h3>
+            <p>
+                Датчики давления, температуры,
+                уровня, положения и другие промышленные сенсоры.
+            </p>
+            <span class="tag">Sensors</span>
+            <span class="tag">Automation</span>
+            <div class="price">Запрос цены</div>
+            <a class="card-button" href="#">Подробнее</a>
+        </div>
+
+        <div class="card">
+            <h3>🏭 Станки</h3>
+            <p>
+                CNC, токарные, фрезерные, штамповочные
+                и другие производственные станки.
+            </p>
+            <span class="tag">CNC</span>
+            <span class="tag">Machines</span>
+            <div class="price">Запрос цены</div>
+            <a class="card-button" href="#">Подробнее</a>
+        </div>
+
+        <div class="card">
+            <h3>🛠️ Инструменты</h3>
+            <p>
+                Ручной инструмент, измерительный инструмент
+                и оборудование для производственных работ.
+            </p>
+            <span class="tag">Tools</span>
+            <span class="tag">Workshop</span>
+            <div class="price">Запрос цены</div>
+            <a class="card-button" href="#">Подробнее</a>
+        </div>
+
+        <div class="card">
+            <h3>🔥 Печи и нагрев</h3>
+            <p>
+                Промышленные печи, нагревательные системы
+                и оборудование для термообработки.
+            </p>
+            <span class="tag">Furnaces</span>
+            <span class="tag">Heating</span>
+            <div class="price">Запрос цены</div>
+            <a class="card-button" href="#">Подробнее</a>
+        </div>
+
+        <div class="card">
+            <h3>🔩 Запчасти</h3>
+            <p>
+                Запасные части для производственного
+                оборудования и промышленных машин.
+            </p>
+            <span class="tag">Spare Parts</span>
+            <span class="tag">Maintenance</span>
+            <div class="price">Запрос цены</div>
+            <a class="card-button" href="#">Подробнее</a>
+        </div>
+
+    </div>
+
+    <div class="intro">
+        <h3>Будущая возможность</h3>
+        <p>
+            Производители и поставщики смогут размещать свои товары
+            в каталоге, указывать характеристики, фотографии,
+            страну производства, наличие и условия поставки.
+        </p>
+    </div>
+
+    <a class="back" href="../index.html">← На главную</a>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026
+</footer>
+
+</body>
+</html>
