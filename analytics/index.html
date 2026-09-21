@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Analytics</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+.top-languages {
+    background: #063d25;
+    padding: 10px;
+    text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.top-languages button {
+    background: transparent;
+    color: white;
+    border: 1px solid #b7ff35;
+    border-radius: 20px;
+    padding: 7px 12px;
+    margin: 3px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.top-languages button:hover {
+    background: #b7ff35;
+    color: #063d25;
+}
+
+header {
+    background: linear-gradient(135deg, #063d25, #0b6b3d);
+    color: white;
+    text-align: center;
+    padding: 42px 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 36px;
+}
+
+header p {
+    font-size: 17px;
+}
+
+nav {
+    background: #075b34;
+    padding: 12px;
+    text-align: center;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 8px;
+}
+
+nav a:hover {
+    color: #b7ff35;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 15px;
+}
+
+.hero {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+    text-align: center;
+}
+
+.hero h2 {
+    color: #063d25;
+    font-size: 30px;
+}
+
+.hero p {
+    line-height: 1.7;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 18px;
+    margin-top: 20px;
+}
+
+.stat {
+    background: #063d25;
+    color: white;
+    padding: 24px;
+    border-radius: 14px;
+    text-align: center;
+}
+
+.stat .number {
+    display: block;
+    font-size: 32px;
+    color: #b7ff35;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+}
+
+.card h3 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.card p {
+    line-height: 1.6;
+}
+
+.bar-box {
+    background: white;
+    padding: 22px;
+    margin-top: 18px;
+    border-radius: 14px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+}
+
+.bar {
+    margin: 15px 0;
+}
+
+.bar-title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.bar-line {
+    height: 14px;
+    background: #dce7e1;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: #0b6b3d;
+    border-radius: 10px;
+}
+
+.notice {
+    margin-top: 25px;
+    background: #fff8d6;
+    border-left: 5px solid #d5a900;
+    padding: 16px;
+    border-radius: 8px;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+footer {
+    margin-top: 40px;
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 29px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+
+    <p>Аналитика промышленной платформы</p>
+
+</header>
+
+<nav>
+
+    <a href="../index.html">Главная</a>
+    <a href="../dashboard/index.html">Dashboard</a>
+    <a href="../admin/index.html">Admin</a>
+    <a href="../reports/index.html">Reports</a>
+    <a href="../companies/index.html">Компании</a>
+    <a href="../products/index.html">Товары</a>
+
+</nav>
+
+<div class="container">
+
+    <div class="hero">
+
+        <h2>📊 Analytics</h2>
+
+        <p>
+            Раздел аналитики WORKER PRO.
+        </p>
+
+        <p>
+            В будущем здесь будет отображаться статистика
+            пользователей, компаний, товаров, заказов,
+            заявок, продаж и активности платформы.
+        </p>
+
+    </div>
+
+
+    <h2>📈 Основные показатели</h2>
+
+    <div class="grid">
+
+        <div class="stat">
+            <span class="number">0</span>
+            Пользователи
+        </div>
+
+        <div class="stat">
+            <span class="number">0</span>
+            Компании
+        </div>
+
+        <div class="stat">
+            <span class="number">0</span>
+            Товары
+        </div>
+
+        <div class="stat">
+            <span class="number">0</span>
+            Заказы
+        </div>
+
+        <div class="stat">
+            <span class="number">0</span>
+            Заявки
+        </div>
+
+        <div class="stat">
+            <span class="number">0</span>
+            Поставщики
+        </div>
+
+    </div>
+
+
+    <h2>🌍 Активность по направлениям</h2>
+
+    <div class="bar-box">
+
+        <div class="bar">
+            <div class="bar-title">
+                <span>Производство</span>
+                <span>0%</span>
+            </div>
+
+            <div class="bar-line">
+                <div class="bar-fill" style="width:0%"></div>
+            </div>
+        </div>
+
+        <div class="bar">
+            <div class="bar-title">
+                <span>Marketplace</span>
+                <span>0%</span>
+            </div>
+
+            <div class="bar-line">
+                <div class="bar-fill" style="width:0%"></div>
+            </div>
+        </div>
+
+        <div class="bar">
+            <div class="bar-title">
+                <span>Обучение</span>
+                <span>0%</span>
+            </div>
+
+            <div class="bar-line">
+                <div class="bar-fill" style="width:0%"></div>
+            </div>
+        </div>
+
+        <div class="bar">
+            <div class="bar-title">
+                <span>Логистика</span>
+                <span>0%</span>
+            </div>
+
+            <div class="bar-line">
+                <div class="bar-fill" style="width:0%"></div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <h2>🔎 Что будет отслеживаться</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>👥 Пользователи</h3>
+            <p>
+                Регистрации, активность, страны,
+                языки и типы пользователей.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🏢 Компании</h3>
+            <p>
+                Новые компании, активность,
+                категории и география.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📦 Товары</h3>
+            <p>
+                Просмотры, поисковые запросы,
+                предложения и популярные категории.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📋 Заказы</h3>
+            <p>
+                Количество заказов, статусы,
+                суммы и динамика.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🚚 Логистика</h3>
+            <p>
+                Перевозки, доставки и статусы
+                отправлений.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🎓 Обучение</h3>
+            <p>
+                Курсы, уроки, активность
+                и прогресс пользователей.
+            </p>
+        </div>
+
+    </div>
+
+
+    <div class="notice">
+
+        <strong>⚠️ DEMO VERSION</strong>
+
+        <p>
+            Сейчас аналитика является демонстрационной.
+            Реальные данные появятся после подключения
+            базы данных и серверной системы.
+        </p>
+
+    </div>
+
+
+    <a class="back" href="../index.html">
+        ← На главную
+    </a>
+
+</div>
+
+
+<footer>
+
+    <h3>WORKER PRO</h3>
+
+    <p>Global Industrial Platform</p>
+
+    <p>F.S</p>
+
+</footer>
+
+<script src="../languages.js"></script>
+
+</body>
+</html>
