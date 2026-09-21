@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Carriers</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+}
+
+header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.languages {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.languages button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.languages button:hover {
+    background: #075b34;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+h2 {
+    color: #063d25;
+    margin-top: 5px;
+}
+
+.intro {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #0b6b3d;
+}
+
+.card p {
+    line-height: 1.5;
+}
+
+.tag {
+    display: inline-block;
+    background: #e7f4ec;
+    color: #075b34;
+    padding: 6px 10px;
+    border-radius: 20px;
+    margin: 4px 3px 0 0;
+    font-size: 13px;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back:hover {
+    background: #075b34;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    main {
+        padding: 20px 15px 35px;
+    }
+
+    .card {
+        padding: 17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Работа. Знания. Производство.</p>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+</header>
+
+<main>
+
+    <h2>Перевозчики</h2>
+
+    <div class="intro">
+        <h3>WORKER PRO Carriers</h3>
+        <p>
+            Раздел для поиска транспортных компаний и перевозчиков,
+            которые могут доставлять промышленные товары, оборудование,
+            материалы и запчасти внутри страны и между странами.
+        </p>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>🚚 Автомобильные перевозки</h3>
+            <p>
+                Доставка оборудования, запчастей, материалов и других
+                промышленных грузов автомобильным транспортом.
+            </p>
+            <span class="tag">Truck</span>
+            <span class="tag">Local</span>
+            <span class="tag">International</span>
+        </div>
+
+        <div class="card">
+            <h3>🚢 Морские перевозки</h3>
+            <p>
+                Международная доставка крупных партий промышленной
+                продукции и оборудования морским транспортом.
+            </p>
+            <span class="tag">Sea Freight</span>
+            <span class="tag">Container</span>
+        </div>
+
+        <div class="card">
+            <h3>✈️ Авиаперевозки</h3>
+            <p>
+                Быстрая международная доставка срочных запчастей,
+                оборудования и промышленных компонентов.
+            </p>
+            <span class="tag">Air Cargo</span>
+            <span class="tag">Express</span>
+        </div>
+
+        <div class="card">
+            <h3>🚆 Железнодорожные перевозки</h3>
+            <p>
+                Перевозка тяжелых и крупногабаритных промышленных грузов
+                по железной дороге.
+            </p>
+            <span class="tag">Rail</span>
+            <span class="tag">Heavy Cargo</span>
+        </div>
+
+        <div class="card">
+            <h3>🏗️ Негабаритные грузы</h3>
+            <p>
+                Перевозка станков, производственных линий, резервуаров,
+                строительной и другой крупной техники.
+            </p>
+            <span class="tag">Oversize</span>
+            <span class="tag">Heavy</span>
+        </div>
+
+        <div class="card">
+            <h3>🌍 Международные перевозчики</h3>
+            <p>
+                Поиск перевозчиков для доставки между Азербайджаном,
+                Турцией, Европой, Китаем и другими странами.
+            </p>
+            <span class="tag">International</span>
+            <span class="tag">Global</span>
+        </div>
+
+    </div>
+
+    <div class="intro">
+        <h3>Что сможет делать перевозчик</h3>
+
+        <p>• Создать профиль транспортной компании.</p>
+        <p>• Указать страны и направления работы.</p>
+        <p>• Добавить типы транспорта.</p>
+        <p>• Получать заявки на перевозку.</p>
+        <p>• Отправлять стоимость и условия доставки.</p>
+        <p>• Отслеживать заказы и грузы.</p>
+    </div>
+
+    <a class="back" href="../index.html">← На главную</a>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026
+</footer>
+
+</body>
+</html>
