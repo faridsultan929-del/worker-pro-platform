@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Integrations</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+}
+
+header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.languages {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.languages button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.languages button:hover {
+    background: #075b34;
+}
+
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+h2 {
+    color: #063d25;
+    margin-top: 5px;
+}
+
+.intro {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #0b6b3d;
+}
+
+.card p {
+    line-height: 1.5;
+}
+
+.status {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #e7f4ec;
+    color: #075b34;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back:hover {
+    background: #075b34;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    main {
+        padding: 20px 15px 35px;
+    }
+
+    .card {
+        padding: 17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Работа. Знания. Производство.</p>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+</header>
+
+<main>
+
+    <h2>Интеграции</h2>
+
+    <div class="intro">
+        <h3>WORKER PRO Integrations</h3>
+        <p>
+            Раздел для подключения WORKER PRO к внешним
+            сервисам, системам компаний и цифровым инструментам.
+            На первом этапе это демонстрационная структура
+            будущих интеграций.
+        </p>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>🏢 ERP-системы</h3>
+            <p>
+                Подключение корпоративных систем управления
+                производством, запасами, заказами и финансами.
+            </p>
+            <span class="status">Планируется</span>
+        </div>
+
+        <div class="card">
+            <h3>📦 Складские системы</h3>
+            <p>
+                Обмен информацией о товарах, остатках,
+                складах и движении промышленной продукции.
+            </p>
+            <span class="status">Планируется</span>
+        </div>
+
+        <div class="card">
+            <h3>🚚 Логистика</h3>
+            <p>
+                Интеграция с транспортными компаниями,
+                перевозчиками и системами отслеживания грузов.
+            </p>
+            <span class="status">Планируется</span>
+        </div>
+
+        <div class="card">
+            <h3>💳 Платёжные системы</h3>
+            <p>
+                Будущая возможность безопасной оплаты
+                товаров, услуг, заказов и подписок.
+            </p>
+            <span class="status">Планируется</span>
+        </div>
+
+        <div class="card">
+            <h3>🗺️ Карты и геолокация</h3>
+            <p>
+                Отображение компаний, складов, сервисных центров
+                и маршрутов доставки на карте.
+            </p>
+            <span class="status">Планируется</span>
+        </div>
+
+        <div class="card">
+            <h3>📨 Email и уведомления</h3>
+            <p>
+                Уведомления о заказах, запросах цен,
+                предложениях, сообщениях и доставках.
+            </p>
+            <span class="status">Планируется</span>
+        </div>
+
+        <div class="card">
+            <h3>📊 Аналитика</h3>
+            <p>
+                Передача данных для анализа продаж,
+                заказов, поставок и активности пользователей.
+            </p>
+            <span class="status">Планируется</span>
+        </div>
+
+        <div class="card">
+            <h3>🔐 Авторизация</h3>
+            <p>
+                Подключение внешних сервисов авторизации
+                и корпоративного доступа.
+            </p>
+            <span class="status">Планируется</span>
+        </div>
+
+    </div>
+
+    <div class="intro">
+        <h3>Будущее API WORKER PRO</h3>
+        <p>
+            В дальнейшем WORKER PRO сможет предоставлять API
+            для производителей, поставщиков, перевозчиков,
+            сервисных центров и корпоративных клиентов.
+        </p>
+        <p>
+            Это позволит автоматически обмениваться данными
+            о товарах, заказах, ценах, остатках и доставке.
+        </p>
+    </div>
+
+    <a class="back" href="../index.html">← На главную</a>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026
+</footer>
+
+</body>
+</html>
