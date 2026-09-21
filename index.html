@@ -81,6 +81,12 @@ body{
     color:#b7ff35;
 }
 
+.sidebar hr{
+    border:0;
+    border-top:1px solid rgba(255,255,255,.25);
+    margin:15px 0;
+}
+
 .main{
     margin-left:230px;
     padding:70px 25px 40px;
@@ -195,6 +201,7 @@ footer{
 }
 
 @media(max-width:800px){
+
     .sidebar{
         position:relative;
         top:45px;
@@ -221,6 +228,7 @@ footer{
 
 <body>
 
+<!-- ЯЗЫКИ -->
 <div class="top-languages">
     <button>AZ</button>
     <button>RU</button>
@@ -233,6 +241,8 @@ footer{
     <button>IT</button>
 </div>
 
+
+<!-- SIDEBAR -->
 <div class="sidebar">
 
     <img src="logo.png" class="logo" alt="WORKER PRO">
@@ -245,24 +255,38 @@ footer{
     <a href="products/index.html">Products</a>
     <a href="brands/index.html">Brands</a>
     <a href="companies/index.html">Companies</a>
+    <a href="company-profile/index.html">Company Profile</a>
     <a href="supppliers/index.html">Suppliers</a>
     <a href="manufacturers/index.html">Manufacturers</a>
+    <a href="carriers/index.html">Carriers</a>
     <a href="equipment/index.html">Equipment</a>
     <a href="specialists/index.html">Specialists</a>
     <a href="vacancies/index.html">Vacancies</a>
     <a href="jobs/index.html">Jobs</a>
+
+    <hr>
+
     <a href="training/index.html">Training</a>
     <a href="training-courses/index.html">Training Courses</a>
     <a href="certificates/index.html">Certificates</a>
     <a href="safety/index.html">Safety</a>
+
+    <hr>
+
+    <a href="applications/index.html">Applications</a>
     <a href="requests/index.html">Requests</a>
+    <a href="requests-board/index.html">Requests Board</a>
     <a href="rfq/index.html">RFQ</a>
     <a href="offers/index.html">Offers</a>
     <a href="quotes/index.html">Quotes</a>
     <a href="contracts/index.html">Contracts</a>
     <a href="orders/index.html">Orders</a>
+
+    <hr>
+
     <a href="logistics/index.html">Logistics</a>
     <a href="transport/index.html">Transport</a>
+    <a href="transport-booking/index.html">Transport Booking</a>
     <a href="shipments/index.html">Shipments</a>
     <a href="tracking/index.html">Tracking</a>
     <a href="delivery/index.html">Delivery</a>
@@ -270,38 +294,44 @@ footer{
 
     <hr>
 
-    <!-- Исправленные основные разделы -->
     <a href="about/index.html">About</a>
     <a href="admin/index.html">Admin</a>
     <a href="advertising/index.html">Advertising</a>
     <a href="alerts/index.html">Alerts</a>
     <a href="analytics/index.html">Analytics</a>
-    <a href="carriers/index.html">Carriers</a>
+    <a href="articles/index.html">Articles</a>
+    <a href="claims/index.html">Claims</a>
+    <a href="comyunity/index.html">Community</a>
+    <a href="disputes/index.html">Disputes</a>
+    <a href="documents/index.html">Documents</a>
+    <a href="events/index.html">Events</a>
     <a href="faq/index.html">FAQ</a>
-    <a href="industries/index.html">Industries</a>
-    <a href="integrations/index.html">Integrations</a>
-    <a href="invertory/index.html">Invertory</a>
-    <a href="invoices/index.html">Invoices</a>
+    <a href="finance/index.html">Finance</a>
+    <a href="feedback/index.html">Feedback</a>
+    <a href="favorites/index.html">Favorites</a>
+    <a href="help/index.html">Help</a>
+    <a href="languages/index.html">Languages</a>
+
+    <hr>
 
     <a href="profile/index.html">Profile</a>
     <a href="dashboard/index.html">Dashboard</a>
     <a href="messages/index.html">Messages</a>
     <a href="notifications/index.html">Notifications</a>
-    <a href="favorites/index.html">Favorites</a>
     <a href="settings/index.html">Settings</a>
 
     <hr>
 
     <a href="contact/index.html">Contact</a>
-    <a href="help/index.html">Help</a>
     <a href="support/index.html">Support</a>
-    <a href="feedback/index.html">Feedback</a>
     <a href="privacy/index.html">Privacy</a>
     <a href="legal/index.html">Legal</a>
     <a href="security/index.html">Security</a>
 
 </div>
 
+
+<!-- MAIN -->
 <main class="main">
 
 <section class="hero">
@@ -316,6 +346,7 @@ footer{
     </p>
 
     <div class="search-box">
+
         <input
             id="searchInput"
             type="text"
@@ -323,9 +354,11 @@ footer{
         >
 
         <button onclick="doSearch()">Поиск</button>
+
     </div>
 
 </section>
+
 
 <h2 class="section-title">Промышленность</h2>
 
@@ -369,6 +402,7 @@ footer{
 
 </div>
 
+
 <h2 class="section-title">Проблемы и решения</h2>
 
 <div class="grid">
@@ -399,6 +433,7 @@ footer{
 
 </div>
 
+
 <div class="flow">
 
     <h2 class="section-title">Как работает WORKER PRO</h2>
@@ -415,15 +450,23 @@ footer{
 
 </div>
 
+
 <footer>
+
     <strong>WORKER PRO</strong>
+
     <br><br>
+
     Global Industrial Platform
+
     <br><br>
+
     F.S
+
 </footer>
 
 </main>
+
 
 <script>
 
