@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Industries</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+}
+
+header h1 {
+    margin: 0 0 8px;
+    font-size: 30px;
+}
+
+header p {
+    margin: 0;
+    opacity: 0.9;
+}
+
+.languages {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+}
+
+.languages button {
+    border: none;
+    padding: 8px 12px;
+    border-radius: 7px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+h2 {
+    color: #063d25;
+    margin-top: 5px;
+}
+
+.intro {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #0b6b3d;
+}
+
+.card p {
+    line-height: 1.5;
+}
+
+.tag {
+    display: inline-block;
+    background: #e7f4ec;
+    color: #075b34;
+    padding: 6px 10px;
+    border-radius: 20px;
+    margin: 3px;
+    font-size: 13px;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    main {
+        padding: 20px 15px 35px;
+    }
+
+    .card {
+        padding: 17px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Работа. Знания. Производство.</p>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+</header>
+
+<main>
+
+    <h2>Промышленные отрасли</h2>
+
+    <div class="intro">
+        <h3>WORKER PRO Industries</h3>
+        <p>
+            Раздел промышленных отраслей WORKER PRO.
+            Здесь пользователи смогут находить компании,
+            специалистов, оборудование, технологии и товары
+            по конкретной отрасли.
+        </p>
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>🛢️ Нефтегазовая промышленность</h3>
+            <p>
+                Оборудование, запчасти, технологии и специалисты
+                для нефтегазовой отрасли.
+            </p>
+            <span class="tag">Oil & Gas</span>
+            <span class="tag">Energy</span>
+        </div>
+
+        <div class="card">
+            <h3>🏭 Машиностроение</h3>
+            <p>
+                Производство машин, станков, компонентов
+                и промышленного оборудования.
+            </p>
+            <span class="tag">Engineering</span>
+            <span class="tag">Machines</span>
+        </div>
+
+        <div class="card">
+            <h3>⚙️ Металлообработка</h3>
+            <p>
+                CNC, токарная обработка, фрезерование,
+                шлифование и другие технологии обработки металла.
+            </p>
+            <span class="tag">CNC</span>
+            <span class="tag">Metal</span>
+        </div>
+
+        <div class="card">
+            <h3>🔩 Штамповочное производство</h3>
+            <p>
+                Прессы, штампы, оснастка и технологии
+                холодной и горячей штамповки.
+            </p>
+            <span class="tag">Stamping</span>
+            <span class="tag">Press</span>
+        </div>
+
+        <div class="card">
+            <h3>🔥 Термообработка</h3>
+            <p>
+                Промышленные печи, нагрев, закалка,
+                отпуск и другие процессы термообработки.
+            </p>
+            <span class="tag">Heat Treatment</span>
+            <span class="tag">Furnace</span>
+        </div>
+
+        <div class="card">
+            <h3>🤖 Автоматизация</h3>
+            <p>
+                Автоматические системы, датчики,
+                PLC, роботы и производственные линии.
+            </p>
+            <span class="tag">Automation</span>
+            <span class="tag">Robotics</span>
+        </div>
+
+        <div class="card">
+            <h3>⚡ Энергетика</h3>
+            <p>
+                Электростанции, энергетическое оборудование,
+                генераторы и системы электроснабжения.
+            </p>
+            <span class="tag">Energy</span>
+            <span class="tag">Power</span>
+        </div>
+
+        <div class="card">
+            <h3>🏗️ Строительство</h3>
+            <p>
+                Строительная техника, материалы,
+                оборудование и специалисты.
+            </p>
+            <span class="tag">Construction</span>
+            <span class="tag">Equipment</span>
+        </div>
+
+        <div class="card">
+            <h3>🚢 Судостроение</h3>
+            <p>
+                Производство и ремонт судов,
+                морское оборудование и комплектующие.
+            </p>
+            <span class="tag">Marine</span>
+            <span class="tag">Shipbuilding</span>
+        </div>
+
+        <div class="card">
+            <h3>✈️ Авиационная промышленность</h3>
+            <p>
+                Авиационные компоненты, производство,
+                ремонт и техническое обслуживание.
+            </p>
+            <span class="tag">Aviation</span>
+            <span class="tag">Maintenance</span>
+        </div>
+
+        <div class="card">
+            <h3>🚗 Автомобильная промышленность</h3>
+            <p>
+                Производство автомобилей, компонентов,
+                запчастей и сервисное обслуживание.
+            </p>
+            <span class="tag">Automotive</span>
+            <span class="tag">Parts</span>
+        </div>
+
+        <div class="card">
+            <h3>🧪 Химическая промышленность</h3>
+            <p>
+                Химическое производство, оборудование,
+                материалы и технологические процессы.
+            </p>
+            <span class="tag">Chemical</span>
+            <span class="tag">Process</span>
+        </div>
+
+    </div>
+
+    <div class="intro">
+        <h3>Поиск по отрасли</h3>
+        <p>
+            В будущем пользователь сможет выбрать отрасль
+            и сразу увидеть связанные компании, товары,
+            специалистов, вакансии, услуги и оборудование.
+        </p>
+    </div>
+
+    <a class="back" href="../index.html">← На главную</a>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026
+</footer>
+
+</body>
+</html>
