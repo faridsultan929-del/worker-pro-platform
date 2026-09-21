@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Comyunity</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+.top-languages {
+    background: #063d25;
+    padding: 10px;
+    text-align: center;
+}
+
+.top-languages button {
+    margin: 3px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background: white;
+    color: #063d25;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+header {
+    background: #0b6b3d;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+header p {
+    margin: 8px 0 0;
+    font-size: 17px;
+}
+
+nav {
+    background: #075b34;
+    padding: 12px;
+    text-align: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 5px 8px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.hero {
+    background: white;
+    padding: 25px;
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.hero h2 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.search {
+    width: 100%;
+    padding: 14px;
+    margin-top: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.card h3 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.card p {
+    line-height: 1.5;
+}
+
+.badge {
+    display: inline-block;
+    background: #b7ff35;
+    color: #063d25;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.btn {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.info {
+    background: #e8f5ed;
+    border-left: 5px solid #0b6b3d;
+    padding: 18px;
+    margin-top: 25px;
+    border-radius: 8px;
+}
+
+footer {
+    margin-top: 30px;
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 26px;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 5px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Comyunity — Сообщество специалистов и компаний</p>
+</header>
+
+<nav>
+    <a href="../index.html">Главная</a>
+    <a href="../specialists/index.html">Специалисты</a>
+    <a href="../companies/index.html">Компании</a>
+    <a href="../articles/index.html">Статьи</a>
+    <a href="../messages/index.html">Сообщения</a>
+</nav>
+
+<div class="container">
+
+    <div class="hero">
+        <h2>Промышленное сообщество</h2>
+
+        <p>
+            Место для общения рабочих, инженеров, мастеров,
+            специалистов, производителей, поставщиков и компаний.
+        </p>
+
+        <input
+            id="search"
+            class="search"
+            type="text"
+            placeholder="Поиск в сообществе..."
+            onkeyup="searchCommunity()"
+        >
+    </div>
+
+    <div class="grid" id="community">
+
+        <div class="card">
+            <span class="badge">SPECIALISTS</span>
+            <h3>Специалисты</h3>
+            <p>
+                Общение между рабочими, операторами станков,
+                инженерами, мастерами и техническими специалистами.
+            </p>
+            <button class="btn" onclick="openCommunity()">
+                Открыть
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">COMPANIES</span>
+            <h3>Компании</h3>
+            <p>
+                Компании могут представлять производство,
+                продукцию, услуги и новые проекты.
+            </p>
+            <button class="btn" onclick="openCommunity()">
+                Открыть
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">PRODUCTION</span>
+            <h3>Производство</h3>
+            <p>
+                Обсуждение технологий, станков, оборудования,
+                производственных процессов и решений.
+            </p>
+            <button class="btn" onclick="openCommunity()">
+                Открыть
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">SAFETY</span>
+            <h3>Безопасность</h3>
+            <p>
+                Обмен знаниями по промышленной безопасности,
+                PPE, охране труда и безопасной эксплуатации оборудования.
+            </p>
+            <button class="btn" onclick="openCommunity()">
+                Открыть
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">TECHNOLOGY</span>
+            <h3>Технологии</h3>
+            <p>
+                Новые производственные технологии, автоматизация,
+                CNC, роботизация, датчики и современные решения.
+            </p>
+            <button class="btn" onclick="openCommunity()">
+                Открыть
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">QUESTIONS</span>
+            <h3>Вопросы и ответы</h3>
+            <p>
+                Пользователи смогут задавать технические вопросы
+                и получать ответы от других специалистов.
+            </p>
+            <button class="btn" onclick="openCommunity()">
+                Открыть
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">PROJECTS</span>
+            <h3>Проекты</h3>
+            <p>
+                Обсуждение промышленных проектов, модернизации,
+                ремонта и внедрения нового оборудования.
+            </p>
+            <button class="btn" onclick="openCommunity()">
+                Открыть
+            </button>
+        </div>
+
+        <div class="card">
+            <span class="badge">INTERNATIONAL</span>
+            <h3>Международное общение</h3>
+            <p>
+                Общение специалистов и компаний из разных стран
+                с поддержкой нескольких языков.
+            </p>
+            <button class="btn" onclick="openCommunity()">
+                Открыть
+            </button>
+        </div>
+
+    </div>
+
+    <div class="info">
+        <h3>Как будет работать Comyunity</h3>
+
+        <p>
+            Пользователь сможет создать профиль специалиста или компании,
+            подписываться на интересующие темы и общаться с другими участниками.
+        </p>
+
+        <p>
+            Можно будет публиковать вопросы, технические материалы,
+            фотографии производства и полезные знания.
+        </p>
+
+        <p>
+            Компании смогут публиковать новости, вакансии, проекты,
+            продукты и предложения.
+        </p>
+
+        <p>
+            В будущем появятся комментарии, подписки, группы,
+            личные сообщения, уведомления и система модерации.
+        </p>
+    </div>
+
+    <div class="info">
+        <h3>WORKER PRO Community</h3>
+
+        <p>
+            Сообщество будет объединять специалистов и промышленный
+            бизнес в одной международной платформе.
+        </p>
+
+        <p>
+            Сейчас это демонстрационная версия интерфейса.
+            Реальная социальная система будет подключена на следующем этапе.
+        </p>
+    </div>
+
+</div>
+
+<footer>
+    © 2026 WORKER PRO — Global Industrial Platform
+</footer>
+
+<script src="../languages.js"></script>
+
+<script>
+function openCommunity() {
+    alert("Функции сообщества будут подключены на следующем этапе.");
+}
+
+function searchCommunity() {
+    const filter = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const cards = document.querySelectorAll(".card");
+
+    cards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+
+        if (text.includes(filter)) {
+            card.style.display = "";
+        } else {
+            card.style.display = "none";
+        }
+    });
+}
+</script>
+
+</body>
+</html>
