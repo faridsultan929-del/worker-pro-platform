@@ -1,0 +1,411 @@
+<!DOCTYPE html><html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — FAQ</title><style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    padding:20px 15px;
+    text-align:center;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:6px;
+    font-size:14px;
+}
+
+.languages{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:7px;
+    margin:15px 0;
+}
+
+.languages button{
+    border:0;
+    border-radius:20px;
+    padding:8px 12px;
+    background:white;
+    color:#063d25;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+nav{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:10px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    background:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-size:13px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px 15px;
+}
+
+.hero{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    text-align:center;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
+    margin-bottom:20px;
+}
+
+.hero h1{
+    color:#063d25;
+    margin-top:0;
+}
+
+.search{
+    width:100%;
+    max-width:650px;
+    padding:14px;
+    border:1px solid #ccc;
+    border-radius:10px;
+    font-size:16px;
+    margin-top:10px;
+}
+
+.faq-list{
+    display:grid;
+    gap:14px;
+}
+
+.faq{
+    background:white;
+    border-radius:14px;
+    padding:18px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.question{
+    font-size:18px;
+    font-weight:bold;
+    color:#063d25;
+    cursor:pointer;
+}
+
+.answer{
+    display:none;
+    margin-top:12px;
+    line-height:1.6;
+    color:#444;
+}
+
+.faq.open .answer{
+    display:block;
+}
+
+.icon{
+    float:right;
+    color:#0b6b3d;
+    font-size:22px;
+}
+
+.info{
+    margin-top:25px;
+    background:#e9f7ed;
+    border-left:5px solid #0b6b3d;
+    padding:18px;
+    border-radius:10px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.demo{
+    color:#b7ff35;
+    font-weight:bold;
+}
+
+@media(max-width:600px){
+    .question{font-size:16px}
+    nav a{font-size:12px}
+}
+</style></head><body><header><div class="logo">WORKER PRO</div><div class="subtitle">
+Работа. Знания. Производство.
+</div><div class="languages">
+<button onclick="setLanguage('AZ')">AZ</button>
+<button onclick="setLanguage('RU')">RU</button>
+<button onclick="setLanguage('EN')">EN</button>
+<button onclick="setLanguage('TR')">TR</button>
+<button onclick="setLanguage('DE')">DE</button>
+<button onclick="setLanguage('AR')">AR</button>
+<button onclick="setLanguage('ES')">ES</button>
+<button onclick="setLanguage('FR')">FR</button>
+<button onclick="setLanguage('IT')">IT</button>
+</div><nav>
+<a href="../index.html">Главная</a>
+<a href="../about/index.html">О платформе</a>
+<a href="../companies/index.html">Компании</a>
+<a href="../catalog/index.html">Каталог</a>
+<a href="../support/index.html">Поддержка</a>
+</nav></header><div class="container"><section class="hero"><h1>Часто задаваемые вопросы</h1><p>
+Здесь собраны основные вопросы о платформе WORKER PRO,
+производстве, компаниях, товарах, специалистах и заказах.
+</p><input
+class="search"
+id="search"
+type="text"
+placeholder="Поиск по вопросам..."
+oninput="searchFAQ()"
+
+«»
+
+</section><div class="faq-list" id="faqList"><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Что такое WORKER PRO?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+WORKER PRO — международная промышленная платформа,
+объединяющая специалистов, производителей, поставщиков,
+компании, оборудование, материалы, запчасти, обучение
+и промышленную логистику.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Кто может пользоваться платформой?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Платформа предназначена для рабочих, инженеров, мастеров,
+специалистов, производителей, поставщиков, сервисных компаний,
+перевозчиков и промышленных предприятий.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Можно ли зарегистрироваться как специалист?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Да. В будущем специалист сможет создать профиль,
+указать профессию, опыт, навыки, сертификаты,
+местоположение и направления работы.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Можно ли зарегистрировать компанию?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Да. Компания сможет создать профиль, добавить товары,
+оборудование, услуги, сертификаты, контакты и предложения.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Можно ли искать промышленные товары?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Да. Каталог WORKER PRO предназначен для поиска оборудования,
+запчастей, материалов, инструментов, датчиков, насосов,
+клапанов и другой промышленной продукции.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Можно ли найти поставщика из другой страны?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Да. Концепция платформы предусматривает поиск компаний
+и поставщиков в разных странах с возможностью отправить
+запрос и получить цену и условия поставки.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Что такое RFQ?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+RFQ — Request for Quotation, то есть запрос коммерческого
+предложения. Покупатель сможет указать нужный товар,
+количество и требования, после чего поставщики смогут
+предоставить свои предложения.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Можно ли организовать доставку?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Да. Будущая система WORKER PRO предусматривает работу
+с перевозчиками, транспортом, отправлениями, отслеживанием
+и международной или местной доставкой.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Будет ли обучение?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Да. Платформа предусматривает обучение по производству,
+технологиям, безопасности, оборудованию, промышленным
+процессам и профессиональным навыкам.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Какие языки поддерживает WORKER PRO?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Платформа готовится к работе на нескольких языках:
+азербайджанском, русском, английском, турецком, немецком,
+арабском, испанском, французском и итальянском.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Можно ли связаться с поставщиком?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Да. В будущей рабочей версии пользователи смогут отправлять
+запросы, получать предложения и общаться с поставщиками
+через систему сообщений.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Как работает поиск?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Пользователь вводит название товара, оборудования,
+запчасти или услуги. Затем можно выбрать страну,
+категорию и другие параметры поиска.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Будет ли отслеживание заказа?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Да. В структуре платформы предусмотрен раздел Tracking,
+который в будущем будет использоваться для отслеживания
+перемещения заказов и отправлений.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Можно ли добавить свой товар?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Производители и поставщики смогут добавлять товары,
+указывать характеристики, количество, условия поставки
+и другую информацию.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Можно ли найти специалиста?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+Да. Раздел Specialists предназначен для поиска специалистов
+по профессии, навыкам, стране, городу и промышленному направлению.
+</div>
+</div><div class="faq">
+<div class="question" onclick="toggleFAQ(this)">
+Безопасны ли документы и данные?
+<span class="icon">+</span>
+</div>
+<div class="answer">
+В будущей рабочей версии будут предусмотрены отдельные
+разделы безопасности, проверки пользователей, документов
+и компаний.
+</div>
+</div></div><div class="info"><h2>WORKER PRO развивается</h2><p>
+Сейчас этот сайт является демонстрационной версией структуры
+платформы. Следующий этап — подключение регистрации,
+базы данных, реальных профилей, товаров, запросов,
+сообщений, заказов, оплаты и логистики.
+</p><p class="demo">
+DEMO VERSION
+</p></div></div><footer>WORKER PRO © 2026
+
+<br><br>
+
+<span class="demo">
+Промышленность • Знания • Люди • Торговля • Логистика
+</span></footer><script src="../languages.js"></script><script>
+
+function toggleFAQ(element){
+
+    const faq = element.parentElement;
+
+    faq.classList.toggle("open");
+
+    const icon = element.querySelector(".icon");
+
+    if(faq.classList.contains("open")){
+        icon.textContent = "−";
+    }else{
+        icon.textContent = "+";
+    }
+}
+
+function searchFAQ(){
+
+    const value =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const items =
+        document.querySelectorAll(".faq");
+
+    items.forEach(function(item){
+
+        const text =
+            item.innerText.toLowerCase();
+
+        item.style.display =
+            text.includes(value) ? "block" : "none";
+
+    });
+}
+
+function setLanguage(language){
+
+    if(typeof window.setSiteLanguage === "function"){
+        window.setSiteLanguage(language);
+    }else{
+        alert("Language: " + language);
+    }
+
+}
+
+</script></body>
+</html>
