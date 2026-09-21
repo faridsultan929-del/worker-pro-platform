@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Invertory</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    text-align:center;
+}
+
+.top-languages button{
+    margin:4px;
+    padding:8px 12px;
+    border:0;
+    border-radius:8px;
+    background:#fff;
+    color:#063d25;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+header{
+    background:#0b6b3d;
+    color:white;
+    padding:22px 15px;
+    text-align:center;
+}
+
+header h1{
+    margin:0 0 8px;
+    font-size:30px;
+}
+
+header p{
+    margin:0;
+    font-size:15px;
+}
+
+nav{
+    background:#075b34;
+    padding:10px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:10;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    display:inline-block;
+    margin:5px;
+    padding:8px 12px;
+    border-radius:7px;
+    background:rgba(255,255,255,.1);
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.hero h2{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    max-width:800px;
+    margin:20px auto 0;
+    flex-wrap:wrap;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:13px;
+    border:1px solid #ccc;
+    border-radius:9px;
+    font-size:16px;
+}
+
+.search-box button{
+    padding:13px 20px;
+    border:0;
+    border-radius:9px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.filters{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:8px;
+    margin:20px 0;
+}
+
+.filters button{
+    padding:9px 15px;
+    border:1px solid #0b6b3d;
+    border-radius:20px;
+    background:white;
+    color:#0b6b3d;
+    cursor:pointer;
+}
+
+.filters button:hover{
+    background:#0b6b3d;
+    color:white;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.card h3{
+    margin-top:0;
+    color:#0b6b3d;
+}
+
+.card p{
+    line-height:1.5;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:12px;
+    background:#e6f5eb;
+    color:#0b6b3d;
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.stock{
+    font-weight:bold;
+    color:#0b6b3d;
+}
+
+.low{
+    color:#c56b00;
+}
+
+.out{
+    color:#c62828;
+}
+
+.card button{
+    width:100%;
+    margin-top:10px;
+    padding:11px;
+    border:0;
+    border-radius:8px;
+    background:#0b6b3d;
+    color:white;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.card button:hover{
+    background:#063d25;
+}
+
+.info{
+    background:#eaf6ee;
+    border-left:5px solid #0b6b3d;
+    padding:18px;
+    margin-top:25px;
+    border-radius:10px;
+}
+
+.steps{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-top:20px;
+}
+
+.step{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 2px 8px rgba(0,0,0,.06);
+}
+
+.step strong{
+    display:block;
+    color:#0b6b3d;
+    font-size:22px;
+    margin-bottom:8px;
+}
+
+footer{
+    margin-top:40px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+[dir="rtl"]{
+    direction:rtl;
+    text-align:right;
+}
+
+[dir="rtl"] .top-languages,
+[dir="rtl"] nav,
+[dir="rtl"] footer{
+    text-align:center;
+}
+
+@media(max-width:600px){
+    header h1{
+        font-size:25px;
+    }
+
+    .container{
+        padding:12px;
+    }
+
+    .hero{
+        padding:18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Invertory — промышленский учёт запасов</p>
+</header>
+
+<nav>
+    <a href="../index.html">Главная</a>
+    <a href="../dashboard/index.html">Dashboard</a>
+    <a href="../catalog/index.html">Каталог</a>
+    <a href="../products/index.html">Products</a>
+    <a href="../warehouses/index.html">Warehouses</a>
+    <a href="../orders/index.html">Orders</a>
+</nav>
+
+<div class="container">
+
+    <section class="hero">
+        <h2>Управление запасами</h2>
+        <p>
+            WORKER PRO Invertory предназначен для контроля промышленных
+            материалов, оборудования, комплектующих и запасных частей.
+        </p>
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Поиск товара, детали или материала..."
+                oninput="searchInventory()"
+            >
+            <button onclick="searchInventory()">Поиск</button>
+        </div>
+    </section>
+
+    <div class="filters">
+        <button onclick="filterInventory('all')">Все</button>
+        <button onclick="filterInventory('equipment')">Оборудование</button>
+        <button onclick="filterInventory('spare')">Запчасти</button>
+        <button onclick="filterInventory('materials')">Материалы</button>
+        <button onclick="filterInventory('tools')">Инструменты</button>
+        <button onclick="filterInventory('sensors')">Датчики</button>
+        <button onclick="filterInventory('low')">Мало на складе</button>
+    </div>
+
+    <div class="grid" id="inventoryGrid">
+
+        <div class="card inventory-item" data-category="spare">
+            <span class="badge">Запчасть</span>
+            <h3>Подшипник 6205</h3>
+            <p>Промышленный шариковый подшипник.</p>
+            <p>Склад: <span class="stock">120 шт.</span></p>
+            <button onclick="openItem('Подшипник 6205')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card inventory-item" data-category="spare">
+            <span class="badge">Запчасть</span>
+            <h3>Гидравлический насос</h3>
+            <p>Насос для промышленной гидравлической системы.</p>
+            <p>Склад: <span class="stock">18 шт.</span></p>
+            <button onclick="openItem('Гидравлический насос')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card inventory-item" data-category="materials">
+            <span class="badge">Материал</span>
+            <h3>Промышленная сталь</h3>
+            <p>Стальной лист для производственных работ.</p>
+            <p>Склад: <span class="stock">450 кг</span></p>
+            <button onclick="openItem('Промышленная сталь')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card inventory-item" data-category="tools">
+            <span class="badge">Инструмент</span>
+            <h3>Твердосплавная фреза</h3>
+            <p>Режущий инструмент для CNC обработки.</p>
+            <p>Склад: <span class="stock low">7 шт.</span></p>
+            <button onclick="openItem('Твердосплавная фреза')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card inventory-item" data-category="sensors">
+            <span class="badge">Датчик</span>
+            <h3>Датчик давления</h3>
+            <p>Промышленный датчик давления для гидравлики.</p>
+            <p>Склад: <span class="stock">32 шт.</span></p>
+            <button onclick="openItem('Датчик давления')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card inventory-item" data-category="sensors">
+            <span class="badge">Датчик</span>
+            <h3>Датчик температуры</h3>
+            <p>Температурный датчик для промышленного оборудования.</p>
+            <p>Склад: <span class="stock low">5 шт.</span></p>
+            <button onclick="openItem('Датчик температуры')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card inventory-item" data-category="equipment">
+            <span class="badge">Оборудование</span>
+            <h3>CNC станок</h3>
+            <p>Промышленный станок с числовым программным управлением.</p>
+            <p>Склад: <span class="stock">2 шт.</span></p>
+            <button onclick="openItem('CNC станок')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card inventory-item" data-category="equipment">
+            <span class="badge">Оборудование</span>
+            <h3>Промышленный компрессор</h3>
+            <p>Компрессор для производственной линии.</p>
+            <p>Склад: <span class="stock out">0 шт.</span></p>
+            <button onclick="openItem('Промышленный компрессор')">
+                Подробнее
+            </button>
+        </div>
+
+    </div>
+
+    <section class="info">
+        <h2>Что будет в Invertory</h2>
+        <p>
+            В будущей версии компании смогут вести реальные складские
+            остатки, добавлять товары, указывать количество, склад,
+            минимальный запас и автоматически получать уведомления
+            о необходимости пополнения.
+        </p>
+    </section>
+
+    <section>
+        <h2>Работа со складом</h2>
+
+        <div class="steps">
+            <div class="step">
+                <strong>1</strong>
+                Добавление товара
+            </div>
+
+            <div class="step">
+                <strong>2</strong>
+                Указание количества
+            </div>
+
+            <div class="step">
+                <strong>3</strong>
+                Выбор склада
+            </div>
+
+            <div class="step">
+                <strong>4</strong>
+                Контроль остатков
+            </div>
+
+            <div class="step">
+                <strong>5</strong>
+                Уведомление
+            </div>
+
+            <div class="step">
+                <strong>6</strong>
+                Пополнение запаса
+            </div>
+        </div>
+    </section>
+
+    <section class="info">
+        <h2>Связь с платформой</h2>
+        <p>
+            Invertory в будущем будет связан с Products, Catalog,
+            Warehouses, Orders, Requests, Suppliers, Logistics и
+            Finance. Это позволит компании видеть движение товара
+            от поставщика до склада и дальнейшей передачи клиенту.
+        </p>
+    </section>
+
+</div>
+
+<footer>
+    <h3>WORKER PRO</h3>
+    <p>Глобальная промышленная платформа</p>
+    <p>© 2026 WORKER PRO — F.S</p>
+</footer>
+
+<script src="../languages.js"></script>
+
+<script>
+
+function searchInventory(){
+
+    const value =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const items =
+        document.querySelectorAll(".inventory-item");
+
+    items.forEach(item => {
+
+        const text =
+            item.innerText.toLowerCase();
+
+        item.style.display =
+            text.includes(value) ? "block" : "none";
+
+    });
+}
+
+function filterInventory(category){
+
+    const items =
+        document.querySelectorAll(".inventory-item");
+
+    items.forEach(item => {
+
+        if(category === "all"){
+            item.style.display = "block";
+        }
+
+        else if(category === "low"){
+
+            const stock =
+                item.querySelector(".stock");
+
+            if(stock && stock.classList.contains("low")){
+                item.style.display = "block";
+            }else{
+                item.style.display = "none";
+            }
+        }
+
+        else{
+
+            item.style.display =
+                item.dataset.category === category
+                ? "block"
+                : "none";
+        }
+
+    });
+}
+
+function openItem(name){
+
+    alert(
+        name +
+        "\n\nДемо-раздел WORKER PRO.\n" +
+        "В будущей версии здесь будет карточка товара, " +
+        "количество, склад, поставщик, цена и движение товара."
+    );
+}
+
+function setLanguage(lang){
+
+    if(lang === "AR"){
+        document.documentElement.dir = "rtl";
+    }else{
+        document.documentElement.dir = "ltr";
+    }
+
+    if(typeof window.changeLanguage === "function"){
+        window.changeLanguage(lang);
+    }
+}
+
+</script>
+
+</body>
+</html>
