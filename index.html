@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>WORKER PRO — Global Industrial Platform</title>
+<title>WORKER PRO</title>
 
 <style>
 *{
@@ -18,203 +18,291 @@ body{
     color:#123;
 }
 
-header{
+.top-languages{
+    position:fixed;
+    top:0;
+    right:0;
+    left:220px;
+    height:42px;
     background:#063d25;
-    color:white;
-    padding:20px;
-    text-align:center;
-}
-
-.logo{
-    width:90px;
-    height:90px;
-    object-fit:contain;
-    margin-bottom:10px;
-}
-
-h1{
-    margin:5px 0;
-    font-size:32px;
-}
-
-.subtitle{
-    color:#b7ff35;
-    font-size:18px;
-    font-weight:bold;
-}
-
-.languages{
+    z-index:2000;
     display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:7px;
-    margin:15px 0;
+    align-items:center;
+    justify-content:flex-end;
+    gap:5px;
+    padding:4px 10px;
+    box-shadow:0 2px 8px #0004;
 }
 
-.languages button{
-    border:0;
-    border-radius:20px;
-    padding:8px 12px;
-    background:#0b6b3d;
+.top-languages button{
+    min-width:38px;
+    height:32px;
+    padding:4px 6px;
+    border:1px solid #b7ff35;
+    border-radius:6px;
+    background:transparent;
     color:white;
+    font-size:12px;
     font-weight:bold;
     cursor:pointer;
 }
 
-.languages button:hover{
-    background:#b7ff35;
-    color:#063d25;
-}
-
-nav{
+.top-languages button:hover,
+.top-languages button.active{
     background:#0b6b3d;
-    padding:10px;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:7px;
-    position:sticky;
-    top:0;
-    z-index:10;
+    color:#b7ff35;
 }
 
-nav a{
+.left-menu{
+    position:fixed;
+    top:0;
+    left:0;
+    bottom:0;
+    width:220px;
+    background:#063d25;
     color:white;
-    text-decoration:none;
-    padding:8px 11px;
-    border-radius:8px;
+    overflow-y:auto;
+    z-index:2100;
+    padding:12px;
+}
+
+.logo{
+    width:100%;
+    max-width:180px;
+    display:block;
+    margin:0 auto 10px;
+}
+
+.left-menu h2{
+    text-align:center;
+    margin:5px 0 15px;
+    color:#b7ff35;
+}
+
+.menu-title{
+    color:#b7ff35;
+    font-weight:bold;
+    margin:14px 5px 5px;
     font-size:14px;
 }
 
-nav a:hover{
-    background:#b7ff35;
-    color:#063d25;
+.left-menu a{
+    display:block;
+    color:white;
+    text-decoration:none;
+    padding:8px 10px;
+    border-radius:6px;
+    margin-bottom:3px;
+    font-size:14px;
+}
+
+.left-menu a:hover{
+    background:#0b6b3d;
+    color:#b7ff35;
+}
+
+.main{
+    margin-left:220px;
+    padding-top:42px;
+    min-height:100vh;
 }
 
 .hero{
-    max-width:1100px;
-    margin:25px auto;
-    padding:35px 20px;
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    padding:55px 30px;
     text-align:center;
-    background:white;
-    border-radius:18px;
-    box-shadow:0 4px 15px #0001;
 }
 
-.hero h2{
-    color:#075b34;
-    font-size:30px;
+.hero h1{
+    margin:0 0 12px;
+    font-size:38px;
 }
 
 .hero p{
-    font-size:17px;
-    line-height:1.6;
+    font-size:18px;
+    max-width:800px;
+    margin:0 auto 25px;
 }
 
 .search{
-    width:100%;
     max-width:700px;
+    margin:auto;
+    display:flex;
+    gap:8px;
+}
+
+.search input{
+    flex:1;
     padding:15px;
-    border:2px solid #0b6b3d;
-    border-radius:12px;
+    border:0;
+    border-radius:8px;
     font-size:16px;
+}
+
+.search button{
+    padding:15px 20px;
+    border:0;
+    border-radius:8px;
+    background:#b7ff35;
+    color:#063d25;
+    font-weight:bold;
+    cursor:pointer;
 }
 
 .container{
     max-width:1200px;
     margin:auto;
-    padding:20px;
+    padding:30px 20px;
 }
 
 .section-title{
-    text-align:center;
-    color:#075b34;
-    margin:30px 0 20px;
+    color:#063d25;
+    margin-bottom:20px;
 }
 
-.grid{
+.cards{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:15px;
+    gap:16px;
 }
 
 .card{
     background:white;
-    border-radius:15px;
+    border-radius:12px;
     padding:20px;
-    box-shadow:0 3px 12px #0001;
+    box-shadow:0 3px 12px #0002;
+    border-left:5px solid #0b6b3d;
     transition:.2s;
 }
 
 .card:hover{
     transform:translateY(-3px);
+    box-shadow:0 6px 18px #0003;
 }
 
 .card h3{
-    color:#075b34;
+    color:#063d25;
     margin-top:0;
 }
 
 .card p{
+    color:#555;
     line-height:1.5;
 }
 
 .card a{
     display:inline-block;
-    margin-top:10px;
-    padding:9px 14px;
-    background:#0b6b3d;
-    color:white;
-    text-decoration:none;
-    border-radius:8px;
+    margin-top:8px;
+    color:#075b34;
     font-weight:bold;
+    text-decoration:none;
 }
 
-.card a:hover{
-    background:#075b34;
+.flow{
+    background:#063d25;
+    color:white;
+    border-radius:14px;
+    padding:25px;
+    margin-top:30px;
 }
 
-.stats{
+.flow-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
     gap:12px;
-    margin:25px 0;
+    margin-top:20px;
 }
 
-.stat{
-    background:#063d25;
-    color:white;
-    padding:20px;
-    border-radius:14px;
+.flow-item{
+    background:#0b6b3d;
+    padding:16px;
+    border-radius:8px;
     text-align:center;
 }
 
-.stat strong{
+.quick{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:10px;
+}
+
+.quick a{
     display:block;
-    font-size:25px;
-    color:#b7ff35;
+    padding:15px;
+    background:white;
+    border-radius:8px;
+    text-decoration:none;
+    color:#063d25;
+    font-weight:bold;
+    text-align:center;
+    box-shadow:0 2px 8px #0002;
 }
 
 footer{
-    margin-top:40px;
     background:#063d25;
     color:white;
     text-align:center;
     padding:25px;
+    margin-top:30px;
+}
+
+.rtl{
+    direction:rtl;
+}
+
+@media(max-width:950px){
+
+    .left-menu{
+        width:190px;
+    }
+
+    .top-languages{
+        left:190px;
+    }
+
+    .main{
+        margin-left:190px;
+    }
 }
 
 @media(max-width:600px){
-    h1{
-        font-size:26px;
+
+    .top-languages{
+        position:relative;
+        top:auto;
+        left:0;
+        right:0;
+        width:100%;
+        height:auto;
+        min-height:42px;
+        flex-wrap:wrap;
+        justify-content:center;
+        padding:5px;
     }
 
-    .hero h2{
-        font-size:24px;
+    .left-menu{
+        position:relative;
+        width:100%;
+        height:auto;
+        padding:10px;
     }
 
-    nav a{
-        font-size:12px;
-        padding:7px;
+    .main{
+        margin:0;
+        padding-top:0;
+    }
+
+    .hero h1{
+        font-size:28px;
+    }
+
+    .hero{
+        padding:35px 15px;
+    }
+
+    .search{
+        flex-direction:column;
     }
 }
 </style>
@@ -222,291 +310,260 @@ footer{
 
 <body>
 
-<header>
+<!-- ЯЗЫКИ -->
+<div class="top-languages">
 
-<img src="logo.png" class="logo" alt="WORKER PRO">
+    <button onclick="changeLanguage('AZ')">AZ</button>
+    <button onclick="changeLanguage('RU')">RU</button>
+    <button onclick="changeLanguage('EN')">EN</button>
+    <button onclick="changeLanguage('TR')">TR</button>
+    <button onclick="changeLanguage('DE')">DE</button>
+    <button onclick="changeLanguage('AR')">AR</button>
+    <button onclick="changeLanguage('ES')">ES</button>
+    <button onclick="changeLanguage('FR')">FR</button>
+    <button onclick="changeLanguage('IT')">IT</button>
 
-<h1>WORKER PRO</h1>
-
-<div class="subtitle">
-Глобальная промышленная платформа
 </div>
 
-<div class="languages">
-<button>🇦🇿 AZ</button>
-<button>🇷🇺 RU</button>
-<button>🇬🇧 EN</button>
-<button>🇹🇷 TR</button>
-<button>🇩🇪 DE</button>
-<button>🇸🇦 AR</button>
-<button>🇪🇸 ES</button>
-<button>🇫🇷 FR</button>
-<button>🇮🇹 IT</button>
-</div>
+<!-- ЛЕВОЕ МЕНЮ -->
+<aside class="left-menu">
 
-</header>
+    <img src="logo.png" class="logo" alt="WORKER PRO">
 
-<nav>
+    <h2>WORKER PRO</h2>
 
-<a href="About/index.html">About</a>
-<a href="Admin/index.html">Admin</a>
-<a href="Advertising/index.html">Advertising</a>
-<a href="Alerts/index.html">Alerts</a>
-<a href="Analytics/index.html">Analytics</a>
-<a href="Applications/index.html">Applications</a>
-<a href="Articles/index.html">Articles</a>
-<a href="Brands/index.html">Brands</a>
-<a href="Carriers/index.html">Carriers</a>
-<a href="Catalog/index.html">Catalog</a>
-<a href="Cateqories/index.html">Categories</a>
-<a href="Certificates/index.html">Certificates</a>
-<a href="Claims/index.html">Claims</a>
-<a href="Comyunity/index.html">Community</a>
-<a href="Companies/index.html">Companies</a>
-<a href="Company-profile/index.html">Company Profile</a>
-<a href="Contact/index.html">Contact</a>
-<a href="Contracts/index.html">Contracts</a>
-<a href="Dashboard/index.html">Dashboard</a>
-<a href="Delivery/index.html">Delivery</a>
-<a href="Disputes/index.html">Disputes</a>
-<a href="Documents/index.html">Documents</a>
-<a href="Equipment/index.html">Equipment</a>
-<a href="Events/index.html">Events</a>
-<a href="FAQ/index.html">FAQ</a>
-<a href="Favorites/index.html">Favorites</a>
-<a href="Feedback/index.html">Feedback</a>
-<a href="Finance/index.html">Finance</a>
-<a href="Help/index.html">Help</a>
-<a href="Industries/index.html">Industries</a>
-<a href="Integrations/index.html">Integrations</a>
-<a href="Invertory/index.html">Inventory</a>
-<a href="Invoices/index.html">Invoices</a>
-<a href="Jobs/index.html">Jobs</a>
-<a href="Languages/index.html">Languages</a>
-<a href="Legal/index.html">Legal</a>
-<a href="Locations/index.html">Locations</a>
-<a href="Login/index.html">Login</a>
-<a href="Logistics/index.html">Logistics</a>
-<a href="Maintennances/index.html">Maintenances</a>
-<a href="Manufacturers/index.html">Manufacturers</a>
-<a href="Map/index.html">Map</a>
-<a href="Marketplace/index.html">Marketplace</a>
-<a href="Materials/index.html">Materials</a>
-<a href="Messages/index.html">Messages</a>
-<a href="Moderation/index.html">Moderation</a>
-<a href="News/index.html">News</a>
-<a href="Notifications/index.html">Notifications</a>
-<a href="Offers/index.html">Offers</a>
-<a href="Orders/index.html">Orders</a>
-<a href="Partners/index.html">Partners</a>
-<a href="Payments/index.html">Payments</a>
-<a href="Pricing/index.html">Pricing</a>
-<a href="Privacy/index.html">Privacy</a>
-<a href="Problems/index.html">Problems</a>
-<a href="Production/index.html">Production</a>
-<a href="Products/index.html">Products</a>
-<a href="Profile/index.html">Profile</a>
-<a href="Quotes/index.html">Quotes</a>
-<a href="Reqister/index.html">Register</a>
-<a href="Reports/index.html">Reports</a>
-<a href="Requests/index.html">Requests</a>
-<a href="Requests-board/index.html">Requests Board</a>
-<a href="Returns/index.html">Returns</a>
-<a href="Reviews/index.html">Reviews</a>
-<a href="RFQ/index.html">RFQ</a>
-<a href="Safety/index.html">Safety</a>
-<a href="Search/index.html">Search</a>
-<a href="Security/index.html">Security</a>
-<a href="Service-centers/index.html">Service Centers</a>
-<a href="Services/index.html">Services</a>
-<a href="Settings/index.html">Settings</a>
-<a href="Shipments/index.html">Shipments</a>
-<a href="Spare - prts/index.html">Spare Parts</a>
-<a href="Specialists/index.html">Specialists</a>
-<a href="Subscriptions/index.html">Subscriptions</a>
-<a href="Supppliers/index.html">Suppliers</a>
-<a href="Support/index.html">Support</a>
-<a href="Tecnologies/index.html">Technologies</a>
-<a href="Tracking/index.html">Tracking</a>
-<a href="Training/index.html">Training</a>
-<a href="Training-courses/index.html">Training Courses</a>
-<a href="Transactions/index.html">Transactions</a>
-<a href="Transport/index.html">Transport</a>
-<a href="Transport-booking/index.html">Transport Booking</a>
-<a href="Vacancies/index.html">Vacancies</a>
-<a href="Verification/index.html">Verification</a>
-<a href="Wallet/index.html">Wallet</a>
-<a href="Warehouses/index.html">Warehouses</a>
-<a href="Waranty/index.html">Warranty</a>
+    <div class="menu-title">Главное</div>
 
-</nav>
+    <a href="index.html">Главная</a>
+
+    <div class="menu-title">Производство</div>
+
+    <a href="production/index.html">Производство</a>
+    <a href="tecnologies/index.html">Технологии</a>
+    <a href="industries/index.html">Отрасли</a>
+
+    <div class="menu-title">Торговля</div>
+
+    <a href="catalog/index.html">Каталог</a>
+    <a href="cateqories/index.html">Категории</a>
+    <a href="products/index.html">Продукты</a>
+    <a href="brands/index.html">Бренды</a>
+    <a href="companies/index.html">Компании</a>
+    <a href="supppliers/index.html">Поставщики</a>
+    <a href="manufacturers/index.html">Производители</a>
+    <a href="materials/index.html">Материалы</a>
+    <a href="equipment/index.html">Оборудование</a>
+
+    <div class="menu-title">Работа и обучение</div>
+
+    <a href="specialists/index.html">Специалисты</a>
+    <a href="vacancies/index.html">Вакансии</a>
+    <a href="jobs/index.html">Jobs</a>
+    <a href="training/index.html">Обучение</a>
+    <a href="training-courses/index.html">Курсы</a>
+    <a href="certificates/index.html">Сертификаты</a>
+    <a href="safety/index.html">Безопасность</a>
+
+    <div class="menu-title">Requests</div>
+
+    <a href="requests/index.html">Requests</a>
+    <a href="requests-board/index.html">Requests Board</a>
+    <a href="rfq/index.html">RFQ</a>
+    <a href="offers/index.html">Offers</a>
+    <a href="quotes/index.html">Quotes</a>
+    <a href="contracts/index.html">Contracts</a>
+    <a href="orders/index.html">Orders</a>
+
+    <div class="menu-title">Logistics</div>
+
+    <a href="logistics/index.html">Logistics</a>
+    <a href="transport/index.html">Transport</a>
+    <a href="transport-booking/index.html">Transport Booking</a>
+    <a href="shipments/index.html">Shipments</a>
+    <a href="tracking/index.html">Tracking</a>
+    <a href="delivery/index.html">Delivery</a>
+    <a href="warehouses/index.html">Warehouses</a>
+    <a href="carriers/index.html">Carriers</a>
+
+    <div class="menu-title">Профиль</div>
+
+    <a href="profile/index.html">Profile</a>
+    <a href="company-profile/index.html">Company Profile</a>
+    <a href="dashboard/index.html">Dashboard</a>
+    <a href="messages/index.html">Messages</a>
+    <a href="notifications/index.html">Notifications</a>
+    <a href="favorites/index.html">Favorites</a>
+    <a href="settings/index.html">Settings</a>
+
+    <div class="menu-title">Система</div>
+
+    <a href="about/index.html">About</a>
+    <a href="contact/index.html">Contact</a>
+    <a href="faq/index.html">FAQ</a>
+    <a href="help/index.html">Help</a>
+    <a href="support/index.html">Support</a>
+    <a href="feedback/index.html">Feedback</a>
+    <a href="privacy/index.html">Privacy</a>
+    <a href="legal/index.html">Legal</a>
+    <a href="security/index.html">Security</a>
+
+</aside>
+
+<!-- ОСНОВНАЯ ЧАСТЬ -->
+<main class="main">
 
 <section class="hero">
 
-<h2>Работа. Знания. Производство.</h2>
+    <h1 data-i18n="heroTitle">
+        Работа. Знания. Производство.
+    </h1>
 
-<p>
-WORKER PRO — международная промышленная платформа
-для рабочих, инженеров, специалистов, производителей,
-поставщиков, компаний и покупателей.
-</p>
+    <p data-i18n="heroText">
+        Международная промышленная платформа для рабочих,
+        инженеров, мастеров, производителей и поставщиков.
+    </p>
 
-<input
-class="search"
-id="search"
-type="search"
-placeholder="Поиск: насос, станок, подшипник, запчасть..."
->
+    <div class="search">
+
+        <input
+            id="searchInput"
+            type="text"
+            data-placeholder="searchPlaceholder"
+            placeholder="Поиск: насос, станок, подшипник, запчасть..."
+        >
+
+        <button onclick="doSearch()" data-i18n="search">
+            Поиск
+        </button>
+
+    </div>
 
 </section>
 
 <div class="container">
 
-<div class="stats">
+<h2 class="section-title" data-i18n="sections">
+    Основные разделы
+</h2>
 
-<div class="stat">
-<strong>90+</strong>
-Разделов
-</div>
+<div class="cards">
 
-<div class="stat">
-<strong>🌍</strong>
-Международная платформа
-</div>
+    <div class="card">
+        <h3>🏭 Production</h3>
+        <p>Производство, оборудование и промышленные технологии.</p>
+        <a href="production/index.html">Открыть →</a>
+    </div>
 
-<div class="stat">
-<strong>🏭</strong>
-Промышленность
-</div>
+    <div class="card">
+        <h3>⚙️ Spare Parts</h3>
+        <p>Поиск промышленных запчастей и комплектующих.</p>
+        <a href="spare%20-%20prts/index.html">Открыть →</a>
+    </div>
 
-<div class="stat">
-<strong>🔧</strong>
-Запчасти
-</div>
+    <div class="card">
+        <h3>🏢 Companies</h3>
+        <p>Производители, поставщики и промышленные компании.</p>
+        <a href="companies/index.html">Открыть →</a>
+    </div>
 
-</div>
+    <div class="card">
+        <h3>👷 Specialists</h3>
+        <p>Специалисты различных производственных профессий.</p>
+        <a href="specialists/index.html">Открыть →</a>
+    </div>
 
-<h2 class="section-title">Основные направления</h2>
+    <div class="card">
+        <h3>💼 Vacancies</h3>
+        <p>Работа и промышленные вакансии.</p>
+        <a href="vacancies/index.html">Открыть →</a>
+    </div>
 
-<div class="grid">
+    <div class="card">
+        <h3>🎓 Training</h3>
+        <p>Обучение, технологии и профессиональное развитие.</p>
+        <a href="training/index.html">Открыть →</a>
+    </div>
 
-<div class="card">
-<h3>🏭 Production</h3>
-<p>Производство и промышленные технологии.</p>
-<a href="Production/index.html">Открыть</a>
-</div>
+    <div class="card">
+        <h3>🚚 Logistics</h3>
+        <p>Транспортировка промышленной продукции.</p>
+        <a href="logistics/index.html">Открыть →</a>
+    </div>
 
-<div class="card">
-<h3>🔩 Spare Parts</h3>
-<p>Промышленные запчасти и комплектующие.</p>
-<a href="Spare - prts/index.html">Открыть</a>
-</div>
+    <div class="card">
+        <h3>📦 Tracking</h3>
+        <p>Отслеживание отправлений и поставок.</p>
+        <a href="tracking/index.html">Открыть →</a>
+    </div>
 
-<div class="card">
-<h3>🏢 Companies</h3>
-<p>Производители, поставщики и промышленные компании.</p>
-<a href="Companies/index.html">Открыть</a>
-</div>
+    <div class="card">
+        <h3>📋 Requests</h3>
+        <p>Запросы на товары, оборудование и услуги.</p>
+        <a href="requests/index.html">Открыть →</a>
+    </div>
 
-<div class="card">
-<h3>📦 Catalog</h3>
-<p>Каталог промышленной продукции.</p>
-<a href="Catalog/index.html">Открыть</a>
-</div>
+    <div class="card">
+        <h3>💰 Offers</h3>
+        <p>Коммерческие предложения поставщиков.</p>
+        <a href="offers/index.html">Открыть →</a>
+    </div>
 
-<div class="card">
-<h3>👷 Specialists</h3>
-<p>Рабочие, инженеры, мастера и специалисты.</p>
-<a href="Specialists/index.html">Открыть</a>
-</div>
+    <div class="card">
+        <h3>📦 Orders</h3>
+        <p>Заказы и управление поставками.</p>
+        <a href="orders/index.html">Открыть →</a>
+    </div>
 
-<div class="card">
-<h3>💼 Jobs</h3>
-<p>Работа и вакансии в промышленности.</p>
-<a href="Jobs/index.html">Открыть</a>
-</div>
-
-<div class="card">
-<h3>🎓 Training</h3>
-<p>Обучение, технологии и профессиональные знания.</p>
-<a href="Training/index.html">Открыть</a>
-</div>
-
-<div class="card">
-<h3>🚚 Logistics</h3>
-<p>Транспорт, доставка и международная логистика.</p>
-<a href="Logistics/index.html">Открыть</a>
-</div>
-
-<div class="card">
-<h3>📋 Requests</h3>
-<p>Запросы на товары, оборудование и услуги.</p>
-<a href="Requests/index.html">Открыть</a>
-</div>
-
-<div class="card">
-<h3>💰 Offers</h3>
-<p>Коммерческие предложения поставщиков.</p>
-<a href="Offers/index.html">Открыть</a>
-</div>
-
-<div class="card">
-<h3>📦 Orders</h3>
-<p>Заказы и управление поставками.</p>
-<a href="Orders/index.html">Открыть</a>
-</div>
-
-<div class="card">
-<h3>🔎 Search</h3>
-<p>Поиск товаров, компаний и специалистов.</p>
-<a href="Search/index.html">Открыть</a>
-</div>
+    <div class="card">
+        <h3>🔎 Search</h3>
+        <p>Поиск товаров, компаний и специалистов.</p>
+        <a href="search/index.html">Открыть →</a>
+    </div>
 
 </div>
 
-<h2 class="section-title">Как работает WORKER PRO</h2>
+<h2 class="section-title" style="margin-top:40px;">
+    Quick Access
+</h2>
 
-<div class="grid">
+<div class="quick">
 
-<div class="card">
-<h3>1️⃣ Язык и страна</h3>
-<p>Пользователь выбирает язык и страну.</p>
+    <a href="catalog/index.html">Catalog</a>
+    <a href="cateqories/index.html">Categories</a>
+    <a href="products/index.html">Products</a>
+    <a href="brands/index.html">Brands</a>
+    <a href="companies/index.html">Companies</a>
+    <a href="supppliers/index.html">Suppliers</a>
+    <a href="manufacturers/index.html">Manufacturers</a>
+    <a href="equipment/index.html">Equipment</a>
+    <a href="rfq/index.html">RFQ</a>
+    <a href="requests/index.html">Requests</a>
+    <a href="offers/index.html">Offers</a>
+    <a href="orders/index.html">Orders</a>
+    <a href="certificates/index.html">Certificates</a>
+    <a href="news/index.html">News</a>
+
 </div>
 
-<div class="card">
-<h3>2️⃣ Производство</h3>
-<p>Изучает производство, оборудование и технологии.</p>
-</div>
+<div class="flow">
 
-<div class="card">
-<h3>3️⃣ Регистрация</h3>
-<p>Регистрируется как специалист или компания.</p>
-</div>
+    <h2>WORKER PRO</h2>
 
-<div class="card">
-<h3>4️⃣ Поиск</h3>
-<p>Находит товары, оборудование и запчасти.</p>
-</div>
+    <p>
+        От обучения и поиска оборудования до покупки,
+        транспорта и получения товара.
+    </p>
 
-<div class="card">
-<h3>5️⃣ Поставщик</h3>
-<p>Связывается с производителем или поставщиком.</p>
-</div>
+    <div class="flow-grid">
 
-<div class="card">
-<h3>6️⃣ Цена</h3>
-<p>Получает цену и коммерческие условия.</p>
-</div>
+        <div class="flow-item">🌍<br>Язык и страна</div>
+        <div class="flow-item">🔎<br>Поиск</div>
+        <div class="flow-item">🏢<br>Компания</div>
+        <div class="flow-item">💰<br>Цена и условия</div>
+        <div class="flow-item">🚚<br>Транспорт</div>
+        <div class="flow-item">📦<br>Получение</div>
 
-<div class="card">
-<h3>7️⃣ Заказ</h3>
-<p>Сравнивает предложения и оформляет заказ.</p>
-</div>
-
-<div class="card">
-<h3>8️⃣ Доставка</h3>
-<p>Организует местную или международную перевозку.</p>
-</div>
+    </div>
 
 </div>
 
@@ -514,42 +571,161 @@ placeholder="Поиск: насос, станок, подшипник, запч�
 
 <footer>
 
-<strong>WORKER PRO</strong>
-
-<p>
-Global Industrial Platform
-</p>
-
-<p>
-Production • Technology • Companies • Products • Training • Logistics
-</p>
-
-<p>
-© 2026 WORKER PRO
-</p>
+    <strong>WORKER PRO</strong>
+    <br>
+    F.S © 2026
 
 </footer>
 
-<script src="languages.js"></script>
+</main>
 
 <script>
 
-const search=document.getElementById("search");
+const translations = {
 
-search.addEventListener("keydown",function(e){
+RU:{
+    heroTitle:"Работа. Знания. Производство.",
+    heroText:"Международная промышленная платформа для рабочих, инженеров, мастеров, производителей и поставщиков.",
+    search:"Поиск",
+    searchPlaceholder:"Поиск: насос, станок, подшипник, запчасть...",
+    sections:"Основные разделы"
+},
 
-    if(e.key==="Enter"){
+AZ:{
+    heroTitle:"İş. Bilik. İstehsalat.",
+    heroText:"Fəhlələr, mühəndislər, ustalar, istehsalçılar və təchizatçılar üçün beynəlxalq sənaye platforması.",
+    search:"Axtar",
+    searchPlaceholder:"Axtarış: nasos, dəzgah, podşipnik, ehtiyat hissəsi...",
+    sections:"Əsas bölmələr"
+},
 
-        const value=search.value.trim();
+EN:{
+    heroTitle:"Work. Knowledge. Production.",
+    heroText:"International industrial platform for workers, engineers, technicians, manufacturers and suppliers.",
+    search:"Search",
+    searchPlaceholder:"Search: pump, machine, bearing, spare part...",
+    sections:"Main Sections"
+},
 
-        if(value){
+TR:{
+    heroTitle:"İş. Bilgi. Üretim.",
+    heroText:"İşçiler, mühendisler, ustalar, üreticiler ve tedarikçiler için uluslararası sanayi platformu.",
+    search:"Ara",
+    searchPlaceholder:"Ara: pompa, makine, rulman, yedek parça...",
+    sections:"Ana Bölümler"
+},
 
-            window.location.href=
-            "Search/index.html?q="+encodeURIComponent(value);
+DE:{
+    heroTitle:"Arbeit. Wissen. Produktion.",
+    heroText:"Internationale Industrieplattform für Arbeiter, Ingenieure, Meister, Hersteller und Lieferanten.",
+    search:"Suchen",
+    searchPlaceholder:"Suche: Pumpe, Maschine, Lager, Ersatzteil...",
+    sections:"Hauptbereiche"
+},
 
+AR:{
+    heroTitle:"العمل. المعرفة. الإنتاج.",
+    heroText:"منصة صناعية دولية للعمال والمهندسين والفنيين والمصنعين والموردين.",
+    search:"بحث",
+    searchPlaceholder:"بحث: مضخة، آلة، محمل، قطعة غيار...",
+    sections:"الأقسام الرئيسية"
+},
+
+ES:{
+    heroTitle:"Trabajo. Conocimiento. Producción.",
+    heroText:"Plataforma industrial internacional para trabajadores, ingenieros, técnicos, fabricantes y proveedores.",
+    search:"Buscar",
+    searchPlaceholder:"Buscar: bomba, máquina, rodamiento, repuesto...",
+    sections:"Secciones principales"
+},
+
+FR:{
+    heroTitle:"Travail. Connaissance. Production.",
+    heroText:"Plateforme industrielle internationale pour travailleurs, ingénieurs, techniciens, fabricants et fournisseurs.",
+    search:"Rechercher",
+    searchPlaceholder:"Rechercher : pompe, machine, roulement, pièce...",
+    sections:"Sections principales"
+},
+
+IT:{
+    heroTitle:"Lavoro. Conoscenza. Produzione.",
+    heroText:"Piattaforma industriale internazionale per lavoratori, ingegneri, tecnici, produttori e fornitori.",
+    search:"Cerca",
+    searchPlaceholder:"Cerca: pompa, macchina, cuscinetto, ricambio...",
+    sections:"Sezioni principali"
+}
+
+};
+
+function changeLanguage(lang){
+
+    const data=translations[lang];
+
+    if(!data)return;
+
+    document.querySelectorAll("[data-i18n]").forEach(element=>{
+
+        const key=element.dataset.i18n;
+
+        if(data[key]!==undefined){
+            element.textContent=data[key];
         }
 
+    });
+
+    document.querySelectorAll("[data-placeholder]").forEach(element=>{
+
+        const key=element.dataset.placeholder;
+
+        if(data[key]!==undefined){
+            element.placeholder=data[key];
+        }
+
+    });
+
+    document.querySelectorAll(".top-languages button").forEach(button=>{
+
+        button.classList.remove("active");
+
+        if(button.textContent.trim()===lang){
+            button.classList.add("active");
+        }
+
+    });
+
+    document.documentElement.lang=lang.toLowerCase();
+
+    if(lang==="AR"){
+        document.body.classList.add("rtl");
+        document.body.dir="rtl";
+    }else{
+        document.body.classList.remove("rtl");
+        document.body.dir="ltr";
     }
+
+    localStorage.setItem("workerProLanguage",lang);
+}
+
+function doSearch(){
+
+    const value=document
+        .getElementById("searchInput")
+        .value
+        .trim();
+
+    if(value==="")return;
+
+    window.location.href=
+        "search/index.html?q="+
+        encodeURIComponent(value);
+}
+
+document.addEventListener("DOMContentLoaded",function(){
+
+    const savedLanguage=
+        localStorage.getItem("workerProLanguage")||"RU";
+
+    changeLanguage(savedLanguage);
 
 });
 
