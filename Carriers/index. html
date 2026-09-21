@@ -1,0 +1,445 @@
+<!DOCTYPE html><html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>WORKER PRO — Carriers</title><style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f7f5;
+    color: #123;
+}
+
+.header {
+    background: #063d25;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 5px 0;
+    font-size: 28px;
+}
+
+.header p {
+    margin: 5px 0 12px;
+    color: #b7ff35;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.languages button {
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    background: white;
+    color: #063d25;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.languages button:hover {
+    background: #b7ff35;
+}
+
+.nav {
+    background: #0b6b3d;
+    padding: 10px;
+    text-align: center;
+}
+
+.nav a {
+    color: white;
+    text-decoration: none;
+    margin: 5px 8px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.hero {
+    background: white;
+    border-radius: 14px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+.hero h2 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.search {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.filters button {
+    border: none;
+    padding: 9px 13px;
+    border-radius: 8px;
+    background: #0b6b3d;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.filters button:hover {
+    background: #063d25;
+}
+
+.carriers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.carrier {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    border-left: 5px solid #0b6b3d;
+}
+
+.carrier h3 {
+    color: #075b34;
+    margin-top: 0;
+}
+
+.country {
+    display: inline-block;
+    background: #e6f5eb;
+    color: #075b34;
+    padding: 5px 9px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 8px;
+}
+
+.carrier p {
+    line-height: 1.5;
+}
+
+.carrier button {
+    width: 100%;
+    padding: 11px;
+    border: none;
+    border-radius: 8px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.carrier button:hover {
+    background: #063d25;
+}
+
+.routes {
+    margin-top: 25px;
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.route {
+    padding: 12px;
+    margin: 8px 0;
+    background: #eef6f1;
+    border-radius: 8px;
+}
+
+.demo {
+    margin-top: 25px;
+    padding: 18px;
+    border-radius: 12px;
+    background: #fff8d8;
+    border: 1px solid #e6d36a;
+}
+
+.footer {
+    margin-top: 30px;
+    padding: 20px;
+    text-align: center;
+    background: #063d25;
+    color: white;
+}
+
+@media(max-width:600px) {
+    .header h1 {
+        font-size: 23px;
+    }
+
+    .container {
+        padding: 12px;
+    }
+}
+</style></head><body><div class="header"><h1>WORKER PRO</h1>
+<p>Carriers / Перевозчики</p>
+
+<div class="languages">
+    <button onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+</div><div class="nav">
+    <a href="../index.html">Главная</a>
+    <a href="../logistics/index.html">Логистика</a>
+    <a href="../delivery/index.html">Доставка</a>
+    <a href="../shipments/index.html">Отправления</a>
+    <a href="../tracking/index.html">Отслеживание</a>
+</div><div class="container"><div class="hero">
+
+    <h2>Промышленные перевозчики</h2>
+
+    <p>
+        Каталог транспортных компаний и перевозчиков
+        для доставки оборудования, материалов,
+        запчастей и другой промышленной продукции.
+    </p>
+
+    <input
+        class="search"
+        id="search"
+        type="text"
+        placeholder="Поиск перевозчика..."
+        onkeyup="searchCarriers()"
+    >
+
+    <div class="filters">
+        <button onclick="filterCarriers('all')">Все</button>
+        <button onclick="filterCarriers('road')">Авто</button>
+        <button onclick="filterCarriers('sea')">Море</button>
+        <button onclick="filterCarriers('rail')">Ж/Д</button>
+        <button onclick="filterCarriers('air')">Авиа</button>
+    </div>
+
+</div>
+
+<div class="carriers" id="carriers">
+
+    <div class="carrier" data-category="road">
+        <span class="country">🇦🇿 Азербайджан</span>
+        <h3>Local Road Carrier</h3>
+        <p>
+            Автомобильные перевозки по Азербайджану
+            и доставка промышленного груза.
+        </p>
+        <button onclick="openCarrier('Local Road Carrier')">
+            Открыть профиль
+        </button>
+    </div>
+
+    <div class="carrier" data-category="road">
+        <span class="country">🇹🇷 Турция</span>
+        <h3>International Road Carrier</h3>
+        <p>
+            Международные автомобильные перевозки
+            между Турцией, Кавказом и Европой.
+        </p>
+        <button onclick="openCarrier('International Road Carrier')">
+            Открыть профиль
+        </button>
+    </div>
+
+    <div class="carrier" data-category="sea">
+        <span class="country">🌍 Международный</span>
+        <h3>Sea Freight Carrier</h3>
+        <p>
+            Морские перевозки контейнеров,
+            оборудования и промышленного груза.
+        </p>
+        <button onclick="openCarrier('Sea Freight Carrier')">
+            Открыть профиль
+        </button>
+    </div>
+
+    <div class="carrier" data-category="rail">
+        <span class="country">🌍 Международный</span>
+        <h3>Rail Cargo Carrier</h3>
+        <p>
+            Железнодорожные перевозки промышленной
+            продукции и контейнерных грузов.
+        </p>
+        <button onclick="openCarrier('Rail Cargo Carrier')">
+            Открыть профиль
+        </button>
+    </div>
+
+    <div class="carrier" data-category="air">
+        <span class="country">🌍 Международный</span>
+        <h3>Air Cargo Carrier</h3>
+        <p>
+            Быстрая авиационная доставка срочных
+            запчастей и промышленного оборудования.
+        </p>
+        <button onclick="openCarrier('Air Cargo Carrier')">
+            Открыть профиль
+        </button>
+    </div>
+
+    <div class="carrier" data-category="road">
+        <span class="country">🇬🇪 Грузия</span>
+        <h3>Caucasus Transport</h3>
+        <p>
+            Региональные автомобильные перевозки
+            по Кавказу и соседним странам.
+        </p>
+        <button onclick="openCarrier('Caucasus Transport')">
+            Открыть профиль
+        </button>
+    </div>
+
+    <div class="carrier" data-category="road">
+        <span class="country">🇪🇺 Европа</span>
+        <h3>European Cargo Transport</h3>
+        <p>
+            Международная доставка промышленного
+            оборудования и комплектующих.
+        </p>
+        <button onclick="openCarrier('European Cargo Transport')">
+            Открыть профиль
+        </button>
+    </div>
+
+    <div class="carrier" data-category="sea">
+        <span class="country">🌍 Международный</span>
+        <h3>Container Shipping</h3>
+        <p>
+            Контейнерные перевозки между портами
+            разных стран.
+        </p>
+        <button onclick="openCarrier('Container Shipping')">
+            Открыть профиль
+        </button>
+    </div>
+
+</div>
+
+<div class="routes">
+
+    <h2>Основные виды перевозок</h2>
+
+    <div class="route">
+        🚚 <b>Автомобильные:</b> доставка по городу,
+        стране и международные автоперевозки.
+    </div>
+
+    <div class="route">
+        🚢 <b>Морские:</b> контейнерные и крупногабаритные грузы.
+    </div>
+
+    <div class="route">
+        🚆 <b>Железнодорожные:</b> большие объёмы
+        промышленной продукции.
+    </div>
+
+    <div class="route">
+        ✈️ <b>Авиационные:</b> срочная доставка
+        небольших и ценных грузов.
+    </div>
+
+    <div class="route">
+        📦 <b>Мультимодальные:</b> несколько видов транспорта
+        в одной международной перевозке.
+    </div>
+
+</div>
+
+<div class="demo">
+    <b>DEMO:</b>
+    Сейчас перевозчики представлены как демонстрационный каталог.
+    Позже подключим реальные профили компаний,
+    маршруты, расчёт стоимости, бронирование,
+    документы и отслеживание груза.
+</div>
+
+</div><div class="footer">
+    WORKER PRO © 2026<br>
+    Работа • Знания • Производство
+</div><script src="../languages.js"></script><script>
+
+function openCarrier(name) {
+
+    alert(
+        "Перевозчик: " + name +
+        "\n\nПрофиль перевозчика будет подключён на следующем этапе."
+    );
+}
+
+function filterCarriers(category) {
+
+    const items =
+        document.querySelectorAll(".carrier");
+
+    items.forEach(function(item) {
+
+        if (
+            category === "all" ||
+            item.dataset.category === category
+        ) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+
+    });
+}
+
+function searchCarriers() {
+
+    const value =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const items =
+        document.querySelectorAll(".carrier");
+
+    items.forEach(function(item) {
+
+        const text =
+            item.innerText.toLowerCase();
+
+        item.style.display =
+            text.includes(value) ? "block" : "none";
+
+    });
+}
+
+</script></body>
+</html>
