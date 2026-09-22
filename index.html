@@ -4,223 +4,195 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>WORKER PRO — Global Industrial Platform</title>
+<title>WORKER PRO — Industrial Platform</title>
 
 <style>
-*{box-sizing:border-box}
-
-html{scroll-behavior:smooth}
-
-body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f4f7f5;
-    color:#123;
+* {
+    box-sizing: border-box;
 }
 
-.top-languages{
-    position:fixed;
-    top:0;
-    left:0;
-    right:0;
-    height:45px;
-    background:#063d25;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:6px;
-    z-index:1000;
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
 }
 
-.top-languages button{
-    border:1px solid #b7ff35;
-    background:#0b6b3d;
-    color:white;
-    border-radius:6px;
-    padding:6px 10px;
-    cursor:pointer;
-    font-weight:bold;
+/* HEADER */
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
 }
 
-.top-languages button:hover{
-    background:#b7ff35;
-    color:#063d25;
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 6px;
 }
 
-.sidebar{
-    position:fixed;
-    top:45px;
-    left:0;
-    bottom:0;
-    width:230px;
-    background:#063d25;
-    padding:15px;
-    overflow-y:auto;
-    z-index:999;
+.subtitle {
+    font-size: 16px;
+    opacity: .9;
 }
 
-.logo{
-    width:100%;
-    max-width:180px;
-    display:block;
-    margin:0 auto 15px;
+/* LANGUAGES */
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
 }
 
-.sidebar a{
-    display:block;
-    color:white;
-    text-decoration:none;
-    padding:10px 12px;
-    margin:4px 0;
-    border-radius:7px;
-    font-size:14px;
+.languages-second {
+    margin-top: 8px;
 }
 
-.sidebar a:hover{
-    background:#0b6b3d;
-    color:#b7ff35;
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
 }
 
-.sidebar hr{
-    border:0;
-    border-top:1px solid rgba(255,255,255,.25);
-    margin:15px 0;
+/* MAIN */
+main {
+    max-width: 1400px;
+    margin: auto;
+    padding: 25px 20px 45px;
 }
 
-.main{
-    margin-left:230px;
-    padding:70px 25px 40px;
+.intro {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
 
-.hero{
-    background:linear-gradient(135deg,#063d25,#0b6b3d);
-    color:white;
-    padding:45px 30px;
-    border-radius:18px;
-    text-align:center;
-    margin-bottom:25px;
+.intro h1 {
+    color: #063d25;
+    margin-top: 0;
 }
 
-.hero h1{
-    margin:0 0 12px;
-    font-size:42px;
+.intro p {
+    line-height: 1.6;
 }
 
-.hero p{
-    font-size:18px;
-    margin:8px 0;
+/* SEARCH */
+.search {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0 30px;
 }
 
-.search-box{
-    max-width:850px;
-    margin:25px auto 0;
-    display:flex;
-    gap:8px;
+.search input {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
 }
 
-.search-box input{
-    flex:1;
-    padding:15px;
-    border:0;
-    border-radius:8px;
-    font-size:16px;
+.search button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 14px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.search-box button{
-    padding:15px 22px;
-    border:0;
-    border-radius:8px;
-    background:#b7ff35;
-    color:#063d25;
-    font-weight:bold;
-    cursor:pointer;
+/* CATALOG */
+.catalog {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
 }
 
-.section-title{
-    color:#063d25;
-    margin-top:35px;
+.column {
+    background: white;
+    border-radius: 14px;
+    padding: 18px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:18px;
+.column h2 {
+    margin-top: 0;
+    color: #063d25;
+    border-bottom: 2px solid #b7ff35;
+    padding-bottom: 10px;
 }
 
-.card{
-    background:white;
-    border-radius:14px;
-    padding:22px;
-    box-shadow:0 4px 14px rgba(0,0,0,.08);
-    border-top:5px solid #0b6b3d;
+.section-link {
+    display: block;
+    text-decoration: none;
+    color: #123;
+    background: #f4f7f5;
+    margin: 7px 0;
+    padding: 10px 12px;
+    border-radius: 7px;
+    transition: .2s;
 }
 
-.card h3{
-    color:#063d25;
-    margin-top:0;
+.section-link:hover {
+    background: #0b6b3d;
+    color: white;
+    transform: translateX(3px);
 }
 
-.card p{
-    line-height:1.5;
+/* FOOTER */
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 22px;
+    margin-top: 20px;
 }
 
-.card a{
-    display:inline-block;
-    margin-top:10px;
-    background:#0b6b3d;
-    color:white;
-    text-decoration:none;
-    padding:9px 14px;
-    border-radius:7px;
+/* TABLET */
+@media (max-width: 1050px) {
+    .catalog {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.card a:hover{
-    background:#063d25;
-    color:#b7ff35;
-}
+/* PHONE */
+@media (max-width: 600px) {
 
-.flow{
-    background:white;
-    padding:25px;
-    border-radius:14px;
-    margin-top:25px;
-    box-shadow:0 4px 14px rgba(0,0,0,.07);
-}
-
-.flow ol{
-    line-height:2;
-}
-
-footer{
-    margin-top:40px;
-    background:#063d25;
-    color:white;
-    text-align:center;
-    padding:25px;
-    border-radius:14px;
-}
-
-@media(max-width:800px){
-
-    .sidebar{
-        position:relative;
-        top:45px;
-        width:100%;
-        height:auto;
-        max-height:none;
+    header {
+        padding: 20px 12px;
     }
 
-    .main{
-        margin-left:0;
-        padding-top:65px;
+    .logo {
+        font-size: 27px;
     }
 
-    .hero h1{
-        font-size:30px;
+    main {
+        padding: 20px 12px 35px;
     }
 
-    .search-box{
-        flex-direction:column;
+    .catalog {
+        grid-template-columns: 1fr;
+    }
+
+    .search {
+        flex-direction: column;
+    }
+
+    .search button {
+        width: 100%;
+    }
+
+    .languages a {
+        padding: 7px 11px;
     }
 }
 </style>
@@ -228,265 +200,250 @@ footer{
 
 <body>
 
-<!-- LANGUAGE BAR -->
-<div class="top-languages">
-    <button>AZ</button>
-    <button>RU</button>
-    <button>EN</button>
-    <button>TR</button>
-    <button>DE</button>
-    <button>AR</button>
-    <button>ES</button>
-    <button>FR</button>
-    <button>IT</button>
-</div>
+<header>
+
+    <div class="logo">WORKER PRO</div>
+
+    <div class="subtitle">
+        Глобальная промышленная платформа
+    </div>
+
+    <!-- FIRST LANGUAGE ROW -->
+    <div class="languages">
+        <a href="#">AZ</a>
+        <a href="#">RU</a>
+        <a href="#">EN</a>
+    </div>
+
+    <!-- SECOND LANGUAGE ROW -->
+    <div class="languages languages-second">
+        <a href="#">TR</a>
+        <a href="#">DE</a>
+        <a href="#">AR</a>
+        <a href="#">ES</a>
+        <a href="#">FR</a>
+        <a href="#">IT</a>
+    </div>
+
+</header>
+
+<main>
+
+    <div class="intro">
+
+        <h1>WORKER PRO</h1>
+
+        <p>
+            <strong>Работа. Знания. Производство.</strong>
+        </p>
+
+        <p>
+            Глобальная промышленная платформа для специалистов,
+            компаний, производителей, поставщиков, оборудования,
+            запчастей, обучения и логистики.
+        </p>
+
+    </div>
 
 
-<!-- SIDEBAR -->
-<div class="sidebar">
+    <!-- SEARCH -->
 
-    <img src="logo.png" class="logo" alt="WORKER PRO">
-
-    <a href="production/index.html">Production</a>
-    <a href="tecnologies/index.html">Technologies</a>
-    <a href="industries/index.html">Industries</a>
-    <a href="catalog/index.html">Catalog</a>
-    <a href="categories/index.html">Categories</a>
-    <a href="products/index.html">Products</a>
-    <a href="brands/index.html">Brands</a>
-    <a href="companies/index.html">Companies</a>
-    <a href="company-profile/index.html">Company Profile</a>
-    <a href="supppliers/index.html">Suppliers</a>
-    <a href="manufacturers/index.html">Manufacturers</a>
-    <a href="carriers/index.html">Carriers</a>
-    <a href="equipment/index.html">Equipment</a>
-    <a href="specialists/index.html">Specialists</a>
-    <a href="vacancies/index.html">Vacancies</a>
-    <a href="jobs/index.html">Jobs</a>
-
-    <hr>
-
-    <a href="training/index.html">Training</a>
-    <a href="training-courses/index.html">Training Courses</a>
-    <a href="certificates/index.html">Certificates</a>
-    <a href="safety/index.html">Safety</a>
-
-    <hr>
-
-    <a href="applications/index.html">Applications</a>
-    <a href="articles/index.html">Articles</a>
-    <a href="requests/index.html">Requests</a>
-    <a href="requests-board/index.html">Requests Board</a>
-    <a href="rfq/index.html">RFQ</a>
-    <a href="offers/index.html">Offers</a>
-    <a href="quotes/index.html">Quotes</a>
-    <a href="contracts/index.html">Contracts</a>
-    <a href="claims/index.html">Claims</a>
-    <a href="disputes/index.html">Disputes</a>
-    <a href="orders/index.html">Orders</a>
-
-    <hr>
-
-    <a href="logistics/index.html">Logistics</a>
-    <a href="transport/index.html">Transport</a>
-    <a href="transport-booking/index.html">Transport Booking</a>
-    <a href="shipments/index.html">Shipments</a>
-    <a href="tracking/index.html">Tracking</a>
-    <a href="delivery/index.html">Delivery</a>
-    <a href="warehouses/index.html">Warehouses</a>
-
-    <hr>
-
-    <a href="about/index.html">About</a>
-    <a href="admin/index.html">Admin</a>
-    <a href="advertising/index.html">Advertising</a>
-    <a href="alerts/index.html">Alerts</a>
-    <a href="analytics/index.html">Analytics</a>
-    <a href="community/index.html">Community</a>
-    <a href="documents/index.html">Documents</a>
-    <a href="events/index.html">Events</a>
-    <a href="faq/index.html">FAQ</a>
-    <a href="finance/index.html">Finance</a>
-    <a href="feedback/index.html">Feedback</a>
-    <a href="favorites/index.html">Favorites</a>
-    <a href="help/index.html">Help</a>
-    <a href="languages/index.html">Languages</a>
-
-    <hr>
-
-    <a href="profile/index.html">Profile</a>
-    <a href="dashboard/index.html">Dashboard</a>
-    <a href="messages/index.html">Messages</a>
-    <a href="notifications/index.html">Notifications</a>
-    <a href="settings/index.html">Settings</a>
-
-    <hr>
-
-    <a href="contact/index.html">Contact</a>
-    <a href="support/index.html">Support</a>
-    <a href="privacy/index.html">Privacy</a>
-    <a href="legal/index.html">Legal</a>
-    <a href="security/index.html">Security</a>
-
-</div>
-
-
-<!-- MAIN CONTENT -->
-<main class="main">
-
-<section class="hero">
-
-    <h1>WORKER PRO</h1>
-
-    <p>Работа. Знания. Производство.</p>
-
-    <p>
-        Международная промышленная платформа
-        для рабочих, инженеров, производителей и поставщиков.
-    </p>
-
-    <div class="search-box">
+    <div class="search">
 
         <input
-            id="searchInput"
             type="text"
-            placeholder="Поиск: насос, станок, подшипник, запчасть..."
+            id="searchInput"
+            placeholder="Поиск раздела..."
         >
 
-        <button onclick="doSearch()">Поиск</button>
+        <button onclick="searchSections()">
+            🔎 Найти
+        </button>
 
     </div>
 
-</section>
+
+    <!-- ALPHABETICAL CATALOG -->
+
+    <div class="catalog">
 
 
-<h2 class="section-title">Промышленность</h2>
+        <!-- A — C -->
 
-<div class="grid">
+        <div class="column">
 
-    <div class="card">
-        <h3>Production</h3>
-        <p>Производственные технологии и направления промышленности.</p>
-        <a href="production/index.html">Открыть</a>
+            <h2>A — C</h2>
+
+            <a class="section-link" href="about/index.html">About</a>
+            <a class="section-link" href="admin/index.html">Admin</a>
+            <a class="section-link" href="advertising/index.html">Advertising</a>
+            <a class="section-link" href="alerts/index.html">Alerts</a>
+            <a class="section-link" href="analytics/index.html">Analytics</a>
+            <a class="section-link" href="applications/index.html">Applications</a>
+            <a class="section-link" href="articles/index.html">Articles</a>
+            <a class="section-link" href="brands/index.html">Brands</a>
+            <a class="section-link" href="carriers/index.html">Carriers</a>
+            <a class="section-link" href="catalog/index.html">Catalog</a>
+            <a class="section-link" href="categories/index.html">Categories</a>
+            <a class="section-link" href="certificates/index.html">Certificates</a>
+            <a class="section-link" href="claims/index.html">Claims</a>
+            <a class="section-link" href="comyunity/index.html">Community</a>
+            <a class="section-link" href="companies/index.html">Companies</a>
+            <a class="section-link" href="company-profile/index.html">Company Profile</a>
+            <a class="section-link" href="contact/index.html">Contact</a>
+            <a class="section-link" href="contracts/index.html">Contracts</a>
+
+        </div>
+
+
+        <!-- D — L -->
+
+        <div class="column">
+
+            <h2>D — L</h2>
+
+            <a class="section-link" href="dashboard/index.html">Dashboard</a>
+            <a class="section-link" href="delivery/index.html">Delivery</a>
+            <a class="section-link" href="disputes/index.html">Disputes</a>
+            <a class="section-link" href="documents/index.html">Documents</a>
+            <a class="section-link" href="equipment/index.html">Equipment</a>
+            <a class="section-link" href="events/index.html">Events</a>
+            <a class="section-link" href="faq/index.html">FAQ</a>
+            <a class="section-link" href="favorites/index.html">Favorites</a>
+            <a class="section-link" href="feedback/index.html">Feedback</a>
+            <a class="section-link" href="finance/index.html">Finance</a>
+            <a class="section-link" href="help/index.html">Help</a>
+            <a class="section-link" href="industries/index.html">Industries</a>
+            <a class="section-link" href="integrations/index.html">Integrations</a>
+            <a class="section-link" href="invertory/index.html">Inventory</a>
+            <a class="section-link" href="invoices/index.html">Invoices</a>
+            <a class="section-link" href="jobs/index.html">Jobs</a>
+            <a class="section-link" href="languages/index.html">Languages</a>
+            <a class="section-link" href="legal/index.html">Legal</a>
+            <a class="section-link" href="locations/index.html">Locations</a>
+            <a class="section-link" href="logistics/index.html">Logistics</a>
+
+        </div>
+
+
+        <!-- M — S -->
+
+        <div class="column">
+
+            <h2>M — S</h2>
+
+            <a class="section-link" href="maintennances/index.html">Maintenances</a>
+            <a class="section-link" href="manufacturers/index.html">Manufacturers</a>
+            <a class="section-link" href="map/index.html">Map</a>
+            <a class="section-link" href="marketplace/index.html">Marketplace</a>
+            <a class="section-link" href="materials/index.html">Materials</a>
+            <a class="section-link" href="messages/index.html">Messages</a>
+            <a class="section-link" href="moderation/index.html">Moderation</a>
+            <a class="section-link" href="news/index.html">News</a>
+            <a class="section-link" href="notifications/index.html">Notifications</a>
+            <a class="section-link" href="offers/index.html">Offers</a>
+            <a class="section-link" href="orders/index.html">Orders</a>
+            <a class="section-link" href="partners/index.html">Partners</a>
+            <a class="section-link" href="payments/index.html">Payments</a>
+            <a class="section-link" href="pricing/index.html">Pricing</a>
+            <a class="section-link" href="privacy/index.html">Privacy</a>
+            <a class="section-link" href="problems/index.html">Problems</a>
+            <a class="section-link" href="production/index.html">Production</a>
+            <a class="section-link" href="products/index.html">Products</a>
+            <a class="section-link" href="profile/index.html">Profile</a>
+            <a class="section-link" href="quotes/index.html">Quotes</a>
+            <a class="section-link" href="register/index.html">Register</a>
+            <a class="section-link" href="reports/index.html">Reports</a>
+            <a class="section-link" href="requests/index.html">Requests</a>
+            <a class="section-link" href="requests-board/index.html">Requests Board</a>
+            <a class="section-link" href="returns/index.html">Returns</a>
+            <a class="section-link" href="reviews/index.html">Reviews</a>
+            <a class="section-link" href="rfq/index.html">RFQ</a>
+            <a class="section-link" href="safety/index.html">Safety</a>
+            <a class="section-link" href="search/index.html">Search</a>
+            <a class="section-link" href="security/index.html">Security</a>
+            <a class="section-link" href="service-centers/index.html">Service Centers</a>
+            <a class="section-link" href="services/index.html">Services</a>
+            <a class="section-link" href="settings/index.html">Settings</a>
+            <a class="section-link" href="shipments/index.html">Shipments</a>
+            <a class="section-link" href="spare%20-%20prts/index.html">Spare Parts</a>
+            <a class="section-link" href="specialists/index.html">Specialists</a>
+            <a class="section-link" href="subscriptions/index.html">Subscriptions</a>
+            <a class="section-link" href="supppliers/index.html">Suppliers</a>
+            <a class="section-link" href="support/index.html">Support</a>
+
+        </div>
+
+
+        <!-- T — W -->
+
+        <div class="column">
+
+            <h2>T — W</h2>
+
+            <a class="section-link" href="tecnologies/index.html">Technologies</a>
+            <a class="section-link" href="tracking/index.html">Tracking</a>
+            <a class="section-link" href="training/index.html">Training</a>
+            <a class="section-link" href="training-courses/index.html">Training Courses</a>
+            <a class="section-link" href="transactions/index.html">Transactions</a>
+            <a class="section-link" href="transport/index.html">Transport</a>
+            <a class="section-link" href="transport-booking/index.html">Transport Booking</a>
+            <a class="section-link" href="vacancies/index.html">Vacancies</a>
+            <a class="section-link" href="verification/index.html">Verification</a>
+            <a class="section-link" href="wallet/index.html">Wallet</a>
+            <a class="section-link" href="warehouses/index.html">Warehouses</a>
+            <a class="section-link" href="waranty/index.html">Warranty</a>
+
+        </div>
+
     </div>
-
-    <div class="card">
-        <h3>Spare Parts</h3>
-        <p>Промышленные запасные части и комплектующие.</p>
-        <a href="spare%20-%20prts/index.html">Открыть</a>
-    </div>
-
-    <div class="card">
-        <h3>Companies</h3>
-        <p>Компании, производители и поставщики.</p>
-        <a href="companies/index.html">Открыть</a>
-    </div>
-
-    <div class="card">
-        <h3>Specialists</h3>
-        <p>Специалисты различных промышленных профессий.</p>
-        <a href="specialists/index.html">Открыть</a>
-    </div>
-
-    <div class="card">
-        <h3>Training</h3>
-        <p>Обучение, технологии, безопасность и профессиональные знания.</p>
-        <a href="training/index.html">Открыть</a>
-    </div>
-
-    <div class="card">
-        <h3>Logistics</h3>
-        <p>Транспортировка и доставка промышленных товаров.</p>
-        <a href="logistics/index.html">Открыть</a>
-    </div>
-
-</div>
-
-
-<h2 class="section-title">Проблемы и решения</h2>
-
-<div class="grid">
-
-    <div class="card">
-        <h3>Equipment Problems</h3>
-        <p>Поиск решений производственных проблем.</p>
-        <a href="problems/index.html">Открыть</a>
-    </div>
-
-    <div class="card">
-        <h3>Requests</h3>
-        <p>Запросы на товары, оборудование и услуги.</p>
-        <a href="requests/index.html">Открыть</a>
-    </div>
-
-    <div class="card">
-        <h3>RFQ</h3>
-        <p>Запрос цены у поставщиков.</p>
-        <a href="rfq/index.html">Открыть</a>
-    </div>
-
-    <div class="card">
-        <h3>Offers</h3>
-        <p>Коммерческие предложения поставщиков.</p>
-        <a href="offers/index.html">Открыть</a>
-    </div>
-
-</div>
-
-
-<div class="flow">
-
-    <h2 class="section-title">Как работает WORKER PRO</h2>
-
-    <ol>
-        <li>Выбор языка и страны.</li>
-        <li>Поиск продукции и запчастей.</li>
-        <li>Выбор производителя или поставщика.</li>
-        <li>Отправка запроса.</li>
-        <li>Получение цены и условий.</li>
-        <li>Организация транспорта.</li>
-        <li>Доставка товара.</li>
-    </ol>
-
-</div>
-
-
-<footer>
-    <strong>WORKER PRO</strong>
-    <br><br>
-    Global Industrial Platform
-    <br><br>
-    F.S
-</footer>
 
 </main>
 
 
+<footer>
+    WORKER PRO © 2026
+</footer>
+
+
 <script>
 
-function doSearch(){
+function searchSections() {
 
-    const value =
-        document.getElementById("searchInput").value.trim();
+    const input =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
 
-    if(!value){
-        return;
-    }
+    const links =
+        document.querySelectorAll(".section-link");
 
-    window.location.href =
-        "search/index.html?q=" +
-        encodeURIComponent(value);
+    links.forEach(function(link) {
+
+        const text =
+            link.textContent.toLowerCase();
+
+        if (
+            input === "" ||
+            text.includes(input)
+        ) {
+            link.style.display = "block";
+        } else {
+            link.style.display = "none";
+        }
+
+    });
+
 }
 
 document
 .getElementById("searchInput")
-.addEventListener("keydown",function(event){
-
-    if(event.key === "Enter"){
-        doSearch();
-    }
-
-});
+.addEventListener(
+    "input",
+    searchSections
+);
 
 </script>
 
