@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Tracking</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2,
+h3 {
+    color: #063d25;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.number {
+    font-size: 28px;
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-box input,
+.search-box select {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tracking-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+}
+
+.tracking-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 5px solid #0b6b3d;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #e9f6ed;
+    color: #0b6b3d;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.status-delayed {
+    background: #ffe7e7;
+    color: #a40000;
+}
+
+.status-delivered {
+    background: #e6f4ea;
+    color: #08752b;
+}
+
+.progress {
+    width: 100%;
+    height: 12px;
+    background: #e2e8e4;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 12px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #0b6b3d;
+    border-radius: 10px;
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a,
+.back {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back {
+    margin-top: 5px;
+}
+
+.notice {
+    background: #fff8df;
+    border-left: 5px solid #e2b400;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Tracking</h1>
+
+<p>Отслеживание промышленных грузов и заказов</p>
+
+<div class="languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Система отслеживания</h2>
+
+<p>
+WORKER PRO Tracking позволяет отслеживать
+заказы, промышленные запчасти, оборудование
+и другие грузы от отправителя до склада получателя.
+</p>
+
+<div class="notice">
+Демонстрационная версия. В будущем Tracking будет
+подключён к реальным перевозчикам, картам,
+логистике и системе заказов.
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="number">8,420</div>
+<p>Всего отправлений</p>
+</div>
+
+<div class="stat">
+<div class="number">2,180</div>
+<p>В пути</p>
+</div>
+
+<div class="stat">
+<div class="number">5,720</div>
+<p>Доставлено</p>
+</div>
+
+<div class="stat">
+<div class="number">96</div>
+<p>Задержано</p>
+</div>
+
+<div class="stat">
+<div class="number">48</div>
+<p>Стран</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Найти отправление</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="trackingNumber"
+placeholder="Введите номер TRK-2026-001"
+>
+
+<button onclick="trackShipment()">
+Отследить
+</button>
+
+</div>
+
+</div>
+
+<h2>Активные отправления</h2>
+
+<div class="tracking-grid">
+
+<div class="tracking-card">
+
+<h3>TRK-2026-001</h3>
+
+<p><strong>Груз:</strong> Hydraulic Spare Parts</p>
+
+<p><strong>Маршрут:</strong> Istanbul → Baku</p>
+
+<p><strong>Транспорт:</strong> Truck</p>
+
+<p><strong>ETA:</strong> 22 Sep 2026</p>
+
+<span class="status">In Transit</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:65%;"></div>
+</div>
+
+<p><strong>Прогресс:</strong> 65%</p>
+
+<button onclick="showTracking('TRK-2026-001')">
+Подробнее
+</button>
+
+</div>
+
+<div class="tracking-card">
+
+<h3>TRK-2026-002</h3>
+
+<p><strong>Груз:</strong> CNC Components</p>
+
+<p><strong>Маршрут:</strong> Dortmund → Baku</p>
+
+<p><strong>Транспорт:</strong> Truck</p>
+
+<p><strong>ETA:</strong> 25 Sep 2026</p>
+
+<span class="status">In Transit</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:48%;"></div>
+</div>
+
+<p><strong>Прогресс:</strong> 48%</p>
+
+<button onclick="showTracking('TRK-2026-002')">
+Подробнее
+</button>
+
+</div>
+
+<div class="tracking-card">
+
+<h3>TRK-2026-003</h3>
+
+<p><strong>Груз:</strong> Industrial Pump</p>
+
+<p><strong>Маршрут:</strong> Milan → Baku</p>
+
+<p><strong>Транспорт:</strong> Air</p>
+
+<p><strong>Дата:</strong> 18 Sep 2026</p>
+
+<span class="status status-delivered">
+Delivered
+</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:100%;"></div>
+</div>
+
+<p><strong>Прогресс:</strong> 100%</p>
+
+<button onclick="showTracking('TRK-2026-003')">
+Подробнее
+</button>
+
+</div>
+
+<div class="tracking-card">
+
+<h3>TRK-2026-004</h3>
+
+<p><strong>Груз:</strong> Industrial Equipment</p>
+
+<p><strong>Маршрут:</strong> Shanghai → Baku</p>
+
+<p><strong>Транспорт:</strong> Sea</p>
+
+<p><strong>ETA:</strong> 15 Oct 2026</p>
+
+<span class="status">In Transit</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:36%;"></div>
+</div>
+
+<p><strong>Прогресс:</strong> 36%</p>
+
+<button onclick="showTracking('TRK-2026-004')">
+Подробнее
+</button>
+
+</div>
+
+<div class="tracking-card">
+
+<h3>TRK-2026-005</h3>
+
+<p><strong>Груз:</strong> Electrical Components</p>
+
+<p><strong>Маршрут:</strong> Houston → Baku</p>
+
+<p><strong>Транспорт:</strong> Sea</p>
+
+<p><strong>Причина:</strong> Customs Delay</p>
+
+<span class="status status-delayed">
+Delayed
+</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:58%;"></div>
+</div>
+
+<p><strong>Прогресс:</strong> 58%</p>
+
+<button onclick="showTracking('TRK-2026-005')">
+Подробнее
+</button>
+
+</div>
+
+<div class="tracking-card">
+
+<h3>TRK-2026-006</h3>
+
+<p><strong>Груз:</strong> Industrial Sensors</p>
+
+<p><strong>Маршрут:</strong> Ankara → Baku</p>
+
+<p><strong>Транспорт:</strong> Truck</p>
+
+<p><strong>Дата:</strong> 19 Sep 2026</p>
+
+<span class="status status-delivered">
+Delivered
+</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:100%;"></div>
+</div>
+
+<p><strong>Прогресс:</strong> 100%</p>
+
+<button onclick="showTracking('TRK-2026-006')">
+Подробнее
+</button>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Добавить отправление</h2>
+
+<input
+type="text"
+id="shipmentNumber"
+placeholder="Номер отправления"
+>
+
+<input
+type="text"
+id="shipmentOrder"
+placeholder="Номер заказа"
+>
+
+<input
+type="text"
+id="shipmentFrom"
+placeholder="Откуда"
+>
+
+<input
+type="text"
+id="shipmentTo"
+placeholder="Куда"
+>
+
+<select id="transportType">
+
+<option value="">Выберите транспорт</option>
+<option>Truck</option>
+<option>Air</option>
+<option>Sea</option>
+<option>Rail</option>
+</select>
+
+<textarea
+id="shipmentDetails"
+rows="4"
+placeholder="Описание груза"
+></textarea>
+
+<button onclick="addShipment()">
+Добавить отправление
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="links">
+
+<a href="../orders/index.html">Orders</a>
+
+<a href="../logistics/index.html">Logistics</a>
+
+<a href="../transport/index.html">Transport</a>
+
+<a href="../transport-booking/index.html">Transport Booking</a>
+
+<a href="../delivery/index.html">Delivery</a>
+
+<a href="../shipments/index.html">Shipments</a>
+
+<a href="../warehouses/index.html">Warehouses</a>
+
+<a href="../carriers/index.html">Carriers</a>
+
+<a href="../locations/index.html">Locations</a>
+
+<a href="../map/index.html">Map</a>
+
+<a href="../documents/index.html">Documents</a>
+
+<a href="../notifications/index.html">Notifications</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на главную
+</a>
+
+</main>
+
+<footer>
+
+© 2026 <span>WORKER PRO</span> — Industrial Platform
+
+</footer>
+
+<script>
+
+function trackShipment() {
+
+let number =
+document.getElementById("trackingNumber").value.trim();
+
+if (!number) {
+
+alert("Введите номер отправления.");
+
+return;
+
+}
+
+alert(
+"WORKER PRO — Tracking\n\n" +
+"Номер: " + number +
+"\n\nПоиск отправления выполнен.\n" +
+"В будущей версии здесь будет показан " +
+"реальный маршрут и статус груза."
+);
+
+}
+
+function showTracking(number) {
+
+alert(
+"WORKER PRO — Tracking\n\n" +
+"Отправление: " + number +
+"\n\nВ будущей версии здесь будет:\n" +
+"• маршрут\n" +
+"• местоположение\n" +
+"• история движения\n" +
+"• транспорт\n" +
+"• ETA\n" +
+"• документы\n" +
+"• статус доставки"
+);
+
+}
+
+function addShipment() {
+
+let number =
+document.getElementById("shipmentNumber").value;
+
+let order =
+document.getElementById("shipmentOrder").value;
+
+let from =
+document.getElementById("shipmentFrom").value;
+
+let to =
+document.getElementById("shipmentTo").value;
+
+let transport =
+document.getElementById("transportType").value;
+
+let details =
+document.getElementById("shipmentDetails").value;
+
+if (
+!number ||
+!order ||
+!from ||
+!to ||
+!transport ||
+!details
+) {
+
+alert("Заполните все поля.");
+
+return;
+
+}
+
+alert(
+"Отправление создано!\n\n" +
+"Tracking: " + number +
+"\nOrder: " + order +
+"\nМаршрут: " + from + " → " + to +
+"\nТранспорт: " + transport +
+"\n\nВ будущей версии данные будут " +
+"сохранены в системе Tracking."
+);
+
+}
+
+</script>
+
+</body>
+</html>
