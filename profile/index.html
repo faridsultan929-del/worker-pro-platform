@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Profile</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.profile-header {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+    border-radius: 50%;
+    background: #0b6b3d;
+    color: #b7ff35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 38px;
+    font-weight: bold;
+}
+
+.profile-header h2 {
+    color: #063d25;
+    margin-bottom: 5px;
+}
+
+.role {
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.card p {
+    line-height: 1.5;
+}
+
+.stats {
+    font-size: 26px;
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-top: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.form-box button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.links a,
+.back {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back {
+    margin-top: 25px;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Profile</h1>
+
+<p>Профиль пользователя и специалиста</p>
+
+<div class="languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="profile-header">
+
+<div class="avatar">WP</div>
+
+<h2>WORKER PRO User</h2>
+
+<div class="role">Industrial Specialist</div>
+
+<p>Baku, Azerbaijan</p>
+
+<p>
+Профиль пользователя платформы WORKER PRO.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Профиль</h3>
+
+<p><strong>Имя:</strong> WORKER PRO User</p>
+
+<p><strong>Страна:</strong> Azerbaijan</p>
+
+<p><strong>Город:</strong> Baku</p>
+
+<p><strong>Специализация:</strong> Manufacturing</p>
+
+</div>
+
+<div class="card">
+
+<h3>Опыт</h3>
+
+<div class="stats">10+</div>
+
+<p>лет промышленного опыта</p>
+
+</div>
+
+<div class="card">
+
+<h3>Навыки</h3>
+
+<p>
+CNC<br>
+Production<br>
+Stamping<br>
+Manufacturing<br>
+Industrial Equipment
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Активность</h3>
+
+<p><strong>Заявки:</strong> 12</p>
+
+<p><strong>Заказы:</strong> 8</p>
+
+<p><strong>Предложения:</strong> 15</p>
+
+<p><strong>Сообщения:</strong> 24</p>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Редактировать профиль</h2>
+
+<input
+type="text"
+id="name"
+placeholder="Имя и фамилия"
+>
+
+<input
+type="text"
+id="country"
+placeholder="Страна"
+>
+
+<input
+type="text"
+id="city"
+placeholder="Город"
+>
+
+<select id="role">
+
+<option value="">Выберите роль</option>
+<option>Specialist</option>
+<option>Engineer</option>
+<option>Manufacturer</option>
+<option>Supplier</option>
+<option>Company</option>
+<option>Transport Partner</option>
+
+</select>
+
+<input
+type="text"
+id="specialization"
+placeholder="Специализация"
+>
+
+<textarea
+id="about"
+rows="4"
+placeholder="О себе и профессиональном опыте"
+></textarea>
+
+<button onclick="saveProfile()">
+Сохранить профиль
+</button>
+
+</div>
+
+<div class="card" style="margin-top:20px;">
+
+<h3>Разделы профиля</h3>
+
+<div class="links">
+
+<a href="../dashboard/index.html">Dashboard</a>
+
+<a href="../companies/index.html">Companies</a>
+
+<a href="../specialists/index.html">Specialists</a>
+
+<a href="../jobs/index.html">Jobs</a>
+
+<a href="../favorites/index.html">Favorites</a>
+
+<a href="../messages/index.html">Messages</a>
+
+<a href="../notifications/index.html">Notifications</a>
+
+<a href="../settings/index.html">Settings</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на главную
+</a>
+
+</main>
+
+<footer>
+
+© 2026 <span>WORKER PRO</span> — Industrial Platform
+
+</footer>
+
+<script>
+
+function saveProfile() {
+
+let name = document.getElementById("name").value;
+let country = document.getElementById("country").value;
+let city = document.getElementById("city").value;
+let role = document.getElementById("role").value;
+let specialization = document.getElementById("specialization").value;
+
+if (!name || !country || !role) {
+
+alert(
+"Заполните имя, страну и роль пользователя."
+);
+
+return;
+
+}
+
+alert(
+"Профиль сохранён!\n\n" +
+"Имя: " + name +
+"\nСтрана: " + country +
+"\nГород: " + (city || "Не указан") +
+"\nРоль: " + role +
+"\nСпециализация: " +
+(specialization || "Не указана") +
+"\n\nВ будущем данные будут сохраняться в аккаунте WORKER PRO."
+);
+
+}
+
+</script>
+
+</body>
+</html>
