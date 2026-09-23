@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Security</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2,
+h3 {
+    color: #063d25;
+}
+
+.security-notice {
+    background: #fff8df;
+    border-left: 5px solid #d89b00;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.number {
+    font-size: 28px;
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 18px;
+}
+
+.security-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 5px solid #0b6b3d;
+}
+
+.security-card h3 {
+    margin-top: 5px;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #e9f6ed;
+    color: #0b6b3d;
+    font-weight: bold;
+    margin-top: 7px;
+}
+
+.security-card button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.form-box button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a,
+.back {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back {
+    margin-top: 5px;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Security</h1>
+
+<p>Безопасность аккаунтов, данных и промышленной платформы</p>
+
+<div class="languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Безопасность WORKER PRO</h2>
+
+<p>
+Раздел предназначен для защиты аккаунтов,
+компаний, документов, сообщений, заказов,
+платежей и других данных платформы.
+</p>
+
+<div class="security-notice">
+<strong>Важно:</strong> текущая страница является
+демонстрационной. Реальная система безопасности
+потребует серверной авторизации, шифрования,
+контроля доступа, журналирования и других
+механизмов защиты.
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="number">100%</div>
+<p>Защита интерфейса</p>
+</div>
+
+<div class="stat">
+<div class="number">24/7</div>
+<p>Мониторинг</p>
+</div>
+
+<div class="stat">
+<div class="number">2FA</div>
+<p>Будущая функция</p>
+</div>
+
+<div class="stat">
+<div class="number">SSL</div>
+<p>HTTPS</p>
+</div>
+
+</div>
+
+<div class="grid">
+
+<div class="security-card">
+
+<h3>Защита аккаунта</h3>
+
+<p>
+Пароль, авторизация, выход из аккаунта
+и управление активными сессиями.
+</p>
+
+<span class="status">Account Security</span>
+
+<br>
+
+<button onclick="securityInfo('Account')">
+Подробнее
+</button>
+
+</div>
+
+<div class="security-card">
+
+<h3>Двухфакторная авторизация</h3>
+
+<p>
+Дополнительная проверка пользователя
+при входе в аккаунт.
+</p>
+
+<span class="status">2FA — Planned</span>
+
+<br>
+
+<button onclick="securityInfo('2FA')">
+Подробнее
+</button>
+
+</div>
+
+<div class="security-card">
+
+<h3>Защита платежей</h3>
+
+<p>
+Безопасная обработка информации,
+связанной с заказами и платежами.
+</p>
+
+<span class="status">Payments</span>
+
+<br>
+
+<button onclick="securityInfo('Payments')">
+Подробнее
+</button>
+
+</div>
+
+<div class="security-card">
+
+<h3>Защита документов</h3>
+
+<p>
+Контроль доступа к счетам, контрактам,
+сертификатам и другим документам.
+</p>
+
+<span class="status">Documents</span>
+
+<br>
+
+<button onclick="securityInfo('Documents')">
+Подробнее
+</button>
+
+</div>
+
+<div class="security-card">
+
+<h3>Защита сообщений</h3>
+
+<p>
+Контроль доступа к переписке между
+покупателями, компаниями и поставщиками.
+</p>
+
+<span class="status">Messages</span>
+
+<br>
+
+<button onclick="securityInfo('Messages')">
+Подробнее
+</button>
+
+</div>
+
+<div class="security-card">
+
+<h3>Контроль доступа</h3>
+
+<p>
+Разные уровни доступа для пользователей,
+компаний, администраторов и специалистов.
+</p>
+
+<span class="status">Access Control</span>
+
+<br>
+
+<button onclick="securityInfo('Access')">
+Подробнее
+</button>
+
+</div>
+
+<div class="security-card">
+
+<h3>Мониторинг активности</h3>
+
+<p>
+Журналирование важных действий
+и обнаружение подозрительной активности.
+</p>
+
+<span class="status">Monitoring</span>
+
+<br>
+
+<button onclick="securityInfo('Monitoring')">
+Подробнее
+</button>
+
+</div>
+
+<div class="security-card">
+
+<h3>Защита от мошенничества</h3>
+
+<p>
+Проверка подозрительных действий,
+объявлений, компаний и операций.
+</p>
+
+<span class="status">Fraud Protection</span>
+
+<br>
+
+<button onclick="securityInfo('Fraud')">
+Подробнее
+</button>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Сообщить о проблеме безопасности</h2>
+
+<input
+type="text"
+id="subject"
+placeholder="Тема проблемы"
+>
+
+<select id="category">
+
+<option value="">Категория</option>
+<option>Аккаунт</option>
+<option>Платежи</option>
+<option>Документы</option>
+<option>Сообщения</option>
+<option>Компания</option>
+<option>Подозрительная активность</option>
+<option>Другая проблема</option>
+
+</select>
+
+<select id="priority">
+
+<option value="">Приоритет</option>
+<option>Низкий</option>
+<option>Средний</option>
+<option>Высокий</option>
+<option>Критический</option>
+
+</select>
+
+<textarea
+id="description"
+rows="5"
+placeholder="Опишите проблему безопасности"
+></textarea>
+
+<button onclick="reportSecurity()">
+Отправить сообщение
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>Связанные разделы</h3>
+
+<div class="links">
+
+<a href="../login/index.html">Login</a>
+
+<a href="../profile/index.html">Profile</a>
+
+<a href="../settings/index.html">Settings</a>
+
+<a href="../privacy/index.html">Privacy</a>
+
+<a href="../legal/index.html">Legal</a>
+
+<a href="../admin/index.html">Admin</a>
+
+<a href="../moderation/index.html">Moderation</a>
+
+<a href="../notifications/index.html">Notifications</a>
+
+<a href="../support/index.html">Support</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на главную
+</a>
+
+</main>
+
+<footer>
+
+© 2026 <span>WORKER PRO</span> — Industrial Platform
+
+</footer>
+
+<script>
+
+function securityInfo(topic) {
+
+alert(
+"Security: " + topic +
+"\n\nВ будущей версии здесь будет полноценная система безопасности WORKER PRO."
+);
+
+}
+
+function reportSecurity() {
+
+let subject =
+document.getElementById("subject").value;
+
+let category =
+document.getElementById("category").value;
+
+let priority =
+document.getElementById("priority").value;
+
+let description =
+document.getElementById("description").value;
+
+if (!subject || !category || !priority || !description) {
+
+alert(
+"Заполните тему, категорию, приоритет и описание проблемы."
+);
+
+return;
+
+}
+
+alert(
+"Сообщение о безопасности создано!\n\n" +
+"Тема: " + subject +
+"\nКатегория: " + category +
+"\nПриоритет: " + priority +
+"\n\nДемонстрационная версия WORKER PRO."
+);
+
+}
+
+</script>
+
+</body>
+</html>
