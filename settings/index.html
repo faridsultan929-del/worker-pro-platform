@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Settings</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card,
+.settings-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2,
+h3 {
+    color: #063d25;
+}
+
+.settings-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+}
+
+.setting-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    border-left: 5px solid #0b6b3d;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.setting-card h3 {
+    margin-top: 0;
+}
+
+.setting-card p {
+    line-height: 1.5;
+}
+
+.setting-row {
+    margin: 15px 0;
+}
+
+.setting-row label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+    color: #063d25;
+}
+
+.setting-row select,
+.setting-row input[type="text"],
+.setting-row input[type="email"] {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.switch-row:last-child {
+    border-bottom: none;
+}
+
+.switch {
+    position: relative;
+    width: 52px;
+    height: 28px;
+    flex-shrink: 0;
+}
+
+.switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background: #bbb;
+    border-radius: 30px;
+    transition: .3s;
+}
+
+.slider:before {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: 3px;
+    top: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: .3s;
+}
+
+.switch input:checked + .slider {
+    background: #0b6b3d;
+}
+
+.switch input:checked + .slider:before {
+    transform: translateX(24px);
+}
+
+.button {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    text-decoration: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.button-danger {
+    background: #9d2b2b;
+}
+
+.button-secondary {
+    background: #063d25;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 5px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.notice {
+    background: #fff8df;
+    border-left: 5px solid #d89b00;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Settings</h1>
+
+<p>Настройки аккаунта и платформы</p>
+
+<div class="languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Настройки WORKER PRO</h2>
+
+<p>
+В этом разделе пользователь сможет управлять
+языком, уведомлениями, безопасностью, профилем,
+приватностью и другими параметрами аккаунта.
+</p>
+
+<div class="notice">
+<strong>Демонстрационная версия:</strong>
+сейчас настройки работают локально в интерфейсе.
+После подключения серверной части изменения
+можно будет сохранять в аккаунте пользователя.
+</div>
+
+</div>
+
+<div class="settings-grid">
+
+<div class="setting-card">
+
+<h3>🌐 Язык платформы</h3>
+
+<div class="setting-row">
+
+<label for="language">
+Основной язык
+</label>
+
+<select id="language">
+
+<option value="AZ">Azərbaycan — AZ</option>
+<option value="RU" selected>Русский — RU</option>
+<option value="EN">English — EN</option>
+<option value="TR">Türkçe — TR</option>
+<option value="DE">Deutsch — DE</option>
+<option value="AR">العربية — AR</option>
+<option value="ES">Español — ES</option>
+<option value="FR">Français — FR</option>
+<option value="IT">Italiano — IT</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="setting-card">
+
+<h3>👤 Профиль</h3>
+
+<div class="setting-row">
+
+<label for="name">
+Имя пользователя
+</label>
+
+<input
+type="text"
+id="name"
+value="WORKER PRO User"
+>
+
+</div>
+
+<div class="setting-row">
+
+<label for="email">
+Email
+</label>
+
+<input
+type="email"
+id="email"
+value="user@example.com"
+>
+
+</div>
+
+</div>
+
+<div class="setting-card">
+
+<h3>🔔 Уведомления</h3>
+
+<div class="switch-row">
+
+<span>Заказы</span>
+
+<label class="switch">
+<input type="checkbox" id="orders" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+<div class="switch-row">
+
+<span>Сообщения</span>
+
+<label class="switch">
+<input type="checkbox" id="messages" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+<div class="switch-row">
+
+<span>Предложения</span>
+
+<label class="switch">
+<input type="checkbox" id="offers" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+<div class="switch-row">
+
+<span>Новости</span>
+
+<label class="switch">
+<input type="checkbox" id="news">
+<span class="slider"></span>
+</label>
+
+</div>
+
+</div>
+
+<div class="setting-card">
+
+<h3>🔒 Безопасность</h3>
+
+<div class="switch-row">
+
+<span>Уведомления о входе</span>
+
+<label class="switch">
+<input type="checkbox" id="loginAlerts" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+<div class="switch-row">
+
+<span>Двухфакторная защита</span>
+
+<label class="switch">
+<input type="checkbox" id="twoFactor">
+<span class="slider"></span>
+</label>
+
+</div>
+
+<p>
+Дополнительные функции безопасности
+будут подключены после создания серверной части.
+</p>
+
+<a class="button" href="../security/index.html">
+Security
+</a>
+
+</div>
+
+<div class="setting-card">
+
+<h3>🔐 Приватность</h3>
+
+<div class="switch-row">
+
+<span>Показывать профиль</span>
+
+<label class="switch">
+<input type="checkbox" id="publicProfile" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+<div class="switch-row">
+
+<span>Показывать компанию</span>
+
+<label class="switch">
+<input type="checkbox" id="publicCompany" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+<a class="button" href="../privacy/index.html">
+Privacy
+</a>
+
+</div>
+
+<div class="setting-card">
+
+<h3>💰 Валюта</h3>
+
+<div class="setting-row">
+
+<label for="currency">
+Основная валюта
+</label>
+
+<select id="currency">
+
+<option>AZN — Azerbaijani Manat</option>
+<option>USD — US Dollar</option>
+<option>EUR — Euro</option>
+<option>TRY — Turkish Lira</option>
+<option>GBP — British Pound</option>
+<option>CNY — Chinese Yuan</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="setting-card">
+
+<h3>📍 Регион</h3>
+
+<div class="setting-row">
+
+<label for="country">
+Страна
+</label>
+
+<select id="country">
+
+<option>Azerbaijan</option>
+<option>Türkiye</option>
+<option>Germany</option>
+<option>Italy</option>
+<option>China</option>
+<option>USA</option>
+<option>Other</option>
+
+</select>
+
+</div>
+
+<div class="setting-row">
+
+<label for="city">
+Город
+</label>
+
+<input
+type="text"
+id="city"
+value="Baku"
+>
+
+</div>
+
+</div>
+
+<div class="setting-card">
+
+<h3>📦 Заказы и логистика</h3>
+
+<div class="switch-row">
+
+<span>Обновления заказов</span>
+
+<label class="switch">
+<input type="checkbox" id="orderUpdates" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+<div class="switch-row">
+
+<span>Tracking</span>
+
+<label class="switch">
+<input type="checkbox" id="tracking" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+<div class="switch-row">
+
+<span>Изменения доставки</span>
+
+<label class="switch">
+<input type="checkbox" id="delivery" checked>
+<span class="slider"></span>
+</label>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="settings-box">
+
+<h2>Сохранить настройки</h2>
+
+<p>
+После сохранения выбранные параметры будут
+использованы в демонстрационной версии страницы.
+</p>
+
+<button class="button" onclick="saveSettings()">
+Сохранить настройки
+</button>
+
+<button class="button button-secondary" onclick="resetSettings()">
+Сбросить
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Аккаунт</h2>
+
+<p>
+Здесь в будущем будут доступны изменение пароля,
+выход со всех устройств, удаление аккаунта
+и другие действия управления аккаунтом.
+</p>
+
+<a class="button" href="../profile/index.html">
+Профиль
+</a>
+
+<a class="button" href="../login/index.html">
+Login
+</a>
+
+<button class="button button-danger" onclick="logoutDemo()">
+Выйти
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="links">
+
+<a href="../profile/index.html">Profile</a>
+
+<a href="../security/index.html">Security</a>
+
+<a href="../privacy/index.html">Privacy</a>
+
+<a href="../notifications/index.html">Notifications</a>
+
+<a href="../messages/index.html">Messages</a>
+
+<a href="../orders/index.html">Orders</a>
+
+<a href="../tracking/index.html">Tracking</a>
+
+<a href="../payments/index.html">Payments</a>
+
+<a href="../wallet/index.html">Wallet</a>
+
+<a href="../dashboard/index.html">Dashboard</a>
+
+<a href="../support/index.html">Support</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на главную
+</a>
+
+</main>
+
+<footer>
+
+© 2026 <span>WORKER PRO</span> — Industrial Platform
+
+</footer>
+
+<script>
+
+function saveSettings() {
+
+let language =
+document.getElementById("language").value;
+
+let currency =
+document.getElementById("currency").value;
+
+let country =
+document.getElementById("country").value;
+
+let city =
+document.getElementById("city").value;
+
+localStorage.setItem(
+"workerProLanguage",
+language
+);
+
+localStorage.setItem(
+"workerProCurrency",
+currency
+);
+
+localStorage.setItem(
+"workerProCountry",
+country
+);
+
+localStorage.setItem(
+"workerProCity",
+city
+);
+
+alert(
+"Настройки сохранены!\n\n" +
+"Язык: " + language +
+"\nВалюта: " + currency +
+"\nСтрана: " + country +
+"\nГород: " + city
+);
+
+}
+
+function resetSettings() {
+
+if (
+confirm("Сбросить демонстрационные настройки?")
+) {
+
+localStorage.removeItem("workerProLanguage");
+localStorage.removeItem("workerProCurrency");
+localStorage.removeItem("workerProCountry");
+localStorage.removeItem("workerProCity");
+
+location.reload();
+
+}
+
+}
+
+function logoutDemo() {
+
+alert(
+"Выход из аккаунта\n\n" +
+"Это демонстрационная функция WORKER PRO."
+);
+
+}
+
+window.onload = function() {
+
+let language =
+localStorage.getItem("workerProLanguage");
+
+let currency =
+localStorage.getItem("workerProCurrency");
+
+let country =
+localStorage.getItem("workerProCountry");
+
+let city =
+localStorage.getItem("workerProCity");
+
+if (language) {
+document.getElementById("language").value = language;
+}
+
+if (currency) {
+document.getElementById("currency").value = currency;
+}
+
+if (country) {
+document.getElementById("country").value = country;
+}
+
+if (city) {
+document.getElementById("city").value = city;
+}
+
+};
+
+</script>
+
+</body>
+</html>
