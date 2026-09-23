@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Specialists</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2,
+h3 {
+    color: #063d25;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.number {
+    font-size: 28px;
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-box input,
+.search-box select {
+    flex: 1;
+    min-width: 190px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.search-box button,
+.form-box button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+}
+
+.specialist-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 5px solid #0b6b3d;
+}
+
+.avatar {
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background: #0b6b3d;
+    color: #b7ff35;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #e9f6ed;
+    color: #0b6b3d;
+    font-weight: bold;
+    margin: 4px 0;
+}
+
+.rating {
+    color: #956800;
+    font-weight: bold;
+}
+
+.specialist-card button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a,
+.back {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back {
+    margin-top: 5px;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Specialists</h1>
+
+<p>Промышленные специалисты и профессионалы</p>
+
+<div class="languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Специалисты WORKER PRO</h2>
+
+<p>
+Здесь пользователи смогут находить специалистов
+по производству, CNC, сварке, автоматизации,
+электрике, ремонту и другим промышленным направлениям.
+</p>
+
+<p>
+Специалист сможет создать профиль, показать опыт,
+навыки, сертификаты и получать запросы от компаний.
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="number">8,640</div>
+<p>Специалистов</p>
+</div>
+
+<div class="stat">
+<div class="number">42</div>
+<p>Страны</p>
+</div>
+
+<div class="stat">
+<div class="number">185</div>
+<p>Специализаций</p>
+</div>
+
+<div class="stat">
+<div class="number">3,920</div>
+<p>Проверенных профилей</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск специалиста</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="search"
+placeholder="Имя, профессия, навык..."
+>
+
+<select id="specialization">
+
+<option value="">Все специализации</option>
+<option>CNC</option>
+<option>Welding</option>
+<option>Electrical</option>
+<option>Automation</option>
+<option>Mechanical</option>
+<option>Maintenance</option>
+<option>Quality Control</option>
+<option>Production</option>
+</select>
+
+<select id="country">
+
+<option value="">Все страны</option>
+<option>Azerbaijan</option>
+<option>Türkiye</option>
+<option>Germany</option>
+<option>Italy</option>
+<option>China</option>
+<option>USA</option>
+</select>
+
+<button onclick="searchSpecialists()">
+Найти
+</button>
+
+</div>
+
+</div>
+
+<div class="grid" id="specialistsGrid">
+
+<div class="specialist-card">
+
+<div class="avatar">AS</div>
+
+<h3>Ali S.</h3>
+
+<span class="badge">CNC Operator</span>
+
+<p><strong>Опыт:</strong> 12 лет</p>
+
+<p><strong>Навыки:</strong> CNC, Fanuc, Siemens, Turning</p>
+
+<p><strong>Город:</strong> Baku, Azerbaijan</p>
+
+<p class="rating">★ 4.9 / 5</p>
+
+<span class="badge">Проверен</span>
+
+<br>
+
+<button onclick="contactSpecialist('Ali S.')">
+Связаться
+</button>
+
+</div>
+
+<div class="specialist-card">
+
+<div class="avatar">MK</div>
+
+<h3>Mehmet K.</h3>
+
+<span class="badge">CNC Technician</span>
+
+<p><strong>Опыт:</strong> 10 лет</p>
+
+<p><strong>Навыки:</strong> CNC, Milling, Programming</p>
+
+<p><strong>Город:</strong> Istanbul, Türkiye</p>
+
+<p class="rating">★ 4.8 / 5</p>
+
+<span class="badge">Проверен</span>
+
+<br>
+
+<button onclick="contactSpecialist('Mehmet K.')">
+Связаться
+</button>
+
+</div>
+
+<div class="specialist-card">
+
+<div class="avatar">HS</div>
+
+<h3>Hans S.</h3>
+
+<span class="badge">Automation Engineer</span>
+
+<p><strong>Опыт:</strong> 15 лет</p>
+
+<p><strong>Навыки:</strong> PLC, Siemens, Robotics</p>
+
+<p><strong>Город:</strong> Dortmund, Germany</p>
+
+<p class="rating">★ 5.0 / 5</p>
+
+<span class="badge">Проверен</span>
+
+<br>
+
+<button onclick="contactSpecialist('Hans S.')">
+Связаться
+</button>
+
+</div>
+
+<div class="specialist-card">
+
+<div class="avatar">LM</div>
+
+<h3>Luca M.</h3>
+
+<span class="badge">Mechanical Engineer</span>
+
+<p><strong>Опыт:</strong> 14 лет</p>
+
+<p><strong>Навыки:</strong> Machinery, CAD, Maintenance</p>
+
+<p><strong>Город:</strong> Milan, Italy</p>
+
+<p class="rating">★ 4.9 / 5</p>
+
+<span class="badge">Проверен</span>
+
+<br>
+
+<button onclick="contactSpecialist('Luca M.')">
+Связаться
+</button>
+
+</div>
+
+<div class="specialist-card">
+
+<div class="avatar">ZW</div>
+
+<h3>Zhang W.</h3>
+
+<span class="badge">Automation Specialist</span>
+
+<p><strong>Опыт:</strong> 9 лет</p>
+
+<p><strong>Навыки:</strong> PLC, Sensors, Robotics</p>
+
+<p><strong>Город:</strong> Shenzhen, China</p>
+
+<p class="rating">★ 4.7 / 5</p>
+
+<span class="badge">Проверен</span>
+
+<br>
+
+<button onclick="contactSpecialist('Zhang W.')">
+Связаться
+</button>
+
+</div>
+
+<div class="specialist-card">
+
+<div class="avatar">JD</div>
+
+<h3>John D.</h3>
+
+<span class="badge">Electrical Engineer</span>
+
+<p><strong>Опыт:</strong> 11 лет</p>
+
+<p><strong>Навыки:</strong> Electrical, Sensors, Control Systems</p>
+
+<p><strong>Город:</strong> Houston, USA</p>
+
+<p class="rating">★ 4.8 / 5</p>
+
+<span class="badge">Проверен</span>
+
+<br>
+
+<button onclick="contactSpecialist('John D.')">
+Связаться
+</button>
+
+</div>
+
+<div class="specialist-card">
+
+<div class="avatar">RK</div>
+
+<h3>Rashad K.</h3>
+
+<span class="badge">Welding Specialist</span>
+
+<p><strong>Опыт:</strong> 16 лет</p>
+
+<p><strong>Навыки:</strong> MIG, TIG, Welding Inspection</p>
+
+<p><strong>Город:</strong> Baku, Azerbaijan</p>
+
+<p class="rating">★ 4.9 / 5</p>
+
+<span class="badge">Проверен</span>
+
+<br>
+
+<button onclick="contactSpecialist('Rashad K.')">
+Связаться
+</button>
+
+</div>
+
+<div class="specialist-card">
+
+<div class="avatar">EM</div>
+
+<h3>Elvin M.</h3>
+
+<span class="badge">Quality Control</span>
+
+<p><strong>Опыт:</strong> 8 лет</p>
+
+<p><strong>Навыки:</strong> Quality, Inspection, ISO</p>
+
+<p><strong>Город:</strong> Sumqayit, Azerbaijan</p>
+
+<p class="rating">★ 4.8 / 5</p>
+
+<span class="badge">Проверен</span>
+
+<br>
+
+<button onclick="contactSpecialist('Elvin M.')">
+Связаться
+</button>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Создать профиль специалиста</h2>
+
+<input
+type="text"
+id="name"
+placeholder="Имя и фамилия"
+>
+
+<input
+type="text"
+id="profession"
+placeholder="Профессия / специальность"
+>
+
+<select id="experience">
+
+<option value="">Опыт работы</option>
+<option>1–3 года</option>
+<option>3–5 лет</option>
+<option>5–10 лет</option>
+<option>10–15 лет</option>
+<option>15+ лет</option>
+
+</select>
+
+<input
+type="text"
+id="skills"
+placeholder="Навыки"
+>
+
+<input
+type="text"
+id="city"
+placeholder="Город"
+>
+
+<input
+type="text"
+id="countryForm"
+placeholder="Страна"
+>
+
+<textarea
+id="about"
+rows="4"
+placeholder="Опыт, образование, сертификаты и дополнительная информация"
+></textarea>
+
+<button onclick="createProfile()">
+Создать профиль
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Работа и проекты для специалистов</h2>
+
+<p>
+Специалисты смогут получать заявки от компаний,
+участвовать в проектах, находить работу,
+предлагать услуги и связываться с производителями.
+</p>
+
+<div class="links">
+
+<a href="../jobs/index.html">Jobs</a>
+
+<a href="../services/index.html">Services</a>
+
+<a href="../service-centers/index.html">Service Centers</a>
+
+<a href="../companies/index.html">Companies</a>
+
+<a href="../requests/index.html">Requests</a>
+
+<a href="../offers/index.html">Offers</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="links">
+
+<a href="../production/index.html">Production</a>
+
+<a href="../equipment/index.html">Equipment</a>
+
+<a href="../technologies/index.html">Technologies</a>
+
+<a href="../training/index.html">Training</a>
+
+<a href="../certificates/index.html">Certificates</a>
+
+<a href="../profile/index.html">Profile</a>
+
+<a href="../messages/index.html">Messages</a>
+
+<a href="../reviews/index.html">Reviews</a>
+
+<a href="../dashboard/index.html">Dashboard</a>
+
+<a href="../map/index.html">Map</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на главную
+</a>
+
+</main>
+
+<footer>
+
+© 2026 <span>WORKER PRO</span> — Industrial Platform
+
+</footer>
+
+<script>
+
+function contactSpecialist(name) {
+
+alert(
+"WORKER PRO — Specialist\n\n" +
+"Специалист: " + name +
+"\n\nВ будущей версии здесь будет " +
+"чат, отправка запроса, предложение работы " +
+"и связь с компанией."
+);
+
+}
+
+function searchSpecialists() {
+
+let search =
+document.getElementById("search").value.toLowerCase();
+
+let specialization =
+document.getElementById("specialization").value.toLowerCase();
+
+let country =
+document.getElementById("country").value.toLowerCase();
+
+let cards =
+document.querySelectorAll(".specialist-card");
+
+let found = 0;
+
+cards.forEach(function(card) {
+
+let text =
+card.innerText.toLowerCase();
+
+let searchMatch =
+!search || text.includes(search);
+
+let specializationMatch =
+!specialization || text.includes(specialization);
+
+let countryMatch =
+!country || text.includes(country);
+
+if (
+searchMatch &&
+specializationMatch &&
+countryMatch
+) {
+
+card.style.display = "block";
+found++;
+
+} else {
+
+card.style.display = "none";
+
+}
+
+});
+
+if (found === 0) {
+
+alert("Специалисты не найдены.");
+
+}
+
+}
+
+function createProfile() {
+
+let name =
+document.getElementById("name").value;
+
+let profession =
+document.getElementById("profession").value;
+
+let experience =
+document.getElementById("experience").value;
+
+let skills =
+document.getElementById("skills").value;
+
+let city =
+document.getElementById("city").value;
+
+let country =
+document.getElementById("countryForm").value;
+
+let about =
+document.getElementById("about").value;
+
+if (
+!name ||
+!profession ||
+!experience ||
+!skills ||
+!city ||
+!country ||
+!about
+) {
+
+alert("Заполните все поля.");
+
+return;
+
+}
+
+alert(
+"Профиль специалиста создан!\n\n" +
+"Имя: " + name +
+"\nПрофессия: " + profession +
+"\nОпыт: " + experience +
+"\nНавыки: " + skills +
+"\nГород: " + city +
+"\nСтрана: " + country +
+"\n\nДемонстрационная версия WORKER PRO."
+);
+
+}
+
+</script>
+
+</body>
+</html>
