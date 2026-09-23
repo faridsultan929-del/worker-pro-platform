@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Partners</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.search {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.card p {
+    line-height: 1.5;
+}
+
+.category {
+    color: #0b6b3d;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.card button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.partner-form {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-top: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.partner-form input,
+.partner-form select,
+.partner-form textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccc;
+    border-radius: 7px;
+    font-size: 15px;
+}
+
+.partner-form button {
+    margin-top: 10px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.links {
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a {
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>WORKER PRO — Partners</h1>
+
+    <p>Партнёры промышленной платформы</p>
+
+    <div class="languages">
+        <a href="#">AZ</a>
+        <a href="#">RU</a>
+        <a href="#">EN</a>
+    </div>
+
+    <div class="languages languages-second">
+        <a href="#">TR</a>
+        <a href="#">DE</a>
+        <a href="#">AR</a>
+        <a href="#">ES</a>
+        <a href="#">FR</a>
+        <a href="#">IT</a>
+    </div>
+
+</header>
+
+<main>
+
+    <div class="intro">
+        <h2>Партнёры WORKER PRO</h2>
+
+        <p>
+            WORKER PRO объединяет производителей, поставщиков,
+            транспортные компании, сервисные центры,
+            технологические и обучающие организации.
+        </p>
+
+        <p>
+            Здесь компании смогут находить партнёров
+            для производства, поставок, обслуживания,
+            логистики и развития бизнеса.
+        </p>
+    </div>
+
+    <input
+        type="text"
+        id="search"
+        class="search"
+        placeholder="Поиск партнёров..."
+        onkeyup="searchPartners()"
+    >
+
+    <div class="grid" id="partnersGrid">
+
+        <div class="card">
+            <div class="category">Производитель</div>
+            <h3>Industrial Manufacturing Group</h3>
+            <p>Производство промышленного оборудования и компонентов.</p>
+            <button onclick="partnerInfo('Industrial Manufacturing Group')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="category">Поставщик</div>
+            <h3>Global Industrial Supply</h3>
+            <p>Промышленные товары, материалы и запасные части.</p>
+            <button onclick="partnerInfo('Global Industrial Supply')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="category">Логистика</div>
+            <h3>International Logistics Partner</h3>
+            <p>Международная доставка грузов между странами.</p>
+            <button onclick="partnerInfo('International Logistics Partner')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="category">Перевозчик</div>
+            <h3>Global Transport Solutions</h3>
+            <p>Автомобильные, морские и другие транспортные решения.</p>
+            <button onclick="partnerInfo('Global Transport Solutions')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="category">Сервисный центр</div>
+            <h3>Industrial Service Center</h3>
+            <p>Ремонт, техническое обслуживание и диагностика оборудования.</p>
+            <button onclick="partnerInfo('Industrial Service Center')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="category">Технологии</div>
+            <h3>Industrial Technology Partner</h3>
+            <p>Автоматизация, CNC, роботизация и цифровые технологии.</p>
+            <button onclick="partnerInfo('Industrial Technology Partner')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="category">Обучение</div>
+            <h3>Worker Training Partner</h3>
+            <p>Профессиональное обучение работников и специалистов.</p>
+            <button onclick="partnerInfo('Worker Training Partner')">
+                Подробнее
+            </button>
+        </div>
+
+        <div class="card">
+            <div class="category">Финансы</div>
+            <h3>Financial Partner</h3>
+            <p>Платежи, финансовые сервисы и бизнес-решения.</p>
+            <button onclick="partnerInfo('Financial Partner')">
+                Подробнее
+            </button>
+        </div>
+
+    </div>
+
+    <div class="partner-form">
+
+        <h2>Стать партнёром WORKER PRO</h2>
+
+        <input
+            type="text"
+            id="company"
+            placeholder="Название компании"
+        >
+
+        <input
+            type="email"
+            id="email"
+            placeholder="Email"
+        >
+
+        <select id="type">
+            <option value="">Выберите тип партнёра</option>
+            <option>Производитель</option>
+            <option>Поставщик</option>
+            <option>Логистическая компания</option>
+            <option>Перевозчик</option>
+            <option>Сервисный центр</option>
+            <option>Технологический партнёр</option>
+            <option>Обучение</option>
+            <option>Финансовый партнёр</option>
+        </select>
+
+        <textarea
+            id="message"
+            rows="4"
+            placeholder="Информация о компании и предложении"
+        ></textarea>
+
+        <button onclick="sendPartnerRequest()">
+            Отправить заявку
+        </button>
+
+    </div>
+
+    <div class="links">
+
+        <a href="../companies/index.html">Companies</a>
+        <a href="../manufacturers/index.html">Manufacturers</a>
+        <a href="../supppliers/index.html">Suppliers</a>
+        <a href="../logistics/index.html">Logistics</a>
+        <a href="../carriers/index.html">Carriers</a>
+        <a href="../service-centers/index.html">Service Centers</a>
+        <a href="../marketplace/index.html">Marketplace</a>
+
+    </div>
+
+    <a class="back" href="../index.html">
+        ← Назад на главную
+    </a>
+
+</main>
+
+<footer>
+    © 2026 <span>WORKER PRO</span> — Industrial Platform
+</footer>
+
+<script>
+
+function searchPartners() {
+
+    let input = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    let cards = document
+        .getElementById("partnersGrid")
+        .getElementsByClassName("card");
+
+    for (let i = 0; i < cards.length; i++) {
+
+        let text = cards[i].innerText.toLowerCase();
+
+        cards[i].style.display =
+            text.includes(input) ? "block" : "none";
+    }
+}
+
+function partnerInfo(name) {
+
+    alert(
+        "Партнёр: " +
+        name +
+        "\n\nФункция профиля партнёра будет подключена позже."
+    );
+}
+
+function sendPartnerRequest() {
+
+    let company = document.getElementById("company").value;
+    let email = document.getElementById("email").value;
+    let type = document.getElementById("type").value;
+
+    if (!company || !email || !type) {
+
+        alert("Заполните название компании, Email и тип партнёра.");
+
+        return;
+    }
+
+    alert(
+        "Заявка отправлена!\n\n" +
+        "Компания: " + company +
+        "\nТип: " + type +
+        "\nEmail: " + email +
+        "\n\nВ будущем заявка будет отправляться в систему WORKER PRO."
+    );
+}
+
+</script>
+
+</body>
+</html>
