@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Products</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.search {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.card h3 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+.card p {
+    line-height: 1.5;
+}
+
+.category {
+    display: inline-block;
+    background: #e8f5eb;
+    color: #0b6b3d;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0b6b3d;
+}
+
+.status {
+    font-size: 13px;
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.card button,
+.form-box button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 11px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+.links a,
+.back {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back {
+    margin-top: 25px;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Products</h1>
+
+<p>Промышленные товары и оборудование</p>
+
+<div class="languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Промышленные продукты</h2>
+
+<p>
+WORKER PRO объединяет промышленные товары,
+оборудование, материалы, комплектующие и
+запасные части от производителей и поставщиков
+из разных стран.
+</p>
+
+<p>
+В будущем здесь будет полноценный каталог
+с фильтрами по стране, производителю,
+цене, характеристикам и наличию.
+</p>
+
+</div>
+
+<input
+type="text"
+id="search"
+class="search"
+placeholder="Поиск товаров..."
+onkeyup="searchProducts()"
+>
+
+<div class="grid" id="productsGrid">
+
+<div class="card">
+<span class="category">CNC</span>
+<h3>CNC Machine</h3>
+<p>Промышленный CNC станок для обработки металла.</p>
+<p class="price">$18,500</p>
+<p class="status">В наличии</p>
+<button onclick="productInfo('CNC Machine')">Подробнее</button>
+</div>
+
+<div class="card">
+<span class="category">Hydraulic</span>
+<h3>Hydraulic Pump</h3>
+<p>Промышленный гидравлический насос.</p>
+<p class="price">$1,250</p>
+<p class="status">В наличии</p>
+<button onclick="productInfo('Hydraulic Pump')">Подробнее</button>
+</div>
+
+<div class="card">
+<span class="category">Motors</span>
+<h3>Industrial Motor</h3>
+<p>Электродвигатель для промышленного оборудования.</p>
+<p class="price">€2,100</p>
+<p class="status">В наличии</p>
+<button onclick="productInfo('Industrial Motor')">Подробнее</button>
+</div>
+
+<div class="card">
+<span class="category">Materials</span>
+<h3>Steel Materials</h3>
+<p>Промышленная сталь для производства и конструкций.</p>
+<p class="price">$980 / ton</p>
+<p class="status">Под заказ</p>
+<button onclick="productInfo('Steel Materials')">Подробнее</button>
+</div>
+
+<div class="card">
+<span class="category">Spare Parts</span>
+<h3>CNC Spare Parts</h3>
+<p>Комплектующие и запасные части для CNC оборудования.</p>
+<p class="price">€450</p>
+<p class="status">В наличии</p>
+<button onclick="productInfo('CNC Spare Parts')">Подробнее</button>
+</div>
+
+<div class="card">
+<span class="category">Sensors</span>
+<h3>Industrial Sensors</h3>
+<p>Датчики для промышленной автоматизации.</p>
+<p class="price">$120</p>
+<p class="status">В наличии</p>
+<button onclick="productInfo('Industrial Sensors')">Подробнее</button>
+</div>
+
+<div class="card">
+<span class="category">Welding</span>
+<h3>Welding Equipment</h3>
+<p>Промышленное сварочное оборудование.</p>
+<p class="price">$2,800</p>
+<p class="status">Под заказ</p>
+<button onclick="productInfo('Welding Equipment')">Подробнее</button>
+</div>
+
+<div class="card">
+<span class="category">Tools</span>
+<h3>Industrial Tools</h3>
+<p>Профессиональный инструмент для производства.</p>
+<p class="price">$350</p>
+<p class="status">В наличии</p>
+<button onclick="productInfo('Industrial Tools')">Подробнее</button>
+</div>
+
+<div class="card">
+<span class="category">Automation</span>
+<h3>PLC Controller</h3>
+<p>Промышленный контроллер автоматизации.</p>
+<p class="price">€780</p>
+<p class="status">В наличии</p>
+<button onclick="productInfo('PLC Controller')">Подробнее</button>
+</div>
+
+<div class="card">
+<span class="category">Safety</span>
+<h3>Industrial Safety Equipment</h3>
+<p>Средства промышленной безопасности.</p>
+<p class="price">$190</p>
+<p class="status">В наличии</p>
+<button onclick="productInfo('Industrial Safety Equipment')">Подробнее</button>
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Добавить продукт</h2>
+
+<input
+type="text"
+id="productName"
+placeholder="Название продукта"
+>
+
+<select id="productCategory">
+
+<option value="">Категория</option>
+<option>CNC</option>
+<option>Equipment</option>
+<option>Materials</option>
+<option>Spare Parts</option>
+<option>Sensors</option>
+<option>Automation</option>
+<option>Tools</option>
+<option>Safety</option>
+
+</select>
+
+<input
+type="text"
+id="manufacturer"
+placeholder="Производитель"
+>
+
+<input
+type="number"
+id="productPrice"
+placeholder="Цена"
+>
+
+<select id="currency">
+
+<option>USD</option>
+<option>EUR</option>
+<option>AZN</option>
+<option>TRY</option>
+<option>RUB</option>
+
+</select>
+
+<textarea
+id="productDescription"
+rows="4"
+placeholder="Описание продукта"
+></textarea>
+
+<button onclick="addProduct()">
+Добавить продукт
+</button>
+
+</div>
+
+<div class="intro">
+
+<h2>Связанные разделы</h2>
+
+<div class="links">
+
+<a href="../marketplace/index.html">Marketplace</a>
+
+<a href="../manufacturers/index.html">Manufacturers</a>
+
+<a href="../supppliers/index.html">Suppliers</a>
+
+<a href="../materials/index.html">Materials</a>
+
+<a href="../equipment/index.html">Equipment</a>
+
+<a href="../spare - prts/index.html">Spare Parts</a>
+
+<a href="../requests/index.html">Requests</a>
+
+<a href="../orders/index.html">Orders</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на главную
+</a>
+
+</main>
+
+<footer>
+
+© 2026 <span>WORKER PRO</span> — Industrial Platform
+
+</footer>
+
+<script>
+
+function searchProducts() {
+
+let input = document
+.getElementById("search")
+.value
+.toLowerCase();
+
+let cards = document
+.getElementById("productsGrid")
+.getElementsByClassName("card");
+
+for (let i = 0; i < cards.length; i++) {
+
+let text = cards[i].innerText.toLowerCase();
+
+cards[i].style.display =
+text.includes(input) ? "block" : "none";
+
+}
+
+}
+
+function productInfo(name) {
+
+alert(
+"Продукт: " +
+name +
+"\n\n" +
+"В будущем здесь будет полный профиль товара, " +
+"характеристики, поставщики, цены и возможность создать заявку."
+);
+
+}
+
+function addProduct() {
+
+let name = document.getElementById("productName").value;
+let category = document.getElementById("productCategory").value;
+let manufacturer = document.getElementById("manufacturer").value;
+let price = document.getElementById("productPrice").value;
+let currency = document.getElementById("currency").value;
+let description = document.getElementById("productDescription").value;
+
+if (!name || !category || !price) {
+
+alert(
+"Заполните название продукта, категорию и цену."
+);
+
+return;
+
+}
+
+alert(
+"Продукт добавлен!\n\n" +
+"Название: " + name +
+"\nКатегория: " + category +
+"\nПроизводитель: " + (manufacturer || "Не указан") +
+"\nЦена: " + price + " " + currency +
+"\n\nВ будущем продукт будет сохранён в каталоге WORKER PRO."
+);
+
+}
+
+</script>
+
+</body>
+</html>
