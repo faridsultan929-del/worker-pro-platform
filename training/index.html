@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Training</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2,
+h3 {
+    color: #063d25;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.number {
+    font-size: 28px;
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.search-box {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-box input,
+.search-box select {
+    flex: 1;
+    min-width: 200px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.course-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-top: 5px solid #0b6b3d;
+}
+
+.icon {
+    font-size: 38px;
+    margin-bottom: 10px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 6px 10px;
+    margin: 4px 4px 4px 0;
+    border-radius: 6px;
+    background: #e9f6ed;
+    color: #0b6b3d;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.progress {
+    width: 100%;
+    height: 10px;
+    background: #e2e8e4;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 12px 0;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #0b6b3d;
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a,
+.back {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back {
+    margin-top: 5px;
+}
+
+.notice {
+    background: #fff8df;
+    border-left: 5px solid #e2b400;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Training</h1>
+
+<p>Профессиональное обучение для работников промышленности</p>
+
+<div class="languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Центр обучения WORKER PRO</h2>
+
+<p>
+Обучение рабочих, операторов, специалистов,
+инженеров и других работников промышленности.
+</p>
+
+<div class="notice">
+Курсы будут включать теорию, практические задания,
+тесты, производственные технологии, безопасность
+и профессиональную терминологию.
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="number">120+</div>
+<p>Курсов</p>
+</div>
+
+<div class="stat">
+<div class="number">850+</div>
+<p>Уроков</p>
+</div>
+
+<div class="stat">
+<div class="number">42</div>
+<p>Страны</p>
+</div>
+
+<div class="stat">
+<div class="number">9</div>
+<p>Языков</p>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск обучения</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="courseSearch"
+placeholder="Например: CNC, welding, safety..."
+>
+
+<select id="courseCategory">
+
+<option value="">Все категории</option>
+<option>Production</option>
+<option>CNC</option>
+<option>Safety</option>
+<option>Welding</option>
+<option>Automation</option>
+<option>Quality</option>
+<option>English</option>
+<option>Maintenance</option>
+
+</select>
+
+<button onclick="searchCourse()">
+Найти
+</button>
+
+</div>
+
+</div>
+
+<h2>Популярные направления</h2>
+
+<div class="course-grid">
+
+<div class="course-card">
+
+<div class="icon">⚙️</div>
+
+<h3>CNC Operator</h3>
+
+<p>
+Основы работы на CNC станках,
+инструменты, программы и контроль деталей.
+</p>
+
+<span class="badge">CNC</span>
+<span class="badge">Production</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:65%;"></div>
+</div>
+
+<p>Прогресс: 65%</p>
+
+<button onclick="openCourse('CNC Operator')">
+Начать обучение
+</button>
+
+</div>
+
+<div class="course-card">
+
+<div class="icon">🦺</div>
+
+<h3>Industrial Safety</h3>
+
+<p>
+Безопасность на производстве,
+PPE, оборудование и предотвращение рисков.
+</p>
+
+<span class="badge">Safety</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:40%;"></div>
+</div>
+
+<p>Прогресс: 40%</p>
+
+<button onclick="openCourse('Industrial Safety')">
+Начать обучение
+</button>
+
+</div>
+
+<div class="course-card">
+
+<div class="icon">🔥</div>
+
+<h3>Welding</h3>
+
+<p>
+MIG, MAG, TIG, сварочное оборудование
+и основные правила промышленной сварки.
+</p>
+
+<span class="badge">Welding</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:25%;"></div>
+</div>
+
+<p>Прогресс: 25%</p>
+
+<button onclick="openCourse('Welding')">
+Начать обучение
+</button>
+
+</div>
+
+<div class="course-card">
+
+<div class="icon">🤖</div>
+
+<h3>Industrial Automation</h3>
+
+<p>
+PLC, датчики, автоматические линии
+и основы промышленной роботизации.
+</p>
+
+<span class="badge">PLC</span>
+<span class="badge">Robotics</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:15%;"></div>
+</div>
+
+<p>Прогресс: 15%</p>
+
+<button onclick="openCourse('Industrial Automation')">
+Начать обучение
+</button>
+
+</div>
+
+<div class="course-card">
+
+<div class="icon">📏</div>
+
+<h3>Quality Control</h3>
+
+<p>
+Контроль размеров, измерительные инструменты,
+дефекты и основы качества производства.
+</p>
+
+<span class="badge">Quality</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:50%;"></div>
+</div>
+
+<p>Прогресс: 50%</p>
+
+<button onclick="openCourse('Quality Control')">
+Начать обучение
+</button>
+
+</div>
+
+<div class="course-card">
+
+<div class="icon">🔧</div>
+
+<h3>Maintenance</h3>
+
+<p>
+Диагностика, обслуживание и ремонт
+промышленного оборудования.
+</p>
+
+<span class="badge">Maintenance</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:30%;"></div>
+</div>
+
+<p>Прогресс: 30%</p>
+
+<button onclick="openCourse('Maintenance')">
+Начать обучение
+</button>
+
+</div>
+
+<div class="course-card">
+
+<div class="icon">🇬🇧</div>
+
+<h3>English for Workers</h3>
+
+<p>
+Английские слова и фразы для работы
+на производстве и общения с коллегами.
+</p>
+
+<span class="badge">English</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:70%;"></div>
+</div>
+
+<p>Прогресс: 70%</p>
+
+<button onclick="openCourse('English for Workers')">
+Начать обучение
+</button>
+
+</div>
+
+<div class="course-card">
+
+<div class="icon">🔥</div>
+
+<h3>Furnaces & Heating</h3>
+
+<p>
+Промышленные печи, нагрев,
+температурные режимы и безопасность.
+</p>
+
+<span class="badge">Heating</span>
+<span class="badge">Production</span>
+
+<div class="progress">
+<div class="progress-bar" style="width:20%;"></div>
+</div>
+
+<p>Прогресс: 20%</p>
+
+<button onclick="openCourse('Furnaces & Heating')">
+Начать обучение
+</button>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Предложить учебный курс</h2>
+
+<input
+type="text"
+id="courseName"
+placeholder="Название курса"
+>
+
+<select id="courseType">
+
+<option value="">Категория</option>
+<option>Production</option>
+<option>CNC</option>
+<option>Safety</option>
+<option>Welding</option>
+<option>Automation</option>
+<option>Quality</option>
+<option>English</option>
+<option>Maintenance</option>
+</select>
+
+<input
+type="text"
+id="courseAuthor"
+placeholder="Автор / организация"
+>
+
+<textarea
+id="courseDescription"
+rows="5"
+placeholder="Описание курса"
+></textarea>
+
+<button onclick="addCourse()">
+Предложить курс
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="links">
+
+<a href="../training-courses/index.html">Training Courses</a>
+
+<a href="../production/index.html">Production</a>
+
+<a href="../tecnologies/index.html">Technologies</a>
+
+<a href="../safety/index.html">Safety</a>
+
+<a href="../specialists/index.html">Specialists</a>
+
+<a href="../jobs/index.html">Jobs</a>
+
+<a href="../certificates/index.html">Certificates</a>
+
+<a href="../equipment/index.html">Equipment</a>
+
+<a href="../services/index.html">Services</a>
+
+<a href="../profile/index.html">Profile</a>
+
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на главную
+</a>
+
+</main>
+
+<footer>
+
+© 2026 <span>WORKER PRO</span> — Industrial Platform
+
+</footer>
+
+<script>
+
+function searchCourse() {
+
+let query =
+document.getElementById("courseSearch").value.trim();
+
+let category =
+document.getElementById("courseCategory").value;
+
+if (!query && !category) {
+
+alert("Введите название курса или выберите категорию.");
+
+return;
+
+}
+
+alert(
+"Поиск обучения\n\n" +
+"Запрос: " + (query || "Все курсы") +
+"\nКатегория: " + (category || "Все категории") +
+"\n\nДемонстрационная версия WORKER PRO."
+);
+
+}
+
+function openCourse(course) {
+
+alert(
+"WORKER PRO — Training\n\n" +
+"Курс: " + course +
+"\n\nВ будущей версии здесь откроется " +
+"полный курс с уроками, видео, тестами, " +
+"практическими заданиями и сертификатом."
+);
+
+}
+
+function addCourse() {
+
+let name =
+document.getElementById("courseName").value;
+
+let type =
+document.getElementById("courseType").value;
+
+let author =
+document.getElementById("courseAuthor").value;
+
+let description =
+document.getElementById("courseDescription").value;
+
+if (
+!name ||
+!type ||
+!author ||
+!description
+) {
+
+alert("Заполните все поля.");
+
+return;
+
+}
+
+alert(
+"Курс отправлен!\n\n" +
+"Название: " + name +
+"\nКатегория: " + type +
+"\nАвтор: " + author +
+"\n\nВ будущей версии курс будет " +
+"проверен и добавлен в каталог."
+);
+
+}
+
+</script>
+
+</body>
+</html>
