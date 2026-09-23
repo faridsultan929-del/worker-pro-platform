@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — News</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.search-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+}
+
+.news-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-top: 5px solid #0b6b3d;
+}
+
+.news-card h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.news-card p {
+    line-height: 1.5;
+}
+
+.date {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.category {
+    display: inline-block;
+    background: #e8f4ed;
+    color: #063d25;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.read-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.info-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.info-card h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.info-card a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+    <p>News — Новости промышленности</p>
+
+    <div class="languages">
+        <a href="#">AZ</a>
+        <a href="#">RU</a>
+        <a href="#">EN</a>
+    </div>
+
+    <div class="languages languages-second">
+        <a href="#">TR</a>
+        <a href="#">DE</a>
+        <a href="#">AR</a>
+        <a href="#">ES</a>
+        <a href="#">FR</a>
+        <a href="#">IT</a>
+    </div>
+
+</header>
+
+<main>
+
+    <section class="intro">
+
+        <h2>Новости WORKER PRO</h2>
+
+        <p>
+            Новости промышленности, производства,
+            технологий, оборудования, транспорта
+            и международной торговли.
+        </p>
+
+        <p>
+            В будущем здесь будут публиковаться новости
+            компаний, производителей, специалистов
+            и самой платформы WORKER PRO.
+        </p>
+
+    </section>
+
+    <section class="search-box">
+
+        <h2>🔎 Поиск новостей</h2>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Введите тему, категорию или название..."
+            onkeyup="searchNews()"
+        >
+
+    </section>
+
+    <section class="news-grid" id="newsList">
+
+        <article class="news-card">
+
+            <span class="category">ПРОИЗВОДСТВО</span>
+
+            <div class="date">
+                20 сентября 2026
+            </div>
+
+            <h3>
+                Новые возможности для промышленных компаний
+            </h3>
+
+            <p>
+                WORKER PRO развивается как международная
+                промышленная платформа для компаний,
+                производителей и специалистов.
+            </p>
+
+            <button
+                class="read-btn"
+                onclick="readNews('Новые возможности для промышленных компаний')">
+                Читать
+            </button>
+
+        </article>
+
+        <article class="news-card">
+
+            <span class="category">ТЕХНОЛОГИИ</span>
+
+            <div class="date">
+                18 сентября 2026
+            </div>
+
+            <h3>
+                Современные технологии производства
+            </h3>
+
+            <p>
+                Развитие CNC, автоматизации, сенсоров,
+                роботизации и цифрового производства
+                меняет промышленность.
+            </p>
+
+            <button
+                class="read-btn"
+                onclick="readNews('Современные технологии производства')">
+                Читать
+            </button>
+
+        </article>
+
+        <article class="news-card">
+
+            <span class="category">ЛОГИСТИКА</span>
+
+            <div class="date">
+                16 сентября 2026
+            </div>
+
+            <h3>
+                Международная промышленная логистика
+            </h3>
+
+            <p>
+                Перевозка оборудования и промышленных
+                запчастей между странами является важной
+                частью международного сотрудничества.
+            </p>
+
+            <button
+                class="read-btn"
+                onclick="readNews('Международная промышленная логистика')">
+                Читать
+            </button>
+
+        </article>
+
+        <article class="news-card">
+
+            <span class="category">ОБОРУДОВАНИЕ</span>
+
+            <div class="date">
+                14 сентября 2026
+            </div>
+
+            <h3>
+                Рынок промышленного оборудования
+            </h3>
+
+            <p>
+                Компании получают новые возможности
+                для поиска оборудования, материалов
+                и запасных частей.
+            </p>
+
+            <button
+                class="read-btn"
+                onclick="readNews('Рынок промышленного оборудования')">
+                Читать
+            </button>
+
+        </article>
+
+        <article class="news-card">
+
+            <span class="category">КОМПАНИИ</span>
+
+            <div class="date">
+                12 сентября 2026
+            </div>
+
+            <h3>
+                Новые компании на WORKER PRO
+            </h3>
+
+            <p>
+                Производители и поставщики смогут
+                создавать свои профили и представлять
+                продукцию международным клиентам.
+            </p>
+
+            <button
+                class="read-btn"
+                onclick="readNews('Новые компании на WORKER PRO')">
+                Читать
+            </button>
+
+        </article>
+
+        <article class="news-card">
+
+            <span class="category">СПЕЦИАЛИСТЫ</span>
+
+            <div class="date">
+                10 сентября 2026
+            </div>
+
+            <h3>
+                Возможности для промышленных специалистов
+            </h3>
+
+            <p>
+                Специалисты смогут находить вакансии,
+                обучение, компании и профессиональные
+                возможности.
+            </p>
+
+            <button
+                class="read-btn"
+                onclick="readNews('Возможности для промышленных специалистов')">
+                Читать
+            </button>
+
+        </article>
+
+    </section>
+
+    <section class="info-grid">
+
+        <div class="info-card">
+            <h3>🏭 Производство</h3>
+            <p>
+                Производственные предприятия
+                и технологии.
+            </p>
+            <a href="../production/index.html">
+                Production
+            </a>
+        </div>
+
+        <div class="info-card">
+            <h3>🌐 Компании</h3>
+            <p>
+                Международные компании
+                и производители.
+            </p>
+            <a href="../companies/index.html">
+                Компании
+            </a>
+        </div>
+
+        <div class="info-card">
+            <h3>📦 Marketplace</h3>
+            <p>
+                Промышленные товары,
+                оборудование и запчасти.
+            </p>
+            <a href="../marketplace/index.html">
+                Marketplace
+            </a>
+        </div>
+
+        <div class="info-card">
+            <h3>🚚 Logistics</h3>
+            <p>
+                Международная доставка
+                промышленной продукции.
+            </p>
+            <a href="../logistics/index.html">
+                Logistics
+            </a>
+        </div>
+
+    </section>
+
+    <a class="back" href="../index.html">
+        ← Вернуться на главную
+    </a>
+
+</main>
+
+<footer>
+    © WORKER PRO — <span>Глобальная промышленная платформа</span>
+</footer>
+
+<script>
+
+function searchNews() {
+
+    let input = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    let news = document
+        .querySelectorAll(".news-card");
+
+    news.forEach(function(item) {
+
+        let text = item.innerText.toLowerCase();
+
+        if (text.includes(input)) {
+            item.style.display = "block";
+        } else {
+            item.style.display = "none";
+        }
+
+    });
+}
+
+function readNews(title) {
+
+    alert(
+        "Статья:\n\n" +
+        title +
+        "\n\nПолная система новостей будет подключена на следующем этапе."
+    );
+
+}
+
+</script>
+
+</body>
+</html>
