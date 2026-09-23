@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Subscriptions</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2,
+h3 {
+    color: #063d25;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.stat {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.number {
+    font-size: 28px;
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.plans {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 18px;
+}
+
+.plan {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-top: 5px solid #0b6b3d;
+    text-align: center;
+}
+
+.plan.featured {
+    border-top: 5px solid #b7ff35;
+}
+
+.price {
+    font-size: 30px;
+    font-weight: bold;
+    color: #0b6b3d;
+    margin: 15px 0;
+}
+
+.plan ul {
+    padding-left: 20px;
+    text-align: left;
+    line-height: 1.8;
+}
+
+.plan button,
+.form-box button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.badge {
+    display: inline-block;
+    background: #e9f6ed;
+    color: #0b6b3d;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+.form-box input,
+.form-box select {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a,
+.back {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.back {
+    margin-top: 5px;
+}
+
+.notice {
+    background: #fff8df;
+    border-left: 5px solid #e2b400;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Subscriptions</h1>
+
+<p>Подписки и тарифные планы WORKER PRO</p>
+
+<div class="languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Подписки WORKER PRO</h2>
+
+<p>
+Подписка позволит пользователям получать дополнительные
+возможности платформы: расширенный поиск, больше запросов,
+расширенные профили компаний и специалистов,
+аналитику и дополнительные инструменты.
+</p>
+
+<div class="notice">
+<strong>Демонстрационная версия:</strong>
+цены и платежи на этой странице являются примером.
+Реальная система подписок будет подключена позже.
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<div class="number">4</div>
+<p>Тарифных плана</p>
+</div>
+
+<div class="stat">
+<div class="number">2,840</div>
+<p>Активных подписок</p>
+</div>
+
+<div class="stat">
+<div class="number">42</div>
+<p>Страны</p>
+</div>
+
+<div class="stat">
+<div class="number">9</div>
+<p>Языков</p>
+</div>
+
+</div>
+
+<h2>Тарифные планы</h2>
+
+<div class="plans">
+
+<div class="plan">
+
+<h3>FREE</h3>
+
+<span class="badge">Бесплатно</span>
+
+<div class="price">€0</div>
+
+<ul>
+<li>Создание профиля</li>
+<li>Базовый поиск</li>
+<li>Просмотр компаний</li>
+<li>Просмотр продуктов</li>
+<li>Ограниченные запросы</li>
+</ul>
+
+<button onclick="selectPlan('FREE')">
+Выбрать
+</button>
+
+</div>
+
+<div class="plan featured">
+
+<h3>PROFESSIONAL</h3>
+
+<span class="badge">Для специалистов</span>
+
+<div class="price">€9.99 / мес.</div>
+
+<ul>
+<li>Расширенный поиск</li>
+<li>Расширенный профиль</li>
+<li>Больше запросов</li>
+<li>Связь с компаниями</li>
+<li>Профиль специалиста</li>
+<li>Дополнительная аналитика</li>
+</ul>
+
+<button onclick="selectPlan('PROFESSIONAL')">
+Выбрать
+</button>
+
+</div>
+
+<div class="plan">
+
+<h3>BUSINESS</h3>
+
+<span class="badge">Для компаний</span>
+
+<div class="price">€29.99 / мес.</div>
+
+<ul>
+<li>Профиль компании</li>
+<li>Размещение продуктов</li>
+<li>Поиск специалистов</li>
+<li>RFQ и запросы</li>
+<li>Расширенные предложения</li>
+<li>Бизнес-аналитика</li>
+</ul>
+
+<button onclick="selectPlan('BUSINESS')">
+Выбрать
+</button>
+
+</div>
+
+<div class="plan">
+
+<h3>ENTERPRISE</h3>
+
+<span class="badge">Для крупных компаний</span>
+
+<div class="price">Custom</div>
+
+<ul>
+<li>Все функции Business</li>
+<li>Большие каталоги</li>
+<li>Интеграции</li>
+<li>API</li>
+<li>Расширенная аналитика</li>
+<li>Индивидуальные условия</li>
+</ul>
+
+<button onclick="selectPlan('ENTERPRISE')">
+Запросить
+</button>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Управление подпиской</h2>
+
+<select id="currentPlan">
+
+<option value="">Выберите тариф</option>
+<option>FREE</option>
+<option>PROFESSIONAL</option>
+<option>BUSINESS</option>
+<option>ENTERPRISE</option>
+
+</select>
+
+<select id="billing">
+
+<option value="">Период оплаты</option>
+<option>Monthly</option>
+<option>Yearly</option>
+</select>
+
+<button onclick="manageSubscription()">
+Продолжить
+</button>
+
+</div>
+
+<div class="card">
+
+<h2>Что будет доступно в будущем</h2>
+
+<div class="links">
+
+<a href="../pricing/index.html">Pricing</a>
+
+<a href="../payments/index.html">Payments</a>
+
+<a href="../wallet/index.html">Wallet</a>
+
+<a href="../finance/index.html">Finance</a>
+
+<a href="../transactions/index.html">Transactions</a>
+
+<a href="../invoices/index.html">Invoices</a>
+
+<a href="../profile/index.html">Profile</a>
+
+<a href="../settings/index.html">Settings</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы WORKER PRO</h2>
+
+<div class="links">
+
+<a href="../companies/index.html">Companies</a>
+
+<a href="../specialists/index.html">Specialists</a>
+
+<a href="../products/index.html">Products</a>
+
+<a href="../marketplace/index.html">Marketplace</a>
+
+<a href="../requests/index.html">Requests</a>
+
+<a href="../offers/index.html">Offers</a>
+
+<a href="../orders/index.html">Orders</a>
+
+<a href="../advertising/index.html">Advertising</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на главную
+</a>
+
+</main>
+
+<footer>
+
+© 2026 <span>WORKER PRO</span> — Industrial Platform
+
+</footer>
+
+<script>
+
+function selectPlan(plan) {
+
+document.getElementById("currentPlan").value = plan;
+
+alert(
+"WORKER PRO\n\n" +
+"Выбран тариф: " + plan +
+"\n\nВ будущей версии здесь будет " +
+"реальная оплата и активация подписки."
+);
+
+}
+
+function manageSubscription() {
+
+let plan =
+document.getElementById("currentPlan").value;
+
+let billing =
+document.getElementById("billing").value;
+
+if (!plan || !billing) {
+
+alert("Выберите тариф и период оплаты.");
+
+return;
+
+}
+
+alert(
+"WORKER PRO — Subscription\n\n" +
+"Тариф: " + plan +
+"\nПериод: " + billing +
+"\n\nДемонстрационная версия.\n" +
+"Платёжная система будет подключена позже."
+);
+
+}
+
+</script>
+
+</body>
+</html>
