@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Suppliers</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.intro h2,
+.form-box h2 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: #063d25;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #b7ff35;
+}
+
+.search-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.search-box input,
+.search-box select,
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccd8d1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.card h3 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+.card .country {
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.verified {
+    display: inline-block;
+    background: #e8f8dc;
+    color: #287018;
+    padding: 5px 9px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.rating {
+    color: #d88b00;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.links a {
+    background: #e7f1eb;
+    color: #063d25;
+    text-decoration: none;
+    padding: 9px 13px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Suppliers</h1>
+
+<p>Industrial Suppliers • Global Supply Network</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Поставщики промышленной продукции</h2>
+
+<p>
+WORKER PRO объединяет производителей, поставщиков и покупателей
+промышленного оборудования, материалов, запчастей и технологий
+из разных стран.
+</p>
+
+<p>
+Найдите поставщика, отправьте запрос, получите предложение,
+сравните цены и организуйте доставку.
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<strong>5,840</strong>
+Поставщиков
+</div>
+
+<div class="stat">
+<strong>42</strong>
+Страны
+</div>
+
+<div class="stat">
+<strong>186</strong>
+Категорий
+</div>
+
+<div class="stat">
+<strong>3,420</strong>
+Проверенных
+</div>
+
+</div>
+
+<div class="search-box">
+
+<h2>Поиск поставщика</h2>
+
+<input type="text" placeholder="Компания, товар или специализация">
+
+<select>
+<option>Все категории</option>
+<option>Запчасти</option>
+<option>CNC</option>
+<option>Оборудование</option>
+<option>Материалы</option>
+<option>Автоматизация</option>
+<option>Электрооборудование</option>
+</select>
+
+<select>
+<option>Все страны</option>
+<option>Азербайджан</option>
+<option>Турция</option>
+<option>Германия</option>
+<option>Италия</option>
+<option>Китай</option>
+<option>США</option>
+</select>
+
+<button onclick="alert('Поиск поставщиков будет подключён к базе WORKER PRO')">
+Найти поставщика
+</button>
+
+</div>
+
+<h2>Поставщики</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Istanbul Industrial Parts</h3>
+
+<p class="country">🇹🇷 Istanbul, Türkiye</p>
+
+<p>Гидравлика, CNC-запчасти, подшипники и промышленные комплектующие.</p>
+
+<p><strong>1,240</strong> поставок</p>
+
+<p class="rating">★★★★★ 4.9</p>
+
+<span class="verified">✓ Проверенный поставщик</span>
+
+</div>
+
+<div class="card">
+
+<h3>German CNC Solutions</h3>
+
+<p class="country">🇩🇪 Dortmund, Germany</p>
+
+<p>CNC детали, двигатели, приводы и комплектующие для станков.</p>
+
+<p><strong>980</strong> поставок</p>
+
+<p class="rating">★★★★★ 4.8</p>
+
+<span class="verified">✓ Проверенный поставщик</span>
+
+</div>
+
+<div class="card">
+
+<h3>Milan Machinery</h3>
+
+<p class="country">🇮🇹 Milan, Italy</p>
+
+<p>Промышленные двигатели, насосы, оборудование и механические детали.</p>
+
+<p><strong>760</strong> поставок</p>
+
+<p class="rating">★★★★★ 4.9</p>
+
+<span class="verified">✓ Проверенный поставщик</span>
+
+</div>
+
+<div class="card">
+
+<h3>Baku Industrial Supply</h3>
+
+<p class="country">🇦🇿 Baku, Azerbaijan</p>
+
+<p>Сталь, инструменты, промышленные детали и производственные материалы.</p>
+
+<p><strong>1,560</strong> поставок</p>
+
+<p class="rating">★★★★★ 4.9</p>
+
+<span class="verified">✓ Проверенный поставщик</span>
+
+</div>
+
+<div class="card">
+
+<h3>Shenzhen Industrial Tech</h3>
+
+<p class="country">🇨🇳 Shenzhen, China</p>
+
+<p>Датчики, PLC, автоматизация и электронные промышленные компоненты.</p>
+
+<p><strong>2,100</strong> поставок</p>
+
+<p class="rating">★★★★☆ 4.7</p>
+
+<span class="verified">✓ Проверенный поставщик</span>
+
+</div>
+
+<div class="card">
+
+<h3>Houston Industrial Supply</h3>
+
+<p class="country">🇺🇸 Houston, USA</p>
+
+<p>Электрооборудование, двигатели, датчики и промышленные компоненты.</p>
+
+<p><strong>640</strong> поставок</p>
+
+<p class="rating">★★★★★ 4.8</p>
+
+<span class="verified">✓ Проверенный поставщик</span>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Регистрация поставщика</h2>
+
+<p>
+Компания может зарегистрироваться на WORKER PRO
+и предлагать промышленную продукцию покупателям.
+</p>
+
+<input type="text" placeholder="Название компании">
+
+<input type="text" placeholder="Страна">
+
+<input type="text" placeholder="Город">
+
+<input type="text" placeholder="Категория продукции">
+
+<input type="email" placeholder="Email">
+
+<input type="tel" placeholder="Телефон">
+
+<textarea rows="4" placeholder="Описание компании и продукции"></textarea>
+
+<button onclick="alert('Регистрация поставщика будет подключена')">
+Зарегистрировать поставщика
+</button>
+
+</div>
+
+<div class="intro">
+
+<h2>Работа с поставщиками</h2>
+
+<p>
+Покупатель может отправить запрос на товар, получить предложения
+от нескольких поставщиков, сравнить условия и оформить заказ.
+</p>
+
+<div class="links">
+
+<a href="../requests/index.html">Requests</a>
+<a href="../rfq/index.html">RFQ</a>
+<a href="../offers/index.html">Offers</a>
+<a href="../quotes/index.html">Quotes</a>
+<a href="../orders/index.html">Orders</a>
+<a href="../products/index.html">Products</a>
+<a href="../spare - prts/index.html">Spare Parts</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../manufacturers/index.html">Manufacturers</a>
+<a href="../marketplace/index.html">Marketplace</a>
+<a href="../materials/index.html">Materials</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../logistics/index.html">Logistics</a>
+<a href="../transport/index.html">Transport</a>
+<a href="../tracking/index.html">Tracking</a>
+<a href="../payments/index.html">Payments</a>
+<a href="../reviews/index.html">Reviews</a>
+<a href="../messages/index.html">Messages</a>
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">← Назад на WORKER PRO</a>
+
+</main>
+
+<footer>
+© 2026 <span>WORKER PRO</span> — Global Industrial Platform
+</footer>
+
+</body>
+</html>
