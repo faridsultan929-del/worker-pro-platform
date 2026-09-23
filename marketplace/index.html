@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Marketplace</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.languages a:hover {
+    background: #075b34;
+}
+
+main {
+    max-width: 1150px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.intro h2 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+.search-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccd8d1;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #0b6b3d;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-top: 4px solid #0b6b3d;
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.card p {
+    line-height: 1.6;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0b6b3d;
+    margin-top: 12px;
+}
+
+.card a {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 9px 14px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.card a:hover {
+    background: #075b34;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+    <p>Marketplace — Промышленный маркетплейс</p>
+
+    <div class="languages">
+        <a href="#">AZ</a>
+        <a href="#">RU</a>
+        <a href="#">EN</a>
+    </div>
+
+    <div class="languages languages-second">
+        <a href="#">TR</a>
+        <a href="#">DE</a>
+        <a href="#">AR</a>
+        <a href="#">ES</a>
+        <a href="#">FR</a>
+        <a href="#">IT</a>
+    </div>
+
+</header>
+
+<main>
+
+    <section class="intro">
+        <h2>Промышленный Marketplace</h2>
+
+        <p>
+            WORKER PRO Marketplace — это будущая торговая площадка
+            для промышленного оборудования, запчастей, материалов,
+            инструментов и других товаров.
+        </p>
+
+        <p>
+            Покупатели смогут находить продукцию производителей
+            и поставщиков из разных стран, отправлять запросы,
+            получать цены и условия поставки.
+        </p>
+    </section>
+
+    <section class="search-box">
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Поиск промышленного товара..."
+            onkeyup="searchProducts()"
+        >
+
+    </section>
+
+    <section class="grid" id="products">
+
+        <div class="card product">
+            <h3>CNC Machine</h3>
+            <p>
+                Промышленный станок с числовым программным управлением.
+            </p>
+            <div class="price">Цена по запросу</div>
+            <a href="../products/index.html">Подробнее</a>
+        </div>
+
+        <div class="card product">
+            <h3>Hydraulic Pump</h3>
+            <p>
+                Промышленный гидравлический насос для оборудования.
+            </p>
+            <div class="price">Цена по запросу</div>
+            <a href="../products/index.html">Подробнее</a>
+        </div>
+
+        <div class="card product">
+            <h3>Industrial Motor</h3>
+            <p>
+                Электродвигатель для промышленного оборудования.
+            </p>
+            <div class="price">Цена по запросу</div>
+            <a href="../products/index.html">Подробнее</a>
+        </div>
+
+        <div class="card product">
+            <h3>Steel Materials</h3>
+            <p>
+                Промышленная сталь и металлические материалы.
+            </p>
+            <div class="price">Цена по запросу</div>
+            <a href="../materials/index.html">Подробнее</a>
+        </div>
+
+        <div class="card product">
+            <h3>CNC Spare Parts</h3>
+            <p>
+                Запасные части и комплектующие для CNC оборудования.
+            </p>
+            <div class="price">Цена по запросу</div>
+            <a href="../spare - prts/index.html">Подробнее</a>
+        </div>
+
+        <div class="card product">
+            <h3>Industrial Sensors</h3>
+            <p>
+                Датчики и системы контроля для производства.
+            </p>
+            <div class="price">Цена по запросу</div>
+            <a href="../products/index.html">Подробнее</a>
+        </div>
+
+        <div class="card product">
+            <h3>Welding Equipment</h3>
+            <p>
+                Сварочное оборудование и комплектующие.
+            </p>
+            <div class="price">Цена по запросу</div>
+            <a href="../equipment/index.html">Подробнее</a>
+        </div>
+
+        <div class="card product">
+            <h3>Industrial Tools</h3>
+            <p>
+                Профессиональный инструмент для производства и ремонта.
+            </p>
+            <div class="price">Цена по запросу</div>
+            <a href="../products/index.html">Подробнее</a>
+        </div>
+
+    </section>
+
+    <section class="grid" style="margin-top:25px;">
+
+        <div class="card">
+            <h3>Manufacturers</h3>
+            <p>
+                Найти производителей промышленной продукции.
+            </p>
+            <a href="../manufacturers/index.html">Открыть</a>
+        </div>
+
+        <div class="card">
+            <h3>Suppliers</h3>
+            <p>
+                Найти поставщиков и получить коммерческие предложения.
+            </p>
+            <a href="../supppliers/index.html">Открыть</a>
+        </div>
+
+        <div class="card">
+            <h3>Requests</h3>
+            <p>
+                Разместить запрос на нужный товар или запчасть.
+            </p>
+            <a href="../requests/index.html">Открыть</a>
+        </div>
+
+        <div class="card">
+            <h3>Orders</h3>
+            <p>
+                Управление заказами и поставками.
+            </p>
+            <a href="../orders/index.html">Открыть</a>
+        </div>
+
+    </section>
+
+    <a class="back" href="../index.html">
+        ← Вернуться на главную
+    </a>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026 — <span>Industrial Global Platform</span>
+</footer>
+
+<script>
+function searchProducts() {
+
+    const input = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const products = document.querySelectorAll(".product");
+
+    products.forEach(function(product) {
+
+        const text = product.textContent.toLowerCase();
+
+        if (text.includes(input)) {
+            product.style.display = "block";
+        } else {
+            product.style.display = "none";
+        }
+
+    });
+}
+</script>
+
+</body>
+</html>
