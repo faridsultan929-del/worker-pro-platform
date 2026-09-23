@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Offers</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.search-box,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.search-box input,
+.form-box input,
+.form-box textarea,
+.form-box select {
+    width: 100%;
+    padding: 13px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.form-box textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.offer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 18px;
+}
+
+.offer {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 5px solid #0b6b3d;
+}
+
+.offer h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.offer p {
+    line-height: 1.5;
+}
+
+.price {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0b6b3d;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+.new {
+    background: #e8f4ed;
+    color: #063d25;
+}
+
+.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.accepted {
+    background: #d4edda;
+    color: #155724;
+}
+
+.rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+button,
+.btn {
+    display: inline-block;
+    border: none;
+    padding: 11px 16px;
+    background: #0b6b3d;
+    color: white;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.secondary {
+    background: #e8f0ec;
+    color: #063d25;
+}
+
+.links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 18px;
+    margin-top: 25px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+    <p>Offers — Коммерческие предложения</p>
+
+    <div class="languages">
+        <a href="#">AZ</a>
+        <a href="#">RU</a>
+        <a href="#">EN</a>
+    </div>
+
+    <div class="languages languages-second">
+        <a href="#">TR</a>
+        <a href="#">DE</a>
+        <a href="#">AR</a>
+        <a href="#">ES</a>
+        <a href="#">FR</a>
+        <a href="#">IT</a>
+    </div>
+
+</header>
+
+<main>
+
+    <section class="intro">
+
+        <h2>Коммерческие предложения</h2>
+
+        <p>
+            В этом разделе компании и поставщики смогут
+            отправлять предложения на товары, оборудование,
+            материалы и запасные части.
+        </p>
+
+        <p>
+            Пользователь сможет сравнивать цены, условия
+            поставки, сроки и выбирать подходящее предложение.
+        </p>
+
+    </section>
+
+    <section class="search-box">
+
+        <h2>🔎 Поиск предложений</h2>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Поиск по товару, компании или стране..."
+            onkeyup="searchOffers()"
+        >
+
+    </section>
+
+    <section class="offer-grid" id="offerList">
+
+        <div class="offer">
+
+            <span class="status new">НОВОЕ</span>
+
+            <h3>🔧 Hydraulic Pump</h3>
+
+            <p>
+                Поставщик: Istanbul Industrial Parts
+            </p>
+
+            <p>
+                Страна: Türkiye
+            </p>
+
+            <p class="price">
+                $1,250
+            </p>
+
+            <p>
+                Срок поставки: 7–10 дней
+            </p>
+
+            <button onclick="offerAction('Istanbul Industrial Parts')">
+                Посмотреть
+            </button>
+
+        </div>
+
+        <div class="offer">
+
+            <span class="status pending">ОЖИДАЕТ ОТВЕТА</span>
+
+            <h3>⚙️ CNC Spare Parts</h3>
+
+            <p>
+                Поставщик: German CNC Solutions
+            </p>
+
+            <p>
+                Страна: Germany
+            </p>
+
+            <p class="price">
+                €2,480
+            </p>
+
+            <p>
+                Срок поставки: 10–14 дней
+            </p>
+
+            <button onclick="offerAction('German CNC Solutions')">
+                Посмотреть
+            </button>
+
+        </div>
+
+        <div class="offer">
+
+            <span class="status accepted">ПРИНЯТО</span>
+
+            <h3>🏭 Industrial Motor</h3>
+
+            <p>
+                Поставщик: Milan Machinery
+            </p>
+
+            <p>
+                Страна: Italy
+            </p>
+
+            <p class="price">
+                €3,750
+            </p>
+
+            <p>
+                Срок поставки: 12 дней
+            </p>
+
+            <button onclick="offerAction('Milan Machinery')">
+                Посмотреть
+            </button>
+
+        </div>
+
+        <div class="offer">
+
+            <span class="status new">НОВОЕ</span>
+
+            <h3>📡 Industrial Sensors</h3>
+
+            <p>
+                Поставщик: Shenzhen Industrial Tech
+            </p>
+
+            <p>
+                Страна: China
+            </p>
+
+            <p class="price">
+                $680
+            </p>
+
+            <p>
+                Срок поставки: 15–20 дней
+            </p>
+
+            <button onclick="offerAction('Shenzhen Industrial Tech')">
+                Посмотреть
+            </button>
+
+        </div>
+
+        <div class="offer">
+
+            <span class="status pending">ОЖИДАЕТ ОТВЕТА</span>
+
+            <h3>🛠️ Welding Equipment</h3>
+
+            <p>
+                Поставщик: Baku Welding Supply
+            </p>
+
+            <p>
+                Страна: Azerbaijan
+            </p>
+
+            <p class="price">
+                2,150 AZN
+            </p>
+
+            <p>
+                Срок поставки: 2–5 дней
+            </p>
+
+            <button onclick="offerAction('Baku Welding Supply')">
+                Посмотреть
+            </button>
+
+        </div>
+
+        <div class="offer">
+
+            <span class="status rejected">ОТКЛОНЕНО</span>
+
+            <h3>🔩 Steel Materials</h3>
+
+            <p>
+                Поставщик: Industrial Steel Group
+            </p>
+
+            <p>
+                Страна: Türkiye
+            </p>
+
+            <p class="price">
+                $4,900
+            </p>
+
+            <p>
+                Условия не соответствуют запросу.
+            </p>
+
+            <button onclick="offerAction('Industrial Steel Group')">
+                Посмотреть
+            </button>
+
+        </div>
+
+    </section>
+
+    <section class="form-box">
+
+        <h2>📨 Создать предложение</h2>
+
+        <p>
+            Демо-форма для будущей системы коммерческих предложений.
+        </p>
+
+        <input
+            type="text"
+            id="company"
+            placeholder="Название компании"
+        >
+
+        <input
+            type="text"
+            id="product"
+            placeholder="Товар или оборудование"
+        >
+
+        <input
+            type="text"
+            id="price"
+            placeholder="Цена"
+        >
+
+        <select id="currency">
+            <option>USD</option>
+            <option>EUR</option>
+            <option>AZN</option>
+            <option>TRY</option>
+        </select>
+
+        <input
+            type="text"
+            id="delivery"
+            placeholder="Срок поставки"
+        >
+
+        <textarea
+            id="details"
+            placeholder="Дополнительные условия..."
+        ></textarea>
+
+        <button onclick="createOffer()">
+            Создать предложение
+        </button>
+
+    </section>
+
+    <section class="links">
+
+        <div class="card">
+            <h3>📋 Requests</h3>
+            <p>
+                Запросы пользователей на товары и услуги.
+            </p>
+            <a class="btn" href="../requests/index.html">
+                Requests
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>💬 Messages</h3>
+            <p>
+                Общение с поставщиками и компаниями.
+            </p>
+            <a class="btn" href="../messages/index.html">
+                Messages
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>📦 Orders</h3>
+            <p>
+                Заказы, созданные после согласования предложения.
+            </p>
+            <a class="btn" href="../orders/index.html">
+                Orders
+            </a>
+        </div>
+
+        <div class="card">
+            <h3>🏪 Marketplace</h3>
+            <p>
+                Поиск промышленных товаров и оборудования.
+            </p>
+            <a class="btn" href="../marketplace/index.html">
+                Marketplace
+            </a>
+        </div>
+
+    </section>
+
+    <a class="back" href="../index.html">
+        ← Вернуться на главную
+    </a>
+
+</main>
+
+<footer>
+    © WORKER PRO — <span>Глобальная промышленная платформа</span>
+</footer>
+
+<script>
+
+function searchOffers() {
+
+    let input = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    let offers = document
+        .querySelectorAll(".offer");
+
+    offers.forEach(function(offer) {
+
+        let text = offer.innerText.toLowerCase();
+
+        if (text.includes(input)) {
+            offer.style.display = "block";
+        } else {
+            offer.style.display = "none";
+        }
+
+    });
+}
+
+function offerAction(company) {
+
+    alert(
+        "Предложение от:\n\n" +
+        company +
+        "\n\nПолная система просмотра предложений будет подключена на следующем этапе."
+    );
+
+}
+
+function createOffer() {
+
+    let company = document
+        .getElementById("company")
+        .value;
+
+    let product = document
+        .getElementById("product")
+        .value;
+
+    let price = document
+        .getElementById("price")
+        .value;
+
+    if (
+        company === "" ||
+        product === "" ||
+        price === ""
+    ) {
+
+        alert("Заполните компанию, товар и цену.");
+
+        return;
+    }
+
+    alert(
+        "Предложение подготовлено.\n\n" +
+        "Компания: " + company +
+        "\nТовар: " + product +
+        "\nЦена: " + price
+    );
+
+}
+
+</script>
+
+</body>
+</html>
