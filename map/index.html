@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Map</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.languages a:hover {
+    background: #075b34;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro {
+    background: white;
+    padding: 22px;
+    border-radius: 14px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.intro h2 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+.map-box {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    margin-bottom: 25px;
+}
+
+.map {
+    min-height: 350px;
+    border-radius: 12px;
+    background:
+        linear-gradient(135deg, #dfeee6 25%, transparent 25%) 0 0 / 70px 70px,
+        linear-gradient(315deg, #dfeee6 25%, #edf5f0 25%) 0 0 / 70px 70px;
+    border: 2px solid #0b6b3d;
+    position: relative;
+    overflow: hidden;
+}
+
+.map-title {
+    text-align: center;
+    padding-top: 25px;
+    font-size: 22px;
+    font-weight: bold;
+    color: #063d25;
+}
+
+.marker {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: #0b6b3d;
+    border: 3px solid white;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0,0,0,.3);
+}
+
+.marker.az {
+    left: 58%;
+    top: 45%;
+}
+
+.marker.tr {
+    left: 48%;
+    top: 48%;
+}
+
+.marker.de {
+    left: 43%;
+    top: 31%;
+}
+
+.marker.it {
+    left: 43%;
+    top: 55%;
+}
+
+.marker.cn {
+    left: 79%;
+    top: 45%;
+}
+
+.marker.us {
+    left: 14%;
+    top: 43%;
+}
+
+.marker-label {
+    position: absolute;
+    background: white;
+    padding: 5px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #063d25;
+    box-shadow: 0 2px 5px rgba(0,0,0,.15);
+}
+
+.label-az {
+    left: 60%;
+    top: 43%;
+}
+
+.label-tr {
+    left: 50%;
+    top: 46%;
+}
+
+.label-de {
+    left: 45%;
+    top: 29%;
+}
+
+.label-it {
+    left: 45%;
+    top: 53%;
+}
+
+.label-cn {
+    left: 81%;
+    top: 43%;
+}
+
+.label-us {
+    left: 16%;
+    top: 41%;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-top: 4px solid #0b6b3d;
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.card p {
+    line-height: 1.6;
+}
+
+.card a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 9px 14px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.card a:hover {
+    background: #075b34;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+    <p>Map — Промышленная карта</p>
+
+    <div class="languages">
+        <a href="#">AZ</a>
+        <a href="#">RU</a>
+        <a href="#">EN</a>
+    </div>
+
+    <div class="languages languages-second">
+        <a href="#">TR</a>
+        <a href="#">DE</a>
+        <a href="#">AR</a>
+        <a href="#">ES</a>
+        <a href="#">FR</a>
+        <a href="#">IT</a>
+    </div>
+
+</header>
+
+<main>
+
+    <section class="intro">
+        <h2>Промышленная карта WORKER PRO</h2>
+
+        <p>
+            Раздел Map предназначен для отображения компаний,
+            производителей, поставщиков, специалистов, складов,
+            транспортных маршрутов и других промышленных объектов
+            на карте.
+        </p>
+
+        <p>
+            Сейчас карта работает как демонстрационный интерфейс.
+            В дальнейшем сюда можно подключить интерактивную карту
+            и реальные координаты объектов.
+        </p>
+    </section>
+
+    <section class="map-box">
+
+        <div class="map">
+
+            <div class="map-title">
+                GLOBAL INDUSTRIAL MAP
+            </div>
+
+            <div class="marker az"></div>
+            <div class="marker tr"></div>
+            <div class="marker de"></div>
+            <div class="marker it"></div>
+            <div class="marker cn"></div>
+            <div class="marker us"></div>
+
+            <div class="marker-label label-az">Azerbaijan</div>
+            <div class="marker-label label-tr">Türkiye</div>
+            <div class="marker-label label-de">Germany</div>
+            <div class="marker-label label-it">Italy</div>
+            <div class="marker-label label-cn">China</div>
+            <div class="marker-label label-us">USA</div>
+
+        </div>
+
+    </section>
+
+    <section class="grid">
+
+        <div class="card">
+            <h3>Companies</h3>
+            <p>
+                Поиск промышленных компаний по странам и городам.
+            </p>
+            <a href="../companies/index.html">Открыть</a>
+        </div>
+
+        <div class="card">
+            <h3>Manufacturers</h3>
+            <p>
+                Производители промышленного оборудования и продукции.
+            </p>
+            <a href="../manufacturers/index.html">Открыть</a>
+        </div>
+
+        <div class="card">
+            <h3>Suppliers</h3>
+            <p>
+                Поставщики товаров, материалов и запасных частей.
+            </p>
+            <a href="../supppliers/index.html">Открыть</a>
+        </div>
+
+        <div class="card">
+            <h3>Locations</h3>
+            <p>
+                Страны, города и промышленные зоны.
+            </p>
+            <a href="../locations/index.html">Открыть</a>
+        </div>
+
+        <div class="card">
+            <h3>Logistics</h3>
+            <p>
+                Логистические направления и международные перевозки.
+            </p>
+            <a href="../logistics/index.html">Открыть</a>
+        </div>
+
+        <div class="card">
+            <h3>Warehouses</h3>
+            <p>
+                Промышленные склады и центры хранения.
+            </p>
+            <a href="../warehouses/index.html">Открыть</a>
+        </div>
+
+    </section>
+
+    <a class="back" href="../index.html">
+        ← Вернуться на главную
+    </a>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026 — <span>Industrial Global Platform</span>
+</footer>
+
+</body>
+</html>
