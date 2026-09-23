@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Messages</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.search-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.search-box input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.messages {
+    display: grid;
+    gap: 15px;
+}
+
+.message {
+    background: white;
+    padding: 18px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 5px solid #0b6b3d;
+}
+
+.message h3 {
+    margin: 0 0 7px;
+    color: #063d25;
+}
+
+.message p {
+    margin: 6px 0;
+}
+
+.message small {
+    color: #777;
+}
+
+.unread {
+    border-left-color: #b7ff35;
+}
+
+.actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.card a {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    padding: 10px 15px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.compose {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-top: 25px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+.compose input,
+.compose textarea {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.compose textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.compose button {
+    margin-top: 12px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+    <p>Messages — Сообщения</p>
+
+    <div class="languages">
+        <a href="#">AZ</a>
+        <a href="#">RU</a>
+        <a href="#">EN</a>
+    </div>
+
+    <div class="languages languages-second">
+        <a href="#">TR</a>
+        <a href="#">DE</a>
+        <a href="#">AR</a>
+        <a href="#">ES</a>
+        <a href="#">FR</a>
+        <a href="#">IT</a>
+    </div>
+
+</header>
+
+<main>
+
+    <section class="intro">
+        <h2>Сообщения WORKER PRO</h2>
+
+        <p>
+            Здесь пользователи смогут общаться с компаниями,
+            поставщиками, производителями, специалистами и
+            партнёрами WORKER PRO.
+        </p>
+
+        <p>
+            Через сообщения можно обсуждать товары, запчасти,
+            цены, заказы, перевозки и условия сотрудничества.
+        </p>
+    </section>
+
+    <section class="search-box">
+
+        <h2>Поиск сообщений</h2>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Введите имя компании, тему или сообщение..."
+            onkeyup="searchMessages()"
+        >
+
+    </section>
+
+    <section class="messages" id="messageList">
+
+        <div class="message unread">
+            <h3>🏭 Baku Industrial Company</h3>
+            <p>
+                Здравствуйте. Мы получили ваш запрос по
+                промышленному насосу.
+            </p>
+            <small>Сегодня, 10:25 • Новое сообщение</small>
+        </div>
+
+        <div class="message">
+            <h3>🔧 CNC Parts Supplier</h3>
+            <p>
+                Цена на комплект запчастей отправлена.
+                Готовы обсудить условия поставки.
+            </p>
+            <small>Сегодня, 09:40</small>
+        </div>
+
+        <div class="message">
+            <h3>🚢 Logistics Partner</h3>
+            <p>
+                Перевозка из Турции в Баку подтверждена.
+            </p>
+            <small>Вчера, 18:20</small>
+        </div>
+
+        <div class="message">
+            <h3>👷 Specialist</h3>
+            <p>
+                Я заинтересован в вакансии оператора CNC.
+            </p>
+            <small>Вчера, 15:05</small>
+        </div>
+
+    </section>
+
+    <section class="actions">
+
+        <div class="card">
+            <h3>🏢 Компании</h3>
+            <p>Общение с компаниями и производителями.</p>
+            <a href="../companies/index.html">Компании</a>
+        </div>
+
+        <div class="card">
+            <h3>👷 Специалисты</h3>
+            <p>Связь со специалистами и работниками.</p>
+            <a href="../specialists/index.html">Специалисты</a>
+        </div>
+
+        <div class="card">
+            <h3>📦 Заказы</h3>
+            <p>Обсуждение текущих заказов.</p>
+            <a href="../orders/index.html">Заказы</a>
+        </div>
+
+        <div class="card">
+            <h3>💰 Предложения</h3>
+            <p>Обсуждение цен и коммерческих предложений.</p>
+            <a href="../offers/index.html">Предложения</a>
+        </div>
+
+        <div class="card">
+            <h3>🔔 Уведомления</h3>
+            <p>Новости и уведомления платформы.</p>
+            <a href="../notifications/index.html">Уведомления</a>
+        </div>
+
+        <div class="card">
+            <h3>🆘 Поддержка</h3>
+            <p>Связь с командой WORKER PRO.</p>
+            <a href="../support/index.html">Поддержка</a>
+        </div>
+
+    </section>
+
+    <section class="compose">
+
+        <h2>✉️ Новое сообщение</h2>
+
+        <input
+            type="text"
+            id="recipient"
+            placeholder="Получатель"
+        >
+
+        <textarea
+            id="message"
+            placeholder="Введите сообщение..."
+        ></textarea>
+
+        <button onclick="sendMessage()">
+            Отправить сообщение
+        </button>
+
+    </section>
+
+    <a class="back" href="../index.html">
+        ← Вернуться на главную
+    </a>
+
+</main>
+
+<footer>
+    © WORKER PRO — <span>Глобальная промышленная платформа</span>
+</footer>
+
+<script>
+
+function searchMessages() {
+
+    let input = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    let messages = document
+        .querySelectorAll(".message");
+
+    messages.forEach(function(message) {
+
+        let text = message.innerText.toLowerCase();
+
+        if (text.includes(input)) {
+            message.style.display = "block";
+        } else {
+            message.style.display = "none";
+        }
+
+    });
+}
+
+function sendMessage() {
+
+    let recipient = document
+        .getElementById("recipient")
+        .value;
+
+    let message = document
+        .getElementById("message")
+        .value;
+
+    if (recipient === "" || message === "") {
+
+        alert("Заполните получателя и сообщение.");
+
+        return;
+    }
+
+    alert(
+        "Сообщение подготовлено для отправки.\n\n" +
+        "Получатель: " + recipient
+    );
+
+}
+
+</script>
+
+</body>
+</html>
