@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Search</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card,
+.search-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2,
+h3 {
+    color: #063d25;
+}
+
+.search-area {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.search-area input {
+    flex: 1;
+    min-width: 220px;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.search-area select {
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+.search-area button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.filters button {
+    background: #e9f6ed;
+    color: #063d25;
+    border: 1px solid #0b6b3d;
+    padding: 9px 13px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.results-info {
+    margin: 15px 0;
+    color: #666;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 18px;
+}
+
+.result-card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    border-left: 5px solid #0b6b3d;
+}
+
+.result-card h3 {
+    margin-top: 5px;
+}
+
+.type {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #063d25;
+    color: #b7ff35;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.result-card button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 7px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+}
+
+.quick-grid a {
+    text-decoration: none;
+    background: #0b6b3d;
+    color: white;
+    padding: 14px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    padding: 11px 15px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Search</h1>
+
+<p>Поиск товаров, компаний, специалистов и промышленной информации</p>
+
+<div class="languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Глобальный поиск WORKER PRO</h2>
+
+<p>
+Поиск по промышленным товарам, запчастям,
+оборудованию, материалам, компаниям,
+поставщикам, специалистам и услугам.
+</p>
+
+</div>
+
+<div class="search-box">
+
+<h2>Что вы ищете?</h2>
+
+<div class="search-area">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Например: CNC, Hydraulic Pump, welding..."
+>
+
+<select id="searchType">
+
+<option value="all">Все категории</option>
+<option value="product">Products</option>
+<option value="company">Companies</option>
+<option value="supplier">Suppliers</option>
+<option value="specialist">Specialists</option>
+<option value="service">Services</option>
+<option value="material">Materials</option>
+<option value="equipment">Equipment</option>
+<option value="spare">Spare Parts</option>
+
+</select>
+
+<button onclick="performSearch()">
+Поиск
+</button>
+
+</div>
+
+<div class="filters">
+
+<button onclick="filterType('all')">
+Все
+</button>
+
+<button onclick="filterType('product')">
+Товары
+</button>
+
+<button onclick="filterType('company')">
+Компании
+</button>
+
+<button onclick="filterType('supplier')">
+Поставщики
+</button>
+
+<button onclick="filterType('specialist')">
+Специалисты
+</button>
+
+<button onclick="filterType('service')">
+Услуги
+</button>
+
+</div>
+
+</div>
+
+<div class="results-info" id="resultsInfo">
+Результаты поиска: 12
+</div>
+
+<div class="grid" id="results">
+
+<div class="result-card" data-type="product">
+
+<span class="type">PRODUCT</span>
+
+<h3>Hydraulic Pump</h3>
+
+<p>
+Промышленный гидравлический насос
+для производственного оборудования.
+</p>
+
+<p><strong>Цена:</strong> $1,250</p>
+
+<p><strong>Страна:</strong> Türkiye</p>
+
+<button onclick="openResult('Hydraulic Pump')">
+Открыть
+</button>
+
+</div>
+
+<div class="result-card" data-type="product">
+
+<span class="type">PRODUCT</span>
+
+<h3>CNC Spare Parts</h3>
+
+<p>
+Запасные части для CNC станков.
+</p>
+
+<p><strong>Цена:</strong> €450</p>
+
+<p><strong>Страна:</strong> Germany</p>
+
+<button onclick="openResult('CNC Spare Parts')">
+Открыть
+</button>
+
+</div>
+
+<div class="result-card" data-type="equipment">
+
+<span class="type">EQUIPMENT</span>
+
+<h3>CNC Machine</h3>
+
+<p>
+Промышленный CNC станок
+для обработки металлических деталей.
+</p>
+
+<p><strong>Цена:</strong> $18,500</p>
+
+<p><strong>Страна:</strong> Germany</p>
+
+<button onclick="openResult('CNC Machine')">
+Открыть
+</button>
+
+</div>
+
+<div class="result-card" data-type="company">
+
+<span class="type">COMPANY</span>
+
+<h3>Baku Industrial Company</h3>
+
+<p>
+Промышленное производство и
+техническое обслуживание.
+</p>
+
+<p><strong>Город:</strong> Baku</p>
+
+<p><strong>Страна:</strong> Azerbaijan</p>
+
+<button onclick="openResult('Baku Industrial Company')">
+Открыть
+</button>
+
+</div>
+
+<div class="result-card" data-type="supplier">
+
+<span class="type">SUPPLIER</span>
+
+<h3>Istanbul Industrial Parts</h3>
+
+<p>
+Поставщик гидравлических компонентов
+и запасных частей.
+</p>
+
+<p><strong>Город:</strong> Istanbul</p>
+
+<p><strong>Страна:</strong> Türkiye</p>
+
+<button onclick="openResult('Istanbul Industrial Parts')">
+Открыть
+</button>
+
+</div>
+
+<div class="result-card" data-type="specialist">
+
+<span class="type">SPECIALIST</span>
+
+<h3>CNC Specialist</h3>
+
+<p>
+Специалист по CNC оборудованию
+и производственным технологиям.
+</p>
+
+<p><strong>Опыт:</strong> 10+ лет</p>
+
+<p><strong>Город:</strong> Baku</p>
+
+<button onclick="openResult('CNC Specialist')">
+Открыть
+</button>
+
+</div>
+
+<div class="result-card" data-type="service">
+
+<span class="type">SERVICE</span>
+
+<h3>Equipment Maintenance</h3>
+
+<p>
+Техническое обслуживание
+промышленного оборудования.
+</p>
+
+<p><strong>Регион:</strong> Azerbaijan</p>
+
+<button onclick="openResult('Equipment Maintenance')">
+Открыть
+</button>
+
+</div>
+
+<div class="result-card" data-type="material">
+
+<span class="type">MATERIAL</span>
+
+<h3>Industrial Steel</h3>
+
+<p>
+Сталь для промышленного производства
+и металлообработки.
+</p>
+
+<p><strong>Цена:</strong> $980 / ton</p>
+
+<p><strong>Страна:</strong> Türkiye</p>
+
+<button onclick="openResult('Industrial Steel')">
+Открыть
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Быстрый поиск</h2>
+
+<div class="quick-grid">
+
+<a href="../products/index.html">Products</a>
+
+<a href="../companies/index.html">Companies</a>
+
+<a href="../supppliers/index.html">Suppliers</a>
+
+<a href="../specialists/index.html">Specialists</a>
+
+<a href="../equipment/index.html">Equipment</a>
+
+<a href="../materials/index.html">Materials</a>
+
+<a href="../spare - prts/index.html">Spare Parts</a>
+
+<a href="../services/index.html">Services</a>
+
+<a href="../marketplace/index.html">Marketplace</a>
+
+<a href="../production/index.html">Production</a>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h3>Поиск по странам</h3>
+
+<div class="filters">
+
+<button onclick="countrySearch('Azerbaijan')">
+Azerbaijan
+</button>
+
+<button onclick="countrySearch('Türkiye')">
+Türkiye
+</button>
+
+<button onclick="countrySearch('Germany')">
+Germany
+</button>
+
+<button onclick="countrySearch('Italy')">
+Italy
+</button>
+
+<button onclick="countrySearch('China')">
+China
+</button>
+
+<button onclick="countrySearch('USA')">
+USA
+</button>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на главную
+</a>
+
+</main>
+
+<footer>
+
+© 2026 <span>WORKER PRO</span> — Industrial Platform
+
+</footer>
+
+<script>
+
+function performSearch() {
+
+let query =
+document.getElementById("searchInput")
+.value
+.toLowerCase();
+
+let type =
+document.getElementById("searchType")
+.value;
+
+let cards =
+document.querySelectorAll(".result-card");
+
+let count = 0;
+
+cards.forEach(function(card) {
+
+let text =
+card.innerText.toLowerCase();
+
+let cardType =
+card.getAttribute("data-type");
+
+let matchesText =
+query === "" || text.includes(query);
+
+let matchesType =
+type === "all" ||
+cardType === type;
+
+if (matchesText && matchesType) {
+
+card.style.display = "block";
+count++;
+
+} else {
+
+card.style.display = "none";
+
+}
+
+});
+
+document.getElementById("resultsInfo").innerText =
+"Результаты поиска: " + count;
+
+}
+
+function filterType(type) {
+
+document.getElementById("searchType").value = type;
+
+performSearch();
+
+}
+
+function countrySearch(country) {
+
+document.getElementById("searchInput").value = country;
+
+document.getElementById("searchType").value = "all";
+
+performSearch();
+
+}
+
+function openResult(name) {
+
+alert(
+"Результат: " + name +
+"\n\nВ будущей версии здесь будет открываться полный профиль товара, компании или специалиста."
+);
+
+}
+
+document.getElementById("searchInput")
+.addEventListener("keyup", function(event) {
+
+if (event.key === "Enter") {
+performSearch();
+}
+
+});
+
+</script>
+
+</body>
+</html>
