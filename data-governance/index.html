@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Data Governance</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.stat {
+    text-align: center;
+    border-top: 4px solid #0b6b3d;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #0b6b3d;
+    margin-bottom: 8px;
+}
+
+.data-card {
+    border-left: 5px solid #0b6b3d;
+}
+
+.data-card h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.active {
+    background: #ffe1e1;
+    color: #a30000;
+}
+
+.review {
+    background: #fff4d6;
+    color: #9a6900;
+}
+
+.approved {
+    background: #e7f6df;
+    color: #28751f;
+}
+
+.monitoring {
+    background: #e5f0ff;
+    color: #1455a0;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+button {
+    padding: 13px 20px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.back {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Data Governance</h1>
+
+<p>Управление, качество, доступ и жизненный цикл промышленных данных</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Управление данными</h2>
+
+<p>
+WORKER PRO предусматривает единый подход к управлению
+промышленными, техническими, коммерческими и операционными данными.
+</p>
+
+<p>
+Раздел помогает определять владельцев данных, правила доступа,
+качество информации, источники данных, ответственность и жизненный цикл.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>18,640</strong>
+Наборов данных
+</div>
+
+<div class="card stat">
+<strong>4,820</strong>
+Компаний
+</div>
+
+<div class="card stat">
+<strong>1,260</strong>
+Политик данных
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск данных</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название набора данных, компания или система">
+
+<select>
+<option>Категория данных</option>
+<option>Производство</option>
+<option>Оборудование</option>
+<option>Продукты</option>
+<option>Поставщики</option>
+<option>Клиенты</option>
+<option>Финансы</option>
+<option>Документы</option>
+<option>Персональные данные</option>
+</select>
+
+<select>
+<option>Качество данных</option>
+<option>Проверено</option>
+<option>На проверке</option>
+<option>Требует исправления</option>
+<option>Не проверено</option>
+</select>
+
+<select>
+<option>Статус</option>
+<option>Активно</option>
+<option>Мониторинг</option>
+<option>На проверке</option>
+<option>Утверждено</option>
+</select>
+
+<button type="button">
+Найти
+</button>
+
+</form>
+
+</div>
+
+<h2>Реестр данных</h2>
+
+<div class="grid">
+
+<div class="card data-card">
+
+<h3>DGV-2026-001</h3>
+
+<p><strong>Производственные данные</strong></p>
+
+<p>Компания: Baku Industrial Manufacturing</p>
+<p>Владелец: Production Department</p>
+<p>Источник: Production System</p>
+<p>Дата проверки: 18 сентября 2026</p>
+
+<span class="status approved">Проверено</span>
+
+</div>
+
+<div class="card data-card">
+
+<h3>DGV-2026-002</h3>
+
+<p><strong>Данные оборудования</strong></p>
+
+<p>Компания: German CNC Solutions</p>
+<p>Владелец: Engineering Department</p>
+<p>Источник: Equipment Database</p>
+<p>Дата проверки: 19 сентября 2026</p>
+
+<span class="status monitoring">Мониторинг</span>
+
+</div>
+
+<div class="card data-card">
+
+<h3>DGV-2026-003</h3>
+
+<p><strong>Данные поставщиков</strong></p>
+
+<p>Компания: Istanbul Industrial Supply</p>
+<p>Владелец: Procurement Department</p>
+<p>Источник: Supplier Database</p>
+<p>Дата проверки: 20 сентября 2026</p>
+
+<span class="status review">На проверке</span>
+
+</div>
+
+<div class="card data-card">
+
+<h3>DGV-2026-004</h3>
+
+<p><strong>Данные продуктов</strong></p>
+
+<p>Компания: Milan Machinery</p>
+<p>Владелец: Product Department</p>
+<p>Источник: Product Catalog</p>
+<p>Дата проверки: 20 сентября 2026</p>
+
+<span class="status approved">Проверено</span>
+
+</div>
+
+<div class="card data-card">
+
+<h3>DGV-2026-005</h3>
+
+<p><strong>Коммерческие данные</strong></p>
+
+<p>Компания: Baku Industrial Supply</p>
+<p>Владелец: Commercial Department</p>
+<p>Источник: Business System</p>
+<p>Дата проверки: 21 сентября 2026</p>
+
+<span class="status active">Активно</span>
+
+</div>
+
+<div class="card data-card">
+
+<h3>DGV-2026-006</h3>
+
+<p><strong>Документы компании</strong></p>
+
+<p>Компания: European Industrial Group</p>
+<p>Владелец: Administration</p>
+<p>Источник: Document System</p>
+<p>Дата проверки: 21 сентября 2026</p>
+
+<span class="status review">На проверке</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать запись управления данными</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название набора данных">
+
+<input
+type="text"
+placeholder="Компания или подразделение">
+
+<input
+type="text"
+placeholder="Источник данных">
+
+<select>
+<option>Категория</option>
+<option>Производственные данные</option>
+<option>Технические данные</option>
+<option>Данные оборудования</option>
+<option>Данные продуктов</option>
+<option>Данные поставщиков</option>
+<option>Коммерческие данные</option>
+<option>Финансовые данные</option>
+<option>Документы</option>
+</select>
+
+<select>
+<option>Владелец данных</option>
+<option>Production</option>
+<option>Engineering</option>
+<option>Quality</option>
+<option>Procurement</option>
+<option>Finance</option>
+<option>Management</option>
+</select>
+
+<select>
+<option>Уровень доступа</option>
+<option>Публичный</option>
+<option>Внутренний</option>
+<option>Ограниченный</option>
+<option>Конфиденциальный</option>
+<option>Критический</option>
+</select>
+
+<textarea
+placeholder="Описание набора данных">
+</textarea>
+
+<textarea
+placeholder="Правила использования, хранения и контроля">
+</textarea>
+
+<button type="button">
+Создать запись
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Основные направления</h2>
+
+<div class="grid">
+
+<div>
+<strong>📊 Качество данных</strong>
+<p>Проверка точности, полноты и актуальности информации.</p>
+</div>
+
+<div>
+<strong>👤 Владельцы данных</strong>
+<p>Определение ответственных подразделений и специалистов.</p>
+</div>
+
+<div>
+<strong>🔐 Контроль доступа</strong>
+<p>Определение правил доступа к различным категориям информации.</p>
+</div>
+
+<div>
+<strong>🏭 Производственные данные</strong>
+<p>Управление информацией о производственных процессах и технологиях.</p>
+</div>
+
+<div>
+<strong>📦 Данные поставщиков</strong>
+<p>Контроль информации о поставщиках и цепочках поставок.</p>
+</div>
+
+<div>
+<strong>📄 Документы</strong>
+<p>Управление техническими, коммерческими и административными документами.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Жизненный цикл данных</h2>
+
+<div class="grid">
+
+<div>
+<strong>1. Создание</strong>
+<p>Формирование или получение новой информации.</p>
+</div>
+
+<div>
+<strong>2. Классификация</strong>
+<p>Определение категории, владельца и уровня доступа.</p>
+</div>
+
+<div>
+<strong>3. Хранение</strong>
+<p>Организация безопасного хранения информации.</p>
+</div>
+
+<div>
+<strong>4. Использование</strong>
+<p>Применение данных в производственных и бизнес-процессах.</p>
+</div>
+
+<div>
+<strong>5. Проверка</strong>
+<p>Контроль качества, актуальности и соответствия требованиям.</p>
+</div>
+
+<div>
+<strong>6. Архивирование</strong>
+<p>Перевод устаревших данных в архив или удаление согласно правилам.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Принципы управления данными</h2>
+
+<div class="grid">
+
+<div>
+<strong>Точность</strong>
+<p>Данные должны быть корректными и проверяемыми.</p>
+</div>
+
+<div>
+<strong>Актуальность</strong>
+<p>Информация должна своевременно обновляться.</p>
+</div>
+
+<div>
+<strong>Доступность</strong>
+<p>Авторизованные пользователи должны получать необходимые данные.</p>
+</div>
+
+<div>
+<strong>Безопасность</strong>
+<p>Доступ и использование данных должны контролироваться.</p>
+</div>
+
+<div>
+<strong>Ответственность</strong>
+<p>Для важных наборов данных должны быть определены ответственные лица.</p>
+</div>
+
+<div>
+<strong>Прозрачность</strong>
+<p>Источники и правила обработки данных должны быть понятны.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../data-security/index.html">
+Data Security
+</a>
+
+<a class="back" href="../data-privacy/index.html">
+Data Privacy
+</a>
+
+<a class="back" href="../cyber-security/index.html">
+Cyber Security
+</a>
+
+<a class="back" href="../business-security/index.html">
+Business Security
+</a>
+
+<a class="back" href="../security/index.html">
+Security
+</a>
+
+<a class="back" href="../compliance/index.html">
+Compliance
+</a>
+
+<a class="back" href="../risk-management/index.html">
+Risk Management
+</a>
+
+<a class="back" href="../analytics/index.html">
+Analytics
+</a>
+
+<a class="back" href="../documents/index.html">
+Documents
+</a>
+
+<a class="back" href="../companies/index.html">
+Companies
+</a>
+
+<a class="back" href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a class="back" href="../manufacturers/index.html">
+Manufacturers
+</a>
+
+<a class="back" href="../production/index.html">
+Production
+</a>
+
+<a class="back" href="../products/index.html">
+Products
+</a>
+
+<a class="back" href="../equipment/index.html">
+Equipment
+</a>
+
+<a class="back" href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← На главную WORKER PRO
+</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
