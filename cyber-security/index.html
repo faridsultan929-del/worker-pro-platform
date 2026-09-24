@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Cyber Security</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.stat {
+    text-align: center;
+    border-top: 4px solid #0b6b3d;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #0b6b3d;
+    margin-bottom: 8px;
+}
+
+.security {
+    border-left: 5px solid #0b6b3d;
+}
+
+.security h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.active {
+    background: #ffe1e1;
+    color: #a30000;
+}
+
+.monitoring {
+    background: #e5f0ff;
+    color: #1455a0;
+}
+
+.warning {
+    background: #fff4d6;
+    color: #9a6900;
+}
+
+.resolved {
+    background: #e7f6df;
+    color: #28751f;
+}
+
+.critical {
+    background: #d90000;
+    color: white;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+button {
+    padding: 13px 20px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.back {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Cyber Security</h1>
+
+<p>Кибербезопасность промышленного бизнеса и цифровой инфраструктуры</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Кибербезопасность</h2>
+
+<p>
+WORKER PRO помогает промышленным компаниям контролировать цифровые
+риски, защищать корпоративные системы, производственные сети,
+данные, документы и критически важную инфраструктуру.
+</p>
+
+<p>
+Раздел предназначен для регистрации событий безопасности,
+контроля угроз, управления доступом, мониторинга систем и
+координации действий при киберинцидентах.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>3,420</strong>
+Проверок безопасности
+</div>
+
+<div class="card stat">
+<strong>1,580</strong>
+Защищаемых систем
+</div>
+
+<div class="card stat">
+<strong>246</strong>
+Активных событий
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск события кибербезопасности</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Номер, компания, система или событие">
+
+<select>
+<option>Тип события</option>
+<option>Подозрительная активность</option>
+<option>Несанкционированный доступ</option>
+<option>Утечка данных</option>
+<option>Вредоносное ПО</option>
+<option>Фишинг</option>
+<option>Атака на сеть</option>
+<option>Нарушение доступа</option>
+<option>Другое</option>
+</select>
+
+<select>
+<option>Уровень</option>
+<option>Низкий</option>
+<option>Средний</option>
+<option>Высокий</option>
+<option>Критический</option>
+</select>
+
+<select>
+<option>Статус</option>
+<option>Новое</option>
+<option>Мониторинг</option>
+<option>Идёт реагирование</option>
+<option>Закрыто</option>
+</select>
+
+<button type="button">Найти</button>
+
+</form>
+
+</div>
+
+<h2>Последние события кибербезопасности</h2>
+
+<div class="grid">
+
+<div class="card security">
+
+<h3>CYB-2026-001</h3>
+
+<p><strong>Подозрительная активность в корпоративной сети</strong></p>
+
+<p>Компания: Baku Industrial Manufacturing</p>
+<p>Система: Corporate Network</p>
+<p>Тип: Сетевая безопасность</p>
+<p>Дата: 18 сентября 2026</p>
+
+<span class="status critical">Критический</span>
+
+</div>
+
+<div class="card security">
+
+<h3>CYB-2026-002</h3>
+
+<p><strong>Попытка несанкционированного доступа</strong></p>
+
+<p>Компания: German CNC Solutions</p>
+<p>Система: Company Portal</p>
+<p>Тип: Контроль доступа</p>
+<p>Дата: 19 сентября 2026</p>
+
+<span class="status monitoring">Мониторинг</span>
+
+</div>
+
+<div class="card security">
+
+<h3>CYB-2026-003</h3>
+
+<p><strong>Подозрительное электронное письмо</strong></p>
+
+<p>Компания: Istanbul Industrial Supply</p>
+<p>Система: Corporate Email</p>
+<p>Тип: Фишинг</p>
+<p>Дата: 20 сентября 2026</p>
+
+<span class="status warning">Высокий</span>
+
+</div>
+
+<div class="card security">
+
+<h3>CYB-2026-004</h3>
+
+<p><strong>Проверка промышленной сети</strong></p>
+
+<p>Компания: Milan Machinery</p>
+<p>Система: Production Network</p>
+<p>Тип: Industrial Network</p>
+<p>Дата: 20 сентября 2026</p>
+
+<span class="status monitoring">Мониторинг</span>
+
+</div>
+
+<div class="card security">
+
+<h3>CYB-2026-005</h3>
+
+<p><strong>Проверка доступа к рабочим станциям</strong></p>
+
+<p>Компания: Baku Industrial Supply</p>
+<p>Система: Workstations</p>
+<p>Тип: Контроль доступа</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status active">Активно</span>
+
+</div>
+
+<div class="card security">
+
+<h3>CYB-2026-006</h3>
+
+<p><strong>Плановое обновление защиты</strong></p>
+
+<p>Компания: European Industrial Group</p>
+<p>Система: Security Infrastructure</p>
+<p>Тип: Профилактика</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status resolved">Завершено</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать план кибербезопасности</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название компании">
+
+<input
+type="text"
+placeholder="Система или производственный объект">
+
+<select>
+<option>Направление защиты</option>
+<option>Корпоративная сеть</option>
+<option>Производственная сеть</option>
+<option>Серверы</option>
+<option>Рабочие станции</option>
+<option>Документы и данные</option>
+<option>Электронная почта</option>
+<option>Доступ пользователей</option>
+</select>
+
+<select>
+<option>Уровень защиты</option>
+<option>Базовый</option>
+<option>Повышенный</option>
+<option>Высокий</option>
+<option>Критический</option>
+</select>
+
+<textarea
+placeholder="Описание цифровых угроз и рисков">
+</textarea>
+
+<textarea
+placeholder="Меры защиты и порядок реагирования">
+</textarea>
+
+<textarea
+placeholder="Ответственные специалисты и контакты">
+</textarea>
+
+<button type="button">
+Создать план
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Основные направления</h2>
+
+<div class="grid">
+
+<div>
+<strong>🌐 Сетевая безопасность</strong>
+<p>Защита корпоративных и производственных сетей.</p>
+</div>
+
+<div>
+<strong>🏭 Промышленная инфраструктура</strong>
+<p>Контроль цифровых систем, связанных с производством.</p>
+</div>
+
+<div>
+<strong>🔐 Управление доступом</strong>
+<p>Контроль пользователей и прав доступа к системам.</p>
+</div>
+
+<div>
+<strong>📄 Защита данных</strong>
+<p>Защита технической, коммерческой и производственной информации.</p>
+</div>
+
+<div>
+<strong>📧 Электронная почта</strong>
+<p>Контроль подозрительных сообщений и попыток мошенничества.</p>
+</div>
+
+<div>
+<strong>💻 Рабочие станции</strong>
+<p>Контроль состояния компьютеров и производственных терминалов.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Процесс управления кибербезопасностью</h2>
+
+<div class="grid">
+
+<div>
+<strong>1. Обнаружение</strong>
+<p>Выявление подозрительной активности.</p>
+</div>
+
+<div>
+<strong>2. Анализ</strong>
+<p>Проверка события и определение уровня угрозы.</p>
+</div>
+
+<div>
+<strong>3. Изоляция</strong>
+<p>Ограничение воздействия на системы.</p>
+</div>
+
+<div>
+<strong>4. Реагирование</strong>
+<p>Выполнение утверждённого плана действий.</p>
+</div>
+
+<div>
+<strong>5. Восстановление</strong>
+<p>Возвращение систем к нормальной работе.</p>
+</div>
+
+<div>
+<strong>6. Профилактика</strong>
+<p>Усиление защиты для предотвращения повторения события.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../business-security/index.html">
+Business Security
+</a>
+
+<a class="back" href="../security/index.html">
+Security
+</a>
+
+<a class="back" href="../crisis-communication/index.html">
+Crisis Communication
+</a>
+
+<a class="back" href="../crisis-management/index.html">
+Crisis Management
+</a>
+
+<a class="back" href="../emergency-management/index.html">
+Emergency Management
+</a>
+
+<a class="back" href="../incident-management/index.html">
+Incident Management
+</a>
+
+<a class="back" href="../risk-management/index.html">
+Risk Management
+</a>
+
+<a class="back" href="../business-continuity/index.html">
+Business Continuity
+</a>
+
+<a class="back" href="../compliance/index.html">
+Compliance
+</a>
+
+<a class="back" href="../audits/index.html">
+Audits
+</a>
+
+<a class="back" href="../notifications/index.html">
+Notifications
+</a>
+
+<a class="back" href="../messages/index.html">
+Messages
+</a>
+
+<a class="back" href="../documents/index.html">
+Documents
+</a>
+
+<a class="back" href="../companies/index.html">
+Companies
+</a>
+
+<a class="back" href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a class="back" href="../manufacturers/index.html">
+Manufacturers
+</a>
+
+<a class="back" href="../specialists/index.html">
+Specialists
+</a>
+
+<a class="back" href="../production/index.html">
+Production
+</a>
+
+<a class="back" href="../equipment/index.html">
+Equipment
+</a>
+
+<a class="back" href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← На главную WORKER PRO
+</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
