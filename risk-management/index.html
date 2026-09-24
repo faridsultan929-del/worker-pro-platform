@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Risk Management</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.stat {
+    text-align: center;
+    border-top: 4px solid #0b6b3d;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #0b6b3d;
+    margin-bottom: 8px;
+}
+
+.risk {
+    border-left: 5px solid #0b6b3d;
+}
+
+.risk h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.level {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.low {
+    background: #e7f6df;
+    color: #28751f;
+}
+
+.medium {
+    background: #fff4d6;
+    color: #9a6900;
+}
+
+.high {
+    background: #ffe1e1;
+    color: #a30000;
+}
+
+.critical {
+    background: #d90000;
+    color: white;
+}
+
+.pending {
+    background: #e5f0ff;
+    color: #1455a0;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+button {
+    padding: 13px 20px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Risk Management</h1>
+
+<p>Управление промышленными, коммерческими и логистическими рисками</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Risk Management</h2>
+
+<p>
+WORKER PRO помогает компаниям выявлять, оценивать и контролировать
+риски, связанные с производством, поставщиками, оборудованием,
+качеством, закупками, транспортировкой и международными сделками.
+</p>
+
+<p>
+Каждый риск может быть связан с компанией, заказом, поставщиком,
+товаром, перевозкой, документами или производственным процессом.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>4,280</strong>
+Зарегистрированных рисков
+</div>
+
+<div class="card stat">
+<strong>1,860</strong>
+Компаний
+</div>
+
+<div class="card stat">
+<strong>920</strong>
+Активных планов
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск и оценка риска</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Компания, заказ, товар или номер риска">
+
+<select>
+<option>Категория риска</option>
+<option>Производство</option>
+<option>Качество</option>
+<option>Поставщик</option>
+<option>Оборудование</option>
+<option>Закупки</option>
+<option>Логистика</option>
+<option>Транспорт</option>
+<option>Финансы</option>
+<option>Документы</option>
+<option>Безопасность</option>
+</select>
+
+<select>
+<option>Уровень риска</option>
+<option>Низкий</option>
+<option>Средний</option>
+<option>Высокий</option>
+<option>Критический</option>
+</select>
+
+<select>
+<option>Статус</option>
+<option>Активный</option>
+<option>Контролируется</option>
+<option>Снижается</option>
+<option>Закрыт</option>
+</select>
+
+<button type="button">Найти риск</button>
+
+</form>
+
+</div>
+
+<h2>Активные риски</h2>
+
+<div class="grid">
+
+<div class="card risk">
+
+<h3>RSK-2026-001</h3>
+
+<p><strong>Задержка поставки CNC компонентов</strong></p>
+
+<p>Компания: German CNC Solutions</p>
+<p>Категория: Логистика</p>
+<p>Вероятность: Средняя</p>
+<p>Влияние: Высокое</p>
+
+<span class="level high">Высокий риск</span>
+
+</div>
+
+<div class="card risk">
+
+<h3>RSK-2026-002</h3>
+
+<p><strong>Несоответствие продукции требованиям</strong></p>
+
+<p>Компания: Milan Machinery</p>
+<p>Категория: Качество</p>
+<p>Вероятность: Средняя</p>
+<p>Влияние: Среднее</p>
+
+<span class="level medium">Средний риск</span>
+
+</div>
+
+<div class="card risk">
+
+<h3>RSK-2026-003</h3>
+
+<p><strong>Задержка таможенного оформления</strong></p>
+
+<p>Маршрут: Houston → Baku</p>
+<p>Категория: Логистика</p>
+<p>Вероятность: Высокая</p>
+<p>Влияние: Высокое</p>
+
+<span class="level critical">Критический</span>
+
+</div>
+
+<div class="card risk">
+
+<h3>RSK-2026-004</h3>
+
+<p><strong>Недостаточная производственная мощность</strong></p>
+
+<p>Компания: Istanbul Industrial Manufacturing</p>
+<p>Категория: Производство</p>
+<p>Вероятность: Средняя</p>
+<p>Влияние: Среднее</p>
+
+<span class="level medium">Средний риск</span>
+
+</div>
+
+<div class="card risk">
+
+<h3>RSK-2026-005</h3>
+
+<p><strong>Истечение сертификата поставщика</strong></p>
+
+<p>Компания: Shenzhen Industrial Tech</p>
+<p>Категория: Документы</p>
+<p>Вероятность: Низкая</p>
+<p>Влияние: Среднее</p>
+
+<span class="level low">Низкий риск</span>
+
+</div>
+
+<div class="card risk">
+
+<h3>RSK-2026-006</h3>
+
+<p><strong>Техническая неисправность оборудования</strong></p>
+
+<p>Компания: Baku Industrial Supply</p>
+<p>Категория: Оборудование</p>
+<p>Вероятность: Средняя</p>
+<p>Влияние: Высокое</p>
+
+<span class="level high">Высокий риск</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать новый риск</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название риска">
+
+<input
+type="text"
+placeholder="Компания / заказ / товар">
+
+<select>
+<option>Категория риска</option>
+<option>Производство</option>
+<option>Качество</option>
+<option>Поставщик</option>
+<option>Оборудование</option>
+<option>Закупки</option>
+<option>Логистика</option>
+<option>Транспорт</option>
+<option>Финансы</option>
+<option>Документы</option>
+<option>Безопасность</option>
+</select>
+
+<select>
+<option>Вероятность</option>
+<option>Низкая</option>
+<option>Средняя</option>
+<option>Высокая</option>
+</select>
+
+<select>
+<option>Влияние</option>
+<option>Низкое</option>
+<option>Среднее</option>
+<option>Высокое</option>
+</select>
+
+<select>
+<option>Уровень риска</option>
+<option>Низкий</option>
+<option>Средний</option>
+<option>Высокий</option>
+<option>Критический</option>
+</select>
+
+<textarea
+placeholder="Описание риска и возможные последствия">
+</textarea>
+
+<textarea
+placeholder="План предотвращения или снижения риска">
+</textarea>
+
+<button type="button">Создать риск</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Основные категории рисков</h2>
+
+<div class="grid">
+
+<div>
+<strong>🏭 Производственные</strong>
+<p>Простои, нехватка мощностей, технологические проблемы.</p>
+</div>
+
+<div>
+<strong>📦 Поставщики</strong>
+<p>Сроки, качество, надёжность и доступность поставщика.</p>
+</div>
+
+<div>
+<strong>🔧 Оборудование</strong>
+<p>Поломки, техническое состояние и обслуживание.</p>
+</div>
+
+<div>
+<strong>✅ Качество</strong>
+<p>Несоответствие продукции техническим требованиям.</p>
+</div>
+
+<div>
+<strong>🚢 Логистика</strong>
+<p>Задержки перевозки, таможня и повреждение груза.</p>
+</div>
+
+<div>
+<strong>💰 Финансы</strong>
+<p>Оплата, стоимость, валютные и коммерческие риски.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>План снижения риска</h2>
+
+<div class="grid">
+
+<div>
+<strong>1. Выявление</strong>
+<p>Определить возможную проблему.</p>
+</div>
+
+<div>
+<strong>2. Оценка</strong>
+<p>Определить вероятность и влияние.</p>
+</div>
+
+<div>
+<strong>3. План</strong>
+<p>Создать меры предотвращения.</p>
+</div>
+
+<div>
+<strong>4. Контроль</strong>
+<p>Отслеживать изменение риска.</p>
+</div>
+
+<div>
+<strong>5. Реакция</strong>
+<p>Применить резервный план.</p>
+</div>
+
+<div>
+<strong>6. Закрытие</strong>
+<p>Закрыть риск после устранения причины.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../compliance/index.html">Compliance</a>
+<a class="back" href="../audits/index.html">Audits</a>
+<a class="back" href="../quality/index.html">Quality</a>
+<a class="back" href="../standards/index.html">Standards</a>
+<a class="back" href="../inspections/index.html">Inspections</a>
+<a class="back" href="../certificates/index.html">Certificates</a>
+<a class="back" href="../verification/index.html">Verification</a>
+<a class="back" href="../documents/index.html">Documents</a>
+<a class="back" href="../production/index.html">Production</a>
+<a class="back" href="../equipment/index.html">Equipment</a>
+<a class="back" href="../products/index.html">Products</a>
+<a class="back" href="../materials/index.html">Materials</a>
+<a class="back" href="../manufacturers/index.html">Manufacturers</a>
+<a class="back" href="../suppliers/index.html">Suppliers</a>
+<a class="back" href="../companies/index.html">Companies</a>
+<a class="back" href="../procurement/index.html">Procurement</a>
+<a class="back" href="../tenders/index.html">Tenders</a>
+<a class="back" href="../rfq/index.html">RFQ</a>
+<a class="back" href="../requests/index.html">Requests</a>
+<a class="back" href="../offers/index.html">Offers</a>
+<a class="back" href="../quotes/index.html">Quotes</a>
+<a class="back" href="../orders/index.html">Orders</a>
+<a class="back" href="../logistics/index.html">Logistics</a>
+<a class="back" href="../transport/index.html">Transport</a>
+<a class="back" href="../tracking/index.html">Tracking</a>
+<a class="back" href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← На главную WORKER PRO
+</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
