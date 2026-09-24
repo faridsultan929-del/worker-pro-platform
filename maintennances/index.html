@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Maintenance</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.search-box,
+.card,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: #063d25;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #b7ff35;
+}
+
+.search-box input,
+.search-box select,
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccd8d1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 18px;
+}
+
+.card h3 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+.number {
+    color: #0b6b3d;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    background: #e8f8dc;
+    color: #287018;
+}
+
+.pending {
+    background: #fff4d6;
+    color: #986800;
+}
+
+.urgent {
+    background: #f5dddd;
+    color: #9a3030;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a {
+    background: #e7f1eb;
+    color: #063d25;
+    text-decoration: none;
+    padding: 9px 13px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Maintenance</h1>
+
+<p>Техническое обслуживание и ремонт промышленного оборудования</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Maintenance WORKER PRO</h2>
+
+<p>
+Раздел Maintenance предназначен для технического
+обслуживания, диагностики, ремонта и профилактики
+промышленного оборудования.
+</p>
+
+<p>
+Компании могут создавать заявки на обслуживание,
+а сервисные специалисты и сервисные центры —
+принимать и выполнять работы.
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<strong>2,840</strong>
+Заявок
+</div>
+
+<div class="stat">
+<strong>1,260</strong>
+Специалистов
+</div>
+
+<div class="stat">
+<strong>248</strong>
+Сервисных центров
+</div>
+
+<div class="stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="search-box">
+
+<h2>Найти обслуживание</h2>
+
+<input
+type="text"
+placeholder="Оборудование или услуга">
+
+<input
+type="text"
+placeholder="Город или страна">
+
+<select>
+<option>Тип обслуживания</option>
+<option>Плановое обслуживание</option>
+<option>Диагностика</option>
+<option>Ремонт</option>
+<option>Аварийный ремонт</option>
+<option>Замена деталей</option>
+<option>Монтаж</option>
+</select>
+
+<select>
+<option>Все отрасли</option>
+<option>CNC</option>
+<option>Производство</option>
+<option>Автоматизация</option>
+<option>Гидравлика</option>
+<option>Электрика</option>
+<option>Нефтегаз</option>
+<option>Энергетика</option>
+</select>
+
+<button onclick="alert('Поиск сервисных специалистов будет подключён')">
+Найти специалиста
+</button>
+
+</div>
+
+<h2>Активные заявки</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>MTN-2026-001</h3>
+
+<p><strong>Оборудование:</strong> CNC Machine</p>
+
+<p><strong>Компания:</strong> Baku Industrial Supply</p>
+
+<p><strong>Место:</strong> Baku, Azerbaijan</p>
+
+<p><strong>Работа:</strong> Плановое обслуживание</p>
+
+<p class="number">Стоимость: 650 AZN</p>
+
+<span class="status">В работе</span>
+
+</div>
+
+<div class="card">
+
+<h3>MTN-2026-002</h3>
+
+<p><strong>Оборудование:</strong> Hydraulic Press</p>
+
+<p><strong>Компания:</strong> Istanbul Industrial Parts</p>
+
+<p><strong>Место:</strong> Istanbul, Türkiye</p>
+
+<p><strong>Работа:</strong> Диагностика гидравлики</p>
+
+<p class="number">Стоимость: €480</p>
+
+<span class="pending">Ожидает специалиста</span>
+
+</div>
+
+<div class="card">
+
+<h3>MTN-2026-003</h3>
+
+<p><strong>Оборудование:</strong> CNC Spindle</p>
+
+<p><strong>Компания:</strong> German CNC Solutions</p>
+
+<p><strong>Место:</strong> Dortmund, Germany</p>
+
+<p><strong>Работа:</strong> Замена подшипников</p>
+
+<p class="number">Стоимость: €920</p>
+
+<span class="status">Подтверждено</span>
+
+</div>
+
+<div class="card">
+
+<h3>MTN-2026-004</h3>
+
+<p><strong>Оборудование:</strong> Industrial Pump</p>
+
+<p><strong>Компания:</strong> Milan Machinery</p>
+
+<p><strong>Место:</strong> Milan, Italy</p>
+
+<p><strong>Работа:</strong> Техническое обслуживание</p>
+
+<p class="number">Стоимость: €560</p>
+
+<span class="status">В работе</span>
+
+</div>
+
+<div class="card">
+
+<h3>MTN-2026-005</h3>
+
+<p><strong>Оборудование:</strong> PLC Automation System</p>
+
+<p><strong>Компания:</strong> Shenzhen Industrial Tech</p>
+
+<p><strong>Место:</strong> Shenzhen, China</p>
+
+<p><strong>Работа:</strong> Диагностика PLC</p>
+
+<p class="number">Стоимость: $780</p>
+
+<span class="status">Подтверждено</span>
+
+</div>
+
+<div class="card">
+
+<h3>MTN-2026-006</h3>
+
+<p><strong>Оборудование:</strong> Industrial Motor</p>
+
+<p><strong>Компания:</strong> Houston Industrial Supply</p>
+
+<p><strong>Место:</strong> Houston, USA</p>
+
+<p><strong>Работа:</strong> Аварийный ремонт</p>
+
+<p class="number">Стоимость: $1,250</p>
+
+<span class="urgent">Срочно</span>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Создать заявку на обслуживание</h2>
+
+<input
+type="text"
+placeholder="Название компании">
+
+<input
+type="text"
+placeholder="Оборудование">
+
+<input
+type="text"
+placeholder="Модель / серийный номер">
+
+<input
+type="text"
+placeholder="Город">
+
+<select>
+<option>Тип работы</option>
+<option>Плановое обслуживание</option>
+<option>Диагностика</option>
+<option>Ремонт</option>
+<option>Аварийный ремонт</option>
+<option>Замена деталей</option>
+<option>Монтаж</option>
+</select>
+
+<input
+type="date">
+
+<textarea
+rows="5"
+placeholder="Опишите проблему или необходимую работу">
+</textarea>
+
+<button onclick="alert('Заявка на обслуживание будет создана')">
+Создать заявку
+</button>
+
+</div>
+
+<div class="form-box">
+
+<h2>Предложить сервисные услуги</h2>
+
+<input
+type="text"
+placeholder="Название компании">
+
+<input
+type="text"
+placeholder="Специализация">
+
+<input
+type="text"
+placeholder="Город и страна">
+
+<input
+type="text"
+placeholder="Опыт работы">
+
+<input
+type="text"
+placeholder="Стоимость услуг">
+
+<textarea
+rows="4"
+placeholder="Описание сервисных услуг">
+</textarea>
+
+<button onclick="alert('Сервисная компания будет добавлена')">
+Добавить сервис
+</button>
+
+</div>
+
+<div class="intro">
+
+<h2>Связанные разделы</h2>
+
+<div class="links">
+
+<a href="../services/index.html">Services</a>
+<a href="../service-centers/index.html">Service Centers</a>
+<a href="../specialists/index.html">Specialists</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../spare - prts/index.html">Spare Parts</a>
+<a href="../products/index.html">Products</a>
+<a href="../manufacturers/index.html">Manufacturers</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../requests/index.html">Requests</a>
+<a href="../orders/index.html">Orders</a>
+<a href="../documents/index.html">Documents</a>
+<a href="../tracking/index.html">Tracking</a>
+<a href="../notifications/index.html">Notifications</a>
+<a href="../warranty/index.html">Warranty</a>
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на WORKER PRO
+</a>
+
+</main>
+
+<footer>
+© 2026 <span>WORKER PRO</span> — Global Industrial Platform
+</footer>
+
+</body>
+</html>
