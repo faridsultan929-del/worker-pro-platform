@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Training Courses</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.search-box,
+.card,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: #063d25;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #b7ff35;
+}
+
+.search-box input,
+.search-box select,
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccd8d1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.card h3 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+.level {
+    display: inline-block;
+    background: #e8f8dc;
+    color: #287018;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.progress {
+    background: #e1e7e3;
+    height: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 12px 0;
+}
+
+.progress span {
+    display: block;
+    height: 100%;
+    background: #0b6b3d;
+}
+
+.course-button {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 10px 15px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a {
+    background: #e7f1eb;
+    color: #063d25;
+    text-decoration: none;
+    padding: 9px 13px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Training Courses</h1>
+
+<p>Профессиональные промышленные курсы</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Каталог учебных курсов</h2>
+
+<p>
+WORKER PRO предлагает профессиональное обучение для рабочих,
+операторов, инженеров, специалистов по производству,
+безопасности, качеству и промышленным технологиям.
+</p>
+
+<p>
+Изучайте новые технологии, проходите уроки и развивайте
+профессиональные навыки.
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<strong>120+</strong>
+Курсов
+</div>
+
+<div class="stat">
+<strong>850+</strong>
+Уроков
+</div>
+
+<div class="stat">
+<strong>42</strong>
+Страны
+</div>
+
+<div class="stat">
+<strong>9</strong>
+Языков
+</div>
+
+</div>
+
+<div class="search-box">
+
+<h2>Поиск курса</h2>
+
+<input
+type="text"
+placeholder="Название курса или технология">
+
+<select>
+<option>Все категории</option>
+<option>Производство</option>
+<option>Безопасность</option>
+<option>CNC</option>
+<option>Сварка</option>
+<option>Автоматизация</option>
+<option>Контроль качества</option>
+<option>Обслуживание</option>
+<option>Английский для рабочих</option>
+</select>
+
+<select>
+<option>Все уровни</option>
+<option>Начальный</option>
+<option>Средний</option>
+<option>Продвинутый</option>
+</select>
+
+<button onclick="alert('Поиск курсов будет подключён')">
+Найти курс
+</button>
+
+</div>
+
+<h2>Популярные курсы</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>CNC Operator</h3>
+
+<p>
+Основы работы на CNC станках, управление,
+инструменты и безопасность.
+</p>
+
+<span class="level">Начальный</span>
+
+<p><strong>42 урока</strong></p>
+
+<div class="progress">
+<span style="width:70%"></span>
+</div>
+
+<p>Прогресс: 70%</p>
+
+<a class="course-button" href="#">
+Открыть курс
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>Industrial Safety</h3>
+
+<p>
+Безопасность на производстве, риски,
+PPE и действия при аварийных ситуациях.
+</p>
+
+<span class="level">Начальный</span>
+
+<p><strong>35 уроков</strong></p>
+
+<div class="progress">
+<span style="width:45%"></span>
+</div>
+
+<p>Прогресс: 45%</p>
+
+<a class="course-button" href="#">
+Открыть курс
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>Welding</h3>
+
+<p>
+Основы промышленной сварки, оборудование,
+материалы и безопасность.
+</p>
+
+<span class="level">Средний</span>
+
+<p><strong>48 уроков</strong></p>
+
+<div class="progress">
+<span style="width:30%"></span>
+</div>
+
+<p>Прогресс: 30%</p>
+
+<a class="course-button" href="#">
+Открыть курс
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>Industrial Automation</h3>
+
+<p>
+PLC, датчики, автоматические линии
+и промышленное управление.
+</p>
+
+<span class="level">Продвинутый</span>
+
+<p><strong>56 уроков</strong></p>
+
+<div class="progress">
+<span style="width:20%"></span>
+</div>
+
+<p>Прогресс: 20%</p>
+
+<a class="course-button" href="#">
+Открыть курс
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>Quality Control</h3>
+
+<p>
+Контроль качества, измерения,
+допуски и производственные стандарты.
+</p>
+
+<span class="level">Средний</span>
+
+<p><strong>38 уроков</strong></p>
+
+<div class="progress">
+<span style="width:60%"></span>
+</div>
+
+<p>Прогресс: 60%</p>
+
+<a class="course-button" href="#">
+Открыть курс
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>Maintenance</h3>
+
+<p>
+Техническое обслуживание оборудования,
+диагностика неисправностей и ремонт.
+</p>
+
+<span class="level">Средний</span>
+
+<p><strong>44 урока</strong></p>
+
+<div class="progress">
+<span style="width:35%"></span>
+</div>
+
+<p>Прогресс: 35%</p>
+
+<a class="course-button" href="#">
+Открыть курс
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>English for Workers</h3>
+
+<p>
+Английский язык для производства,
+оборудования, безопасности и работы.
+</p>
+
+<span class="level">Начальный</span>
+
+<p><strong>60 уроков</strong></p>
+
+<div class="progress">
+<span style="width:80%"></span>
+</div>
+
+<p>Прогресс: 80%</p>
+
+<a class="course-button" href="#">
+Открыть курс
+</a>
+
+</div>
+
+<div class="card">
+
+<h3>Furnaces & Heating</h3>
+
+<p>
+Промышленные печи, нагрев,
+температурный контроль и безопасность.
+</p>
+
+<span class="level">Продвинутый</span>
+
+<p><strong>40 уроков</strong></p>
+
+<div class="progress">
+<span style="width:25%"></span>
+</div>
+
+<p>Прогресс: 25%</p>
+
+<a class="course-button" href="#">
+Открыть курс
+</a>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Предложить учебный курс</h2>
+
+<p>
+Специалисты и компании могут предложить новые
+профессиональные курсы для WORKER PRO.
+</p>
+
+<input type="text" placeholder="Название курса">
+
+<input type="text" placeholder="Автор или компания">
+
+<select>
+<option>Выберите категорию</option>
+<option>Производство</option>
+<option>Безопасность</option>
+<option>CNC</option>
+<option>Сварка</option>
+<option>Автоматизация</option>
+<option>Качество</option>
+<option>Обслуживание</option>
+</select>
+
+<textarea
+rows="4"
+placeholder="Описание курса"></textarea>
+
+<button onclick="alert('Курс будет отправлен на проверку')">
+Предложить курс
+</button>
+
+</div>
+
+<div class="intro">
+
+<h2>Связанные разделы</h2>
+
+<div class="links">
+
+<a href="../training/index.html">Training</a>
+<a href="../production/index.html">Production</a>
+<a href="../tecnologies/index.html">Technologies</a>
+<a href="../safety/index.html">Safety</a>
+<a href="../specialists/index.html">Specialists</a>
+<a href="../jobs/index.html">Jobs</a>
+<a href="../certificates/index.html">Certificates</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../services/index.html">Services</a>
+<a href="../profile/index.html">Profile</a>
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на WORKER PRO
+</a>
+
+</main>
+
+<footer>
+© 2026 <span>WORKER PRO</span> — Global Industrial Platform
+</footer>
+
+</body>
+</html>
