@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Vacancies</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.search-box,
+.form-box,
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: #063d25;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #b7ff35;
+}
+
+.search-box input,
+.search-box select,
+.form-box input,
+.form-box select,
+.form-box textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccd8d1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+    gap: 18px;
+}
+
+.card h3 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+.company {
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.salary {
+    font-size: 20px;
+    font-weight: bold;
+    color: #0b6b3d;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: bold;
+    background: #e8f8dc;
+    color: #287018;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a {
+    background: #e7f1eb;
+    color: #063d25;
+    text-decoration: none;
+    padding: 9px 13px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Vacancies</h1>
+
+<p>Промышленные вакансии и работа для специалистов</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Работа в промышленности</h2>
+
+<p>
+WORKER PRO объединяет специалистов и промышленные компании
+из разных стран.
+</p>
+
+<p>
+Здесь компании могут размещать вакансии, а специалисты —
+находить работу по своей профессии, опыту и стране.
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<strong>4,820</strong>
+Вакансий
+</div>
+
+<div class="stat">
+<strong>2,640</strong>
+Компаний
+</div>
+
+<div class="stat">
+<strong>42</strong>
+Страны
+</div>
+
+<div class="stat">
+<strong>18,500</strong>
+Специалистов
+</div>
+
+</div>
+
+<div class="search-box">
+
+<h2>Поиск вакансий</h2>
+
+<input
+type="text"
+placeholder="Профессия, должность или ключевое слово">
+
+<input
+type="text"
+placeholder="Город или страна">
+
+<select>
+<option>Все отрасли</option>
+<option>Производство</option>
+<option>CNC</option>
+<option>Штамповка</option>
+<option>Сварка</option>
+<option>Автоматизация</option>
+<option>Нефтегаз</option>
+<option>Энергетика</option>
+<option>Логистика</option>
+<option>Техническое обслуживание</option>
+</select>
+
+<select>
+<option>Любой уровень</option>
+<option>Начальный</option>
+<option>Опытный специалист</option>
+<option>Инженер</option>
+<option>Мастер</option>
+<option>Руководитель</option>
+</select>
+
+<button onclick="alert('Поиск вакансий будет подключён')">
+Найти вакансии
+</button>
+
+</div>
+
+<h2>Последние вакансии</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>CNC Operator</h3>
+
+<p class="company">Baku Industrial Supply</p>
+
+<p>📍 Baku, Azerbaijan</p>
+
+<p><strong>Отрасль:</strong> CNC / Manufacturing</p>
+
+<p><strong>Опыт:</strong> 3+ года</p>
+
+<p class="salary">1,200–1,700 AZN</p>
+
+<span class="status">Открыта</span>
+
+</div>
+
+<div class="card">
+
+<h3>Production Technician</h3>
+
+<p class="company">Istanbul Industrial Parts</p>
+
+<p>📍 Istanbul, Türkiye</p>
+
+<p><strong>Отрасль:</strong> Production</p>
+
+<p><strong>Опыт:</strong> 2+ года</p>
+
+<p class="salary">€1,500–2,100</p>
+
+<span class="status">Открыта</span>
+
+</div>
+
+<div class="card">
+
+<h3>CNC Machine Operator</h3>
+
+<p class="company">German CNC Solutions</p>
+
+<p>📍 Dortmund, Germany</p>
+
+<p><strong>Отрасль:</strong> CNC / Machinery</p>
+
+<p><strong>Опыт:</strong> 3+ года</p>
+
+<p class="salary">€2,800–3,600</p>
+
+<span class="status">Открыта</span>
+
+</div>
+
+<div class="card">
+
+<h3>Industrial Maintenance Technician</h3>
+
+<p class="company">Milan Machinery</p>
+
+<p>📍 Milan, Italy</p>
+
+<p><strong>Отрасль:</strong> Maintenance</p>
+
+<p><strong>Опыт:</strong> 3+ года</p>
+
+<p class="salary">€2,200–3,000</p>
+
+<span class="status">Открыта</span>
+
+</div>
+
+<div class="card">
+
+<h3>Automation Technician</h3>
+
+<p class="company">Shenzhen Industrial Tech</p>
+
+<p>📍 Shenzhen, China</p>
+
+<p><strong>Отрасль:</strong> Automation / PLC</p>
+
+<p><strong>Опыт:</strong> 2+ года</p>
+
+<p class="salary">$1,800–2,600</p>
+
+<span class="status">Открыта</span>
+
+</div>
+
+<div class="card">
+
+<h3>Industrial Electrician</h3>
+
+<p class="company">Houston Industrial Supply</p>
+
+<p>📍 Houston, USA</p>
+
+<p><strong>Отрасль:</strong> Electrical</p>
+
+<p><strong>Опыт:</strong> 3+ года</p>
+
+<p class="salary">$3,000–4,200</p>
+
+<span class="status">Открыта</span>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Разместить вакансию</h2>
+
+<input
+type="text"
+placeholder="Название компании">
+
+<input
+type="text"
+placeholder="Название должности">
+
+<input
+type="text"
+placeholder="Город и страна">
+
+<select>
+<option>Выберите отрасль</option>
+<option>Production</option>
+<option>CNC</option>
+<option>Welding</option>
+<option>Automation</option>
+<option>Maintenance</option>
+<option>Oil & Gas</option>
+<option>Energy</option>
+<option>Logistics</option>
+</select>
+
+<input
+type="text"
+placeholder="Требуемый опыт">
+
+<input
+type="text"
+placeholder="Заработная плата">
+
+<textarea
+rows="5"
+placeholder="Описание вакансии и требования">
+</textarea>
+
+<button onclick="alert('Вакансия будет опубликована')">
+Опубликовать вакансию
+</button>
+
+</div>
+
+<div class="form-box">
+
+<h2>Создать профиль специалиста</h2>
+
+<input
+type="text"
+placeholder="Имя и фамилия">
+
+<input
+type="text"
+placeholder="Профессия">
+
+<input
+type="text"
+placeholder="Опыт работы">
+
+<input
+type="text"
+placeholder="Страна / город">
+
+<input
+type="text"
+placeholder="Желаемая должность">
+
+<textarea
+rows="4"
+placeholder="Расскажите о своих навыках">
+</textarea>
+
+<button onclick="alert('Профиль специалиста будет создан')">
+Создать профиль
+</button>
+
+</div>
+
+<div class="intro">
+
+<h2>Связанные разделы</h2>
+
+<div class="links">
+
+<a href="../jobs/index.html">Jobs</a>
+<a href="../specialists/index.html">Specialists</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../company-profile/index.html">Company Profile</a>
+<a href="../profile/index.html">Profile</a>
+<a href="../training/index.html">Training</a>
+<a href="../training-courses/index.html">Training Courses</a>
+<a href="../certificates/index.html">Certificates</a>
+<a href="../production/index.html">Production</a>
+<a href="../industries/index.html">Industries</a>
+<a href="../services/index.html">Services</a>
+<a href="../notifications/index.html">Notifications</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на WORKER PRO
+</a>
+
+</main>
+
+<footer>
+© 2026 <span>WORKER PRO</span> — Global Industrial Platform
+</footer>
+
+</body>
+</html>
