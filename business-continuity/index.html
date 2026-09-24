@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Business Continuity</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.stat {
+    text-align: center;
+    border-top: 4px solid #0b6b3d;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #0b6b3d;
+    margin-bottom: 8px;
+}
+
+.plan {
+    border-left: 5px solid #0b6b3d;
+}
+
+.plan h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.ready {
+    background: #e7f6df;
+    color: #28751f;
+}
+
+.progress {
+    background: #e5f0ff;
+    color: #1455a0;
+}
+
+.warning {
+    background: #fff4d6;
+    color: #9a6900;
+}
+
+.critical {
+    background: #ffe1e1;
+    color: #a30000;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+button {
+    padding: 13px 20px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Business Continuity</h1>
+
+<p>Непрерывность бизнеса, производства и поставок</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Непрерывность бизнеса</h2>
+
+<p>
+WORKER PRO помогает компаниям подготовиться к ситуациям, которые
+могут нарушить производство, поставки, логистику, работу оборудования
+или выполнение заказов.
+</p>
+
+<p>
+Планы непрерывности позволяют заранее определить критические процессы,
+резервные ресурсы, альтернативных поставщиков и порядок восстановления
+работы.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>1,840</strong>
+Планов непрерывности
+</div>
+
+<div class="card stat">
+<strong>920</strong>
+Компаний
+</div>
+
+<div class="card stat">
+<strong>680</strong>
+Резервных сценариев
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск плана</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Компания, производство или номер плана">
+
+<select>
+<option>Тип непрерывности</option>
+<option>Производство</option>
+<option>Поставки</option>
+<option>Логистика</option>
+<option>Оборудование</option>
+<option>IT и данные</option>
+<option>Персонал</option>
+<option>Финансы</option>
+<option>Критические операции</option>
+</select>
+
+<select>
+<option>Статус</option>
+<option>Готов</option>
+<option>В процессе</option>
+<option>Требует обновления</option>
+<option>Активирован</option>
+</select>
+
+<select>
+<option>Страна</option>
+<option>Азербайджан</option>
+<option>Турция</option>
+<option>Германия</option>
+<option>Италия</option>
+<option>Китай</option>
+<option>США</option>
+<option>Другие страны</option>
+</select>
+
+<button type="button">Найти план</button>
+
+</form>
+
+</div>
+
+<h2>Активные планы непрерывности</h2>
+
+<div class="grid">
+
+<div class="card plan">
+
+<h3>BCP-2026-001</h3>
+
+<p><strong>Резервное производство CNC компонентов</strong></p>
+
+<p>Компания: German CNC Solutions</p>
+<p>Основной риск: остановка производства</p>
+<p>Резерв: альтернативный производственный партнёр</p>
+<p>Дата обновления: 18 сентября 2026</p>
+
+<span class="status ready">Готов</span>
+
+</div>
+
+<div class="card plan">
+
+<h3>BCP-2026-002</h3>
+
+<p><strong>Альтернативный поставщик гидравлики</strong></p>
+
+<p>Компания: Baku Industrial Supply</p>
+<p>Основной риск: задержка поставки</p>
+<p>Резерв: поставщик из Турции</p>
+<p>Дата обновления: 19 сентября 2026</p>
+
+<span class="status ready">Готов</span>
+
+</div>
+
+<div class="card plan">
+
+<h3>BCP-2026-003</h3>
+
+<p><strong>Логистический резерв</strong></p>
+
+<p>Маршрут: Shanghai → Baku</p>
+<p>Основной риск: задержка морской перевозки</p>
+<p>Резерв: альтернативный маршрут</p>
+<p>Дата обновления: 20 сентября 2026</p>
+
+<span class="status progress">В процессе</span>
+
+</div>
+
+<div class="card plan">
+
+<h3>BCP-2026-004</h3>
+
+<p><strong>Резервное оборудование</strong></p>
+
+<p>Компания: Milan Machinery</p>
+<p>Основной риск: поломка оборудования</p>
+<p>Резерв: запасная производственная линия</p>
+<p>Дата обновления: 20 сентября 2026</p>
+
+<span class="status warning">Требует обновления</span>
+
+</div>
+
+<div class="card plan">
+
+<h3>BCP-2026-005</h3>
+
+<p><strong>Критические запасные части</strong></p>
+
+<p>Компания: Istanbul Industrial Manufacturing</p>
+<p>Основной риск: отсутствие деталей</p>
+<p>Резерв: склад критических компонентов</p>
+<p>Дата обновления: 21 сентября 2026</p>
+
+<span class="status ready">Готов</span>
+
+</div>
+
+<div class="card plan">
+
+<h3>BCP-2026-006</h3>
+
+<p><strong>Резервный план поставок</strong></p>
+
+<p>Маршрут: Houston → Baku</p>
+<p>Основной риск: таможенная задержка</p>
+<p>Резерв: альтернативный поставщик</p>
+<p>Дата обновления: 21 сентября 2026</p>
+
+<span class="status critical">Активирован</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать план непрерывности</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название компании">
+
+<input
+type="text"
+placeholder="Критический процесс">
+
+<select>
+<option>Область плана</option>
+<option>Производство</option>
+<option>Поставки</option>
+<option>Логистика</option>
+<option>Оборудование</option>
+<option>IT и данные</option>
+<option>Персонал</option>
+<option>Финансы</option>
+</select>
+
+<input
+type="text"
+placeholder="Основной риск">
+
+<input
+type="text"
+placeholder="Резервный поставщик / ресурс">
+
+<textarea
+placeholder="Описание основного сценария">
+</textarea>
+
+<textarea
+placeholder="Резервный сценарий и действия при остановке">
+</textarea>
+
+<button type="button">Создать план</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Основные направления</h2>
+
+<div class="grid">
+
+<div>
+<strong>🏭 Производство</strong>
+<p>Резервные производственные мощности и оборудование.</p>
+</div>
+
+<div>
+<strong>📦 Поставки</strong>
+<p>Альтернативные поставщики и критические материалы.</p>
+</div>
+
+<div>
+<strong>🚢 Логистика</strong>
+<p>Резервные маршруты и транспортные решения.</p>
+</div>
+
+<div>
+<strong>🔧 Оборудование</strong>
+<p>Запасное оборудование и техническое обслуживание.</p>
+</div>
+
+<div>
+<strong>👷 Персонал</strong>
+<p>Резервное распределение специалистов и рабочих.</p>
+</div>
+
+<div>
+<strong>💾 Данные</strong>
+<p>Резервирование важных документов и информации.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>План восстановления</h2>
+
+<div class="grid">
+
+<div>
+<strong>1. Обнаружение</strong>
+<p>Определить событие и его влияние.</p>
+</div>
+
+<div>
+<strong>2. Активация</strong>
+<p>Запустить соответствующий резервный план.</p>
+</div>
+
+<div>
+<strong>3. Резерв</strong>
+<p>Переключиться на альтернативные ресурсы.</p>
+</div>
+
+<div>
+<strong>4. Восстановление</strong>
+<p>Восстановить нормальную работу.</p>
+</div>
+
+<div>
+<strong>5. Контроль</strong>
+<p>Проверить результат и безопасность.</p>
+</div>
+
+<div>
+<strong>6. Анализ</strong>
+<p>Обновить план по итогам ситуации.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../risk-management/index.html">Risk Management</a>
+<a class="back" href="../compliance/index.html">Compliance</a>
+<a class="back" href="../audits/index.html">Audits</a>
+<a class="back" href="../quality/index.html">Quality</a>
+<a class="back" href="../standards/index.html">Standards</a>
+<a class="back" href="../inspections/index.html">Inspections</a>
+<a class="back" href="../production/index.html">Production</a>
+<a class="back" href="../equipment/index.html">Equipment</a>
+<a class="back" href="../products/index.html">Products</a>
+<a class="back" href="../materials/index.html">Materials</a>
+<a class="back" href="../manufacturers/index.html">Manufacturers</a>
+<a class="back" href="../suppliers/index.html">Suppliers</a>
+<a class="back" href="../companies/index.html">Companies</a>
+<a class="back" href="../procurement/index.html">Procurement</a>
+<a class="back" href="../tenders/index.html">Tenders</a>
+<a class="back" href="../requests/index.html">Requests</a>
+<a class="back" href="../rfq/index.html">RFQ</a>
+<a class="back" href="../offers/index.html">Offers</a>
+<a class="back" href="../quotes/index.html">Quotes</a>
+<a class="back" href="../orders/index.html">Orders</a>
+<a class="back" href="../contracts/index.html">Contracts</a>
+<a class="back" href="../logistics/index.html">Logistics</a>
+<a class="back" href="../transport/index.html">Transport</a>
+<a class="back" href="../tracking/index.html">Tracking</a>
+<a class="back" href="../warehouses/index.html">Warehouses</a>
+<a class="back" href="../documents/index.html">Documents</a>
+<a class="back" href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← На главную WORKER PRO
+</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
