@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Crisis Communication</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.stat {
+    text-align: center;
+    border-top: 4px solid #0b6b3d;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #0b6b3d;
+    margin-bottom: 8px;
+}
+
+.communication {
+    border-left: 5px solid #0b6b3d;
+}
+
+.communication h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.active {
+    background: #ffe1e1;
+    color: #a30000;
+}
+
+.response {
+    background: #e5f0ff;
+    color: #1455a0;
+}
+
+.control {
+    background: #fff4d6;
+    color: #9a6900;
+}
+
+.resolved {
+    background: #e7f6df;
+    color: #28751f;
+}
+
+.critical {
+    background: #d90000;
+    color: white;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+button {
+    padding: 13px 20px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.back {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Crisis Communication</h1>
+
+<p>Кризисные коммуникации и координация действий</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Кризисные коммуникации</h2>
+
+<p>
+WORKER PRO помогает организовать обмен информацией между компаниями,
+специалистами, поставщиками, перевозчиками и ответственными лицами
+во время кризисных ситуаций.
+</p>
+
+<p>
+Раздел позволяет фиксировать важные сообщения, назначать получателей,
+отслеживать уведомления и координировать действия участников кризисного
+реагирования.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>1,840</strong>
+Кризисных сообщений
+</div>
+
+<div class="card stat">
+<strong>426</strong>
+Активных коммуникаций
+</div>
+
+<div class="card stat">
+<strong>1,414</strong>
+Завершённых коммуникаций
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск сообщения</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Номер сообщения, компания или ключевое слово">
+
+<select>
+<option>Тип сообщения</option>
+<option>Аварийное уведомление</option>
+<option>Кризисное обновление</option>
+<option>Запрос помощи</option>
+<option>Информация о поставках</option>
+<option>Логистическое сообщение</option>
+<option>Сообщение руководства</option>
+<option>Отчёт о восстановлении</option>
+</select>
+
+<select>
+<option>Приоритет</option>
+<option>Обычный</option>
+<option>Высокий</option>
+<option>Срочный</option>
+<option>Критический</option>
+</select>
+
+<select>
+<option>Статус</option>
+<option>Новое</option>
+<option>В работе</option>
+<option>Ожидает ответа</option>
+<option>Закрыто</option>
+</select>
+
+<button type="button">Найти</button>
+
+</form>
+
+</div>
+
+<h2>Последние кризисные коммуникации</h2>
+
+<div class="grid">
+
+<div class="card communication">
+
+<h3>COM-2026-001</h3>
+
+<p><strong>Аварийное уведомление производства</strong></p>
+
+<p>Отправитель: German CNC Solutions</p>
+<p>Получатели: Production Team</p>
+<p>Тема: Остановка CNC линии</p>
+<p>Дата: 18 сентября 2026</p>
+
+<span class="status critical">Критический</span>
+
+</div>
+
+<div class="card communication">
+
+<h3>COM-2026-002</h3>
+
+<p><strong>Изменение международной поставки</strong></p>
+
+<p>Отправитель: Shanghai Supplier</p>
+<p>Получатели: Baku Buyer / Logistics</p>
+<p>Тема: Задержка груза</p>
+<p>Дата: 19 сентября 2026</p>
+
+<span class="status response">Срочный</span>
+
+</div>
+
+<div class="card communication">
+
+<h3>COM-2026-003</h3>
+
+<p><strong>Запрос технической помощи</strong></p>
+
+<p>Отправитель: Baku Manufacturing</p>
+<p>Получатели: Service Center</p>
+<p>Тема: Отказ оборудования</p>
+<p>Дата: 20 сентября 2026</p>
+
+<span class="status control">В работе</span>
+
+</div>
+
+<div class="card communication">
+
+<h3>COM-2026-004</h3>
+
+<p><strong>Логистическое предупреждение</strong></p>
+
+<p>Отправитель: Transport Partner</p>
+<p>Получатели: Buyer / Supplier</p>
+<p>Тема: Изменение маршрута</p>
+<p>Дата: 20 сентября 2026</p>
+
+<span class="status response">Высокий</span>
+
+</div>
+
+<div class="card communication">
+
+<h3>COM-2026-005</h3>
+
+<p><strong>Сообщение по безопасности</strong></p>
+
+<p>Отправитель: Safety Department</p>
+<p>Получатели: All Personnel</p>
+<p>Тема: Аварийная процедура</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status active">Активно</span>
+
+</div>
+
+<div class="card communication">
+
+<h3>COM-2026-006</h3>
+
+<p><strong>Отчёт о восстановлении</strong></p>
+
+<p>Отправитель: Operations Team</p>
+<p>Получатели: Management</p>
+<p>Тема: Возобновление производства</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status resolved">Завершено</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать кризисное сообщение</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название компании">
+
+<input
+type="text"
+placeholder="Получатель или группа">
+
+<select>
+<option>Тип сообщения</option>
+<option>Аварийное уведомление</option>
+<option>Кризисное обновление</option>
+<option>Запрос помощи</option>
+<option>Информация о поставках</option>
+<option>Логистика</option>
+<option>Сообщение руководства</option>
+<option>Отчёт о восстановлении</option>
+</select>
+
+<select>
+<option>Приоритет</option>
+<option>Обычный</option>
+<option>Высокий</option>
+<option>Срочный</option>
+<option>Критический</option>
+</select>
+
+<textarea
+placeholder="Текст сообщения">
+</textarea>
+
+<textarea
+placeholder="Необходимые действия получателя">
+</textarea>
+
+<input
+type="text"
+placeholder="Контакт ответственного специалиста">
+
+<button type="button">
+Отправить сообщение
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Каналы кризисной коммуникации</h2>
+
+<div class="grid">
+
+<div>
+<strong>🚨 Аварийные уведомления</strong>
+<p>Быстрое информирование ответственных лиц о чрезвычайной ситуации.</p>
+</div>
+
+<div>
+<strong>🏭 Производство</strong>
+<p>Обмен информацией между производственными подразделениями.</p>
+</div>
+
+<div>
+<strong>📦 Поставки</strong>
+<p>Связь между покупателями, поставщиками и производителями.</p>
+</div>
+
+<div>
+<strong>🚢 Логистика</strong>
+<p>Координация перевозчиков, маршрутов и доставки.</p>
+</div>
+
+<div>
+<strong>👷 Специалисты</strong>
+<p>Привлечение технических специалистов и сервисных команд.</p>
+</div>
+
+<div>
+<strong>📋 Руководство</strong>
+<p>Передача важных решений и отчётов руководству компании.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Процесс кризисной коммуникации</h2>
+
+<div class="grid">
+
+<div>
+<strong>1. Обнаружение</strong>
+<p>Получение информации о кризисной ситуации.</p>
+</div>
+
+<div>
+<strong>2. Проверка</strong>
+<p>Проверка достоверности информации.</p>
+</div>
+
+<div>
+<strong>3. Уведомление</strong>
+<p>Отправка информации ответственным участникам.</p>
+</div>
+
+<div>
+<strong>4. Координация</strong>
+<p>Организация совместных действий.</p>
+</div>
+
+<div>
+<strong>5. Обновление</strong>
+<p>Регулярная передача текущего статуса.</p>
+</div>
+
+<div>
+<strong>6. Закрытие</strong>
+<p>Фиксация результата и завершение коммуникации.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../crisis-management/index.html">
+Crisis Management
+</a>
+
+<a class="back" href="../emergency-management/index.html">
+Emergency Management
+</a>
+
+<a class="back" href="../incident-management/index.html">
+Incident Management
+</a>
+
+<a class="back" href="../risk-management/index.html">
+Risk Management
+</a>
+
+<a class="back" href="../business-continuity/index.html">
+Business Continuity
+</a>
+
+<a class="back" href="../notifications/index.html">
+Notifications
+</a>
+
+<a class="back" href="../messages/index.html">
+Messages
+</a>
+
+<a class="back" href="../support/index.html">
+Support
+</a>
+
+<a class="back" href="../companies/index.html">
+Companies
+</a>
+
+<a class="back" href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a class="back" href="../manufacturers/index.html">
+Manufacturers
+</a>
+
+<a class="back" href="../specialists/index.html">
+Specialists
+</a>
+
+<a class="back" href="../logistics/index.html">
+Logistics
+</a>
+
+<a class="back" href="../transport/index.html">
+Transport
+</a>
+
+<a class="back" href="../tracking/index.html">
+Tracking
+</a>
+
+<a class="back" href="../production/index.html">
+Production
+</a>
+
+<a class="back" href="../safety/index.html">
+Safety
+</a>
+
+<a class="back" href="../documents/index.html">
+Documents
+</a>
+
+<a class="back" href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← На главную WORKER PRO
+</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
