@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Crisis Management</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.stat {
+    text-align: center;
+    border-top: 4px solid #0b6b3d;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #0b6b3d;
+    margin-bottom: 8px;
+}
+
+.crisis {
+    border-left: 5px solid #0b6b3d;
+}
+
+.crisis h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.active {
+    background: #ffe1e1;
+    color: #a30000;
+}
+
+.response {
+    background: #e5f0ff;
+    color: #1455a0;
+}
+
+.control {
+    background: #fff4d6;
+    color: #9a6900;
+}
+
+.resolved {
+    background: #e7f6df;
+    color: #28751f;
+}
+
+.critical {
+    background: #d90000;
+    color: white;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+button {
+    padding: 13px 20px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.back {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Crisis Management</h1>
+
+<p>Управление кризисами и координация промышленного реагирования</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Управление кризисами</h2>
+
+<p>
+WORKER PRO помогает компаниям координировать действия при серьёзных
+кризисах, которые могут повлиять на производство, персонал,
+оборудование, поставки, логистику и финансовые процессы.
+</p>
+
+<p>
+Раздел позволяет фиксировать кризисные события, оценивать ситуацию,
+назначать ответственных специалистов, контролировать план действий
+и отслеживать восстановление работы предприятия.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>286</strong>
+Кризисных ситуаций
+</div>
+
+<div class="card stat">
+<strong>94</strong>
+Активных кризиса
+</div>
+
+<div class="card stat">
+<strong>192</strong>
+Завершённых кризиса
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск кризисной ситуации</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Номер, компания, объект или описание">
+
+<select>
+<option>Тип кризиса</option>
+<option>Производственный</option>
+<option>Логистический</option>
+<option>Финансовый</option>
+<option>Кризис поставок</option>
+<option>Оборудование</option>
+<option>Кибербезопасность</option>
+<option>Персонал</option>
+<option>Другое</option>
+</select>
+
+<select>
+<option>Уровень</option>
+<option>Низкий</option>
+<option>Средний</option>
+<option>Высокий</option>
+<option>Критический</option>
+</select>
+
+<select>
+<option>Статус</option>
+<option>Активен</option>
+<option>Идёт реагирование</option>
+<option>Под контролем</option>
+<option>Завершён</option>
+</select>
+
+<button type="button">Найти</button>
+
+</form>
+
+</div>
+
+<h2>Текущие кризисные ситуации</h2>
+
+<div class="grid">
+
+<div class="card crisis">
+
+<h3>CRM-2026-001</h3>
+
+<p><strong>Остановка производственного комплекса</strong></p>
+
+<p>Компания: German CNC Solutions</p>
+<p>Объект: CNC Production</p>
+<p>Причина: отказ ключевого оборудования</p>
+<p>Дата: 18 сентября 2026</p>
+
+<span class="status critical">Критический</span>
+
+</div>
+
+<div class="card crisis">
+
+<h3>CRM-2026-002</h3>
+
+<p><strong>Нарушение международной поставки</strong></p>
+
+<p>Маршрут: Shanghai → Baku</p>
+<p>Груз: Industrial Equipment</p>
+<p>Причина: задержка транспортировки</p>
+<p>Дата: 19 сентября 2026</p>
+
+<span class="status response">Идёт реагирование</span>
+
+</div>
+
+<div class="card crisis">
+
+<h3>CRM-2026-003</h3>
+
+<p><strong>Критическая нехватка компонентов</strong></p>
+
+<p>Компания: Istanbul Industrial Supply</p>
+<p>Материалы: CNC Components</p>
+<p>Причина: нарушение поставок</p>
+<p>Дата: 20 сентября 2026</p>
+
+<span class="status control">Под контролем</span>
+
+</div>
+
+<div class="card crisis">
+
+<h3>CRM-2026-004</h3>
+
+<p><strong>Финансовый кризис проекта</strong></p>
+
+<p>Компания: Milan Machinery</p>
+<p>Проект: Industrial Pump</p>
+<p>Причина: увеличение расходов</p>
+<p>Дата: 20 сентября 2026</p>
+
+<span class="status response">Идёт реагирование</span>
+
+</div>
+
+<div class="card crisis">
+
+<h3>CRM-2026-005</h3>
+
+<p><strong>Кризис производственной безопасности</strong></p>
+
+<p>Компания: Baku Industrial Manufacturing</p>
+<p>Объект: Production Plant</p>
+<p>Причина: аварийная ситуация</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status active">Активен</span>
+
+</div>
+
+<div class="card crisis">
+
+<h3>CRM-2026-006</h3>
+
+<p><strong>Кризис логистической цепочки</strong></p>
+
+<p>Маршрут: Houston → Baku</p>
+<p>Груз: Electrical Components</p>
+<p>Причина: таможенная задержка</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status resolved">Завершён</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать кризисный план</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название компании">
+
+<input
+type="text"
+placeholder="Объект или подразделение">
+
+<select>
+<option>Тип кризиса</option>
+<option>Производственный</option>
+<option>Логистический</option>
+<option>Кризис поставок</option>
+<option>Финансовый</option>
+<option>Оборудование</option>
+<option>Персонал</option>
+<option>Кибербезопасность</option>
+<option>Другое</option>
+</select>
+
+<select>
+<option>Уровень реагирования</option>
+<option>Низкий</option>
+<option>Средний</option>
+<option>Высокий</option>
+<option>Критический</option>
+</select>
+
+<textarea
+placeholder="Описание кризисной ситуации">
+</textarea>
+
+<textarea
+placeholder="Основные действия и меры реагирования">
+</textarea>
+
+<textarea
+placeholder="Ответственные специалисты и контакты">
+</textarea>
+
+<button type="button">Создать кризисный план</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Основные направления</h2>
+
+<div class="grid">
+
+<div>
+<strong>🏭 Производственный кризис</strong>
+<p>Защита производства и восстановление технологических процессов.</p>
+</div>
+
+<div>
+<strong>🚢 Логистический кризис</strong>
+<p>Координация транспорта, грузов и международных поставок.</p>
+</div>
+
+<div>
+<strong>📦 Кризис поставок</strong>
+<p>Поиск альтернативных поставщиков и материалов.</p>
+</div>
+
+<div>
+<strong>⚙ Оборудование</strong>
+<p>Восстановление критически важного промышленного оборудования.</p>
+</div>
+
+<div>
+<strong>💰 Финансовый кризис</strong>
+<p>Контроль расходов, платежей и обязательств проекта.</p>
+</div>
+
+<div>
+<strong>👷 Персонал</strong>
+<p>Организация безопасной работы и распределение специалистов.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Этапы управления кризисом</h2>
+
+<div class="grid">
+
+<div>
+<strong>1. Обнаружение</strong>
+<p>Выявление кризисной ситуации.</p>
+</div>
+
+<div>
+<strong>2. Оценка</strong>
+<p>Определение масштаба и уровня риска.</p>
+</div>
+
+<div>
+<strong>3. Координация</strong>
+<p>Назначение ответственных специалистов.</p>
+</div>
+
+<div>
+<strong>4. Реагирование</strong>
+<p>Выполнение утверждённого плана.</p>
+</div>
+
+<div>
+<strong>5. Восстановление</strong>
+<p>Возвращение производства и поставок к нормальной работе.</p>
+</div>
+
+<div>
+<strong>6. Анализ</strong>
+<p>Изучение результатов и подготовка профилактических мер.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../emergency-management/index.html">
+Emergency Management
+</a>
+
+<a class="back" href="../incident-management/index.html">
+Incident Management
+</a>
+
+<a class="back" href="../risk-management/index.html">
+Risk Management
+</a>
+
+<a class="back" href="../business-continuity/index.html">
+Business Continuity
+</a>
+
+<a class="back" href="../compliance/index.html">
+Compliance
+</a>
+
+<a class="back" href="../audits/index.html">
+Audits
+</a>
+
+<a class="back" href="../quality/index.html">
+Quality
+</a>
+
+<a class="back" href="../standards/index.html">
+Standards
+</a>
+
+<a class="back" href="../inspections/index.html">
+Inspections
+</a>
+
+<a class="back" href="../safety/index.html">
+Safety
+</a>
+
+<a class="back" href="../production/index.html">
+Production
+</a>
+
+<a class="back" href="../equipment/index.html">
+Equipment
+</a>
+
+<a class="back" href="../companies/index.html">
+Companies
+</a>
+
+<a class="back" href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a class="back" href="../manufacturers/index.html">
+Manufacturers
+</a>
+
+<a class="back" href="../procurement/index.html">
+Procurement
+</a>
+
+<a class="back" href="../orders/index.html">
+Orders
+</a>
+
+<a class="back" href="../logistics/index.html">
+Logistics
+</a>
+
+<a class="back" href="../transport/index.html">
+Transport
+</a>
+
+<a class="back" href="../tracking/index.html">
+Tracking
+</a>
+
+<a class="back" href="../warehouses/index.html">
+Warehouses
+</a>
+
+<a class="back" href="../documents/index.html">
+Documents
+</a>
+
+<a class="back" href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← На главную WORKER PRO
+</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
