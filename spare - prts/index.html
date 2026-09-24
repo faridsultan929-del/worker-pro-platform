@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Spare Parts</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.search-box,
+.card,
+.form-box {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.stat {
+    background: #063d25;
+    color: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #b7ff35;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0;
+    border: 1px solid #ccd8d1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+button {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+}
+
+.card h3 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+.price {
+    font-size: 20px;
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.country {
+    color: #0b6b3d;
+    font-weight: bold;
+}
+
+.stock {
+    display: inline-block;
+    background: #e8f8dc;
+    color: #287018;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.links a {
+    background: #e7f1eb;
+    color: #063d25;
+    text-decoration: none;
+    padding: 9px 13px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 25px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Spare Parts</h1>
+
+<p>Industrial Spare Parts Marketplace</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Промышленные запчасти</h2>
+
+<p>
+WORKER PRO помогает находить промышленные запчасти,
+комплектующие и детали для станков, оборудования,
+производственных линий и других промышленных систем.
+</p>
+
+<p>
+Ищите по названию, номеру детали, модели, производителю
+или категории.
+</p>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+<strong>12,480</strong>
+Запчастей
+</div>
+
+<div class="stat">
+<strong>860</strong>
+Поставщиков
+</div>
+
+<div class="stat">
+<strong>42</strong>
+Страны
+</div>
+
+<div class="stat">
+<strong>2,150</strong>
+Производителей
+</div>
+
+</div>
+
+<div class="search-box">
+
+<h2>Поиск запчасти</h2>
+
+<input
+type="text"
+placeholder="Название, номер детали или модель">
+
+<select>
+<option>Все категории</option>
+<option>Гидравлика</option>
+<option>CNC</option>
+<option>Подшипники</option>
+<option>Электрооборудование</option>
+<option>Автоматизация</option>
+<option>Датчики</option>
+<option>Двигатели</option>
+<option>Насосы</option>
+<option>Клапаны</option>
+</select>
+
+<select>
+<option>Все страны</option>
+<option>Азербайджан</option>
+<option>Турция</option>
+<option>Германия</option>
+<option>Италия</option>
+<option>Китай</option>
+<option>США</option>
+</select>
+
+<button onclick="alert('Поиск запчастей будет подключён к базе WORKER PRO')">
+Найти запчасть
+</button>
+
+</div>
+
+<h2>Популярные запчасти</h2>
+
+<div class="grid">
+
+<div class="card">
+
+<h3>Hydraulic Pump HP-250</h3>
+
+<p><strong>Номер:</strong> HP-250-2026</p>
+
+<p>Промышленная гидравлическая система</p>
+
+<p>Для прессов и CNC оборудования</p>
+
+<p class="country">🇹🇷 Türkiye</p>
+
+<p class="price">$1,250</p>
+
+<span class="stock">✓ В наличии</span>
+
+</div>
+
+<div class="card">
+
+<h3>CNC Spindle Motor</h3>
+
+<p><strong>Номер:</strong> CNC-SP-450</p>
+
+<p>German CNC Solutions</p>
+
+<p>Мощность: 7.5 kW</p>
+
+<p class="country">🇩🇪 Germany</p>
+
+<p class="price">€2,480</p>
+
+<span class="stock">✓ В наличии</span>
+
+</div>
+
+<div class="card">
+
+<h3>Industrial Bearing 6208</h3>
+
+<p><strong>Номер:</strong> BR-6208</p>
+
+<p>European Bearings Group</p>
+
+<p>Ball Bearing</p>
+
+<p class="country">🇮🇹 Italy</p>
+
+<p class="price">€45</p>
+
+<span class="stock">✓ В наличии</span>
+
+</div>
+
+<div class="card">
+
+<h3>PLC Controller S7</h3>
+
+<p><strong>Номер:</strong> PLC-S7-1200</p>
+
+<p>Industrial Automation Group</p>
+
+<p>Промышленная автоматизация</p>
+
+<p class="country">🇩🇪 Germany</p>
+
+<p class="price">€780</p>
+
+<span class="stock">✓ В наличии</span>
+
+</div>
+
+<div class="card">
+
+<h3>Industrial Sensor IS-100</h3>
+
+<p><strong>Номер:</strong> IS-100-24V</p>
+
+<p>Shenzhen Industrial Tech</p>
+
+<p>Напряжение: 24V</p>
+
+<p class="country">🇨🇳 China</p>
+
+<p class="price">$120</p>
+
+<span class="stock">✓ В наличии</span>
+
+</div>
+
+<div class="card">
+
+<h3>Industrial Motor IM-15</h3>
+
+<p><strong>Номер:</strong> IM-15-380</p>
+
+<p>Milan Machinery</p>
+
+<p>Мощность: 15 kW</p>
+
+<p class="country">🇮🇹 Italy</p>
+
+<p class="price">€2,100</p>
+
+<span class="stock">✓ В наличии</span>
+
+</div>
+
+<div class="card">
+
+<h3>Hydraulic Valve HV-80</h3>
+
+<p><strong>Номер:</strong> HV-80-2026</p>
+
+<p>Baku Industrial Supply</p>
+
+<p>Промышленный гидравлический клапан</p>
+
+<p class="country">🇦🇿 Azerbaijan</p>
+
+<p class="price">$185</p>
+
+<span class="stock">✓ В наличии</span>
+
+</div>
+
+<div class="card">
+
+<h3>CNC Servo Drive</h3>
+
+<p><strong>Номер:</strong> SD-CNC-500</p>
+
+<p>CNC Technology Group</p>
+
+<p>Servo Drive для CNC</p>
+
+<p class="country">🇺🇸 USA</p>
+
+<p class="price">$950</p>
+
+<span class="stock">На заказ</span>
+
+</div>
+
+</div>
+
+<div class="form-box">
+
+<h2>Добавить запчасть</h2>
+
+<input type="text" placeholder="Название запчасти">
+
+<input type="text" placeholder="Номер детали">
+
+<input type="text" placeholder="Производитель">
+
+<input type="text" placeholder="Модель оборудования">
+
+<select>
+<option>Выберите категорию</option>
+<option>Гидравлика</option>
+<option>CNC</option>
+<option>Электрика</option>
+<option>Автоматизация</option>
+<option>Подшипники</option>
+<option>Двигатели</option>
+<option>Датчики</option>
+<option>Насосы</option>
+</select>
+
+<input type="text" placeholder="Цена">
+
+<input type="text" placeholder="Страна">
+
+<textarea rows="4"
+placeholder="Описание запчасти"></textarea>
+
+<button onclick="alert('Запчасть будет добавлена в каталог WORKER PRO')">
+Добавить запчасть
+</button>
+
+</div>
+
+<div class="form-box">
+
+<h2>Запросить запчасть</h2>
+
+<p>
+Если нужной детали нет в каталоге, отправьте запрос поставщикам.
+</p>
+
+<input type="text" placeholder="Название или номер детали">
+
+<input type="text" placeholder="Количество">
+
+<textarea rows="4"
+placeholder="Дополнительные требования"></textarea>
+
+<button onclick="alert('Запрос будет отправлен поставщикам')">
+Отправить запрос
+</button>
+
+</div>
+
+<div class="intro">
+
+<h2>Связанные разделы</h2>
+
+<div class="links">
+
+<a href="../products/index.html">Products</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../manufacturers/index.html">Manufacturers</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../supppliers/index.html">Suppliers</a>
+<a href="../materials/index.html">Materials</a>
+<a href="../marketplace/index.html">Marketplace</a>
+<a href="../requests/index.html">Requests</a>
+<a href="../rfq/index.html">RFQ</a>
+<a href="../offers/index.html">Offers</a>
+<a href="../quotes/index.html">Quotes</a>
+<a href="../orders/index.html">Orders</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← Назад на WORKER PRO
+</a>
+
+</main>
+
+<footer>
+© 2026 <span>WORKER PRO</span> — Global Industrial Platform
+</footer>
+
+</body>
+</html>
