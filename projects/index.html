@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Projects</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.stat {
+    text-align: center;
+    border-top: 4px solid #0b6b3d;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #0b6b3d;
+    margin-bottom: 8px;
+}
+
+.project {
+    border-left: 5px solid #0b6b3d;
+}
+
+.project h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #e7f6df;
+    color: #28751f;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.budget {
+    font-size: 19px;
+    font-weight: bold;
+    color: #0b6b3d;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+button {
+    padding: 13px 20px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Projects</h1>
+
+<p>Промышленные проекты и поиск исполнителей</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Промышленные проекты</h2>
+
+<p>
+WORKER PRO позволяет компаниям размещать промышленные проекты,
+находить инженеров, производителей, специалистов, поставщиков
+и подрядчиков, а также получать предложения на выполнение работ.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>1,580</strong>
+Активных проектов
+</div>
+
+<div class="card stat">
+<strong>740</strong>
+Компаний-заказчиков
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+<div class="card stat">
+<strong>5,240</strong>
+Исполнителей
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск проектов</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название проекта или направление">
+
+<select>
+<option>Все направления</option>
+<option>Производство</option>
+<option>Машиностроение</option>
+<option>CNC</option>
+<option>Автоматизация</option>
+<option>Энергетика</option>
+<option>Строительство</option>
+<option>Инжиниринг</option>
+<option>Логистика</option>
+<option>Ремонт и модернизация</option>
+</select>
+
+<select>
+<option>Все страны</option>
+<option>Азербайджан</option>
+<option>Турция</option>
+<option>Германия</option>
+<option>Италия</option>
+<option>Китай</option>
+<option>США</option>
+<option>Другие страны</option>
+</select>
+
+<select>
+<option>Статус</option>
+<option>Открыт</option>
+<option>В работе</option>
+<option>Завершён</option>
+</select>
+
+<button type="button">Найти проекты</button>
+
+</form>
+
+</div>
+
+<h2>Активные проекты</h2>
+
+<div class="grid">
+
+<div class="card project">
+
+<h3>PRJ-2026-001</h3>
+
+<p><strong>Модернизация CNC производственной линии</strong></p>
+
+<p>Заказчик: Baku Industrial Supply</p>
+<p>Местоположение: Баку, Азербайджан</p>
+<p>Направление: CNC / производство</p>
+
+<p class="budget">Бюджет: 85,000 AZN</p>
+
+<p>Срок подачи предложений: 30 сентября 2026</p>
+
+<span class="status">Открыт</span>
+
+</div>
+
+<div class="card project">
+
+<h3>PRJ-2026-002</h3>
+
+<p><strong>Автоматизация промышленного участка</strong></p>
+
+<p>Заказчик: Istanbul Industrial Parts</p>
+<p>Местоположение: Стамбул, Турция</p>
+<p>Направление: PLC / SCADA</p>
+
+<p class="budget">Бюджет: €120,000</p>
+
+<p>Срок подачи предложений: 5 октября 2026</p>
+
+<span class="status">Открыт</span>
+
+</div>
+
+<div class="card project">
+
+<h3>PRJ-2026-003</h3>
+
+<p><strong>Новая линия обработки металла</strong></p>
+
+<p>Заказчик: German CNC Solutions</p>
+<p>Местоположение: Дортмунд, Германия</p>
+<p>Направление: Машиностроение</p>
+
+<p class="budget">Бюджет: €450,000</p>
+
+<p>Срок подачи предложений: 10 октября 2026</p>
+
+<span class="status">Открыт</span>
+
+</div>
+
+<div class="card project">
+
+<h3>PRJ-2026-004</h3>
+
+<p><strong>Модернизация насосной станции</strong></p>
+
+<p>Заказчик: Milan Machinery</p>
+<p>Местоположение: Милан, Италия</p>
+<p>Направление: Гидравлика / энергетика</p>
+
+<p class="budget">Бюджет: €75,000</p>
+
+<p>Срок подачи предложений: 15 октября 2026</p>
+
+<span class="status">Открыт</span>
+
+</div>
+
+<div class="card project">
+
+<h3>PRJ-2026-005</h3>
+
+<p><strong>Роботизированная производственная линия</strong></p>
+
+<p>Заказчик: Shenzhen Industrial Tech</p>
+<p>Местоположение: Шэньчжэнь, Китай</p>
+<p>Направление: Роботизация</p>
+
+<p class="budget">Бюджет: $280,000</p>
+
+<p>Срок подачи предложений: 18 октября 2026</p>
+
+<span class="status">Открыт</span>
+
+</div>
+
+<div class="card project">
+
+<h3>PRJ-2026-006</h3>
+
+<p><strong>Энергетическая система предприятия</strong></p>
+
+<p>Заказчик: Houston Industrial Supply</p>
+<p>Местоположение: Хьюстон, США</p>
+<p>Направление: Энергетика</p>
+
+<p class="budget">Бюджет: $350,000</p>
+
+<p>Срок подачи предложений: 22 октября 2026</p>
+
+<span class="status">Открыт</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать проект</h2>
+
+<form>
+
+<input type="text" placeholder="Название проекта">
+
+<input type="text" placeholder="Компания-заказчик">
+
+<select>
+<option>Направление проекта</option>
+<option>Производство</option>
+<option>Машиностроение</option>
+<option>CNC</option>
+<option>Автоматизация</option>
+<option>Энергетика</option>
+<option>Инжиниринг</option>
+<option>Логистика</option>
+<option>Ремонт и модернизация</option>
+<option>Другое</option>
+</select>
+
+<input type="text" placeholder="Страна / город">
+
+<input type="text" placeholder="Предварительный бюджет">
+
+<input type="date">
+
+<textarea placeholder="Техническое задание, требования и описание проекта"></textarea>
+
+<button type="button">Опубликовать проект</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Для исполнителей</h2>
+
+<p>
+Инженеры, производители, специалисты и подрядчики могут
+находить подходящие проекты и отправлять свои предложения.
+</p>
+
+<button type="button">Найти проекты</button>
+
+</div>
+
+<div class="card">
+
+<h2>Основные типы проектов</h2>
+
+<div class="grid">
+
+<div>
+<strong>⚙ Производство</strong>
+<p>Создание и модернизация производственных линий.</p>
+</div>
+
+<div>
+<strong>🤖 Автоматизация</strong>
+<p>PLC, SCADA, роботы и автоматические системы.</p>
+</div>
+
+<div>
+<strong>🔧 Машиностроение</strong>
+<p>Проектирование машин, станков и механизмов.</p>
+</div>
+
+<div>
+<strong>⚡ Энергетика</strong>
+<p>Энергетические и электрические промышленные проекты.</p>
+</div>
+
+<div>
+<strong>📐 Инжиниринг</strong>
+<p>Проектирование, расчёты и технические решения.</p>
+</div>
+
+<div>
+<strong>🚚 Логистика</strong>
+<p>Промышленные перевозки и логистические проекты.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../engineering/index.html">Engineering</a>
+<a class="back" href="../production/index.html">Production</a>
+<a class="back" href="../companies/index.html">Companies</a>
+<a class="back" href="../specialists/index.html">Specialists</a>
+<a class="back" href="../manufacturers/index.html">Manufacturers</a>
+<a class="back" href="../suppliers/index.html">Suppliers</a>
+<a class="back" href="../services/index.html">Services</a>
+<a class="back" href="../requests/index.html">Requests</a>
+<a class="back" href="../tenders/index.html">Tenders</a>
+<a class="back" href="../offers/index.html">Offers</a>
+<a class="back" href="../quotes/index.html">Quotes</a>
+<a class="back" href="../contracts/index.html">Contracts</a>
+<a class="back" href="../orders/index.html">Orders</a>
+<a class="back" href="../documents/index.html">Documents</a>
+<a class="back" href="../payments/index.html">Payments</a>
+<a class="back" href="../logistics/index.html">Logistics</a>
+<a class="back" href="../tracking/index.html">Tracking</a>
+<a class="back" href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">← На главную WORKER PRO</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
