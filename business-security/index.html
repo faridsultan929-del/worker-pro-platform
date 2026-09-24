@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Business Security</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.stat {
+    text-align: center;
+    border-top: 4px solid #0b6b3d;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #0b6b3d;
+    margin-bottom: 8px;
+}
+
+.security {
+    border-left: 5px solid #0b6b3d;
+}
+
+.security h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.active {
+    background: #ffe1e1;
+    color: #a30000;
+}
+
+.monitoring {
+    background: #e5f0ff;
+    color: #1455a0;
+}
+
+.warning {
+    background: #fff4d6;
+    color: #9a6900;
+}
+
+.resolved {
+    background: #e7f6df;
+    color: #28751f;
+}
+
+.critical {
+    background: #d90000;
+    color: white;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+button {
+    padding: 13px 20px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.back {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    text-align: center;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Business Security</h1>
+
+<p>Безопасность бизнеса, производства и промышленной инфраструктуры</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Безопасность бизнеса</h2>
+
+<p>
+WORKER PRO помогает компаниям контролировать риски, защищать
+производственные объекты, оборудование, документы, поставки,
+персонал и деловые операции.
+</p>
+
+<p>
+Раздел объединяет информацию о безопасности компании и помогает
+организовать контроль угроз, проверки, планы реагирования,
+ответственных специалистов и восстановление после происшествий.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>2,860</strong>
+Проверок безопасности
+</div>
+
+<div class="card stat">
+<strong>1,240</strong>
+Защищаемых компаний
+</div>
+
+<div class="card stat">
+<strong>680</strong>
+Активных планов
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск события безопасности</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Номер, компания, объект или событие">
+
+<select>
+<option>Тип безопасности</option>
+<option>Физическая безопасность</option>
+<option>Производственная безопасность</option>
+<option>Безопасность оборудования</option>
+<option>Информационная безопасность</option>
+<option>Безопасность поставок</option>
+<option>Безопасность персонала</option>
+<option>Документальная безопасность</option>
+</select>
+
+<select>
+<option>Уровень</option>
+<option>Низкий</option>
+<option>Средний</option>
+<option>Высокий</option>
+<option>Критический</option>
+</select>
+
+<select>
+<option>Статус</option>
+<option>Активен</option>
+<option>Мониторинг</option>
+<option>Под контролем</option>
+<option>Завершён</option>
+</select>
+
+<button type="button">Найти</button>
+
+</form>
+
+</div>
+
+<h2>Последние события безопасности</h2>
+
+<div class="grid">
+
+<div class="card security">
+
+<h3>SEC-2026-001</h3>
+
+<p><strong>Нарушение безопасности производственного объекта</strong></p>
+
+<p>Компания: Baku Industrial Manufacturing</p>
+<p>Объект: Production Plant</p>
+<p>Тип: Физическая безопасность</p>
+<p>Дата: 18 сентября 2026</p>
+
+<span class="status critical">Критический</span>
+
+</div>
+
+<div class="card security">
+
+<h3>SEC-2026-002</h3>
+
+<p><strong>Подозрительная активность в системе</strong></p>
+
+<p>Компания: Industrial Technology Group</p>
+<p>Объект: IT Infrastructure</p>
+<p>Тип: Информационная безопасность</p>
+<p>Дата: 19 сентября 2026</p>
+
+<span class="status monitoring">Мониторинг</span>
+
+</div>
+
+<div class="card security">
+
+<h3>SEC-2026-003</h3>
+
+<p><strong>Риск при международной поставке</strong></p>
+
+<p>Маршрут: Shanghai → Baku</p>
+<p>Груз: Industrial Equipment</p>
+<p>Тип: Безопасность поставок</p>
+<p>Дата: 20 сентября 2026</p>
+
+<span class="status warning">Высокий</span>
+
+</div>
+
+<div class="card security">
+
+<h3>SEC-2026-004</h3>
+
+<p><strong>Проверка доступа к оборудованию</strong></p>
+
+<p>Компания: Milan Machinery</p>
+<p>Объект: CNC Equipment</p>
+<p>Тип: Безопасность оборудования</p>
+<p>Дата: 20 сентября 2026</p>
+
+<span class="status monitoring">Мониторинг</span>
+
+</div>
+
+<div class="card security">
+
+<h3>SEC-2026-005</h3>
+
+<p><strong>Проверка безопасности персонала</strong></p>
+
+<p>Компания: Istanbul Industrial Supply</p>
+<p>Объект: Production Department</p>
+<p>Тип: Безопасность персонала</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status active">Активен</span>
+
+</div>
+
+<div class="card security">
+
+<h3>SEC-2026-006</h3>
+
+<p><strong>Проверка документов поставщика</strong></p>
+
+<p>Компания: German Industrial Supplier</p>
+<p>Объект: Supplier Documentation</p>
+<p>Тип: Документальная безопасность</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status resolved">Завершён</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать план безопасности</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название компании">
+
+<input
+type="text"
+placeholder="Объект или подразделение">
+
+<select>
+<option>Направление безопасности</option>
+<option>Физическая безопасность</option>
+<option>Производственная безопасность</option>
+<option>Оборудование</option>
+<option>Информационная безопасность</option>
+<option>Поставки</option>
+<option>Персонал</option>
+<option>Документы</option>
+</select>
+
+<select>
+<option>Уровень защиты</option>
+<option>Базовый</option>
+<option>Повышенный</option>
+<option>Высокий</option>
+<option>Критический</option>
+</select>
+
+<textarea
+placeholder="Описание угроз и рисков">
+</textarea>
+
+<textarea
+placeholder="Меры защиты и порядок действий">
+</textarea>
+
+<textarea
+placeholder="Ответственные специалисты и контакты">
+</textarea>
+
+<button type="button">
+Создать план безопасности
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Основные направления безопасности</h2>
+
+<div class="grid">
+
+<div>
+<strong>🏭 Производство</strong>
+<p>Защита производственных процессов и объектов.</p>
+</div>
+
+<div>
+<strong>⚙ Оборудование</strong>
+<p>Контроль доступа и защита промышленного оборудования.</p>
+</div>
+
+<div>
+<strong>🔐 Информация</strong>
+<p>Защита деловой и технической информации.</p>
+</div>
+
+<div>
+<strong>📦 Поставки</strong>
+<p>Контроль безопасности цепочки поставок.</p>
+</div>
+
+<div>
+<strong>👷 Персонал</strong>
+<p>Безопасность сотрудников и специалистов.</p>
+</div>
+
+<div>
+<strong>📄 Документы</strong>
+<p>Контроль важных документов и деловой информации.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Процесс управления безопасностью</h2>
+
+<div class="grid">
+
+<div>
+<strong>1. Определение угроз</strong>
+<p>Выявление возможных угроз для компании.</p>
+</div>
+
+<div>
+<strong>2. Оценка риска</strong>
+<p>Определение уровня и возможных последствий.</p>
+</div>
+
+<div>
+<strong>3. План защиты</strong>
+<p>Создание мер предотвращения и реагирования.</p>
+</div>
+
+<div>
+<strong>4. Мониторинг</strong>
+<p>Постоянный контроль состояния безопасности.</p>
+</div>
+
+<div>
+<strong>5. Реагирование</strong>
+<p>Действия при обнаружении события.</p>
+</div>
+
+<div>
+<strong>6. Восстановление</strong>
+<p>Возвращение процессов к нормальной работе.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../crisis-communication/index.html">
+Crisis Communication
+</a>
+
+<a class="back" href="../crisis-management/index.html">
+Crisis Management
+</a>
+
+<a class="back" href="../emergency-management/index.html">
+Emergency Management
+</a>
+
+<a class="back" href="../incident-management/index.html">
+Incident Management
+</a>
+
+<a class="back" href="../risk-management/index.html">
+Risk Management
+</a>
+
+<a class="back" href="../business-continuity/index.html">
+Business Continuity
+</a>
+
+<a class="back" href="../compliance/index.html">
+Compliance
+</a>
+
+<a class="back" href="../audits/index.html">
+Audits
+</a>
+
+<a class="back" href="../quality/index.html">
+Quality
+</a>
+
+<a class="back" href="../standards/index.html">
+Standards
+</a>
+
+<a class="back" href="../inspections/index.html">
+Inspections
+</a>
+
+<a class="back" href="../safety/index.html">
+Safety
+</a>
+
+<a class="back" href="../security/index.html">
+Security
+</a>
+
+<a class="back" href="../companies/index.html">
+Companies
+</a>
+
+<a class="back" href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a class="back" href="../manufacturers/index.html">
+Manufacturers
+</a>
+
+<a class="back" href="../specialists/index.html">
+Specialists
+</a>
+
+<a class="back" href="../production/index.html">
+Production
+</a>
+
+<a class="back" href="../equipment/index.html">
+Equipment
+</a>
+
+<a class="back" href="../logistics/index.html">
+Logistics
+</a>
+
+<a class="back" href="../transport/index.html">
+Transport
+</a>
+
+<a class="back" href="../tracking/index.html">
+Tracking
+</a>
+
+<a class="back" href="../documents/index.html">
+Documents
+</a>
+
+<a class="back" href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← На главную WORKER PRO
+</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
