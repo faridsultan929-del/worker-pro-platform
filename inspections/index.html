@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Inspections</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #b7ff35;
+    font-size: 16px;
+}
+
+.languages {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.languages-second {
+    margin-top: 8px;
+}
+
+.languages a {
+    text-decoration: none;
+    color: white;
+    background: #0b6b3d;
+    border: 1px solid #b7ff35;
+    padding: 8px 14px;
+    border-radius: 7px;
+    font-weight: bold;
+}
+
+main {
+    max-width: 1100px;
+    margin: auto;
+    padding: 25px 20px 40px;
+}
+
+.intro,
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 14px;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+
+h2 {
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.stat {
+    text-align: center;
+    border-top: 4px solid #0b6b3d;
+}
+
+.stat strong {
+    display: block;
+    font-size: 28px;
+    color: #0b6b3d;
+    margin-bottom: 8px;
+}
+
+.inspection {
+    border-left: 5px solid #0b6b3d;
+}
+
+.inspection h3 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.status {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 6px;
+    background: #e7f6df;
+    color: #28751f;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.status.warning {
+    background: #fff4d6;
+    color: #9a6900;
+}
+
+.status.failed {
+    background: #ffe1e1;
+    color: #a30000;
+}
+
+.status.progress {
+    background: #e5f0ff;
+    color: #1455a0;
+}
+
+form {
+    display: grid;
+    gap: 12px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+button {
+    padding: 13px 20px;
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #063d25;
+}
+
+.back {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 12px 20px;
+    background: #0b6b3d;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+footer span {
+    color: #b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Inspections</h1>
+
+<p>Промышленные инспекции и технический контроль</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Промышленные инспекции</h2>
+
+<p>
+WORKER PRO позволяет организовывать независимые инспекции
+продукции, оборудования, производства, поставщиков и грузов.
+</p>
+
+<p>
+Инспекция может проводиться до производства, во время производства,
+перед отправкой товара или после его получения покупателем.
+Результаты могут быть связаны с заказом, документами,
+сертификатами и поставщиком.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>4,860</strong>
+Инспекций
+</div>
+
+<div class="card stat">
+<strong>1,740</strong>
+Инспекторов
+</div>
+
+<div class="card stat">
+<strong>2,280</strong>
+Компаний
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск инспекции</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Номер инспекции, товар или компания">
+
+<select>
+<option>Все типы</option>
+<option>Продукция</option>
+<option>Оборудование</option>
+<option>Производство</option>
+<option>Поставщик</option>
+<option>Груз</option>
+<option>Документы</option>
+<option>Технический аудит</option>
+</select>
+
+<select>
+<option>Все страны</option>
+<option>Азербайджан</option>
+<option>Турция</option>
+<option>Германия</option>
+<option>Италия</option>
+<option>Китай</option>
+<option>США</option>
+<option>Другие страны</option>
+</select>
+
+<select>
+<option>Все статусы</option>
+<option>Запланирована</option>
+<option>В процессе</option>
+<option>Пройдена</option>
+<option>Требует исправления</option>
+<option>Не пройдена</option>
+</select>
+
+<button type="button">Найти инспекцию</button>
+
+</form>
+
+</div>
+
+<h2>Активные инспекции</h2>
+
+<div class="grid">
+
+<div class="card inspection">
+
+<h3>INS-2026-001</h3>
+
+<p><strong>Гидравлический насос HP-250</strong></p>
+
+<p>Компания: Istanbul Industrial Parts</p>
+<p>Место: Стамбул, Турция</p>
+<p>Тип: Предотгрузочная инспекция</p>
+<p>Дата: 22 сентября 2026</p>
+
+<span class="status progress">Запланирована</span>
+
+</div>
+
+<div class="card inspection">
+
+<h3>INS-2026-002</h3>
+
+<p><strong>CNC станок</strong></p>
+
+<p>Компания: German CNC Solutions</p>
+<p>Место: Дортмунд, Германия</p>
+<p>Тип: Техническая инспекция</p>
+<p>Дата: 23 сентября 2026</p>
+
+<span class="status progress">В процессе</span>
+
+</div>
+
+<div class="card inspection">
+
+<h3>INS-2026-003</h3>
+
+<p><strong>Промышленный насос</strong></p>
+
+<p>Компания: Milan Machinery</p>
+<p>Место: Милан, Италия</p>
+<p>Тип: Контроль качества</p>
+<p>Дата: 20 сентября 2026</p>
+
+<span class="status">Пройдена</span>
+
+</div>
+
+<div class="card inspection">
+
+<h3>INS-2026-004</h3>
+
+<p><strong>PLC система автоматизации</strong></p>
+
+<p>Компания: Shenzhen Industrial Tech</p>
+<p>Место: Шэньчжэнь, Китай</p>
+<p>Тип: Проверка оборудования</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status">Пройдена</span>
+
+</div>
+
+<div class="card inspection">
+
+<h3>INS-2026-005</h3>
+
+<p><strong>Промышленные датчики</strong></p>
+
+<p>Компания: Baku Industrial Supply</p>
+<p>Место: Баку, Азербайджан</p>
+<p>Тип: Приёмочная инспекция</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status warning">Требует исправления</span>
+
+</div>
+
+<div class="card inspection">
+
+<h3>INS-2026-006</h3>
+
+<p><strong>Электродвигатель</strong></p>
+
+<p>Компания: Houston Industrial Supply</p>
+<p>Место: Хьюстон, США</p>
+<p>Тип: Предотгрузочная инспекция</p>
+<p>Дата: 21 сентября 2026</p>
+
+<span class="status failed">Не пройдена</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать инспекцию</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Товар или оборудование">
+
+<input
+type="text"
+placeholder="Компания / производитель / поставщик">
+
+<select>
+<option>Тип инспекции</option>
+<option>Предпроизводственная</option>
+<option>Во время производства</option>
+<option>Предотгрузочная</option>
+<option>Приёмочная</option>
+<option>Техническая</option>
+<option>Инспекция поставщика</option>
+<option>Инспекция груза</option>
+</select>
+
+<input
+type="text"
+placeholder="Страна и город">
+
+<input
+type="date">
+
+<textarea
+placeholder="Требования к инспекции и технические условия">
+</textarea>
+
+<button type="button">Создать инспекцию</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Виды инспекций</h2>
+
+<div class="grid">
+
+<div>
+<strong>🏭 Производство</strong>
+<p>Проверка производственного процесса и соблюдения требований.</p>
+</div>
+
+<div>
+<strong>⚙ Оборудование</strong>
+<p>Техническая проверка машин, станков и промышленного оборудования.</p>
+</div>
+
+<div>
+<strong>📦 Перед отправкой</strong>
+<p>Контроль товара перед отгрузкой покупателю.</p>
+</div>
+
+<div>
+<strong>🔍 Поставщики</strong>
+<p>Проверка производственных возможностей и документов поставщика.</p>
+</div>
+
+<div>
+<strong>🚚 Грузы</strong>
+<p>Проверка количества, упаковки и состояния груза.</p>
+</div>
+
+<div>
+<strong>📋 Документы</strong>
+<p>Проверка сертификатов, паспортов и технической документации.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Процесс инспекции</h2>
+
+<div class="grid">
+
+<div>
+<strong>1. Заявка</strong>
+<p>Заказчик создаёт заявку на инспекцию.</p>
+</div>
+
+<div>
+<strong>2. Инспектор</strong>
+<p>Назначается квалифицированный инспектор.</p>
+</div>
+
+<div>
+<strong>3. Проверка</strong>
+<p>Проводится техническая и визуальная проверка.</p>
+</div>
+
+<div>
+<strong>4. Отчёт</strong>
+<p>Создаётся инспекционный отчёт.</p>
+</div>
+
+<div>
+<strong>5. Результат</strong>
+<p>Фиксируется соответствие или выявленные проблемы.</p>
+</div>
+
+<div>
+<strong>6. Документы</strong>
+<p>Отчёт связывается с заказом и документами.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Для покупателей</h2>
+
+<p>
+Покупатель может заказать независимую инспекцию перед оплатой,
+отправкой или получением промышленного товара.
+</p>
+
+<button type="button">Заказать инспекцию</button>
+
+</div>
+
+<div class="card">
+
+<h2>Для инспекторов</h2>
+
+<p>
+Квалифицированные специалисты могут создавать профиль инспектора,
+указывать опыт, направления работы, страны и доступность для новых
+заказов.
+</p>
+
+<a class="back" href="../specialists/index.html">
+Профиль специалиста
+</a>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../quality/index.html">Quality</a>
+<a class="back" href="../standards/index.html">Standards</a>
+<a class="back" href="../certificates/index.html">Certificates</a>
+<a class="back" href="../verification/index.html">Verification</a>
+<a class="back" href="../products/index.html">Products</a>
+<a class="back" href="../equipment/index.html">Equipment</a>
+<a class="back" href="../spare - prts/index.html">Spare Parts</a>
+<a class="back" href="../materials/index.html">Materials</a>
+<a class="back" href="../manufacturers/index.html">Manufacturers</a>
+<a class="back" href="../suppliers/index.html">Suppliers</a>
+<a class="back" href="../companies/index.html">Companies</a>
+<a class="back" href="../procurement/index.html">Procurement</a>
+<a class="back" href="../requests/index.html">Requests</a>
+<a class="back" href="../rfq/index.html">RFQ</a>
+<a class="back" href="../offers/index.html">Offers</a>
+<a class="back" href="../orders/index.html">Orders</a>
+<a class="back" href="../documents/index.html">Documents</a>
+<a class="back" href="../tracking/index.html">Tracking</a>
+<a class="back" href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← На главную WORKER PRO
+</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
