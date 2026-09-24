@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Data Integration</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    padding:25px 20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    font-size:30px;
+}
+
+header p{
+    margin:8px 0 0;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.languages{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.languages-second{
+    margin-top:8px;
+}
+
+.languages a{
+    text-decoration:none;
+    color:white;
+    background:#0b6b3d;
+    border:1px solid #b7ff35;
+    padding:8px 14px;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:25px 20px 40px;
+}
+
+.intro,.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    margin:20px 0;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+h2{
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:18px;
+}
+
+.stat{
+    text-align:center;
+    border-top:4px solid #0b6b3d;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:8px;
+}
+
+.integration-card{
+    border-left:5px solid #0b6b3d;
+}
+
+.integration-card h3{
+    margin-top:0;
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:6px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.connected{
+    background:#e7f6df;
+    color:#28751f;
+}
+
+.sync{
+    background:#e5f0ff;
+    color:#1455a0;
+}
+
+.warning{
+    background:#fff4d6;
+    color:#9a6900;
+}
+
+.error{
+    background:#ffe1e1;
+    color:#a30000;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+button{
+    padding:13px 20px;
+    background:#0b6b3d;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#063d25;
+}
+
+.back{
+    display:inline-block;
+    padding:12px 20px;
+    background:#0b6b3d;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+    text-align:center;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:20px;
+}
+
+footer span{
+    color:#b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Data Integration</h1>
+
+<p>Объединение промышленных систем, данных и бизнес-процессов</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Интеграция данных</h2>
+
+<p>
+WORKER PRO объединяет данные различных разделов платформы,
+компаний, поставщиков, производителей и промышленных систем.
+</p>
+
+<p>
+Раздел предназначен для управления подключениями, обменом данными,
+синхронизацией информации и контролем интеграционных процессов.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>486</strong>
+Интеграций
+</div>
+
+<div class="card stat">
+<strong>218</strong>
+Подключённых компаний
+</div>
+
+<div class="card stat">
+<strong>96</strong>
+Активных соединений
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск интеграции</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название интеграции, компании или системы">
+
+<select>
+<option>Тип интеграции</option>
+<option>ERP</option>
+<option>CRM</option>
+<option>Production</option>
+<option>Warehouse</option>
+<option>Logistics</option>
+<option>Finance</option>
+<option>Marketplace</option>
+<option>API</option>
+<option>Database</option>
+</select>
+
+<select>
+<option>Статус</option>
+<option>Подключено</option>
+<option>Синхронизация</option>
+<option>На проверке</option>
+<option>Ошибка</option>
+</select>
+
+<select>
+<option>Направление данных</option>
+<option>Импорт</option>
+<option>Экспорт</option>
+<option>Двусторонний обмен</option>
+</select>
+
+<button type="button">
+Найти
+</button>
+
+</form>
+
+</div>
+
+<h2>Активные интеграции</h2>
+
+<div class="grid">
+
+<div class="card integration-card">
+
+<h3>INT-2026-001</h3>
+
+<p><strong>ERP — WORKER PRO</strong></p>
+<p>Компания: Baku Industrial Manufacturing</p>
+<p>Система: ERP Production</p>
+<p>Обмен: Производственные данные</p>
+<p>Последняя синхронизация: 21 сентября 2026</p>
+
+<span class="status connected">Подключено</span>
+
+</div>
+
+<div class="card integration-card">
+
+<h3>INT-2026-002</h3>
+
+<p><strong>Warehouse Integration</strong></p>
+<p>Компания: Istanbul Industrial Supply</p>
+<p>Система: Warehouse Management</p>
+<p>Обмен: Остатки и товары</p>
+<p>Последняя синхронизация: 21 сентября 2026</p>
+
+<span class="status sync">Синхронизация</span>
+
+</div>
+
+<div class="card integration-card">
+
+<h3>INT-2026-003</h3>
+
+<p><strong>Logistics Integration</strong></p>
+<p>Компания: European Industrial Group</p>
+<p>Система: Logistics Platform</p>
+<p>Обмен: Отправления и транспорт</p>
+<p>Последняя синхронизация: 20 сентября 2026</p>
+
+<span class="status connected">Подключено</span>
+
+</div>
+
+<div class="card integration-card">
+
+<h3>INT-2026-004</h3>
+
+<p><strong>Finance Integration</strong></p>
+<p>Компания: Milan Machinery</p>
+<p>Система: Finance System</p>
+<p>Обмен: Счета и платежи</p>
+<p>Последняя синхронизация: 20 сентября 2026</p>
+
+<span class="status warning">На проверке</span>
+
+</div>
+
+<div class="card integration-card">
+
+<h3>INT-2026-005</h3>
+
+<p><strong>Supplier API</strong></p>
+<p>Компания: German CNC Solutions</p>
+<p>Система: Supplier API</p>
+<p>Обмен: Каталог и цены</p>
+<p>Последняя синхронизация: 21 сентября 2026</p>
+
+<span class="status connected">Подключено</span>
+
+</div>
+
+<div class="card integration-card">
+
+<h3>INT-2026-006</h3>
+
+<p><strong>Marketplace Integration</strong></p>
+<p>Компания: Industrial Parts Group</p>
+<p>Система: Marketplace API</p>
+<p>Обмен: Products / Orders</p>
+<p>Последняя синхронизация: 21 сентября 2026</p>
+
+<span class="status error">Ошибка</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать интеграцию</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название интеграции">
+
+<input
+type="text"
+placeholder="Компания">
+
+<input
+type="text"
+placeholder="Название внешней системы">
+
+<select>
+<option>Тип системы</option>
+<option>ERP</option>
+<option>CRM</option>
+<option>Production</option>
+<option>Warehouse</option>
+<option>Logistics</option>
+<option>Finance</option>
+<option>Marketplace</option>
+<option>API</option>
+<option>Database</option>
+</select>
+
+<select>
+<option>Тип обмена</option>
+<option>Импорт</option>
+<option>Экспорт</option>
+<option>Двусторонний обмен</option>
+</select>
+
+<input
+type="text"
+placeholder="Адрес API или системы">
+
+<textarea
+placeholder="Описание интеграции">
+</textarea>
+
+<textarea
+placeholder="Какие данные должны передаваться">
+</textarea>
+
+<button type="button">
+Создать интеграцию
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Основные направления интеграции</h2>
+
+<div class="grid">
+
+<div>
+<strong>🏭 Production</strong>
+<p>Обмен производственными заказами, операциями и результатами.</p>
+</div>
+
+<div>
+<strong>📦 Warehouse</strong>
+<p>Синхронизация товаров, запасов и складских операций.</p>
+</div>
+
+<div>
+<strong>🚚 Logistics</strong>
+<p>Передача информации об отправлениях, транспорте и доставке.</p>
+</div>
+
+<div>
+<strong>💰 Finance</strong>
+<p>Обмен счетами, платежами и финансовыми операциями.</p>
+</div>
+
+<div>
+<strong>🏢 Companies</strong>
+<p>Синхронизация информации о компаниях и партнёрах.</p>
+</div>
+
+<div>
+<strong>🛒 Marketplace</strong>
+<p>Обмен товарами, заказами, ценами и предложениями.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Процесс интеграции</h2>
+
+<div class="grid">
+
+<div>
+<strong>1. Анализ</strong>
+<p>Определение систем и данных, которые необходимо объединить.</p>
+</div>
+
+<div>
+<strong>2. Настройка</strong>
+<p>Создание подключения и параметров обмена.</p>
+</div>
+
+<div>
+<strong>3. Проверка</strong>
+<p>Тестирование передачи данных.</p>
+</div>
+
+<div>
+<strong>4. Синхронизация</strong>
+<p>Регулярный обмен информацией между системами.</p>
+</div>
+
+<div>
+<strong>5. Мониторинг</strong>
+<p>Контроль состояния интеграции и ошибок.</p>
+</div>
+
+<div>
+<strong>6. Восстановление</strong>
+<p>Обработка ошибок и повторная передача данных.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Безопасность интеграций</h2>
+
+<div class="grid">
+
+<div>
+<strong>🔐 Контроль доступа</strong>
+<p>Доступ к интеграциям должен предоставляться только авторизованным пользователям.</p>
+</div>
+
+<div>
+<strong>🛡 Защита данных</strong>
+<p>Передаваемая информация должна соответствовать правилам безопасности данных.</p>
+</div>
+
+<div>
+<strong>📋 Журналирование</strong>
+<p>Интеграционные события и ошибки должны фиксироваться.</p>
+</div>
+
+<div>
+<strong>⚠ Контроль ошибок</strong>
+<p>Ошибки обмена должны обнаруживаться и обрабатываться.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../integrations/index.html">
+Integrations
+</a>
+
+<a class="back" href="../data-governance/index.html">
+Data Governance
+</a>
+
+<a class="back" href="../master-data/index.html">
+Master Data
+</a>
+
+<a class="back" href="../data-security/index.html">
+Data Security
+</a>
+
+<a class="back" href="../data-privacy/index.html">
+Data Privacy
+</a>
+
+<a class="back" href="../cyber-security/index.html">
+Cyber Security
+</a>
+
+<a class="back" href="../analytics/index.html">
+Analytics
+</a>
+
+<a class="back" href="../production/index.html">
+Production
+</a>
+
+<a class="back" href="../products/index.html">
+Products
+</a>
+
+<a class="back" href="../equipment/index.html">
+Equipment
+</a>
+
+<a class="back" href="../companies/index.html">
+Companies
+</a>
+
+<a class="back" href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a class="back" href="../manufacturers/index.html">
+Manufacturers
+</a>
+
+<a class="back" href="../warehouse/index.html">
+Warehouses
+</a>
+
+<a class="back" href="../logistics/index.html">
+Logistics
+</a>
+
+<a class="back" href="../transport/index.html">
+Transport
+</a>
+
+<a class="back" href="../orders/index.html">
+Orders
+</a>
+
+<a class="back" href="../documents/index.html">
+Documents
+</a>
+
+<a class="back" href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← На главную WORKER PRO
+</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
