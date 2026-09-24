@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Master Data</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    padding:25px 20px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    font-size:30px;
+}
+
+header p{
+    margin:8px 0 0;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.languages{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:20px;
+}
+
+.languages-second{
+    margin-top:8px;
+}
+
+.languages a{
+    text-decoration:none;
+    color:white;
+    background:#0b6b3d;
+    border:1px solid #b7ff35;
+    padding:8px 14px;
+    border-radius:7px;
+    font-weight:bold;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:25px 20px 40px;
+}
+
+.intro,.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    margin:20px 0;
+    box-shadow:0 2px 8px rgba(0,0,0,.05);
+}
+
+h2{
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:18px;
+}
+
+.stat{
+    text-align:center;
+    border-top:4px solid #0b6b3d;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:8px;
+}
+
+.master-card{
+    border-left:5px solid #0b6b3d;
+}
+
+.master-card h3{
+    margin-top:0;
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    padding:6px 10px;
+    border-radius:6px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.approved{
+    background:#e7f6df;
+    color:#28751f;
+}
+
+.review{
+    background:#fff4d6;
+    color:#9a6900;
+}
+
+.active{
+    background:#ffe1e1;
+    color:#a30000;
+}
+
+.sync{
+    background:#e5f0ff;
+    color:#1455a0;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+button{
+    padding:13px 20px;
+    background:#0b6b3d;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#063d25;
+}
+
+.back{
+    display:inline-block;
+    padding:12px 20px;
+    background:#0b6b3d;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:bold;
+    text-align:center;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:20px;
+}
+
+footer span{
+    color:#b7ff35;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO — Master Data</h1>
+
+<p>Единые основные данные промышленной платформы</p>
+
+<div class="languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+</div>
+
+<div class="languages languages-second">
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+</header>
+
+<main>
+
+<div class="intro">
+
+<h2>Основные данные</h2>
+
+<p>
+Master Data — это единые базовые данные, которые используются
+разными разделами WORKER PRO.
+</p>
+
+<p>
+К ним относятся компании, специалисты, товары, оборудование,
+материалы, поставщики, страны, категории и другие объекты платформы.
+Цель — уменьшить дублирование и поддерживать единый формат информации.
+</p>
+
+</div>
+
+<div class="grid">
+
+<div class="card stat">
+<strong>28,640</strong>
+Основных записей
+</div>
+
+<div class="card stat">
+<strong>6,420</strong>
+Компаний
+</div>
+
+<div class="card stat">
+<strong>18,860</strong>
+Продуктов
+</div>
+
+<div class="card stat">
+<strong>42</strong>
+Страны
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Поиск основных данных</h2>
+
+<form>
+
+<input
+type="text"
+placeholder="Название, код или идентификатор">
+
+<select>
+<option>Тип данных</option>
+<option>Компания</option>
+<option>Специалист</option>
+<option>Продукт</option>
+<option>Оборудование</option>
+<option>Материал</option>
+<option>Поставщик</option>
+<option>Производитель</option>
+<option>Категория</option>
+<option>Локация</option>
+</select>
+
+<select>
+<option>Статус</option>
+<option>Активно</option>
+<option>Проверено</option>
+<option>На проверке</option>
+<option>Требует обновления</option>
+</select>
+
+<select>
+<option>Страна</option>
+<option>Azerbaijan</option>
+<option>Turkey</option>
+<option>Germany</option>
+<option>Italy</option>
+<option>China</option>
+<option>USA</option>
+<option>Other</option>
+</select>
+
+<button type="button">Найти</button>
+
+</form>
+
+</div>
+
+<h2>Реестр основных данных</h2>
+
+<div class="grid">
+
+<div class="card master-card">
+
+<h3>MST-2026-001</h3>
+
+<p><strong>Компания</strong></p>
+<p>Название: Baku Industrial Manufacturing</p>
+<p>Код: AZ-CMP-001</p>
+<p>Страна: Azerbaijan</p>
+
+<span class="status approved">Проверено</span>
+
+</div>
+
+<div class="card master-card">
+
+<h3>MST-2026-002</h3>
+
+<p><strong>Продукт</strong></p>
+<p>Название: Hydraulic Industrial Pump</p>
+<p>Код: PRD-HYD-2026</p>
+<p>Категория: Industrial Equipment</p>
+
+<span class="status approved">Активно</span>
+
+</div>
+
+<div class="card master-card">
+
+<h3>MST-2026-003</h3>
+
+<p><strong>Оборудование</strong></p>
+<p>Название: CNC Machining Center</p>
+<p>Код: EQ-CNC-2026</p>
+<p>Производитель: German CNC Solutions</p>
+
+<span class="status sync">Синхронизация</span>
+
+</div>
+
+<div class="card master-card">
+
+<h3>MST-2026-004</h3>
+
+<p><strong>Материал</strong></p>
+<p>Название: Industrial Steel</p>
+<p>Код: MAT-STL-001</p>
+<p>Категория: Metals</p>
+
+<span class="status approved">Проверено</span>
+
+</div>
+
+<div class="card master-card">
+
+<h3>MST-2026-005</h3>
+
+<p><strong>Поставщик</strong></p>
+<p>Название: Istanbul Industrial Supply</p>
+<p>Код: SUP-TR-026</p>
+<p>Страна: Turkey</p>
+
+<span class="status review">На проверке</span>
+
+</div>
+
+<div class="card master-card">
+
+<h3>MST-2026-006</h3>
+
+<p><strong>Специалист</strong></p>
+<p>Профиль: Industrial CNC Specialist</p>
+<p>Код: SPC-2026-006</p>
+<p>Страна: Azerbaijan</p>
+
+<span class="status active">Активно</span>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Создать основную запись</h2>
+
+<form>
+
+<select>
+<option>Тип объекта</option>
+<option>Компания</option>
+<option>Специалист</option>
+<option>Продукт</option>
+<option>Оборудование</option>
+<option>Материал</option>
+<option>Поставщик</option>
+<option>Производитель</option>
+<option>Категория</option>
+<option>Локация</option>
+</select>
+
+<input
+type="text"
+placeholder="Название объекта">
+
+<input
+type="text"
+placeholder="Уникальный код">
+
+<input
+type="text"
+placeholder="Компания или владелец">
+
+<select>
+<option>Статус</option>
+<option>Активно</option>
+<option>На проверке</option>
+<option>Архив</option>
+</select>
+
+<textarea
+placeholder="Описание объекта">
+</textarea>
+
+<textarea
+placeholder="Дополнительные данные">
+</textarea>
+
+<button type="button">
+Создать запись
+</button>
+
+</form>
+
+</div>
+
+<div class="card">
+
+<h2>Категории основных данных</h2>
+
+<div class="grid">
+
+<div>
+<strong>🏢 Компании</strong>
+<p>Единые записи производителей, поставщиков и промышленных организаций.</p>
+</div>
+
+<div>
+<strong>👷 Специалисты</strong>
+<p>Профили специалистов, инженеров, операторов и других работников.</p>
+</div>
+
+<div>
+<strong>📦 Продукты</strong>
+<p>Единый каталог промышленных товаров и продукции.</p>
+</div>
+
+<div>
+<strong>⚙ Оборудование</strong>
+<p>Основные данные станков, машин и промышленного оборудования.</p>
+</div>
+
+<div>
+<strong>🔩 Материалы</strong>
+<p>Стандартизированные данные металлов, сырья и других материалов.</p>
+</div>
+
+<div>
+<strong>🚚 Поставщики</strong>
+<p>Единые записи поставщиков и участников цепочки поставок.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Управление качеством основных данных</h2>
+
+<div class="grid">
+
+<div>
+<strong>1. Уникальность</strong>
+<p>Предотвращение создания одинаковых записей.</p>
+</div>
+
+<div>
+<strong>2. Стандартизация</strong>
+<p>Использование единого формата названий и кодов.</p>
+</div>
+
+<div>
+<strong>3. Проверка</strong>
+<p>Контроль правильности и актуальности информации.</p>
+</div>
+
+<div>
+<strong>4. Синхронизация</strong>
+<p>Обновление данных между связанными разделами платформы.</p>
+</div>
+
+<div>
+<strong>5. Контроль изменений</strong>
+<p>Отслеживание изменений важных записей.</p>
+</div>
+
+<div>
+<strong>6. Архивирование</strong>
+<p>Сохранение истории устаревших записей.</p>
+</div>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Связанные разделы</h2>
+
+<div class="grid">
+
+<a class="back" href="../data-governance/index.html">
+Data Governance
+</a>
+
+<a class="back" href="../data-privacy/index.html">
+Data Privacy
+</a>
+
+<a class="back" href="../data-security/index.html">
+Data Security
+</a>
+
+<a class="back" href="../cyber-security/index.html">
+Cyber Security
+</a>
+
+<a class="back" href="../analytics/index.html">
+Analytics
+</a>
+
+<a class="back" href="../catalog/index.html">
+Catalog
+</a>
+
+<a class="back" href="../products/index.html">
+Products
+</a>
+
+<a class="back" href="../equipment/index.html">
+Equipment
+</a>
+
+<a class="back" href="../materials/index.html">
+Materials
+</a>
+
+<a class="back" href="../companies/index.html">
+Companies
+</a>
+
+<a class="back" href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a class="back" href="../manufacturers/index.html">
+Manufacturers
+</a>
+
+<a class="back" href="../specialists/index.html">
+Specialists
+</a>
+
+<a class="back" href="../documents/index.html">
+Documents
+</a>
+
+<a class="back" href="../compliance/index.html">
+Compliance
+</a>
+
+<a class="back" href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</div>
+
+<a class="back" href="../index.html">
+← На главную WORKER PRO
+</a>
+
+</main>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа<br>
+<span>Работа • Знания • Производство</span>
+
+</footer>
+
+</body>
+</html>
