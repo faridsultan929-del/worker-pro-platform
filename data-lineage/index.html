@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Data Lineage</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#18352a;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+header h1{
+    margin:0;
+    font-size:28px;
+}
+
+header p{
+    margin:8px 0 15px;
+    color:#d9f2df;
+}
+
+.languages{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    align-items:center;
+}
+
+.lang-row{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.languages button{
+    background:#0b6b3d;
+    color:white;
+    border:1px solid #8bc9a2;
+    border-radius:6px;
+    padding:8px 13px;
+    font-weight:bold;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    background:#0b6b3d;
+    padding:12px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:6px 10px;
+    display:inline-block;
+    font-size:14px;
+}
+
+.container{
+    max-width:1100px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:22px;
+}
+
+.hero h2{
+    margin-top:0;
+    font-size:26px;
+}
+
+.hero p{
+    line-height:1.6;
+}
+
+.btn{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:11px 17px;
+    border-radius:7px;
+    text-decoration:none;
+    font-weight:bold;
+    border:0;
+    cursor:pointer;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 12px #0000000d;
+}
+
+.card h3{
+    margin-top:0;
+    color:#0b6b3d;
+}
+
+.stat{
+    font-size:27px;
+    font-weight:bold;
+    color:#0b6b3d;
+}
+
+.section-title{
+    color:#063d25;
+    margin:30px 0 15px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:12px 0 6px;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd9cf;
+    border-radius:7px;
+    font-size:15px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+th,td{
+    padding:13px;
+    border-bottom:1px solid #e1e9e3;
+    text-align:left;
+    font-size:14px;
+}
+
+th{
+    background:#0b6b3d;
+    color:white;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.good{
+    background:#d9f8df;
+    color:#17632c;
+}
+
+.info{
+    background:#dff1ff;
+    color:#145b87;
+}
+
+.warn{
+    background:#fff1c7;
+    color:#855b00;
+}
+
+.lineage{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:20px 0;
+}
+
+.node{
+    background:white;
+    border:2px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    min-width:150px;
+    text-align:center;
+    box-shadow:0 3px 10px #00000010;
+}
+
+.node strong{
+    display:block;
+    color:#063d25;
+    margin-bottom:6px;
+}
+
+.arrow{
+    font-size:28px;
+    color:#0b6b3d;
+    font-weight:bold;
+}
+
+.links a{
+    display:inline-block;
+    background:#e8f5eb;
+    color:#063d25;
+    padding:10px 13px;
+    border-radius:7px;
+    text-decoration:none;
+    margin:5px;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:35px;
+}
+
+@media(max-width:600px){
+    header h1{font-size:23px}
+    .hero h2{font-size:21px}
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO</h1>
+
+<p>Промышленная платформа — происхождение данных</p>
+
+<div class="languages">
+
+<div class="lang-row">
+<button type="button">AZ</button>
+<button type="button">RU</button>
+<button type="button">EN</button>
+</div>
+
+<div class="lang-row">
+<button type="button">TR</button>
+<button type="button">DE</button>
+<button type="button">AR</button>
+<button type="button">ES</button>
+<button type="button">FR</button>
+<button type="button">IT</button>
+</div>
+
+</div>
+
+</header>
+
+<nav>
+<a href="../index.html">Главная</a>
+<a href="../dashboard/index.html">Dashboard</a>
+<a href="../data-catalog/index.html">Data Catalog</a>
+<a href="../data-quality/index.html">Data Quality</a>
+<a href="../data-integration/index.html">Data Integration</a>
+<a href="../master-data/index.html">Master Data</a>
+<a href="../data-governance/index.html">Data Governance</a>
+<a href="../analytics/index.html">Analytics</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<h2>Data Lineage — Происхождение данных</h2>
+
+<p>
+Отслеживание пути данных от первоначального источника
+до конечного использования в WORKER PRO.
+Можно видеть, откуда появилась информация, где она
+обрабатывается и в каких разделах используется.
+</p>
+
+<a class="btn" href="#lineage-search">
+Просмотреть происхождение
+</a>
+
+</section>
+
+<h2 class="section-title">Обзор Data Lineage</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Источники данных</h3>
+<div class="stat">28</div>
+<p>Системы и внешние источники.</p>
+</div>
+
+<div class="card">
+<h3>Связи</h3>
+<div class="stat">4 860</div>
+<p>Связи между объектами данных.</p>
+</div>
+
+<div class="card">
+<h3>Потоки данных</h3>
+<div class="stat">342</div>
+<p>Демонстрационные потоки.</p>
+</div>
+
+<div class="card">
+<h3>Проверено</h3>
+<div class="stat">97%</div>
+<p>Проверенных связей.</p>
+</div>
+
+</div>
+
+<h2 class="section-title">Пример цепочки происхождения</h2>
+
+<div class="card">
+
+<div class="lineage">
+
+<div class="node">
+<strong>Supplier</strong>
+Поставщик
+</div>
+
+<div class="arrow">→</div>
+
+<div class="node">
+<strong>Products</strong>
+Каталог товаров
+</div>
+
+<div class="arrow">→</div>
+
+<div class="node">
+<strong>Orders</strong>
+Заказ
+</div>
+
+<div class="arrow">→</div>
+
+<div class="node">
+<strong>Logistics</strong>
+Логистика
+</div>
+
+<div class="arrow">→</div>
+
+<div class="node">
+<strong>Analytics</strong>
+Аналитика
+</div>
+
+</div>
+
+<p>
+Эта схема показывает демонстрационный путь информации
+через основные процессы платформы WORKER PRO.
+</p>
+
+</div>
+
+<h2 class="section-title">Поиск происхождения данных</h2>
+
+<div class="card" id="lineage-search">
+
+<label for="search">Поиск объекта</label>
+
+<input
+id="search"
+type="text"
+placeholder="Например: Hydraulic Pump, Order, Supplier..."
+oninput="filterTable()"
+>
+
+<label for="direction">Направление</label>
+
+<select id="direction" onchange="filterTable()">
+
+<option value="">Все направления</option>
+<option value="Входящие">Входящие</option>
+<option value="Исходящие">Исходящие</option>
+<option value="Оба направления">Оба направления</option>
+
+</select>
+
+</div>
+
+<br>
+
+<table id="lineageTable">
+
+<thead>
+
+<tr>
+<th>Код</th>
+<th>Объект</th>
+<th>Источник</th>
+<th>Назначение</th>
+<th>Направление</th>
+<th>Статус</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>DL-001</td>
+<td>Hydraulic Pump</td>
+<td>Suppliers</td>
+<td>Products</td>
+<td>Входящие</td>
+<td><span class="badge good">Активен</span></td>
+</tr>
+
+<tr>
+<td>DL-002</td>
+<td>Product Price</td>
+<td>Products</td>
+<td>Orders</td>
+<td>Исходящие</td>
+<td><span class="badge good">Активен</span></td>
+</tr>
+
+<tr>
+<td>DL-003</td>
+<td>Order Status</td>
+<td>Orders</td>
+<td>Logistics</td>
+<td>Исходящие</td>
+<td><span class="badge info">Проверен</span></td>
+</tr>
+
+<tr>
+<td>DL-004</td>
+<td>Delivery Status</td>
+<td>Delivery</td>
+<td>Tracking</td>
+<td>Исходящие</td>
+<td><span class="badge good">Активен</span></td>
+</tr>
+
+<tr>
+<td>DL-005</td>
+<td>Supplier Rating</td>
+<td>Reviews</td>
+<td>Analytics</td>
+<td>Исходящие</td>
+<td><span class="badge warn">Проверка</span></td>
+</tr>
+
+</tbody>
+
+</table>
+
+<h2 class="section-title">Основные возможности</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Источник</h3>
+<p>
+Определяет, откуда первоначально поступила информация.
+</p>
+</div>
+
+<div class="card">
+<h3>Преобразование</h3>
+<p>
+Показывает, где данные изменяются или обрабатываются.
+</p>
+</div>
+
+<div class="card">
+<h3>Назначение</h3>
+<p>
+Показывает конечную систему или раздел, использующий данные.
+</p>
+</div>
+
+<div class="card">
+<h3>История</h3>
+<p>
+Позволяет отслеживать изменения информационного потока.
+</p>
+</div>
+
+</div>
+
+<h2 class="section-title">Жизненный цикл информационного потока</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>1. Source</h3>
+<p>Первичный источник информации.</p>
+</div>
+
+<div class="card">
+<h3>2. Integration</h3>
+<p>Передача информации между системами.</p>
+</div>
+
+<div class="card">
+<h3>3. Transformation</h3>
+<p>Обработка и изменение данных.</p>
+</div>
+
+<div class="card">
+<h3>4. Destination</h3>
+<p>Конечное использование информации.</p>
+</div>
+
+</div>
+
+<h2 class="section-title">Связанные разделы WORKER PRO</h2>
+
+<div class="card links">
+
+<a href="../data-catalog/index.html">Data Catalog</a>
+
+<a href="../data-quality/index.html">Data Quality</a>
+
+<a href="../data-integration/index.html">Data Integration</a>
+
+<a href="../master-data/index.html">Master Data</a>
+
+<a href="../data-governance/index.html">Data Governance</a>
+
+<a href="../data-security/index.html">Data Security</a>
+
+<a href="../data-privacy/index.html">Data Privacy</a>
+
+<a href="../analytics/index.html">Analytics</a>
+
+<a href="../products/index.html">Products</a>
+
+<a href="../suppliers/index.html">Suppliers</a>
+
+<a href="../orders/index.html">Orders</a>
+
+<a href="../logistics/index.html">Logistics</a>
+
+<a href="../delivery/index.html">Delivery</a>
+
+<a href="../tracking/index.html">Tracking</a>
+
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</main>
+
+<footer>
+WORKER PRO © 2026 | Data Lineage — Происхождение данных
+</footer>
+
+<script>
+
+function filterTable(){
+
+const search =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+const direction =
+document.getElementById("direction")
+.value;
+
+const rows =
+document.querySelectorAll(
+"#lineageTable tbody tr"
+);
+
+rows.forEach(row => {
+
+const text =
+row.innerText.toLowerCase();
+
+const rowDirection =
+row.cells[4].innerText;
+
+const searchMatch =
+text.includes(search);
+
+const directionMatch =
+!direction ||
+rowDirection === direction;
+
+row.style.display =
+searchMatch && directionMatch
+? ""
+: "none";
+
+});
+
+}
+
+</script>
+
+</body>
+</html>
