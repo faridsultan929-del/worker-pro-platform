@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Digital Twin</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    padding:20px 15px;
+    text-align:center;
+}
+
+.top h1{
+    margin:0;
+    font-size:30px;
+}
+
+.top p{
+    margin:8px 0 15px;
+    color:#cceedd;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+.languages button{
+    border:0;
+    padding:9px 13px;
+    border-radius:8px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    border-radius:14px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-left:5px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:18px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.card h3{
+    margin-top:0;
+    color:#063d25;
+}
+
+.badge{
+    display:inline-block;
+    background:#e4f6eb;
+    color:#075b34;
+    padding:6px 10px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+    margin:3px;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.twin{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.twin h4{
+    margin:0 0 8px;
+    color:#075b34;
+}
+
+.progress{
+    height:10px;
+    background:#e5ebe7;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 14px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    margin-top:15px;
+}
+
+.flow span{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.links a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+}
+
+@media(max-width:600px){
+    .top h1{
+        font-size:25px;
+    }
+
+    .container{
+        padding:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+    <h1>WORKER PRO</h1>
+    <p>Digital Twin — Цифровые двойники промышленности</p>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+    <h2>Цифровой двойник промышленного объекта</h2>
+
+    <p>
+        Digital Twin позволяет создать цифровую модель оборудования,
+        станка, производственной линии или целого предприятия.
+        Модель получает данные от датчиков и помогает контролировать
+        состояние оборудования, производство, техническое обслуживание
+        и будущие изменения.
+    </p>
+
+    <div>
+        <span class="badge">IoT</span>
+        <span class="badge">AI</span>
+        <span class="badge">Sensors</span>
+        <span class="badge">Simulation</span>
+        <span class="badge">Predictive Maintenance</span>
+        <span class="badge">Production</span>
+    </div>
+</section>
+
+<section class="stats">
+
+    <div class="stat">
+        <strong>186</strong>
+        Digital Twins
+        <small>активных моделей</small>
+    </div>
+
+    <div class="stat">
+        <strong>4,820</strong>
+        Connected Assets
+        <small>подключённых объектов</small>
+    </div>
+
+    <div class="stat">
+        <strong>18,640</strong>
+        Sensors
+        <small>источников данных</small>
+    </div>
+
+    <div class="stat">
+        <strong>97.2%</strong>
+        Data Sync
+        <small>синхронизация</small>
+    </div>
+
+</section>
+
+<section class="card">
+    <h3>🔄 Архитектура Digital Twin</h3>
+
+    <div class="flow">
+        <span>Real Equipment</span>
+        <b class="arrow">→</b>
+        <span>Sensors</span>
+        <b class="arrow">→</b>
+        <span>IoT</span>
+        <b class="arrow">→</b>
+        <span>Digital Twin</span>
+        <b class="arrow">→</b>
+        <span>AI</span>
+        <b class="arrow">→</b>
+        <span>Decision</span>
+    </div>
+</section>
+
+<br>
+
+<section class="card">
+    <h3>🔎 Поиск цифровых двойников</h3>
+
+    <div class="search">
+        <input
+            id="search"
+            type="text"
+            placeholder="Название оборудования или объекта..."
+            onkeyup="filterTwins()"
+        >
+
+        <select id="typeFilter" onchange="filterTwins()">
+            <option value="">Все типы</option>
+            <option value="CNC">CNC</option>
+            <option value="Production Line">Production Line</option>
+            <option value="Pump">Pump</option>
+            <option value="Furnace">Furnace</option>
+            <option value="Robot">Robot</option>
+        </select>
+    </div>
+
+    <div id="twinList">
+
+        <div class="twin" data-name="CNC Machine 01" data-type="CNC">
+            <h4>Digital Twin — CNC Machine 01</h4>
+            <p><b>Location:</b> Baku, Azerbaijan</p>
+            <p><b>Type:</b> CNC</p>
+            <p><b>Status:</b> 🟢 Online</p>
+            <p>Equipment Health: 94%</p>
+            <div class="progress">
+                <div style="width:94%"></div>
+            </div>
+        </div>
+
+        <div class="twin" data-name="Production Line A" data-type="Production Line">
+            <h4>Digital Twin — Production Line A</h4>
+            <p><b>Location:</b> Sumqayit, Azerbaijan</p>
+            <p><b>Type:</b> Production Line</p>
+            <p><b>Status:</b> 🟢 Running</p>
+            <p>Production Efficiency: 91%</p>
+            <div class="progress">
+                <div style="width:91%"></div>
+            </div>
+        </div>
+
+        <div class="twin" data-name="Industrial Pump 24" data-type="Pump">
+            <h4>Digital Twin — Industrial Pump 24</h4>
+            <p><b>Location:</b> Ganja, Azerbaijan</p>
+            <p><b>Type:</b> Pump</p>
+            <p><b>Status:</b> 🟢 Online</p>
+            <p>Health: 88%</p>
+            <div class="progress">
+                <div style="width:88%"></div>
+            </div>
+        </div>
+
+        <div class="twin" data-name="Heat Furnace 05" data-type="Furnace">
+            <h4>Digital Twin — Heat Furnace 05</h4>
+            <p><b>Location:</b> Turkey</p>
+            <p><b>Type:</b> Furnace</p>
+            <p><b>Status:</b> 🟡 Monitoring</p>
+            <p>Health: 82%</p>
+            <div class="progress">
+                <div style="width:82%"></div>
+            </div>
+        </div>
+
+        <div class="twin" data-name="Industrial Robot 12" data-type="Robot">
+            <h4>Digital Twin — Industrial Robot 12</h4>
+            <p><b>Location:</b> Germany</p>
+            <p><b>Type:</b> Robot</p>
+            <p><b>Status:</b> 🟢 Online</p>
+            <p>Health: 96%</p>
+            <div class="progress">
+                <div style="width:96%"></div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<br>
+
+<section class="grid">
+
+    <div class="card">
+        <h3>📊 Что контролирует Digital Twin</h3>
+
+        <p>• Температуру</p>
+        <p>• Давление</p>
+        <p>• Вибрацию</p>
+        <p>• Скорость оборудования</p>
+        <p>• Энергопотребление</p>
+        <p>• Производительность</p>
+        <p>• Износ деталей</p>
+        <p>• Аварийные состояния</p>
+    </div>
+
+    <div class="card">
+        <h3>🤖 AI + Digital Twin</h3>
+
+        <p>
+            Искусственный интеллект анализирует данные цифрового двойника
+            и помогает обнаруживать отклонения и возможные неисправности.
+        </p>
+
+        <button class="action" onclick="runAI()">
+            Запустить AI-анализ
+        </button>
+
+        <p id="aiResult"></p>
+    </div>
+
+    <div class="card">
+        <h3>🛠 Predictive Maintenance</h3>
+
+        <p>
+            Цифровой двойник может использоваться для прогнозирования
+            технического обслуживания оборудования.
+        </p>
+
+        <button class="action" onclick="maintenanceCheck()">
+            Проверить оборудование
+        </button>
+
+        <p id="maintenanceResult"></p>
+    </div>
+
+</section>
+
+<br>
+
+<section class="card">
+    <h3>➕ Создать Digital Twin</h3>
+
+    <div class="search">
+        <input id="newTwin" type="text" placeholder="Название объекта">
+
+        <select id="newType">
+            <option>CNC</option>
+            <option>Production Line</option>
+            <option>Pump</option>
+            <option>Furnace</option>
+            <option>Robot</option>
+        </select>
+
+        <button class="action" onclick="addTwin()">
+            Создать
+        </button>
+    </div>
+
+    <p id="addResult"></p>
+</section>
+
+<br>
+
+<section class="card">
+    <h3>🔐 Безопасность Digital Twin</h3>
+
+    <div class="grid">
+
+        <div>
+            <b>🔒 Data Security</b>
+            <p>Защита промышленной информации.</p>
+        </div>
+
+        <div>
+            <b>👤 Access Control</b>
+            <p>Контроль доступа пользователей.</p>
+        </div>
+
+        <div>
+            <b>📡 Secure IoT</b>
+            <p>Защищённая передача данных от датчиков.</p>
+        </div>
+
+        <div>
+            <b>🧠 AI Monitoring</b>
+            <p>Контроль аномалий и событий.</p>
+        </div>
+
+    </div>
+</section>
+
+<br>
+
+<section class="card">
+    <h3>🔗 Связанные разделы WORKER PRO</h3>
+
+    <div class="links">
+
+        <a href="../index.html">Главная</a>
+        <a href="../iot-industrial-internet/index.html">IoT</a>
+        <a href="../ai-machine-learning/index.html">AI & ML</a>
+        <a href="../automation-robotics/index.html">Automation</a>
+        <a href="../sensors/index.html">Sensors</a>
+        <a href="../production/index.html">Production</a>
+        <a href="../equipment/index.html">Equipment</a>
+        <a href="../products/index.html">Products</a>
+        <a href="../maintennances/index.html">Maintenance</a>
+        <a href="../data-lake/index.html">Data Lake</a>
+        <a href="../data-warehouse/index.html">Data Warehouse</a>
+        <a href="../data-lineage/index.html">Data Lineage</a>
+        <a href="../data-quality/index.html">Data Quality</a>
+        <a href="../data-security/index.html">Data Security</a>
+        <a href="../dashboard/index.html">Dashboard</a>
+
+    </div>
+</section>
+
+</main>
+
+<footer>
+    WORKER PRO — Global Industrial Platform<br>
+    Digital Twin • IoT • AI • Production • Logistics<br><br>
+    © 2026 WORKER PRO
+</footer>
+
+<script>
+
+function filterTwins(){
+
+    const search =
+        document.getElementById("search").value.toLowerCase();
+
+    const type =
+        document.getElementById("typeFilter").value;
+
+    const twins =
+        document.querySelectorAll(".twin");
+
+    twins.forEach(function(twin){
+
+        const name =
+            twin.dataset.name.toLowerCase();
+
+        const twinType =
+            twin.dataset.type;
+
+        const matchName =
+            name.includes(search);
+
+        const matchType =
+            !type || twinType === type;
+
+        twin.style.display =
+            matchName && matchType
+            ? "block"
+            : "none";
+    });
+}
+
+function runAI(){
+
+    document.getElementById("aiResult").innerHTML =
+        "🤖 AI-анализ завершён. Обнаружено 0 критических отклонений. Система работает нормально.";
+}
+
+function maintenanceCheck(){
+
+    document.getElementById("maintenanceResult").innerHTML =
+        "🛠 Проверка завершена. Рекомендуется плановое техническое обслуживание через 184 часа.";
+}
+
+function addTwin(){
+
+    const name =
+        document.getElementById("newTwin").value.trim();
+
+    const type =
+        document.getElementById("newType").value;
+
+    if(!name){
+
+        document.getElementById("addResult").innerHTML =
+            "⚠️ Введите название объекта.";
+
+        return;
+    }
+
+    document.getElementById("addResult").innerHTML =
+        "✅ Digital Twin создан: " + name +
+        " (" + type + ").";
+    
+    document.getElementById("newTwin").value = "";
+}
+
+</script>
+
+</body>
+</html>
