@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Automation & Robotics</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 22px 15px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 18px;
+    color: #b7ff35;
+}
+
+.top-languages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+}
+
+.top-languages button {
+    border: none;
+    padding: 8px 13px;
+    border-radius: 7px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.top-languages button:hover {
+    background: #b7ff35;
+    color: #063d25;
+}
+
+main {
+    max-width: 1100px;
+    margin: 25px auto;
+    padding: 0 15px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.hero {
+    background: linear-gradient(135deg, #063d25, #0b6b3d);
+    color: white;
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 20px;
+}
+
+.hero h2 {
+    color: #b7ff35;
+    margin-top: 0;
+}
+
+.hero p {
+    line-height: 1.6;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 15px;
+}
+
+.stat {
+    background: #eef6f1;
+    border-left: 5px solid #0b6b3d;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 27px;
+    color: #063d25;
+    margin-bottom: 7px;
+}
+
+.robot {
+    background: #f0f7f2;
+    border: 2px solid #0b6b3d;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.robot h3 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #bbb;
+    border-radius: 7px;
+    margin-bottom: 10px;
+}
+
+button.action {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 11px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button.action:hover {
+    background: #063d25;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th,
+td {
+    padding: 11px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #063d25;
+    color: white;
+}
+
+.status {
+    padding: 5px 9px;
+    border-radius: 12px;
+    background: #e5f5e9;
+    color: #063d25;
+    font-weight: bold;
+}
+
+.progress {
+    background: #ddd;
+    height: 12px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 8px;
+}
+
+.progress-bar {
+    height: 100%;
+    background: #0b6b3d;
+}
+
+.flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.flow-box {
+    background: #0b6b3d;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.arrow {
+    font-size: 24px;
+    color: #063d25;
+}
+
+.links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+}
+
+.links a {
+    display: block;
+    text-decoration: none;
+    background: #eef6f1;
+    color: #063d25;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.links a:hover {
+    background: #b7ff35;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 35px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    th,
+    td {
+        padding: 8px;
+    }
+
+    .hero {
+        padding: 20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+    <p>Automation & Robotics — промышленная автоматизация</p>
+
+    <div class="top-languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+    </div>
+
+    <div class="top-languages" style="margin-top:7px;">
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+<main>
+
+    <div class="hero">
+
+        <h2>🤖 Smart Industrial Automation</h2>
+
+        <p>
+            WORKER PRO объединяет промышленную автоматизацию,
+            робототехнику, CNC, PLC, датчики, автоматические линии
+            и цифровой мониторинг производства.
+        </p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Automation Overview</h2>
+
+        <div class="grid">
+
+            <div class="stat">
+                <strong>186</strong>
+                автоматизированных линий
+            </div>
+
+            <div class="stat">
+                <strong>74</strong>
+                промышленных робота
+            </div>
+
+            <div class="stat">
+                <strong>328</strong>
+                PLC-контроллеров
+            </div>
+
+            <div class="stat">
+                <strong>96.8%</strong>
+                доступность систем
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Основные технологии</h2>
+
+        <div class="grid">
+
+            <div class="robot">
+                <h3>🤖 Industrial Robots</h3>
+                <p>
+                    Роботы для сварки, сборки, загрузки станков,
+                    упаковки и перемещения деталей.
+                </p>
+            </div>
+
+            <div class="robot">
+                <h3>⚙️ CNC Automation</h3>
+                <p>
+                    Автоматическая загрузка, обработка и выгрузка
+                    деталей на CNC-оборудовании.
+                </p>
+            </div>
+
+            <div class="robot">
+                <h3>🧠 PLC Control</h3>
+                <p>
+                    Управление промышленными машинами,
+                    станками и производственными линиями.
+                </p>
+            </div>
+
+            <div class="robot">
+                <h3>📡 Sensors</h3>
+                <p>
+                    Температура, давление, вибрация, положение
+                    и другие промышленные параметры.
+                </p>
+            </div>
+
+            <div class="robot">
+                <h3>🏭 Smart Factory</h3>
+                <p>
+                    Цифровое управление производством
+                    и обмен данными между оборудованием.
+                </p>
+            </div>
+
+            <div class="robot">
+                <h3>👁️ Machine Vision</h3>
+                <p>
+                    Камеры и AI для контроля продукции
+                    и автоматического обнаружения дефектов.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Производственные системы</h2>
+
+        <div class="flow">
+
+            <div class="flow-box">Sensors</div>
+            <div class="arrow">→</div>
+
+            <div class="flow-box">PLC</div>
+            <div class="arrow">→</div>
+
+            <div class="flow-box">Robot</div>
+            <div class="arrow">→</div>
+
+            <div class="flow-box">CNC</div>
+            <div class="arrow">→</div>
+
+            <div class="flow-box">Production</div>
+            <div class="arrow">→</div>
+
+            <div class="flow-box">Analytics</div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Роботизированное оборудование</h2>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Поиск оборудования..."
+            onkeyup="filterRobots()"
+        >
+
+        <table id="robotsTable">
+
+            <thead>
+                <tr>
+                    <th>Оборудование</th>
+                    <th>Назначение</th>
+                    <th>Статус</th>
+                    <th>Загрузка</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Robot Cell R-01</td>
+                    <td>Сварка</td>
+                    <td><span class="status">Active</span></td>
+                    <td>87%</td>
+                </tr>
+
+                <tr>
+                    <td>Robot Cell R-02</td>
+                    <td>Сборка</td>
+                    <td><span class="status">Active</span></td>
+                    <td>76%</td>
+                </tr>
+
+                <tr>
+                    <td>CNC Line C-15</td>
+                    <td>Механическая обработка</td>
+                    <td><span class="status">Active</span></td>
+                    <td>91%</td>
+                </tr>
+
+                <tr>
+                    <td>Vision System V-04</td>
+                    <td>Контроль качества</td>
+                    <td><span class="status">Active</span></td>
+                    <td>82%</td>
+                </tr>
+
+                <tr>
+                    <td>Packaging Robot P-07</td>
+                    <td>Упаковка</td>
+                    <td><span class="status">Maintenance</span></td>
+                    <td>0%</td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Загрузка автоматизации</h2>
+
+        <div class="grid">
+
+            <div class="stat">
+                <strong>87%</strong>
+                Robotic Cells
+                <div class="progress">
+                    <div class="progress-bar" style="width:87%"></div>
+                </div>
+            </div>
+
+            <div class="stat">
+                <strong>91%</strong>
+                CNC Lines
+                <div class="progress">
+                    <div class="progress-bar" style="width:91%"></div>
+                </div>
+            </div>
+
+            <div class="stat">
+                <strong>82%</strong>
+                Vision Systems
+                <div class="progress">
+                    <div class="progress-bar" style="width:82%"></div>
+                </div>
+            </div>
+
+            <div class="stat">
+                <strong>76%</strong>
+                Assembly
+                <div class="progress">
+                    <div class="progress-bar" style="width:76%"></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Добавить автоматизированную систему</h2>
+
+        <input
+            type="text"
+            id="systemName"
+            placeholder="Название системы"
+        >
+
+        <select id="systemType">
+
+            <option>Industrial Robot</option>
+            <option>CNC Automation</option>
+            <option>PLC System</option>
+            <option>Machine Vision</option>
+            <option>Sensor System</option>
+            <option>Smart Factory</option>
+
+        </select>
+
+        <button class="action" onclick="addSystem()">
+            + Добавить систему
+        </button>
+
+        <p id="systemMessage"></p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Связь с AI</h2>
+
+        <div class="grid">
+
+            <div class="stat">
+                <strong>AI</strong>
+                Predictive Maintenance
+                <p>Прогнозирование неисправностей роботов.</p>
+            </div>
+
+            <div class="stat">
+                <strong>AI</strong>
+                Quality Inspection
+                <p>Автоматический контроль продукции.</p>
+            </div>
+
+            <div class="stat">
+                <strong>AI</strong>
+                Production Optimization
+                <p>Оптимизация производственных процессов.</p>
+            </div>
+
+            <div class="stat">
+                <strong>AI</strong>
+                Demand Forecast
+                <p>Прогнозирование производственной нагрузки.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Безопасность автоматизации</h2>
+
+        <div class="grid">
+
+            <div class="stat">
+                <strong>✓</strong>
+                Machine Safety
+            </div>
+
+            <div class="stat">
+                <strong>✓</strong>
+                Emergency Stop
+            </div>
+
+            <div class="stat">
+                <strong>✓</strong>
+                Access Control
+            </div>
+
+            <div class="stat">
+                <strong>✓</strong>
+                System Monitoring
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Связанные разделы WORKER PRO</h2>
+
+        <div class="links">
+
+            <a href="../ai-machine-learning/index.html">AI & Machine Learning</a>
+
+            <a href="../production/index.html">Production</a>
+
+            <a href="../tecnologies/index.html">Technologies</a>
+
+            <a href="../equipment/index.html">Equipment</a>
+
+            <a href="../maintennances/index.html">Maintenance</a>
+
+            <a href="../safety/index.html">Safety</a>
+
+            <a href="../quality/index.html">Quality</a>
+
+            <a href="../sensors/index.html">Sensors</a>
+
+            <a href="../data-lake/index.html">Data Lake</a>
+
+            <a href="../data-warehouse/index.html">Data Warehouse</a>
+
+            <a href="../analytics/index.html">Analytics</a>
+
+            <a href="../products/index.html">Products</a>
+
+            <a href="../companies/index.html">Companies</a>
+
+            <a href="../suppliers/index.html">Suppliers</a>
+
+            <a href="../orders/index.html">Orders</a>
+
+            <a href="../logistics/index.html">Logistics</a>
+
+            <a href="../tracking/index.html">Tracking</a>
+
+            <a href="../dashboard/index.html">Dashboard</a>
+
+            <a href="../index.html">WORKER PRO Home</a>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026 — Industrial Global Platform
+</footer>
+
+<script>
+
+function filterRobots() {
+
+    const input =
+        document.getElementById("search").value.toLowerCase();
+
+    const rows =
+        document.querySelectorAll("#robotsTable tbody tr");
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        row.style.display =
+            text.includes(input) ? "" : "none";
+
+    });
+}
+
+function addSystem() {
+
+    const name =
+        document.getElementById("systemName").value.trim();
+
+    const type =
+        document.getElementById("systemType").value;
+
+    const message =
+        document.getElementById("systemMessage");
+
+    if (!name) {
+
+        message.textContent =
+            "Введите название системы.";
+
+        return;
+    }
+
+    message.textContent =
+        "Система \"" + name +
+        "\" (" + type + ") добавлена в демо-список.";
+
+    document.getElementById("systemName").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
