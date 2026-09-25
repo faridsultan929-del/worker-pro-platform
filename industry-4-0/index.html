@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Industry 4.0</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+.top h1{
+    margin:0;
+    font-size:30px;
+}
+
+.top p{
+    margin:8px 0 15px;
+    color:#cceedd;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.hero h2,
+.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-left:5px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:18px;
+}
+
+.badge{
+    display:inline-block;
+    background:#e4f6eb;
+    color:#075b34;
+    padding:6px 10px;
+    border-radius:20px;
+    margin:3px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.flow span{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.system{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.system h4{
+    color:#075b34;
+    margin:0 0 8px;
+}
+
+.progress{
+    height:10px;
+    background:#e5ebe7;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 14px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.links a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .top h1{font-size:25px}
+    .container{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+<h1>WORKER PRO</h1>
+
+<p>Industry 4.0 — Четвёртая промышленная революция</p>
+
+<div class="languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<h2>⚙️ Industry 4.0</h2>
+
+<p>
+Industry 4.0 объединяет автоматизацию, промышленный интернет,
+искусственный интеллект, робототехнику, цифровые двойники,
+облачные технологии и анализ данных.
+</p>
+
+<p>
+WORKER PRO создаёт цифровую промышленную экосистему,
+где производство, оборудование, специалисты, компании,
+поставщики и логистика связаны между собой.
+</p>
+
+<div>
+<span class="badge">Industry 4.0</span>
+<span class="badge">IoT</span>
+<span class="badge">AI</span>
+<span class="badge">Robotics</span>
+<span class="badge">Digital Twin</span>
+<span class="badge">Cloud</span>
+<span class="badge">Big Data</span>
+<span class="badge">Automation</span>
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<strong>328</strong>
+Connected Machines
+<small>подключённых машин</small>
+</div>
+
+<div class="stat">
+<strong>74</strong>
+Industrial Robots
+<small>роботов</small>
+</div>
+
+<div class="stat">
+<strong>18,640</strong>
+Sensors
+<small>датчиков</small>
+</div>
+
+<div class="stat">
+<strong>96.8%</strong>
+System Availability
+<small>доступность</small>
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔄 Industry 4.0 Architecture</h3>
+
+<div class="flow">
+
+<span>Machines</span>
+<b class="arrow">→</b>
+
+<span>Sensors</span>
+<b class="arrow">→</b>
+
+<span>IoT</span>
+<b class="arrow">→</b>
+
+<span>Cloud</span>
+<b class="arrow">→</b>
+
+<span>AI</span>
+<b class="arrow">→</b>
+
+<span>Analytics</span>
+<b class="arrow">→</b>
+
+<span>Smart Decision</span>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔎 Industry 4.0 Systems</h3>
+
+<div class="search">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск системы..."
+onkeyup="filterSystems()"
+>
+
+<select
+id="typeFilter"
+onchange="filterSystems()"
+>
+
+<option value="">Все системы</option>
+<option value="IoT">IoT</option>
+<option value="AI">AI</option>
+<option value="Robotics">Robotics</option>
+<option value="Digital Twin">Digital Twin</option>
+<option value="Automation">Automation</option>
+
+</select>
+
+</div>
+
+<div id="systemList">
+
+<div
+class="system"
+data-name="Industrial IoT Platform"
+data-type="IoT"
+>
+
+<h4>📡 Industrial IoT Platform</h4>
+
+<p><b>Location:</b> Baku, Azerbaijan</p>
+<p><b>Type:</b> IoT</p>
+<p><b>Status:</b> 🟢 Online</p>
+<p>Connectivity: 97%</p>
+
+<div class="progress">
+<div style="width:97%"></div>
+</div>
+
+</div>
+
+<div
+class="system"
+data-name="AI Production Analytics"
+data-type="AI"
+>
+
+<h4>🧠 AI Production Analytics</h4>
+
+<p><b>Location:</b> Sumqayit, Azerbaijan</p>
+<p><b>Type:</b> AI</p>
+<p><b>Status:</b> 🟢 Active</p>
+<p>Analysis Accuracy: 96%</p>
+
+<div class="progress">
+<div style="width:96%"></div>
+</div>
+
+</div>
+
+<div
+class="system"
+data-name="Robotic Manufacturing Cell"
+data-type="Robotics"
+>
+
+<h4>🤖 Robotic Manufacturing Cell</h4>
+
+<p><b>Location:</b> Turkey</p>
+<p><b>Type:</b> Robotics</p>
+<p><b>Status:</b> 🟢 Running</p>
+<p>Automation Level: 94%</p>
+
+<div class="progress">
+<div style="width:94%"></div>
+</div>
+
+</div>
+
+<div
+class="system"
+data-name="Digital Twin Platform"
+data-type="Digital Twin"
+>
+
+<h4>🔷 Digital Twin Platform</h4>
+
+<p><b>Location:</b> Germany</p>
+<p><b>Type:</b> Digital Twin</p>
+<p><b>Status:</b> 🟢 Online</p>
+<p>Data Synchronization: 97%</p>
+
+<div class="progress">
+<div style="width:97%"></div>
+</div>
+
+</div>
+
+<div
+class="system"
+data-name="Smart Automation System"
+data-type="Automation"
+>
+
+<h4>⚙️ Smart Automation System</h4>
+
+<p><b>Location:</b> Italy</p>
+<p><b>Type:</b> Automation</p>
+<p><b>Status:</b> 🟡 Monitoring</p>
+<p>Automation Efficiency: 89%</p>
+
+<div class="progress">
+<div style="width:89%"></div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>📡 Industrial IoT</h3>
+
+<p>
+Датчики и оборудование передают данные
+в цифровую систему в реальном времени.
+</p>
+
+<p>✓ Sensors</p>
+<p>✓ Machines</p>
+<p>✓ Gateways</p>
+<p>✓ Cloud</p>
+
+</div>
+
+<div class="card">
+
+<h3>🤖 Robotics</h3>
+
+<p>
+Промышленные роботы выполняют операции
+сборки, сварки, перемещения и контроля.
+</p>
+
+<p>✓ Welding</p>
+<p>✓ Assembly</p>
+<p>✓ CNC</p>
+<p>✓ Inspection</p>
+
+</div>
+
+<div class="card">
+
+<h3>🔷 Digital Twin</h3>
+
+<p>
+Цифровая модель оборудования позволяет
+наблюдать и анализировать его состояние.
+</p>
+
+<button class="action" onclick="openTwin()">
+Открыть Digital Twin
+</button>
+
+<p id="twinResult"></p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🧠 Artificial Intelligence</h3>
+
+<p>
+AI может анализировать производственные данные,
+обнаруживать аномалии и помогать прогнозировать
+техническое обслуживание.
+</p>
+
+<button class="action" onclick="runAI()">
+Запустить AI-анализ
+</button>
+
+<p id="aiResult"></p>
+
+</section>
+
+<section class="card">
+
+<h3>📊 Industry 4.0 Monitoring</h3>
+
+<div class="grid">
+
+<div>
+
+<b>Production Load</b>
+
+<div class="progress">
+<div style="width:86%"></div>
+</div>
+
+<p>86%</p>
+
+</div>
+
+<div>
+
+<b>Equipment Health</b>
+
+<div class="progress">
+<div style="width:94%"></div>
+</div>
+
+<p>94%</p>
+
+</div>
+
+<div>
+
+<b>IoT Connectivity</b>
+
+<div class="progress">
+<div style="width:97%"></div>
+</div>
+
+<p>97%</p>
+
+</div>
+
+<div>
+
+<b>Data Availability</b>
+
+<div class="progress">
+<div style="width:99%"></div>
+</div>
+
+<p>99%</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>➕ Добавить Industry 4.0 систему</h3>
+
+<div class="search">
+
+<input
+id="newSystem"
+type="text"
+placeholder="Название системы"
+>
+
+<select id="newType">
+
+<option>IoT</option>
+<option>AI</option>
+<option>Robotics</option>
+<option>Digital Twin</option>
+<option>Automation</option>
+
+</select>
+
+<button class="action" onclick="addSystem()">
+Добавить
+</button>
+
+</div>
+
+<p id="addResult"></p>
+
+</section>
+
+<section class="card">
+
+<h3>🔐 Безопасность Industry 4.0</h3>
+
+<div class="grid">
+
+<div>
+<b>🔒 Data Security</b>
+<p>Защита промышленной информации.</p>
+</div>
+
+<div>
+<b>🛡 Cyber Security</b>
+<p>Защита промышленной сети.</p>
+</div>
+
+<div>
+<b>👤 Access Control</b>
+<p>Управление доступом.</p>
+</div>
+
+<div>
+<b>📡 Secure IoT</b>
+<p>Безопасное подключение устройств.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔗 Связанные разделы WORKER PRO</h3>
+
+<div class="links">
+
+<a href="../index.html">Главная</a>
+<a href="../smart-factory/index.html">Smart Factory</a>
+<a href="../digital-manufacturing/index.html">Digital Manufacturing</a>
+<a href="../digital-twin/index.html">Digital Twin</a>
+<a href="../iot-industrial-internet/index.html">IoT</a>
+<a href="../ai-machine-learning/index.html">AI & ML</a>
+<a href="../automation-robotics/index.html">Automation</a>
+<a href="../production/index.html">Production</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../sensors/index.html">Sensors</a>
+<a href="../quality/index.html">Quality</a>
+<a href="../analytics/index.html">Analytics</a>
+<a href="../data-lake/index.html">Data Lake</a>
+<a href="../data-warehouse/index.html">Data Warehouse</a>
+<a href="../maintennances/index.html">Maintenance</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+WORKER PRO — Global Industrial Platform<br>
+Industry 4.0 • Smart Factory • AI • IoT • Robotics<br><br>
+© 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterSystems(){
+
+const search =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+const type =
+document.getElementById("typeFilter")
+.value;
+
+const systems =
+document.querySelectorAll(".system");
+
+systems.forEach(function(system){
+
+const name =
+system.dataset.name.toLowerCase();
+
+const systemType =
+system.dataset.type;
+
+const matchName =
+name.includes(search);
+
+const matchType =
+!type || systemType === type;
+
+system.style.display =
+matchName && matchType
+? "block"
+: "none";
+
+});
+
+}
+
+function runAI(){
+
+document.getElementById("aiResult").innerHTML =
+"🤖 AI-анализ завершён. Система обнаружила 0 критических отклонений. Производственные показатели стабильны.";
+
+}
+
+function openTwin(){
+
+document.getElementById("twinResult").innerHTML =
+"🔷 Digital Twin активирован. Синхронизация оборудования: 97%.";
+
+}
+
+function addSystem(){
+
+const name =
+document.getElementById("newSystem")
+.value
+.trim();
+
+const type =
+document.getElementById("newType")
+.value;
+
+if(!name){
+
+document.getElementById("addResult").innerHTML =
+"⚠️ Введите название системы.";
+
+return;
+
+}
+
+document.getElementById("addResult").innerHTML =
+"✅ Industry 4.0 система добавлена: " +
+name +
+" (" +
+type +
+").";
+
+document.getElementById("newSystem").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
