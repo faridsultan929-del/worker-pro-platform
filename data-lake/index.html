@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Data Lake</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+header {
+    background: #063d25;
+    color: white;
+    padding: 22px 15px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 30px;
+}
+
+header p {
+    margin: 8px 0 18px;
+    color: #b7ff35;
+}
+
+.top-languages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 7px;
+}
+
+.top-languages button {
+    border: none;
+    padding: 8px 13px;
+    border-radius: 7px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.top-languages button:hover {
+    background: #b7ff35;
+    color: #063d25;
+}
+
+main {
+    max-width: 1100px;
+    margin: 25px auto;
+    padding: 0 15px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+    color: #063d25;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 15px;
+}
+
+.stat {
+    background: #eef6f1;
+    border-left: 5px solid #0b6b3d;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 27px;
+    color: #063d25;
+}
+
+.data-zone {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.zone {
+    padding: 20px;
+    border-radius: 12px;
+    background: #f0f7f2;
+    border: 2px solid #0b6b3d;
+}
+
+.zone h3 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #bbb;
+    border-radius: 7px;
+    margin-bottom: 10px;
+}
+
+button.action {
+    background: #0b6b3d;
+    color: white;
+    border: none;
+    padding: 11px 16px;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button.action:hover {
+    background: #063d25;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th,
+td {
+    padding: 11px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background: #063d25;
+    color: white;
+}
+
+.status {
+    padding: 5px 9px;
+    border-radius: 12px;
+    background: #e5f5e9;
+    color: #063d25;
+    font-weight: bold;
+}
+
+.flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.flow-box {
+    background: #0b6b3d;
+    color: white;
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+.arrow {
+    font-size: 24px;
+    color: #063d25;
+}
+
+.links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 10px;
+}
+
+.links a {
+    display: block;
+    text-decoration: none;
+    background: #eef6f1;
+    color: #063d25;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.links a:hover {
+    background: #b7ff35;
+}
+
+footer {
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    margin-top: 35px;
+}
+
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 24px;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    th,
+    td {
+        padding: 8px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+    <p>Промышленное озеро данных — Data Lake</p>
+
+    <div class="top-languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+    </div>
+
+    <div class="top-languages" style="margin-top:7px;">
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+<main>
+
+    <div class="card">
+        <h2>🌊 Data Lake</h2>
+        <p>
+            Data Lake — централизованное хранилище больших объёмов
+            промышленных данных в исходном и обработанном виде.
+        </p>
+
+        <div class="grid">
+
+            <div class="stat">
+                <strong>2.8 TB</strong>
+                Общий объём данных
+            </div>
+
+            <div class="stat">
+                <strong>148</strong>
+                Источников данных
+            </div>
+
+            <div class="stat">
+                <strong>24.6M</strong>
+                Записей
+            </div>
+
+            <div class="stat">
+                <strong>98.7%</strong>
+                Доступность
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card">
+
+        <h2>Архитектура Data Lake</h2>
+
+        <div class="flow">
+
+            <div class="flow-box">Источники</div>
+            <div class="arrow">→</div>
+
+            <div class="flow-box">Ingestion</div>
+            <div class="arrow">→</div>
+
+            <div class="flow-box">Raw Zone</div>
+            <div class="arrow">→</div>
+
+            <div class="flow-box">Processed Zone</div>
+            <div class="arrow">→</div>
+
+            <div class="flow-box">Analytics</div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Зоны хранения</h2>
+
+        <div class="data-zone">
+
+            <div class="zone">
+                <h3>🟤 Raw Zone</h3>
+                <p>Исходные данные без изменения.</p>
+                <strong>1.9 TB</strong>
+            </div>
+
+            <div class="zone">
+                <h3>🟢 Processed Zone</h3>
+                <p>Очищенные и подготовленные данные.</p>
+                <strong>720 GB</strong>
+            </div>
+
+            <div class="zone">
+                <h3>🔵 Analytics Zone</h3>
+                <p>Данные для аналитики и отчётов.</p>
+                <strong>180 GB</strong>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Источники данных</h2>
+
+        <input
+            type="text"
+            id="search"
+            placeholder="Поиск источника..."
+            onkeyup="filterTable()"
+        >
+
+        <table id="dataTable">
+
+            <thead>
+                <tr>
+                    <th>Источник</th>
+                    <th>Тип</th>
+                    <th>Объём</th>
+                    <th>Статус</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                <tr>
+                    <td>Products</td>
+                    <td>Каталог</td>
+                    <td>420 GB</td>
+                    <td><span class="status">Active</span></td>
+                </tr>
+
+                <tr>
+                    <td>Companies</td>
+                    <td>Компании</td>
+                    <td>210 GB</td>
+                    <td><span class="status">Active</span></td>
+                </tr>
+
+                <tr>
+                    <td>Suppliers</td>
+                    <td>Поставщики</td>
+                    <td>160 GB</td>
+                    <td><span class="status">Active</span></td>
+                </tr>
+
+                <tr>
+                    <td>Orders</td>
+                    <td>Заказы</td>
+                    <td>350 GB</td>
+                    <td><span class="status">Active</span></td>
+                </tr>
+
+                <tr>
+                    <td>Logistics</td>
+                    <td>Логистика</td>
+                    <td>540 GB</td>
+                    <td><span class="status">Active</span></td>
+                </tr>
+
+                <tr>
+                    <td>Tracking</td>
+                    <td>Отслеживание</td>
+                    <td>280 GB</td>
+                    <td><span class="status">Active</span></td>
+                </tr>
+
+                <tr>
+                    <td>Production</td>
+                    <td>Производство</td>
+                    <td>620 GB</td>
+                    <td><span class="status">Active</span></td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Добавить источник</h2>
+
+        <input type="text" id="sourceName" placeholder="Название источника">
+
+        <select id="sourceType">
+            <option>Production</option>
+            <option>Products</option>
+            <option>Companies</option>
+            <option>Suppliers</option>
+            <option>Orders</option>
+            <option>Logistics</option>
+            <option>Tracking</option>
+            <option>Other</option>
+        </select>
+
+        <button class="action" onclick="addSource()">
+            + Добавить источник
+        </button>
+
+        <p id="message"></p>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Обработка данных</h2>
+
+        <div class="grid">
+
+            <div class="stat">
+                <strong>01</strong>
+                Получение данных
+            </div>
+
+            <div class="stat">
+                <strong>02</strong>
+                Проверка
+            </div>
+
+            <div class="stat">
+                <strong>03</strong>
+                Очистка
+            </div>
+
+            <div class="stat">
+                <strong>04</strong>
+                Трансформация
+            </div>
+
+            <div class="stat">
+                <strong>05</strong>
+                Хранение
+            </div>
+
+            <div class="stat">
+                <strong>06</strong>
+                Аналитика
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Контроль Data Lake</h2>
+
+        <div class="grid">
+
+            <div class="stat">
+                <strong>✓</strong>
+                Data Quality
+            </div>
+
+            <div class="stat">
+                <strong>✓</strong>
+                Data Security
+            </div>
+
+            <div class="stat">
+                <strong>✓</strong>
+                Data Governance
+            </div>
+
+            <div class="stat">
+                <strong>✓</strong>
+                Data Lineage
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Связанные разделы WORKER PRO</h2>
+
+        <div class="links">
+
+            <a href="../data-warehouse/index.html">Data Warehouse</a>
+
+            <a href="../data-lineage/index.html">Data Lineage</a>
+
+            <a href="../data-catalog/index.html">Data Catalog</a>
+
+            <a href="../data-quality/index.html">Data Quality</a>
+
+            <a href="../data-integration/index.html">Data Integration</a>
+
+            <a href="../master-data/index.html">Master Data</a>
+
+            <a href="../data-governance/index.html">Data Governance</a>
+
+            <a href="../data-security/index.html">Data Security</a>
+
+            <a href="../data-privacy/index.html">Data Privacy</a>
+
+            <a href="../analytics/index.html">Analytics</a>
+
+            <a href="../reports/index.html">Reports</a>
+
+            <a href="../products/index.html">Products</a>
+
+            <a href="../companies/index.html">Companies</a>
+
+            <a href="../suppliers/index.html">Suppliers</a>
+
+            <a href="../orders/index.html">Orders</a>
+
+            <a href="../logistics/index.html">Logistics</a>
+
+            <a href="../tracking/index.html">Tracking</a>
+
+            <a href="../documents/index.html">Documents</a>
+
+            <a href="../dashboard/index.html">Dashboard</a>
+
+            <a href="../index.html">WORKER PRO Home</a>
+
+        </div>
+
+    </div>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026 — Industrial Global Platform
+</footer>
+
+<script>
+
+function filterTable() {
+
+    const input =
+        document.getElementById("search").value.toLowerCase();
+
+    const rows =
+        document.querySelectorAll("#dataTable tbody tr");
+
+    rows.forEach(row => {
+
+        const text = row.innerText.toLowerCase();
+
+        row.style.display =
+            text.includes(input) ? "" : "none";
+
+    });
+}
+
+function addSource() {
+
+    const name =
+        document.getElementById("sourceName").value.trim();
+
+    const type =
+        document.getElementById("sourceType").value;
+
+    const message =
+        document.getElementById("message");
+
+    if (!name) {
+
+        message.textContent =
+            "Введите название источника.";
+
+        return;
+    }
+
+    message.textContent =
+        "Источник \"" + name +
+        "\" (" + type + ") добавлен в демо-список.";
+
+    document.getElementById("sourceName").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
