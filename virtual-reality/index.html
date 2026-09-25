@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Virtual Reality</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+.top h1{
+    margin:0;
+    font-size:30px;
+}
+
+.top p{
+    margin:8px 0 15px;
+    color:#cceedd;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.hero h2,.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-left:5px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+}
+
+.badge{
+    display:inline-block;
+    background:#e4f6eb;
+    color:#075b34;
+    padding:6px 10px;
+    border-radius:20px;
+    margin:3px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.flow span{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.vr-card{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.vr-card h4{
+    color:#075b34;
+    margin:0 0 8px;
+}
+
+.progress{
+    height:10px;
+    background:#e5ebe7;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 14px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.links a:hover{
+    background:#b7ff35;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #d6a500;
+    padding:15px;
+    border-radius:10px;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .top h1{font-size:25px}
+    .container{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+<h1>WORKER PRO</h1>
+
+<p>Virtual Reality — виртуальная реальность для промышленности</p>
+
+<div class="languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<h2>🥽 Virtual Reality</h2>
+
+<p>
+Виртуальная реальность позволяет создавать цифровые
+сценарии для обучения специалистов, моделирования
+производственных процессов и подготовки к работе
+с промышленным оборудованием.
+</p>
+
+<p>
+WORKER PRO объединяет VR с AI, Digital Twin,
+Smart Factory, Training, Safety и Production Simulation.
+</p>
+
+<div>
+<span class="badge">VR Training</span>
+<span class="badge">Simulation</span>
+<span class="badge">Digital Twin</span>
+<span class="badge">AI</span>
+<span class="badge">Safety</span>
+<span class="badge">Production</span>
+<span class="badge">Smart Factory</span>
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<strong>124</strong>
+VR Systems
+<small>VR-систем</small>
+</div>
+
+<div class="stat">
+<strong>3,680</strong>
+Training Sessions
+<small>учебных сессий</small>
+</div>
+
+<div class="stat">
+<strong>96.4%</strong>
+System Availability
+<small>доступность систем</small>
+</div>
+
+<div class="stat">
+<strong>92.8%</strong>
+Training Completion
+<small>завершение обучения</small>
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔄 VR Technology Flow</h3>
+
+<div class="flow">
+
+<span>Worker</span>
+<b class="arrow">→</b>
+<span>VR Headset</span>
+<b class="arrow">→</b>
+<span>Simulation</span>
+<b class="arrow">→</b>
+<span>Digital Twin</span>
+<b class="arrow">→</b>
+<span>AI</span>
+<b class="arrow">→</b>
+<span>Training Data</span>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🥽 Основные применения VR</h3>
+
+<div class="grid">
+
+<div>
+<h3>🎓 VR Training</h3>
+<p>
+Практическое обучение специалистов
+в виртуальной производственной среде.
+</p>
+</div>
+
+<div>
+<h3>🏭 Production Simulation</h3>
+<p>
+Моделирование производственных операций
+до их выполнения в реальном производстве.
+</p>
+</div>
+
+<div>
+<h3>🔧 Maintenance Training</h3>
+<p>
+Симуляция технического обслуживания
+и последовательности рабочих операций.
+</p>
+</div>
+
+<div>
+<h3>🛡 Safety Training</h3>
+<p>
+Сценарии обучения правилам и процедурам
+безопасной работы.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔎 VR Systems</h3>
+
+<div class="search">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск VR-системы..."
+onkeyup="filterVR()"
+>
+
+<select id="locationFilter" onchange="filterVR()">
+<option value="">Все страны</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Turkey">Turkey</option>
+<option value="Germany">Germany</option>
+<option value="Italy">Italy</option>
+<option value="China">China</option>
+</select>
+
+<select id="typeFilter" onchange="filterVR()">
+<option value="">Все типы</option>
+<option value="Training">Training</option>
+<option value="Simulation">Simulation</option>
+<option value="Maintenance">Maintenance</option>
+<option value="Safety">Safety</option>
+</select>
+
+</div>
+
+<div id="vrList">
+
+<div
+class="vr-card"
+data-name="VR Training Baku"
+data-location="Azerbaijan"
+data-type="Training"
+>
+
+<h4>🎓 VR Training Center — Baku</h4>
+
+<p><b>Country:</b> Azerbaijan</p>
+<p><b>Type:</b> Training</p>
+<p><b>Application:</b> Industrial Worker Training</p>
+<p><b>Status:</b> 🟢 Active</p>
+
+<p>Training Availability: 96%</p>
+
+<div class="progress">
+<div style="width:96%"></div>
+</div>
+
+</div>
+
+<div
+class="vr-card"
+data-name="Production Simulation Sumqayit"
+data-location="Azerbaijan"
+data-type="Simulation"
+>
+
+<h4>🏭 Production Simulation — Sumqayit</h4>
+
+<p><b>Country:</b> Azerbaijan</p>
+<p><b>Type:</b> Simulation</p>
+<p><b>Application:</b> Manufacturing Simulation</p>
+<p><b>Status:</b> 🟢 Active</p>
+
+<p>Simulation Performance: 94%</p>
+
+<div class="progress">
+<div style="width:94%"></div>
+</div>
+
+</div>
+
+<div
+class="vr-card"
+data-name="VR Maintenance Istanbul"
+data-location="Turkey"
+data-type="Maintenance"
+>
+
+<h4>🔧 VR Maintenance — Istanbul</h4>
+
+<p><b>Country:</b> Turkey</p>
+<p><b>Type:</b> Maintenance</p>
+<p><b>Application:</b> Equipment Maintenance Training</p>
+<p><b>Status:</b> 🟢 Connected</p>
+
+<p>System Availability: 97%</p>
+
+<div class="progress">
+<div style="width:97%"></div>
+</div>
+
+</div>
+
+<div
+class="vr-card"
+data-name="Safety VR Dortmund"
+data-location="Germany"
+data-type="Safety"
+>
+
+<h4>🛡 Safety VR — Dortmund</h4>
+
+<p><b>Country:</b> Germany</p>
+<p><b>Type:</b> Safety</p>
+<p><b>Application:</b> Industrial Safety Training</p>
+<p><b>Status:</b> 🟢 Active</p>
+
+<p>Training Performance: 95%</p>
+
+<div class="progress">
+<div style="width:95%"></div>
+</div>
+
+</div>
+
+<div
+class="vr-card"
+data-name="Smart Factory VR Milan"
+data-location="Italy"
+data-type="Simulation"
+>
+
+<h4>🏭 Smart Factory VR — Milan</h4>
+
+<p><b>Country:</b> Italy</p>
+<p><b>Type:</b> Simulation</p>
+<p><b>Application:</b> Smart Factory</p>
+<p><b>Status:</b> 🟡 Monitoring</p>
+
+<p>Simulation Accuracy: 91%</p>
+
+<div class="progress">
+<div style="width:91%"></div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>🎓 VR Training</h3>
+
+<p>
+Виртуальный учебный сценарий позволяет
+отрабатывать производственные операции
+в цифровой среде.
+</p>
+
+<button class="action" onclick="trainingDemo()">
+Запустить VR Training
+</button>
+
+<p id="trainingResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>🏭 Production Simulation</h3>
+
+<p>
+Моделирование помогает визуализировать
+производственный процесс до его запуска.
+</p>
+
+<button class="action" onclick="simulationDemo()">
+Запустить Simulation
+</button>
+
+<p id="simulationResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>🤖 AI + VR</h3>
+
+<p>
+AI может анализировать результаты виртуальных
+сценариев и данные обучения.
+</p>
+
+<button class="action" onclick="aiDemo()">
+Запустить AI
+</button>
+
+<p id="aiResult"></p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>📊 VR Performance</h3>
+
+<div class="grid">
+
+<div>
+<b>System Availability</b>
+<p>96.4%</p>
+
+<div class="progress">
+<div style="width:96.4%"></div>
+</div>
+</div>
+
+<div>
+<b>Training Completion</b>
+<p>92.8%</p>
+
+<div class="progress">
+<div style="width:92.8%"></div>
+</div>
+</div>
+
+<div>
+<b>Simulation Accuracy</b>
+<p>94.1%</p>
+
+<div class="progress">
+<div style="width:94.1%"></div>
+</div>
+</div>
+
+<div>
+<b>Digital Twin Sync</b>
+<p>97.3%</p>
+
+<div class="progress">
+<div style="width:97.3%"></div>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>➕ Добавить VR System</h3>
+
+<div class="search">
+
+<input
+id="newSystem"
+type="text"
+placeholder="Название VR-системы"
+>
+
+<select id="newType">
+
+<option>Training</option>
+<option>Simulation</option>
+<option>Maintenance</option>
+<option>Safety</option>
+
+</select>
+
+<button class="action" onclick="addSystem()">
+Добавить
+</button>
+
+</div>
+
+<p id="addResult"></p>
+
+</section>
+
+<section class="card">
+
+<div class="notice">
+
+<b>⚠️ Важно:</b>
+
+<p>
+VR является инструментом обучения и моделирования.
+Его использование не заменяет реальные требования
+промышленной безопасности, инструкции работодателя,
+обучение и процедуры допуска к работе.
+</p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔐 VR Data Security</h3>
+
+<div class="grid">
+
+<div>
+<b>🔒 Secure Data</b>
+<p>Защита данных виртуальных тренировок.</p>
+</div>
+
+<div>
+<b>👤 User Access</b>
+<p>Контроль доступа специалистов.</p>
+</div>
+
+<div>
+<b>📡 Secure Network</b>
+<p>Безопасное подключение VR-систем.</p>
+</div>
+
+<div>
+<b>🛡 Privacy</b>
+<p>Контроль обработки пользовательских данных.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔗 Связанные разделы WORKER PRO</h3>
+
+<div class="links">
+
+<a href="../index.html">Главная</a>
+<a href="../augmented-reality/index.html">Augmented Reality</a>
+<a href="../wearable-technology/index.html">Wearable Technology</a>
+<a href="../industry-5-0/index.html">Industry 5.0</a>
+<a href="../human-centric-manufacturing/index.html">Human-Centric Manufacturing</a>
+<a href="../collaborative-robots/index.html">Collaborative Robots</a>
+<a href="../industrial-exoskeletons/index.html">Industrial Exoskeletons</a>
+<a href="../digital-twin/index.html">Digital Twin</a>
+<a href="../digital-manufacturing/index.html">Digital Manufacturing</a>
+<a href="../smart-factory/index.html">Smart Factory</a>
+<a href="../industry-4-0/index.html">Industry 4.0</a>
+<a href="../ai-machine-learning/index.html">AI & ML</a>
+<a href="../iot-industrial-internet/index.html">IoT</a>
+<a href="../automation-robotics/index.html">Automation</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../production/index.html">Production</a>
+<a href="../sensors/index.html">Sensors</a>
+<a href="../training/index.html">Training</a>
+<a href="../specialists/index.html">Specialists</a>
+<a href="../safety/index.html">Safety</a>
+<a href="../maintennances/index.html">Maintenance</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+WORKER PRO — Global Industrial Platform<br>
+Virtual Reality • Training • Simulation • AI • Digital Twin<br><br>
+© 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterVR(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const location =
+        document.getElementById("locationFilter")
+        .value;
+
+    const type =
+        document.getElementById("typeFilter")
+        .value;
+
+    const systems =
+        document.querySelectorAll(".vr-card");
+
+    systems.forEach(function(system){
+
+        const name =
+            system.dataset.name.toLowerCase();
+
+        const systemLocation =
+            system.dataset.location;
+
+        const systemType =
+            system.dataset.type;
+
+        const matchName =
+            name.includes(search);
+
+        const matchLocation =
+            !location ||
+            systemLocation === location;
+
+        const matchType =
+            !type ||
+            systemType === type;
+
+        system.style.display =
+            matchName &&
+            matchLocation &&
+            matchType
+            ? "block"
+            : "none";
+
+    });
+}
+
+function trainingDemo(){
+
+    document.getElementById("trainingResult").innerHTML =
+        "🎓 VR Training запущен. Виртуальный учебный сценарий готов.";
+
+}
+
+function simulationDemo(){
+
+    document.getElementById("simulationResult").innerHTML =
+        "🏭 Production Simulation запущен. Виртуальная производственная модель загружена.";
+
+}
+
+function aiDemo(){
+
+    document.getElementById("aiResult").innerHTML =
+        "🤖 AI + VR анализ завершён. Результаты виртуального сценария обработаны.";
+
+}
+
+function addSystem(){
+
+    const name =
+        document.getElementById("newSystem")
+        .value
+        .trim();
+
+    const type =
+        document.getElementById("newType")
+        .value;
+
+    if(!name){
+
+        document.getElementById("addResult").innerHTML =
+            "⚠️ Введите название VR-системы.";
+
+        return;
+    }
+
+    document.getElementById("addResult").innerHTML =
+        "✅ VR System добавлена: " +
+        name +
+        " — " +
+        type;
+
+    document.getElementById("newSystem").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
