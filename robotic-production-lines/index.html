@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Robotic Production Lines</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    padding:24px 16px;
+    text-align:center;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:8px;
+    font-size:16px;
+    color:#b7ff35;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:0;
+    padding:8px 12px;
+    border-radius:8px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    border-radius:16px;
+    padding:28px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.hero h1{
+    color:#063d25;
+    margin-top:0;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#063d25;
+    margin-bottom:6px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:15px;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:11px 14px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.arrow{
+    font-size:22px;
+    color:#063d25;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+}
+
+.search-box button,
+.demo-btn,
+.add-btn{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:12px 16px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.search-box button:hover,
+.demo-btn:hover,
+.add-btn:hover{
+    background:#063d25;
+}
+
+.line-item{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+    background:#fafcfb;
+}
+
+.line-item strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#dff5e7;
+    color:#087238;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.progress{
+    height:10px;
+    background:#e1e8e4;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.demo-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.result{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#e9f7ee;
+    color:#063d25;
+    font-weight:bold;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+.warning{
+    background:#fff6d9;
+    border-left:5px solid #e3ae00;
+    padding:16px;
+    border-radius:10px;
+    margin-top:20px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+a{
+    color:#0b6b3d;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    background:#e8f5ed;
+    padding:9px 12px;
+    border-radius:9px;
+}
+
+@media(max-width:600px){
+    .logo{
+        font-size:27px;
+    }
+
+    .hero{
+        padding:20px;
+    }
+
+    main{
+        padding:12px;
+    }
+
+    .flow-item{
+        width:100%;
+        text-align:center;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Robotic Production Lines — роботизированные производственные линии
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<h1>🤖 Robotic Production Lines</h1>
+
+<p>
+Роботизированные производственные линии объединяют промышленных роботов,
+конвейеры, автоматизированные станции, PLC, SCADA, машинное зрение,
+контроль качества, упаковку и Smart Factory.
+</p>
+
+<div class="tags">
+<span class="tag">Robotic Lines</span>
+<span class="tag">Industrial Robots</span>
+<span class="tag">PLC</span>
+<span class="tag">SCADA</span>
+<span class="tag">Machine Vision</span>
+<span class="tag">Quality Control</span>
+<span class="tag">Packaging</span>
+<span class="tag">Smart Factory</span>
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="card stat">
+<strong>186</strong>
+Robotic Production Lines
+</div>
+
+<div class="card stat">
+<strong>2,840</strong>
+Automated Stations
+</div>
+
+<div class="card stat">
+<strong>624</strong>
+Industrial Robots
+</div>
+
+<div class="card stat">
+<strong>97.6%</strong>
+Line Availability
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 Production Line Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">📦 Materials</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🚚 Conveyor</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🤖 Robot Cells</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔧 Assembly / Welding</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">👁️ Vision</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">✅ Quality Control</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📦 Packaging</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🏭 Warehouse</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+<h3>🚚 Conveyor Systems</h3>
+<p>Автоматическая транспортировка материалов и деталей между производственными станциями.</p>
+</div>
+
+<div class="card">
+<h3>🤖 Robotic Cells</h3>
+<p>Роботизированные рабочие ячейки для сборки, сварки, обработки и перемещения.</p>
+</div>
+
+<div class="card">
+<h3>🔧 Assembly Stations</h3>
+<p>Автоматизированная сборка компонентов и готовых изделий.</p>
+</div>
+
+<div class="card">
+<h3>🔥 Welding Cells</h3>
+<p>Роботизированная сварка и повторяемые производственные операции.</p>
+</div>
+
+<div class="card">
+<h3>👁️ Vision Inspection</h3>
+<p>Машинное зрение для автоматического контроля продукции.</p>
+</div>
+
+<div class="card">
+<h3>📦 Packaging Automation</h3>
+<p>Автоматическая упаковка, маркировка и подготовка продукции.</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔎 Production Lines</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="lineSearch"
+placeholder="Поиск линии, города или технологии..."
+onkeyup="filterLines()"
+>
+
+<button onclick="filterLines()">Поиск</button>
+
+</div>
+
+<div id="lineList">
+
+<div class="line-item">
+<strong>Baku Robotic Assembly Line</strong><br>
+Azerbaijan — Assembly — 48 stations
+<span class="status">Online</span>
+</div>
+
+<div class="line-item">
+<strong>Sumqayit Welding Line</strong><br>
+Azerbaijan — Welding — 36 robot cells
+<span class="status">Online</span>
+</div>
+
+<div class="line-item">
+<strong>Istanbul Packaging Line</strong><br>
+Turkey — Packaging — 64 stations
+<span class="status">Online</span>
+</div>
+
+<div class="line-item">
+<strong>Dortmund Automotive Line</strong><br>
+Germany — Assembly + Vision — 86 stations
+<span class="status">Online</span>
+</div>
+
+<div class="line-item">
+<strong>Milan Smart Production Line</strong><br>
+Italy — IoT + Robotics — 52 stations
+<span class="status">Maintenance</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 Production Performance</h2>
+
+<p>Line Availability — 97.6%</p>
+<div class="progress">
+<span style="width:97.6%"></span>
+</div>
+
+<p>Production Efficiency — 96.8%</p>
+<div class="progress">
+<span style="width:96.8%"></span>
+</div>
+
+<p>Quality Control — 98.2%</p>
+<div class="progress">
+<span style="width:98.2%"></span>
+</div>
+
+<p>Robot Availability — 97.9%</p>
+<div class="progress">
+<span style="width:97.9%"></span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 Production Line Demo</h2>
+
+<div class="demo-area">
+
+<button class="demo-btn" onclick="lineDemo()">
+Line Status
+</button>
+
+<button class="demo-btn" onclick="conveyorDemo()">
+Conveyor Demo
+</button>
+
+<button class="demo-btn" onclick="visionDemo()">
+Quality Vision
+</button>
+
+<button class="demo-btn" onclick="packagingDemo()">
+Packaging Demo
+</button>
+
+</div>
+
+<div id="demoResult"></div>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add Robotic Production Line</h2>
+
+<form onsubmit="addLine(event)">
+
+<input
+type="text"
+id="lineName"
+placeholder="Название производственной линии"
+required
+>
+
+<select id="lineType">
+
+<option>Assembly Line</option>
+<option>Welding Line</option>
+<option>Packaging Line</option>
+<option>Inspection Line</option>
+<option>Mixed Robotic Line</option>
+
+</select>
+
+<button class="add-btn" type="submit">
+Добавить линию
+</button>
+
+</form>
+
+<div id="addResult"></div>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+<h3>🔧 Assembly</h3>
+<p>Автоматизированная сборка изделий.</p>
+</div>
+
+<div class="card">
+<h3>🔥 Welding</h3>
+<p>Роботизированная сварка.</p>
+</div>
+
+<div class="card">
+<h3>⚙️ Machining</h3>
+<p>Интеграция CNC и роботизированных станций.</p>
+</div>
+
+<div class="card">
+<h3>📦 Packaging</h3>
+<p>Автоматическая упаковка и маркировка.</p>
+</div>
+
+<div class="card">
+<h3>👁️ Inspection</h3>
+<p>Автоматический визуальный контроль.</p>
+</div>
+
+<div class="card">
+<h3>🚚 Material Handling</h3>
+<p>Перемещение материалов и деталей роботами.</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🛡️ Safety & Security</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🛑 Emergency Stop</h3>
+<p>Аварийная остановка оборудования.</p>
+</div>
+
+<div class="card">
+<h3>🚧 Safety Zones</h3>
+<p>Контролируемые зоны работы роботов.</p>
+</div>
+
+<div class="card">
+<h3>🔒 Interlocks</h3>
+<p>Защитные блокировки оборудования.</p>
+</div>
+
+<div class="card">
+<h3>🔐 Access Control</h3>
+<p>Контроль доступа операторов.</p>
+</div>
+
+<div class="card">
+<h3>🌐 Network Security</h3>
+<p>Защита промышленной сети.</p>
+</div>
+
+<div class="card">
+<h3>💾 Backup</h3>
+<p>Резервное копирование данных и конфигураций.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="warning">
+
+<strong>⚠️ Важно:</strong>
+
+<p>
+Эта страница является цифровой демонстрационной моделью.
+Реальные роботизированные производственные линии требуют
+квалифицированного проектирования, оценки рисков, защитных систем,
+обучения персонала, соблюдения требований производителя и
+соответствующих норм промышленной безопасности.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO</h2>
+
+<div class="related">
+
+<a href="../index.html">Main</a>
+
+<a href="../industrial-robotics/index.html">
+Industrial Robotics
+</a>
+
+<a href="../industrial-automation/index.html">
+Industrial Automation
+</a>
+
+<a href="../industrial-control-systems/index.html">
+Industrial Control Systems
+</a>
+
+<a href="../industrial-network/index.html">
+Industrial Network
+</a>
+
+<a href="../industrial-communication/index.html">
+Industrial Communication
+</a>
+
+<a href="../automation-robotics/index.html">
+Automation Robotics
+</a>
+
+<a href="../collaborative-robots/index.html">
+Collaborative Robots
+</a>
+
+<a href="../digital-twin/index.html">
+Digital Twin
+</a>
+
+<a href="../smart-factory/index.html">
+Smart Factory
+</a>
+
+<a href="../digital-manufacturing/index.html">
+Digital Manufacturing
+</a>
+
+<a href="../production/index.html">
+Production
+</a>
+
+<a href="../equipment/index.html">
+Equipment
+</a>
+
+<a href="../sensors/index.html">
+Sensors
+</a>
+
+<a href="../maintennances/index.html">
+Maintenance
+</a>
+
+<a href="../safety/index.html">
+Safety
+</a>
+
+<a href="../training/index.html">
+Training
+</a>
+
+<a href="../specialists/index.html">
+Specialists
+</a>
+
+<a href="../companies/index.html">
+Companies
+</a>
+
+<a href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>
+Global Industrial Platform — Production • Technology • Robotics • Logistics • Training
+</p>
+
+<p>© 2026 WORKER PRO</p>
+
+</footer>
+
+<script>
+
+function filterLines(){
+
+    const input =
+        document.getElementById("lineSearch")
+        .value
+        .toLowerCase();
+
+    const items =
+        document.querySelectorAll(".line-item");
+
+    items.forEach(function(item){
+
+        const text =
+            item.innerText.toLowerCase();
+
+        if(text.includes(input)){
+            item.style.display = "block";
+        }else{
+            item.style.display = "none";
+        }
+
+    });
+
+}
+
+function showDemo(message){
+
+    document.getElementById("demoResult").innerHTML =
+        '<div class="result">' + message + '</div>';
+
+}
+
+function lineDemo(){
+
+    showDemo(
+        "🤖 Production Line: ONLINE — 186 robotic lines connected."
+    );
+
+}
+
+function conveyorDemo(){
+
+    showDemo(
+        "🚚 Conveyor System: ACTIVE — material flow operating normally."
+    );
+
+}
+
+function visionDemo(){
+
+    showDemo(
+        "👁️ Machine Vision: ACTIVE — quality inspection system ready."
+    );
+
+}
+
+function packagingDemo(){
+
+    showDemo(
+        "📦 Packaging System: ACTIVE — automated packaging station ready."
+    );
+
+}
+
+function addLine(event){
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("lineName").value;
+
+    const type =
+        document.getElementById("lineType").value;
+
+    document.getElementById("addResult").innerHTML =
+        '<div class="result">' +
+        '✅ Added: ' + name +
+        ' — ' + type +
+        '</div>';
+
+    document.getElementById("lineName").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
