@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Automated Inspection</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:24px 15px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+h1,
+h2{
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    text-align:center;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#063d25;
+    margin-bottom:8px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#063d25;
+}
+
+.component{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+}
+
+.component h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+.action,
+.add-btn{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:12px 16px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.action:hover,
+.add-btn:hover{
+    background:#063d25;
+}
+
+.inspect-item{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+}
+
+.inspect-item strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    background:#dff5e7;
+    color:#087238;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.maintenance{
+    background:#fff1c7;
+    color:#8a6200;
+}
+
+.progress{
+    height:10px;
+    background:#e1e8e4;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 15px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.demo-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.result{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#e9f7ee;
+    color:#063d25;
+    font-weight:bold;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+.warning{
+    background:#fff6d9;
+    border-left:5px solid #e3ae00;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    background:#e8f5ed;
+    color:#0b6b3d;
+    padding:9px 12px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.related a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:27px;
+    }
+
+    main{
+        padding:12px;
+    }
+
+    .hero,
+    .card{
+        padding:18px;
+    }
+
+    .flow-item{
+        width:100%;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Automated Inspection — автоматический контроль качества
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<h1>🔍 Automated Inspection</h1>
+
+<p>
+Автоматический контроль объединяет камеры, машинное зрение,
+датчики, измерительные системы, AI и промышленную автоматизацию
+для обнаружения дефектов, проверки размеров, поверхности,
+формы и других параметров продукции.
+</p>
+
+<div class="tags">
+
+<span class="tag">Automated Inspection</span>
+<span class="tag">Machine Vision</span>
+<span class="tag">Industrial Cameras</span>
+<span class="tag">AI Inspection</span>
+<span class="tag">Sensors</span>
+<span class="tag">Measurement</span>
+<span class="tag">PLC</span>
+<span class="tag">SCADA</span>
+<span class="tag">Quality Control</span>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="stat">
+<strong>214</strong>
+Inspection Systems
+</div>
+
+<div class="stat">
+<strong>684</strong>
+Industrial Cameras
+</div>
+
+<div class="stat">
+<strong>126</strong>
+Connected Factories
+</div>
+
+<div class="stat">
+<strong>98.7%</strong>
+Inspection Accuracy
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 Automated Inspection Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">🏭 Production</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📦 Product</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📷 Camera</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">👁️ Vision</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🧠 AI</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📏 Measurement</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">✅ Quality</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📊 PLC/SCADA</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>📷 Industrial Cameras</h3>
+<p>
+Камеры высокого разрешения для автоматического контроля продукции.
+</p>
+</div>
+
+<div class="component">
+<h3>👁️ Machine Vision</h3>
+<p>
+Распознавание формы, поверхности, положения и внешних дефектов.
+</p>
+</div>
+
+<div class="component">
+<h3>🧠 AI Inspection</h3>
+<p>
+Интеллектуальная классификация и обнаружение производственных дефектов.
+</p>
+</div>
+
+<div class="component">
+<h3>📏 Measurement</h3>
+<p>
+Автоматическое измерение размеров и геометрии деталей.
+</p>
+</div>
+
+<div class="component">
+<h3>🔬 Surface Inspection</h3>
+<p>
+Контроль поверхности на наличие царапин, трещин и других дефектов.
+</p>
+</div>
+
+<div class="component">
+<h3>📡 Sensors</h3>
+<p>
+Датчики положения, присутствия и производственных параметров.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔎 Automated Inspection Systems</h2>
+
+<div class="search-box">
+
+<input
+id="inspectSearch"
+type="text"
+placeholder="Поиск системы, города или технологии..."
+onkeyup="filterInspection()"
+>
+
+<button class="action" onclick="filterInspection()">
+Поиск
+</button>
+
+</div>
+
+<div id="inspectList">
+
+<div class="inspect-item">
+<strong>Baku Automated Inspection</strong><br>
+Azerbaijan — Machine Vision + AI — 42 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="inspect-item">
+<strong>Sumqayit Quality Inspection</strong><br>
+Azerbaijan — Camera Inspection — 36 stations<br>
+<span class="status">Online</span>
+</div>
+
+<div class="inspect-item">
+<strong>Istanbul Vision Inspection</strong><br>
+Turkey — AI + Machine Vision — 54 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="inspect-item">
+<strong>Dortmund Precision Inspection</strong><br>
+Germany — Measurement + Vision — 48 stations<br>
+<span class="status">Online</span>
+</div>
+
+<div class="inspect-item">
+<strong>Milan Smart Inspection</strong><br>
+Italy — IoT + AI Inspection — 32 systems<br>
+<span class="status maintenance">Maintenance</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 Inspection Performance</h2>
+
+<p>System Availability — 98.5%</p>
+
+<div class="progress">
+<span style="width:98.5%"></span>
+</div>
+
+<p>Inspection Accuracy — 98.7%</p>
+
+<div class="progress">
+<span style="width:98.7%"></span>
+</div>
+
+<p>Vision Recognition — 98.1%</p>
+
+<div class="progress">
+<span style="width:98.1%"></span>
+</div>
+
+<p>Measurement Accuracy — 97.9%</p>
+
+<div class="progress">
+<span style="width:97.9%"></span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 Inspection System Demo</h2>
+
+<div class="demo-area">
+
+<button class="action" onclick="inspectionStatus()">
+Inspection Status
+</button>
+
+<button class="action" onclick="cameraDemo()">
+Camera Check
+</button>
+
+<button class="action" onclick="visionDemo()">
+Vision Check
+</button>
+
+<button class="action" onclick="measurementDemo()">
+Measurement Check
+</button>
+
+</div>
+
+<div id="demoResult"></div>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add Automated Inspection System</h2>
+
+<form onsubmit="addInspection(event)">
+
+<input
+id="inspectName"
+type="text"
+placeholder="Название системы контроля"
+required
+>
+
+<select id="inspectType">
+
+<option>Machine Vision Inspection</option>
+<option>AI Inspection</option>
+<option>Dimensional Inspection</option>
+<option>Surface Inspection</option>
+<option>Camera Inspection</option>
+<option>Industrial Quality Inspection</option>
+
+</select>
+
+<button class="add-btn" type="submit">
+Добавить систему
+</button>
+
+</form>
+
+<div id="addResult"></div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>📐 Dimensional Inspection</h3>
+<p>
+Автоматическая проверка размеров деталей.
+</p>
+</div>
+
+<div class="component">
+<h3>🔬 Surface Inspection</h3>
+<p>
+Контроль поверхности и обнаружение дефектов.
+</p>
+</div>
+
+<div class="component">
+<h3>📷 Camera Inspection</h3>
+<p>
+Контроль продукции промышленными камерами.
+</p>
+</div>
+
+<div class="component">
+<h3>🧠 AI Quality Control</h3>
+<p>
+AI-анализ изображений и классификация дефектов.
+</p>
+</div>
+
+<div class="component">
+<h3>⚙️ Process Inspection</h3>
+<p>
+Контроль производственного процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>📊 Digital Quality</h3>
+<p>
+Передача результатов контроля в цифровую систему.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🛡️ Inspection Safety & Security</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>🛑 Emergency Stop</h3>
+<p>
+Аварийная остановка оборудования.
+</p>
+</div>
+
+<div class="component">
+<h3>🚧 Safety Guards</h3>
+<p>
+Защитные ограждения рабочих зон.
+</p>
+</div>
+
+<div class="component">
+<h3>🔒 Interlocks</h3>
+<p>
+Защитные блокировки оборудования.
+</p>
+</div>
+
+<div class="component">
+<h3>📡 Safety Sensors</h3>
+<p>
+Контроль состояния рабочей зоны.
+</p>
+</div>
+
+<div class="component">
+<h3>👷 Operator Safety</h3>
+<p>
+Защита персонала при эксплуатации оборудования.
+</p>
+</div>
+
+<div class="component">
+<h3>🌐 Network Security</h3>
+<p>
+Защита подключённых систем контроля.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="warning">
+
+<strong>⚠️ Важно:</strong>
+
+<p>
+Эта страница является демонстрационной моделью WORKER PRO.
+Реальные системы автоматического контроля требуют
+квалифицированного проектирования, настройки оборудования,
+оценки рисков, проверки измерительных средств, обучения
+персонала, технического обслуживания и соблюдения требований
+производителя и применимых норм промышленной безопасности.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO</h2>
+
+<div class="related">
+
+<a href="../index.html">Main</a>
+
+<a href="../automated-sorting/index.html">
+Automated Sorting
+</a>
+
+<a href="../automated-packaging/index.html">
+Automated Packaging
+</a>
+
+<a href="../robotic-palletizing/index.html">
+Robotic Palletizing
+</a>
+
+<a href="../robotic-assembly/index.html">
+Robotic Assembly
+</a>
+
+<a href="../robotic-welding/index.html">
+Robotic Welding
+</a>
+
+<a href="../robotic-production-lines/index.html">
+Robotic Production Lines
+</a>
+
+<a href="../industrial-robot-cells/index.html">
+Industrial Robot Cells
+</a>
+
+<a href="../industrial-robotics/index.html">
+Industrial Robotics
+</a>
+
+<a href="../industrial-automation/index.html">
+Industrial Automation
+</a>
+
+<a href="../industrial-control-systems/index.html">
+Industrial Control Systems
+</a>
+
+<a href="../automation-robotics/index.html">
+Automation Robotics
+</a>
+
+<a href="../collaborative-robots/index.html">
+Collaborative Robots
+</a>
+
+<a href="../industrial-network/index.html">
+Industrial Network
+</a>
+
+<a href="../industrial-communication/index.html">
+Industrial Communication
+</a>
+
+<a href="../digital-twin/index.html">
+Digital Twin
+</a>
+
+<a href="../smart-factory/index.html">
+Smart Factory
+</a>
+
+<a href="../digital-manufacturing/index.html">
+Digital Manufacturing
+</a>
+
+<a href="../production/index.html">
+Production
+</a>
+
+<a href="../equipment/index.html">
+Equipment
+</a>
+
+<a href="../sensors/index.html">
+Sensors
+</a>
+
+<a href="../quality/index.html">
+Quality
+</a>
+
+<a href="../maintennances/index.html">
+Maintenance
+</a>
+
+<a href="../safety/index.html">
+Safety
+</a>
+
+<a href="../training/index.html">
+Training
+</a>
+
+<a href="../specialists/index.html">
+Specialists
+</a>
+
+<a href="../companies/index.html">
+Companies
+</a>
+
+<a href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a href="../orders/index.html">
+Orders
+</a>
+
+<a href="../logistics/index.html">
+Logistics
+</a>
+
+<a href="../warehouses/index.html">
+Warehouses
+</a>
+
+<a href="../tracking/index.html">
+Tracking
+</a>
+
+<a href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>
+Global Industrial Platform — Production • Quality • Automation • Robotics
+</p>
+
+<p>© 2026 WORKER PRO</p>
+
+</footer>
+
+<script>
+
+function filterInspection(){
+
+var input=
+document.getElementById("inspectSearch")
+.value
+.toLowerCase();
+
+var items=
+document.querySelectorAll(".inspect-item");
+
+items.forEach(function(item){
+
+var text=
+item.innerText.toLowerCase();
+
+if(text.indexOf(input)!==-1){
+item.style.display="block";
+}else{
+item.style.display="none";
+}
+
+});
+
+}
+
+function showDemo(message){
+
+document.getElementById("demoResult").innerHTML=
+'<div class="result">'+message+'</div>';
+
+}
+
+function inspectionStatus(){
+
+showDemo(
+"🔍 Inspection System: ONLINE — система автоматического контроля работает."
+);
+
+}
+
+function cameraDemo(){
+
+showDemo(
+"📷 Camera System: READY — промышленные камеры готовы."
+);
+
+}
+
+function visionDemo(){
+
+showDemo(
+"👁️ Machine Vision: ONLINE — машинное зрение активно."
+);
+
+}
+
+function measurementDemo(){
+
+showDemo(
+"📏 Measurement System: READY — измерительная система готова."
+);
+
+}
+
+function addInspection(event){
+
+event.preventDefault();
+
+var name=
+document.getElementById("inspectName").value;
+
+var type=
+document.getElementById("inspectType").value;
+
+document.getElementById("addResult").innerHTML=
+'<div class="result">'+
+'✅ Added: '+name+' — '+type+
+'</div>';
+
+document.getElementById("inspectName").value="";
+
+}
+
+</script>
+
+</body>
+</html>
