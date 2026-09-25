@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Industrial Cloud</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+.top h1{
+    margin:0;
+    font-size:30px;
+}
+
+.top p{
+    margin:8px 0 15px;
+    color:#cceedd;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.hero h2,
+.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-left:5px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+}
+
+.badge{
+    display:inline-block;
+    background:#e4f6eb;
+    color:#075b34;
+    padding:6px 10px;
+    border-radius:20px;
+    margin:3px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.flow span{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.cloud-card{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.cloud-card h4{
+    color:#075b34;
+    margin:0 0 8px;
+}
+
+.progress{
+    height:10px;
+    background:#e5ebe7;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 14px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #d6a500;
+    padding:15px;
+    border-radius:10px;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.links a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .top h1{
+        font-size:25px;
+    }
+
+    .container{
+        padding:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+<h1>WORKER PRO</h1>
+
+<p>Industrial Cloud — облачная промышленная инфраструктура</p>
+
+<div class="languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<h2>☁️ Industrial Cloud</h2>
+
+<p>
+Industrial Cloud объединяет промышленные данные,
+оборудование, IoT, AI, Digital Twin, аналитику
+и производственные системы в единой цифровой среде.
+</p>
+
+<div>
+<span class="badge">Industrial Cloud</span>
+<span class="badge">Cloud Manufacturing</span>
+<span class="badge">IoT</span>
+<span class="badge">AI</span>
+<span class="badge">Digital Twin</span>
+<span class="badge">Big Data</span>
+<span class="badge">Analytics</span>
+<span class="badge">Smart Factory</span>
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<strong>128</strong>
+Cloud Systems
+<small>промышленных cloud-систем</small>
+</div>
+
+<div class="stat">
+<strong>8,420</strong>
+Connected Devices
+<small>подключённых устройств</small>
+</div>
+
+<div class="stat">
+<strong>4.8 PB</strong>
+Industrial Data
+<small>промышленных данных</small>
+</div>
+
+<div class="stat">
+<strong>98.2%</strong>
+Cloud Availability
+<small>доступность платформы</small>
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔄 Industrial Cloud Flow</h3>
+
+<div class="flow">
+
+<span>Machines</span>
+<b class="arrow">→</b>
+<span>IoT</span>
+<b class="arrow">→</b>
+<span>Industrial Cloud</span>
+<b class="arrow">→</b>
+<span>AI</span>
+<b class="arrow">→</b>
+<span>Analytics</span>
+<b class="arrow">→</b>
+<span>Smart Factory</span>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>☁️ Основные возможности</h3>
+
+<div class="grid">
+
+<div>
+<h3>📡 IoT Data</h3>
+<p>
+Сбор данных с промышленных датчиков,
+станков и оборудования.
+</p>
+</div>
+
+<div>
+<h3>🗄️ Cloud Storage</h3>
+<p>
+Централизованное хранение производственных
+и технических данных.
+</p>
+</div>
+
+<div>
+<h3>🤖 AI Processing</h3>
+<p>
+Обработка промышленных данных с использованием
+алгоритмов искусственного интеллекта.
+</p>
+</div>
+
+<div>
+<h3>📊 Analytics</h3>
+<p>
+Анализ производительности оборудования
+и производственных процессов.
+</p>
+</div>
+
+<div>
+<h3>🧩 Digital Twin</h3>
+<p>
+Хранение и синхронизация данных цифровых
+двойников оборудования.
+</p>
+</div>
+
+<div>
+<h3>🌍 Global Access</h3>
+<p>
+Безопасный доступ к промышленным данным
+из разных регионов и предприятий.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔎 Industrial Cloud Systems</h3>
+
+<div class="search">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск cloud-системы..."
+onkeyup="filterCloud()"
+>
+
+<select id="locationFilter" onchange="filterCloud()">
+<option value="">Все страны</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Turkey">Turkey</option>
+<option value="Germany">Germany</option>
+<option value="Italy">Italy</option>
+<option value="China">China</option>
+</select>
+
+<select id="typeFilter" onchange="filterCloud()">
+<option value="">Все типы</option>
+<option value="IoT Cloud">IoT Cloud</option>
+<option value="Data Cloud">Data Cloud</option>
+<option value="AI Cloud">AI Cloud</option>
+<option value="Digital Twin">Digital Twin</option>
+</select>
+
+</div>
+
+<div id="cloudList">
+
+<div
+class="cloud-card"
+data-name="Industrial IoT Cloud Baku"
+data-location="Azerbaijan"
+data-type="IoT Cloud"
+>
+
+<h4>📡 Industrial IoT Cloud — Baku</h4>
+
+<p><b>Country:</b> Azerbaijan</p>
+<p><b>Type:</b> IoT Cloud</p>
+<p><b>Connected Devices:</b> 2,840</p>
+<p><b>Status:</b> 🟢 Active</p>
+
+<p>Availability: 98%</p>
+
+<div class="progress">
+<div style="width:98%"></div>
+</div>
+
+</div>
+
+<div
+class="cloud-card"
+data-name="Production Data Cloud Sumqayit"
+data-location="Azerbaijan"
+data-type="Data Cloud"
+>
+
+<h4>🗄️ Production Data Cloud — Sumqayit</h4>
+
+<p><b>Country:</b> Azerbaijan</p>
+<p><b>Type:</b> Data Cloud</p>
+<p><b>Data:</b> 840 TB</p>
+<p><b>Status:</b> 🟢 Active</p>
+
+<p>Data Availability: 97%</p>
+
+<div class="progress">
+<div style="width:97%"></div>
+</div>
+
+</div>
+
+<div
+class="cloud-card"
+data-name="AI Manufacturing Cloud Istanbul"
+data-location="Turkey"
+data-type="AI Cloud"
+>
+
+<h4>🤖 AI Manufacturing Cloud — Istanbul</h4>
+
+<p><b>Country:</b> Turkey</p>
+<p><b>Type:</b> AI Cloud</p>
+<p><b>AI Models:</b> 126</p>
+<p><b>Status:</b> 🟢 Connected</p>
+
+<p>Processing Availability: 95%</p>
+
+<div class="progress">
+<div style="width:95%"></div>
+</div>
+
+</div>
+
+<div
+class="cloud-card"
+data-name="Digital Twin Cloud Dortmund"
+data-location="Germany"
+data-type="Digital Twin"
+>
+
+<h4>🧩 Digital Twin Cloud — Dortmund</h4>
+
+<p><b>Country:</b> Germany</p>
+<p><b>Type:</b> Digital Twin</p>
+<p><b>Digital Twins:</b> 186</p>
+<p><b>Status:</b> 🟢 Synchronized</p>
+
+<p>Synchronization: 98%</p>
+
+<div class="progress">
+<div style="width:98%"></div>
+</div>
+
+</div>
+
+<div
+class="cloud-card"
+data-name="Smart Factory Cloud Milan"
+data-location="Italy"
+data-type="Data Cloud"
+>
+
+<h4>🏭 Smart Factory Cloud — Milan</h4>
+
+<p><b>Country:</b> Italy</p>
+<p><b>Type:</b> Data Cloud</p>
+<p><b>Factories:</b> 24</p>
+<p><b>Status:</b> 🟡 Monitoring</p>
+
+<p>Performance: 93%</p>
+
+<div class="progress">
+<div style="width:93%"></div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>☁️ Cloud Platform</h3>
+
+<p>
+Запуск демонстрационной промышленной
+cloud-платформы.
+</p>
+
+<button class="action" onclick="cloudDemo()">
+Запустить Cloud
+</button>
+
+<p id="cloudResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>📊 Data Analytics</h3>
+
+<p>
+Анализ промышленных данных в cloud-среде.
+</p>
+
+<button class="action" onclick="analyticsDemo()">
+Запустить Analytics
+</button>
+
+<p id="analyticsResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>🤖 AI Processing</h3>
+
+<p>
+Демонстрация обработки производственных
+данных искусственным интеллектом.
+</p>
+
+<button class="action" onclick="aiDemo()">
+Запустить AI
+</button>
+
+<p id="aiResult"></p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>📈 Industrial Cloud Performance</h3>
+
+<div class="grid">
+
+<div>
+<b>Cloud Availability</b>
+<p>98.2%</p>
+<div class="progress">
+<div style="width:98.2%"></div>
+</div>
+</div>
+
+<div>
+<b>IoT Connectivity</b>
+<p>97.8%</p>
+<div class="progress">
+<div style="width:97.8%"></div>
+</div>
+</div>
+
+<div>
+<b>Data Processing</b>
+<p>96.5%</p>
+<div class="progress">
+<div style="width:96.5%"></div>
+</div>
+</div>
+
+<div>
+<b>Digital Twin Sync</b>
+<p>98.4%</p>
+<div class="progress">
+<div style="width:98.4%"></div>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>➕ Добавить Cloud System</h3>
+
+<div class="search">
+
+<input
+id="newCloud"
+type="text"
+placeholder="Название cloud-системы"
+>
+
+<select id="newCloudType">
+<option>IoT Cloud</option>
+<option>Data Cloud</option>
+<option>AI Cloud</option>
+<option>Digital Twin</option>
+</select>
+
+<button class="action" onclick="addCloud()">
+Добавить
+</button>
+
+</div>
+
+<p id="addResult"></p>
+
+</section>
+
+<section class="card">
+
+<div class="notice">
+
+<b>⚠️ Важно:</b>
+
+<p>
+Industrial Cloud предназначен для хранения,
+обработки, анализа и передачи промышленных данных.
+Для реальных производственных систем необходимо
+учитывать требования информационной безопасности,
+надёжности, резервирования и защиты данных.
+</p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔐 Cloud Security</h3>
+
+<div class="grid">
+
+<div>
+<b>🔒 Data Security</b>
+<p>Защита промышленных данных.</p>
+</div>
+
+<div>
+<b>🛡 Access Control</b>
+<p>Управление доступом пользователей.</p>
+</div>
+
+<div>
+<b>💾 Backup</b>
+<p>Резервное копирование критических данных.</p>
+</div>
+
+<div>
+<b>📡 Network Security</b>
+<p>Защита промышленных соединений.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔗 Связанные разделы WORKER PRO</h3>
+
+<div class="links">
+
+<a href="../index.html">Главная</a>
+<a href="../industrial-metaverse/index.html">Industrial Metaverse</a>
+<a href="../mixed-reality/index.html">Mixed Reality</a>
+<a href="../virtual-reality/index.html">Virtual Reality</a>
+<a href="../augmented-reality/index.html">Augmented Reality</a>
+<a href="../digital-twin/index.html">Digital Twin</a>
+<a href="../digital-manufacturing/index.html">Digital Manufacturing</a>
+<a href="../smart-factory/index.html">Smart Factory</a>
+<a href="../industry-4-0/index.html">Industry 4.0</a>
+<a href="../industry-5-0/index.html">Industry 5.0</a>
+<a href="../iot-industrial-internet/index.html">IoT</a>
+<a href="../ai-machine-learning/index.html">AI & ML</a>
+<a href="../data-lake/index.html">Data Lake</a>
+<a href="../data-warehouse/index.html">Data Warehouse</a>
+<a href="../analytics/index.html">Analytics</a>
+<a href="../reports/index.html">Reports</a>
+<a href="../automation-robotics/index.html">Automation</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../production/index.html">Production</a>
+<a href="../training/index.html">Training</a>
+<a href="../specialists/index.html">Specialists</a>
+<a href="../safety/index.html">Safety</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+WORKER PRO — Global Industrial Platform<br>
+Industrial Cloud • IoT • AI • Digital Twin • Smart Factory<br><br>
+© 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterCloud(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const location =
+        document.getElementById("locationFilter")
+        .value;
+
+    const type =
+        document.getElementById("typeFilter")
+        .value;
+
+    const systems =
+        document.querySelectorAll(".cloud-card");
+
+    systems.forEach(function(system){
+
+        const name =
+            system.dataset.name.toLowerCase();
+
+        const systemLocation =
+            system.dataset.location;
+
+        const systemType =
+            system.dataset.type;
+
+        const matchName =
+            name.includes(search);
+
+        const matchLocation =
+            !location ||
+            systemLocation === location;
+
+        const matchType =
+            !type ||
+            systemType === type;
+
+        system.style.display =
+            matchName &&
+            matchLocation &&
+            matchType
+            ? "block"
+            : "none";
+
+    });
+}
+
+function cloudDemo(){
+
+    document.getElementById("cloudResult").innerHTML =
+        "☁️ Industrial Cloud запущен. Cloud environment готов.";
+
+}
+
+function analyticsDemo(){
+
+    document.getElementById("analyticsResult").innerHTML =
+        "📊 Analytics запущен. Промышленные данные подготовлены для анализа.";
+
+}
+
+function aiDemo(){
+
+    document.getElementById("aiResult").innerHTML =
+        "🤖 AI Processing завершён. Производственные данные обработаны.";
+
+}
+
+function addCloud(){
+
+    const name =
+        document.getElementById("newCloud")
+        .value
+        .trim();
+
+    const type =
+        document.getElementById("newCloudType")
+        .value;
+
+    if(!name){
+
+        document.getElementById("addResult").innerHTML =
+            "⚠️ Введите название cloud-системы.";
+
+        return;
+    }
+
+    document.getElementById("addResult").innerHTML =
+        "✅ Cloud System добавлена: " +
+        name +
+        " — " +
+        type;
+
+    document.getElementById("newCloud").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
