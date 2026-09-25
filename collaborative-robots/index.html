@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Collaborative Robots</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+.top h1{
+    margin:0;
+    font-size:30px;
+}
+
+.top p{
+    margin:8px 0 15px;
+    color:#cceedd;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.hero h2,.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-left:5px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+}
+
+.badge{
+    display:inline-block;
+    background:#e4f6eb;
+    color:#075b34;
+    padding:6px 10px;
+    border-radius:20px;
+    margin:3px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.flow span{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search input,.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.robot{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.robot h4{
+    color:#075b34;
+    margin:0 0 8px;
+}
+
+.progress{
+    height:10px;
+    background:#e5ebe7;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 14px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.links a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .top h1{font-size:25px}
+    .container{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+<h1>WORKER PRO</h1>
+
+<p>Collaborative Robots — человек и робот работают вместе</p>
+
+<div class="languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<h2>🤖 Collaborative Robots — Cobots</h2>
+
+<p>
+Коллаборативные роботы предназначены для совместной работы
+человека и робота в одном производственном пространстве.
+</p>
+
+<p>
+В WORKER PRO Cobots могут использоваться для сборки,
+сварки, упаковки, контроля качества, перемещения деталей
+и других промышленных операций.
+</p>
+
+<div>
+<span class="badge">Cobots</span>
+<span class="badge">Human + Robot</span>
+<span class="badge">AI</span>
+<span class="badge">Safety</span>
+<span class="badge">CNC</span>
+<span class="badge">Quality</span>
+<span class="badge">Smart Factory</span>
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<strong>74</strong>
+Collaborative Robots
+<small>коллаборативных робота</small>
+</div>
+
+<div class="stat">
+<strong>42</strong>
+Robot Cells
+<small>роботизированные ячейки</small>
+</div>
+
+<div class="stat">
+<strong>96.8%</strong>
+Availability
+<small>доступность систем</small>
+</div>
+
+<div class="stat">
+<strong>94.2%</strong>
+Safety Monitoring
+<small>контроль безопасности</small>
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔄 Cobot Production Flow</h3>
+
+<div class="flow">
+
+<span>Worker</span>
+<b class="arrow">↔</b>
+<span>Cobot</span>
+<b class="arrow">↔</b>
+<span>Sensors</span>
+<b class="arrow">→</b>
+<span>PLC</span>
+<b class="arrow">→</b>
+<span>Machine</span>
+<b class="arrow">→</b>
+<span>Quality</span>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🏭 Основные применения</h3>
+
+<div class="grid">
+
+<div>
+<h3>⚙️ Assembly</h3>
+<p>
+Автоматизация сборки деталей и компонентов
+при непосредственном участии специалиста.
+</p>
+</div>
+
+<div>
+<h3>🔥 Welding</h3>
+<p>
+Роботизированная сварка с контролем параметров
+и повторяемостью операций.
+</p>
+</div>
+
+<div>
+<h3>📦 Packaging</h3>
+<p>
+Упаковка, сортировка и перемещение продукции.
+</p>
+</div>
+
+<div>
+<h3>🔍 Quality Control</h3>
+<p>
+Совместная работа робота и систем машинного зрения
+для контроля качества.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔎 Cobot Systems</h3>
+
+<div class="search">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск робота или системы..."
+onkeyup="filterRobots()"
+>
+
+<select id="locationFilter" onchange="filterRobots()">
+
+<option value="">Все страны</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Turkey">Turkey</option>
+<option value="Germany">Germany</option>
+<option value="Italy">Italy</option>
+<option value="China">China</option>
+
+</select>
+
+<select id="taskFilter" onchange="filterRobots()">
+
+<option value="">Все операции</option>
+<option value="Assembly">Assembly</option>
+<option value="Welding">Welding</option>
+<option value="Packaging">Packaging</option>
+<option value="Quality">Quality Control</option>
+
+</select>
+
+</div>
+
+<div id="robotList">
+
+<div class="robot"
+data-name="Cobot Assembly Baku"
+data-location="Azerbaijan"
+data-task="Assembly">
+
+<h4>🤖 Cobot Assembly Cell — Baku</h4>
+
+<p><b>Country:</b> Azerbaijan</p>
+<p><b>Task:</b> Assembly</p>
+<p><b>Status:</b> 🟢 Working</p>
+<p>Performance: 94%</p>
+
+<div class="progress">
+<div style="width:94%"></div>
+</div>
+
+</div>
+
+<div class="robot"
+data-name="Cobot Welding Sumqayit"
+data-location="Azerbaijan"
+data-task="Welding">
+
+<h4>🔥 Cobot Welding Cell — Sumqayit</h4>
+
+<p><b>Country:</b> Azerbaijan</p>
+<p><b>Task:</b> Welding</p>
+<p><b>Status:</b> 🟢 Working</p>
+<p>Performance: 91%</p>
+
+<div class="progress">
+<div style="width:91%"></div>
+</div>
+
+</div>
+
+<div class="robot"
+data-name="Cobot Packaging Istanbul"
+data-location="Turkey"
+data-task="Packaging">
+
+<h4>📦 Cobot Packaging Cell — Istanbul</h4>
+
+<p><b>Country:</b> Turkey</p>
+<p><b>Task:</b> Packaging</p>
+<p><b>Status:</b> 🟢 Active</p>
+<p>Performance: 96%</p>
+
+<div class="progress">
+<div style="width:96%"></div>
+</div>
+
+</div>
+
+<div class="robot"
+data-name="Cobot Quality Dortmund"
+data-location="Germany"
+data-task="Quality">
+
+<h4>🔍 Cobot Quality Cell — Dortmund</h4>
+
+<p><b>Country:</b> Germany</p>
+<p><b>Task:</b> Quality Control</p>
+<p><b>Status:</b> 🟢 Monitoring</p>
+<p>Inspection Accuracy: 98%</p>
+
+<div class="progress">
+<div style="width:98%"></div>
+</div>
+
+</div>
+
+<div class="robot"
+data-name="Smart Cobot Milan"
+data-location="Italy"
+data-task="Assembly">
+
+<h4>🏭 Smart Cobot — Milan</h4>
+
+<p><b>Country:</b> Italy</p>
+<p><b>Task:</b> Assembly</p>
+<p><b>Status:</b> 🟡 Maintenance</p>
+<p>Performance: 87%</p>
+
+<div class="progress">
+<div style="width:87%"></div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>🛡 Safety</h3>
+
+<p>
+Безопасность является ключевым элементом
+при совместной работе человека и робота.
+</p>
+
+<p>✓ Safety Sensors</p>
+<p>✓ Emergency Stop</p>
+<p>✓ Collision Detection</p>
+<p>✓ Safe Zones</p>
+
+<button class="action" onclick="safetyCheck()">
+Проверить безопасность
+</button>
+
+<p id="safetyResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>🧠 AI + Cobot</h3>
+
+<p>
+AI помогает анализировать данные робота,
+оптимизировать операции и обнаруживать отклонения.
+</p>
+
+<button class="action" onclick="runAI()">
+Запустить AI анализ
+</button>
+
+<p id="aiResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>🎓 Worker Training</h3>
+
+<p>
+Специалисты должны понимать управление,
+безопасность и обслуживание Cobots.
+</p>
+
+<p>Training Completion: 89%</p>
+
+<div class="progress">
+<div style="width:89%"></div>
+</div>
+
+<button class="action" onclick="startTraining()">
+Начать обучение
+</button>
+
+<p id="trainingResult"></p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>📊 Cobot Performance</h3>
+
+<div class="grid">
+
+<div>
+<b>Availability</b>
+<p>96.8%</p>
+<div class="progress">
+<div style="width:96.8%"></div>
+</div>
+</div>
+
+<div>
+<b>Safety</b>
+<p>94.2%</p>
+<div class="progress">
+<div style="width:94.2%"></div>
+</div>
+</div>
+
+<div>
+<b>Productivity</b>
+<p>92.6%</p>
+<div class="progress">
+<div style="width:92.6%"></div>
+</div>
+</div>
+
+<div>
+<b>Quality</b>
+<p>97.1%</p>
+<div class="progress">
+<div style="width:97.1%"></div>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>➕ Добавить Cobot System</h3>
+
+<div class="search">
+
+<input
+id="newRobot"
+type="text"
+placeholder="Название Cobot системы"
+>
+
+<select id="newTask">
+
+<option>Assembly</option>
+<option>Welding</option>
+<option>Packaging</option>
+<option>Quality</option>
+
+</select>
+
+<button class="action" onclick="addRobot()">
+Добавить
+</button>
+
+</div>
+
+<p id="addResult"></p>
+
+</section>
+
+<section class="card">
+
+<h3>🔐 Cobot Security</h3>
+
+<div class="grid">
+
+<div>
+<b>🚨 Emergency Stop</b>
+<p>Мгновенная остановка оборудования.</p>
+</div>
+
+<div>
+<b>📡 Sensors</b>
+<p>Контроль положения и движения.</p>
+</div>
+
+<div>
+<b>🛡 Safe Zone</b>
+<p>Контроль рабочей зоны робота.</p>
+</div>
+
+<div>
+<b>🔒 Digital Security</b>
+<p>Защита программного обеспечения и данных.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔗 Связанные разделы WORKER PRO</h3>
+
+<div class="links">
+
+<a href="../index.html">Главная</a>
+<a href="../industry-5-0/index.html">Industry 5.0</a>
+<a href="../human-centric-manufacturing/index.html">Human-Centric Manufacturing</a>
+<a href="../industry-4-0/index.html">Industry 4.0</a>
+<a href="../automation-robotics/index.html">Automation & Robotics</a>
+<a href="../smart-factory/index.html">Smart Factory</a>
+<a href="../digital-manufacturing/index.html">Digital Manufacturing</a>
+<a href="../digital-twin/index.html">Digital Twin</a>
+<a href="../ai-machine-learning/index.html">AI & ML</a>
+<a href="../iot-industrial-internet/index.html">IoT</a>
+<a href="../production/index.html">Production</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../sensors/index.html">Sensors</a>
+<a href="../training/index.html">Training</a>
+<a href="../specialists/index.html">Specialists</a>
+<a href="../safety/index.html">Safety</a>
+<a href="../quality/index.html">Quality</a>
+<a href="../maintennances/index.html">Maintenance</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+WORKER PRO — Global Industrial Platform<br>
+Collaborative Robots • Human + Robot • AI • Safety<br><br>
+© 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterRobots(){
+
+const search =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+const location =
+document.getElementById("locationFilter")
+.value;
+
+const task =
+document.getElementById("taskFilter")
+.value;
+
+const robots =
+document.querySelectorAll(".robot");
+
+robots.forEach(function(robot){
+
+const name =
+robot.dataset.name.toLowerCase();
+
+const robotLocation =
+robot.dataset.location;
+
+const robotTask =
+robot.dataset.task;
+
+const matchName =
+name.includes(search);
+
+const matchLocation =
+!location || robotLocation === location;
+
+const matchTask =
+!task || robotTask === task;
+
+robot.style.display =
+matchName && matchLocation && matchTask
+? "block"
+: "none";
+
+});
+
+}
+
+function safetyCheck(){
+
+document.getElementById("safetyResult").innerHTML =
+"🟢 Проверка завершена. Критических нарушений безопасности не обнаружено.";
+
+}
+
+function runAI(){
+
+document.getElementById("aiResult").innerHTML =
+"🤖 AI анализ завершён. Производительность и состояние Cobot систем проверены.";
+
+}
+
+function startTraining(){
+
+document.getElementById("trainingResult").innerHTML =
+"🎓 Обучение запущено. Модуль: Безопасная работа с Collaborative Robots.";
+
+}
+
+function addRobot(){
+
+const name =
+document.getElementById("newRobot")
+.value
+.trim();
+
+const task =
+document.getElementById("newTask")
+.value;
+
+if(!name){
+
+document.getElementById("addResult").innerHTML =
+"⚠️ Введите название Cobot системы.";
+
+return;
+
+}
+
+document.getElementById("addResult").innerHTML =
+"✅ Cobot система добавлена: " +
+name +
+" — " +
+task;
+
+document.getElementById("newRobot").value="";
+
+}
+
+</script>
+
+</body>
+</html>
