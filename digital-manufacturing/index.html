@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Digital Manufacturing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+.top h1{
+    margin:0;
+    font-size:30px;
+}
+
+.top p{
+    margin:8px 0 15px;
+    color:#cceedd;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.hero h2,
+.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-left:5px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:18px;
+}
+
+.badge{
+    display:inline-block;
+    background:#e4f6eb;
+    color:#075b34;
+    padding:6px 10px;
+    border-radius:20px;
+    margin:3px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.flow span{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.machine{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.machine h4{
+    color:#075b34;
+    margin:0 0 8px;
+}
+
+.progress{
+    height:10px;
+    background:#e5ebe7;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 14px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.links a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .top h1{font-size:25px}
+    .container{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <h1>WORKER PRO</h1>
+
+    <p>Digital Manufacturing — Цифровое производство</p>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+    <h2>🏭 Digital Manufacturing</h2>
+
+    <p>
+        Digital Manufacturing объединяет производство, оборудование,
+        автоматизацию, IoT, искусственный интеллект, цифровые двойники
+        и анализ данных в единую промышленную систему.
+    </p>
+
+    <p>
+        WORKER PRO позволяет связать производственные процессы,
+        оборудование, специалистов, данные и управление предприятием.
+    </p>
+
+    <div>
+        <span class="badge">Smart Factory</span>
+        <span class="badge">IoT</span>
+        <span class="badge">AI</span>
+        <span class="badge">Digital Twin</span>
+        <span class="badge">Robotics</span>
+        <span class="badge">CNC</span>
+        <span class="badge">Analytics</span>
+    </div>
+
+</section>
+
+<section class="stats">
+
+    <div class="stat">
+        <strong>328</strong>
+        Smart Machines
+        <small>подключённых станков</small>
+    </div>
+
+    <div class="stat">
+        <strong>74</strong>
+        Robots
+        <small>промышленных робота</small>
+    </div>
+
+    <div class="stat">
+        <strong>18,640</strong>
+        Sensors
+        <small>промышленных датчиков</small>
+    </div>
+
+    <div class="stat">
+        <strong>96.8%</strong>
+        Availability
+        <small>доступность системы</small>
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h3>🔄 Производственный цифровой поток</h3>
+
+    <div class="flow">
+
+        <span>Design</span>
+        <b class="arrow">→</b>
+
+        <span>Planning</span>
+        <b class="arrow">→</b>
+
+        <span>Production</span>
+        <b class="arrow">→</b>
+
+        <span>Quality</span>
+        <b class="arrow">→</b>
+
+        <span>Logistics</span>
+        <b class="arrow">→</b>
+
+        <span>Analytics</span>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h3>🔎 Производственные системы</h3>
+
+    <div class="search">
+
+        <input
+            id="search"
+            type="text"
+            placeholder="Поиск оборудования..."
+            onkeyup="filterMachines()"
+        >
+
+        <select id="typeFilter" onchange="filterMachines()">
+
+            <option value="">Все типы</option>
+            <option value="CNC">CNC</option>
+            <option value="Robot">Robot</option>
+            <option value="PLC">PLC</option>
+            <option value="Assembly">Assembly</option>
+            <option value="Inspection">Inspection</option>
+
+        </select>
+
+    </div>
+
+    <div id="machineList">
+
+        <div class="machine"
+             data-name="CNC Production Center"
+             data-type="CNC">
+
+            <h4>⚙️ CNC Production Center</h4>
+
+            <p><b>Location:</b> Baku, Azerbaijan</p>
+            <p><b>Type:</b> CNC</p>
+            <p><b>Status:</b> 🟢 Running</p>
+            <p>Efficiency: 94%</p>
+
+            <div class="progress">
+                <div style="width:94%"></div>
+            </div>
+
+        </div>
+
+        <div class="machine"
+             data-name="Industrial Robot Cell"
+             data-type="Robot">
+
+            <h4>🤖 Industrial Robot Cell</h4>
+
+            <p><b>Location:</b> Sumqayit, Azerbaijan</p>
+            <p><b>Type:</b> Robot</p>
+            <p><b>Status:</b> 🟢 Online</p>
+            <p>Efficiency: 91%</p>
+
+            <div class="progress">
+                <div style="width:91%"></div>
+            </div>
+
+        </div>
+
+        <div class="machine"
+             data-name="PLC Control System"
+             data-type="PLC">
+
+            <h4>🧠 PLC Control System</h4>
+
+            <p><b>Location:</b> Ganja, Azerbaijan</p>
+            <p><b>Type:</b> PLC</p>
+            <p><b>Status:</b> 🟢 Online</p>
+            <p>Availability: 98%</p>
+
+            <div class="progress">
+                <div style="width:98%"></div>
+            </div>
+
+        </div>
+
+        <div class="machine"
+             data-name="Automated Assembly Line"
+             data-type="Assembly">
+
+            <h4>🏗 Automated Assembly Line</h4>
+
+            <p><b>Location:</b> Turkey</p>
+            <p><b>Type:</b> Assembly</p>
+            <p><b>Status:</b> 🟡 Monitoring</p>
+            <p>Efficiency: 87%</p>
+
+            <div class="progress">
+                <div style="width:87%"></div>
+            </div>
+
+        </div>
+
+        <div class="machine"
+             data-name="Vision Inspection System"
+             data-type="Inspection">
+
+            <h4>👁 Vision Inspection System</h4>
+
+            <p><b>Location:</b> Germany</p>
+            <p><b>Type:</b> Inspection</p>
+            <p><b>Status:</b> 🟢 Online</p>
+            <p>Accuracy: 99.1%</p>
+
+            <div class="progress">
+                <div style="width:99%"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="grid">
+
+    <div class="card">
+
+        <h3>🏭 Smart Factory</h3>
+
+        <p>
+            Цифровое производство объединяет оборудование,
+            людей и информационные системы.
+        </p>
+
+        <p>✓ автоматизация</p>
+        <p>✓ мониторинг</p>
+        <p>✓ анализ данных</p>
+        <p>✓ управление производством</p>
+
+    </div>
+
+    <div class="card">
+
+        <h3>🤖 AI Production</h3>
+
+        <p>
+            AI анализирует производственные данные и помогает
+            выявлять отклонения, оптимизировать процессы
+            и прогнозировать проблемы.
+        </p>
+
+        <button class="action" onclick="runAI()">
+            Запустить AI-анализ
+        </button>
+
+        <p id="aiResult"></p>
+
+    </div>
+
+    <div class="card">
+
+        <h3>📊 Production Analytics</h3>
+
+        <p>
+            Аналитика позволяет контролировать:
+        </p>
+
+        <p>• производительность</p>
+        <p>• качество</p>
+        <p>• простои</p>
+        <p>• расход энергии</p>
+        <p>• состояние оборудования</p>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h3>➕ Добавить производственную систему</h3>
+
+    <div class="search">
+
+        <input
+            id="newMachine"
+            type="text"
+            placeholder="Название системы"
+        >
+
+        <select id="newType">
+
+            <option>CNC</option>
+            <option>Robot</option>
+            <option>PLC</option>
+            <option>Assembly</option>
+            <option>Inspection</option>
+
+        </select>
+
+        <button class="action" onclick="addMachine()">
+            Добавить
+        </button>
+
+    </div>
+
+    <p id="addResult"></p>
+
+</section>
+
+<section class="card">
+
+    <h3>🔐 Безопасность цифрового производства</h3>
+
+    <div class="grid">
+
+        <div>
+            <b>🔒 Data Security</b>
+            <p>Защита производственных данных.</p>
+        </div>
+
+        <div>
+            <b>🛡 Cyber Security</b>
+            <p>Защита промышленной инфраструктуры.</p>
+        </div>
+
+        <div>
+            <b>👤 Access Control</b>
+            <p>Контроль доступа пользователей.</p>
+        </div>
+
+        <div>
+            <b>📡 Secure IoT</b>
+            <p>Защищённое подключение оборудования.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h3>🔗 Связанные разделы WORKER PRO</h3>
+
+    <div class="links">
+
+        <a href="../index.html">Главная</a>
+        <a href="../digital-twin/index.html">Digital Twin</a>
+        <a href="../iot-industrial-internet/index.html">IoT</a>
+        <a href="../ai-machine-learning/index.html">AI & ML</a>
+        <a href="../automation-robotics/index.html">Automation</a>
+        <a href="../production/index.html">Production</a>
+        <a href="../equipment/index.html">Equipment</a>
+        <a href="../sensors/index.html">Sensors</a>
+        <a href="../quality/index.html">Quality</a>
+        <a href="../data-lake/index.html">Data Lake</a>
+        <a href="../data-warehouse/index.html">Data Warehouse</a>
+        <a href="../analytics/index.html">Analytics</a>
+        <a href="../maintennances/index.html">Maintenance</a>
+        <a href="../companies/index.html">Companies</a>
+        <a href="../suppliers/index.html">Suppliers</a>
+        <a href="../dashboard/index.html">Dashboard</a>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+
+    WORKER PRO — Global Industrial Platform<br>
+    Digital Manufacturing • Smart Factory • AI • IoT<br><br>
+    © 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterMachines(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const type =
+        document.getElementById("typeFilter")
+        .value;
+
+    const machines =
+        document.querySelectorAll(".machine");
+
+    machines.forEach(function(machine){
+
+        const name =
+            machine.dataset.name.toLowerCase();
+
+        const machineType =
+            machine.dataset.type;
+
+        const matchName =
+            name.includes(search);
+
+        const matchType =
+            !type || machineType === type;
+
+        machine.style.display =
+            matchName && matchType
+            ? "block"
+            : "none";
+
+    });
+}
+
+function runAI(){
+
+    document.getElementById("aiResult").innerHTML =
+        "🤖 AI-анализ завершён. Производственные показатели стабильны. Критических отклонений не обнаружено.";
+
+}
+
+function addMachine(){
+
+    const name =
+        document.getElementById("newMachine")
+        .value
+        .trim();
+
+    const type =
+        document.getElementById("newType")
+        .value;
+
+    if(!name){
+
+        document.getElementById("addResult").innerHTML =
+            "⚠️ Введите название производственной системы.";
+
+        return;
+    }
+
+    document.getElementById("addResult").innerHTML =
+        "✅ Система добавлена: " +
+        name +
+        " (" +
+        type +
+        ").";
+
+    document.getElementById("newMachine").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
