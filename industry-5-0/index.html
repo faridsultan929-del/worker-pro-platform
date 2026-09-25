@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Industry 5.0</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+.top h1{
+    margin:0;
+    font-size:30px;
+}
+
+.top p{
+    margin:8px 0 15px;
+    color:#cceedd;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.hero h2,
+.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-left:5px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:18px;
+}
+
+.badge{
+    display:inline-block;
+    background:#e4f6eb;
+    color:#075b34;
+    padding:6px 10px;
+    border-radius:20px;
+    margin:3px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.flow span{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.system{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.system h4{
+    color:#075b34;
+    margin:0 0 8px;
+}
+
+.progress{
+    height:10px;
+    background:#e5ebe7;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 14px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.links a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .top h1{font-size:25px}
+    .container{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+<h1>WORKER PRO</h1>
+
+<p>Industry 5.0 — Человек + технологии + устойчивое производство</p>
+
+<div class="languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<h2>🤖 Industry 5.0</h2>
+
+<p>
+Industry 5.0 развивает идеи Industry 4.0 и делает акцент
+на сотрудничестве человека и интеллектуальных машин,
+персонализации производства, устойчивости и
+ориентации на человека.
+</p>
+
+<p>
+В WORKER PRO Industry 5.0 объединяет специалистов,
+роботов, искусственный интеллект, цифровые двойники,
+умные производства и международную промышленную сеть.
+</p>
+
+<div>
+<span class="badge">Human-Centric</span>
+<span class="badge">AI</span>
+<span class="badge">Cobots</span>
+<span class="badge">Robotics</span>
+<span class="badge">Digital Twin</span>
+<span class="badge">Sustainability</span>
+<span class="badge">Personalization</span>
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<strong>186</strong>
+Human-AI Systems
+<small>систем человек + AI</small>
+</div>
+
+<div class="stat">
+<strong>74</strong>
+Collaborative Robots
+<small>коллаборативных робота</small>
+</div>
+
+<div class="stat">
+<strong>96.4%</strong>
+Worker Safety
+<small>показатель безопасности</small>
+</div>
+
+<div class="stat">
+<strong>91.8%</strong>
+Production Efficiency
+<small>эффективность производства</small>
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔄 Industry 5.0 Architecture</h3>
+
+<div class="flow">
+
+<span>Worker</span>
+<b class="arrow">↔</b>
+
+<span>Cobot</span>
+<b class="arrow">↔</b>
+
+<span>AI</span>
+<b class="arrow">↔</b>
+
+<span>Digital Twin</span>
+<b class="arrow">↔</b>
+
+<span>Smart Factory</span>
+<b class="arrow">→</b>
+
+<span>Sustainable Production</span>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>👷 Человек в центре производства</h3>
+
+<div class="grid">
+
+<div>
+<h3>🧑‍🏭 Worker</h3>
+<p>
+Специалист управляет процессами и принимает
+решения при работе с интеллектуальными системами.
+</p>
+</div>
+
+<div>
+<h3>🤝 Collaboration</h3>
+<p>
+Человек и робот работают совместно,
+а не заменяют друг друга во всех операциях.
+</p>
+</div>
+
+<div>
+<h3>🎯 Personalization</h3>
+<p>
+Производство может адаптироваться
+к индивидуальным требованиям заказчика.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔎 Industry 5.0 Systems</h3>
+
+<div class="search">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск системы..."
+onkeyup="filterSystems()"
+>
+
+<select
+id="typeFilter"
+onchange="filterSystems()"
+>
+
+<option value="">Все системы</option>
+<option value="Cobot">Cobot</option>
+<option value="AI">AI</option>
+<option value="Human">Human-Centric</option>
+<option value="Sustainability">Sustainability</option>
+<option value="Digital Twin">Digital Twin</option>
+
+</select>
+
+</div>
+
+<div id="systemList">
+
+<div
+class="system"
+data-name="Collaborative Robot Cell"
+data-type="Cobot"
+>
+
+<h4>🤖 Collaborative Robot Cell</h4>
+
+<p><b>Location:</b> Baku, Azerbaijan</p>
+<p><b>Type:</b> Cobot</p>
+<p><b>Status:</b> 🟢 Working</p>
+<p>Human-Robot Collaboration: 94%</p>
+
+<div class="progress">
+<div style="width:94%"></div>
+</div>
+
+</div>
+
+<div
+class="system"
+data-name="AI Worker Assistant"
+data-type="AI"
+>
+
+<h4>🧠 AI Worker Assistant</h4>
+
+<p><b>Location:</b> Sumqayit, Azerbaijan</p>
+<p><b>Type:</b> AI</p>
+<p><b>Status:</b> 🟢 Active</p>
+<p>Assistance Accuracy: 96%</p>
+
+<div class="progress">
+<div style="width:96%"></div>
+</div>
+
+</div>
+
+<div
+class="system"
+data-name="Human Centric Production"
+data-type="Human"
+>
+
+<h4>👷 Human-Centric Production</h4>
+
+<p><b>Location:</b> Germany</p>
+<p><b>Type:</b> Human-Centric</p>
+<p><b>Status:</b> 🟢 Active</p>
+<p>Worker Engagement: 92%</p>
+
+<div class="progress">
+<div style="width:92%"></div>
+</div>
+
+</div>
+
+<div
+class="system"
+data-name="Green Smart Factory"
+data-type="Sustainability"
+>
+
+<h4>🌱 Green Smart Factory</h4>
+
+<p><b>Location:</b> Italy</p>
+<p><b>Type:</b> Sustainability</p>
+<p><b>Status:</b> 🟢 Monitoring</p>
+<p>Energy Efficiency: 89%</p>
+
+<div class="progress">
+<div style="width:89%"></div>
+</div>
+
+</div>
+
+<div
+class="system"
+data-name="Human Digital Twin"
+data-type="Digital Twin"
+>
+
+<h4>🔷 Human Digital Twin</h4>
+
+<p><b>Location:</b> Turkey</p>
+<p><b>Type:</b> Digital Twin</p>
+<p><b>Status:</b> 🟡 Monitoring</p>
+<p>Data Synchronization: 95%</p>
+
+<div class="progress">
+<div style="width:95%"></div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>🤝 Cobots</h3>
+
+<p>
+Коллаборативные роботы предназначены
+для совместной работы с человеком.
+</p>
+
+<p>✓ Assembly</p>
+<p>✓ Packaging</p>
+<p>✓ Inspection</p>
+<p>✓ Material Handling</p>
+
+</div>
+
+<div class="card">
+
+<h3>🧠 Human + AI</h3>
+
+<p>
+AI помогает специалисту анализировать
+данные и принимать производственные решения.
+</p>
+
+<button class="action" onclick="runAI()">
+Запустить AI Assistant
+</button>
+
+<p id="aiResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>🌱 Sustainable Industry</h3>
+
+<p>
+Industry 5.0 уделяет внимание эффективному
+использованию энергии, ресурсов и материалов.
+</p>
+
+<p>Energy Efficiency: 91%</p>
+
+<div class="progress">
+<div style="width:91%"></div>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🛡 Безопасность работников</h3>
+
+<div class="grid">
+
+<div>
+<b>👷 Worker Safety</b>
+<p>Контроль безопасных условий работы.</p>
+</div>
+
+<div>
+<b>🤖 Safe Robotics</b>
+<p>Безопасное взаимодействие человека и робота.</p>
+</div>
+
+<div>
+<b>📡 Smart Sensors</b>
+<p>Датчики контролируют окружающую среду.</p>
+</div>
+
+<div>
+<b>🚨 Emergency Monitoring</b>
+<p>Контроль аварийных ситуаций.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🌱 Устойчивое производство</h3>
+
+<div class="grid">
+
+<div>
+<b>Energy</b>
+<p>Оптимизация потребления энергии.</p>
+</div>
+
+<div>
+<b>Materials</b>
+<p>Рациональное использование материалов.</p>
+</div>
+
+<div>
+<b>Waste</b>
+<p>Снижение промышленных отходов.</p>
+</div>
+
+<div>
+<b>Environment</b>
+<p>Контроль экологических показателей.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>➕ Добавить Industry 5.0 систему</h3>
+
+<div class="search">
+
+<input
+id="newSystem"
+type="text"
+placeholder="Название системы"
+>
+
+<select id="newType">
+
+<option>Cobot</option>
+<option>AI</option>
+<option>Human</option>
+<option>Sustainability</option>
+<option>Digital Twin</option>
+
+</select>
+
+<button class="action" onclick="addSystem()">
+Добавить
+</button>
+
+</div>
+
+<p id="addResult"></p>
+
+</section>
+
+<section class="card">
+
+<h3>🔐 Цифровая безопасность</h3>
+
+<div class="grid">
+
+<div>
+<b>🔒 Data Security</b>
+<p>Защита промышленных данных.</p>
+</div>
+
+<div>
+<b>🛡 Cyber Security</b>
+<p>Защита цифровой инфраструктуры.</p>
+</div>
+
+<div>
+<b>👤 Access Control</b>
+<p>Контроль доступа специалистов.</p>
+</div>
+
+<div>
+<b>🤖 AI Safety</b>
+<p>Контроль безопасной работы AI.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔗 Связанные разделы WORKER PRO</h3>
+
+<div class="links">
+
+<a href="../index.html">Главная</a>
+<a href="../industry-4-0/index.html">Industry 4.0</a>
+<a href="../smart-factory/index.html">Smart Factory</a>
+<a href="../digital-manufacturing/index.html">Digital Manufacturing</a>
+<a href="../digital-twin/index.html">Digital Twin</a>
+<a href="../iot-industrial-internet/index.html">IoT</a>
+<a href="../ai-machine-learning/index.html">AI & ML</a>
+<a href="../automation-robotics/index.html">Automation</a>
+<a href="../production/index.html">Production</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../sensors/index.html">Sensors</a>
+<a href="../safety/index.html">Safety</a>
+<a href="../quality/index.html">Quality</a>
+<a href="../analytics/index.html">Analytics</a>
+<a href="../data-security/index.html">Data Security</a>
+<a href="../maintennances/index.html">Maintenance</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+WORKER PRO — Global Industrial Platform<br>
+Industry 5.0 • Human + AI • Robotics • Sustainability<br><br>
+© 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterSystems(){
+
+const search =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+const type =
+document.getElementById("typeFilter")
+.value;
+
+const systems =
+document.querySelectorAll(".system");
+
+systems.forEach(function(system){
+
+const name =
+system.dataset.name.toLowerCase();
+
+const systemType =
+system.dataset.type;
+
+const matchName =
+name.includes(search);
+
+const matchType =
+!type || systemType === type;
+
+system.style.display =
+matchName && matchType
+? "block"
+: "none";
+
+});
+
+}
+
+function runAI(){
+
+document.getElementById("aiResult").innerHTML =
+"🤖 AI Assistant активирован. Анализ производственных данных завершён. Критических отклонений не обнаружено.";
+
+}
+
+function addSystem(){
+
+const name =
+document.getElementById("newSystem")
+.value
+.trim();
+
+const type =
+document.getElementById("newType")
+.value;
+
+if(!name){
+
+document.getElementById("addResult").innerHTML =
+"⚠️ Введите название системы.";
+
+return;
+
+}
+
+document.getElementById("addResult").innerHTML =
+"✅ Industry 5.0 система добавлена: " +
+name +
+" (" +
+type +
+").";
+
+document.getElementById("newSystem").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
