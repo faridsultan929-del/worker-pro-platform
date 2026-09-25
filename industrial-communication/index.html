@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Industrial Communication</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    padding:22px 15px;
+    text-align:center;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:6px;
+    font-size:16px;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.languages button{
+    border:1px solid #b7ff35;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    border-radius:16px;
+    padding:28px;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+.hero h1{
+    color:#063d25;
+    margin-top:0;
+    font-size:32px;
+}
+
+.hero p{
+    line-height:1.6;
+    font-size:17px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    border-radius:14px;
+    padding:22px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:29px;
+    color:#b7ff35;
+    margin-bottom:7px;
+}
+
+.section{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 4px 14px rgba(0,0,0,.07);
+}
+
+.section h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.flow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(130px,1fr));
+    gap:10px;
+}
+
+.flow-box{
+    background:#0b6b3d;
+    color:white;
+    padding:16px 10px;
+    text-align:center;
+    border-radius:12px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.card{
+    border:1px solid #d9e5de;
+    border-radius:13px;
+    padding:18px;
+    background:#fafcfb;
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:720px;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #dce7e1;
+    text-align:left;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:15px;
+    background:#dff5e7;
+    color:#086336;
+    font-weight:bold;
+}
+
+.status.warning{
+    background:#fff0c2;
+    color:#8a6500;
+}
+
+.search{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #bfd2c7;
+    border-radius:8px;
+    font-size:15px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    border-radius:8px;
+    padding:11px 16px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:4px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.progress{
+    background:#dfe9e3;
+    border-radius:20px;
+    height:14px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.metric{
+    margin-bottom:17px;
+}
+
+.metric strong{
+    color:#063d25;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #e3ad00;
+    padding:16px;
+    border-radius:8px;
+    line-height:1.5;
+}
+
+.security{
+    background:#eef8f2;
+    border-left:5px solid #0b6b3d;
+    padding:15px;
+    border-radius:8px;
+    line-height:1.5;
+}
+
+.form{
+    display:grid;
+    grid-template-columns:1fr 1fr auto;
+    gap:10px;
+}
+
+.form input,
+.form select{
+    padding:12px;
+    border:1px solid #bfd2c7;
+    border-radius:8px;
+    font-size:15px;
+    width:100%;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#063d25;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:25px;
+}
+
+@media(max-width:700px){
+    .hero h1{
+        font-size:25px;
+    }
+
+    .form{
+        grid-template-columns:1fr;
+    }
+
+    .flow{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">WORKER PRO</div>
+
+    <div class="subtitle">
+        Industrial Communication — промышленная коммуникация
+    </div>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+    <h1>📡 Industrial Communication</h1>
+
+    <p>
+        Industrial Communication — система обмена информацией между
+        рабочими, машинами, PLC, SCADA, датчиками, роботами,
+        производственными линиями, предприятиями и цифровыми
+        платформами WORKER PRO.
+    </p>
+
+    <div class="tags">
+        <span class="tag">Industrial Communication</span>
+        <span class="tag">PLC</span>
+        <span class="tag">SCADA</span>
+        <span class="tag">IoT</span>
+        <span class="tag">5G</span>
+        <span class="tag">Industrial Ethernet</span>
+        <span class="tag">Cloud</span>
+        <span class="tag">Cyber Security</span>
+    </div>
+
+</section>
+
+<section class="stats">
+
+    <div class="stat">
+        <strong>426</strong>
+        Communication Systems
+    </div>
+
+    <div class="stat">
+        <strong>8,420</strong>
+        Connected Devices
+    </div>
+
+    <div class="stat">
+        <strong>98.4%</strong>
+        Communication Availability
+    </div>
+
+    <div class="stat">
+        <strong>48</strong>
+        Connected Countries
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>🔄 Communication Flow</h2>
+
+    <div class="flow">
+
+        <div class="flow-box">👷 Worker</div>
+        <div class="flow-box">🏭 Machine</div>
+        <div class="flow-box">🎛️ PLC</div>
+        <div class="flow-box">📊 SCADA</div>
+        <div class="flow-box">📡 Network</div>
+        <div class="flow-box">🖥️ Data Center</div>
+        <div class="flow-box">☁️ WORKER PRO</div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>⚙️ Communication Technologies</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>🔌 Industrial Ethernet</h3>
+            <p>
+                Проводная передача данных между промышленными
+                контроллерами, машинами и системами управления.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📡 Industrial Wireless</h3>
+            <p>
+                Беспроводная связь для мобильного оборудования,
+                датчиков и промышленных устройств.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📱 5G</h3>
+            <p>
+                Высокоскоростная беспроводная коммуникация
+                для промышленного IoT и мобильных систем.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🎛️ PLC Communication</h3>
+            <p>
+                Обмен данными между PLC и промышленным оборудованием.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📊 SCADA Communication</h3>
+            <p>
+                Передача данных мониторинга и управления
+                производственными процессами.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>☁️ Cloud Communication</h3>
+            <p>
+                Связь между заводами, Data Center,
+                Industrial Cloud и цифровыми сервисами.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>🌍 Communication Systems</h2>
+
+    <div class="search">
+
+        <input
+            id="communicationSearch"
+            type="text"
+            placeholder="Поиск системы, страны или технологии..."
+            oninput="filterSystems()"
+        >
+
+    </div>
+
+    <div class="table-wrap">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>System</th>
+                    <th>Location</th>
+                    <th>Technology</th>
+                    <th>Devices</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody id="systemTable">
+
+                <tr>
+                    <td>Baku Industrial Communication</td>
+                    <td>Azerbaijan</td>
+                    <td>Ethernet + PLC</td>
+                    <td>1,840</td>
+                    <td>
+                        <span class="status">Online</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Sumqayit Factory Communication</td>
+                    <td>Azerbaijan</td>
+                    <td>SCADA + IoT</td>
+                    <td>1,260</td>
+                    <td>
+                        <span class="status">Online</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Istanbul Industrial 5G</td>
+                    <td>Turkey</td>
+                    <td>5G + IoT</td>
+                    <td>980</td>
+                    <td>
+                        <span class="status">Online</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Dortmund Factory Network</td>
+                    <td>Germany</td>
+                    <td>Ethernet + SCADA</td>
+                    <td>1,540</td>
+                    <td>
+                        <span class="status">Online</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Milan Smart Factory Communication</td>
+                    <td>Italy</td>
+                    <td>5G + IoT</td>
+                    <td>760</td>
+                    <td>
+                        <span class="status warning">Maintenance</span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>📈 Communication Performance</h2>
+
+    <div class="metric">
+
+        <strong>Communication Availability — 98.4%</strong>
+
+        <div class="progress">
+            <span style="width:98.4%"></span>
+        </div>
+
+    </div>
+
+    <div class="metric">
+
+        <strong>Network Reliability — 97.9%</strong>
+
+        <div class="progress">
+            <span style="width:97.9%"></span>
+        </div>
+
+    </div>
+
+    <div class="metric">
+
+        <strong>Data Transmission — 98.1%</strong>
+
+        <div class="progress">
+            <span style="width:98.1%"></span>
+        </div>
+
+    </div>
+
+    <div class="metric">
+
+        <strong>Communication Security — 99.0%</strong>
+
+        <div class="progress">
+            <span style="width:99%"></span>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>🧪 Communication Demo</h2>
+
+    <p>
+        Демонстрационные функции WORKER PRO показывают
+        состояние промышленной коммуникации.
+    </p>
+
+    <button class="action" onclick="communicationDemo()">
+        📡 Communication Status
+    </button>
+
+    <button class="action" onclick="workerDemo()">
+        👷 Worker Communication
+    </button>
+
+    <button class="action" onclick="machineDemo()">
+        🏭 Machine Communication
+    </button>
+
+    <button class="action" onclick="globalDemo()">
+        🌍 Global Communication
+    </button>
+
+</section>
+
+<section class="section">
+
+    <h2>➕ Add Communication System</h2>
+
+    <div class="form">
+
+        <input
+            id="systemName"
+            type="text"
+            placeholder="Название системы связи"
+        >
+
+        <select id="systemType">
+
+            <option>Industrial Ethernet</option>
+            <option>Industrial IoT</option>
+            <option>5G Communication</option>
+            <option>SCADA Communication</option>
+            <option>Wireless Communication</option>
+            <option>Cloud Communication</option>
+
+        </select>
+
+        <button class="action" onclick="addSystem()">
+            Добавить
+        </button>
+
+    </div>
+
+    <div id="addResult"></div>
+
+</section>
+
+<section class="section">
+
+    <h2>🏭 Industrial Communication Applications</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>👷 Worker</h3>
+            <p>
+                Передача рабочих уведомлений, заданий,
+                инструкций и информации о производстве.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🏭 Machines</h3>
+            <p>
+                Обмен данными между промышленными машинами
+                и системами управления.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🤖 Robotics</h3>
+            <p>
+                Коммуникация роботов и автоматизированных
+                производственных систем.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📡 IoT</h3>
+            <p>
+                Передача данных от промышленных датчиков
+                и подключённых устройств.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📊 Monitoring</h3>
+            <p>
+                Передача информации о состоянии оборудования
+                и производственных процессов.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🌍 Global Factories</h3>
+            <p>
+                Коммуникация между промышленными объектами
+                в разных странах.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>🔐 Communication Security</h2>
+
+    <div class="security">
+
+        <p>🔒 Encrypted Communication</p>
+        <p>🛡️ Industrial Firewall</p>
+        <p>👤 Access Control</p>
+        <p>🔑 Authentication</p>
+        <p>📊 Network Monitoring</p>
+        <p>🚨 Threat Detection</p>
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>⚠️ Important</h2>
+
+    <div class="notice">
+
+        Промышленная коммуникация должна проектироваться
+        с учётом требований безопасности, надёжности,
+        резервирования, совместимости оборудования,
+        контроля доступа и требований производителя.
+        Эта страница WORKER PRO является демонстрационной
+        цифровой моделью.
+
+    </div>
+
+</section>
+
+<section class="section">
+
+    <h2>🔗 Related WORKER PRO Sections</h2>
+
+    <div class="related">
+
+        <a href="../index.html">Main</a>
+
+        <a href="../industrial-network/index.html">
+            Industrial Network
+        </a>
+
+        <a href="../industrial-data-center/index.html">
+            Industrial Data Center
+        </a>
+
+        <a href="../industrial-cloud/index.html">
+            Industrial Cloud
+        </a>
+
+        <a href="../iot-industrial-internet/index.html">
+            Industrial IoT
+        </a>
+
+        <a href="../ai-machine-learning/index.html">
+            AI & ML
+        </a>
+
+        <a href="../automation-robotics/index.html">
+            Automation
+        </a>
+
+        <a href="../digital-twin/index.html">
+            Digital Twin
+        </a>
+
+        <a href="../digital-manufacturing/index.html">
+            Digital Manufacturing
+        </a>
+
+        <a href="../smart-factory/index.html">
+            Smart Factory
+        </a>
+
+        <a href="../production/index.html">
+            Production
+        </a>
+
+        <a href="../equipment/index.html">
+            Equipment
+        </a>
+
+        <a href="../sensors/index.html">
+            Sensors
+        </a>
+
+        <a href="../safety/index.html">
+            Safety
+        </a>
+
+        <a href="../maintennances/index.html">
+            Maintenance
+        </a>
+
+        <a href="../training/index.html">
+            Training
+        </a>
+
+        <a href="../specialists/index.html">
+            Specialists
+        </a>
+
+        <a href="../companies/index.html">
+            Companies
+        </a>
+
+        <a href="../suppliers/index.html">
+            Suppliers
+        </a>
+
+        <a href="../dashboard/index.html">
+            Dashboard
+        </a>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+
+    <strong>WORKER PRO</strong>
+
+    <br><br>
+
+    Глобальная промышленная цифровая платформа
+
+    <br>
+
+    Production • Technology • Data • Communication • Logistics • Training
+
+    <br><br>
+
+    © 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterSystems(){
+
+    const input =
+        document.getElementById("communicationSearch")
+        .value
+        .toLowerCase();
+
+    const rows =
+        document.querySelectorAll("#systemTable tr");
+
+    rows.forEach(function(row){
+
+        const text =
+            row.innerText.toLowerCase();
+
+        row.style.display =
+            text.includes(input) ? "" : "none";
+
+    });
+
+}
+
+function communicationDemo(){
+
+    alert(
+        "📡 Industrial Communication\n\n" +
+        "Communication Systems: 426\n" +
+        "Connected Devices: 8,420\n" +
+        "Availability: 98.4%\n" +
+        "Status: ONLINE"
+    );
+
+}
+
+function workerDemo(){
+
+    alert(
+        "👷 Worker Communication\n\n" +
+        "Connected Workers: 8,420\n" +
+        "Active Messages: 286\n" +
+        "Safety Notifications: 42\n" +
+        "Communication: ACTIVE"
+    );
+
+}
+
+function machineDemo(){
+
+    alert(
+        "🏭 Machine Communication\n\n" +
+        "Connected Machines: 2,840\n" +
+        "PLC Controllers: 426\n" +
+        "Data Streams: 3,680\n" +
+        "Machine Network: ACTIVE"
+    );
+
+}
+
+function globalDemo(){
+
+    alert(
+        "🌍 Global Communication\n\n" +
+        "Connected Countries: 48\n" +
+        "Industrial Sites: 186\n" +
+        "Global Connections: 1,240\n" +
+        "Platform Communication: ACTIVE"
+    );
+
+}
+
+function addSystem(){
+
+    const name =
+        document.getElementById("systemName")
+        .value
+        .trim();
+
+    const type =
+        document.getElementById("systemType")
+        .value;
+
+    const result =
+        document.getElementById("addResult");
+
+    if(!name){
+
+        result.innerHTML =
+            "<p style='color:#b00020;font-weight:bold;'>" +
+            "Введите название системы связи." +
+            "</p>";
+
+        return;
+
+    }
+
+    result.innerHTML =
+        "<div class='security' style='margin-top:15px;'>" +
+        "✅ Система <strong>" +
+        name +
+        "</strong> (" +
+        type +
+        ") добавлена в демонстрационный список." +
+        "</div>";
+
+    document.getElementById("systemName").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
