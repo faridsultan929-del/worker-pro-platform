@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Statistical Process Control</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:24px 15px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+h1,
+h2{
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    text-align:center;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#063d25;
+    margin-bottom:8px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#063d25;
+}
+
+.component{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+}
+
+.component h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+}
+
+.action,
+.add-btn{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:12px 16px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.action:hover,
+.add-btn:hover{
+    background:#063d25;
+}
+
+.spc-item{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+}
+
+.spc-item strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    background:#dff5e7;
+    color:#087238;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.warning-status{
+    background:#fff1c7;
+    color:#8a6200;
+}
+
+.progress{
+    height:10px;
+    background:#e1e8e4;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 15px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.chart{
+    background:#f8fbf9;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:15px;
+    overflow:hidden;
+}
+
+.chart-line{
+    display:flex;
+    align-items:flex-end;
+    gap:8px;
+    height:180px;
+    padding:15px;
+}
+
+.bar{
+    flex:1;
+    background:#0b6b3d;
+    border-radius:6px 6px 0 0;
+    min-width:18px;
+}
+
+.limit-line{
+    border-top:2px dashed #8a6200;
+    margin:8px 0;
+}
+
+.demo-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.result{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#e9f7ee;
+    color:#063d25;
+    font-weight:bold;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+.warning{
+    background:#fff6d9;
+    border-left:5px solid #e3ae00;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    background:#e8f5ed;
+    color:#0b6b3d;
+    padding:9px 12px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.related a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:27px;
+    }
+
+    main{
+        padding:12px;
+    }
+
+    .hero,
+    .card{
+        padding:18px;
+    }
+
+    .flow-item{
+        width:100%;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Statistical Process Control — статистическое управление процессами
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<h1>📊 Statistical Process Control</h1>
+
+<p>
+SPC — статистическое управление процессами — использует
+измерения, контрольные карты, статистические показатели
+и анализ трендов для мониторинга стабильности производственного
+процесса и выявления отклонений.
+</p>
+
+<div class="tags">
+
+<span class="tag">SPC</span>
+<span class="tag">Statistical Process Control</span>
+<span class="tag">Control Charts</span>
+<span class="tag">Process Monitoring</span>
+<span class="tag">Quality Control</span>
+<span class="tag">Statistics</span>
+<span class="tag">Measurements</span>
+<span class="tag">Analytics</span>
+<span class="tag">AI</span>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="stat">
+<strong>248</strong>
+SPC Systems
+</div>
+
+<div class="stat">
+<strong>12,680</strong>
+Process Measurements
+</div>
+
+<div class="stat">
+<strong>136</strong>
+Connected Factories
+</div>
+
+<div class="stat">
+<strong>98.4%</strong>
+Process Stability
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 SPC Process Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">🏭 Production</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📏 Measurement</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📊 Data Collection</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📈 Control Chart</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔎 Analysis</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">⚠️ Deviation</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔄 Process Action</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">✅ Stable Process</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>📈 Control Charts</h3>
+<p>
+Контрольные карты для отслеживания изменения параметров процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>📏 Measurements</h3>
+<p>
+Сбор измерений размеров, температуры, давления и других параметров.
+</p>
+</div>
+
+<div class="component">
+<h3>📊 Statistical Analysis</h3>
+<p>
+Расчёт средних значений, разброса и других статистических показателей.
+</p>
+</div>
+
+<div class="component">
+<h3>⚠️ Out-of-Control Detection</h3>
+<p>
+Выявление признаков нестабильности процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>📉 Trend Analysis</h3>
+<p>
+Поиск изменений и тенденций производственного процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>🔄 Process Improvement</h3>
+<p>
+Использование результатов анализа для улучшения процесса.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📈 Example Control Chart</h2>
+
+<div class="chart">
+
+<p><strong>Process Measurement Trend</strong></p>
+
+<div class="limit-line">
+Upper Control Limit
+</div>
+
+<div class="chart-line">
+
+<div class="bar" style="height:48%"></div>
+<div class="bar" style="height:55%"></div>
+<div class="bar" style="height:52%"></div>
+<div class="bar" style="height:61%"></div>
+<div class="bar" style="height:58%"></div>
+<div class="bar" style="height:64%"></div>
+<div class="bar" style="height:60%"></div>
+<div class="bar" style="height:68%"></div>
+<div class="bar" style="height:65%"></div>
+<div class="bar" style="height:62%"></div>
+<div class="bar" style="height:66%"></div>
+<div class="bar" style="height:63%"></div>
+
+</div>
+
+<div class="limit-line">
+Lower Control Limit
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔎 SPC Systems</h2>
+
+<div class="search-box">
+
+<input
+id="spcSearch"
+type="text"
+placeholder="Поиск системы, города или технологии..."
+onkeyup="filterSPC()"
+>
+
+<button class="action" onclick="filterSPC()">
+Поиск
+</button>
+
+</div>
+
+<div id="spcList">
+
+<div class="spc-item">
+<strong>Baku Production SPC</strong><br>
+Azerbaijan — CNC Process Control — 46 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="spc-item">
+<strong>Sumqayit Quality SPC</strong><br>
+Azerbaijan — Dimensional Control — 38 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="spc-item">
+<strong>Istanbul Manufacturing SPC</strong><br>
+Turkey — Process Analytics — 52 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="spc-item">
+<strong>Dortmund Precision SPC</strong><br>
+Germany — Statistical Quality Control — 64 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="spc-item">
+<strong>Milan Smart SPC</strong><br>
+Italy — IoT + SPC Analytics — 42 systems<br>
+<span class="status warning-status">Monitoring</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 SPC Performance</h2>
+
+<p>Process Stability — 98.4%</p>
+
+<div class="progress">
+<span style="width:98.4%"></span>
+</div>
+
+<p>Measurement Reliability — 98.8%</p>
+
+<div class="progress">
+<span style="width:98.8%"></span>
+</div>
+
+<p>Deviation Detection — 97.6%</p>
+
+<div class="progress">
+<span style="width:97.6%"></span>
+</div>
+
+<p>Data Availability — 99.1%</p>
+
+<div class="progress">
+<span style="width:99.1%"></span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 SPC Demo</h2>
+
+<div class="demo-area">
+
+<button class="action" onclick="spcStatus()">
+SPC Status
+</button>
+
+<button class="action" onclick="measurementDemo()">
+Measurement Check
+</button>
+
+<button class="action" onclick="chartDemo()">
+Control Chart
+</button>
+
+<button class="action" onclick="deviationDemo()">
+Deviation Check
+</button>
+
+</div>
+
+<div id="demoResult"></div>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add SPC System</h2>
+
+<form onsubmit="addSPC(event)">
+
+<input
+id="spcName"
+type="text"
+placeholder="Название SPC системы"
+required
+>
+
+<select id="spcType">
+
+<option>Production SPC</option>
+<option>Dimensional SPC</option>
+<option>Machine SPC</option>
+<option>Process Temperature SPC</option>
+<option>Quality SPC</option>
+<option>IoT SPC Analytics</option>
+
+</select>
+
+<button class="add-btn" type="submit">
+Добавить SPC систему
+</button>
+
+</form>
+
+<div id="addResult"></div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>⚙️ Machine Monitoring</h3>
+<p>
+Статистический контроль параметров оборудования.
+</p>
+</div>
+
+<div class="component">
+<h3>📐 Dimensional SPC</h3>
+<p>
+Контроль размеров и геометрии деталей.
+</p>
+</div>
+
+<div class="component">
+<h3>🌡️ Temperature SPC</h3>
+<p>
+Мониторинг температурных параметров процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>💨 Pressure SPC</h3>
+<p>
+Статистический контроль давления.
+</p>
+</div>
+
+<div class="component">
+<h3>📈 Trend Monitoring</h3>
+<p>
+Отслеживание долгосрочных изменений процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>🧠 AI + SPC</h3>
+<p>
+Комбинация статистического анализа и интеллектуальных моделей.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🛡️ SPC Safety & Security</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>🔐 Data Security</h3>
+<p>
+Защита измерительных и производственных данных.
+</p>
+</div>
+
+<div class="component">
+<h3>👤 Access Control</h3>
+<p>
+Контроль доступа к SPC системе.
+</p>
+</div>
+
+<div class="component">
+<h3>💾 Backup</h3>
+<p>
+Резервное копирование результатов анализа.
+</p>
+</div>
+
+<div class="component">
+<h3>📋 Audit Logs</h3>
+<p>
+Регистрация изменений и действий пользователей.
+</p>
+</div>
+
+<div class="component">
+<h3>🌐 Network Security</h3>
+<p>
+Защита соединений с промышленными системами.
+</p>
+</div>
+
+<div class="component">
+<h3>⚠️ Alarm Monitoring</h3>
+<p>
+Контроль предупреждений и отклонений процесса.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="warning">
+
+<strong>⚠️ Важно:</strong>
+
+<p>
+Эта страница является демонстрационной моделью WORKER PRO.
+SPC является инструментом анализа процесса и не гарантирует
+отсутствие дефектов. Для реального применения необходимо
+правильно определить измеряемые характеристики, методику
+измерений, частоту отбора данных, контрольные пределы,
+калибровку средств измерений и квалифицированную интерпретацию
+результатов.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO</h2>
+
+<div class="related">
+
+<a href="../index.html">Main</a>
+
+<a href="../zero-defect-manufacturing/index.html">
+Zero Defect Manufacturing
+</a>
+
+<a href="../predictive-quality/index.html">
+Predictive Quality
+</a>
+
+<a href="../automated-quality-control/index.html">
+Automated Quality Control
+</a>
+
+<a href="../automated-inspection/index.html">
+Automated Inspection
+</a>
+
+<a href="../automated-sorting/index.html">
+Automated Sorting
+</a>
+
+<a href="../automated-packaging/index.html">
+Automated Packaging
+</a>
+
+<a href="../robotic-palletizing/index.html">
+Robotic Palletizing
+</a>
+
+<a href="../robotic-assembly/index.html">
+Robotic Assembly
+</a>
+
+<a href="../robotic-welding/index.html">
+Robotic Welding
+</a>
+
+<a href="../industrial-robotics/index.html">
+Industrial Robotics
+</a>
+
+<a href="../industrial-automation/index.html">
+Industrial Automation
+</a>
+
+<a href="../industrial-control-systems/index.html">
+Industrial Control Systems
+</a>
+
+<a href="../automation-robotics/index.html">
+Automation Robotics
+</a>
+
+<a href="../industrial-network/index.html">
+Industrial Network
+</a>
+
+<a href="../industrial-communication/index.html">
+Industrial Communication
+</a>
+
+<a href="../iot-industrial-internet/index.html">
+Industrial IoT
+</a>
+
+<a href="../ai-machine-learning/index.html">
+AI & Machine Learning
+</a>
+
+<a href="../digital-twin/index.html">
+Digital Twin
+</a>
+
+<a href="../smart-factory/index.html">
+Smart Factory
+</a>
+
+<a href="../digital-manufacturing/index.html">
+Digital Manufacturing
+</a>
+
+<a href="../analytics/index.html">
+Analytics
+</a>
+
+<a href="../reports/index.html">
+Reports
+</a>
+
+<a href="../production/index.html">
+Production
+</a>
+
+<a href="../equipment/index.html">
+Equipment
+</a>
+
+<a href="../sensors/index.html">
+Sensors
+</a>
+
+<a href="../quality/index.html">
+Quality
+</a>
+
+<a href="../maintennances/index.html">
+Maintenance
+</a>
+
+<a href="../safety/index.html">
+Safety
+</a>
+
+<a href="../training/index.html">
+Training
+</a>
+
+<a href="../specialists/index.html">
+Specialists
+</a>
+
+<a href="../companies/index.html">
+Companies
+</a>
+
+<a href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a href="../orders/index.html">
+Orders
+</a>
+
+<a href="../logistics/index.html">
+Logistics
+</a>
+
+<a href="../warehouses/index.html">
+Warehouses
+</a>
+
+<a href="../tracking/index.html">
+Tracking
+</a>
+
+<a href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>
+Global Industrial Platform — Production • Quality • AI • Automation
+</p>
+
+<p>© 2026 WORKER PRO</p>
+
+</footer>
+
+<script>
+
+function filterSPC(){
+
+var input=
+document.getElementById("spcSearch")
+.value
+.toLowerCase();
+
+var items=
+document.querySelectorAll(".spc-item");
+
+items.forEach(function(item){
+
+var text=
+item.innerText.toLowerCase();
+
+if(text.indexOf(input)!==-1){
+
+item.style.display="block";
+
+}else{
+
+item.style.display="none";
+
+}
+
+});
+
+}
+
+function showDemo(message){
+
+document.getElementById("demoResult").innerHTML=
+'<div class="result">'+
+message+
+'</div>';
+
+}
+
+function spcStatus(){
+
+showDemo(
+"📊 SPC Status: ONLINE — система статистического управления процессом работает."
+);
+
+}
+
+function measurementDemo(){
+
+showDemo(
+"📏 Measurement Check: READY — демонстрационные измерения получены."
+);
+
+}
+
+function chartDemo(){
+
+showDemo(
+"📈 Control Chart: ACTIVE — контрольная карта обновлена."
+);
+
+}
+
+function deviationDemo(){
+
+showDemo(
+"⚠️ Deviation Check: NORMAL — демонстрационные значения находятся внутри заданного диапазона."
+);
+
+}
+
+function addSPC(event){
+
+event.preventDefault();
+
+var name=
+document.getElementById("spcName").value;
+
+var type=
+document.getElementById("spcType").value;
+
+document.getElementById("addResult").innerHTML=
+'<div class="result">'+
+'✅ Added: '+
+name+
+' — '+
+type+
+'</div>';
+
+document.getElementById("spcName").value="";
+
+}
+
+</script>
+
+</body>
+</html>
