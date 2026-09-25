@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Process Capability Analysis</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:24px 15px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+h1,
+h2{
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    text-align:center;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#063d25;
+    margin-bottom:8px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#063d25;
+}
+
+.component{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+}
+
+.component h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+}
+
+.action,
+.add-btn{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:12px 16px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.action:hover,
+.add-btn:hover{
+    background:#063d25;
+}
+
+.capability-item{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+}
+
+.capability-item strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    background:#dff5e7;
+    color:#087238;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.monitoring{
+    background:#fff1c7;
+    color:#8a6200;
+}
+
+.metric{
+    background:#f8fbf9;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+}
+
+.metric strong{
+    display:block;
+    color:#063d25;
+    font-size:30px;
+    margin-bottom:6px;
+}
+
+.progress{
+    height:10px;
+    background:#e1e8e4;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 15px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.range{
+    background:#f8fbf9;
+    border:1px solid #dce7e0;
+    padding:20px;
+    border-radius:12px;
+}
+
+.range-line{
+    height:12px;
+    background:#dfe8e3;
+    border-radius:20px;
+    position:relative;
+    margin:25px 0;
+}
+
+.range-zone{
+    position:absolute;
+    left:20%;
+    right:20%;
+    height:100%;
+    background:#0b6b3d;
+    border-radius:20px;
+}
+
+.range-marker{
+    position:absolute;
+    top:-8px;
+    width:4px;
+    height:28px;
+    background:#063d25;
+}
+
+.range-labels{
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.demo-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.result{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#e9f7ee;
+    color:#063d25;
+    font-weight:bold;
+}
+
+.warning{
+    background:#fff6d9;
+    border-left:5px solid #e3ae00;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    background:#e8f5ed;
+    color:#0b6b3d;
+    padding:9px 12px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.related a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:27px;
+    }
+
+    main{
+        padding:12px;
+    }
+
+    .hero,
+    .card{
+        padding:18px;
+    }
+
+    .flow-item{
+        width:100%;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Process Capability Analysis — анализ возможностей производственного процесса
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<h1>📐 Process Capability Analysis</h1>
+
+<p>
+Анализ возможностей производственного процесса помогает
+оценивать способность стабильного процесса выпускать продукцию
+в установленных пределах допуска. В анализе используются
+среднее значение, стандартное отклонение, USL, LSL, Cp и Cpk.
+</p>
+
+<div class="tags">
+<span class="tag">Process Capability</span>
+<span class="tag">Cp</span>
+<span class="tag">Cpk</span>
+<span class="tag">USL</span>
+<span class="tag">LSL</span>
+<span class="tag">Quality</span>
+<span class="tag">SPC</span>
+<span class="tag">Statistics</span>
+<span class="tag">Analytics</span>
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="stat">
+<strong>186</strong>
+Capability Systems
+</div>
+
+<div class="stat">
+<strong>9,640</strong>
+Analyzed Processes
+</div>
+
+<div class="stat">
+<strong>126</strong>
+Connected Factories
+</div>
+
+<div class="stat">
+<strong>98.1%</strong>
+Capability Monitoring
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 Process Capability Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">🏭 Process</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📏 Measurements</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📊 Statistics</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📐 Tolerance</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Cp / Cpk</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔎 Analysis</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">✅ Decision</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>📊 Mean</h3>
+<p>
+Расчёт среднего значения измеряемого параметра процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>📉 Standard Deviation</h3>
+<p>
+Оценка разброса результатов измерений.
+</p>
+</div>
+
+<div class="component">
+<h3>⬆️ USL</h3>
+<p>
+Верхний предел допуска характеристики процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>⬇️ LSL</h3>
+<p>
+Нижний предел допуска характеристики процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>📐 Cp</h3>
+<p>
+Показатель потенциальной способности процесса относительно ширины допуска.
+</p>
+</div>
+
+<div class="component">
+<h3>🎯 Cpk</h3>
+<p>
+Показатель способности процесса с учётом положения среднего значения.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📏 Process Tolerance</h2>
+
+<div class="range">
+
+<div class="range-labels">
+<span>LSL</span>
+<span>Target</span>
+<span>USL</span>
+</div>
+
+<div class="range-line">
+
+<div class="range-zone"></div>
+
+<div class="range-marker" style="left:18%"></div>
+<div class="range-marker" style="left:50%"></div>
+<div class="range-marker" style="left:82%"></div>
+
+</div>
+
+<p>
+<strong>Example:</strong>
+Target = 50.00 mm |
+LSL = 49.80 mm |
+USL = 50.20 mm
+</p>
+
+<p>
+Демонстрационный процесс находится в пределах установленного допуска.
+</p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 Capability Indicators</h2>
+
+<div class="grid">
+
+<div class="metric">
+<strong>1.67</strong>
+Cp
+</div>
+
+<div class="metric">
+<strong>1.54</strong>
+Cpk
+</div>
+
+<div class="metric">
+<strong>50.01</strong>
+Mean
+</div>
+
+<div class="metric">
+<strong>0.043</strong>
+Std. Dev.
+</div>
+
+</div>
+
+<p>Capability Monitoring — 98.1%</p>
+
+<div class="progress">
+<span style="width:98.1%"></span>
+</div>
+
+<p>Measurement Reliability — 98.7%</p>
+
+<div class="progress">
+<span style="width:98.7%"></span>
+</div>
+
+<p>Process Stability — 97.9%</p>
+
+<div class="progress">
+<span style="width:97.9%"></span>
+</div>
+
+<p>Data Quality — 98.5%</p>
+
+<div class="progress">
+<span style="width:98.5%"></span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🏭 Process Capability Systems</h2>
+
+<div class="search-box">
+
+<input
+id="capabilitySearch"
+type="text"
+placeholder="Поиск процесса, города или технологии..."
+onkeyup="filterCapability()"
+>
+
+<button class="action" onclick="filterCapability()">
+Поиск
+</button>
+
+</div>
+
+<div id="capabilityList">
+
+<div class="capability-item">
+<strong>Baku CNC Capability</strong><br>
+Azerbaijan — CNC Dimensional Process — Cp 1.67 / Cpk 1.54<br>
+<span class="status">Online</span>
+</div>
+
+<div class="capability-item">
+<strong>Sumqayit Stamping Capability</strong><br>
+Azerbaijan — Stamping Dimensions — Cp 1.58 / Cpk 1.46<br>
+<span class="status">Online</span>
+</div>
+
+<div class="capability-item">
+<strong>Istanbul Manufacturing Capability</strong><br>
+Turkey — Production Process — Cp 1.63 / Cpk 1.51<br>
+<span class="status">Online</span>
+</div>
+
+<div class="capability-item">
+<strong>Dortmund Precision Capability</strong><br>
+Germany — Precision Manufacturing — Cp 1.82 / Cpk 1.69<br>
+<span class="status">Online</span>
+</div>
+
+<div class="capability-item">
+<strong>Milan Smart Capability</strong><br>
+Italy — IoT Process Analytics — Cp 1.55 / Cpk 1.43<br>
+<span class="status monitoring">Monitoring</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 Capability Analysis Demo</h2>
+
+<div class="demo-area">
+
+<button class="action" onclick="capabilityStatus()">
+Capability Status
+</button>
+
+<button class="action" onclick="cpDemo()">
+Calculate Cp
+</button>
+
+<button class="action" onclick="cpkDemo()">
+Calculate Cpk
+</button>
+
+<button class="action" onclick="processCheck()">
+Process Check
+</button>
+
+</div>
+
+<div id="demoResult"></div>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add Capability System</h2>
+
+<form onsubmit="addCapability(event)">
+
+<input
+id="capabilityName"
+type="text"
+placeholder="Название системы"
+required
+>
+
+<select id="capabilityType">
+
+<option>CNC Process Capability</option>
+<option>Stamping Capability</option>
+<option>Welding Capability</option>
+<option>Heat Treatment Capability</option>
+<option>Assembly Capability</option>
+<option>Automated Capability Analysis</option>
+
+</select>
+
+<button class="add-btn" type="submit">
+Добавить систему
+</button>
+
+</form>
+
+<div id="addResult"></div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>⚙️ CNC Quality</h3>
+<p>
+Анализ возможностей процессов обработки деталей на CNC.
+</p>
+</div>
+
+<div class="component">
+<h3>🔩 Stamping Quality</h3>
+<p>
+Контроль стабильности размеров штампованных деталей.
+</p>
+</div>
+
+<div class="component">
+<h3>🔥 Heat Treatment</h3>
+<p>
+Анализ температурных и технологических параметров.
+</p>
+</div>
+
+<div class="component">
+<h3>🔧 Welding Quality</h3>
+<p>
+Оценка стабильности параметров сварочного процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>🔩 Assembly</h3>
+<p>
+Анализ повторяемости операций сборки.
+</p>
+</div>
+
+<div class="component">
+<h3>🤖 Automated Analysis</h3>
+<p>
+Автоматизированный расчёт показателей процесса.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🛡️ Security & Data Control</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>🔐 Data Integrity</h3>
+<p>
+Контроль целостности измерительных данных.
+</p>
+</div>
+
+<div class="component">
+<h3>👤 Access Control</h3>
+<p>
+Контроль доступа пользователей к анализу.
+</p>
+</div>
+
+<div class="component">
+<h3>📋 Audit Logs</h3>
+<p>
+Регистрация изменений и операций.
+</p>
+</div>
+
+<div class="component">
+<h3>💾 Backup</h3>
+<p>
+Резервное копирование результатов анализа.
+</p>
+</div>
+
+<div class="component">
+<h3>🌐 Network Security</h3>
+<p>
+Защита соединения с производственными системами.
+</p>
+</div>
+
+<div class="component">
+<h3>📏 Measurement Control</h3>
+<p>
+Контроль качества и пригодности измерительной системы.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="warning">
+
+<strong>⚠️ Важно:</strong>
+
+<p>
+Эта страница является демонстрационной моделью WORKER PRO.
+Показатели Cp и Cpk нельзя интерпретировать изолированно.
+Для реального анализа необходимо учитывать стабильность процесса,
+качество измерительной системы, способ выборки, распределение данных,
+допуски, целевое значение и требования конкретного производства.
+Контрольные пределы и критерии приемки должны быть определены
+квалифицированными специалистами.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO</h2>
+
+<div class="related">
+
+<a href="../index.html">Main</a>
+
+<a href="../statistical-process-control/index.html">
+Statistical Process Control
+</a>
+
+<a href="../zero-defect-manufacturing/index.html">
+Zero Defect Manufacturing
+</a>
+
+<a href="../predictive-quality/index.html">
+Predictive Quality
+</a>
+
+<a href="../automated-quality-control/index.html">
+Automated Quality Control
+</a>
+
+<a href="../automated-inspection/index.html">
+Automated Inspection
+</a>
+
+<a href="../automated-sorting/index.html">
+Automated Sorting
+</a>
+
+<a href="../automated-packaging/index.html">
+Automated Packaging
+</a>
+
+<a href="../robotic-palletizing/index.html">
+Robotic Palletizing
+</a>
+
+<a href="../robotic-assembly/index.html">
+Robotic Assembly
+</a>
+
+<a href="../robotic-welding/index.html">
+Robotic Welding
+</a>
+
+<a href="../robotic-production-lines/index.html">
+Robotic Production Lines
+</a>
+
+<a href="../industrial-robot-cells/index.html">
+Industrial Robot Cells
+</a>
+
+<a href="../industrial-robotics/index.html">
+Industrial Robotics
+</a>
+
+<a href="../industrial-automation/index.html">
+Industrial Automation
+</a>
+
+<a href="../industrial-control-systems/index.html">
+Industrial Control Systems
+</a>
+
+<a href="../automation-robotics/index.html">
+Automation Robotics
+</a>
+
+<a href="../industrial-network/index.html">
+Industrial Network
+</a>
+
+<a href="../industrial-communication/index.html">
+Industrial Communication
+</a>
+
+<a href="../iot-industrial-internet/index.html">
+Industrial IoT
+</a>
+
+<a href="../ai-machine-learning/index.html">
+AI & Machine Learning
+</a>
+
+<a href="../digital-twin/index.html">
+Digital Twin
+</a>
+
+<a href="../smart-factory/index.html">
+Smart Factory
+</a>
+
+<a href="../digital-manufacturing/index.html">
+Digital Manufacturing
+</a>
+
+<a href="../analytics/index.html">
+Analytics
+</a>
+
+<a href="../reports/index.html">
+Reports
+</a>
+
+<a href="../production/index.html">
+Production
+</a>
+
+<a href="../equipment/index.html">
+Equipment
+</a>
+
+<a href="../sensors/index.html">
+Sensors
+</a>
+
+<a href="../quality/index.html">
+Quality
+</a>
+
+<a href="../maintennances/index.html">
+Maintenance
+</a>
+
+<a href="../safety/index.html">
+Safety
+</a>
+
+<a href="../training/index.html">
+Training
+</a>
+
+<a href="../specialists/index.html">
+Specialists
+</a>
+
+<a href="../companies/index.html">
+Companies
+</a>
+
+<a href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a href="../orders/index.html">
+Orders
+</a>
+
+<a href="../logistics/index.html">
+Logistics
+</a>
+
+<a href="../warehouses/index.html">
+Warehouses
+</a>
+
+<a href="../tracking/index.html">
+Tracking
+</a>
+
+<a href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>
+Global Industrial Platform — Production • Quality • Statistics • Analytics
+</p>
+
+<p>© 2026 WORKER PRO</p>
+
+</footer>
+
+<script>
+
+function filterCapability(){
+
+var input=
+document.getElementById("capabilitySearch")
+.value
+.toLowerCase();
+
+var items=
+document.querySelectorAll(".capability-item");
+
+items.forEach(function(item){
+
+var text=
+item.innerText.toLowerCase();
+
+if(text.indexOf(input)!==-1){
+
+item.style.display="block";
+
+}else{
+
+item.style.display="none";
+
+}
+
+});
+
+}
+
+function showDemo(message){
+
+document.getElementById("demoResult").innerHTML=
+'<div class="result">'+
+message+
+'</div>';
+
+}
+
+function capabilityStatus(){
+
+showDemo(
+"📐 Capability Status: ONLINE — система анализа возможностей процесса работает."
+);
+
+}
+
+function cpDemo(){
+
+showDemo(
+"📊 Cp Demo: 1.67 — демонстрационный показатель потенциальной способности процесса."
+);
+
+}
+
+function cpkDemo(){
+
+showDemo(
+"🎯 Cpk Demo: 1.54 — демонстрационный показатель способности процесса с учётом положения среднего значения."
+);
+
+}
+
+function processCheck(){
+
+showDemo(
+"✅ Process Check: STABLE — демонстрационный процесс находится в допустимом диапазоне."
+);
+
+}
+
+function addCapability(event){
+
+event.preventDefault();
+
+var name=
+document.getElementById("capabilityName").value;
+
+var type=
+document.getElementById("capabilityType").value;
+
+document.getElementById("addResult").innerHTML=
+'<div class="result">'+
+'✅ Added: '+
+name+
+' — '+
+type+
+'</div>';
+
+document.getElementById("capabilityName").value="";
+
+}
+
+</script>
+
+</body>
+</html>
