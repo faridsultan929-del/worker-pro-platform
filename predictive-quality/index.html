@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Predictive Quality</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:24px 15px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+h1,
+h2{
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    text-align:center;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#063d25;
+    margin-bottom:8px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#063d25;
+}
+
+.component{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+}
+
+.component h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+}
+
+.action,
+.add-btn{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:12px 16px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.action:hover,
+.add-btn:hover{
+    background:#063d25;
+}
+
+.predictive-item{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+}
+
+.predictive-item strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    background:#dff5e7;
+    color:#087238;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.warning-status{
+    background:#fff1c7;
+    color:#8a6200;
+}
+
+.progress{
+    height:10px;
+    background:#e1e8e4;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 15px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.demo-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.result{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#e9f7ee;
+    color:#063d25;
+    font-weight:bold;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+.warning{
+    background:#fff6d9;
+    border-left:5px solid #e3ae00;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    background:#e8f5ed;
+    color:#0b6b3d;
+    padding:9px 12px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.related a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:27px;
+    }
+
+    main{
+        padding:12px;
+    }
+
+    .hero,
+    .card{
+        padding:18px;
+    }
+
+    .flow-item{
+        width:100%;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Predictive Quality — прогнозирование качества продукции
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<h1>🔮 Predictive Quality</h1>
+
+<p>
+Predictive Quality использует производственные данные,
+датчики, машинное зрение, статистический анализ и AI,
+чтобы заранее выявлять возможные проблемы с качеством
+продукции и процессом производства.
+</p>
+
+<div class="tags">
+
+<span class="tag">Predictive Quality</span>
+<span class="tag">AI Quality</span>
+<span class="tag">Machine Learning</span>
+<span class="tag">Machine Vision</span>
+<span class="tag">Sensors</span>
+<span class="tag">Defect Prediction</span>
+<span class="tag">Analytics</span>
+<span class="tag">PLC</span>
+<span class="tag">SCADA</span>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="stat">
+<strong>186</strong>
+Predictive Quality Systems
+</div>
+
+<div class="stat">
+<strong>8,420</strong>
+Connected Sensors
+</div>
+
+<div class="stat">
+<strong>126</strong>
+Connected Factories
+</div>
+
+<div class="stat">
+<strong>96.8%</strong>
+Prediction Accuracy
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 Predictive Quality Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">🏭 Production</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📡 Sensors</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📊 Data</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">👁️ Vision</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🧠 AI</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📈 Analytics</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">⚠️ Prediction</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">✅ Quality Action</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>📡 Sensor Data</h3>
+<p>
+Сбор данных о температуре, вибрации, давлении и других параметрах процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>👁️ Machine Vision</h3>
+<p>
+Анализ изображений продукции для поиска признаков дефектов.
+</p>
+</div>
+
+<div class="component">
+<h3>🧠 AI Prediction</h3>
+<p>
+AI анализирует исторические и текущие данные производства.
+</p>
+</div>
+
+<div class="component">
+<h3>📈 Quality Analytics</h3>
+<p>
+Анализ тенденций и отклонений производственного процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>⚠️ Early Warning</h3>
+<p>
+Раннее обнаружение возможного ухудшения качества.
+</p>
+</div>
+
+<div class="component">
+<h3>🔄 Process Optimization</h3>
+<p>
+Помощь в принятии решений по оптимизации процесса.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔎 Predictive Quality Systems</h2>
+
+<div class="search-box">
+
+<input
+id="predictiveSearch"
+type="text"
+placeholder="Поиск системы, города или технологии..."
+onkeyup="filterPredictive()"
+>
+
+<button class="action" onclick="filterPredictive()">
+Поиск
+</button>
+
+</div>
+
+<div id="predictiveList">
+
+<div class="predictive-item">
+<strong>Baku Predictive Quality</strong><br>
+Azerbaijan — AI + Sensors — 42 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="predictive-item">
+<strong>Sumqayit Quality Prediction</strong><br>
+Azerbaijan — Machine Vision + Analytics — 34 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="predictive-item">
+<strong>Istanbul AI Quality</strong><br>
+Turkey — AI + Production Data — 48 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="predictive-item">
+<strong>Dortmund Predictive Manufacturing</strong><br>
+Germany — Sensors + Machine Learning — 56 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="predictive-item">
+<strong>Milan Smart Quality</strong><br>
+Italy — IoT + Predictive Analytics — 38 systems<br>
+<span class="status warning-status">Monitoring</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 Predictive Quality Performance</h2>
+
+<p>Prediction Accuracy — 96.8%</p>
+
+<div class="progress">
+<span style="width:96.8%"></span>
+</div>
+
+<p>Sensor Data Quality — 98.1%</p>
+
+<div class="progress">
+<span style="width:98.1%"></span>
+</div>
+
+<p>AI Model Availability — 97.6%</p>
+
+<div class="progress">
+<span style="width:97.6%"></span>
+</div>
+
+<p>Early Warning Detection — 95.9%</p>
+
+<div class="progress">
+<span style="width:95.9%"></span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 Predictive Quality Demo</h2>
+
+<div class="demo-area">
+
+<button class="action" onclick="predictionStatus()">
+Prediction Status
+</button>
+
+<button class="action" onclick="sensorDemo()">
+Sensor Analysis
+</button>
+
+<button class="action" onclick="aiDemo()">
+AI Prediction
+</button>
+
+<button class="action" onclick="riskDemo()">
+Quality Risk
+</button>
+
+</div>
+
+<div id="demoResult"></div>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add Predictive Quality System</h2>
+
+<form onsubmit="addPredictive(event)">
+
+<input
+id="predictiveName"
+type="text"
+placeholder="Название системы"
+required
+>
+
+<select id="predictiveType">
+
+<option>AI Quality Prediction</option>
+<option>Sensor Analytics</option>
+<option>Machine Vision Prediction</option>
+<option>Predictive Defect Detection</option>
+<option>Production Quality Analytics</option>
+<option>Smart Quality Monitoring</option>
+
+</select>
+
+<button class="add-btn" type="submit">
+Добавить систему
+</button>
+
+</form>
+
+<div id="addResult"></div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>🔧 Process Quality</h3>
+<p>
+Прогнозирование изменений параметров производственного процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>📦 Product Quality</h3>
+<p>
+Анализ данных готовой продукции.
+</p>
+</div>
+
+<div class="component">
+<h3>⚙️ Machine Quality</h3>
+<p>
+Анализ состояния оборудования и его влияния на качество.
+</p>
+</div>
+
+<div class="component">
+<h3>📡 Sensor Monitoring</h3>
+<p>
+Непрерывный сбор данных с промышленных датчиков.
+</p>
+</div>
+
+<div class="component">
+<h3>🧠 Machine Learning</h3>
+<p>
+Поиск закономерностей в исторических данных.
+</p>
+</div>
+
+<div class="component">
+<h3>📊 Quality Dashboard</h3>
+<p>
+Цифровое отображение показателей качества.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🛡️ Predictive Quality Security</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>🔐 Data Security</h3>
+<p>
+Защита производственных данных.
+</p>
+</div>
+
+<div class="component">
+<h3>🌐 Network Security</h3>
+<p>
+Защита подключённых промышленных систем.
+</p>
+</div>
+
+<div class="component">
+<h3>👤 Access Control</h3>
+<p>
+Контроль доступа пользователей.
+</p>
+</div>
+
+<div class="component">
+<h3>💾 Backup</h3>
+<p>
+Резервное копирование данных и моделей.
+</p>
+</div>
+
+<div class="component">
+<h3>📋 Audit Logs</h3>
+<p>
+Регистрация важных действий и изменений.
+</p>
+</div>
+
+<div class="component">
+<h3>🧩 Model Monitoring</h3>
+<p>
+Контроль работы аналитических моделей.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="warning">
+
+<strong>⚠️ Важно:</strong>
+
+<p>
+Эта страница является демонстрационной моделью WORKER PRO.
+Прогнозы AI не гарантируют будущий результат. Реальные системы
+Predictive Quality требуют качественных исходных данных,
+калиброванных измерительных средств, корректной валидации
+моделей, квалифицированной интеграции, контроля доступа,
+технического обслуживания и соблюдения требований производителя
+и применимых норм.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO</h2>
+
+<div class="related">
+
+<a href="../index.html">Main</a>
+
+<a href="../automated-quality-control/index.html">
+Automated Quality Control
+</a>
+
+<a href="../automated-inspection/index.html">
+Automated Inspection
+</a>
+
+<a href="../automated-sorting/index.html">
+Automated Sorting
+</a>
+
+<a href="../automated-packaging/index.html">
+Automated Packaging
+</a>
+
+<a href="../robotic-palletizing/index.html">
+Robotic Palletizing
+</a>
+
+<a href="../robotic-assembly/index.html">
+Robotic Assembly
+</a>
+
+<a href="../robotic-welding/index.html">
+Robotic Welding
+</a>
+
+<a href="../robotic-production-lines/index.html">
+Robotic Production Lines
+</a>
+
+<a href="../industrial-robot-cells/index.html">
+Industrial Robot Cells
+</a>
+
+<a href="../industrial-robotics/index.html">
+Industrial Robotics
+</a>
+
+<a href="../industrial-automation/index.html">
+Industrial Automation
+</a>
+
+<a href="../industrial-control-systems/index.html">
+Industrial Control Systems
+</a>
+
+<a href="../automation-robotics/index.html">
+Automation Robotics
+</a>
+
+<a href="../collaborative-robots/index.html">
+Collaborative Robots
+</a>
+
+<a href="../industrial-network/index.html">
+Industrial Network
+</a>
+
+<a href="../industrial-communication/index.html">
+Industrial Communication
+</a>
+
+<a href="../iot-industrial-internet/index.html">
+Industrial IoT
+</a>
+
+<a href="../ai-machine-learning/index.html">
+AI & Machine Learning
+</a>
+
+<a href="../digital-twin/index.html">
+Digital Twin
+</a>
+
+<a href="../smart-factory/index.html">
+Smart Factory
+</a>
+
+<a href="../digital-manufacturing/index.html">
+Digital Manufacturing
+</a>
+
+<a href="../analytics/index.html">
+Analytics
+</a>
+
+<a href="../reports/index.html">
+Reports
+</a>
+
+<a href="../production/index.html">
+Production
+</a>
+
+<a href="../equipment/index.html">
+Equipment
+</a>
+
+<a href="../sensors/index.html">
+Sensors
+</a>
+
+<a href="../quality/index.html">
+Quality
+</a>
+
+<a href="../maintennances/index.html">
+Maintenance
+</a>
+
+<a href="../safety/index.html">
+Safety
+</a>
+
+<a href="../training/index.html">
+Training
+</a>
+
+<a href="../specialists/index.html">
+Specialists
+</a>
+
+<a href="../companies/index.html">
+Companies
+</a>
+
+<a href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a href="../orders/index.html">
+Orders
+</a>
+
+<a href="../logistics/index.html">
+Logistics
+</a>
+
+<a href="../warehouses/index.html">
+Warehouses
+</a>
+
+<a href="../tracking/index.html">
+Tracking
+</a>
+
+<a href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>
+Global Industrial Platform — Production • Quality • AI • Automation
+</p>
+
+<p>© 2026 WORKER PRO</p>
+
+</footer>
+
+<script>
+
+function filterPredictive(){
+
+var input=
+document.getElementById("predictiveSearch")
+.value
+.toLowerCase();
+
+var items=
+document.querySelectorAll(".predictive-item");
+
+items.forEach(function(item){
+
+var text=
+item.innerText.toLowerCase();
+
+if(text.indexOf(input)!==-1){
+
+item.style.display="block";
+
+}else{
+
+item.style.display="none";
+
+}
+
+});
+
+}
+
+function showDemo(message){
+
+document.getElementById("demoResult").innerHTML=
+'<div class="result">'+
+message+
+'</div>';
+
+}
+
+function predictionStatus(){
+
+showDemo(
+"🔮 Prediction System: ONLINE — система прогнозирования качества работает."
+);
+
+}
+
+function sensorDemo(){
+
+showDemo(
+"📡 Sensor Analysis: ACTIVE — данные промышленных датчиков анализируются."
+);
+
+}
+
+function aiDemo(){
+
+showDemo(
+"🧠 AI Prediction: READY — AI-модель анализирует производственные данные."
+);
+
+}
+
+function riskDemo(){
+
+showDemo(
+"⚠️ Quality Risk: LOW — демонстрационный прогноз не показывает критического отклонения."
+);
+
+}
+
+function addPredictive(event){
+
+event.preventDefault();
+
+var name=
+document.getElementById("predictiveName").value;
+
+var type=
+document.getElementById("predictiveType").value;
+
+document.getElementById("addResult").innerHTML=
+'<div class="result">'+
+'✅ Added: '+
+name+
+' — '+
+type+
+'</div>';
+
+document.getElementById("predictiveName").value="";
+
+}
+
+</script>
+
+</body>
+</html>
