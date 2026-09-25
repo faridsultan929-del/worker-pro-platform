@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Data Warehouse</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#18352a;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+header h1{
+    margin:0;
+    font-size:28px;
+}
+
+header p{
+    margin:8px 0 15px;
+    color:#d9f2df;
+}
+
+.languages{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    align-items:center;
+}
+
+.lang-row{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.languages button{
+    background:#0b6b3d;
+    color:white;
+    border:1px solid #8bc9a2;
+    border-radius:6px;
+    padding:8px 13px;
+    font-weight:bold;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    background:#0b6b3d;
+    padding:12px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:6px 10px;
+    display:inline-block;
+    font-size:14px;
+}
+
+.container{
+    max-width:1100px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:22px;
+}
+
+.hero h2{
+    margin-top:0;
+    font-size:26px;
+}
+
+.hero p{
+    line-height:1.6;
+}
+
+.btn{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:11px 17px;
+    border-radius:7px;
+    text-decoration:none;
+    font-weight:bold;
+    border:0;
+    cursor:pointer;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 12px #0000000d;
+}
+
+.card h3{
+    margin-top:0;
+    color:#0b6b3d;
+}
+
+.stat{
+    font-size:27px;
+    font-weight:bold;
+    color:#0b6b3d;
+}
+
+.section-title{
+    color:#063d25;
+    margin:30px 0 15px;
+}
+
+.architecture{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:15px 0;
+}
+
+.node{
+    background:white;
+    border:2px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    min-width:145px;
+    text-align:center;
+    box-shadow:0 3px 10px #00000010;
+}
+
+.node strong{
+    display:block;
+    color:#063d25;
+    margin-bottom:6px;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:27px;
+    font-weight:bold;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:12px 0 6px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd9cf;
+    border-radius:7px;
+    font-size:15px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+th,
+td{
+    padding:13px;
+    border-bottom:1px solid #e1e9e3;
+    text-align:left;
+    font-size:14px;
+}
+
+th{
+    background:#0b6b3d;
+    color:white;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.good{
+    background:#d9f8df;
+    color:#17632c;
+}
+
+.info{
+    background:#dff1ff;
+    color:#145b87;
+}
+
+.warn{
+    background:#fff1c7;
+    color:#855b00;
+}
+
+.links a{
+    display:inline-block;
+    background:#e8f5eb;
+    color:#063d25;
+    padding:10px 13px;
+    border-radius:7px;
+    text-decoration:none;
+    margin:5px;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:35px;
+}
+
+@media(max-width:600px){
+    header h1{
+        font-size:23px;
+    }
+
+    .hero h2{
+        font-size:21px;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>WORKER PRO</h1>
+
+<p>Промышленная платформа — хранилище данных</p>
+
+<div class="languages">
+
+<div class="lang-row">
+<button type="button">AZ</button>
+<button type="button">RU</button>
+<button type="button">EN</button>
+</div>
+
+<div class="lang-row">
+<button type="button">TR</button>
+<button type="button">DE</button>
+<button type="button">AR</button>
+<button type="button">ES</button>
+<button type="button">FR</button>
+<button type="button">IT</button>
+</div>
+
+</div>
+
+</header>
+
+<nav>
+<a href="../index.html">Главная</a>
+<a href="../dashboard/index.html">Dashboard</a>
+<a href="../data-catalog/index.html">Data Catalog</a>
+<a href="../data-lineage/index.html">Data Lineage</a>
+<a href="../data-quality/index.html">Data Quality</a>
+<a href="../data-integration/index.html">Data Integration</a>
+<a href="../master-data/index.html">Master Data</a>
+<a href="../data-governance/index.html">Data Governance</a>
+<a href="../analytics/index.html">Analytics</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<h2>Data Warehouse — Хранилище данных</h2>
+
+<p>
+Центральное хранилище данных WORKER PRO для объединения
+информации из разных разделов платформы.
+Здесь могут собираться данные о товарах, оборудовании,
+компаниях, заказах, поставщиках, логистике и аналитике.
+</p>
+
+<a class="btn" href="#sources">
+Просмотреть источники
+</a>
+
+</section>
+
+<h2 class="section-title">Обзор хранилища</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Объём данных</h3>
+<div class="stat">2.8 TB</div>
+<p>Демонстрационный объём.</p>
+</div>
+
+<div class="card">
+<h3>Таблицы</h3>
+<div class="stat">486</div>
+<p>Информационные таблицы.</p>
+</div>
+
+<div class="card">
+<h3>Источники</h3>
+<div class="stat">28</div>
+<p>Подключённые источники.</p>
+</div>
+
+<div class="card">
+<h3>Обновление</h3>
+<div class="stat">98.7%</div>
+<p>Демонстрационный показатель успешных загрузок.</p>
+</div>
+
+</div>
+
+<h2 class="section-title">Архитектура данных</h2>
+
+<div class="card">
+
+<div class="architecture">
+
+<div class="node">
+<strong>Sources</strong>
+Источники
+</div>
+
+<div class="arrow">→</div>
+
+<div class="node">
+<strong>Integration</strong>
+Интеграция
+</div>
+
+<div class="arrow">→</div>
+
+<div class="node">
+<strong>Warehouse</strong>
+Хранилище
+</div>
+
+<div class="arrow">→</div>
+
+<div class="node">
+<strong>Analytics</strong>
+Аналитика
+</div>
+
+<div class="arrow">→</div>
+
+<div class="node">
+<strong>Reports</strong>
+Отчёты
+</div>
+
+</div>
+
+<p>
+Демонстрационная схема показывает общий путь
+информации от источников до аналитики WORKER PRO.
+</p>
+
+</div>
+
+<h2 class="section-title" id="sources">Источники данных</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Products</h3>
+<p>Товары, характеристики, цены и категории.</p>
+<span class="badge good">Активен</span>
+</div>
+
+<div class="card">
+<h3>Companies</h3>
+<p>Производители, компании и организации.</p>
+<span class="badge good">Активен</span>
+</div>
+
+<div class="card">
+<h3>Suppliers</h3>
+<p>Поставщики и предложения.</p>
+<span class="badge good">Активен</span>
+</div>
+
+<div class="card">
+<h3>Orders</h3>
+<p>Заказы, позиции и статусы.</p>
+<span class="badge info">Синхронизация</span>
+</div>
+
+<div class="card">
+<h3>Logistics</h3>
+<p>Перевозки, маршруты и логистические операции.</p>
+<span class="badge good">Активен</span>
+</div>
+
+<div class="card">
+<h3>Tracking</h3>
+<p>Статусы доставки и перемещения грузов.</p>
+<span class="badge info">Синхронизация</span>
+</div>
+
+</div>
+
+<h2 class="section-title">Таблицы хранилища</h2>
+
+<div class="card">
+
+<label for="search">
+Поиск таблицы
+</label>
+
+<input
+id="search"
+type="text"
+placeholder="Название таблицы или описание..."
+oninput="filterTables()"
+>
+
+<label for="tableType">
+Тип данных
+</label>
+
+<select id="tableType" onchange="filterTables()">
+
+<option value="">Все типы</option>
+<option value="Master">Master Data</option>
+<option value="Transaction">Transaction</option>
+<option value="Reference">Reference</option>
+<option value="Analytics">Analytics</option>
+
+</select>
+
+</div>
+
+<br>
+
+<table id="warehouseTable">
+
+<thead>
+
+<tr>
+<th>Код</th>
+<th>Таблица</th>
+<th>Тип</th>
+<th>Записей</th>
+<th>Обновление</th>
+<th>Статус</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>DW-001</td>
+<td>products_fact</td>
+<td>Master</td>
+<td>248 620</td>
+<td>Сегодня</td>
+<td><span class="badge good">Готово</span></td>
+</tr>
+
+<tr>
+<td>DW-002</td>
+<td>orders_fact</td>
+<td>Transaction</td>
+<td>84 250</td>
+<td>Сегодня</td>
+<td><span class="badge good">Готово</span></td>
+</tr>
+
+<tr>
+<td>DW-003</td>
+<td>suppliers_dim</td>
+<td>Master</td>
+<td>12 480</td>
+<td>Сегодня</td>
+<td><span class="badge info">Обновляется</span></td>
+</tr>
+
+<tr>
+<td>DW-004</td>
+<td>countries_ref</td>
+<td>Reference</td>
+<td>195</td>
+<td>20.09.2026</td>
+<td><span class="badge good">Готово</span></td>
+</tr>
+
+<tr>
+<td>DW-005</td>
+<td>logistics_fact</td>
+<td>Transaction</td>
+<td>46 820</td>
+<td>Сегодня</td>
+<td><span class="badge good">Готово</span></td>
+</tr>
+
+<tr>
+<td>DW-006</td>
+<td>sales_analytics</td>
+<td>Analytics</td>
+<td>185 640</td>
+<td>Сегодня</td>
+<td><span class="badge warn">Проверка</span></td>
+</tr>
+
+</tbody>
+
+</table>
+
+<h2 class="section-title">Загрузка данных</h2>
+
+<div class="card">
+
+<div class="form-grid">
+
+<div>
+<label for="sourceName">Источник</label>
+
+<select id="sourceName">
+
+<option>Products</option>
+<option>Companies</option>
+<option>Suppliers</option>
+<option>Orders</option>
+<option>Logistics</option>
+<option>Tracking</option>
+</select>
+</div>
+
+<div>
+<label for="loadType">Тип загрузки</label>
+
+<select id="loadType">
+
+<option>Полная загрузка</option>
+<option>Инкрементальная загрузка</option>
+<option>Синхронизация</option>
+</select>
+</div>
+
+<div>
+<label for="loadStatus">Статус</label>
+
+<select id="loadStatus">
+
+<option>Запланировано</option>
+<option>В процессе</option>
+<option>Завершено</option>
+</select>
+</div>
+
+</div>
+
+<br>
+
+<button class="btn" type="button" onclick="startLoad()">
+Запустить загрузку
+</button>
+
+</div>
+
+<h2 class="section-title">Этапы обработки данных</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>1. Extract</h3>
+<p>
+Получение информации из внутренних и внешних источников.
+</p>
+</div>
+
+<div class="card">
+<h3>2. Transform</h3>
+<p>
+Проверка, очистка и преобразование информации.
+</p>
+</div>
+
+<div class="card">
+<h3>3. Load</h3>
+<p>
+Загрузка подготовленных данных в хранилище.
+</p>
+</div>
+
+<div class="card">
+<h3>4. Analyze</h3>
+<p>
+Использование данных для аналитики и отчётов.
+</p>
+</div>
+
+</div>
+
+<h2 class="section-title">Контроль хранилища</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Качество</h3>
+<p>
+Проверка точности, полноты и согласованности данных.
+</p>
+</div>
+
+<div class="card">
+<h3>Безопасность</h3>
+<p>
+Контроль доступа и защита информационных ресурсов.
+</p>
+</div>
+
+<div class="card">
+<h3>Резервное копирование</h3>
+<p>
+Демонстрационный контроль резервных копий.
+</p>
+</div>
+
+<div class="card">
+<h3>Мониторинг</h3>
+<p>
+Контроль загрузок, ошибок и производительности.
+</p>
+</div>
+
+</div>
+
+<h2 class="section-title">Связанные разделы WORKER PRO</h2>
+
+<div class="card links">
+
+<a href="../data-catalog/index.html">Data Catalog</a>
+
+<a href="../data-lineage/index.html">Data Lineage</a>
+
+<a href="../data-quality/index.html">Data Quality</a>
+
+<a href="../data-integration/index.html">Data Integration</a>
+
+<a href="../master-data/index.html">Master Data</a>
+
+<a href="../data-governance/index.html">Data Governance</a>
+
+<a href="../data-security/index.html">Data Security</a>
+
+<a href="../data-privacy/index.html">Data Privacy</a>
+
+<a href="../analytics/index.html">Analytics</a>
+
+<a href="../reports/index.html">Reports</a>
+
+<a href="../products/index.html">Products</a>
+
+<a href="../companies/index.html">Companies</a>
+
+<a href="../suppliers/index.html">Suppliers</a>
+
+<a href="../orders/index.html">Orders</a>
+
+<a href="../logistics/index.html">Logistics</a>
+
+<a href="../tracking/index.html">Tracking</a>
+
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</main>
+
+<footer>
+WORKER PRO © 2026 | Data Warehouse — Хранилище данных
+</footer>
+
+<script>
+
+function filterTables(){
+
+const search =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+const type =
+document.getElementById("tableType")
+.value;
+
+const rows =
+document.querySelectorAll(
+"#warehouseTable tbody tr"
+);
+
+rows.forEach(row => {
+
+const text =
+row.innerText.toLowerCase();
+
+const rowType =
+row.cells[2].innerText;
+
+const searchMatch =
+text.includes(search);
+
+const typeMatch =
+!type || rowType === type;
+
+row.style.display =
+searchMatch && typeMatch
+? ""
+: "none";
+
+});
+
+}
+
+function startLoad(){
+
+const source =
+document.getElementById("sourceName")
+.value;
+
+const loadType =
+document.getElementById("loadType")
+.value;
+
+const status =
+document.getElementById("loadStatus")
+.value;
+
+alert(
+"Демонстрационная загрузка данных\n\n" +
+"Источник: " + source + "\n" +
+"Тип: " + loadType + "\n" +
+"Статус: " + status
+);
+
+}
+
+</script>
+
+</body>
+</html>
