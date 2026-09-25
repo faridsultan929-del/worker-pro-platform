@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Zero Defect Manufacturing</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:24px 15px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+h1,
+h2{
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    text-align:center;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#063d25;
+    margin-bottom:8px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#063d25;
+}
+
+.component{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+}
+
+.component h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+}
+
+.action,
+.add-btn{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:12px 16px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.action:hover,
+.add-btn:hover{
+    background:#063d25;
+}
+
+.zero-item{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+}
+
+.zero-item strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    background:#dff5e7;
+    color:#087238;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.monitoring{
+    background:#fff1c7;
+    color:#8a6200;
+}
+
+.progress{
+    height:10px;
+    background:#e1e8e4;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 15px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.demo-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.result{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#e9f7ee;
+    color:#063d25;
+    font-weight:bold;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+.warning{
+    background:#fff6d9;
+    border-left:5px solid #e3ae00;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    background:#e8f5ed;
+    color:#0b6b3d;
+    padding:9px 12px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.related a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:27px;
+    }
+
+    main{
+        padding:12px;
+    }
+
+    .hero,
+    .card{
+        padding:18px;
+    }
+
+    .flow-item{
+        width:100%;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Zero Defect Manufacturing — производство с минимальным количеством дефектов
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<h1>🎯 Zero Defect Manufacturing</h1>
+
+<p>
+Zero Defect Manufacturing — подход к производству,
+направленный на предотвращение и раннее обнаружение
+дефектов. WORKER PRO объединяет машинное зрение,
+датчики, AI, автоматический контроль, анализ данных
+и обратную связь с производственным процессом.
+</p>
+
+<div class="tags">
+
+<span class="tag">Zero Defect Manufacturing</span>
+<span class="tag">Quality Control</span>
+<span class="tag">AI</span>
+<span class="tag">Machine Vision</span>
+<span class="tag">Defect Prevention</span>
+<span class="tag">Sensors</span>
+<span class="tag">Analytics</span>
+<span class="tag">PLC</span>
+<span class="tag">SCADA</span>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="stat">
+<strong>164</strong>
+Zero Defect Systems
+</div>
+
+<div class="stat">
+<strong>8,420</strong>
+Connected Sensors
+</div>
+
+<div class="stat">
+<strong>118</strong>
+Connected Factories
+</div>
+
+<div class="stat">
+<strong>99.1%</strong>
+First Pass Quality
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 Zero Defect Manufacturing Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">🏭 Production</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📡 Sensors</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📷 Vision</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📏 Measurement</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🧠 AI</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔎 Defect Detection</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔄 Process Feedback</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">✅ Quality</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>🛡️ Defect Prevention</h3>
+<p>
+Обнаружение отклонений до появления большого количества брака.
+</p>
+</div>
+
+<div class="component">
+<h3>📷 Machine Vision</h3>
+<p>
+Автоматический визуальный контроль продукции.
+</p>
+</div>
+
+<div class="component">
+<h3>🧠 AI Quality</h3>
+<p>
+Анализ производственных данных и признаков дефектов.
+</p>
+</div>
+
+<div class="component">
+<h3>📏 Precision Measurement</h3>
+<p>
+Контроль размеров и геометрических параметров.
+</p>
+</div>
+
+<div class="component">
+<h3>📡 Process Sensors</h3>
+<p>
+Непрерывный контроль технологических параметров.
+</p>
+</div>
+
+<div class="component">
+<h3>🔄 Process Feedback</h3>
+<p>
+Передача результатов контроля обратно в производственный процесс.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔎 Zero Defect Systems</h2>
+
+<div class="search-box">
+
+<input
+id="zeroSearch"
+type="text"
+placeholder="Поиск системы, города или технологии..."
+onkeyup="filterZero()"
+>
+
+<button class="action" onclick="filterZero()">
+Поиск
+</button>
+
+</div>
+
+<div id="zeroList">
+
+<div class="zero-item">
+<strong>Baku Zero Defect Factory</strong><br>
+Azerbaijan — AI + Machine Vision — 42 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="zero-item">
+<strong>Sumqayit Defect Prevention</strong><br>
+Azerbaijan — Sensors + Analytics — 36 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="zero-item">
+<strong>Istanbul Zero Defect Production</strong><br>
+Turkey — Vision + AI — 54 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="zero-item">
+<strong>Dortmund Precision Manufacturing</strong><br>
+Germany — Measurement + Robotics — 62 systems<br>
+<span class="status">Online</span>
+</div>
+
+<div class="zero-item">
+<strong>Milan Smart Quality</strong><br>
+Italy — IoT + AI — 38 systems<br>
+<span class="status monitoring">Monitoring</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 Quality Performance</h2>
+
+<p>First Pass Quality — 99.1%</p>
+
+<div class="progress">
+<span style="width:99.1%"></span>
+</div>
+
+<p>Defect Prevention — 97.8%</p>
+
+<div class="progress">
+<span style="width:97.8%"></span>
+</div>
+
+<p>Inspection Accuracy — 98.6%</p>
+
+<div class="progress">
+<span style="width:98.6%"></span>
+</div>
+
+<p>Process Monitoring — 98.9%</p>
+
+<div class="progress">
+<span style="width:98.9%"></span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 Zero Defect Demo</h2>
+
+<div class="demo-area">
+
+<button class="action" onclick="zeroStatus()">
+System Status
+</button>
+
+<button class="action" onclick="defectDemo()">
+Defect Check
+</button>
+
+<button class="action" onclick="processDemo()">
+Process Check
+</button>
+
+<button class="action" onclick="qualityDemo()">
+Quality Result
+</button>
+
+</div>
+
+<div id="demoResult"></div>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add Zero Defect System</h2>
+
+<form onsubmit="addZero(event)">
+
+<input
+id="zeroName"
+type="text"
+placeholder="Название системы"
+required
+>
+
+<select id="zeroType">
+
+<option>Zero Defect Production</option>
+<option>AI Defect Prevention</option>
+<option>Machine Vision Quality</option>
+<option>Precision Manufacturing</option>
+<option>Smart Quality System</option>
+<option>Digital Quality Control</option>
+
+</select>
+
+<button class="add-btn" type="submit">
+Добавить систему
+</button>
+
+</form>
+
+<div id="addResult"></div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>🏭 Smart Production</h3>
+<p>
+Цифровой контроль производственных процессов.
+</p>
+</div>
+
+<div class="component">
+<h3>🔎 Defect Detection</h3>
+<p>
+Автоматическое обнаружение потенциальных дефектов.
+</p>
+</div>
+
+<div class="component">
+<h3>📐 Precision Control</h3>
+<p>
+Контроль точности изготовления деталей.
+</p>
+</div>
+
+<div class="component">
+<h3>🤖 Robotic Quality</h3>
+<p>
+Использование роботов для автоматического контроля.
+</p>
+</div>
+
+<div class="component">
+<h3>📈 Quality Analytics</h3>
+<p>
+Анализ статистики качества производства.
+</p>
+</div>
+
+<div class="component">
+<h3>🔄 Continuous Improvement</h3>
+<p>
+Непрерывное улучшение производственного процесса.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🛡️ Safety & Security</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>🛑 Emergency Stop</h3>
+<p>Аварийная остановка оборудования.</p>
+</div>
+
+<div class="component">
+<h3>🚧 Safety Guards</h3>
+<p>Защитные ограждения рабочих зон.</p>
+</div>
+
+<div class="component">
+<h3>🔒 Interlocks</h3>
+<p>Защитные блокировки оборудования.</p>
+</div>
+
+<div class="component">
+<h3>👷 Operator Safety</h3>
+<p>Защита персонала при работе с оборудованием.</p>
+</div>
+
+<div class="component">
+<h3>🌐 Network Security</h3>
+<p>Защита цифровой промышленной инфраструктуры.</p>
+</div>
+
+<div class="component">
+<h3>💾 Data Backup</h3>
+<p>Резервное копирование производственных данных.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="warning">
+
+<strong>⚠️ Важно:</strong>
+
+<p>
+Эта страница является демонстрационной моделью WORKER PRO.
+Термин Zero Defect Manufacturing не означает абсолютное
+отсутствие дефектов. Реальное производство требует
+квалифицированного проектирования, контроля процесса,
+калибровки оборудования, оценки рисков, обучения персонала,
+технического обслуживания и соблюдения требований производителя
+и применимых норм.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO</h2>
+
+<div class="related">
+
+<a href="../index.html">Main</a>
+
+<a href="../predictive-quality/index.html">Predictive Quality</a>
+
+<a href="../automated-quality-control/index.html">Automated Quality Control</a>
+
+<a href="../automated-inspection/index.html">Automated Inspection</a>
+
+<a href="../automated-sorting/index.html">Automated Sorting</a>
+
+<a href="../automated-packaging/index.html">Automated Packaging</a>
+
+<a href="../robotic-palletizing/index.html">Robotic Palletizing</a>
+
+<a href="../robotic-assembly/index.html">Robotic Assembly</a>
+
+<a href="../robotic-welding/index.html">Robotic Welding</a>
+
+<a href="../robotic-production-lines/index.html">Robotic Production Lines</a>
+
+<a href="../industrial-robot-cells/index.html">Industrial Robot Cells</a>
+
+<a href="../industrial-robotics/index.html">Industrial Robotics</a>
+
+<a href="../industrial-automation/index.html">Industrial Automation</a>
+
+<a href="../industrial-control-systems/index.html">Industrial Control Systems</a>
+
+<a href="../automation-robotics/index.html">Automation Robotics</a>
+
+<a href="../collaborative-robots/index.html">Collaborative Robots</a>
+
+<a href="../industrial-network/index.html">Industrial Network</a>
+
+<a href="../industrial-communication/index.html">Industrial Communication</a>
+
+<a href="../iot-industrial-internet/index.html">Industrial IoT</a>
+
+<a href="../ai-machine-learning/index.html">AI & Machine Learning</a>
+
+<a href="../digital-twin/index.html">Digital Twin</a>
+
+<a href="../smart-factory/index.html">Smart Factory</a>
+
+<a href="../digital-manufacturing/index.html">Digital Manufacturing</a>
+
+<a href="../analytics/index.html">Analytics</a>
+
+<a href="../reports/index.html">Reports</a>
+
+<a href="../production/index.html">Production</a>
+
+<a href="../equipment/index.html">Equipment</a>
+
+<a href="../sensors/index.html">Sensors</a>
+
+<a href="../quality/index.html">Quality</a>
+
+<a href="../maintennances/index.html">Maintenance</a>
+
+<a href="../safety/index.html">Safety</a>
+
+<a href="../training/index.html">Training</a>
+
+<a href="../specialists/index.html">Specialists</a>
+
+<a href="../companies/index.html">Companies</a>
+
+<a href="../suppliers/index.html">Suppliers</a>
+
+<a href="../orders/index.html">Orders</a>
+
+<a href="../logistics/index.html">Logistics</a>
+
+<a href="../warehouses/index.html">Warehouses</a>
+
+<a href="../tracking/index.html">Tracking</a>
+
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>
+Global Industrial Platform — Production • Quality • AI • Automation
+</p>
+
+<p>© 2026 WORKER PRO</p>
+
+</footer>
+
+<script>
+
+function filterZero(){
+
+var input=
+document.getElementById("zeroSearch")
+.value
+.toLowerCase();
+
+var items=
+document.querySelectorAll(".zero-item");
+
+items.forEach(function(item){
+
+var text=
+item.innerText.toLowerCase();
+
+if(text.indexOf(input)!==-1){
+
+item.style.display="block";
+
+}else{
+
+item.style.display="none";
+
+}
+
+});
+
+}
+
+function showDemo(message){
+
+document.getElementById("demoResult").innerHTML=
+'<div class="result">'+
+message+
+'</div>';
+
+}
+
+function zeroStatus(){
+
+showDemo(
+"🎯 Zero Defect System: ONLINE — система контроля работает."
+);
+
+}
+
+function defectDemo(){
+
+showDemo(
+"🔎 Defect Check: ACTIVE — автоматическая проверка дефектов выполнена."
+);
+
+}
+
+function processDemo(){
+
+showDemo(
+"🏭 Process Check: NORMAL — демонстрационные параметры процесса находятся в нормальном диапазоне."
+);
+
+}
+
+function qualityDemo(){
+
+showDemo(
+"✅ Quality Result: PASS — демонстрационный результат соответствует заданным критериям."
+);
+
+}
+
+function addZero(event){
+
+event.preventDefault();
+
+var name=
+document.getElementById("zeroName").value;
+
+var type=
+document.getElementById("zeroType").value;
+
+document.getElementById("addResult").innerHTML=
+'<div class="result">'+
+'✅ Added: '+
+name+
+' — '+
+type+
+'</div>';
+
+document.getElementById("zeroName").value="";
+
+}
+
+</script>
+
+</body>
+</html>
