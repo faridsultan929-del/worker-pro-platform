@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Wearable Technology</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+.top h1{
+    margin:0;
+    font-size:30px;
+}
+
+.top p{
+    margin:8px 0 15px;
+    color:#cceedd;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.hero h2,
+.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-left:5px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+}
+
+.badge{
+    display:inline-block;
+    background:#e4f6eb;
+    color:#075b34;
+    padding:6px 10px;
+    border-radius:20px;
+    margin:3px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.flow span{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.device{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.device h4{
+    color:#075b34;
+    margin:0 0 8px;
+}
+
+.progress{
+    height:10px;
+    background:#e5ebe7;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 14px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.links a:hover{
+    background:#b7ff35;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #d6a500;
+    padding:15px;
+    border-radius:10px;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .top h1{
+        font-size:25px;
+    }
+
+    .container{
+        padding:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+<h1>WORKER PRO</h1>
+
+<p>Wearable Technology — умные носимые технологии для промышленности</p>
+
+<div class="languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<h2>⌚ Wearable Technology</h2>
+
+<p>
+Носимые технологии помогают промышленным специалистам
+получать информацию, поддерживать связь с цифровыми
+системами и контролировать рабочие процессы.
+</p>
+
+<p>
+WORKER PRO объединяет носимые устройства с IoT,
+AI, цифровыми системами, безопасностью, обучением
+и Human-Centric Manufacturing.
+</p>
+
+<div>
+
+<span class="badge">Smart Wearables</span>
+<span class="badge">Worker Safety</span>
+<span class="badge">IoT</span>
+<span class="badge">AI</span>
+<span class="badge">Sensors</span>
+<span class="badge">Communication</span>
+<span class="badge">Training</span>
+
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<strong>1,860</strong>
+Wearable Devices
+<small>носимых устройств</small>
+</div>
+
+<div class="stat">
+<strong>8,420</strong>
+Connected Workers
+<small>подключённых работников</small>
+</div>
+
+<div class="stat">
+<strong>97.2%</strong>
+Device Connectivity
+<small>подключение устройств</small>
+</div>
+
+<div class="stat">
+<strong>94.6%</strong>
+Safety Monitoring
+<small>контроль безопасности</small>
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔄 Wearable Technology Flow</h3>
+
+<div class="flow">
+
+<span>Worker</span>
+<b class="arrow">→</b>
+<span>Wearable</span>
+<b class="arrow">→</b>
+<span>Sensors</span>
+<b class="arrow">→</b>
+<span>IoT</span>
+<b class="arrow">→</b>
+<span>AI</span>
+<b class="arrow">→</b>
+<span>Dashboard</span>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>⌚ Основные типы устройств</h3>
+
+<div class="grid">
+
+<div>
+<h3>⌚ Smart Watch</h3>
+<p>
+Получение уведомлений, связь с системой
+и отображение производственной информации.
+</p>
+</div>
+
+<div>
+<h3>🥽 Smart Glasses</h3>
+<p>
+Визуальная информация, инструкции,
+поддержка обслуживания и обучения.
+</p>
+</div>
+
+<div>
+<h3>📡 Worker Sensors</h3>
+<p>
+Носимые датчики для взаимодействия
+с промышленными цифровыми системами.
+</p>
+</div>
+
+<div>
+<h3>🎧 Smart Communication</h3>
+<p>
+Цифровая связь специалистов
+в производственной среде.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔎 Wearable Devices</h3>
+
+<div class="search">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск устройства..."
+onkeyup="filterDevices()"
+>
+
+<select id="locationFilter" onchange="filterDevices()">
+
+<option value="">Все страны</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Turkey">Turkey</option>
+<option value="Germany">Germany</option>
+<option value="Italy">Italy</option>
+<option value="China">China</option>
+
+</select>
+
+<select id="typeFilter" onchange="filterDevices()">
+
+<option value="">Все типы</option>
+<option value="Smart Watch">Smart Watch</option>
+<option value="Smart Glasses">Smart Glasses</option>
+<option value="Worker Sensor">Worker Sensor</option>
+<option value="Communication">Communication</option>
+
+</select>
+
+</div>
+
+<div id="deviceList">
+
+<div
+class="device"
+data-name="Worker Smart Watch Baku"
+data-location="Azerbaijan"
+data-type="Smart Watch"
+>
+
+<h4>⌚ Worker Smart Watch — Baku</h4>
+
+<p><b>Country:</b> Azerbaijan</p>
+<p><b>Type:</b> Smart Watch</p>
+<p><b>Application:</b> Worker Communication</p>
+<p><b>Status:</b> 🟢 Connected</p>
+
+<p>Connectivity: 98%</p>
+
+<div class="progress">
+<div style="width:98%"></div>
+</div>
+
+</div>
+
+<div
+class="device"
+data-name="Smart Glasses Sumqayit"
+data-location="Azerbaijan"
+data-type="Smart Glasses"
+>
+
+<h4>🥽 Smart Glasses — Sumqayit</h4>
+
+<p><b>Country:</b> Azerbaijan</p>
+<p><b>Type:</b> Smart Glasses</p>
+<p><b>Application:</b> Maintenance Support</p>
+<p><b>Status:</b> 🟢 Active</p>
+
+<p>System Availability: 94%</p>
+
+<div class="progress">
+<div style="width:94%"></div>
+</div>
+
+</div>
+
+<div
+class="device"
+data-name="Worker Sensor Istanbul"
+data-location="Turkey"
+data-type="Worker Sensor"
+>
+
+<h4>📡 Worker Sensor — Istanbul</h4>
+
+<p><b>Country:</b> Turkey</p>
+<p><b>Type:</b> Worker Sensor</p>
+<p><b>Application:</b> Safety Monitoring</p>
+<p><b>Status:</b> 🟢 Connected</p>
+
+<p>Sensor Accuracy: 96%</p>
+
+<div class="progress">
+<div style="width:96%"></div>
+</div>
+
+</div>
+
+<div
+class="device"
+data-name="Smart Glasses Dortmund"
+data-location="Germany"
+data-type="Smart Glasses"
+>
+
+<h4>🥽 Industrial Smart Glasses — Dortmund</h4>
+
+<p><b>Country:</b> Germany</p>
+<p><b>Type:</b> Smart Glasses</p>
+<p><b>Application:</b> Training & Maintenance</p>
+<p><b>Status:</b> 🟢 Active</p>
+
+<p>Data Synchronization: 97%</p>
+
+<div class="progress">
+<div style="width:97%"></div>
+</div>
+
+</div>
+
+<div
+class="device"
+data-name="Industrial Communication Milan"
+data-location="Italy"
+data-type="Communication"
+>
+
+<h4>🎧 Industrial Communication — Milan</h4>
+
+<p><b>Country:</b> Italy</p>
+<p><b>Type:</b> Communication</p>
+<p><b>Application:</b> Worker Communication</p>
+<p><b>Status:</b> 🟡 Monitoring</p>
+
+<p>Communication Quality: 91%</p>
+
+<div class="progress">
+<div style="width:91%"></div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>🛡 Worker Safety</h3>
+
+<p>
+Носимые устройства могут использоваться
+для передачи предупреждений и информации
+о рабочей среде.
+</p>
+
+<p>✓ Safety Alerts</p>
+<p>✓ Worker Communication</p>
+<p>✓ Zone Monitoring</p>
+<p>✓ Emergency Signals</p>
+
+<button class="action" onclick="safetyCheck()">
+Проверить систему
+</button>
+
+<p id="safetyResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>📡 IoT Connectivity</h3>
+
+<p>
+Wearable устройства могут подключаться
+к промышленной IoT-инфраструктуре.
+</p>
+
+<p>Connectivity: 97.2%</p>
+
+<div class="progress">
+<div style="width:97.2%"></div>
+</div>
+
+<button class="action" onclick="iotCheck()">
+Проверить подключение
+</button>
+
+<p id="iotResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>🧠 AI Assistance</h3>
+
+<p>
+AI может анализировать данные носимых систем
+и помогать специалистам получать информацию.
+</p>
+
+<button class="action" onclick="runAI()">
+Запустить AI
+</button>
+
+<p id="aiResult"></p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🎓 Training & Smart Instructions</h3>
+
+<div class="grid">
+
+<div>
+<b>📘 Digital Instructions</b>
+<p>Цифровые инструкции для специалиста.</p>
+</div>
+
+<div>
+<b>🥽 AR Support</b>
+<p>Визуальная поддержка обслуживания.</p>
+</div>
+
+<div>
+<b>🔧 Maintenance</b>
+<p>Информация о техническом обслуживании.</p>
+</div>
+
+<div>
+<b>🎓 Training</b>
+<p>Обучение работе с промышленными системами.</p>
+</div>
+
+</div>
+
+<p>Training Completion: 86%</p>
+
+<div class="progress">
+<div style="width:86%"></div>
+</div>
+
+<button class="action" onclick="startTraining()">
+Начать обучение
+</button>
+
+<p id="trainingResult"></p>
+
+</section>
+
+<section class="card">
+
+<h3>📊 Wearable Technology Performance</h3>
+
+<div class="grid">
+
+<div>
+<b>Connectivity</b>
+<p>97.2%</p>
+
+<div class="progress">
+<div style="width:97.2%"></div>
+</div>
+</div>
+
+<div>
+<b>Safety Monitoring</b>
+<p>94.6%</p>
+
+<div class="progress">
+<div style="width:94.6%"></div>
+</div>
+</div>
+
+<div>
+<b>Device Availability</b>
+<p>96.8%</p>
+
+<div class="progress">
+<div style="width:96.8%"></div>
+</div>
+</div>
+
+<div>
+<b>Training</b>
+<p>86%</p>
+
+<div class="progress">
+<div style="width:86%"></div>
+</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>➕ Добавить Wearable Device</h3>
+
+<div class="search">
+
+<input
+id="newDevice"
+type="text"
+placeholder="Название устройства"
+>
+
+<select id="newType">
+
+<option>Smart Watch</option>
+<option>Smart Glasses</option>
+<option>Worker Sensor</option>
+<option>Communication</option>
+
+</select>
+
+<button class="action" onclick="addDevice()">
+Добавить
+</button>
+
+</div>
+
+<p id="addResult"></p>
+
+</section>
+
+<section class="card">
+
+<div class="notice">
+
+<b>⚠️ Важно:</b>
+
+<p>
+Носимые технологии должны использоваться с учётом
+требований промышленной безопасности, защиты данных,
+условий рабочей среды и инструкций производителя.
+</p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔐 Digital Security & Privacy</h3>
+
+<div class="grid">
+
+<div>
+<b>🔒 Data Protection</b>
+<p>Защита данных носимых устройств.</p>
+</div>
+
+<div>
+<b>👤 Privacy</b>
+<p>Контроль использования персональных данных.</p>
+</div>
+
+<div>
+<b>📡 Secure IoT</b>
+<p>Безопасное подключение устройств.</p>
+</div>
+
+<div>
+<b>🛡 Access Control</b>
+<p>Контроль доступа к цифровой системе.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔗 Связанные разделы WORKER PRO</h3>
+
+<div class="links">
+
+<a href="../index.html">Главная</a>
+<a href="../industry-5-0/index.html">Industry 5.0</a>
+<a href="../human-centric-manufacturing/index.html">Human-Centric Manufacturing</a>
+<a href="../collaborative-robots/index.html">Collaborative Robots</a>
+<a href="../industrial-exoskeletons/index.html">Industrial Exoskeletons</a>
+<a href="../industry-4-0/index.html">Industry 4.0</a>
+<a href="../smart-factory/index.html">Smart Factory</a>
+<a href="../digital-manufacturing/index.html">Digital Manufacturing</a>
+<a href="../digital-twin/index.html">Digital Twin</a>
+<a href="../ai-machine-learning/index.html">AI & ML</a>
+<a href="../iot-industrial-internet/index.html">IoT</a>
+<a href="../automation-robotics/index.html">Automation</a>
+<a href="../production/index.html">Production</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../sensors/index.html">Sensors</a>
+<a href="../training/index.html">Training</a>
+<a href="../specialists/index.html">Specialists</a>
+<a href="../safety/index.html">Safety</a>
+<a href="../maintennances/index.html">Maintenance</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+WORKER PRO — Global Industrial Platform<br>
+Wearable Technology • Worker Safety • IoT • AI<br><br>
+© 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterDevices(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const location =
+        document.getElementById("locationFilter")
+        .value;
+
+    const type =
+        document.getElementById("typeFilter")
+        .value;
+
+    const devices =
+        document.querySelectorAll(".device");
+
+    devices.forEach(function(device){
+
+        const name =
+            device.dataset.name.toLowerCase();
+
+        const deviceLocation =
+            device.dataset.location;
+
+        const deviceType =
+            device.dataset.type;
+
+        const matchName =
+            name.includes(search);
+
+        const matchLocation =
+            !location ||
+            deviceLocation === location;
+
+        const matchType =
+            !type ||
+            deviceType === type;
+
+        device.style.display =
+            matchName &&
+            matchLocation &&
+            matchType
+            ? "block"
+            : "none";
+
+    });
+}
+
+function safetyCheck(){
+
+    document.getElementById("safetyResult").innerHTML =
+        "🟢 Проверка завершена. Система мониторинга безопасности доступна.";
+
+}
+
+function iotCheck(){
+
+    document.getElementById("iotResult").innerHTML =
+        "📡 IoT проверка завершена. Подключение устройства отображается как стабильное.";
+
+}
+
+function runAI(){
+
+    document.getElementById("aiResult").innerHTML =
+        "🤖 AI анализ завершён. Данные Wearable Technology обработаны.";
+
+}
+
+function startTraining(){
+
+    document.getElementById("trainingResult").innerHTML =
+        "🎓 Обучение запущено. Модуль: Wearable Technology для промышленности.";
+
+}
+
+function addDevice(){
+
+    const name =
+        document.getElementById("newDevice")
+        .value
+        .trim();
+
+    const type =
+        document.getElementById("newType")
+        .value;
+
+    if(!name){
+
+        document.getElementById("addResult").innerHTML =
+            "⚠️ Введите название устройства.";
+
+        return;
+    }
+
+    document.getElementById("addResult").innerHTML =
+        "✅ Wearable Device добавлено: " +
+        name +
+        " — " +
+        type;
+
+    document.getElementById("newDevice").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
