@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Industrial Robotics</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    padding:22px 15px;
+    text-align:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:7px;
+    font-size:16px;
+}
+
+.top-languages{
+    margin-top:18px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+}
+
+.top-languages a{
+    text-decoration:none;
+    color:white;
+    background:#0b6b3d;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.top-languages a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px 15px 50px;
+}
+
+.hero{
+    background:white;
+    border-radius:16px;
+    padding:28px;
+    margin-bottom:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.08);
+    border-left:6px solid #0b6b3d;
+}
+
+.hero h1{
+    margin-top:0;
+    color:#063d25;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e7f4ec;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+.card h3{
+    margin-top:0;
+    color:#0b6b3d;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat .number{
+    font-size:30px;
+    font-weight:bold;
+    color:#0b6b3d;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin-top:15px;
+}
+
+.flow-item{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.arrow{
+    font-size:22px;
+    color:#0b6b3d;
+    font-weight:bold;
+}
+
+.search-box{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search-box input,
+.search-box select,
+.form input,
+.form select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:9px;
+    font-size:15px;
+}
+
+.btn{
+    border:none;
+    background:#0b6b3d;
+    color:white;
+    padding:11px 16px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.btn:hover{
+    background:#063d25;
+}
+
+.robot{
+    border:1px solid #dbe7df;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+    background:#fbfdfc;
+}
+
+.robot strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:7px;
+    background:#dff5e6;
+    color:#126b36;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.progress{
+    background:#e5ebe7;
+    height:13px;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress-bar{
+    background:#0b6b3d;
+    height:100%;
+}
+
+.demo-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.notice{
+    background:#fff8dc;
+    border-left:5px solid #e1ad01;
+    padding:18px;
+    border-radius:10px;
+    margin-top:20px;
+}
+
+.security{
+    background:#eef8f2;
+    border-radius:14px;
+    padding:20px;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.related a{
+    background:white;
+    color:#0b6b3d;
+    border:1px solid #cfe0d5;
+    padding:9px 12px;
+    border-radius:8px;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.form{
+    display:grid;
+    gap:10px;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:20px;
+}
+
+@media(max-width:600px){
+
+    .hero{
+        padding:20px;
+    }
+
+    .flow-item{
+        width:100%;
+        text-align:center;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Industrial Robotics — промышленные роботизированные системы
+</div>
+
+<div class="top-languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<h1>🤖 Industrial Robotics</h1>
+
+<p>
+Industrial Robotics — это применение промышленных роботов,
+роботизированных комплексов и автоматических систем для
+выполнения производственных операций.
+</p>
+
+<p>
+WORKER PRO объединяет роботов, PLC, датчики, машинное зрение,
+AI, IoT, автоматизированные линии и Smart Factory.
+</p>
+
+<div class="tags">
+<span class="tag">Industrial Robots</span>
+<span class="tag">Robotic Arms</span>
+<span class="tag">Cobots</span>
+<span class="tag">Machine Vision</span>
+<span class="tag">AI</span>
+<span class="tag">PLC</span>
+<span class="tag">IoT</span>
+<span class="tag">Smart Factory</span>
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="card stat">
+<div class="number">624</div>
+<div>Industrial Robots</div>
+</div>
+
+<div class="card stat">
+<div class="number">186</div>
+<div>Robotic Cells</div>
+</div>
+
+<div class="card stat">
+<div class="number">48</div>
+<div>Connected Factories</div>
+</div>
+
+<div class="card stat">
+<div class="number">97.8%</div>
+<div>Robot Availability</div>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 Robotic Production Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">Sensors</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">PLC</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Robot</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Machine Vision</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">AI</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">SCADA</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">IoT</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Smart Factory</div>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>🧩 Robotics Technologies</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🦾 Robotic Arms</h3>
+<p>
+Промышленные манипуляторы для сварки, сборки,
+обработки, окраски и перемещения деталей.
+</p>
+</div>
+
+<div class="card">
+<h3>🤝 Cobots</h3>
+<p>
+Коллаборативные роботы для совместной работы
+с человеком в контролируемых производственных условиях.
+</p>
+</div>
+
+<div class="card">
+<h3>👁️ Machine Vision</h3>
+<p>
+Камеры и системы компьютерного зрения для
+контроля деталей, положения и качества.
+</p>
+</div>
+
+<div class="card">
+<h3>🧠 AI Robotics</h3>
+<p>
+AI используется для анализа данных, распознавания
+объектов и оптимизации роботизированных операций.
+</p>
+</div>
+
+<div class="card">
+<h3>📦 Palletizing</h3>
+<p>
+Автоматическое размещение продукции на паллетах
+и перемещение грузов.
+</p>
+</div>
+
+<div class="card">
+<h3>🔥 Robotic Welding</h3>
+<p>
+Роботизированная сварка с повторяемыми траекториями
+и автоматическим контролем операций.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔎 Robotic Systems</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="search"
+placeholder="Поиск робота, страны или технологии..."
+oninput="filterRobots()"
+>
+
+<select id="typeFilter" onchange="filterRobots()">
+
+<option value="all">
+Все системы
+</option>
+
+<option value="Welding">
+Welding
+</option>
+
+<option value="Assembly">
+Assembly
+</option>
+
+<option value="Palletizing">
+Palletizing
+</option>
+
+<option value="Cobot">
+Cobot
+</option>
+
+<option value="Vision">
+Machine Vision
+</option>
+
+</select>
+
+</div>
+
+<div id="robots">
+
+<div
+class="robot"
+data-search="Baku Robotic Welding Azerbaijan Welding Robot"
+data-type="Welding"
+>
+
+<strong>🔥 Baku Robotic Welding</strong><br>
+
+🇦🇿 Azerbaijan<br>
+
+Welding Robots — 48 cells
+
+<span class="status">
+Online
+</span>
+
+</div>
+
+<div
+class="robot"
+data-search="Sumqayit Robotic Assembly Azerbaijan Assembly"
+data-type="Assembly"
+>
+
+<strong>🔧 Sumqayit Robotic Assembly</strong><br>
+
+🇦🇿 Azerbaijan<br>
+
+Assembly Robots — 36 cells
+
+<span class="status">
+Online
+</span>
+
+</div>
+
+<div
+class="robot"
+data-search="Istanbul Cobot Factory Turkey Cobot"
+data-type="Cobot"
+>
+
+<strong>🤝 Istanbul Cobot Factory</strong><br>
+
+🇹🇷 Turkey<br>
+
+Collaborative Robots — 64 units
+
+<span class="status">
+Online
+</span>
+
+</div>
+
+<div
+class="robot"
+data-search="Dortmund Robotic Palletizing Germany Palletizing"
+data-type="Palletizing"
+>
+
+<strong>📦 Dortmund Robotic Palletizing</strong><br>
+
+🇩🇪 Germany<br>
+
+Palletizing Robots — 42 systems
+
+<span class="status">
+Online
+</span>
+
+</div>
+
+<div
+class="robot"
+data-search="Milan Machine Vision Italy Vision"
+data-type="Vision"
+>
+
+<strong>👁️ Milan Machine Vision</strong><br>
+
+🇮🇹 Italy<br>
+
+AI Vision Systems — 86 cameras
+
+<span class="status">
+Maintenance
+</span>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 Robotics Performance</h2>
+
+<p>
+Robot Availability — 97.8%
+</p>
+
+<div class="progress">
+<div class="progress-bar" style="width:97.8%"></div>
+</div>
+
+<p>
+Production Accuracy — 98.6%
+</p>
+
+<div class="progress">
+<div class="progress-bar" style="width:98.6%"></div>
+</div>
+
+<p>
+Machine Vision Accuracy — 96.9%
+</p>
+
+<div class="progress">
+<div class="progress-bar" style="width:96.9%"></div>
+</div>
+
+<p>
+Robotic Cell Availability — 97.4%
+</p>
+
+<div class="progress">
+<div class="progress-bar" style="width:97.4%"></div>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 Robotics Demo</h2>
+
+<div class="demo-buttons">
+
+<button class="btn" onclick="robotStatus()">
+🤖 Robot Status
+</button>
+
+<button class="btn" onclick="weldingDemo()">
+🔥 Welding Robot
+</button>
+
+<button class="btn" onclick="cobotDemo()">
+🤝 Cobot Check
+</button>
+
+<button class="btn" onclick="visionDemo()">
+👁️ Vision System
+</button>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add Robotic System</h2>
+
+<div class="form">
+
+<input
+type="text"
+id="robotName"
+placeholder="Название роботизированной системы"
+>
+
+<select id="robotType">
+
+<option value="Welding Robot">
+Welding Robot
+</option>
+
+<option value="Assembly Robot">
+Assembly Robot
+</option>
+
+<option value="Palletizing Robot">
+Palletizing Robot
+</option>
+
+<option value="Cobot">
+Cobot
+</option>
+
+<option value="Machine Vision">
+Machine Vision
+</option>
+
+</select>
+
+<button class="btn" onclick="addRobot()">
+Добавить систему
+</button>
+
+</div>
+
+<div id="newRobots"></div>
+
+</section>
+
+<section>
+
+<h2>🏭 Industrial Robotics Applications</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🔥 Welding</h3>
+<p>
+Автоматизированная сварка металлических деталей
+и конструкций.
+</p>
+</div>
+
+<div class="card">
+<h3>🔧 Assembly</h3>
+<p>
+Роботизированная сборка компонентов и изделий.
+</p>
+</div>
+
+<div class="card">
+<h3>📦 Palletizing</h3>
+<p>
+Автоматическая укладка продукции и грузов.
+</p>
+</div>
+
+<div class="card">
+<h3>🎨 Painting</h3>
+<p>
+Автоматизированная окраска промышленных изделий.
+</p>
+</div>
+
+<div class="card">
+<h3>🚚 Material Handling</h3>
+<p>
+Перемещение деталей и материалов между операциями.
+</p>
+</div>
+
+<div class="card">
+<h3>👁️ Quality Inspection</h3>
+<p>
+Контроль качества с помощью машинного зрения.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="security">
+
+<h2>🔐 Robotics Safety & Security</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🦺 Safety Zones</h3>
+<p>
+Определение безопасных зон вокруг роботизированного оборудования.
+</p>
+</div>
+
+<div class="card">
+<h3>🚨 Emergency Stop</h3>
+<p>
+Системы аварийной остановки и безопасного состояния оборудования.
+</p>
+</div>
+
+<div class="card">
+<h3>🔑 Access Control</h3>
+<p>
+Контроль доступа к роботизированным системам и настройкам.
+</p>
+</div>
+
+<div class="card">
+<h3>📡 Network Security</h3>
+<p>
+Защита коммуникаций роботов и промышленной сети.
+</p>
+</div>
+
+<div class="card">
+<h3>👤 Operator Safety</h3>
+<p>
+Безопасное взаимодействие персонала с роботизированными системами.
+</p>
+</div>
+
+<div class="card">
+<h3>💾 Backup</h3>
+<p>
+Резервное копирование программ и конфигураций роботов.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="notice">
+
+<h3>⚠️ Важная информация</h3>
+
+<p>
+Эта страница WORKER PRO является цифровой демонстрационной моделью.
+Реальные роботизированные системы требуют квалифицированного
+проектирования, оценки рисков, настройки защитных функций,
+обучения персонала, соблюдения требований производителя и
+промышленных процедур безопасности.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO Systems</h2>
+
+<div class="related">
+
+<a href="../index.html">🏠 Main</a>
+
+<a href="../industrial-automation/index.html">
+⚙️ Industrial Automation
+</a>
+
+<a href="../industrial-control-systems/index.html">
+🎛️ Control Systems
+</a>
+
+<a href="../automation-robotics/index.html">
+🤖 Automation Robotics
+</a>
+
+<a href="../collaborative-robots/index.html">
+🤝 Collaborative Robots
+</a>
+
+<a href="../industrial-exoskeletons/index.html">
+🦾 Industrial Exoskeletons
+</a>
+
+<a href="../industrial-network/index.html">
+🌐 Industrial Network
+</a>
+
+<a href="../industrial-communication/index.html">
+📡 Industrial Communication
+</a>
+
+<a href="../iot-industrial-internet/index.html">
+📡 Industrial IoT
+</a>
+
+<a href="../ai-machine-learning/index.html">
+🧠 AI & ML
+</a>
+
+<a href="../digital-twin/index.html">
+🔄 Digital Twin
+</a>
+
+<a href="../smart-factory/index.html">
+🏭 Smart Factory
+</a>
+
+<a href="../digital-manufacturing/index.html">
+🏭 Digital Manufacturing
+</a>
+
+<a href="../production/index.html">
+⚙️ Production
+</a>
+
+<a href="../equipment/index.html">
+🔧 Equipment
+</a>
+
+<a href="../sensors/index.html">
+📡 Sensors
+</a>
+
+<a href="../maintennances/index.html">
+🛠️ Maintenance
+</a>
+
+<a href="../safety/index.html">
+🦺 Safety
+</a>
+
+<a href="../training/index.html">
+🎓 Training
+</a>
+
+<a href="../specialists/index.html">
+👷 Specialists
+</a>
+
+<a href="../companies/index.html">
+🏢 Companies
+</a>
+
+<a href="../suppliers/index.html">
+📦 Suppliers
+</a>
+
+<a href="../dashboard/index.html">
+📊 Dashboard
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong><br>
+Global Industrial Platform<br><br>
+Industrial Robotics<br><br>
+© 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterRobots(){
+
+const search =
+document.getElementById("search")
+.value
+.toLowerCase();
+
+const type =
+document.getElementById("typeFilter")
+.value;
+
+const robots =
+document.querySelectorAll(".robot");
+
+robots.forEach(function(robot){
+
+const text =
+robot.dataset.search.toLowerCase();
+
+const robotType =
+robot.dataset.type;
+
+const searchMatch =
+text.includes(search);
+
+const typeMatch =
+type === "all" ||
+robotType === type;
+
+robot.style.display =
+searchMatch && typeMatch
+? "block"
+: "none";
+
+});
+
+}
+
+function robotStatus(){
+
+alert(
+"Robot Status\n\n" +
+"Industrial Robots: 624\n" +
+"Online: 607\n" +
+"Maintenance: 17\n" +
+"Availability: 97.8%"
+);
+
+}
+
+function weldingDemo(){
+
+alert(
+"Welding Robot\n\n" +
+"Robotic Welding Cells: 48\n" +
+"Online: 46\n" +
+"Production Status: ACTIVE"
+);
+
+}
+
+function cobotDemo(){
+
+alert(
+"Cobot Check\n\n" +
+"Collaborative Robots: 64\n" +
+"Online: 62\n" +
+"Safety Monitoring: ACTIVE"
+);
+
+}
+
+function visionDemo(){
+
+alert(
+"Machine Vision\n\n" +
+"Vision Systems: 86\n" +
+"Online: 83\n" +
+"Inspection Accuracy: 96.9%"
+);
+
+}
+
+function addRobot(){
+
+const name =
+document.getElementById("robotName")
+.value
+.trim();
+
+const type =
+document.getElementById("robotType")
+.value;
+
+if(!name){
+
+alert("Введите название роботизированной системы.");
+
+return;
+
+}
+
+const box =
+document.getElementById("newRobots");
+
+const item =
+document.createElement("div");
+
+item.className = "robot";
+
+item.innerHTML =
+"<strong>🤖 " +
+name +
+"</strong><br>" +
+"WORKER PRO Demo<br>" +
+type +
+' <span class="status">New</span>';
+
+box.appendChild(item);
+
+document.getElementById("robotName").value = "";
+
+alert(
+"Роботизированная система добавлена в демонстрационный список WORKER PRO."
+);
+
+}
+
+</script>
+
+</body>
+</html>
