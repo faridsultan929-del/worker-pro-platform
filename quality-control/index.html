@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Quality Control</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:24px 15px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+h1,
+h2{
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    text-align:center;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#063d25;
+    margin-bottom:8px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#063d25;
+}
+
+.component{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+}
+
+.component h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.metric{
+    background:#f8fbf9;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+}
+
+.metric strong{
+    display:block;
+    color:#063d25;
+    font-size:30px;
+    margin-bottom:6px;
+}
+
+.progress{
+    height:10px;
+    background:#e1e8e4;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 15px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+}
+
+.action,
+.add-btn{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:12px 16px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.action:hover,
+.add-btn:hover{
+    background:#063d25;
+}
+
+.control-item{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:10px;
+}
+
+.control-item strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    background:#dff5e7;
+    color:#087238;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-top:6px;
+}
+
+.warning-status{
+    background:#fff1c7;
+    color:#8a6200;
+}
+
+.fail-status{
+    background:#ffe2e2;
+    color:#a40000;
+}
+
+.result{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#e9f7ee;
+    color:#063d25;
+    font-weight:bold;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.warning{
+    background:#fff6d9;
+    border-left:5px solid #e3ae00;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    background:#e8f5ed;
+    color:#0b6b3d;
+    padding:9px 12px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.related a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .logo{
+        font-size:27px;
+    }
+
+    main{
+        padding:12px;
+    }
+
+    .hero,
+    .card{
+        padding:18px;
+    }
+
+    .flow-item{
+        width:100%;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Quality Control — контроль качества
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<h1>🔍 Quality Control</h1>
+
+<p>
+Quality Control (QC) — контроль качества продукции и процессов.
+Раздел помогает выполнять входной, промежуточный и финальный контроль,
+проводить измерения, выявлять несоответствия и принимать решения
+по результатам проверки.
+</p>
+
+<div class="tags">
+<span class="tag">Quality Control</span>
+<span class="tag">Inspection</span>
+<span class="tag">Incoming Control</span>
+<span class="tag">Process Control</span>
+<span class="tag">Final Inspection</span>
+<span class="tag">Measurements</span>
+<span class="tag">Defects</span>
+<span class="tag">Acceptance</span>
+<span class="tag">Quality Results</span>
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="stat">
+<strong>428</strong>
+QC Systems
+</div>
+
+<div class="stat">
+<strong>18,640</strong>
+Inspections
+</div>
+
+<div class="stat">
+<strong>138</strong>
+Connected Factories
+</div>
+
+<div class="stat">
+<strong>98.4%</strong>
+Control Accuracy
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 Quality Control Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">📦 Incoming Material</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔍 Incoming Inspection</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">⚙️ Process Control</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📏 Measurement</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔎 Final Inspection</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">✅ Acceptance</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📊 Quality Data</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔄 Improvement</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>📦 Incoming Control</h3>
+<p>
+Проверка материалов, комплектующих и продукции от поставщиков.
+</p>
+</div>
+
+<div class="component">
+<h3>⚙️ Process Control</h3>
+<p>
+Контроль параметров производственного процесса во время изготовления.
+</p>
+</div>
+
+<div class="component">
+<h3>📏 Measurement</h3>
+<p>
+Измерение размеров, температуры, давления, веса и других параметров.
+</p>
+</div>
+
+<div class="component">
+<h3>🔎 Final Inspection</h3>
+<p>
+Финальная проверка готовой продукции перед передачей или поставкой.
+</p>
+</div>
+
+<div class="component">
+<h3>⚠️ Nonconformity</h3>
+<p>
+Регистрация несоответствий и результатов проверки.
+</p>
+</div>
+
+<div class="component">
+<h3>✅ Acceptance</h3>
+<p>
+Принятие решения на основе установленных критериев качества.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 Quality Control Performance</h2>
+
+<div class="grid">
+
+<div class="metric">
+<strong>98.4%</strong>
+Control Accuracy
+</div>
+
+<div class="metric">
+<strong>97.8%</strong>
+Inspection Coverage
+</div>
+
+<div class="metric">
+<strong>96.5%</strong>
+Defect Detection
+</div>
+
+<div class="metric">
+<strong>99.1%</strong>
+Inspection Records
+</div>
+
+</div>
+
+<p>Control Accuracy — 98.4%</p>
+
+<div class="progress">
+<span style="width:98.4%"></span>
+</div>
+
+<p>Inspection Coverage — 97.8%</p>
+
+<div class="progress">
+<span style="width:97.8%"></span>
+</div>
+
+<p>Defect Detection — 96.5%</p>
+
+<div class="progress">
+<span style="width:96.5%"></span>
+</div>
+
+<p>Inspection Records — 99.1%</p>
+
+<div class="progress">
+<span style="width:99.1%"></span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🏭 Quality Control Systems</h2>
+
+<div class="search-box">
+
+<input
+id="controlSearch"
+type="text"
+placeholder="Поиск QC, города или процесса..."
+onkeyup="filterControls()"
+>
+
+<button class="action" onclick="filterControls()">
+Поиск
+</button>
+
+</div>
+
+<div id="controlList">
+
+<div class="control-item">
+<strong>Baku CNC Quality Control</strong><br>
+Azerbaijan — CNC Dimensional Inspection — 68 control points<br>
+<span class="status">Online</span>
+</div>
+
+<div class="control-item">
+<strong>Sumqayit Stamping QC</strong><br>
+Azerbaijan — Stamping Process Control — 54 control points<br>
+<span class="status">Online</span>
+</div>
+
+<div class="control-item">
+<strong>Istanbul Manufacturing QC</strong><br>
+Turkey — Production + Final Inspection — 72 control points<br>
+<span class="status">Online</span>
+</div>
+
+<div class="control-item">
+<strong>Dortmund Precision QC</strong><br>
+Germany — Dimensional + Process Control — 84 control points<br>
+<span class="status">Online</span>
+</div>
+
+<div class="control-item">
+<strong>Milan Smart Quality Control</strong><br>
+Italy — Digital Inspection + IoT — 46 control points<br>
+<span class="status warning-status">Review</span>
+</div>
+
+<div class="control-item">
+<strong>Shanghai Industrial QC</strong><br>
+China — Incoming + Final Inspection — 76 control points<br>
+<span class="status">Online</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 Quality Control Demo</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>📦 Incoming Check</h3>
+<p>
+Демонстрационная проверка поступившего материала.
+</p>
+
+<button class="action" onclick="incomingDemo()">
+Проверить
+</button>
+</div>
+
+<div class="component">
+<h3>⚙️ Process Check</h3>
+<p>
+Проверка параметров производственного процесса.
+</p>
+
+<button class="action" onclick="processDemo()">
+Проверить
+</button>
+</div>
+
+<div class="component">
+<h3>📏 Measurement Check</h3>
+<p>
+Демонстрационная проверка результата измерения.
+</p>
+
+<button class="action" onclick="measurementDemo()">
+Проверить
+</button>
+</div>
+
+<div class="component">
+<h3>🔎 Final Inspection</h3>
+<p>
+Демонстрационная финальная проверка продукции.
+</p>
+
+<button class="action" onclick="finalDemo()">
+Проверить
+</button>
+</div>
+
+</div>
+
+<div id="demoResult"></div>
+
+</section>
+
+<section class="card">
+
+<h2>📐 Measurement Example</h2>
+
+<div class="grid">
+
+<div class="metric">
+<strong>50.00 mm</strong>
+Target
+</div>
+
+<div class="metric">
+<strong>49.98 mm</strong>
+Measured
+</div>
+
+<div class="metric">
+<strong>±0.10 mm</strong>
+Tolerance
+</div>
+
+<div class="metric">
+<strong>PASS</strong>
+Result
+</div>
+
+</div>
+
+<p>
+Демонстрационный пример: измеренное значение находится
+в пределах указанного допуска.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add Quality Control System</h2>
+
+<form onsubmit="addControl(event)">
+
+<input
+id="controlName"
+type="text"
+placeholder="Название QC системы"
+required
+>
+
+<select id="controlType">
+
+<option>Incoming Quality Control</option>
+<option>Process Quality Control</option>
+<option>Dimensional Inspection</option>
+<option>Final Quality Control</option>
+<option>Supplier Quality Control</option>
+<option>Digital Quality Control</option>
+
+</select>
+
+<input
+id="controlPoints"
+type="number"
+min="1"
+placeholder="Количество контрольных точек"
+required
+>
+
+<textarea
+id="controlDescription"
+placeholder="Описание системы контроля..."
+></textarea>
+
+<button class="add-btn" type="submit">
+Добавить QC систему
+</button>
+
+</form>
+
+<div id="addResult"></div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>📦 Incoming Inspection</h3>
+<p>
+Контроль поступающих материалов и комплектующих.
+</p>
+</div>
+
+<div class="component">
+<h3>⚙️ Process Inspection</h3>
+<p>
+Контроль процесса на отдельных производственных операциях.
+</p>
+</div>
+
+<div class="component">
+<h3>📏 Dimensional Control</h3>
+<p>
+Проверка размеров и геометрических характеристик.
+</p>
+</div>
+
+<div class="component">
+<h3>🌡️ Parameter Control</h3>
+<p>
+Контроль температуры, давления, скорости и других параметров.
+</p>
+</div>
+
+<div class="component">
+<h3>🔎 Final Inspection</h3>
+<p>
+Проверка готовой продукции перед выпуском.
+</p>
+</div>
+
+<div class="component">
+<h3>📊 Quality Records</h3>
+<p>
+Сохранение результатов контроля и истории проверок.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🛡️ Quality Control Security</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>🔐 Access Control</h3>
+<p>
+Контроль доступа к результатам инспекций.
+</p>
+</div>
+
+<div class="component">
+<h3>📋 Audit Trail</h3>
+<p>
+Регистрация изменений и действий пользователей.
+</p>
+</div>
+
+<div class="component">
+<h3>📑 Inspection Records</h3>
+<p>
+Хранение результатов измерений и проверок.
+</p>
+</div>
+
+<div class="component">
+<h3>💾 Backup</h3>
+<p>
+Резервное копирование данных контроля качества.
+</p>
+</div>
+
+<div class="component">
+<h3>🔎 Traceability</h3>
+<p>
+Связь продукции, партии, измерения и результата проверки.
+</p>
+</div>
+
+<div class="component">
+<h3>👤 Operator Control</h3>
+<p>
+Определение ответственных за проведение контроля.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="warning">
+
+<strong>⚠️ Важно:</strong>
+
+<p>
+Эта страница является демонстрационной моделью WORKER PRO.
+Реальный Quality Control должен учитывать требования к продукции,
+методы измерений, калибровку средств измерений, квалификацию
+персонала, техническую документацию, критерии приемки и применимые
+требования организации. Демонстрационные показатели не являются
+фактическими показателями предприятия.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO</h2>
+
+<div class="related">
+
+<a href="../index.html">Main</a>
+
+<a href="../quality-planning/index.html">
+Quality Planning
+</a>
+
+<a href="../quality-assurance/index.html">
+Quality Assurance
+</a>
+
+<a href="../quality-management-system/index.html">
+Quality Management System
+</a>
+
+<a href="../measurement-system-analysis/index.html">
+Measurement System Analysis
+</a>
+
+<a href="../process-capability-analysis/index.html">
+Process Capability Analysis
+</a>
+
+<a href="../statistical-process-control/index.html">
+Statistical Process Control
+</a>
+
+<a href="../zero-defect-manufacturing/index.html">
+Zero Defect Manufacturing
+</a>
+
+<a href="../predictive-quality/index.html">
+Predictive Quality
+</a>
+
+<a href="../automated-quality-control/index.html">
+Automated Quality Control
+</a>
+
+<a href="../automated-inspection/index.html">
+Automated Inspection
+</a>
+
+<a href="../automated-sorting/index.html">
+Automated Sorting
+</a>
+
+<a href="../automated-packaging/index.html">
+Automated Packaging
+</a>
+
+<a href="../robotic-palletizing/index.html">
+Robotic Palletizing
+</a>
+
+<a href="../robotic-assembly/index.html">
+Robotic Assembly
+</a>
+
+<a href="../robotic-welding/index.html">
+Robotic Welding
+</a>
+
+<a href="../robotic-production-lines/index.html">
+Robotic Production Lines
+</a>
+
+<a href="../industrial-robot-cells/index.html">
+Industrial Robot Cells
+</a>
+
+<a href="../industrial-robotics/index.html">
+Industrial Robotics
+</a>
+
+<a href="../industrial-automation/index.html">
+Industrial Automation
+</a>
+
+<a href="../industrial-control-systems/index.html">
+Industrial Control Systems
+</a>
+
+<a href="../automation-robotics/index.html">
+Automation Robotics
+</a>
+
+<a href="../industrial-network/index.html">
+Industrial Network
+</a>
+
+<a href="../industrial-communication/index.html">
+Industrial Communication
+</a>
+
+<a href="../iot-industrial-internet/index.html">
+Industrial IoT
+</a>
+
+<a href="../ai-machine-learning/index.html">
+AI &amp; Machine Learning
+</a>
+
+<a href="../digital-twin/index.html">
+Digital Twin
+</a>
+
+<a href="../smart-factory/index.html">
+Smart Factory
+</a>
+
+<a href="../digital-manufacturing/index.html">
+Digital Manufacturing
+</a>
+
+<a href="../analytics/index.html">
+Analytics
+</a>
+
+<a href="../reports/index.html">
+Reports
+</a>
+
+<a href="../production/index.html">
+Production
+</a>
+
+<a href="../equipment/index.html">
+Equipment
+</a>
+
+<a href="../sensors/index.html">
+Sensors
+</a>
+
+<a href="../quality/index.html">
+Quality
+</a>
+
+<a href="../maintennances/index.html">
+Maintenance
+</a>
+
+<a href="../safety/index.html">
+Safety
+</a>
+
+<a href="../training/index.html">
+Training
+</a>
+
+<a href="../specialists/index.html">
+Specialists
+</a>
+
+<a href="../companies/index.html">
+Companies
+</a>
+
+<a href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a href="../orders/index.html">
+Orders
+</a>
+
+<a href="../logistics/index.html">
+Logistics
+</a>
+
+<a href="../warehouses/index.html">
+Warehouses
+</a>
+
+<a href="../tracking/index.html">
+Tracking
+</a>
+
+<a href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>
+Global Industrial Platform — Quality Control • Production • Technology
+</p>
+
+<p>© 2026 WORKER PRO</p>
+
+</footer>
+
+<script>
+
+function filterControls(){
+
+var input =
+document.getElementById("controlSearch")
+.value
+.toLowerCase();
+
+var items =
+document.querySelectorAll(".control-item");
+
+items.forEach(function(item){
+
+var text =
+item.innerText.toLowerCase();
+
+item.style.display =
+text.indexOf(input) !== -1
+? "block"
+: "none";
+
+});
+
+}
+
+function showDemo(message){
+
+document.getElementById("demoResult").innerHTML =
+'<div class="result">'+message+'</div>';
+
+}
+
+function incomingDemo(){
+
+showDemo(
+"📦 Incoming Check: PASS — демонстрационный материал соответствует заданным условиям контроля."
+);
+
+}
+
+function processDemo(){
+
+showDemo(
+"⚙️ Process Check: OK — демонстрационные параметры процесса находятся под контролем."
+);
+
+}
+
+function measurementDemo(){
+
+showDemo(
+"📏 Measurement Check: PASS — демонстрационное измерение находится в пределах допуска."
+);
+
+}
+
+function finalDemo(){
+
+showDemo(
+"🔎 Final Inspection: PASS — демонстрационная финальная проверка завершена."
+);
+
+}
+
+function addControl(event){
+
+event.preventDefault();
+
+var name =
+document.getElementById("controlName").value;
+
+var type =
+document.getElementById("controlType").value;
+
+var points =
+document.getElementById("controlPoints").value;
+
+document.getElementById("addResult").innerHTML =
+'<div class="result">'+
+'✅ QC System added: '+
+name+
+' — '+
+type+
+' — '+
+points+
+' control points.'+
+'</div>';
+
+document.getElementById("controlName").value="";
+document.getElementById("controlPoints").value="";
+document.getElementById("controlDescription").value="";
+
+}
+
+</script>
+
+</body>
+</html>
