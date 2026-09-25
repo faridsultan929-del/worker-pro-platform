@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Robotic Assembly</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:24px 16px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+.hero h1{
+    color:#063d25;
+    margin-top:0;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    text-align:center;
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#063d25;
+    margin-bottom:7px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:11px 14px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#063d25;
+}
+
+.component{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+}
+
+.component h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search-box{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+}
+
+.action,
+.add-btn{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:12px 16px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.action:hover,
+.add-btn:hover{
+    background:#063d25;
+}
+
+.assembly-item{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+    background:#fafcfb;
+}
+
+.assembly-item strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    background:#dff5e7;
+    color:#087238;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.maintenance{
+    background:#fff1c7;
+    color:#8a6200;
+}
+
+.progress{
+    height:10px;
+    background:#e1e8e4;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+    margin-bottom:15px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.demo-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.result{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#e9f7ee;
+    color:#063d25;
+    font-weight:bold;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+.warning{
+    background:#fff6d9;
+    border-left:5px solid #e3ae00;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    background:#e8f5ed;
+    color:#0b6b3d;
+    padding:9px 12px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.related a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:27px;
+    }
+
+    main{
+        padding:12px;
+    }
+
+    .hero,
+    .card{
+        padding:19px;
+    }
+
+    .flow-item{
+        width:100%;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Robotic Assembly — роботизированная промышленная сборка
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<h1>🔧 Robotic Assembly</h1>
+
+<p>
+Роботизированная сборка объединяет промышленных роботов,
+cobots, автоматическую подачу деталей, крепёжные системы,
+датчики, машинное зрение, PLC/SCADA и контроль качества
+для автоматизации сборочных операций.
+</p>
+
+<div class="tags">
+<span class="tag">Robotic Assembly</span>
+<span class="tag">Industrial Robots</span>
+<span class="tag">Cobots</span>
+<span class="tag">Machine Vision</span>
+<span class="tag">PLC</span>
+<span class="tag">SCADA</span>
+<span class="tag">Quality Control</span>
+<span class="tag">Smart Factory</span>
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="stat">
+<strong>248</strong>
+Robotic Assembly Cells
+</div>
+
+<div class="stat">
+<strong>684</strong>
+Assembly Robots
+</div>
+
+<div class="stat">
+<strong>92</strong>
+Connected Factories
+</div>
+
+<div class="stat">
+<strong>98.2%</strong>
+Assembly Availability
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 Robotic Assembly Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">📦 Parts</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🚚 Feeding</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🤖 Robot</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔩 Assembly</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">👁️ Vision</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">✅ Quality</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📦 Product</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>🤖 Assembly Robots</h3>
+<p>
+Роботы-манипуляторы выполняют повторяемые операции сборки.
+</p>
+</div>
+
+<div class="component">
+<h3>🤝 Cobots</h3>
+<p>
+Коллаборативные роботы для совместных рабочих процессов.
+</p>
+</div>
+
+<div class="component">
+<h3>🚚 Part Feeding</h3>
+<p>
+Автоматическая подача и позиционирование компонентов.
+</p>
+</div>
+
+<div class="component">
+<h3>🔩 Fastening</h3>
+<p>
+Автоматизированная установка крепежа и соединение компонентов.
+</p>
+</div>
+
+<div class="component">
+<h3>👁️ Machine Vision</h3>
+<p>
+Определение положения деталей и контроль сборки.
+</p>
+</div>
+
+<div class="component">
+<h3>📊 Quality Control</h3>
+<p>
+Контроль параметров и результата сборочной операции.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔎 Robotic Assembly Systems</h2>
+
+<div class="search-box">
+
+<input
+id="assemblySearch"
+type="text"
+placeholder="Поиск системы, города или технологии..."
+onkeyup="filterAssembly()"
+>
+
+<button class="action" onclick="filterAssembly()">
+Поиск
+</button>
+
+</div>
+
+<div id="assemblyList">
+
+<div class="assembly-item">
+<strong>Baku Robotic Assembly</strong><br>
+Azerbaijan — Assembly Robots — 48 cells
+<span class="status">Online</span>
+</div>
+
+<div class="assembly-item">
+<strong>Sumqayit Component Assembly</strong><br>
+Azerbaijan — Cobot Assembly — 36 cells
+<span class="status">Online</span>
+</div>
+
+<div class="assembly-item">
+<strong>Istanbul Automotive Assembly</strong><br>
+Turkey — Robot + Vision — 72 cells
+<span class="status">Online</span>
+</div>
+
+<div class="assembly-item">
+<strong>Dortmund Precision Assembly</strong><br>
+Germany — Robotics + Vision — 54 cells
+<span class="status">Online</span>
+</div>
+
+<div class="assembly-item">
+<strong>Milan Smart Assembly</strong><br>
+Italy — IoT + Robotics — 42 cells
+<span class="status maintenance">Maintenance</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 Assembly Performance</h2>
+
+<p>Assembly Availability — 98.2%</p>
+
+<div class="progress">
+<span style="width:98.2%"></span>
+</div>
+
+<p>Assembly Accuracy — 98.7%</p>
+
+<div class="progress">
+<span style="width:98.7%"></span>
+</div>
+
+<p>Vision Inspection — 97.9%</p>
+
+<div class="progress">
+<span style="width:97.9%"></span>
+</div>
+
+<p>Robot Availability — 98.3%</p>
+
+<div class="progress">
+<span style="width:98.3%"></span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 Assembly System Demo</h2>
+
+<div class="demo-area">
+
+<button class="action" onclick="assemblyStatus()">
+Assembly Status
+</button>
+
+<button class="action" onclick="robotDemo()">
+Robot Check
+</button>
+
+<button class="action" onclick="feedingDemo()">
+Part Feeding
+</button>
+
+<button class="action" onclick="visionDemo()">
+Vision Check
+</button>
+
+</div>
+
+<div id="demoResult"></div>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add Robotic Assembly Cell</h2>
+
+<form onsubmit="addAssembly(event)">
+
+<input
+id="assemblyName"
+type="text"
+placeholder="Название сборочной ячейки"
+required
+>
+
+<select id="assemblyType">
+
+<option>Robotic Assembly</option>
+<option>Cobot Assembly</option>
+<option>Automotive Assembly</option>
+<option>Precision Assembly</option>
+<option>Fastening Cell</option>
+<option>Vision Assembly</option>
+
+</select>
+
+<button class="add-btn" type="submit">
+Добавить сборочную ячейку
+</button>
+
+</form>
+
+<div id="addResult"></div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>🚗 Automotive</h3>
+<p>Роботизированная сборка автомобильных компонентов.</p>
+</div>
+
+<div class="component">
+<h3>⚙️ Machine Building</h3>
+<p>Сборка машин и промышленного оборудования.</p>
+</div>
+
+<div class="component">
+<h3>🔌 Electronics</h3>
+<p>Автоматизированная сборка электронных компонентов.</p>
+</div>
+
+<div class="component">
+<h3>🏭 Industrial Equipment</h3>
+<p>Сборка промышленного оборудования.</p>
+</div>
+
+<div class="component">
+<h3>📦 Consumer Products</h3>
+<p>Высокоскоростная сборка серийной продукции.</p>
+</div>
+
+<div class="component">
+<h3>🔩 Precision Components</h3>
+<p>Точная роботизированная сборка небольших деталей.</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🛡️ Assembly Safety</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>🛑 Emergency Stop</h3>
+<p>Аварийная остановка роботизированной системы.</p>
+</div>
+
+<div class="component">
+<h3>🚧 Safety Zones</h3>
+<p>Контролируемые зоны движения робота.</p>
+</div>
+
+<div class="component">
+<h3>🔒 Interlocks</h3>
+<p>Защитные блокировки доступа.</p>
+</div>
+
+<div class="component">
+<h3>📡 Safety Sensors</h3>
+<p>Контроль состояния рабочей зоны.</p>
+</div>
+
+<div class="component">
+<h3>👷 Operator Safety</h3>
+<p>Безопасность операторов и обслуживающего персонала.</p>
+</div>
+
+<div class="component">
+<h3>🌐 Network Security</h3>
+<p>Защита подключённого промышленного оборудования.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="warning">
+
+<strong>⚠️ Важно:</strong>
+
+<p>
+Эта страница является цифровой демонстрационной моделью.
+Реальные роботизированные сборочные системы требуют
+квалифицированного проектирования, оценки рисков, защитных функций,
+обучения персонала, технического обслуживания, соблюдения требований
+производителя и применимых норм промышленной безопасности.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO</h2>
+
+<div class="related">
+
+<a href="../index.html">Main</a>
+
+<a href="../robotic-welding/index.html">
+Robotic Welding
+</a>
+
+<a href="../industrial-robot-cells/index.html">
+Industrial Robot Cells
+</a>
+
+<a href="../robotic-production-lines/index.html">
+Robotic Production Lines
+</a>
+
+<a href="../industrial-robotics/index.html">
+Industrial Robotics
+</a>
+
+<a href="../industrial-automation/index.html">
+Industrial Automation
+</a>
+
+<a href="../industrial-control-systems/index.html">
+Industrial Control Systems
+</a>
+
+<a href="../automation-robotics/index.html">
+Automation Robotics
+</a>
+
+<a href="../collaborative-robots/index.html">
+Collaborative Robots
+</a>
+
+<a href="../industrial-network/index.html">
+Industrial Network
+</a>
+
+<a href="../industrial-communication/index.html">
+Industrial Communication
+</a>
+
+<a href="../digital-twin/index.html">
+Digital Twin
+</a>
+
+<a href="../smart-factory/index.html">
+Smart Factory
+</a>
+
+<a href="../digital-manufacturing/index.html">
+Digital Manufacturing
+</a>
+
+<a href="../production/index.html">
+Production
+</a>
+
+<a href="../equipment/index.html">
+Equipment
+</a>
+
+<a href="../sensors/index.html">
+Sensors
+</a>
+
+<a href="../maintennances/index.html">
+Maintenance
+</a>
+
+<a href="../safety/index.html">
+Safety
+</a>
+
+<a href="../training/index.html">
+Training
+</a>
+
+<a href="../specialists/index.html">
+Specialists
+</a>
+
+<a href="../companies/index.html">
+Companies
+</a>
+
+<a href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>
+Global Industrial Platform — Production • Robotics • Assembly • Automation
+</p>
+
+<p>© 2026 WORKER PRO</p>
+
+</footer>
+
+<script>
+
+function filterAssembly(){
+
+    const input =
+        document.getElementById("assemblySearch")
+        .value
+        .toLowerCase();
+
+    const items =
+        document.querySelectorAll(".assembly-item");
+
+    items.forEach(function(item){
+
+        const text =
+            item.innerText.toLowerCase();
+
+        item.style.display =
+            text.includes(input)
+            ? "block"
+            : "none";
+
+    });
+
+}
+
+function showDemo(message){
+
+    document.getElementById("demoResult").innerHTML =
+        '<div class="result">' +
+        message +
+        '</div>';
+
+}
+
+function assemblyStatus(){
+
+    showDemo(
+        "🔧 Assembly System: ONLINE — robotic assembly cells are connected."
+    );
+
+}
+
+function robotDemo(){
+
+    showDemo(
+        "🤖 Assembly Robot: READY — robot controller and motion system responding."
+    );
+
+}
+
+function feedingDemo(){
+
+    showDemo(
+        "🚚 Part Feeding: ACTIVE — automated component feeding system ready."
+    );
+
+}
+
+function visionDemo(){
+
+    showDemo(
+        "👁️ Vision System: ACTIVE — assembly position and quality inspection ready."
+    );
+
+}
+
+function addAssembly(event){
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("assemblyName").value;
+
+    const type =
+        document.getElementById("assemblyType").value;
+
+    document.getElementById("addResult").innerHTML =
+        '<div class="result">' +
+        '✅ Added: ' +
+        name +
+        ' — ' +
+        type +
+        '</div>';
+
+    document.getElementById("assemblyName").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
