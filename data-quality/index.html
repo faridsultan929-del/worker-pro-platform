@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Data Quality</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#18352a}
+header{background:#063d25;color:white;padding:20px 15px;text-align:center}
+header h1{margin:0;font-size:28px}
+header p{margin:8px 0 15px;color:#d9f2df}
+.languages{display:flex;flex-direction:column;gap:8px;align-items:center}
+.lang-row{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.languages button{background:#0b6b3d;color:white;border:1px solid #8bc9a2;border-radius:6px;padding:8px 13px;font-weight:bold}
+.languages button:hover{background:#b7ff35;color:#063d25}
+nav{background:#0b6b3d;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;margin:6px 10px;display:inline-block;font-size:14px}
+.container{max-width:1100px;margin:25px auto;padding:0 15px}
+.hero{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;border-radius:15px;padding:25px;margin-bottom:22px}
+.hero h2{margin-top:0;font-size:25px}
+.hero p{line-height:1.6}
+.btn{display:inline-block;background:#b7ff35;color:#063d25;padding:11px 17px;border-radius:7px;text-decoration:none;font-weight:bold;border:0;cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:25px}
+.card{background:white;padding:20px;border-radius:12px;box-shadow:0 3px 12px #0000000d}
+.card h3{margin-top:0;color:#0b6b3d}
+.stat{font-size:27px;font-weight:bold;color:#0b6b3d}
+.section-title{color:#063d25;margin:30px 0 15px}
+label{display:block;font-weight:bold;margin:12px 0 6px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cbd9cf;border-radius:7px;font-size:15px}
+textarea{min-height:90px;resize:vertical}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+table{width:100%;border-collapse:collapse;background:white;border-radius:10px;overflow:hidden}
+th,td{padding:13px;border-bottom:1px solid #e1e9e3;text-align:left;font-size:14px}
+th{background:#0b6b3d;color:white}
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:bold}
+.good{background:#d9f8df;color:#17632c}
+.warn{background:#fff1c7;color:#855b00}
+.bad{background:#ffe0dc;color:#9b2b20}
+.links a{display:inline-block;background:#e8f5eb;color:#063d25;padding:10px 13px;border-radius:7px;text-decoration:none;margin:5px}
+footer{background:#063d25;color:white;text-align:center;padding:22px;margin-top:35px}
+@media(max-width:600px){header h1{font-size:23px}.hero h2{font-size:21px}table{display:block;overflow-x:auto;white-space:nowrap}}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Промышленная платформа — качество данных</p>
+
+    <div class="languages">
+        <div class="lang-row">
+            <button type="button">AZ</button>
+            <button type="button">RU</button>
+            <button type="button">EN</button>
+        </div>
+        <div class="lang-row">
+            <button type="button">TR</button>
+            <button type="button">DE</button>
+            <button type="button">AR</button>
+            <button type="button">ES</button>
+            <button type="button">FR</button>
+            <button type="button">IT</button>
+        </div>
+    </div>
+</header>
+
+<nav>
+    <a href="../index.html">Главная</a>
+    <a href="../dashboard/index.html">Панель управления</a>
+    <a href="../data-integration/index.html">Интеграция данных</a>
+    <a href="../master-data/index.html">Основные данные</a>
+    <a href="../data-governance/index.html">Управление данными</a>
+    <a href="../analytics/index.html">Аналитика</a>
+</nav>
+
+<main class="container">
+
+    <section class="hero">
+        <h2>Data Quality — Качество данных</h2>
+        <p>
+            Контроль точности, полноты и согласованности промышленной информации.
+            Проверяйте данные о товарах, оборудовании, поставщиках и заказах,
+            выявляйте ошибки и повышайте надёжность информации WORKER PRO.
+        </p>
+        <a class="btn" href="#new-check">Создать проверку</a>
+    </section>
+
+    <h2 class="section-title">Обзор качества данных</h2>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Общий показатель качества</h3>
+            <div class="stat">96,4%</div>
+            <p>Демонстрационный показатель</p>
+        </div>
+
+        <div class="card">
+            <h3>Проверено записей</h3>
+            <div class="stat">12 480</div>
+            <p>Данные товаров и оборудования</p>
+        </div>
+
+        <div class="card">
+            <h3>Найдено ошибок</h3>
+            <div class="stat">184</div>
+            <p>Записи, требующие проверки</p>
+        </div>
+
+        <div class="card">
+            <h3>Ожидают исправления</h3>
+            <div class="stat">37</div>
+            <p>Незакрытые замечания</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Основные параметры качества</h2>
+
+    <div class="grid">
+        <div class="card">
+            <h3>Точность</h3>
+            <p>Соответствие данных фактическим характеристикам продукции.</p>
+            <span class="badge good">98% — пример</span>
+        </div>
+
+        <div class="card">
+            <h3>Полнота</h3>
+            <p>Наличие всех обязательных полей и характеристик.</p>
+            <span class="badge good">95% — пример</span>
+        </div>
+
+        <div class="card">
+            <h3>Согласованность</h3>
+            <p>Отсутствие противоречий между связанными записями.</p>
+            <span class="badge warn">91% — пример</span>
+        </div>
+
+        <div class="card">
+            <h3>Актуальность</h3>
+            <p>Соответствие информации текущему состоянию продукции и процессов.</p>
+            <span class="badge good">97% — пример</span>
+        </div>
+
+        <div class="card">
+            <h3>Уникальность</h3>
+            <p>Выявление повторяющихся товаров, кодов и записей.</p>
+            <span class="badge warn">Требуется проверка</span>
+        </div>
+    </div>
+
+    <h2 class="section-title">Реестр проверок качества</h2>
+
+    <div class="card">
+        <label for="search">Поиск по записям</label>
+        <input id="search" type="text" placeholder="Название, код или категория..." oninput="filterTable()">
+
+        <label for="statusFilter">Фильтр по статусу</label>
+        <select id="statusFilter" onchange="filterTable()">
+            <option value="">Все статусы</option>
+            <option value="Проверено">Проверено</option>
+            <option value="Требует проверки">Требует проверки</option>
+            <option value="Ошибка">Ошибка</option>
+        </select>
+    </div>
+
+    <br>
+
+    <table id="qualityTable">
+        <thead>
+            <tr>
+                <th>Код</th>
+                <th>Объект проверки</th>
+                <th>Категория</th>
+                <th>Результат</th>
+                <th>Статус</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>DQ-001</td>
+                <td>Гидравлический насос</td>
+                <td>Товары</td>
+                <td>98%</td>
+                <td><span class="badge good">Проверено</span></td>
+            </tr>
+            <tr>
+                <td>DQ-002</td>
+                <td>Станок CNC</td>
+                <td>Оборудование</td>
+                <td>82%</td>
+                <td><span class="badge warn">Требует проверки</span></td>
+            </tr>
+            <tr>
+                <td>DQ-003</td>
+                <td>Промышленный датчик</td>
+                <td>Запчасти</td>
+                <td>64%</td>
+                <td><span class="badge bad">Ошибка</span></td>
+            </tr>
+            <tr>
+                <td>DQ-004</td>
+                <td>Поставщик оборудования</td>
+                <td>Компании</td>
+                <td>96%</td>
+                <td><span class="badge good">Проверено</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title" id="new-check">Создать проверку качества</h2>
+
+    <div class="card">
+        <form onsubmit="addCheck(event)">
+            <div class="form-grid">
+                <div>
+                    <label for="objectName">Название объекта</label>
+                    <input id="objectName" type="text" placeholder="Например, промышленный насос" required>
+                </div>
+
+                <div>
+                    <label for="category">Категория</label>
+                    <select id="category" required>
+                        <option value="">Выберите категорию</option>
+                        <option>Товары</option>
+                        <option>Оборудование</option>
+                        <option>Запчасти</option>
+                        <option>Компании</option>
+                        <option>Заказы</option>
+                        <option>Поставщики</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="result">Оценка качества (%)</label>
+                    <input id="result" type="number" min="0" max="100" placeholder="Например, 95" required>
+                </div>
+
+                <div>
+                    <label for="status">Статус проверки</label>
+                    <select id="status" required>
+                        <option value="Проверено">Проверено</option>
+                        <option value="Требует проверки">Требует проверки</option>
+                        <option value="Ошибка">Ошибка</option>
+                    </select>
+                </div>
+            </div>
+
+            <label for="description">Описание проблемы или замечания</label>
+            <textarea id="description" placeholder="Укажите обнаруженные ошибки или комментарии..."></textarea>
+
+            <br><br>
+            <button class="btn" type="submit">Добавить запись</button>
+        </form>
+    </div>
+
+    <h2 class="section-title">Процесс контроля качества</h2>
+
+    <div class="grid">
+        <div class="card">
+            <h3>1. Сбор данных</h3>
+            <p>Получение информации из каталога, заказов и системы поставщиков.</p>
+        </div>
+
+        <div class="card">
+            <h3>2. Проверка</h3>
+            <p>Поиск ошибок, пропусков, дубликатов и противоречий.</p>
+        </div>
+
+        <div class="card">
+            <h3>3. Исправление</h3>
+            <p>Уточнение характеристик и устранение выявленных проблем.</p>
+        </div>
+
+        <div class="card">
+            <h3>4. Контроль результата</h3>
+            <p>Повторная проверка и фиксация итогового статуса.</p>
+        </div>
+    </div>
+
+    <h2 class="section-title">Связанные разделы WORKER PRO</h2>
+
+    <div class="card links">
+        <a href="../data-integration/index.html">Интеграция данных</a>
+        <a href="../master-data/index.html">Основные данные</a>
+        <a href="../data-governance/index.html">Управление данными</a>
+        <a href="../data-security/index.html">Безопасность данных</a>
+        <a href="../data-privacy/index.html">Конфиденциальность</a>
+        <a href="../analytics/index.html">Аналитика</a>
+        <a href="../products/index.html">Товары</a>
+        <a href="../equipment/index.html">Оборудование</a>
+        <a href="../companies/index.html">Компании</a>
+        <a href="../suppliers/index.html">Поставщики</a>
+        <a href="../documents/index.html">Документы</a>
+        <a href="../dashboard/index.html">Панель управления</a>
+    </div>
+
+</main>
+
+<footer>
+    WORKER PRO © 2026 | Data Quality — Качество данных
+</footer>
+
+<script>
+function filterTable() {
+    const search = document.getElementById("search").value.toLowerCase();
+    const status = document.getElementById("statusFilter").value;
+    const rows = document.querySelectorAll("#qualityTable tbody tr");
+
+    rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const rowStatus = row.innerText;
+
+        const matchesSearch = text.includes(search);
+        const matchesStatus = !status || rowStatus.includes(status);
+
+        row.style.display = matchesSearch && matchesStatus ? "" : "none";
+    });
+}
+
+function addCheck(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("objectName").value.trim();
+    const category = document.getElementById("category").value;
+    const result = Number(document.getElementById("result").value);
+    const status = document.getElementById("status").value;
+
+    const tbody = document.querySelector("#qualityTable tbody");
+    const code = "DQ-" + String(tbody.rows.length + 1).padStart(3, "0");
+
+    let badgeClass = "good";
+    if (status === "Требует проверки") badgeClass = "warn";
+    if (status === "Ошибка") badgeClass = "bad";
+
+    const row = tbody.insertRow();
+
+    row.innerHTML = `
+        <td>${code}</td>
+        <td></td>
+        <td></td>
+        <td>${result}%</td>
+        <td><span class="badge ${badgeClass}"></span></td>
+    `;
+
+    row.cells[1].textContent = name;
+    row.cells[2].textContent = category;
+    row.cells[4].querySelector("span").textContent = status;
+
+    document.getElementById("objectName").value = "";
+    document.getElementById("category").value = "";
+    document.getElementById("result").value = "";
+    document.getElementById("status").value = "Проверено";
+    document.getElementById("description").value = "";
+
+    alert("Запись добавлена в таблицу. Это демонстрационная версия страницы.");
+}
+</script>
+
+</body>
+</html>
