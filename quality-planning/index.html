@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Quality Planning</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:24px 15px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+h1,h2{
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    text-align:center;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#063d25;
+    margin-bottom:8px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#063d25;
+}
+
+.component{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+}
+
+.component h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.metric{
+    background:#f8fbf9;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+}
+
+.metric strong{
+    display:block;
+    color:#063d25;
+    font-size:30px;
+    margin-bottom:6px;
+}
+
+.progress{
+    height:10px;
+    background:#e1e8e4;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 15px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+}
+
+.action,.add-btn{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:12px 16px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.action:hover,.add-btn:hover{
+    background:#063d25;
+}
+
+.plan-item{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-bottom:10px;
+}
+
+.plan-item strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    background:#dff5e7;
+    color:#087238;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-top:6px;
+}
+
+.review{
+    background:#fff1c7;
+    color:#8a6200;
+}
+
+.result{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#e9f7ee;
+    color:#063d25;
+    font-weight:bold;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.warning{
+    background:#fff6d9;
+    border-left:5px solid #e3ae00;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    background:#e8f5ed;
+    color:#0b6b3d;
+    padding:9px 12px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.related a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .logo{font-size:27px}
+
+    main{padding:12px}
+
+    .hero,.card{padding:18px}
+
+    .flow-item{width:100%}
+
+    .arrow{transform:rotate(90deg)}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Quality Planning — планирование качества
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<h1>📋 Quality Planning</h1>
+
+<p>
+Quality Planning — планирование качества продукции и процессов.
+Раздел помогает определить требования к качеству, контрольные точки,
+методы измерения, критерии приемки, необходимые ресурсы, риски и KPI
+до начала и во время производственного процесса.
+</p>
+
+<div class="tags">
+<span class="tag">Quality Planning</span>
+<span class="tag">Quality Plan</span>
+<span class="tag">Inspection Plan</span>
+<span class="tag">Requirements</span>
+<span class="tag">Control Points</span>
+<span class="tag">Acceptance Criteria</span>
+<span class="tag">Risk Management</span>
+<span class="tag">KPI</span>
+<span class="tag">Inspection</span>
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="stat">
+<strong>192</strong>
+Quality Plans
+</div>
+
+<div class="stat">
+<strong>5,860</strong>
+Control Points
+</div>
+
+<div class="stat">
+<strong>132</strong>
+Connected Factories
+</div>
+
+<div class="stat">
+<strong>97.9%</strong>
+Planning Coverage
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 Quality Planning Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">📋 Requirements</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🎯 Quality Goals</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📐 Specifications</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔍 Control Points</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📏 Measurements</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">✅ Acceptance</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📊 KPI</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔄 Improvement</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>📋 Requirements</h3>
+<p>
+Определение требований заказчика, продукции, процесса и применимых норм.
+</p>
+</div>
+
+<div class="component">
+<h3>🎯 Quality Goals</h3>
+<p>
+Формирование измеримых целей качества для производства.
+</p>
+</div>
+
+<div class="component">
+<h3>📐 Specifications</h3>
+<p>
+Определение размеров, допусков, материалов и других характеристик.
+</p>
+</div>
+
+<div class="component">
+<h3>🔍 Control Points</h3>
+<p>
+Определение этапов, на которых необходимо выполнять контроль.
+</p>
+</div>
+
+<div class="component">
+<h3>📏 Measurement Methods</h3>
+<p>
+Выбор средств измерений, методов проверки и критериев оценки.
+</p>
+</div>
+
+<div class="component">
+<h3>⚠️ Risk Planning</h3>
+<p>
+Определение потенциальных рисков и необходимых предупреждающих действий.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 Planning Performance</h2>
+
+<div class="grid">
+
+<div class="metric">
+<strong>97.9%</strong>
+Planning Coverage
+</div>
+
+<div class="metric">
+<strong>96.8%</strong>
+Control Point Coverage
+</div>
+
+<div class="metric">
+<strong>95.7%</strong>
+Inspection Readiness
+</div>
+
+<div class="metric">
+<strong>98.2%</strong>
+Requirement Traceability
+</div>
+
+</div>
+
+<p>Planning Coverage — 97.9%</p>
+
+<div class="progress">
+<span style="width:97.9%"></span>
+</div>
+
+<p>Control Point Coverage — 96.8%</p>
+
+<div class="progress">
+<span style="width:96.8%"></span>
+</div>
+
+<p>Inspection Readiness — 95.7%</p>
+
+<div class="progress">
+<span style="width:95.7%"></span>
+</div>
+
+<p>Requirement Traceability — 98.2%</p>
+
+<div class="progress">
+<span style="width:98.2%"></span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🏭 Quality Plans</h2>
+
+<div class="search-box">
+
+<input
+id="planSearch"
+type="text"
+placeholder="Поиск Quality Plan, города или процесса..."
+onkeyup="filterPlans()"
+>
+
+<button class="action" onclick="filterPlans()">
+Поиск
+</button>
+
+</div>
+
+<div id="planList">
+
+<div class="plan-item">
+<strong>Baku CNC Quality Plan</strong><br>
+Azerbaijan — CNC production — 48 control points<br>
+<span class="status">Active</span>
+</div>
+
+<div class="plan-item">
+<strong>Sumqayit Stamping Quality Plan</strong><br>
+Azerbaijan — Stamping production — 42 control points<br>
+<span class="status">Active</span>
+</div>
+
+<div class="plan-item">
+<strong>Istanbul Manufacturing Plan</strong><br>
+Turkey — Manufacturing + Inspection — 56 control points<br>
+<span class="status">Active</span>
+</div>
+
+<div class="plan-item">
+<strong>Dortmund Precision Quality Plan</strong><br>
+Germany — Precision manufacturing — 64 control points<br>
+<span class="status">Active</span>
+</div>
+
+<div class="plan-item">
+<strong>Milan Smart Quality Plan</strong><br>
+Italy — Digital production quality — 38 control points<br>
+<span class="status review">Review</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 Quality Planning Demo</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>📋 Requirements Check</h3>
+<p>
+Проверка наличия основных требований к продукции и процессу.
+</p>
+<button class="action" onclick="requirementsDemo()">
+Проверить
+</button>
+</div>
+
+<div class="component">
+<h3>🔍 Control Point Check</h3>
+<p>
+Проверка контрольных точек демонстрационного Quality Plan.
+</p>
+<button class="action" onclick="controlDemo()">
+Проверить
+</button>
+</div>
+
+<div class="component">
+<h3>📏 Inspection Check</h3>
+<p>
+Проверка готовности методов измерения и контроля.
+</p>
+<button class="action" onclick="inspectionDemo()">
+Проверить
+</button>
+</div>
+
+<div class="component">
+<h3>⚠️ Risk Check</h3>
+<p>
+Демонстрационная проверка запланированных рисков.
+</p>
+<button class="action" onclick="riskDemo()">
+Проверить
+</button>
+</div>
+
+</div>
+
+<div id="demoResult"></div>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add Quality Plan</h2>
+
+<form onsubmit="addPlan(event)">
+
+<input
+id="planName"
+type="text"
+placeholder="Название Quality Plan"
+required
+>
+
+<select id="planType">
+
+<option>CNC Quality Plan</option>
+<option>Stamping Quality Plan</option>
+<option>Welding Quality Plan</option>
+<option>Heat Treatment Quality Plan</option>
+<option>Assembly Quality Plan</option>
+<option>Supplier Quality Plan</option>
+
+</select>
+
+<input
+id="controlPoints"
+type="number"
+min="1"
+placeholder="Количество контрольных точек"
+required
+>
+
+<textarea
+id="planDescription"
+placeholder="Описание плана качества..."
+></textarea>
+
+<button class="add-btn" type="submit">
+Добавить Quality Plan
+</button>
+
+</form>
+
+<div id="addResult"></div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>🏭 Production Planning</h3>
+<p>
+Планирование качества непосредственно для производственного процесса.
+</p>
+</div>
+
+<div class="component">
+<h3>🔧 Process Control Plan</h3>
+<p>
+Контроль параметров процесса и определение контрольных операций.
+</p>
+</div>
+
+<div class="component">
+<h3>📦 Supplier Quality Plan</h3>
+<p>
+Требования к качеству поставляемых материалов и компонентов.
+</p>
+</div>
+
+<div class="component">
+<h3>🔍 Inspection Plan</h3>
+<p>
+Планирование входного, промежуточного и финального контроля.
+</p>
+</div>
+
+<div class="component">
+<h3>⚠️ Risk Plan</h3>
+<p>
+Планирование действий для снижения производственных рисков.
+</p>
+</div>
+
+<div class="component">
+<h3>📈 KPI Plan</h3>
+<p>
+Определение показателей качества и методов их мониторинга.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📐 Example Quality Plan</h2>
+
+<div class="grid">
+
+<div class="metric">
+<strong>50.00 mm</strong>
+Target Dimension
+</div>
+
+<div class="metric">
+<strong>±0.10 mm</strong>
+Tolerance
+</div>
+
+<div class="metric">
+<strong>4</strong>
+Control Points
+</div>
+
+<div class="metric">
+<strong>100%</strong>
+Inspection Plan
+</div>
+
+</div>
+
+<p>
+Пример: деталь должна соответствовать установленному размеру,
+допуску и другим техническим требованиям. Контрольные точки,
+методы измерения и критерии приемки определяются заранее.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🛡️ Planning Control &amp; Security</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>🔐 Access Control</h3>
+<p>
+Контроль доступа к Quality Plans и техническим требованиям.
+</p>
+</div>
+
+<div class="component">
+<h3>📋 Version Control</h3>
+<p>
+Управление версиями планов качества и изменений.
+</p>
+</div>
+
+<div class="component">
+<h3>🔎 Traceability</h3>
+<p>
+Связь требований, контрольных точек, измерений и результатов.
+</p>
+</div>
+
+<div class="component">
+<h3>💾 Backup</h3>
+<p>
+Резервное копирование планов и записей качества.
+</p>
+</div>
+
+<div class="component">
+<h3>👤 Responsibilities</h3>
+<p>
+Определение ответственных за контроль и выполнение требований.
+</p>
+</div>
+
+<div class="component">
+<h3>📑 Document Control</h3>
+<p>
+Контроль актуальности документации и рабочих инструкций.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="warning">
+
+<strong>⚠️ Важно:</strong>
+
+<p>
+Эта страница является демонстрационной моделью WORKER PRO.
+Реальный Quality Plan должен разрабатываться с учетом требований
+конкретной продукции и процесса, технической документации,
+допусков, методов измерения, применимых требований, рисков,
+ответственных лиц и критериев приемки. Демонстрационные показатели
+на странице не являются фактическими показателями предприятия.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO</h2>
+
+<div class="related">
+
+<a href="../index.html">Main</a>
+
+<a href="../quality-assurance/index.html">
+Quality Assurance
+</a>
+
+<a href="../quality-management-system/index.html">
+Quality Management System
+</a>
+
+<a href="../measurement-system-analysis/index.html">
+Measurement System Analysis
+</a>
+
+<a href="../process-capability-analysis/index.html">
+Process Capability Analysis
+</a>
+
+<a href="../statistical-process-control/index.html">
+Statistical Process Control
+</a>
+
+<a href="../zero-defect-manufacturing/index.html">
+Zero Defect Manufacturing
+</a>
+
+<a href="../predictive-quality/index.html">
+Predictive Quality
+</a>
+
+<a href="../automated-quality-control/index.html">
+Automated Quality Control
+</a>
+
+<a href="../automated-inspection/index.html">
+Automated Inspection
+</a>
+
+<a href="../automated-sorting/index.html">
+Automated Sorting
+</a>
+
+<a href="../automated-packaging/index.html">
+Automated Packaging
+</a>
+
+<a href="../robotic-palletizing/index.html">
+Robotic Palletizing
+</a>
+
+<a href="../robotic-assembly/index.html">
+Robotic Assembly
+</a>
+
+<a href="../robotic-welding/index.html">
+Robotic Welding
+</a>
+
+<a href="../robotic-production-lines/index.html">
+Robotic Production Lines
+</a>
+
+<a href="../industrial-robot-cells/index.html">
+Industrial Robot Cells
+</a>
+
+<a href="../industrial-robotics/index.html">
+Industrial Robotics
+</a>
+
+<a href="../industrial-automation/index.html">
+Industrial Automation
+</a>
+
+<a href="../industrial-control-systems/index.html">
+Industrial Control Systems
+</a>
+
+<a href="../automation-robotics/index.html">
+Automation Robotics
+</a>
+
+<a href="../industrial-network/index.html">
+Industrial Network
+</a>
+
+<a href="../industrial-communication/index.html">
+Industrial Communication
+</a>
+
+<a href="../iot-industrial-internet/index.html">
+Industrial IoT
+</a>
+
+<a href="../ai-machine-learning/index.html">
+AI &amp; Machine Learning
+</a>
+
+<a href="../digital-twin/index.html">
+Digital Twin
+</a>
+
+<a href="../smart-factory/index.html">
+Smart Factory
+</a>
+
+<a href="../digital-manufacturing/index.html">
+Digital Manufacturing
+</a>
+
+<a href="../analytics/index.html">
+Analytics
+</a>
+
+<a href="../reports/index.html">
+Reports
+</a>
+
+<a href="../production/index.html">
+Production
+</a>
+
+<a href="../equipment/index.html">
+Equipment
+</a>
+
+<a href="../sensors/index.html">
+Sensors
+</a>
+
+<a href="../quality/index.html">
+Quality
+</a>
+
+<a href="../maintennances/index.html">
+Maintenance
+</a>
+
+<a href="../safety/index.html">
+Safety
+</a>
+
+<a href="../training/index.html">
+Training
+</a>
+
+<a href="../specialists/index.html">
+Specialists
+</a>
+
+<a href="../companies/index.html">
+Companies
+</a>
+
+<a href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a href="../orders/index.html">
+Orders
+</a>
+
+<a href="../logistics/index.html">
+Logistics
+</a>
+
+<a href="../warehouses/index.html">
+Warehouses
+</a>
+
+<a href="../tracking/index.html">
+Tracking
+</a>
+
+<a href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>
+Global Industrial Platform — Quality Planning • Production • Technology
+</p>
+
+<p>© 2026 WORKER PRO</p>
+
+</footer>
+
+<script>
+
+function filterPlans(){
+
+var input =
+document.getElementById("planSearch")
+.value
+.toLowerCase();
+
+var items =
+document.querySelectorAll(".plan-item");
+
+items.forEach(function(item){
+
+var text =
+item.innerText.toLowerCase();
+
+item.style.display =
+text.indexOf(input) !== -1
+? "block"
+: "none";
+
+});
+
+}
+
+function showDemo(message){
+
+document.getElementById("demoResult").innerHTML =
+'<div class="result">'+message+'</div>';
+
+}
+
+function requirementsDemo(){
+
+showDemo(
+"📋 Requirements Check: OK — основные требования демонстрационного Quality Plan определены."
+);
+
+}
+
+function controlDemo(){
+
+showDemo(
+"🔍 Control Point Check: OK — контрольные точки определены и доступны для проверки."
+);
+
+}
+
+function inspectionDemo(){
+
+showDemo(
+"📏 Inspection Check: READY — демонстрационные методы контроля готовы."
+);
+
+}
+
+function riskDemo(){
+
+showDemo(
+"⚠️ Risk Check: ACTIVE — демонстрационная оценка рисков выполнена."
+);
+
+}
+
+function addPlan(event){
+
+event.preventDefault();
+
+var name =
+document.getElementById("planName").value;
+
+var type =
+document.getElementById("planType").value;
+
+var points =
+document.getElementById("controlPoints").value;
+
+document.getElementById("addResult").innerHTML =
+'<div class="result">'+
+'✅ Quality Plan added: '+
+name+
+' — '+
+type+
+' — '+
+points+
+' control points.'+
+'</div>';
+
+document.getElementById("planName").value="";
+document.getElementById("controlPoints").value="";
+document.getElementById("planDescription").value="";
+
+}
+
+</script>
+
+</body>
+</html>
