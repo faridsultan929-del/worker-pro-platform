@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Data Catalog</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#18352a;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+header h1{
+    margin:0;
+    font-size:28px;
+}
+
+header p{
+    margin:8px 0 15px;
+    color:#d9f2df;
+}
+
+.languages{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    align-items:center;
+}
+
+.lang-row{
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.languages button{
+    background:#0b6b3d;
+    color:white;
+    border:1px solid #8bc9a2;
+    border-radius:6px;
+    padding:8px 13px;
+    font-weight:bold;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    background:#0b6b3d;
+    padding:12px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:6px 10px;
+    display:inline-block;
+    font-size:14px;
+}
+
+.container{
+    max-width:1100px;
+    margin:25px auto;
+    padding:0 15px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    border-radius:15px;
+    padding:25px;
+    margin-bottom:22px;
+}
+
+.hero h2{
+    margin-top:0;
+    font-size:26px;
+}
+
+.hero p{
+    line-height:1.6;
+}
+
+.btn{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:11px 17px;
+    border-radius:7px;
+    text-decoration:none;
+    font-weight:bold;
+    border:0;
+    cursor:pointer;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 3px 12px #0000000d;
+}
+
+.card h3{
+    margin-top:0;
+    color:#0b6b3d;
+}
+
+.stat{
+    font-size:27px;
+    font-weight:bold;
+    color:#0b6b3d;
+}
+
+.section-title{
+    color:#063d25;
+    margin:30px 0 15px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:12px 0 6px;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:12px;
+    border:1px solid #cbd9cf;
+    border-radius:7px;
+    font-size:15px;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+th,
+td{
+    padding:13px;
+    border-bottom:1px solid #e1e9e3;
+    text-align:left;
+    font-size:14px;
+}
+
+th{
+    background:#0b6b3d;
+    color:white;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.good{
+    background:#d9f8df;
+    color:#17632c;
+}
+
+.info{
+    background:#dff1ff;
+    color:#145b87;
+}
+
+.warn{
+    background:#fff1c7;
+    color:#855b00;
+}
+
+.links a{
+    display:inline-block;
+    background:#e8f5eb;
+    color:#063d25;
+    padding:10px 13px;
+    border-radius:7px;
+    text-decoration:none;
+    margin:5px;
+}
+
+.catalog-card{
+    border-left:5px solid #0b6b3d;
+}
+
+.catalog-code{
+    color:#0b6b3d;
+    font-weight:bold;
+    font-size:13px;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:35px;
+}
+
+@media(max-width:600px){
+    header h1{
+        font-size:23px;
+    }
+
+    .hero h2{
+        font-size:21px;
+    }
+
+    table{
+        display:block;
+        overflow-x:auto;
+        white-space:nowrap;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>WORKER PRO</h1>
+
+    <p>Промышленная платформа — каталог данных</p>
+
+    <div class="languages">
+
+        <div class="lang-row">
+            <button type="button">AZ</button>
+            <button type="button">RU</button>
+            <button type="button">EN</button>
+        </div>
+
+        <div class="lang-row">
+            <button type="button">TR</button>
+            <button type="button">DE</button>
+            <button type="button">AR</button>
+            <button type="button">ES</button>
+            <button type="button">FR</button>
+            <button type="button">IT</button>
+        </div>
+
+    </div>
+
+</header>
+
+<nav>
+    <a href="../index.html">Главная</a>
+    <a href="../dashboard/index.html">Dashboard</a>
+    <a href="../data-governance/index.html">Data Governance</a>
+    <a href="../master-data/index.html">Master Data</a>
+    <a href="../data-quality/index.html">Data Quality</a>
+    <a href="../data-integration/index.html">Data Integration</a>
+    <a href="../analytics/index.html">Analytics</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+    <h2>Data Catalog — Каталог данных</h2>
+
+    <p>
+        Единый каталог информационных объектов WORKER PRO.
+        Здесь можно находить и описывать данные о товарах,
+        оборудовании, компаниях, поставщиках, заказах,
+        документах и промышленных процессах.
+    </p>
+
+    <a class="btn" href="#new-data">Добавить объект данных</a>
+
+</section>
+
+<h2 class="section-title">Обзор каталога</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>Объекты данных</h3>
+        <div class="stat">18 640</div>
+        <p>Демонстрационное количество записей</p>
+    </div>
+
+    <div class="card">
+        <h3>Категории</h3>
+        <div class="stat">42</div>
+        <p>Типы информационных объектов</p>
+    </div>
+
+    <div class="card">
+        <h3>Источники</h3>
+        <div class="stat">28</div>
+        <p>Системы и подразделения</p>
+    </div>
+
+    <div class="card">
+        <h3>Обновлено сегодня</h3>
+        <div class="stat">1 284</div>
+        <p>Демонстрационный показатель</p>
+    </div>
+
+</div>
+
+<h2 class="section-title">Категории данных</h2>
+
+<div class="grid">
+
+    <div class="card catalog-card">
+        <h3>Products</h3>
+        <p>Промышленные товары и продукция.</p>
+        <span class="badge good">4 820 объектов</span>
+    </div>
+
+    <div class="card catalog-card">
+        <h3>Equipment</h3>
+        <p>Станки, машины и промышленное оборудование.</p>
+        <span class="badge good">2 460 объектов</span>
+    </div>
+
+    <div class="card catalog-card">
+        <h3>Companies</h3>
+        <p>Производители, компании и организации.</p>
+        <span class="badge info">1 920 объектов</span>
+    </div>
+
+    <div class="card catalog-card">
+        <h3>Suppliers</h3>
+        <p>Поставщики продукции и услуг.</p>
+        <span class="badge info">1 540 объектов</span>
+    </div>
+
+    <div class="card catalog-card">
+        <h3>Orders</h3>
+        <p>Заказы и закупочные операции.</p>
+        <span class="badge warn">3 240 объектов</span>
+    </div>
+
+    <div class="card catalog-card">
+        <h3>Documents</h3>
+        <p>Сертификаты, счета, договоры и другие документы.</p>
+        <span class="badge info">4 660 объектов</span>
+    </div>
+
+</div>
+
+<h2 class="section-title">Поиск в каталоге</h2>
+
+<div class="card">
+
+    <label for="search">Поиск</label>
+
+    <input
+        id="search"
+        type="text"
+        placeholder="Название, код, категория или источник..."
+        oninput="filterCatalog()"
+    >
+
+    <label for="typeFilter">Тип данных</label>
+
+    <select id="typeFilter" onchange="filterCatalog()">
+
+        <option value="">Все типы</option>
+        <option value="Product">Product</option>
+        <option value="Equipment">Equipment</option>
+        <option value="Company">Company</option>
+        <option value="Supplier">Supplier</option>
+        <option value="Order">Order</option>
+        <option value="Document">Document</option>
+
+    </select>
+
+</div>
+
+<br>
+
+<table id="catalogTable">
+
+<thead>
+
+<tr>
+    <th>Код</th>
+    <th>Название</th>
+    <th>Тип</th>
+    <th>Источник</th>
+    <th>Статус</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+    <td>DC-001</td>
+    <td>Hydraulic Pump HP-500</td>
+    <td>Product</td>
+    <td>Products</td>
+    <td><span class="badge good">Активен</span></td>
+</tr>
+
+<tr>
+    <td>DC-002</td>
+    <td>CNC Machine MX-200</td>
+    <td>Equipment</td>
+    <td>Equipment</td>
+    <td><span class="badge good">Активен</span></td>
+</tr>
+
+<tr>
+    <td>DC-003</td>
+    <td>Industrial Solutions LLC</td>
+    <td>Company</td>
+    <td>Companies</td>
+    <td><span class="badge info">Проверен</span></td>
+</tr>
+
+<tr>
+    <td>DC-004</td>
+    <td>Global Parts Supplier</td>
+    <td>Supplier</td>
+    <td>Suppliers</td>
+    <td><span class="badge good">Активен</span></td>
+</tr>
+
+<tr>
+    <td>DC-005</td>
+    <td>Order WP-2026-1058</td>
+    <td>Order</td>
+    <td>Orders</td>
+    <td><span class="badge warn">В обработке</span></td>
+</tr>
+
+<tr>
+    <td>DC-006</td>
+    <td>Certificate ISO-2026-004</td>
+    <td>Document</td>
+    <td>Documents</td>
+    <td><span class="badge info">Проверен</span></td>
+</tr>
+
+</tbody>
+
+</table>
+
+<h2 class="section-title" id="new-data">Добавить объект данных</h2>
+
+<div class="card">
+
+<form onsubmit="addCatalogRecord(event)">
+
+<div class="form-grid">
+
+<div>
+
+<label for="dataName">Название объекта</label>
+
+<input
+    id="dataName"
+    type="text"
+    placeholder="Например, Industrial Motor"
+    required
+>
+
+</div>
+
+<div>
+
+<label for="dataType">Тип данных</label>
+
+<select id="dataType" required>
+
+<option value="">Выберите тип</option>
+<option>Product</option>
+<option>Equipment</option>
+<option>Company</option>
+<option>Supplier</option>
+<option>Order</option>
+<option>Document</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label for="source">Источник</label>
+
+<input
+    id="source"
+    type="text"
+    placeholder="Например, Products"
+    required
+>
+
+</div>
+
+<div>
+
+<label for="dataStatus">Статус</label>
+
+<select id="dataStatus">
+
+<option>Активен</option>
+<option>Проверен</option>
+<option>В обработке</option>
+
+</select>
+
+</div>
+
+</div>
+
+<br>
+
+<button class="btn" type="submit">
+Добавить в каталог
+</button>
+
+</form>
+
+</div>
+
+<h2 class="section-title">Информация об объекте данных</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>Название</h3>
+        <p>Уникальное название информационного объекта.</p>
+    </div>
+
+    <div class="card">
+        <h3>Источник</h3>
+        <p>Система, подразделение или внешний источник информации.</p>
+    </div>
+
+    <div class="card">
+        <h3>Владелец данных</h3>
+        <p>Компания или подразделение, ответственное за данные.</p>
+    </div>
+
+    <div class="card">
+        <h3>Качество</h3>
+        <p>Связь с системой контроля качества данных.</p>
+    </div>
+
+</div>
+
+<h2 class="section-title">Жизненный цикл данных</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>1. Создание</h3>
+        <p>Информация появляется в системе или поступает от поставщика.</p>
+    </div>
+
+    <div class="card">
+        <h3>2. Регистрация</h3>
+        <p>Объект получает код и заносится в каталог.</p>
+    </div>
+
+    <div class="card">
+        <h3>3. Проверка</h3>
+        <p>Проверяются полнота, точность и актуальность данных.</p>
+    </div>
+
+    <div class="card">
+        <h3>4. Использование</h3>
+        <p>Данные используются в поиске, закупках, логистике и аналитике.</p>
+    </div>
+
+</div>
+
+<h2 class="section-title">Связанные разделы WORKER PRO</h2>
+
+<div class="card links">
+
+    <a href="../data-quality/index.html">Data Quality</a>
+
+    <a href="../data-governance/index.html">Data Governance</a>
+
+    <a href="../master-data/index.html">Master Data</a>
+
+    <a href="../data-integration/index.html">Data Integration</a>
+
+    <a href="../data-security/index.html">Data Security</a>
+
+    <a href="../data-privacy/index.html">Data Privacy</a>
+
+    <a href="../analytics/index.html">Analytics</a>
+
+    <a href="../products/index.html">Products</a>
+
+    <a href="../equipment/index.html">Equipment</a>
+
+    <a href="../companies/index.html">Companies</a>
+
+    <a href="../suppliers/index.html">Suppliers</a>
+
+    <a href="../orders/index.html">Orders</a>
+
+    <a href="../documents/index.html">Documents</a>
+
+    <a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</main>
+
+<footer>
+WORKER PRO © 2026 | Data Catalog — Каталог данных
+</footer>
+
+<script>
+
+function filterCatalog(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const type =
+        document.getElementById("typeFilter")
+        .value;
+
+    const rows =
+        document.querySelectorAll(
+            "#catalogTable tbody tr"
+        );
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowType =
+            row.cells[2].innerText;
+
+        const searchMatch =
+            text.includes(search);
+
+        const typeMatch =
+            !type || rowType === type;
+
+        row.style.display =
+            searchMatch && typeMatch
+            ? ""
+            : "none";
+
+    });
+}
+
+
+function addCatalogRecord(event){
+
+    event.preventDefault();
+
+    const name =
+        document.getElementById("dataName")
+        .value.trim();
+
+    const type =
+        document.getElementById("dataType")
+        .value;
+
+    const source =
+        document.getElementById("source")
+        .value.trim();
+
+    const status =
+        document.getElementById("dataStatus")
+        .value;
+
+    const tbody =
+        document.querySelector(
+            "#catalogTable tbody"
+        );
+
+    const code =
+        "DC-" +
+        String(tbody.rows.length + 1)
+        .padStart(3,"0");
+
+    let badgeClass = "good";
+
+    if(status === "В обработке"){
+        badgeClass = "warn";
+    }
+
+    if(status === "Проверен"){
+        badgeClass = "info";
+    }
+
+    const row =
+        tbody.insertRow();
+
+    row.innerHTML = `
+        <td>${code}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+            <span class="badge ${badgeClass}"></span>
+        </td>
+    `;
+
+    row.cells[1].textContent = name;
+    row.cells[2].textContent = type;
+    row.cells[3].textContent = source;
+    row.cells[4]
+        .querySelector("span")
+        .textContent = status;
+
+    document.getElementById("dataName").value = "";
+    document.getElementById("dataType").value = "";
+    document.getElementById("source").value = "";
+    document.getElementById("dataStatus").value = "Активен";
+
+    alert(
+        "Объект добавлен в каталог. " +
+        "Это демонстрационная версия страницы."
+    );
+}
+
+</script>
+
+</body>
+</html>
