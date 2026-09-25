@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Quality Management System</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:24px 15px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:8px;
+    color:#b7ff35;
+    font-size:16px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+main{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:16px;
+    padding:24px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+h1,
+h2{
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    text-align:center;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#063d25;
+    margin-bottom:8px;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#e8f5ed;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#063d25;
+}
+
+.component{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+}
+
+.component h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search-box{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:15px;
+}
+
+.search-box input{
+    flex:1;
+    min-width:220px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+}
+
+.action,
+.add-btn{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:12px 16px;
+    border-radius:9px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.action:hover,
+.add-btn:hover{
+    background:#063d25;
+}
+
+.qms-item{
+    background:#fafcfb;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:10px;
+}
+
+.qms-item strong{
+    color:#063d25;
+}
+
+.status{
+    display:inline-block;
+    background:#dff5e7;
+    color:#087238;
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.review{
+    background:#fff1c7;
+    color:#8a6200;
+}
+
+.metric{
+    background:#f8fbf9;
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+}
+
+.metric strong{
+    display:block;
+    color:#063d25;
+    font-size:30px;
+    margin-bottom:6px;
+}
+
+.progress{
+    height:10px;
+    background:#e1e8e4;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 15px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.demo-area{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.result{
+    margin-top:15px;
+    padding:14px;
+    border-radius:10px;
+    background:#e9f7ee;
+    color:#063d25;
+    font-weight:bold;
+}
+
+.warning{
+    background:#fff6d9;
+    border-left:5px solid #e3ae00;
+    padding:16px;
+    border-radius:10px;
+    margin-bottom:20px;
+}
+
+form{
+    display:grid;
+    gap:12px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.related a{
+    background:#e8f5ed;
+    color:#0b6b3d;
+    padding:9px 12px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+.related a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+
+    .logo{
+        font-size:27px;
+    }
+
+    main{
+        padding:12px;
+    }
+
+    .hero,
+    .card{
+        padding:18px;
+    }
+
+    .flow-item{
+        width:100%;
+    }
+
+    .arrow{
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Quality Management System — система управления качеством
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main>
+
+<section class="hero">
+
+<h1>🏆 Quality Management System</h1>
+
+<p>
+QMS — система управления качеством — объединяет процессы,
+документы, стандарты, контроль качества, аудиты, работу
+с несоответствиями, корректирующие действия и постоянное
+улучшение производственной организации.
+</p>
+
+<div class="tags">
+<span class="tag">QMS</span>
+<span class="tag">Quality Management</span>
+<span class="tag">Quality Control</span>
+<span class="tag">Audits</span>
+<span class="tag">Documents</span>
+<span class="tag">CAPA</span>
+<span class="tag">Continuous Improvement</span>
+<span class="tag">KPI</span>
+<span class="tag">Compliance</span>
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="stat">
+<strong>186</strong>
+QMS Systems
+</div>
+
+<div class="stat">
+<strong>4,820</strong>
+Quality Documents
+</div>
+
+<div class="stat">
+<strong>126</strong>
+Connected Factories
+</div>
+
+<div class="stat">
+<strong>98.2%</strong>
+Quality Performance
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🔄 QMS Process Flow</h2>
+
+<div class="flow">
+
+<div class="flow-item">📋 Requirements</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📑 Procedures</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🏭 Production</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔍 Quality Control</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">📊 KPI</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔎 Audit</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">⚠️ CAPA</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">🔄 Improvement</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>📋 Quality Policy</h3>
+<p>
+Определение целей и принципов управления качеством организации.
+</p>
+</div>
+
+<div class="component">
+<h3>📑 Document Control</h3>
+<p>
+Управление процедурами, инструкциями, записями и версиями документов.
+</p>
+</div>
+
+<div class="component">
+<h3>🔍 Internal Audits</h3>
+<p>
+Планирование и проведение внутренних аудитов процессов.
+</p>
+</div>
+
+<div class="component">
+<h3>⚠️ Nonconformities</h3>
+<p>
+Регистрация и анализ несоответствий продукции и процессов.
+</p>
+</div>
+
+<div class="component">
+<h3>🔧 CAPA</h3>
+<p>
+Корректирующие и предупреждающие действия для устранения причин проблем.
+</p>
+</div>
+
+<div class="component">
+<h3>🔄 Continuous Improvement</h3>
+<p>
+Постоянное улучшение процессов и качества продукции.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>📊 QMS Performance</h2>
+
+<div class="grid">
+
+<div class="metric">
+<strong>98.2%</strong>
+Quality KPI
+</div>
+
+<div class="metric">
+<strong>96.8%</strong>
+Audit Completion
+</div>
+
+<div class="metric">
+<strong>94.6%</strong>
+CAPA Closure
+</div>
+
+<div class="metric">
+<strong>99.1%</strong>
+Document Control
+</div>
+
+</div>
+
+<p>Quality Performance — 98.2%</p>
+
+<div class="progress">
+<span style="width:98.2%"></span>
+</div>
+
+<p>Audit Completion — 96.8%</p>
+
+<div class="progress">
+<span style="width:96.8%"></span>
+</div>
+
+<p>CAPA Closure — 94.6%</p>
+
+<div class="progress">
+<span style="width:94.6%"></span>
+</div>
+
+<p>Document Control — 99.1%</p>
+
+<div class="progress">
+<span style="width:99.1%"></span>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🏭 Quality Management Systems</h2>
+
+<div class="search-box">
+
+<input
+id="qmsSearch"
+type="text"
+placeholder="Поиск QMS, города или процесса..."
+onkeyup="filterQMS()"
+>
+
+<button class="action" onclick="filterQMS()">
+Поиск
+</button>
+
+</div>
+
+<div id="qmsList">
+
+<div class="qms-item">
+<strong>Baku Manufacturing QMS</strong><br>
+Azerbaijan — Production Quality Management — 48 processes<br>
+<span class="status">Online</span>
+</div>
+
+<div class="qms-item">
+<strong>Sumqayit Industrial QMS</strong><br>
+Azerbaijan — Quality Control + Audits — 42 processes<br>
+<span class="status">Online</span>
+</div>
+
+<div class="qms-item">
+<strong>Istanbul Factory QMS</strong><br>
+Turkey — Manufacturing Quality — 56 processes<br>
+<span class="status">Online</span>
+</div>
+
+<div class="qms-item">
+<strong>Dortmund Precision QMS</strong><br>
+Germany — Quality + CAPA — 64 processes<br>
+<span class="status">Online</span>
+</div>
+
+<div class="qms-item">
+<strong>Milan Smart QMS</strong><br>
+Italy — Digital Quality Management — 38 processes<br>
+<span class="status review">Review</span>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🧪 QMS Demo</h2>
+
+<div class="demo-area">
+
+<button class="action" onclick="qmsStatus()">
+QMS Status
+</button>
+
+<button class="action" onclick="auditDemo()">
+Audit Check
+</button>
+
+<button class="action" onclick="capaDemo()">
+CAPA Check
+</button>
+
+<button class="action" onclick="documentDemo()">
+Document Check
+</button>
+
+</div>
+
+<div id="demoResult"></div>
+
+</section>
+
+<section class="card">
+
+<h2>➕ Add Quality System</h2>
+
+<form onsubmit="addQMS(event)">
+
+<input
+id="qmsName"
+type="text"
+placeholder="Название QMS системы"
+required
+>
+
+<select id="qmsType">
+
+<option>Manufacturing QMS</option>
+<option>Production Quality System</option>
+<option>Digital QMS</option>
+<option>Supplier Quality System</option>
+<option>Audit Management System</option>
+<option>CAPA Management System</option>
+
+</select>
+
+<button class="add-btn" type="submit">
+Добавить QMS систему
+</button>
+
+</form>
+
+<div id="addResult"></div>
+
+</section>
+
+<section class="grid">
+
+<div class="component">
+<h3>🏭 Production Quality</h3>
+<p>
+Контроль качества производственных процессов.
+</p>
+</div>
+
+<div class="component">
+<h3>📦 Supplier Quality</h3>
+<p>
+Управление качеством поставщиков и входящих материалов.
+</p>
+</div>
+
+<div class="component">
+<h3>📑 Document Management</h3>
+<p>
+Управление версиями документов и рабочих инструкций.
+</p>
+</div>
+
+<div class="component">
+<h3>🔍 Audit Management</h3>
+<p>
+Планирование, проведение и контроль аудитов.
+</p>
+</div>
+
+<div class="component">
+<h3>⚠️ CAPA Management</h3>
+<p>
+Управление корректирующими и предупреждающими действиями.
+</p>
+</div>
+
+<div class="component">
+<h3>📈 Quality Analytics</h3>
+<p>
+Анализ KPI и тенденций качества.
+</p>
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>🛡️ QMS Security &amp; Control</h2>
+
+<div class="grid">
+
+<div class="component">
+<h3>🔐 Access Control</h3>
+<p>
+Разграничение доступа к качественным данным и документам.
+</p>
+</div>
+
+<div class="component">
+<h3>📋 Audit Trail</h3>
+<p>
+Регистрация изменений и действий пользователей.
+</p>
+</div>
+
+<div class="component">
+<h3>📑 Version Control</h3>
+<p>
+Контроль версий процедур и документов.
+</p>
+</div>
+
+<div class="component">
+<h3>💾 Backup</h3>
+<p>
+Резервное копирование качественных записей.
+</p>
+</div>
+
+<div class="component">
+<h3>🌐 Network Security</h3>
+<p>
+Защита цифровой инфраструктуры QMS.
+</p>
+</div>
+
+<div class="component">
+<h3>👤 User Management</h3>
+<p>
+Управление ролями и полномочиями пользователей.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="warning">
+
+<strong>⚠️ Важно:</strong>
+
+<p>
+Эта страница является демонстрационной моделью WORKER PRO.
+Реальная система управления качеством должна соответствовать
+целям организации, применимым требованиям, внутренним процедурам
+и выбранным стандартам. Наличие цифрового QMS само по себе
+не означает соответствие конкретному стандарту или автоматическую
+сертификацию организации.
+</p>
+
+</section>
+
+<section class="card">
+
+<h2>🔗 Related WORKER PRO</h2>
+
+<div class="related">
+
+<a href="../index.html">Main</a>
+
+<a href="../measurement-system-analysis/index.html">
+Measurement System Analysis
+</a>
+
+<a href="../process-capability-analysis/index.html">
+Process Capability Analysis
+</a>
+
+<a href="../statistical-process-control/index.html">
+Statistical Process Control
+</a>
+
+<a href="../zero-defect-manufacturing/index.html">
+Zero Defect Manufacturing
+</a>
+
+<a href="../predictive-quality/index.html">
+Predictive Quality
+</a>
+
+<a href="../automated-quality-control/index.html">
+Automated Quality Control
+</a>
+
+<a href="../automated-inspection/index.html">
+Automated Inspection
+</a>
+
+<a href="../automated-sorting/index.html">
+Automated Sorting
+</a>
+
+<a href="../automated-packaging/index.html">
+Automated Packaging
+</a>
+
+<a href="../robotic-palletizing/index.html">
+Robotic Palletizing
+</a>
+
+<a href="../robotic-assembly/index.html">
+Robotic Assembly
+</a>
+
+<a href="../robotic-welding/index.html">
+Robotic Welding
+</a>
+
+<a href="../robotic-production-lines/index.html">
+Robotic Production Lines
+</a>
+
+<a href="../industrial-robot-cells/index.html">
+Industrial Robot Cells
+</a>
+
+<a href="../industrial-robotics/index.html">
+Industrial Robotics
+</a>
+
+<a href="../industrial-automation/index.html">
+Industrial Automation
+</a>
+
+<a href="../industrial-control-systems/index.html">
+Industrial Control Systems
+</a>
+
+<a href="../automation-robotics/index.html">
+Automation Robotics
+</a>
+
+<a href="../industrial-network/index.html">
+Industrial Network
+</a>
+
+<a href="../industrial-communication/index.html">
+Industrial Communication
+</a>
+
+<a href="../iot-industrial-internet/index.html">
+Industrial IoT
+</a>
+
+<a href="../ai-machine-learning/index.html">
+AI &amp; Machine Learning
+</a>
+
+<a href="../digital-twin/index.html">
+Digital Twin
+</a>
+
+<a href="../smart-factory/index.html">
+Smart Factory
+</a>
+
+<a href="../digital-manufacturing/index.html">
+Digital Manufacturing
+</a>
+
+<a href="../analytics/index.html">
+Analytics
+</a>
+
+<a href="../reports/index.html">
+Reports
+</a>
+
+<a href="../production/index.html">
+Production
+</a>
+
+<a href="../equipment/index.html">
+Equipment
+</a>
+
+<a href="../sensors/index.html">
+Sensors
+</a>
+
+<a href="../quality/index.html">
+Quality
+</a>
+
+<a href="../maintennances/index.html">
+Maintenance
+</a>
+
+<a href="../safety/index.html">
+Safety
+</a>
+
+<a href="../training/index.html">
+Training
+</a>
+
+<a href="../specialists/index.html">
+Specialists
+</a>
+
+<a href="../companies/index.html">
+Companies
+</a>
+
+<a href="../suppliers/index.html">
+Suppliers
+</a>
+
+<a href="../orders/index.html">
+Orders
+</a>
+
+<a href="../logistics/index.html">
+Logistics
+</a>
+
+<a href="../warehouses/index.html">
+Warehouses
+</a>
+
+<a href="../tracking/index.html">
+Tracking
+</a>
+
+<a href="../dashboard/index.html">
+Dashboard
+</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>
+Global Industrial Platform — Production • Quality • QMS • Continuous Improvement
+</p>
+
+<p>© 2026 WORKER PRO</p>
+
+</footer>
+
+<script>
+
+function filterQMS(){
+
+var input=
+document.getElementById("qmsSearch")
+.value
+.toLowerCase();
+
+var items=
+document.querySelectorAll(".qms-item");
+
+items.forEach(function(item){
+
+var text=
+item.innerText.toLowerCase();
+
+if(text.indexOf(input)!==-1){
+
+item.style.display="block";
+
+}else{
+
+item.style.display="none";
+
+}
+
+});
+
+}
+
+function showDemo(message){
+
+document.getElementById("demoResult").innerHTML=
+'<div class="result">'+
+message+
+'</div>';
+
+}
+
+function qmsStatus(){
+
+showDemo(
+"🏆 QMS Status: ONLINE — система управления качеством работает."
+);
+
+}
+
+function auditDemo(){
+
+showDemo(
+"🔍 Audit Check: READY — демонстрационный план аудита доступен."
+);
+
+}
+
+function capaDemo(){
+
+showDemo(
+"🔧 CAPA Check: ACTIVE — демонстрационный контроль корректирующих действий работает."
+);
+
+}
+
+function documentDemo(){
+
+showDemo(
+"📑 Document Check: OK — демонстрационные документы имеют актуальные версии."
+);
+
+}
+
+function addQMS(event){
+
+event.preventDefault();
+
+var name=
+document.getElementById("qmsName").value;
+
+var type=
+document.getElementById("qmsType").value;
+
+document.getElementById("addResult").innerHTML=
+'<div class="result">'+
+'✅ Added: '+
+name+
+' — '+
+type+
+'</div>';
+
+document.getElementById("qmsName").value="";
+
+}
+
+</script>
+
+</body>
+</html>
