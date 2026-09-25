@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Smart Factory</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+.top h1{
+    margin:0;
+    font-size:30px;
+}
+
+.top p{
+    margin:8px 0 15px;
+    color:#cceedd;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.hero h2,
+.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-left:5px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:18px;
+}
+
+.badge{
+    display:inline-block;
+    background:#e4f6eb;
+    color:#075b34;
+    padding:6px 10px;
+    border-radius:20px;
+    margin:3px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.flow span{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.factory{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.factory h4{
+    color:#075b34;
+    margin:0 0 8px;
+}
+
+.progress{
+    height:10px;
+    background:#e5ebe7;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 14px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.links a:hover{
+    background:#b7ff35;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .top h1{
+        font-size:25px;
+    }
+
+    .container{
+        padding:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <h1>WORKER PRO</h1>
+
+    <p>Smart Factory — Умная промышленная фабрика</p>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+    <h2>🏭 Smart Factory</h2>
+
+    <p>
+        Smart Factory объединяет производство, оборудование,
+        работников, роботов, датчики, IoT, искусственный интеллект
+        и цифровые системы управления в единую промышленную экосистему.
+    </p>
+
+    <p>
+        Цель — получать данные в реальном времени, повышать
+        эффективность производства, контролировать качество
+        и уменьшать простои.
+    </p>
+
+    <div>
+        <span class="badge">Industry 4.0</span>
+        <span class="badge">IoT</span>
+        <span class="badge">AI</span>
+        <span class="badge">Robotics</span>
+        <span class="badge">Digital Twin</span>
+        <span class="badge">Automation</span>
+        <span class="badge">Analytics</span>
+    </div>
+
+</section>
+
+<section class="stats">
+
+    <div class="stat">
+        <strong>24</strong>
+        Smart Factories
+        <small>подключённых предприятий</small>
+    </div>
+
+    <div class="stat">
+        <strong>328</strong>
+        Smart Machines
+        <small>умных станков</small>
+    </div>
+
+    <div class="stat">
+        <strong>74</strong>
+        Robots
+        <small>промышленных робота</small>
+    </div>
+
+    <div class="stat">
+        <strong>96.8%</strong>
+        Availability
+        <small>доступность оборудования</small>
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h3>🔄 Smart Factory Architecture</h3>
+
+    <div class="flow">
+
+        <span>Sensors</span>
+        <b class="arrow">→</b>
+
+        <span>IoT</span>
+        <b class="arrow">→</b>
+
+        <span>Machines</span>
+        <b class="arrow">→</b>
+
+        <span>Production</span>
+        <b class="arrow">→</b>
+
+        <span>AI</span>
+        <b class="arrow">→</b>
+
+        <span>Analytics</span>
+        <b class="arrow">→</b>
+
+        <span>Decision</span>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h3>🔎 Умные предприятия</h3>
+
+    <div class="search">
+
+        <input
+            id="search"
+            type="text"
+            placeholder="Поиск фабрики..."
+            onkeyup="filterFactories()"
+        >
+
+        <select
+            id="countryFilter"
+            onchange="filterFactories()"
+        >
+
+            <option value="">Все страны</option>
+            <option value="Azerbaijan">Azerbaijan</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Germany">Germany</option>
+            <option value="Italy">Italy</option>
+
+        </select>
+
+    </div>
+
+    <div id="factoryList">
+
+        <div
+            class="factory"
+            data-name="Baku Smart Manufacturing"
+            data-country="Azerbaijan"
+        >
+
+            <h4>🏭 Baku Smart Manufacturing</h4>
+
+            <p><b>Country:</b> Azerbaijan</p>
+            <p><b>Production:</b> CNC & Industrial Components</p>
+            <p><b>Status:</b> 🟢 Online</p>
+            <p>Factory Efficiency: 94%</p>
+
+            <div class="progress">
+                <div style="width:94%"></div>
+            </div>
+
+        </div>
+
+        <div
+            class="factory"
+            data-name="Sumqayit Industrial Factory"
+            data-country="Azerbaijan"
+        >
+
+            <h4>🏭 Sumqayit Industrial Factory</h4>
+
+            <p><b>Country:</b> Azerbaijan</p>
+            <p><b>Production:</b> Metal & Machinery</p>
+            <p><b>Status:</b> 🟢 Running</p>
+            <p>Factory Efficiency: 91%</p>
+
+            <div class="progress">
+                <div style="width:91%"></div>
+            </div>
+
+        </div>
+
+        <div
+            class="factory"
+            data-name="Istanbul Automation Factory"
+            data-country="Turkey"
+        >
+
+            <h4>🏭 Istanbul Automation Factory</h4>
+
+            <p><b>Country:</b> Turkey</p>
+            <p><b>Production:</b> Automation & Robotics</p>
+            <p><b>Status:</b> 🟢 Online</p>
+            <p>Factory Efficiency: 96%</p>
+
+            <div class="progress">
+                <div style="width:96%"></div>
+            </div>
+
+        </div>
+
+        <div
+            class="factory"
+            data-name="Dortmund Smart Factory"
+            data-country="Germany"
+        >
+
+            <h4>🏭 Dortmund Smart Factory</h4>
+
+            <p><b>Country:</b> Germany</p>
+            <p><b>Production:</b> CNC & Robotics</p>
+            <p><b>Status:</b> 🟢 Online</p>
+            <p>Factory Efficiency: 98%</p>
+
+            <div class="progress">
+                <div style="width:98%"></div>
+            </div>
+
+        </div>
+
+        <div
+            class="factory"
+            data-name="Milan Smart Production"
+            data-country="Italy"
+        >
+
+            <h4>🏭 Milan Smart Production</h4>
+
+            <p><b>Country:</b> Italy</p>
+            <p><b>Production:</b> Pumps & Industrial Equipment</p>
+            <p><b>Status:</b> 🟡 Monitoring</p>
+            <p>Factory Efficiency: 89%</p>
+
+            <div class="progress">
+                <div style="width:89%"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<section class="grid">
+
+    <div class="card">
+
+        <h3>🤖 Smart Automation</h3>
+
+        <p>✓ CNC automation</p>
+        <p>✓ Industrial robots</p>
+        <p>✓ PLC systems</p>
+        <p>✓ Machine vision</p>
+        <p>✓ Automatic inspection</p>
+
+    </div>
+
+    <div class="card">
+
+        <h3>📡 Real-Time Monitoring</h3>
+
+        <p>
+            Данные оборудования поступают в систему
+            через промышленные датчики и IoT.
+        </p>
+
+        <p>Temperature: 72%</p>
+
+        <div class="progress">
+            <div style="width:72%"></div>
+        </div>
+
+        <p>Production Load: 86%</p>
+
+        <div class="progress">
+            <div style="width:86%"></div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>🧠 AI Factory</h3>
+
+        <p>
+            AI анализирует производственные процессы,
+            выявляет отклонения и помогает принимать решения.
+        </p>
+
+        <button class="action" onclick="runAI()">
+            Запустить AI
+        </button>
+
+        <p id="aiResult"></p>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h3>⚡ Энергетическая эффективность</h3>
+
+    <div class="grid">
+
+        <div>
+            <b>Energy Monitoring</b>
+            <p>Контроль энергопотребления оборудования.</p>
+        </div>
+
+        <div>
+            <b>Smart Lighting</b>
+            <p>Автоматическое управление освещением.</p>
+        </div>
+
+        <div>
+            <b>Energy Optimization</b>
+            <p>Поиск возможностей снижения расходов.</p>
+        </div>
+
+        <div>
+            <b>Carbon Monitoring</b>
+            <p>Мониторинг экологических показателей.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h3>➕ Добавить Smart Factory</h3>
+
+    <div class="search">
+
+        <input
+            id="newFactory"
+            type="text"
+            placeholder="Название предприятия"
+        >
+
+        <select id="newCountry">
+
+            <option>Azerbaijan</option>
+            <option>Turkey</option>
+            <option>Germany</option>
+            <option>Italy</option>
+
+        </select>
+
+        <button class="action" onclick="addFactory()">
+            Добавить
+        </button>
+
+    </div>
+
+    <p id="addResult"></p>
+
+</section>
+
+<section class="card">
+
+    <h3>🔐 Безопасность Smart Factory</h3>
+
+    <div class="grid">
+
+        <div>
+            <b>🔒 Data Security</b>
+            <p>Защита производственных данных.</p>
+        </div>
+
+        <div>
+            <b>🛡 Cyber Security</b>
+            <p>Защита промышленной сети.</p>
+        </div>
+
+        <div>
+            <b>👤 Access Control</b>
+            <p>Контроль доступа пользователей.</p>
+        </div>
+
+        <div>
+            <b>📡 Secure IoT</b>
+            <p>Безопасное подключение оборудования.</p>
+        </div>
+
+    </div>
+
+</section>
+
+<section class="card">
+
+    <h3>🔗 Связанные разделы WORKER PRO</h3>
+
+    <div class="links">
+
+        <a href="../index.html">Главная</a>
+        <a href="../digital-manufacturing/index.html">Digital Manufacturing</a>
+        <a href="../digital-twin/index.html">Digital Twin</a>
+        <a href="../iot-industrial-internet/index.html">IoT</a>
+        <a href="../ai-machine-learning/index.html">AI & ML</a>
+        <a href="../automation-robotics/index.html">Automation</a>
+        <a href="../production/index.html">Production</a>
+        <a href="../equipment/index.html">Equipment</a>
+        <a href="../sensors/index.html">Sensors</a>
+        <a href="../quality/index.html">Quality</a>
+        <a href="../analytics/index.html">Analytics</a>
+        <a href="../maintennances/index.html">Maintenance</a>
+        <a href="../companies/index.html">Companies</a>
+        <a href="../suppliers/index.html">Suppliers</a>
+        <a href="../dashboard/index.html">Dashboard</a>
+
+    </div>
+
+</section>
+
+</main>
+
+<footer>
+
+    WORKER PRO — Global Industrial Platform<br>
+    Smart Factory • Industry 4.0 • AI • IoT • Automation<br><br>
+    © 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterFactories(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const country =
+        document.getElementById("countryFilter")
+        .value;
+
+    const factories =
+        document.querySelectorAll(".factory");
+
+    factories.forEach(function(factory){
+
+        const name =
+            factory.dataset.name.toLowerCase();
+
+        const factoryCountry =
+            factory.dataset.country;
+
+        const matchName =
+            name.includes(search);
+
+        const matchCountry =
+            !country || factoryCountry === country;
+
+        factory.style.display =
+            matchName && matchCountry
+            ? "block"
+            : "none";
+
+    });
+}
+
+function runAI(){
+
+    document.getElementById("aiResult").innerHTML =
+        "🤖 AI-анализ завершён. Производственные процессы стабильны. Критических отклонений не обнаружено.";
+
+}
+
+function addFactory(){
+
+    const name =
+        document.getElementById("newFactory")
+        .value
+        .trim();
+
+    const country =
+        document.getElementById("newCountry")
+        .value;
+
+    if(!name){
+
+        document.getElementById("addResult").innerHTML =
+            "⚠️ Введите название предприятия.";
+
+        return;
+    }
+
+    document.getElementById("addResult").innerHTML =
+        "✅ Smart Factory добавлена: " +
+        name +
+        " — " +
+        country +
+        ".";
+
+    document.getElementById("newFactory").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
