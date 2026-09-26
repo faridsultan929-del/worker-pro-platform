@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Acoustic Testing</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    padding:18px 12px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 3px 12px rgba(0,0,0,.2);
+}
+
+.logo{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.subtitle{
+    text-align:center;
+    color:#b7ff35;
+    margin:5px 0 14px;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+}
+
+.languages button{
+    border:0;
+    padding:8px 12px;
+    border-radius:8px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px 14px 40px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    border-radius:18px;
+    padding:30px 22px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    margin:0 0 12px;
+    font-size:34px;
+}
+
+.hero p{
+    max-width:850px;
+    margin:auto;
+    line-height:1.6;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#b7ff35;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+.card h2,
+.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.section-title{
+    background:#063d25;
+    color:white;
+    padding:14px 18px;
+    border-radius:12px;
+    margin:25px 0 14px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.step{
+    background:#e7f4eb;
+    border:2px solid #0b6b3d;
+    color:#063d25;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#0b6b3d;
+    font-weight:bold;
+}
+
+.method{
+    border-left:5px solid #0b6b3d;
+}
+
+.search-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+input,
+select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #b8cfc0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    border-radius:9px;
+    padding:12px 18px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:4px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.lab.hidden{
+    display:none;
+}
+
+.progress{
+    background:#dfe9e2;
+    border-radius:20px;
+    overflow:hidden;
+    height:15px;
+    margin:8px 0 15px;
+}
+
+.bar{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+.table th,
+.table td{
+    border-bottom:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+}
+
+.table th{
+    background:#e7f4eb;
+    color:#063d25;
+}
+
+.demo-box{
+    background:#f0f8f2;
+    border:1px solid #c9dfd0;
+    border-radius:12px;
+    padding:16px;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #d89d00;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+.security{
+    background:#063d25;
+    color:white;
+    border-radius:15px;
+    padding:20px;
+}
+
+.security-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+}
+
+.security-item{
+    background:#0b6b3d;
+    padding:12px;
+    border-radius:9px;
+    text-align:center;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.related a{
+    color:#0b6b3d;
+    font-weight:bold;
+    text-decoration:none;
+    background:#e7f4eb;
+    padding:10px 14px;
+    border-radius:9px;
+}
+
+.related a:hover{
+    text-decoration:underline;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .hero h1{
+        font-size:27px;
+    }
+
+    .arrow{
+        display:none;
+    }
+
+    .table{
+        font-size:13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <div class="logo">WORKER PRO</div>
+
+    <div class="subtitle">
+        Глобальная промышленная платформа
+    </div>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+
+<main class="container">
+
+<section class="hero">
+
+    <h1>🔊 Acoustic Testing</h1>
+
+    <p>
+        Промышленная система акустических испытаний и измерений.
+        Анализ уровня шума, звукового давления, акустической мощности,
+        частотного спектра, виброакустических характеристик и
+        акустической безопасности оборудования.
+    </p>
+
+    <div class="tags">
+        <span class="tag">Acoustic Testing</span>
+        <span class="tag">Noise Testing</span>
+        <span class="tag">Sound Pressure</span>
+        <span class="tag">Sound Power</span>
+        <span class="tag">Frequency Analysis</span>
+        <span class="tag">Noise Mapping</span>
+        <span class="tag">Acoustic Emission</span>
+        <span class="tag">Test Report</span>
+    </div>
+
+</section>
+
+
+<div class="grid">
+
+    <div class="card stat">
+        <strong>118</strong>
+        Acoustic Test Systems
+    </div>
+
+    <div class="card stat">
+        <strong>6,940</strong>
+        Acoustic Tests
+    </div>
+
+    <div class="card stat">
+        <strong>52</strong>
+        Connected Laboratories
+    </div>
+
+    <div class="card stat">
+        <strong>98.2%</strong>
+        Test Record Completeness
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔄 Acoustic Testing Workflow</h2>
+
+<div class="card">
+
+    <div class="flow">
+
+        <div class="step">Sample</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Sample ID</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Test Setup</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Microphone Setup</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Sound Measurement</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Frequency Analysis</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Noise Evaluation</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Report</div>
+
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🎧 Acoustic Test Methods</h2>
+
+<div class="grid">
+
+    <div class="card method">
+        <h3>🔊 Noise Testing</h3>
+        <p>
+            Измерение уровня шума промышленного оборудования
+            при различных режимах работы.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>🎙️ Sound Pressure</h3>
+        <p>
+            Измерение звукового давления в заданных точках
+            вокруг оборудования.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>📢 Sound Power</h3>
+        <p>
+            Определение акустической мощности источника шума.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>📈 Frequency Analysis</h3>
+        <p>
+            Анализ частотного спектра и выявление основных
+            источников акустического шума.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>🗺️ Noise Mapping</h3>
+        <p>
+            Создание карты распределения шума на промышленной территории.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>⚙️ Acoustic Emission</h3>
+        <p>
+            Контроль акустических сигналов, возникающих
+            при работе или повреждении материалов.
+        </p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">📊 Main Acoustic Parameters</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🔊 Sound Pressure Level</h3>
+        <p>Уровень звукового давления, dB.</p>
+    </div>
+
+    <div class="card">
+        <h3>📢 Sound Power Level</h3>
+        <p>Акустическая мощность источника.</p>
+    </div>
+
+    <div class="card">
+        <h3>🎵 Frequency</h3>
+        <p>Частота звукового сигнала, Hz.</p>
+    </div>
+
+    <div class="card">
+        <h3>📈 Spectrum</h3>
+        <p>Распределение акустической энергии по частотам.</p>
+    </div>
+
+    <div class="card">
+        <h3>⏱️ Duration</h3>
+        <p>Продолжительность акустического испытания.</p>
+    </div>
+
+    <div class="card">
+        <h3>📍 Measurement Point</h3>
+        <p>Точка размещения измерительного микрофона.</p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔬 Acoustic Test Demo</h2>
+
+<div class="card">
+
+    <div class="demo-box">
+
+        <h3>Equipment-AZ-2026-A001</h3>
+
+        <table class="table">
+
+            <tr>
+                <th>Equipment</th>
+                <td>Industrial Pump Assembly</td>
+            </tr>
+
+            <tr>
+                <th>Test Method</th>
+                <td>Noise Testing</td>
+            </tr>
+
+            <tr>
+                <th>Frequency Range</th>
+                <td>20–20,000 Hz</td>
+            </tr>
+
+            <tr>
+                <th>Sound Pressure</th>
+                <td>72 dB(A)</td>
+            </tr>
+
+            <tr>
+                <th>Measurement Distance</th>
+                <td>1 meter</td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <td>✅ PASS</td>
+            </tr>
+
+        </table>
+
+        <button class="action" onclick="startAcoustic()">
+            ▶ Start Acoustic Test
+        </button>
+
+        <button class="action" onclick="analyzeAcoustic()">
+            🔬 Analyze Spectrum
+        </button>
+
+        <button class="action" onclick="createReport()">
+            📄 Create Test Report
+        </button>
+
+        <p id="testResult"></p>
+
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🏭 Acoustic Testing Laboratories</h2>
+
+<div class="card">
+
+    <div class="search-row">
+
+        <input
+            type="text"
+            id="labSearch"
+            placeholder="Поиск лаборатории..."
+            oninput="filterLabs()"
+        >
+
+        <select
+            id="labCountry"
+            onchange="filterLabs()"
+        >
+
+            <option value="all">Все страны</option>
+            <option value="Azerbaijan">Azerbaijan</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Germany">Germany</option>
+            <option value="Italy">Italy</option>
+            <option value="China">China</option>
+            <option value="USA">USA</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="grid" id="labs">
+
+        <div class="card lab" data-country="Azerbaijan">
+            <h3>🇦🇿 Baku Acoustic Lab</h3>
+            <p>Noise / Sound Pressure / Spectrum</p>
+            <b>98.6%</b>
+        </div>
+
+        <div class="card lab" data-country="Azerbaijan">
+            <h3>🇦🇿 Sumqayit Noise Laboratory</h3>
+            <p>Industrial Noise / Noise Mapping</p>
+            <b>98.0%</b>
+        </div>
+
+        <div class="card lab" data-country="Turkey">
+            <h3>🇹🇷 Istanbul Acoustic Center</h3>
+            <p>Noise / Sound Power</p>
+            <b>98.4%</b>
+        </div>
+
+        <div class="card lab" data-country="Germany">
+            <h3>🇩🇪 Dortmund Acoustic Laboratory</h3>
+            <p>Frequency / Sound Power</p>
+            <b>99.2%</b>
+        </div>
+
+        <div class="card lab" data-country="Italy">
+            <h3>🇮🇹 Milan Acoustic Lab</h3>
+            <p>Noise / Automotive Acoustics</p>
+            <b>98.8%</b>
+        </div>
+
+        <div class="card lab" data-country="China">
+            <h3>🇨🇳 Shanghai Acoustic Laboratory</h3>
+            <p>Industrial Noise / Spectrum</p>
+            <b>98.1%</b>
+        </div>
+
+        <div class="card lab" data-country="USA">
+            <h3>🇺🇸 Houston Acoustic Lab</h3>
+            <p>Oil & Gas / Industrial Noise</p>
+            <b>98.9%</b>
+        </div>
+
+    </div>
+
+</div>
+
+
+<h2 class="section-title">📊 Laboratory Performance</h2>
+
+<div class="card">
+
+    <p><b>Baku — 98.6%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:98.6%"></div>
+    </div>
+
+    <p><b>Sumqayit — 98.0%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:98%"></div>
+    </div>
+
+    <p><b>Istanbul — 98.4%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:98.4%"></div>
+    </div>
+
+    <p><b>Dortmund — 99.2%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:99.2%"></div>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">➕ Add Acoustic Test System</h2>
+
+<div class="grid">
+
+    <button class="action" onclick="addSystem('Noise Testing')">
+        🔊 Noise Testing
+    </button>
+
+    <button class="action" onclick="addSystem('Sound Pressure')">
+        🎙️ Sound Pressure
+    </button>
+
+    <button class="action" onclick="addSystem('Sound Power')">
+        📢 Sound Power
+    </button>
+
+    <button class="action" onclick="addSystem('Frequency Analysis')">
+        📈 Frequency Analysis
+    </button>
+
+    <button class="action" onclick="addSystem('Noise Mapping')">
+        🗺️ Noise Mapping
+    </button>
+
+    <button class="action" onclick="addSystem('Acoustic Emission')">
+        ⚙️ Acoustic Emission
+    </button>
+
+</div>
+
+<p id="systemResult"></p>
+
+
+<h2 class="section-title">🏭 Industrial Applications</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🛢️ Oil & Gas</h3>
+        <p>
+            Насосы, компрессоры, турбины, трубопроводы,
+            клапаны и промышленное оборудование.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🚗 Automotive</h3>
+        <p>
+            Двигатели, трансмиссии, кузовные элементы,
+            электронные системы и NVH testing.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>✈️ Aerospace</h3>
+        <p>
+            Авиационные системы и компоненты,
+            требующие контроля акустической нагрузки.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>⛏️ Mining</h3>
+        <p>
+            Дробилки, конвейеры, вентиляторы,
+            насосы и горное оборудование.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🏭 Heavy Industry</h3>
+        <p>
+            Электродвигатели, редукторы, компрессоры
+            и производственные машины.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>⚙️ Manufacturing</h3>
+        <p>
+            CNC, robotics, automation, sensors
+            и производственные линии.
+        </p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔐 Security & Traceability</h2>
+
+<section class="security">
+
+    <div class="security-grid">
+
+        <div class="security-item">🔑 Access Control</div>
+        <div class="security-item">🆔 Sample ID</div>
+        <div class="security-item">🎙️ Microphone Records</div>
+        <div class="security-item">📈 Spectrum Data</div>
+        <div class="security-item">📄 Test Reports</div>
+        <div class="security-item">📋 Audit Trail</div>
+
+    </div>
+
+</section>
+
+
+<div class="notice">
+
+    ⚠️ <b>Важно:</b>
+    эта страница является демонстрационной частью WORKER PRO.
+    Реальные акустические измерения должны выполняться
+    квалифицированным персоналом с откалиброванными
+    измерительными системами и подходящими методиками.
+
+</div>
+
+
+<h2 class="section-title">🔗 Related WORKER PRO Modules</h2>
+
+<div class="card">
+
+    <div class="related">
+
+        <a href="../vibration-testing/index.html">
+            Vibration Testing
+        </a>
+
+        <a href="../environmental-testing/index.html">
+            Environmental Testing
+        </a>
+
+        <a href="../thermal-testing/index.html">
+            Thermal Testing
+        </a>
+
+        <a href="../corrosion-testing/index.html">
+            Corrosion Testing
+        </a>
+
+        <a href="../fatigue-testing/index.html">
+            Fatigue Testing
+        </a>
+
+        <a href="../impact-testing/index.html">
+            Impact Testing
+        </a>
+
+        <a href="../material-testing/index.html">
+            Material Testing
+        </a>
+
+        <a href="../laboratory-testing/index.html">
+            Laboratory Testing
+        </a>
+
+        <a href="../quality-control/index.html">
+            Quality Control
+        </a>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+    <h3>WORKER PRO</h3>
+
+    <p>Работа. Знания. Производство.</p>
+
+    <p>Global Industrial Platform</p>
+
+    <p>© 2026 WORKER PRO — F.S.</p>
+
+</footer>
+
+
+<script>
+
+function filterLabs(){
+
+    const search =
+        document.getElementById("labSearch")
+        .value
+        .toLowerCase();
+
+    const country =
+        document.getElementById("labCountry")
+        .value;
+
+    const labs =
+        document.querySelectorAll(".lab");
+
+    labs.forEach(function(lab){
+
+        const text =
+            lab.innerText.toLowerCase();
+
+        const labCountry =
+            lab.dataset.country;
+
+        const searchOK =
+            text.includes(search);
+
+        const countryOK =
+            country === "all" ||
+            labCountry === country;
+
+        if(searchOK && countryOK){
+            lab.classList.remove("hidden");
+        }else{
+            lab.classList.add("hidden");
+        }
+
+    });
+
+}
+
+
+function startAcoustic(){
+
+    document.getElementById("testResult").innerHTML =
+        "🔊 Acoustic Test запущен. " +
+        "Система регистрирует уровень шума, " +
+        "звуковое давление и частотный спектр.";
+
+}
+
+
+function analyzeAcoustic(){
+
+    document.getElementById("testResult").innerHTML =
+        "📈 Спектральный анализ завершён. " +
+        "Демонстрационные акустические данные готовы.";
+
+}
+
+
+function createReport(){
+
+    document.getElementById("testResult").innerHTML =
+        "📄 Демонстрационный акустический отчёт создан. " +
+        "Sample ID: Equipment-AZ-2026-A001.";
+
+}
+
+
+function addSystem(type){
+
+    document.getElementById("systemResult").innerHTML =
+        "➕ Система <b>" +
+        type +
+        "</b> добавлена в демонстрационный список WORKER PRO.";
+
+}
+
+</script>
+
+</body>
+</html>
