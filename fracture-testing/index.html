@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Fracture Testing</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    text-align:center;
+}
+
+.top-languages a{
+    display:inline-block;
+    margin:4px;
+    padding:8px 12px;
+    border-radius:8px;
+    background:#0b6b3d;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.top-languages a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+header{
+    background:#0b6b3d;
+    color:white;
+    padding:28px 15px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    font-size:32px;
+}
+
+header p{
+    margin:10px 0 0;
+    font-size:17px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.tag{
+    display:inline-block;
+    background:#e7f5ec;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    font-size:13px;
+    text-decoration:none;
+}
+
+.tag:hover{
+    background:#b7ff35;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:7px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:15px;
+}
+
+.flow-item{
+    background:#063d25;
+    color:white;
+    padding:11px 14px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search-box{
+    width:100%;
+    padding:13px;
+    border:2px solid #d7e5dc;
+    border-radius:10px;
+    font-size:16px;
+    margin-bottom:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #e4ece7;
+    text-align:left;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:15px;
+    background:#dff5e7;
+    color:#063d25;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.progress{
+    background:#e3ebe6;
+    height:12px;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:11px 16px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:4px;
+}
+
+button:hover{
+    background:#063d25;
+}
+
+.notice{
+    background:#fff8d8;
+    border-left:5px solid #b7ff35;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+@media(max-width:600px){
+    header h1{
+        font-size:25px;
+    }
+
+    .container{
+        padding:12px;
+    }
+
+    th,td{
+        font-size:13px;
+        padding:9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Global Industrial Platform — Fracture Testing</p>
+</header>
+
+<div class="container">
+
+<section class="hero">
+    <h2>💥 Fracture Testing</h2>
+
+    <p>
+        Демонстрационная промышленная система WORKER PRO
+        для испытаний и анализа разрушения материалов.
+        Платформа объединяет трещины, образцы, нагрузку,
+        механические свойства разрушения, распространение трещин,
+        fracture toughness, результаты и отчёты.
+    </p>
+
+    <div class="tags">
+        <span class="tag">Fracture Testing</span>
+        <span class="tag">Fracture Toughness</span>
+        <span class="tag">Crack Growth</span>
+        <span class="tag">Crack Detection</span>
+        <span class="tag">KIC</span>
+        <span class="tag">JIC</span>
+        <span class="tag">Failure Analysis</span>
+        <span class="tag">Test Report</span>
+    </div>
+</section>
+
+<section class="stats">
+
+    <div class="stat">
+        <strong>86</strong>
+        Fracture Test Systems
+    </div>
+
+    <div class="stat">
+        <strong>3,940</strong>
+        Fracture Tests
+    </div>
+
+    <div class="stat">
+        <strong>44</strong>
+        Connected Laboratories
+    </div>
+
+    <div class="stat">
+        <strong>97.8%</strong>
+        Test Record Completeness
+    </div>
+
+</section>
+
+<section class="hero">
+    <h2>🔄 Fracture Testing Workflow</h2>
+
+    <div class="flow">
+
+        <div class="flow-item">Material</div>
+        <div class="arrow">→</div>
+
+        <div class="flow-item">Sample ID</div>
+        <div class="arrow">→</div>
+
+        <div class="flow-item">Pre-Crack</div>
+        <div class="arrow">→</div>
+
+        <div class="flow-item">Loading</div>
+        <div class="arrow">→</div>
+
+        <div class="flow-item">Crack Growth</div>
+        <div class="arrow">→</div>
+
+        <div class="flow-item">Fracture</div>
+        <div class="arrow">→</div>
+
+        <div class="flow-item">Analysis</div>
+        <div class="arrow">→</div>
+
+        <div class="flow-item">Report</div>
+
+    </div>
+</section>
+
+<section class="hero">
+    <h2>🧪 Fracture Testing Methods</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>🔬 Fracture Toughness</h3>
+            <p>
+                Демонстрационная оценка сопротивления
+                материала распространению трещины.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>📈 Crack Growth</h3>
+            <p>
+                Анализ изменения длины трещины
+                при повторяющемся нагружении.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>⚙️ KIC Analysis</h3>
+            <p>
+                Демонстрационный анализ параметра
+                критической интенсивности напряжений.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🧩 JIC Analysis</h3>
+            <p>
+                Демонстрационная оценка сопротивления
+                разрушению по энергетическому подходу.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🔎 Failure Analysis</h3>
+            <p>
+                Анализ поверхности и характера
+                разрушения образца.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🤖 Automated Crack Analysis</h3>
+            <p>
+                Демонстрационная автоматическая регистрация
+                роста трещины и результатов.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="hero">
+    <h2>📐 Main Parameters</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Crack Length</h3>
+            <p>
+                Длина контролируемой трещины.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Applied Load</h3>
+            <p>
+                Демонстрационная нагрузка,
+                приложенная к образцу.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Stress Intensity</h3>
+            <p>
+                Параметр интенсивности напряжений
+                в зоне трещины.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Crack Growth Rate</h3>
+            <p>
+                Скорость распространения трещины
+                при заданных условиях.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Fracture Toughness</h3>
+            <p>
+                Демонстрационный показатель сопротивления
+                материала разрушению.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Fracture Mode</h3>
+            <p>
+                Характер и режим разрушения образца.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="hero">
+    <h2>📈 Crack Growth Analysis</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Initial Crack</h3>
+            <p><b>8.2 mm</b></p>
+        </div>
+
+        <div class="card">
+            <h3>Final Crack</h3>
+            <p><b>22.6 mm</b></p>
+        </div>
+
+        <div class="card">
+            <h3>Stress Intensity</h3>
+            <p><b>42.8 MPa√m</b></p>
+        </div>
+
+        <div class="card">
+            <h3>Result</h3>
+            <p><span class="status">PASS</span></p>
+        </div>
+
+    </div>
+
+    <button onclick="analyzeCrack()">
+        📊 Analyze Crack Growth
+    </button>
+
+    <p id="crackResult"></p>
+</section>
+
+<section class="hero">
+    <h2>💥 Demonstration Fracture Test</h2>
+
+    <div class="card">
+
+        <h3>Sample: Steel-AZ-2026-FR001</h3>
+
+        <p><b>Material:</b> Alloy Steel</p>
+        <p><b>Method:</b> Fracture Toughness</p>
+        <p><b>Initial Crack:</b> 8.2 mm</p>
+        <p><b>Final Crack:</b> 22.6 mm</p>
+        <p><b>Stress Intensity:</b> 42.8 MPa√m</p>
+        <p><b>Fracture Toughness:</b> 68.4 MPa√m</p>
+
+        <p>
+            <b>Demonstration Status:</b>
+            <span class="status">PASS</span>
+        </p>
+
+        <button onclick="startFracture()">
+            Start Fracture Test
+        </button>
+
+        <button onclick="analyzeTest()">
+            Analyze Result
+        </button>
+
+        <button onclick="createReport()">
+            Create Report
+        </button>
+
+        <p id="demoResult"></p>
+
+    </div>
+</section>
+
+<section class="hero">
+    <h2>🏭 Fracture Testing Laboratories</h2>
+
+    <input
+        class="search-box"
+        type="text"
+        id="labSearch"
+        placeholder="Поиск лаборатории, страны или метода..."
+        onkeyup="filterLabs()"
+    >
+
+    <table id="labTable">
+
+        <thead>
+            <tr>
+                <th>Laboratory</th>
+                <th>Country</th>
+                <th>Method</th>
+                <th>Tests</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>Baku Fracture Laboratory</td>
+                <td>Azerbaijan</td>
+                <td>Fracture Toughness</td>
+                <td>520</td>
+                <td><span class="status">Online</span></td>
+            </tr>
+
+            <tr>
+                <td>Sumqayit Materials Lab</td>
+                <td>Azerbaijan</td>
+                <td>Crack Growth</td>
+                <td>460</td>
+                <td><span class="status">Testing</span></td>
+            </tr>
+
+            <tr>
+                <td>Istanbul Industrial Lab</td>
+                <td>Turkey</td>
+                <td>KIC Analysis</td>
+                <td>640</td>
+                <td><span class="status">Online</span></td>
+            </tr>
+
+            <tr>
+                <td>Dortmund Precision Lab</td>
+                <td>Germany</td>
+                <td>JIC Analysis</td>
+                <td>820</td>
+                <td><span class="status">Online</span></td>
+            </tr>
+
+            <tr>
+                <td>Milan Materials Lab</td>
+                <td>Italy</td>
+                <td>Failure Analysis</td>
+                <td>580</td>
+                <td><span class="status">Review</span></td>
+            </tr>
+
+            <tr>
+                <td>Shanghai Industrial Lab</td>
+                <td>China</td>
+                <td>Automated Crack Analysis</td>
+                <td>920</td>
+                <td><span class="status">Online</span></td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+<section class="hero">
+    <h2>📊 Testing Performance</h2>
+
+    <div class="card">
+        <b>Test Record Completeness — 97.8%</b>
+        <div class="progress">
+            <span style="width:97.8%"></span>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card">
+        <b>Crack Traceability — 98.1%</b>
+        <div class="progress">
+            <span style="width:98.1%"></span>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card">
+        <b>Analysis Completion — 97.3%</b>
+        <div class="progress">
+            <span style="width:97.3%"></span>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card">
+        <b>Equipment Record Coverage — 98.9%</b>
+        <div class="progress">
+            <span style="width:98.9%"></span>
+        </div>
+    </div>
+
+</section>
+
+<section class="hero">
+    <h2>➕ Add Fracture Testing Systems</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Fracture Toughness</h3>
+            <button onclick="addSystem('Fracture Toughness Testing')">
+                Add System
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>Crack Growth</h3>
+            <button onclick="addSystem('Crack Growth Testing')">
+                Add System
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>KIC Analysis</h3>
+            <button onclick="addSystem('KIC Fracture Analysis')">
+                Add System
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>JIC Analysis</h3>
+            <button onclick="addSystem('JIC Fracture Analysis')">
+                Add System
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>Failure Analysis</h3>
+            <button onclick="addSystem('Failure Analysis')">
+                Add System
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>Automated Crack Analysis</h3>
+            <button onclick="addSystem('Automated Crack Analysis')">
+                Add System
+            </button>
+        </div>
+
+    </div>
+
+    <p id="addResult"></p>
+</section>
+
+<section class="hero">
+    <h2>🏗️ Industrial Applications</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>🛢️ Oil & Gas</h3>
+            <p>
+                Анализ трещиностойкости материалов
+                нефтегазового оборудования и трубопроводов.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>✈️ Aerospace</h3>
+            <p>
+                Демонстрационная оценка распространения трещин
+                в авиационных конструкциях и компонентах.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🚗 Automotive</h3>
+            <p>
+                Контроль сопротивления разрушению
+                автомобильных деталей и компонентов.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>⚙️ CNC Manufacturing</h3>
+            <p>
+                Исследование дефектов и трещин
+                после механической обработки.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>⛏️ Mining</h3>
+            <p>
+                Анализ разрушения компонентов
+                горного оборудования.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🏭 Heavy Industry</h3>
+            <p>
+                Контроль трещиностойкости промышленных
+                конструкций и деталей.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="hero">
+    <h2>🔐 Data Security & Traceability</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Access Control</h3>
+            <p>Контроль доступа пользователей.</p>
+        </div>
+
+        <div class="card">
+            <h3>Sample ID</h3>
+            <p>Уникальная идентификация образцов.</p>
+        </div>
+
+        <div class="card">
+            <h3>Crack Records</h3>
+            <p>История измерений и распространения трещин.</p>
+        </div>
+
+        <div class="card">
+            <h3>Test Reports</h3>
+            <p>Хранение результатов и отчётов.</p>
+        </div>
+
+        <div class="card">
+            <h3>Machine Records</h3>
+            <p>История испытательного оборудования.</p>
+        </div>
+
+        <div class="card">
+            <h3>Audit Trail</h3>
+            <p>История действий пользователей.</p>
+        </div>
+
+    </div>
+</section>
+
+<section class="notice">
+    <b>⚠️ Важно:</b>
+    эта страница является демонстрационным интерфейсом WORKER PRO.
+    Реальные испытания на разрушение, трещиностойкость и рост трещин
+    должны выполняться по применимым стандартам и методикам с
+    использованием подходящих образцов, оборудования,
+    измерительных систем и квалифицированного персонала.
+</section>
+
+<section class="hero">
+    <h2>🔗 Related WORKER PRO Sections</h2>
+
+    <div class="tags">
+
+        <a class="tag" href="../index.html">Main</a>
+
+        <a class="tag" href="../mechanical-testing/index.html">
+            Mechanical Testing
+        </a>
+
+        <a class="tag" href="../material-testing/index.html">
+            Material Testing
+        </a>
+
+        <a class="tag" href="../laboratory-testing/index.html">
+            Laboratory Testing
+        </a>
+
+        <a class="tag" href="../tensile-testing/index.html">
+            Tensile Testing
+        </a>
+
+        <a class="tag" href="../compression-testing/index.html">
+            Compression Testing
+        </a>
+
+        <a class="tag" href="../bending-testing/index.html">
+            Bending Testing
+        </a>
+
+        <a class="tag" href="../hardness-testing/index.html">
+            Hardness Testing
+        </a>
+
+        <a class="tag" href="../impact-testing/index.html">
+            Impact Testing
+        </a>
+
+        <a class="tag" href="../fatigue-testing/index.html">
+            Fatigue Testing
+        </a>
+
+        <a class="tag" href="../creep-testing/index.html">
+            Creep Testing
+        </a>
+
+        <a class="tag" href="../quality-control/index.html">
+            Quality Control
+        </a>
+
+        <a class="tag" href="../quality-inspection/index.html">
+            Quality Inspection
+        </a>
+
+        <a class="tag" href="../quality-planning/index.html">
+            Quality Planning
+        </a>
+
+        <a class="tag" href="../quality-assurance/index.html">
+            Quality Assurance
+        </a>
+
+        <a class="tag" href="../quality-management-system/index.html">
+            QMS
+        </a>
+
+        <a class="tag" href="../measurement-system-analysis/index.html">
+            MSA
+        </a>
+
+        <a class="tag" href="../process-capability-analysis/index.html">
+            Process Capability
+        </a>
+
+        <a class="tag" href="../statistical-process-control/index.html">
+            SPC
+        </a>
+
+        <a class="tag" href="../production/index.html">
+            Production
+        </a>
+
+        <a class="tag" href="../equipment/index.html">
+            Equipment
+        </a>
+
+        <a class="tag" href="../sensors/index.html">
+            Sensors
+        </a>
+
+        <a class="tag" href="../maintennances/index.html">
+            Maintenance
+        </a>
+
+        <a class="tag" href="../safety/index.html">
+            Safety
+        </a>
+
+        <a class="tag" href="../training/index.html">
+            Training
+        </a>
+
+        <a class="tag" href="../specialists/index.html">
+            Specialists
+        </a>
+
+        <a class="tag" href="../companies/index.html">
+            Companies
+        </a>
+
+        <a class="tag" href="../suppliers/index.html">
+            Suppliers
+        </a>
+
+        <a class="tag" href="../orders/index.html">
+            Orders
+        </a>
+
+        <a class="tag" href="../logistics/index.html">
+            Logistics
+        </a>
+
+        <a class="tag" href="../tracking/index.html">
+            Tracking
+        </a>
+
+        <a class="tag" href="../warehouses/index.html">
+            Warehouses
+        </a>
+
+        <a class="tag" href="../dashboard/index.html">
+            Dashboard
+        </a>
+
+    </div>
+</section>
+
+</div>
+
+<footer>
+    <strong>WORKER PRO</strong>
+    <p>Global Industrial Platform</p>
+    <p>Production • Technology • Quality • Logistics • Industry</p>
+    <p>© 2026 WORKER PRO — F.S.</p>
+</footer>
+
+<script>
+
+function filterLabs(){
+
+    const input =
+        document.getElementById("labSearch");
+
+    const filter =
+        input.value.toLowerCase();
+
+    const rows =
+        document.querySelectorAll(
+            "#labTable tbody tr"
+        );
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        row.style.display =
+            text.includes(filter) ? "" : "none";
+
+    });
+}
+
+function startFracture(){
+
+    document.getElementById("demoResult").innerHTML =
+        "💥 Fracture test started. Demonstration crack and load data are being recorded...";
+
+}
+
+function analyzeTest(){
+
+    document.getElementById("demoResult").innerHTML =
+        "📊 Analysis completed. Demonstration fracture toughness: <b>68.4 MPa√m</b>.";
+
+}
+
+function createReport(){
+
+    document.getElementById("demoResult").innerHTML =
+        "📄 Demonstration fracture test report created successfully.";
+
+}
+
+function analyzeCrack(){
+
+    document.getElementById("crackResult").innerHTML =
+        "📈 Crack growth analysis completed. Demonstration crack growth: <b>8.2 → 22.6 mm</b>.";
+
+}
+
+function addSystem(name){
+
+    document.getElementById("addResult").innerHTML =
+        "✅ System added to demonstration list: <b>" +
+        name +
+        "</b>";
+
+}
+
+</script>
+
+</body>
+</html>
