@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Mechanical Testing</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#123}
+.top-languages{background:#063d25;padding:10px;text-align:center}
+.top-languages a{display:inline-block;margin:4px;padding:9px 13px;background:#0b6b3d;color:white;text-decoration:none;border-radius:8px;font-weight:bold;font-size:13px}
+.top-languages a:hover{background:#b7ff35;color:#063d25}
+
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;text-align:center;padding:28px 15px}
+.logo{font-size:30px;font-weight:bold}
+.subtitle{color:#b7ff35;margin-top:8px;font-weight:bold}
+
+.container{max-width:1100px;margin:auto;padding:20px}
+.hero,.section,.stat{background:white;border-radius:15px;padding:22px;margin-bottom:20px;box-shadow:0 3px 12px #0000000d}
+.hero h1,.section h2{color:#063d25;margin-top:0}
+
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.tag{background:#e4f5e9;color:#063d25;padding:8px 12px;border-radius:20px;font-size:13px;font-weight:bold}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px}
+.stat{text-align:center;margin:0}
+.stat strong{display:block;font-size:27px;color:#0b6b3d}
+.stat span{font-size:14px;color:#555}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:#f8fbf9;border-left:5px solid #0b6b3d;border-radius:10px;padding:16px}
+.card h3{margin-top:0;color:#063d25}
+
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.flow-item{background:#0b6b3d;color:white;padding:14px 8px;text-align:center;border-radius:9px;font-weight:bold}
+
+.search-box{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+input,select{padding:12px;border:1px solid #ccc;border-radius:8px;min-width:180px;flex:1}
+
+button{border:0;background:#0b6b3d;color:white;padding:11px 15px;border-radius:8px;cursor:pointer;font-weight:bold}
+button:hover{background:#063d25}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+th{background:#063d25;color:white;text-align:left;padding:12px}
+td{padding:12px;border-bottom:1px solid #ddd}
+
+.status{display:inline-block;background:#dff4e5;color:#086331;padding:5px 9px;border-radius:15px;font-size:12px;font-weight:bold}
+
+.progress{height:12px;background:#e1e8e3;border-radius:10px;overflow:hidden;margin:8px 0 18px}
+.progress div{height:100%;background:#0b6b3d}
+
+.result{display:none;margin-top:12px;padding:12px;background:#eaf7ed;border-radius:8px;color:#063d25;font-weight:bold}
+
+.warning{background:#fff8df;border-left:5px solid #d99b00;padding:15px;border-radius:8px}
+
+.links a{display:inline-block;background:#e4f5e9;color:#063d25;text-decoration:none;padding:10px 12px;border-radius:8px;margin:4px;font-weight:bold}
+
+footer{background:#063d25;color:white;text-align:center;padding:25px;margin-top:30px}
+
+@media(max-width:600px){
+.logo{font-size:24px}
+.container{padding:12px}
+.hero,.section{padding:16px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+<header>
+<div class="logo">WORKER PRO</div>
+<div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+<h1>⚙️ Mechanical Testing</h1>
+
+<p>
+Система механических испытаний промышленных материалов и деталей.
+Раздел предназначен для демонстрации испытаний на растяжение,
+сжатие, изгиб, твердость, ударную вязкость и других механических
+характеристик.
+</p>
+
+<div class="tags">
+<span class="tag">Mechanical Testing</span>
+<span class="tag">Tensile Test</span>
+<span class="tag">Compression Test</span>
+<span class="tag">Bending Test</span>
+<span class="tag">Hardness</span>
+<span class="tag">Impact Test</span>
+<span class="tag">Fatigue Testing</span>
+<span class="tag">Material Strength</span>
+</div>
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<strong>324</strong>
+<span>Mechanical Test Systems</span>
+</div>
+
+<div class="stat">
+<strong>18,640</strong>
+<span>Test Records</span>
+</div>
+
+<div class="stat">
+<strong>118</strong>
+<span>Connected Laboratories</span>
+</div>
+
+<div class="stat">
+<strong>98.1%</strong>
+<span>Test Data Completeness</span>
+</div>
+
+</section>
+
+<section class="section">
+<h2>🔄 Mechanical Testing Workflow</h2>
+
+<div class="flow">
+<div class="flow-item">📦 Sample</div>
+<div class="flow-item">📋 Test Plan</div>
+<div class="flow-item">🏷️ Identification</div>
+<div class="flow-item">🔧 Preparation</div>
+<div class="flow-item">⚙️ Mechanical Test</div>
+<div class="flow-item">📊 Measurement</div>
+<div class="flow-item">📈 Analysis</div>
+<div class="flow-item">📄 Report</div>
+</div>
+</section>
+
+<section class="section">
+<h2>🧰 Mechanical Test Types</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>↔️ Tensile Testing</h3>
+<p>
+Испытание образца на растяжение для определения соответствующих
+механических характеристик.
+</p>
+</div>
+
+<div class="card">
+<h3>⬇️ Compression Testing</h3>
+<p>
+Испытание материала или детали на сжатие.
+</p>
+</div>
+
+<div class="card">
+<h3>↩️ Bending Testing</h3>
+<p>
+Проверка поведения материала при изгибе.
+</p>
+</div>
+
+<div class="card">
+<h3>🔨 Hardness Testing</h3>
+<p>
+Определение твердости подходящим методом измерения.
+</p>
+</div>
+
+<div class="card">
+<h3>💥 Impact Testing</h3>
+<p>
+Демонстрация испытания материала на ударное воздействие.
+</p>
+</div>
+
+<div class="card">
+<h3>🔄 Fatigue Testing</h3>
+<p>
+Исследование поведения материала при циклических нагрузках.
+</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>📊 Mechanical Test Parameters</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>💪 Strength</h3>
+<p>Механическая прочность материала.</p>
+</div>
+
+<div class="card">
+<h3>📐 Deformation</h3>
+<p>Изменение формы или размеров образца.</p>
+</div>
+
+<div class="card">
+<h3>↔️ Elongation</h3>
+<p>Относительное удлинение образца при испытании.</p>
+</div>
+
+<div class="card">
+<h3>🔨 Hardness</h3>
+<p>Показатель сопротивления материала локальному воздействию.</p>
+</div>
+
+<div class="card">
+<h3>💥 Impact Energy</h3>
+<p>Показатель поведения материала при ударном воздействии.</p>
+</div>
+
+<div class="card">
+<h3>🔄 Fatigue</h3>
+<p>Поведение материала при повторяющихся нагрузках.</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>🌍 Mechanical Testing Laboratories</h2>
+
+<div class="search-box">
+
+<input
+id="search"
+placeholder="Поиск лаборатории или теста..."
+oninput="filterRows()"
+>
+
+<select id="statusFilter" onchange="filterRows()">
+<option value="all">Все статусы</option>
+<option value="Online">Online</option>
+<option value="Testing">Testing</option>
+<option value="Review">Review</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="labTable">
+
+<thead>
+<tr>
+<th>Laboratory</th>
+<th>Country</th>
+<th>Testing</th>
+<th>Records</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Baku Mechanical Lab</td>
+<td>Azerbaijan</td>
+<td>Tensile Testing</td>
+<td>1,420</td>
+<td><span class="status">Online</span></td>
+</tr>
+
+<tr>
+<td>Sumqayit Mechanical Center</td>
+<td>Azerbaijan</td>
+<td>Hardness + Bending</td>
+<td>1,080</td>
+<td><span class="status">Testing</span></td>
+</tr>
+
+<tr>
+<td>Istanbul Industrial Lab</td>
+<td>Turkey</td>
+<td>Tensile + Compression</td>
+<td>1,640</td>
+<td><span class="status">Online</span></td>
+</tr>
+
+<tr>
+<td>Dortmund Precision Lab</td>
+<td>Germany</td>
+<td>Fatigue Testing</td>
+<td>1,860</td>
+<td><span class="status">Online</span></td>
+</tr>
+
+<tr>
+<td>Milan Materials Lab</td>
+<td>Italy</td>
+<td>Impact Testing</td>
+<td>920</td>
+<td><span class="status">Review</span></td>
+</tr>
+
+<tr>
+<td>Shanghai Industrial Lab</td>
+<td>China</td>
+<td>Mechanical Testing</td>
+<td>2,140</td>
+<td><span class="status">Online</span></td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+</section>
+
+<section class="section">
+<h2>📈 Testing Performance</h2>
+
+<p><b>Test Data Completeness — 98.1%</b></p>
+<div class="progress">
+<div style="width:98.1%"></div>
+</div>
+
+<p><b>Sample Traceability — 97.9%</b></p>
+<div class="progress">
+<div style="width:97.9%"></div>
+</div>
+
+<p><b>Test Report Completion — 97.2%</b></p>
+<div class="progress">
+<div style="width:97.2%"></div>
+</div>
+
+<p><b>Equipment Record Coverage — 99.0%</b></p>
+<div class="progress">
+<div style="width:99%"></div>
+</div>
+
+</section>
+
+<section class="section">
+<h2>🧪 Mechanical Testing Demo</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>↔️ Tensile Test</h3>
+<p>Демонстрация регистрации испытания на растяжение.</p>
+<button onclick="runDemo('tensile')">Run Test</button>
+<div id="tensile" class="result"></div>
+</div>
+
+<div class="card">
+<h3>⬇️ Compression Test</h3>
+<p>Демонстрация испытания на сжатие.</p>
+<button onclick="runDemo('compression')">Run Test</button>
+<div id="compression" class="result"></div>
+</div>
+
+<div class="card">
+<h3>🔨 Hardness Test</h3>
+<p>Демонстрация проверки твердости.</p>
+<button onclick="runDemo('hardness')">Run Test</button>
+<div id="hardness" class="result"></div>
+</div>
+
+<div class="card">
+<h3>💥 Impact Test</h3>
+<p>Демонстрация ударного испытания.</p>
+<button onclick="runDemo('impact')">Run Test</button>
+<div id="impact" class="result"></div>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>➕ Add Mechanical Test</h2>
+
+<div class="grid">
+
+<button onclick="addTest('Tensile Testing')">
+↔️ Tensile Testing
+</button>
+
+<button onclick="addTest('Compression Testing')">
+⬇️ Compression Testing
+</button>
+
+<button onclick="addTest('Bending Testing')">
+↩️ Bending Testing
+</button>
+
+<button onclick="addTest('Hardness Testing')">
+🔨 Hardness Testing
+</button>
+
+<button onclick="addTest('Impact Testing')">
+💥 Impact Testing
+</button>
+
+<button onclick="addTest('Fatigue Testing')">
+🔄 Fatigue Testing
+</button>
+
+</div>
+
+<div id="addResult" class="result"></div>
+</section>
+
+<section class="section">
+<h2>🏭 Industrial Applications</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>⚙️ CNC Manufacturing</h3>
+<p>
+Механические испытания материалов и деталей для станков и оборудования.
+</p>
+</div>
+
+<div class="card">
+<h3>🔨 Stamping</h3>
+<p>
+Контроль механических характеристик листового металла и штампованных деталей.
+</p>
+</div>
+
+<div class="card">
+<h3>🔥 Heat Treatment</h3>
+<p>
+Проверка изменения механических свойств после термической обработки.
+</p>
+</div>
+
+<div class="card">
+<h3>🛢️ Oil & Gas</h3>
+<p>
+Испытания материалов и компонентов нефтегазового оборудования.
+</p>
+</div>
+
+<div class="card">
+<h3>⛏️ Mining</h3>
+<p>
+Проверка механических характеристик горных материалов и компонентов оборудования.
+</p>
+</div>
+
+<div class="card">
+<h3>🚢 Heavy Industry</h3>
+<p>
+Испытания материалов для тяжелого промышленного оборудования.
+</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>🔐 Testing Data & Traceability</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🔑 Access Control</h3>
+<p>Управление доступом к результатам испытаний.</p>
+</div>
+
+<div class="card">
+<h3>🏷️ Sample Identification</h3>
+<p>Идентификация образцов и партий материалов.</p>
+</div>
+
+<div class="card">
+<h3>📄 Test Reports</h3>
+<p>Хранение результатов и отчетов испытаний.</p>
+</div>
+
+<div class="card">
+<h3>🧰 Equipment Records</h3>
+<p>Учет испытательного оборудования.</p>
+</div>
+
+<div class="card">
+<h3>💾 Backup</h3>
+<p>Резервное сохранение данных.</p>
+</div>
+
+<div class="card">
+<h3>📝 Audit Trail</h3>
+<p>Регистрация действий пользователей и изменений.</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+
+<div class="warning">
+
+⚠️ <b>Важно:</b>
+эта страница является демонстрационной частью WORKER PRO.
+Реальные механические испытания должны выполняться по подходящим
+методикам, с учетом типа материала, образца, оборудования,
+условий испытаний, требований к измерениям и квалификации персонала.
+Все показатели и результаты на этой странице условные.
+
+</div>
+
+</section>
+
+<section class="section links">
+
+<h2>🔗 Related WORKER PRO Sections</h2>
+
+<a href="../index.html">🏠 Main</a>
+<a href="../material-testing/index.html">🧱 Material Testing</a>
+<a href="../laboratory-testing/index.html">🔬 Laboratory Testing</a>
+<a href="../quality-testing/index.html">🧪 Quality Testing</a>
+<a href="../quality-inspection/index.html">🔍 Quality Inspection</a>
+<a href="../quality-control/index.html">🛡️ Quality Control</a>
+<a href="../quality-planning/index.html">📋 Quality Planning</a>
+<a href="../quality-assurance/index.html">✅ Quality Assurance</a>
+<a href="../quality-management-system/index.html">🏆 QMS</a>
+<a href="../measurement-system-analysis/index.html">📏 MSA</a>
+<a href="../process-capability-analysis/index.html">📐 Process Capability</a>
+<a href="../statistical-process-control/index.html">📊 SPC</a>
+<a href="../production/index.html">🏭 Production</a>
+<a href="../equipment/index.html">⚙️ Equipment</a>
+<a href="../sensors/index.html">📡 Sensors</a>
+<a href="../maintennances/index.html">🔧 Maintenance</a>
+<a href="../safety/index.html">🦺 Safety</a>
+<a href="../training/index.html">🎓 Training</a>
+<a href="../specialists/index.html">👷 Specialists</a>
+<a href="../companies/index.html">🏢 Companies</a>
+<a href="../suppliers/index.html">🚚 Suppliers</a>
+<a href="../orders/index.html">📦 Orders</a>
+<a href="../logistics/index.html">🚛 Logistics</a>
+<a href="../tracking/index.html">📍 Tracking</a>
+<a href="../warehouses/index.html">🏬 Warehouses</a>
+<a href="../dashboard/index.html">📊 Dashboard</a>
+
+</section>
+
+</main>
+
+<footer>
+<strong>WORKER PRO</strong>
+<p>Глобальная промышленная платформа</p>
+<p>© 2026 WORKER PRO — F.S.</p>
+</footer>
+
+<script>
+
+function filterRows(){
+
+const search=
+document.getElementById("search").value.toLowerCase();
+
+const status=
+document.getElementById("statusFilter").value;
+
+document.querySelectorAll("#labTable tbody tr").forEach(row=>{
+
+const text=row.innerText.toLowerCase();
+
+const rowStatus=
+row.cells[4].innerText.trim();
+
+row.style.display=
+text.includes(search) &&
+(status==="all" || rowStatus===status)
+? ""
+: "none";
+
+});
+
+}
+
+function runDemo(id){
+
+const messages={
+
+tensile:
+"↔️ Demo: tensile test record created. No physical test was performed.",
+
+compression:
+"⬇️ Demo: compression test record created. No real measurement was performed.",
+
+hardness:
+"🔨 Demo: hardness test record created. No actual hardness measurement was taken.",
+
+impact:
+"💥 Demo: impact test record created. No physical impact test was performed."
+
+};
+
+const el=document.getElementById(id);
+
+el.textContent=messages[id];
+
+el.style.display="block";
+
+}
+
+function addTest(type){
+
+const el=document.getElementById("addResult");
+
+el.textContent=
+"➕ Demo: selected mechanical test — "+type;
+
+el.style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
