@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Corrosion Testing</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    padding:18px 12px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 3px 12px rgba(0,0,0,.2);
+}
+
+.logo{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.subtitle{
+    text-align:center;
+    color:#b7ff35;
+    margin:5px 0 14px;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+}
+
+.languages button{
+    border:0;
+    padding:8px 12px;
+    border-radius:8px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px 14px 40px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    border-radius:18px;
+    padding:30px 22px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    margin:0 0 12px;
+    font-size:34px;
+}
+
+.hero p{
+    max-width:850px;
+    margin:auto;
+    line-height:1.6;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#b7ff35;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+.card h2,
+.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.section-title{
+    background:#063d25;
+    color:white;
+    padding:14px 18px;
+    border-radius:12px;
+    margin:25px 0 14px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.step{
+    background:#e7f4eb;
+    border:2px solid #0b6b3d;
+    color:#063d25;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#0b6b3d;
+    font-weight:bold;
+}
+
+.method{
+    border-left:5px solid #0b6b3d;
+}
+
+.demo-box{
+    background:#f0f8f2;
+    border:1px solid #c9dfd0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.search-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+input,
+select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #b8cfc0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    border-radius:9px;
+    padding:12px 18px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.lab{
+    transition:.2s;
+}
+
+.lab.hidden{
+    display:none;
+}
+
+.progress{
+    background:#dfe9e2;
+    border-radius:20px;
+    overflow:hidden;
+    height:15px;
+    margin:8px 0 15px;
+}
+
+.bar{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+.table th,
+.table td{
+    border-bottom:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+}
+
+.table th{
+    background:#e7f4eb;
+    color:#063d25;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #d89d00;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+.security{
+    background:#063d25;
+    color:white;
+    border-radius:15px;
+    padding:20px;
+}
+
+.security-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+}
+
+.security-item{
+    background:#0b6b3d;
+    padding:12px;
+    border-radius:9px;
+    text-align:center;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+a{
+    color:#0b6b3d;
+    font-weight:bold;
+    text-decoration:none;
+}
+
+a:hover{
+    text-decoration:underline;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.related a{
+    background:#e7f4eb;
+    padding:10px 14px;
+    border-radius:9px;
+}
+
+@media(max-width:600px){
+    .hero h1{
+        font-size:27px;
+    }
+
+    .arrow{
+        display:none;
+    }
+
+    .table{
+        font-size:13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <div class="logo">WORKER PRO</div>
+
+    <div class="subtitle">
+        Глобальная промышленная платформа
+    </div>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+    <h1>🧪 Corrosion Testing</h1>
+
+    <p>
+        Промышленная система испытаний на коррозию материалов,
+        оборудования и защитных покрытий. Контроль скорости коррозии,
+        потери массы, воздействия среды, температуры, влажности,
+        солевого тумана и электрохимических процессов.
+    </p>
+
+    <div class="tags">
+        <span class="tag">Corrosion Testing</span>
+        <span class="tag">Salt Spray</span>
+        <span class="tag">Immersion</span>
+        <span class="tag">Electrochemical</span>
+        <span class="tag">Pitting</span>
+        <span class="tag">Corrosion Rate</span>
+        <span class="tag">Coating</span>
+        <span class="tag">Test Report</span>
+    </div>
+
+</section>
+
+
+<div class="grid">
+
+    <div class="card stat">
+        <strong>112</strong>
+        Corrosion Test Systems
+    </div>
+
+    <div class="card stat">
+        <strong>6,420</strong>
+        Corrosion Tests
+    </div>
+
+    <div class="card stat">
+        <strong>54</strong>
+        Connected Laboratories
+    </div>
+
+    <div class="card stat">
+        <strong>98.0%</strong>
+        Test Record Completeness
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔄 Corrosion Testing Workflow</h2>
+
+<div class="card">
+
+    <div class="flow">
+
+        <div class="step">Sample</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Sample ID</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Surface Preparation</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Exposure</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Measurement</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Corrosion Rate</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Analysis</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Report</div>
+
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🧪 Corrosion Testing Methods</h2>
+
+<div class="grid">
+
+    <div class="card method">
+        <h3>🌊 Salt Spray</h3>
+        <p>
+            Испытание материалов и покрытий в условиях солевого тумана.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>💧 Immersion</h3>
+        <p>
+            Длительное погружение образцов в агрессивную жидкую среду.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>⚡ Electrochemical</h3>
+        <p>
+            Электрохимический анализ коррозионных процессов и потенциала.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>🌦 Atmospheric</h3>
+        <p>
+            Исследование воздействия влажности, воздуха и окружающей среды.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>🔬 Pitting Corrosion</h3>
+        <p>
+            Анализ локальной точечной коррозии и глубины повреждений.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>🛡️ Coating Protection</h3>
+        <p>
+            Проверка эффективности защитных покрытий и антикоррозионных систем.
+        </p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">📊 Main Test Parameters</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>Corrosion Rate</h3>
+        <p>Скорость коррозии материала.</p>
+    </div>
+
+    <div class="card">
+        <h3>Mass Loss</h3>
+        <p>Изменение массы образца после испытания.</p>
+    </div>
+
+    <div class="card">
+        <h3>Exposure Time</h3>
+        <p>Продолжительность воздействия среды.</p>
+    </div>
+
+    <div class="card">
+        <h3>Temperature</h3>
+        <p>Температура испытательной среды.</p>
+    </div>
+
+    <div class="card">
+        <h3>Humidity / Salinity</h3>
+        <p>Влажность и концентрация соли.</p>
+    </div>
+
+    <div class="card">
+        <h3>Surface Condition</h3>
+        <p>Состояние поверхности до и после испытания.</p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">📈 Corrosion Rate Demo</h2>
+
+<div class="card">
+
+    <div class="demo-box">
+
+        <h3>Steel-AZ-2026-CR001</h3>
+
+        <table class="table">
+
+            <tr>
+                <th>Material</th>
+                <td>Carbon Steel</td>
+            </tr>
+
+            <tr>
+                <th>Method</th>
+                <td>Salt Spray</td>
+            </tr>
+
+            <tr>
+                <th>Exposure</th>
+                <td>240 hours</td>
+            </tr>
+
+            <tr>
+                <th>Mass Loss</th>
+                <td>1.84 g</td>
+            </tr>
+
+            <tr>
+                <th>Corrosion Rate</th>
+                <td>0.21 mm/year</td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <td>✅ PASS</td>
+            </tr>
+
+        </table>
+
+        <button class="action" onclick="analyzeRate()">
+            🔬 Analyze Corrosion Rate
+        </button>
+
+        <p id="rateResult"></p>
+
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🧪 Test System Demo</h2>
+
+<div class="card">
+
+    <div class="demo-box">
+
+        <h3>Current Corrosion Test</h3>
+
+        <p>
+            <b>Sample:</b> Steel-AZ-2026-CR001
+        </p>
+
+        <p>
+            <b>Material:</b> Carbon Steel
+        </p>
+
+        <p>
+            <b>Method:</b> Salt Spray
+        </p>
+
+        <p>
+            <b>Exposure:</b> 240 h
+        </p>
+
+        <p>
+            <b>Environment:</b> Salt Fog
+        </p>
+
+        <button class="action" onclick="startCorrosion()">
+            ▶ Start Corrosion Test
+        </button>
+
+        <button class="action" onclick="createReport()">
+            📄 Create Test Report
+        </button>
+
+        <p id="corrosionResult"></p>
+
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🏭 Connected Laboratories</h2>
+
+<div class="card">
+
+    <div class="search-row">
+
+        <input
+            type="text"
+            id="labSearch"
+            placeholder="Поиск лаборатории..."
+            oninput="filterLabs()"
+        >
+
+        <select id="labCountry" onchange="filterLabs()">
+
+            <option value="all">Все страны</option>
+            <option value="Azerbaijan">Azerbaijan</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Germany">Germany</option>
+            <option value="Italy">Italy</option>
+            <option value="China">China</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="grid" id="labs">
+
+        <div class="card lab" data-country="Azerbaijan">
+            <h3>🇦🇿 Baku Corrosion Lab</h3>
+            <p>Salt Spray / Immersion / Coating</p>
+            <b>98.4%</b>
+        </div>
+
+        <div class="card lab" data-country="Azerbaijan">
+            <h3>🇦🇿 Sumqayit Materials Lab</h3>
+            <p>Electrochemical / Pitting</p>
+            <b>97.8%</b>
+        </div>
+
+        <div class="card lab" data-country="Turkey">
+            <h3>🇹🇷 Istanbul Corrosion Center</h3>
+            <p>Salt Spray / Atmospheric</p>
+            <b>98.1%</b>
+        </div>
+
+        <div class="card lab" data-country="Germany">
+            <h3>🇩🇪 Dortmund Materials Lab</h3>
+            <p>Electrochemical / Coating</p>
+            <b>99.0%</b>
+        </div>
+
+        <div class="card lab" data-country="Italy">
+            <h3>🇮🇹 Milan Industrial Lab</h3>
+            <p>Immersion / Pitting</p>
+            <b>98.6%</b>
+        </div>
+
+        <div class="card lab" data-country="China">
+            <h3>🇨🇳 Shanghai Corrosion Lab</h3>
+            <p>Salt Spray / Coating</p>
+            <b>97.9%</b>
+        </div>
+
+    </div>
+
+</div>
+
+
+<h2 class="section-title">📊 Test Performance</h2>
+
+<div class="card">
+
+    <p><b>Baku — 98.4%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:98.4%"></div>
+    </div>
+
+    <p><b>Sumqayit — 97.8%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:97.8%"></div>
+    </div>
+
+    <p><b>Istanbul — 98.1%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:98.1%"></div>
+    </div>
+
+    <p><b>Dortmund — 99.0%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:99%"></div>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">➕ Add Corrosion Test System</h2>
+
+<div class="grid">
+
+    <button class="action" onclick="addSystem('Salt Spray')">
+        🌊 Salt Spray
+    </button>
+
+    <button class="action" onclick="addSystem('Immersion')">
+        💧 Immersion
+    </button>
+
+    <button class="action" onclick="addSystem('Electrochemical')">
+        ⚡ Electrochemical
+    </button>
+
+    <button class="action" onclick="addSystem('Atmospheric')">
+        🌦 Atmospheric
+    </button>
+
+    <button class="action" onclick="addSystem('Pitting')">
+        🔬 Pitting
+    </button>
+
+    <button class="action" onclick="addSystem('Coating')">
+        🛡️ Coating
+    </button>
+
+</div>
+
+<p id="systemResult"></p>
+
+
+<h2 class="section-title">🏗️ Industrial Applications</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🛢️ Oil & Gas</h3>
+        <p>Трубопроводы, резервуары, оборудование и защитные покрытия.</p>
+    </div>
+
+    <div class="card">
+        <h3>🚢 Marine</h3>
+        <p>Морская вода, корпуса, детали и морское оборудование.</p>
+    </div>
+
+    <div class="card">
+        <h3>🚗 Automotive</h3>
+        <p>Кузовные детали, крепёж, покрытия и компоненты.</p>
+    </div>
+
+    <div class="card">
+        <h3>⛏️ Mining</h3>
+        <p>Горное оборудование и материалы в агрессивных средах.</p>
+    </div>
+
+    <div class="card">
+        <h3>🏭 Heavy Industry</h3>
+        <p>Металлоконструкции, машины и производственное оборудование.</p>
+    </div>
+
+    <div class="card">
+        <h3>⚙️ Manufacturing</h3>
+        <p>CNC, stamping, heat treatment и промышленные компоненты.</p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔐 Security & Traceability</h2>
+
+<section class="security">
+
+    <div class="security-grid">
+
+        <div class="security-item">🔑 Access Control</div>
+        <div class="security-item">🆔 Sample ID</div>
+        <div class="security-item">🌊 Exposure Records</div>
+        <div class="security-item">📄 Test Reports</div>
+        <div class="security-item">⚙️ Equipment Records</div>
+        <div class="security-item">📋 Audit Trail</div>
+
+    </div>
+
+</section>
+
+
+<div class="notice">
+    ⚠️ <b>Важно:</b> эта страница является демонстрационной частью
+    WORKER PRO. Реальные испытания на коррозию должны выполняться
+    квалифицированным персоналом с применением соответствующих
+    методов, оборудования и действующих стандартов.
+</div>
+
+
+<h2 class="section-title">🔗 Related WORKER PRO Modules</h2>
+
+<div class="card">
+
+    <div class="related">
+
+        <a href="../laboratory-testing/index.html">
+            Laboratory Testing
+        </a>
+
+        <a href="../material-testing/index.html">
+            Material Testing
+        </a>
+
+        <a href="../tensile-testing/index.html">
+            Tensile Testing
+        </a>
+
+        <a href="../compression-testing/index.html">
+            Compression Testing
+        </a>
+
+        <a href="../bending-testing/index.html">
+            Bending Testing
+        </a>
+
+        <a href="../hardness-testing/index.html">
+            Hardness Testing
+        </a>
+
+        <a href="../impact-testing/index.html">
+            Impact Testing
+        </a>
+
+        <a href="../fatigue-testing/index.html">
+            Fatigue Testing
+        </a>
+
+        <a href="../creep-testing/index.html">
+            Creep Testing
+        </a>
+
+        <a href="../fracture-testing/index.html">
+            Fracture Testing
+        </a>
+
+        <a href="../quality-control/index.html">
+            Quality Control
+        </a>
+
+        <a href="../quality-assurance/index.html">
+            Quality Assurance
+        </a>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+    <h3>WORKER PRO</h3>
+
+    <p>
+        Работа. Знания. Производство.
+    </p>
+
+    <p>
+        Global Industrial Platform
+    </p>
+
+    <p>
+        © 2026 WORKER PRO — F.S.
+    </p>
+
+</footer>
+
+
+<script>
+
+function filterLabs(){
+
+    const search =
+        document.getElementById("labSearch")
+        .value
+        .toLowerCase();
+
+    const country =
+        document.getElementById("labCountry")
+        .value;
+
+    const labs =
+        document.querySelectorAll(".lab");
+
+    labs.forEach(function(lab){
+
+        const text =
+            lab.innerText.toLowerCase();
+
+        const labCountry =
+            lab.dataset.country;
+
+        const searchOK =
+            text.includes(search);
+
+        const countryOK =
+            country === "all" ||
+            labCountry === country;
+
+        if(searchOK && countryOK){
+            lab.classList.remove("hidden");
+        }else{
+            lab.classList.add("hidden");
+        }
+
+    });
+
+}
+
+
+function startCorrosion(){
+
+    document.getElementById("corrosionResult").innerHTML =
+        "🧪 Коррозионное испытание запущено. " +
+        "Система регистрирует условия воздействия и измерения образца.";
+
+}
+
+
+function analyzeCorrosion(){
+
+    document.getElementById("corrosionResult").innerHTML =
+        "🔬 Анализ завершён. " +
+        "Результаты готовы для проверки.";
+
+}
+
+
+function createReport(){
+
+    document.getElementById("corrosionResult").innerHTML =
+        "📄 Демонстрационный отчёт создан. " +
+        "Sample ID: Steel-AZ-2026-CR001.";
+
+}
+
+
+function analyzeRate(){
+
+    document.getElementById("rateResult").innerHTML =
+        "✅ Corrosion Rate: 0.21 mm/year. " +
+        "Демонстрационный результат анализа.";
+
+}
+
+
+function addSystem(type){
+
+    document.getElementById("systemResult").innerHTML =
+        "➕ Система <b>" +
+        type +
+        "</b> добавлена в демонстрационный список WORKER PRO.";
+
+}
+
+</script>
+
+</body>
+</html>
