@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Material Testing</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#123}
+.top-languages{background:#063d25;padding:10px;text-align:center}
+.top-languages a{display:inline-block;margin:4px;padding:9px 13px;background:#0b6b3d;color:white;text-decoration:none;border-radius:8px;font-weight:bold;font-size:13px}
+.top-languages a:hover{background:#b7ff35;color:#063d25}
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;text-align:center;padding:28px 15px}
+.logo{font-size:30px;font-weight:bold}
+.subtitle{color:#b7ff35;margin-top:8px;font-weight:bold}
+.container{max-width:1100px;margin:auto;padding:20px}
+.hero,.section,.stat{background:white;border-radius:15px;padding:22px;margin-bottom:20px;box-shadow:0 3px 12px #0000000d}
+.hero h1,.section h2{color:#063d25;margin-top:0}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.tag{background:#e4f5e9;color:#063d25;padding:8px 12px;border-radius:20px;font-size:13px;font-weight:bold}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px}
+.stat{text-align:center;margin:0}
+.stat strong{display:block;font-size:27px;color:#0b6b3d}
+.stat span{font-size:14px;color:#555}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:#f8fbf9;border-left:5px solid #0b6b3d;border-radius:10px;padding:16px}
+.card h3{margin-top:0;color:#063d25}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.flow-item{background:#0b6b3d;color:white;padding:14px 8px;text-align:center;border-radius:9px;font-weight:bold}
+.search-box{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+input,select{padding:12px;border:1px solid #ccc;border-radius:8px;min-width:180px;flex:1}
+button{border:0;background:#0b6b3d;color:white;padding:11px 15px;border-radius:8px;cursor:pointer;font-weight:bold}
+button:hover{background:#063d25}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th{background:#063d25;color:white;text-align:left;padding:12px}
+td{padding:12px;border-bottom:1px solid #ddd}
+.status{display:inline-block;background:#dff4e5;color:#086331;padding:5px 9px;border-radius:15px;font-size:12px;font-weight:bold}
+.progress{height:12px;background:#e1e8e3;border-radius:10px;overflow:hidden;margin:8px 0 18px}
+.progress div{height:100%;background:#0b6b3d}
+.result{display:none;margin-top:12px;padding:12px;background:#eaf7ed;border-radius:8px;color:#063d25;font-weight:bold}
+.warning{background:#fff8df;border-left:5px solid #d99b00;padding:15px;border-radius:8px}
+.links a{display:inline-block;background:#e4f5e9;color:#063d25;text-decoration:none;padding:10px 12px;border-radius:8px;margin:4px;font-weight:bold}
+footer{background:#063d25;color:white;text-align:center;padding:25px;margin-top:30px}
+@media(max-width:600px){.logo{font-size:24px}.container{padding:12px}.hero,.section{padding:16px}}
+</style>
+</head>
+<body>
+
+<div class="top-languages">
+<a href="#">AZ</a><a href="#">RU</a><a href="#">EN</a>
+<a href="#">TR</a><a href="#">DE</a><a href="#">AR</a>
+<a href="#">ES</a><a href="#">FR</a><a href="#">IT</a>
+</div>
+
+<header>
+<div class="logo">WORKER PRO</div>
+<div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+<h1>🧱 Material Testing</h1>
+<p>Демонстрационная система испытаний промышленных материалов: металлов, сплавов, полимеров, композитов и других материалов. Раздел помогает учитывать образцы, методы испытаний, результаты и технические отчеты.</p>
+<div class="tags">
+<span class="tag">Material Testing</span><span class="tag">Metals</span>
+<span class="tag">Alloys</span><span class="tag">Polymers</span>
+<span class="tag">Composites</span><span class="tag">Hardness</span>
+<span class="tag">Tensile Testing</span><span class="tag">Material Analysis</span>
+</div>
+</section>
+
+<section class="stats">
+<div class="stat"><strong>286</strong><span>Material Test Systems</span></div>
+<div class="stat"><strong>14,820</strong><span>Sample Records</span></div>
+<div class="stat"><strong>112</strong><span>Connected Laboratories</span></div>
+<div class="stat"><strong>97.8%</strong><span>Record Completeness</span></div>
+</section>
+
+<section class="section">
+<h2>🔄 Material Testing Workflow</h2>
+<div class="flow">
+<div class="flow-item">📦 Material</div>
+<div class="flow-item">🏷️ Sample ID</div>
+<div class="flow-item">📋 Test Plan</div>
+<div class="flow-item">🧪 Preparation</div>
+<div class="flow-item">🔬 Testing</div>
+<div class="flow-item">📊 Analysis</div>
+<div class="flow-item">✅ Evaluation</div>
+<div class="flow-item">📄 Test Report</div>
+</div>
+</section>
+
+<section class="section">
+<h2>🧰 Material Categories</h2>
+<div class="grid">
+<div class="card"><h3>🔩 Metals & Alloys</h3><p>Испытания металлических материалов и сплавов для промышленного производства.</p></div>
+<div class="card"><h3>🪨 Minerals</h3><p>Исследование физических и химических характеристик минерального сырья.</p></div>
+<div class="card"><h3>🧴 Polymers</h3><p>Проверка свойств пластиков, полимеров и синтетических материалов.</p></div>
+<div class="card"><h3>🧵 Composites</h3><p>Испытания композитных материалов и многослойных конструкций.</p></div>
+<div class="card"><h3>🧱 Ceramics</h3><p>Исследование керамических и огнеупорных материалов.</p></div>
+<div class="card"><h3>🛢️ Industrial Fluids</h3><p>Анализ промышленных жидкостей и технических материалов по установленным методикам.</p></div>
+</div>
+</section>
+
+<section class="section">
+<h2>🧪 Testing Methods</h2>
+<div class="grid">
+<div class="card"><h3>💪 Tensile Testing</h3><p>Определение характеристик материала при растяжении.</p></div>
+<div class="card"><h3>🔨 Hardness Testing</h3><p>Измерение твердости подходящим методом.</p></div>
+<div class="card"><h3>🔬 Metallography</h3><p>Исследование микроструктуры металлов и сплавов.</p></div>
+<div class="card"><h3>🌡️ Thermal Analysis</h3><p>Изучение поведения материала при температурных воздействиях.</p></div>
+<div class="card"><h3>⚗️ Chemical Analysis</h3><p>Определение химического состава материала.</p></div>
+<div class="card"><h3>🔍 Non-Destructive Testing</h3><p>Контроль материала без разрушения образца подходящим методом.</p></div>
+</div>
+</section>
+
+<section class="section">
+<h2>🌍 Material Testing Laboratories</h2>
+<div class="search-box">
+<input id="search" placeholder="Поиск лаборатории или материала..." oninput="filterRows()">
+<select id="statusFilter" onchange="filterRows()">
+<option value="all">Все статусы</option>
+<option value="Online">Online</option>
+<option value="Testing">Testing</option>
+<option value="Review">Review</option>
+</select>
+</div>
+<div class="table-wrap">
+<table id="labTable">
+<thead><tr><th>Laboratory</th><th>Country</th><th>Material</th><th>Test Records</th><th>Status</th></tr></thead>
+<tbody>
+<tr><td>Baku Materials Lab</td><td>Azerbaijan</td><td>Steel & Alloys</td><td>1,240</td><td><span class="status">Online</span></td></tr>
+<tr><td>Sumqayit Metal Testing</td><td>Azerbaijan</td><td>Industrial Metals</td><td>980</td><td><span class="status">Testing</span></td></tr>
+<tr><td>Istanbul Polymer Lab</td><td>Turkey</td><td>Polymers</td><td>1,480</td><td><span class="status">Online</span></td></tr>
+<tr><td>Dortmund Materials Lab</td><td>Germany</td><td>Precision Alloys</td><td>1,620</td><td><span class="status">Online</span></td></tr>
+<tr><td>Milan Composite Lab</td><td>Italy</td><td>Composite Materials</td><td>860</td><td><span class="status">Review</span></td></tr>
+<tr><td>Shanghai Industrial Materials Lab</td><td>China</td><td>Industrial Materials</td><td>1,920</td><td><span class="status">Online</span></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="section">
+<h2>📊 Testing Performance</h2>
+<p><b>Record Completeness — 97.8%</b></p><div class="progress"><div style="width:97.8%"></div></div>
+<p><b>Sample Traceability — 98.1%</b></p><div class="progress"><div style="width:98.1%"></div></div>
+<p><b>Report Completion — 96.7%</b></p><div class="progress"><div style="width:96.7%"></div></div>
+<p><b>Equipment Record Coverage — 99.0%</b></p><div class="progress"><div style="width:99%"></div></div>
+</section>
+
+<section class="section">
+<h2>🧪 Material Testing Demo</h2>
+<div class="grid">
+<div class="card"><h3>🔩 Metal Test</h3><p>Демонстрационная запись испытания металла.</p><button onclick="runDemo('metal')">Run Test</button><div id="metal" class="result"></div></div>
+<div class="card"><h3>🧴 Polymer Test</h3><p>Демонстрационная запись испытания полимера.</p><button onclick="runDemo('polymer')">Run Test</button><div id="polymer" class="result"></div></div>
+<div class="card"><h3>🧵 Composite Test</h3><p>Демонстрационная запись испытания композита.</p><button onclick="runDemo('composite')">Run Test</button><div id="composite" class="result"></div></div>
+<div class="card"><h3>🔨 Hardness Test</h3><p>Демонстрационная запись проверки твердости.</p><button onclick="runDemo('hardness')">Run Test</button><div id="hardness" class="result"></div></div>
+</div>
+</section>
+
+<section class="section">
+<h2>➕ Add Material Test</h2>
+<div class="grid">
+<button onclick="addTest('Metal Testing')">🔩 Metal Testing</button>
+<button onclick="addTest('Polymer Testing')">🧴 Polymer Testing</button>
+<button onclick="addTest('Composite Testing')">🧵 Composite Testing</button>
+<button onclick="addTest('Ceramic Testing')">🧱 Ceramic Testing</button>
+<button onclick="addTest('Hardness Testing')">🔨 Hardness Testing</button>
+<button onclick="addTest('Chemical Analysis')">⚗️ Chemical Analysis</button>
+</div>
+<div id="addResult" class="result"></div>
+</section>
+
+<section class="section">
+<h2>🏭 Industrial Applications</h2>
+<div class="grid">
+<div class="card"><h3>⚙️ CNC Manufacturing</h3><p>Проверка материалов для деталей и компонентов станков.</p></div>
+<div class="card"><h3>🔨 Stamping</h3><p>Испытания листового металла и штампованных изделий.</p></div>
+<div class="card"><h3>🔥 Heat Treatment</h3><p>Контроль изменений свойств материала после термообработки.</p></div>
+<div class="card"><h3>🛢️ Oil & Gas</h3><p>Исследование материалов труб, соединений и оборудования.</p></div>
+<div class="card"><h3>⛏️ Mining</h3><p>Анализ руды, минералов и образцов горных пород.</p></div>
+<div class="card"><h3>🌾 Agriculture</h3><p>Анализ материалов, почвы и сырья для сельского хозяйства.</p></div>
+</div>
+</section>
+
+<section class="section">
+<h2>🔐 Data & Traceability</h2>
+<div class="grid">
+<div class="card"><h3>🔑 Access Control</h3><p>Управление доступом к результатам испытаний.</p></div>
+<div class="card"><h3>🏷️ Sample Identification</h3><p>Идентификация образцов и партий материалов.</p></div>
+<div class="card"><h3>📄 Test Reports</h3><p>Хранение протоколов и результатов испытаний.</p></div>
+<div class="card"><h3>🧰 Equipment Records</h3><p>Учет оборудования и записей о его проверке.</p></div>
+<div class="card"><h3>💾 Backup</h3><p>Резервное сохранение данных и документов.</p></div>
+<div class="card"><h3>📝 Audit Trail</h3><p>Регистрация действий пользователей и изменений.</p></div>
+</div>
+</section>
+
+<section class="section">
+<div class="warning">
+⚠️ <b>Важно:</b> страница является демонстрационной частью WORKER PRO.
+Реальные испытания материалов должны проводиться по подходящим методикам,
+с учетом типа материала, условий испытаний, требований к оборудованию,
+квалификации персонала и технической документации. Все показатели и примеры условные.
+</div>
+</section>
+
+<section class="section links">
+<h2>🔗 Related WORKER PRO Sections</h2>
+<a href="../index.html">🏠 Main</a>
+<a href="../laboratory-testing/index.html">🔬 Laboratory Testing</a>
+<a href="../quality-testing/index.html">🧪 Quality Testing</a>
+<a href="../quality-inspection/index.html">🔍 Quality Inspection</a>
+<a href="../quality-control/index.html">🛡️ Quality Control</a>
+<a href="../quality-planning/index.html">📋 Quality Planning</a>
+<a href="../quality-assurance/index.html">✅ Quality Assurance</a>
+<a href="../quality-management-system/index.html">🏆 QMS</a>
+<a href="../measurement-system-analysis/index.html">📏 MSA</a>
+<a href="../process-capability-analysis/index.html">📐 Process Capability</a>
+<a href="../statistical-process-control/index.html">📊 SPC</a>
+<a href="../production/index.html">🏭 Production</a>
+<a href="../equipment/index.html">⚙️ Equipment</a>
+<a href="../sensors/index.html">📡 Sensors</a>
+<a href="../maintennances/index.html">🔧 Maintenance</a>
+<a href="../safety/index.html">🦺 Safety</a>
+<a href="../training/index.html">🎓 Training</a>
+<a href="../specialists/index.html">👷 Specialists</a>
+<a href="../companies/index.html">🏢 Companies</a>
+<a href="../suppliers/index.html">🚚 Suppliers</a>
+<a href="../orders/index.html">📦 Orders</a>
+<a href="../logistics/index.html">🚛 Logistics</a>
+<a href="../tracking/index.html">📍 Tracking</a>
+<a href="../warehouses/index.html">🏬 Warehouses</a>
+<a href="../dashboard/index.html">📊 Dashboard</a>
+</section>
+
+</main>
+
+<footer>
+<strong>WORKER PRO</strong>
+<p>Глобальная промышленная платформа</p>
+<p>© 2026 WORKER PRO — F.S.</p>
+</footer>
+
+<script>
+function filterRows(){
+    const search=document.getElementById("search").value.toLowerCase();
+    const status=document.getElementById("statusFilter").value;
+    document.querySelectorAll("#labTable tbody tr").forEach(row=>{
+        const text=row.innerText.toLowerCase();
+        const rowStatus=row.cells[4].innerText.trim();
+        row.style.display=text.includes(search)&&(status==="all"||rowStatus===status)?"":"none";
+    });
+}
+
+function runDemo(id){
+    const messages={
+        metal:"🔩 Demo: metal test record created. No physical test was performed.",
+        polymer:"🧴 Demo: polymer test record created. No real material properties were measured.",
+        composite:"🧵 Demo: composite test record created. No actual test was performed.",
+        hardness:"🔨 Demo: hardness test record created. No real hardness measurement was taken."
+    };
+    const el=document.getElementById(id);
+    el.textContent=messages[id];
+    el.style.display="block";
+}
+
+function addTest(type){
+    const el=document.getElementById("addResult");
+    el.textContent="➕ Demo: selected material test — "+type;
+    el.style.display="block";
+}
+</script>
+
+</body>
+</html>
