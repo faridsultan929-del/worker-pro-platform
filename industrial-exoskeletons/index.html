@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Industrial Exoskeletons</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:20px 15px;
+}
+
+.top h1{
+    margin:0;
+    font-size:30px;
+}
+
+.top p{
+    margin:8px 0 15px;
+    color:#cceedd;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+.languages button{
+    border:0;
+    border-radius:8px;
+    padding:9px 13px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card{
+    background:white;
+    border-radius:14px;
+    padding:22px;
+    margin-bottom:20px;
+    box-shadow:0 3px 12px #0001;
+}
+
+.hero h2,
+.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    border-left:5px solid #0b6b3d;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px #0001;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    gap:18px;
+}
+
+.badge{
+    display:inline-block;
+    background:#e4f6eb;
+    color:#075b34;
+    padding:6px 10px;
+    border-radius:20px;
+    margin:3px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+}
+
+.flow span{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d1;
+    border-radius:8px;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:12px 18px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.exoskeleton{
+    border:1px solid #dce7e0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.exoskeleton h4{
+    color:#075b34;
+    margin:0 0 8px;
+}
+
+.progress{
+    height:10px;
+    background:#e5ebe7;
+    border-radius:10px;
+    overflow:hidden;
+    margin:8px 0 14px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:9px;
+}
+
+.links a{
+    text-decoration:none;
+    background:#e8f5ed;
+    color:#075b34;
+    padding:9px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.links a:hover{
+    background:#b7ff35;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #d6a500;
+    padding:15px;
+    border-radius:10px;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .top h1{
+        font-size:25px;
+    }
+
+    .container{
+        padding:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+<h1>WORKER PRO</h1>
+
+<p>Industrial Exoskeletons — технологии поддержки промышленного работника</p>
+
+<div class="languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<h2>🦾 Industrial Exoskeletons</h2>
+
+<p>
+Промышленные экзоскелеты — носимые системы поддержки,
+которые могут помогать работнику при определённых физических
+операциях, например при подъёме, удержании инструмента
+или длительной работе в неудобном положении.
+</p>
+
+<p>
+WORKER PRO объединяет экзоскелеты с обучением,
+датчиками, безопасностью, IoT, AI и Human-Centric Manufacturing.
+</p>
+
+<div>
+
+<span class="badge">Exoskeleton</span>
+<span class="badge">Worker Safety</span>
+<span class="badge">Ergonomics</span>
+<span class="badge">Sensors</span>
+<span class="badge">AI</span>
+<span class="badge">IoT</span>
+<span class="badge">Training</span>
+
+</div>
+
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<strong>48</strong>
+Exoskeleton Systems
+<small>систем экзоскелетов</small>
+</div>
+
+<div class="stat">
+<strong>186</strong>
+Connected Sensors
+<small>подключённых датчиков</small>
+</div>
+
+<div class="stat">
+<strong>92.4%</strong>
+Ergonomic Monitoring
+<small>контроль эргономики</small>
+</div>
+
+<div class="stat">
+<strong>96.1%</strong>
+System Availability
+<small>доступность систем</small>
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔄 Exoskeleton Workflow</h3>
+
+<div class="flow">
+
+<span>Worker</span>
+<b class="arrow">→</b>
+<span>Exoskeleton</span>
+<b class="arrow">→</b>
+<span>Sensors</span>
+<b class="arrow">→</b>
+<span>IoT</span>
+<b class="arrow">→</b>
+<span>AI</span>
+<b class="arrow">→</b>
+<span>Safety</span>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🏭 Основные применения</h3>
+
+<div class="grid">
+
+<div>
+<h3>📦 Material Handling</h3>
+<p>
+Поддержка работников при операциях
+с материалами и оборудованием.
+</p>
+</div>
+
+<div>
+<h3>🔧 Assembly</h3>
+<p>
+Помощь при продолжительных монтажных
+и сборочных операциях.
+</p>
+</div>
+
+<div>
+<h3>⬆️ Overhead Work</h3>
+<p>
+Поддержка при работе руками
+в поднятом положении.
+</p>
+</div>
+
+<div>
+<h3>🚚 Logistics</h3>
+<p>
+Использование носимых систем
+в складских и логистических процессах.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔎 Exoskeleton Systems</h3>
+
+<div class="search">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск экзоскелета или системы..."
+onkeyup="filterExoskeletons()"
+>
+
+<select id="locationFilter" onchange="filterExoskeletons()">
+
+<option value="">Все страны</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Turkey">Turkey</option>
+<option value="Germany">Germany</option>
+<option value="Italy">Italy</option>
+<option value="China">China</option>
+
+</select>
+
+<select id="typeFilter" onchange="filterExoskeletons()">
+
+<option value="">Все типы</option>
+<option value="Upper Body">Upper Body</option>
+<option value="Back Support">Back Support</option>
+<option value="Leg Support">Leg Support</option>
+<option value="Full Body">Full Body</option>
+
+</select>
+
+</div>
+
+<div id="exoskeletonList">
+
+<div
+class="exoskeleton"
+data-name="Upper Body Support Baku"
+data-location="Azerbaijan"
+data-type="Upper Body"
+>
+
+<h4>🦾 Upper Body Support — Baku</h4>
+
+<p><b>Country:</b> Azerbaijan</p>
+<p><b>Type:</b> Upper Body</p>
+<p><b>Application:</b> Assembly</p>
+<p><b>Status:</b> 🟢 Active</p>
+
+<p>System Availability: 94%</p>
+
+<div class="progress">
+<div style="width:94%"></div>
+</div>
+
+</div>
+
+<div
+class="exoskeleton"
+data-name="Back Support Sumqayit"
+data-location="Azerbaijan"
+data-type="Back Support"
+>
+
+<h4>🦾 Back Support — Sumqayit</h4>
+
+<p><b>Country:</b> Azerbaijan</p>
+<p><b>Type:</b> Back Support</p>
+<p><b>Application:</b> Material Handling</p>
+<p><b>Status:</b> 🟢 Active</p>
+
+<p>Ergonomic Monitoring: 91%</p>
+
+<div class="progress">
+<div style="width:91%"></div>
+</div>
+
+</div>
+
+<div
+class="exoskeleton"
+data-name="Full Body Istanbul"
+data-location="Turkey"
+data-type="Full Body"
+>
+
+<h4>🦾 Full Body Exoskeleton — Istanbul</h4>
+
+<p><b>Country:</b> Turkey</p>
+<p><b>Type:</b> Full Body</p>
+<p><b>Application:</b> Logistics</p>
+<p><b>Status:</b> 🟢 Working</p>
+
+<p>Worker Support: 89%</p>
+
+<div class="progress">
+<div style="width:89%"></div>
+</div>
+
+</div>
+
+<div
+class="exoskeleton"
+data-name="Upper Body Dortmund"
+data-location="Germany"
+data-type="Upper Body"
+>
+
+<h4>🦾 Industrial Upper Body — Dortmund</h4>
+
+<p><b>Country:</b> Germany</p>
+<p><b>Type:</b> Upper Body</p>
+<p><b>Application:</b> Assembly</p>
+<p><b>Status:</b> 🟢 Monitoring</p>
+
+<p>Sensor Accuracy: 97%</p>
+
+<div class="progress">
+<div style="width:97%"></div>
+</div>
+
+</div>
+
+<div
+class="exoskeleton"
+data-name="Leg Support Milan"
+data-location="Italy"
+data-type="Leg Support"
+>
+
+<h4>🦿 Leg Support System — Milan</h4>
+
+<p><b>Country:</b> Italy</p>
+<p><b>Type:</b> Leg Support</p>
+<p><b>Application:</b> Industrial Maintenance</p>
+<p><b>Status:</b> 🟡 Monitoring</p>
+
+<p>System Performance: 88%</p>
+
+<div class="progress">
+<div style="width:88%"></div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>🛡 Worker Safety</h3>
+
+<p>
+Экзоскелет должен использоваться только
+после оценки конкретной рабочей операции,
+рисков и требований производителя.
+</p>
+
+<p>✓ Risk Assessment</p>
+<p>✓ Training</p>
+<p>✓ Correct Fitting</p>
+<p>✓ Safety Monitoring</p>
+
+<button class="action" onclick="safetyCheck()">
+Проверить систему
+</button>
+
+<p id="safetyResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>📡 Smart Sensors</h3>
+
+<p>
+Датчики могут отслеживать движение,
+положение системы и рабочие параметры.
+</p>
+
+<p>Sensor Connectivity: 96%</p>
+
+<div class="progress">
+<div style="width:96%"></div>
+</div>
+
+<button class="action" onclick="sensorCheck()">
+Проверить датчики
+</button>
+
+<p id="sensorResult"></p>
+
+</div>
+
+<div class="card">
+
+<h3>🧠 AI Assistance</h3>
+
+<p>
+AI может анализировать данные системы
+и помогать контролировать рабочие процессы.
+</p>
+
+<button class="action" onclick="runAI()">
+Запустить AI анализ
+</button>
+
+<p id="aiResult"></p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🎓 Training</h3>
+
+<div class="grid">
+
+<div>
+<b>1. Introduction</b>
+<p>Основы работы с экзоскелетом.</p>
+</div>
+
+<div>
+<b>2. Fitting</b>
+<p>Правильная настройка системы.</p>
+</div>
+
+<div>
+<b>3. Safe Operation</b>
+<p>Безопасное использование.</p>
+</div>
+
+<div>
+<b>4. Maintenance</b>
+<p>Осмотр и техническое обслуживание.</p>
+</div>
+
+</div>
+
+<p>Training Completion: 88%</p>
+
+<div class="progress">
+<div style="width:88%"></div>
+</div>
+
+<button class="action" onclick="startTraining()">
+Начать обучение
+</button>
+
+<p id="trainingResult"></p>
+
+</section>
+
+<section class="card">
+
+<h3>📊 Exoskeleton Performance</h3>
+
+<div class="grid">
+
+<div>
+<b>Availability</b>
+<p>96.1%</p>
+
+<div class="progress">
+<div style="width:96.1%"></div>
+</div>
+
+</div>
+
+<div>
+<b>Sensor Connectivity</b>
+<p>96%</p>
+
+<div class="progress">
+<div style="width:96%"></div>
+</div>
+
+</div>
+
+<div>
+<b>Ergonomic Monitoring</b>
+<p>92.4%</p>
+
+<div class="progress">
+<div style="width:92.4%"></div>
+</div>
+
+</div>
+
+<div>
+<b>Training</b>
+<p>88%</p>
+
+<div class="progress">
+<div style="width:88%"></div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<div class="notice">
+
+<b>⚠️ Важно:</b>
+
+<p>
+Экзоскелет не является универсальной заменой
+оценке рисков, правильной организации рабочего места
+или требованиям промышленной безопасности.
+Перед применением необходимо учитывать конкретную
+операцию, характеристики оборудования, обучение
+работника и инструкции производителя.
+</p>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>➕ Добавить Exoskeleton System</h3>
+
+<div class="search">
+
+<input
+id="newExoskeleton"
+type="text"
+placeholder="Название системы"
+>
+
+<select id="newType">
+
+<option>Upper Body</option>
+<option>Back Support</option>
+<option>Leg Support</option>
+<option>Full Body</option>
+
+</select>
+
+<button class="action" onclick="addExoskeleton()">
+Добавить
+</button>
+
+</div>
+
+<p id="addResult"></p>
+
+</section>
+
+<section class="card">
+
+<h3>🔐 Digital Security</h3>
+
+<div class="grid">
+
+<div>
+<b>🔒 Data Protection</b>
+<p>Защита данных носимых устройств.</p>
+</div>
+
+<div>
+<b>📡 Secure IoT</b>
+<p>Безопасное подключение датчиков.</p>
+</div>
+
+<div>
+<b>🛡 Access Control</b>
+<p>Контроль доступа к системе.</p>
+</div>
+
+<div>
+<b>🤖 AI Safety</b>
+<p>Контроль цифровых функций системы.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h3>🔗 Связанные разделы WORKER PRO</h3>
+
+<div class="links">
+
+<a href="../index.html">Главная</a>
+<a href="../industry-5-0/index.html">Industry 5.0</a>
+<a href="../human-centric-manufacturing/index.html">Human-Centric Manufacturing</a>
+<a href="../collaborative-robots/index.html">Collaborative Robots</a>
+<a href="../industry-4-0/index.html">Industry 4.0</a>
+<a href="../smart-factory/index.html">Smart Factory</a>
+<a href="../digital-manufacturing/index.html">Digital Manufacturing</a>
+<a href="../digital-twin/index.html">Digital Twin</a>
+<a href="../ai-machine-learning/index.html">AI & ML</a>
+<a href="../iot-industrial-internet/index.html">IoT</a>
+<a href="../automation-robotics/index.html">Automation</a>
+<a href="../production/index.html">Production</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../sensors/index.html">Sensors</a>
+<a href="../training/index.html">Training</a>
+<a href="../specialists/index.html">Specialists</a>
+<a href="../safety/index.html">Safety</a>
+<a href="../maintennances/index.html">Maintenance</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../dashboard/index.html">Dashboard</a>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+WORKER PRO — Global Industrial Platform<br>
+Industrial Exoskeletons • Worker Safety • Ergonomics • AI<br><br>
+© 2026 WORKER PRO
+
+</footer>
+
+<script>
+
+function filterExoskeletons(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const location =
+        document.getElementById("locationFilter")
+        .value;
+
+    const type =
+        document.getElementById("typeFilter")
+        .value;
+
+    const systems =
+        document.querySelectorAll(".exoskeleton");
+
+    systems.forEach(function(system){
+
+        const name =
+            system.dataset.name.toLowerCase();
+
+        const systemLocation =
+            system.dataset.location;
+
+        const systemType =
+            system.dataset.type;
+
+        const matchName =
+            name.includes(search);
+
+        const matchLocation =
+            !location ||
+            systemLocation === location;
+
+        const matchType =
+            !type ||
+            systemType === type;
+
+        system.style.display =
+            matchName &&
+            matchLocation &&
+            matchType
+            ? "block"
+            : "none";
+    });
+}
+
+function safetyCheck(){
+
+    document.getElementById("safetyResult").innerHTML =
+        "🟢 Проверка завершена. Система готова к дальнейшей оценке безопасности.";
+
+}
+
+function sensorCheck(){
+
+    document.getElementById("sensorResult").innerHTML =
+        "📡 Датчики проверены. Подключение системы отображается как стабильное.";
+
+}
+
+function runAI(){
+
+    document.getElementById("aiResult").innerHTML =
+        "🤖 AI анализ завершён. Производственные и сенсорные данные обработаны.";
+
+}
+
+function startTraining(){
+
+    document.getElementById("trainingResult").innerHTML =
+        "🎓 Обучение запущено. Модуль: Безопасная работа с промышленными экзоскелетами.";
+
+}
+
+function addExoskeleton(){
+
+    const name =
+        document.getElementById("newExoskeleton")
+        .value
+        .trim();
+
+    const type =
+        document.getElementById("newType")
+        .value;
+
+    if(!name){
+
+        document.getElementById("addResult").innerHTML =
+            "⚠️ Введите название системы.";
+
+        return;
+    }
+
+    document.getElementById("addResult").innerHTML =
+        "✅ Exoskeleton System добавлена: " +
+        name +
+        " — " +
+        type;
+
+    document.getElementById("newExoskeleton").value = "";
+
+}
+
+</script>
+
+</body>
+</html>
