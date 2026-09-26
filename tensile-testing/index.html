@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Tensile Testing</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#123}
+.top-languages{background:#063d25;padding:10px;text-align:center}
+.top-languages a{display:inline-block;margin:4px;padding:9px 13px;background:#0b6b3d;color:white;text-decoration:none;border-radius:8px;font-weight:bold;font-size:13px}
+.top-languages a:hover{background:#b7ff35;color:#063d25}
+
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;text-align:center;padding:28px 15px}
+.logo{font-size:30px;font-weight:bold}
+.subtitle{color:#b7ff35;margin-top:8px;font-weight:bold}
+
+.container{max-width:1100px;margin:auto;padding:20px}
+.hero,.section,.stat{background:white;border-radius:15px;padding:22px;margin-bottom:20px;box-shadow:0 3px 12px #0000000d}
+.hero h1,.section h2{color:#063d25;margin-top:0}
+
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.tag{background:#e4f5e9;color:#063d25;padding:8px 12px;border-radius:20px;font-size:13px;font-weight:bold}
+
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px}
+.stat{text-align:center;margin:0}
+.stat strong{display:block;font-size:27px;color:#0b6b3d}
+.stat span{font-size:14px;color:#555}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:#f8fbf9;border-left:5px solid #0b6b3d;border-radius:10px;padding:16px}
+.card h3{margin-top:0;color:#063d25}
+
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.flow-item{background:#0b6b3d;color:white;padding:14px 8px;text-align:center;border-radius:9px;font-weight:bold}
+
+.search-box{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+input,select{padding:12px;border:1px solid #ccc;border-radius:8px;min-width:180px;flex:1}
+
+button{border:0;background:#0b6b3d;color:white;padding:11px 15px;border-radius:8px;cursor:pointer;font-weight:bold}
+button:hover{background:#063d25}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:700px}
+th{background:#063d25;color:white;text-align:left;padding:12px}
+td{padding:12px;border-bottom:1px solid #ddd}
+
+.status{display:inline-block;background:#dff4e5;color:#086331;padding:5px 9px;border-radius:15px;font-size:12px;font-weight:bold}
+
+.progress{height:12px;background:#e1e8e3;border-radius:10px;overflow:hidden;margin:8px 0 18px}
+.progress div{height:100%;background:#0b6b3d}
+
+.result{display:none;margin-top:12px;padding:12px;background:#eaf7ed;border-radius:8px;color:#063d25;font-weight:bold}
+
+.warning{background:#fff8df;border-left:5px solid #d99b00;padding:15px;border-radius:8px}
+
+.links a{display:inline-block;background:#e4f5e9;color:#063d25;text-decoration:none;padding:10px 12px;border-radius:8px;margin:4px;font-weight:bold}
+
+footer{background:#063d25;color:white;text-align:center;padding:25px;margin-top:30px}
+
+@media(max-width:600px){
+.logo{font-size:24px}
+.container{padding:12px}
+.hero,.section{padding:16px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+<header>
+<div class="logo">WORKER PRO</div>
+<div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+<h1>↔️ Tensile Testing</h1>
+
+<p>
+Испытание материалов на растяжение для демонстрационной оценки
+механических характеристик образцов. Раздел WORKER PRO объединяет
+образцы, испытательные машины, параметры теста, измерения,
+результаты и отчеты.
+</p>
+
+<div class="tags">
+<span class="tag">Tensile Testing</span>
+<span class="tag">Tensile Strength</span>
+<span class="tag">Yield Strength</span>
+<span class="tag">Elongation</span>
+<span class="tag">Stress</span>
+<span class="tag">Strain</span>
+<span class="tag">Test Machine</span>
+<span class="tag">Test Report</span>
+</div>
+</section>
+
+<section class="stats">
+
+<div class="stat">
+<strong>186</strong>
+<span>Tensile Test Systems</span>
+</div>
+
+<div class="stat">
+<strong>9,840</strong>
+<span>Tensile Tests</span>
+</div>
+
+<div class="stat">
+<strong>84</strong>
+<span>Connected Laboratories</span>
+</div>
+
+<div class="stat">
+<strong>98.3%</strong>
+<span>Test Record Completeness</span>
+</div>
+
+</section>
+
+<section class="section">
+<h2>🔄 Tensile Testing Workflow</h2>
+
+<div class="flow">
+<div class="flow-item">📦 Sample</div>
+<div class="flow-item">🏷️ ID</div>
+<div class="flow-item">📏 Dimensions</div>
+<div class="flow-item">🔧 Setup</div>
+<div class="flow-item">↔️ Loading</div>
+<div class="flow-item">📊 Measurement</div>
+<div class="flow-item">📈 Analysis</div>
+<div class="flow-item">📄 Report</div>
+</div>
+</section>
+
+<section class="section">
+<h2>🧰 Main Tensile Parameters</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>💪 Tensile Strength</h3>
+<p>
+Максимальное напряжение, достигнутое в ходе испытания.
+</p>
+</div>
+
+<div class="card">
+<h3>📐 Yield Strength</h3>
+<p>
+Параметр, характеризующий переход материала к пластической деформации
+в соответствии с выбранной методикой.
+</p>
+</div>
+
+<div class="card">
+<h3>↔️ Elongation</h3>
+<p>
+Изменение длины образца в ходе испытания.
+</p>
+</div>
+
+<div class="card">
+<h3>📊 Stress</h3>
+<p>
+Расчетная величина напряжения на основе применяемой методики.
+</p>
+</div>
+
+<div class="card">
+<h3>📏 Strain</h3>
+<p>
+Относительная деформация образца.
+</p>
+</div>
+
+<div class="card">
+<h3>⚙️ Test Speed</h3>
+<p>
+Скорость испытания, установленная соответствующей методикой.
+</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>📊 Demonstration Test Result</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Sample</h3>
+<p>Steel-AZ-2026-001</p>
+</div>
+
+<div class="card">
+<h3>Gauge Length</h3>
+<p>50 mm</p>
+</div>
+
+<div class="card">
+<h3>Test Force</h3>
+<p>42.5 kN</p>
+</div>
+
+<div class="card">
+<h3>Demonstration Result</h3>
+<p>✅ PASS</p>
+</div>
+
+</div>
+
+<p>
+⚠️ Значения выше являются демонстрационными и не являются
+реальными результатами сертифицированного испытания.
+</p>
+</section>
+
+<section class="section">
+<h2>🌍 Tensile Testing Laboratories</h2>
+
+<div class="search-box">
+
+<input
+id="search"
+placeholder="Поиск лаборатории или материала..."
+oninput="filterRows()"
+>
+
+<select id="statusFilter" onchange="filterRows()">
+<option value="all">Все статусы</option>
+<option value="Online">Online</option>
+<option value="Testing">Testing</option>
+<option value="Review">Review</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="labTable">
+
+<thead>
+<tr>
+<th>Laboratory</th>
+<th>Country</th>
+<th>Material</th>
+<th>Tests</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>Baku Tensile Laboratory</td>
+<td>Azerbaijan</td>
+<td>Steel</td>
+<td>1,240</td>
+<td><span class="status">Online</span></td>
+</tr>
+
+<tr>
+<td>Sumqayit Materials Lab</td>
+<td>Azerbaijan</td>
+<td>Alloy Steel</td>
+<td>980</td>
+<td><span class="status">Testing</span></td>
+</tr>
+
+<tr>
+<td>Istanbul Industrial Lab</td>
+<td>Turkey</td>
+<td>Aluminium</td>
+<td>1,420</td>
+<td><span class="status">Online</span></td>
+</tr>
+
+<tr>
+<td>Dortmund Precision Lab</td>
+<td>Germany</td>
+<td>Precision Alloy</td>
+<td>1,680</td>
+<td><span class="status">Online</span></td>
+</tr>
+
+<tr>
+<td>Milan Materials Lab</td>
+<td>Italy</td>
+<td>Composite</td>
+<td>820</td>
+<td><span class="status">Review</span></td>
+</tr>
+
+<tr>
+<td>Shanghai Industrial Lab</td>
+<td>China</td>
+<td>Industrial Steel</td>
+<td>1,960</td>
+<td><span class="status">Online</span></td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+</section>
+
+<section class="section">
+<h2>📈 Tensile Testing Performance</h2>
+
+<p><b>Test Record Completeness — 98.3%</b></p>
+<div class="progress">
+<div style="width:98.3%"></div>
+</div>
+
+<p><b>Sample Traceability — 97.9%</b></p>
+<div class="progress">
+<div style="width:97.9%"></div>
+</div>
+
+<p><b>Report Completion — 97.4%</b></p>
+<div class="progress">
+<div style="width:97.4%"></div>
+</div>
+
+<p><b>Equipment Record Coverage — 99.1%</b></p>
+<div class="progress">
+<div style="width:99.1%"></div>
+</div>
+
+</section>
+
+<section class="section">
+<h2>🧪 Tensile Test Demo</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>📦 Prepare Sample</h3>
+<p>Создать демонстрационную запись образца.</p>
+<button onclick="runDemo('sample')">Prepare</button>
+<div id="sample" class="result"></div>
+</div>
+
+<div class="card">
+<h3>⚙️ Start Test</h3>
+<p>Запустить демонстрационный тест.</p>
+<button onclick="runDemo('test')">Start Test</button>
+<div id="test" class="result"></div>
+</div>
+
+<div class="card">
+<h3>📊 Analyze</h3>
+<p>Создать демонстрационный результат анализа.</p>
+<button onclick="runDemo('analysis')">Analyze</button>
+<div id="analysis" class="result"></div>
+</div>
+
+<div class="card">
+<h3>📄 Test Report</h3>
+<p>Создать демонстрационную запись отчета.</p>
+<button onclick="runDemo('report')">Create Report</button>
+<div id="report" class="result"></div>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>➕ Add Tensile Testing System</h2>
+
+<div class="grid">
+
+<button onclick="addSystem('Steel Tensile Testing')">
+🔩 Steel Tensile
+</button>
+
+<button onclick="addSystem('Aluminium Tensile Testing')">
+🪶 Aluminium Tensile
+</button>
+
+<button onclick="addSystem('Alloy Tensile Testing')">
+⚙️ Alloy Tensile
+</button>
+
+<button onclick="addSystem('Polymer Tensile Testing')">
+🧴 Polymer Tensile
+</button>
+
+<button onclick="addSystem('Composite Tensile Testing')">
+🧵 Composite Tensile
+</button>
+
+<button onclick="addSystem('Automated Tensile Testing')">
+🤖 Automated Tensile
+</button>
+
+</div>
+
+<div id="addResult" class="result"></div>
+</section>
+
+<section class="section">
+<h2>🏭 Industrial Applications</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>⚙️ CNC Manufacturing</h3>
+<p>
+Испытание материалов для деталей, валов, компонентов и инструментов.
+</p>
+</div>
+
+<div class="card">
+<h3>🔨 Stamping</h3>
+<p>
+Проверка механических характеристик листового металла.
+</p>
+</div>
+
+<div class="card">
+<h3>🔥 Heat Treatment</h3>
+<p>
+Сравнение механических характеристик материалов после термообработки.
+</p>
+</div>
+
+<div class="card">
+<h3>🛢️ Oil & Gas</h3>
+<p>
+Демонстрационный контроль материалов труб, деталей и оборудования.
+</p>
+</div>
+
+<div class="card">
+<h3>⛏️ Mining</h3>
+<p>
+Испытание материалов и компонентов горнодобывающего оборудования.
+</p>
+</div>
+
+<div class="card">
+<h3>🚢 Heavy Industry</h3>
+<p>
+Испытания материалов тяжелого промышленного оборудования.
+</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>🔐 Data & Traceability</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🔑 Access Control</h3>
+<p>Управление доступом к результатам тестирования.</p>
+</div>
+
+<div class="card">
+<h3>🏷️ Sample ID</h3>
+<p>Уникальная идентификация каждого образца.</p>
+</div>
+
+<div class="card">
+<h3>📄 Test Reports</h3>
+<p>Хранение результатов и отчетов испытаний.</p>
+</div>
+
+<div class="card">
+<h3>🧰 Machine Records</h3>
+<p>Учет испытательных машин и оборудования.</p>
+</div>
+
+<div class="card">
+<h3>💾 Backup</h3>
+<p>Резервное сохранение данных испытаний.</p>
+</div>
+
+<div class="card">
+<h3>📝 Audit Trail</h3>
+<p>Регистрация действий пользователей.</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+
+<div class="warning">
+
+⚠️ <b>Важно:</b>
+эта страница является демонстрационной частью WORKER PRO.
+Реальные испытания на растяжение должны выполняться по применимой
+методике и с учетом типа материала, формы образца, оборудования,
+условий испытания, измерительной системы и квалификации персонала.
+Демонстрационные значения не являются сертифицированными результатами.
+
+</div>
+
+</section>
+
+<section class="section links">
+
+<h2>🔗 Related WORKER PRO Sections</h2>
+
+<a href="../index.html">🏠 Main</a>
+<a href="../mechanical-testing/index.html">⚙️ Mechanical Testing</a>
+<a href="../material-testing/index.html">🧱 Material Testing</a>
+<a href="../laboratory-testing/index.html">🔬 Laboratory Testing</a>
+<a href="../quality-testing/index.html">🧪 Quality Testing</a>
+<a href="../quality-inspection/index.html">🔍 Quality Inspection</a>
+<a href="../quality-control/index.html">🛡️ Quality Control</a>
+<a href="../quality-planning/index.html">📋 Quality Planning</a>
+<a href="../quality-assurance/index.html">✅ Quality Assurance</a>
+<a href="../quality-management-system/index.html">🏆 QMS</a>
+<a href="../measurement-system-analysis/index.html">📏 MSA</a>
+<a href="../process-capability-analysis/index.html">📐 Process Capability</a>
+<a href="../statistical-process-control/index.html">📊 SPC</a>
+<a href="../production/index.html">🏭 Production</a>
+<a href="../equipment/index.html">⚙️ Equipment</a>
+<a href="../sensors/index.html">📡 Sensors</a>
+<a href="../maintennances/index.html">🔧 Maintenance</a>
+<a href="../safety/index.html">🦺 Safety</a>
+<a href="../training/index.html">🎓 Training</a>
+<a href="../specialists/index.html">👷 Specialists</a>
+<a href="../companies/index.html">🏢 Companies</a>
+<a href="../suppliers/index.html">🚚 Suppliers</a>
+<a href="../orders/index.html">📦 Orders</a>
+<a href="../logistics/index.html">🚛 Logistics</a>
+<a href="../tracking/index.html">📍 Tracking</a>
+<a href="../warehouses/index.html">🏬 Warehouses</a>
+<a href="../dashboard/index.html">📊 Dashboard</a>
+
+</section>
+
+</main>
+
+<footer>
+<strong>WORKER PRO</strong>
+<p>Глобальная промышленная платформа</p>
+<p>© 2026 WORKER PRO — F.S.</p>
+</footer>
+
+<script>
+
+function filterRows(){
+
+const search=
+document.getElementById("search").value.toLowerCase();
+
+const status=
+document.getElementById("statusFilter").value;
+
+document.querySelectorAll("#labTable tbody tr").forEach(row=>{
+
+const text=row.innerText.toLowerCase();
+
+const rowStatus=
+row.cells[4].innerText.trim();
+
+row.style.display=
+text.includes(search) &&
+(status==="all" || rowStatus===status)
+? ""
+: "none";
+
+});
+
+}
+
+function runDemo(id){
+
+const messages={
+
+sample:
+"📦 Demo: tensile test sample prepared. No physical sample was tested.",
+
+test:
+"↔️ Demo: tensile testing started. No real machine was operated.",
+
+analysis:
+"📊 Demo: test analysis completed. No certified result was generated.",
+
+report:
+"📄 Demo: tensile test report record created."
+
+};
+
+const el=document.getElementById(id);
+
+el.textContent=messages[id];
+
+el.style.display="block";
+
+}
+
+function addSystem(type){
+
+const el=document.getElementById("addResult");
+
+el.textContent=
+"➕ Demo: selected tensile testing system — "+type;
+
+el.style.display="block";
+
+}
+
+</script>
+
+</body>
+</html>
