@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Quality Testing</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#123}
+.top-languages{background:#063d25;padding:10px;text-align:center}
+.top-languages a{display:inline-block;margin:4px;padding:9px 13px;background:#0b6b3d;color:white;text-decoration:none;border-radius:8px;font-weight:bold;font-size:13px}
+.top-languages a:hover{background:#b7ff35;color:#063d25}
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;text-align:center;padding:28px 15px}
+.logo{font-size:30px;font-weight:bold}
+.subtitle{color:#b7ff35;margin-top:8px;font-weight:bold}
+.container{max-width:1100px;margin:auto;padding:20px}
+.hero,.section,.stat{background:white;border-radius:15px;padding:22px;margin-bottom:20px;box-shadow:0 3px 12px #0000000d}
+.hero h1,.section h2{color:#063d25;margin-top:0}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.tag{background:#e4f5e9;color:#063d25;padding:8px 12px;border-radius:20px;font-size:13px;font-weight:bold}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:14px;margin-bottom:20px}
+.stat{text-align:center;margin:0}
+.stat strong{display:block;font-size:27px;color:#0b6b3d}
+.stat span{font-size:14px;color:#555}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:#f8fbf9;border-left:5px solid #0b6b3d;border-radius:10px;padding:16px}
+.card h3{margin-top:0;color:#063d25}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.flow-item{background:#0b6b3d;color:white;padding:14px 8px;text-align:center;border-radius:9px;font-weight:bold}
+.search-box{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+input,select{padding:12px;border:1px solid #ccc;border-radius:8px;min-width:180px;flex:1}
+button{border:0;background:#0b6b3d;color:white;padding:11px 15px;border-radius:8px;cursor:pointer;font-weight:bold}
+button:hover{background:#063d25}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th{background:#063d25;color:white;text-align:left;padding:12px}
+td{padding:12px;border-bottom:1px solid #ddd}
+.status{display:inline-block;background:#dff4e5;color:#086331;padding:5px 9px;border-radius:15px;font-size:12px;font-weight:bold}
+.progress{height:12px;background:#e1e8e3;border-radius:10px;overflow:hidden;margin:8px 0 18px}
+.progress div{height:100%;background:#0b6b3d}
+.result{display:none;margin-top:12px;padding:12px;background:#eaf7ed;border-radius:8px;color:#063d25;font-weight:bold}
+.warning{background:#fff8df;border-left:5px solid #d99b00;padding:15px;border-radius:8px}
+.links a{display:inline-block;background:#e4f5e9;color:#063d25;text-decoration:none;padding:10px 12px;border-radius:8px;margin:4px;font-weight:bold}
+footer{background:#063d25;color:white;text-align:center;padding:25px;margin-top:30px}
+footer a{color:#b7ff35}
+@media(max-width:600px){.logo{font-size:24px}.container{padding:12px}.hero,.section{padding:16px}}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+<a href="#">AZ</a>
+<a href="#">RU</a>
+<a href="#">EN</a>
+<a href="#">TR</a>
+<a href="#">DE</a>
+<a href="#">AR</a>
+<a href="#">ES</a>
+<a href="#">FR</a>
+<a href="#">IT</a>
+</div>
+
+<header>
+<div class="logo">WORKER PRO</div>
+<div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+<h1>🧪 Quality Testing</h1>
+<p>
+Система промышленных испытаний и проверки качества материалов,
+компонентов и готовой продукции. Раздел объединяет лабораторные
+испытания, механические и физические тесты, анализ результатов
+и контроль соответствия техническим требованиям.
+</p>
+<div class="tags">
+<span class="tag">Quality Testing</span>
+<span class="tag">Laboratory Testing</span>
+<span class="tag">Material Testing</span>
+<span class="tag">Mechanical Testing</span>
+<span class="tag">Product Testing</span>
+<span class="tag">Non-Destructive Testing</span>
+<span class="tag">Test Reports</span>
+<span class="tag">Compliance</span>
+</div>
+</section>
+
+<section class="stats">
+<div class="stat"><strong>248</strong><span>Testing Systems</span></div>
+<div class="stat"><strong>12,480</strong><span>Test Records</span></div>
+<div class="stat"><strong>126</strong><span>Connected Laboratories</span></div>
+<div class="stat"><strong>98.2%</strong><span>Test Data Completeness</span></div>
+</section>
+
+<section class="section">
+<h2>🔄 Testing Process</h2>
+<div class="flow">
+<div class="flow-item">📦 Sample</div>
+<div class="flow-item">📋 Test Plan</div>
+<div class="flow-item">🔬 Preparation</div>
+<div class="flow-item">🧪 Testing</div>
+<div class="flow-item">📊 Measurement</div>
+<div class="flow-item">📈 Analysis</div>
+<div class="flow-item">✅ Evaluation</div>
+<div class="flow-item">📄 Test Report</div>
+</div>
+</section>
+
+<section class="section">
+<h2>🧰 Testing Categories</h2>
+<div class="grid">
+<div class="card"><h3>🔩 Mechanical Testing</h3><p>Испытания прочности, твердости, растяжения и механических характеристик материалов.</p></div>
+<div class="card"><h3>🧱 Material Testing</h3><p>Проверка свойств металлов, сплавов, полимеров и других производственных материалов.</p></div>
+<div class="card"><h3>🌡️ Thermal Testing</h3><p>Исследование поведения материалов и компонентов при температурных воздействиях.</p></div>
+<div class="card"><h3>⚡ Electrical Testing</h3><p>Проверка электрических параметров, изоляции и характеристик электрических компонентов.</p></div>
+<div class="card"><h3>🔍 Non-Destructive Testing</h3><p>Контроль изделий без разрушения с использованием подходящих методов неразрушающего контроля.</p></div>
+<div class="card"><h3>📦 Product Testing</h3><p>Проверка функциональности, характеристик и соответствия готовой продукции установленным требованиям.</p></div>
+</div>
+</section>
+
+<section class="section">
+<h2>🌍 Testing Laboratories</h2>
+
+<div class="search-box">
+<input id="search" type="text" placeholder="Поиск лаборатории..." oninput="filterRows()">
+<select id="statusFilter" onchange="filterRows()">
+<option value="all">Все статусы</option>
+<option value="Online">Online</option>
+<option value="Review">Review</option>
+<option value="Testing">Testing</option>
+</select>
+</div>
+
+<div class="table-wrap">
+<table id="labTable">
+<thead>
+<tr>
+<th>Laboratory</th>
+<th>Country</th>
+<th>Testing Type</th>
+<th>Test Records</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Baku Materials Laboratory</td><td>Azerbaijan</td><td>Material Testing</td><td>1,240</td><td><span class="status">Online</span></td></tr>
+<tr><td>Sumqayit Mechanical Lab</td><td>Azerbaijan</td><td>Mechanical Testing</td><td>980</td><td><span class="status">Testing</span></td></tr>
+<tr><td>Istanbul Industrial Laboratory</td><td>Turkey</td><td>Product Testing</td><td>1,480</td><td><span class="status">Online</span></td></tr>
+<tr><td>Dortmund Precision Lab</td><td>Germany</td><td>Dimensional Testing</td><td>1,620</td><td><span class="status">Online</span></td></tr>
+<tr><td>Milan Materials Lab</td><td>Italy</td><td>Material Analysis</td><td>860</td><td><span class="status">Review</span></td></tr>
+<tr><td>Shanghai Industrial Testing Lab</td><td>China</td><td>Product Testing</td><td>1,920</td><td><span class="status">Online</span></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="section">
+<h2>📊 Testing Performance</h2>
+
+<p><b>Test Data Completeness — 98.2%</b></p>
+<div class="progress"><div style="width:98.2%"></div></div>
+
+<p><b>Test Plan Coverage — 96.8%</b></p>
+<div class="progress"><div style="width:96.8%"></div></div>
+
+<p><b>Report Completion — 97.4%</b></p>
+<div class="progress"><div style="width:97.4%"></div></div>
+
+<p><b>Equipment Record Coverage — 99.1%</b></p>
+<div class="progress"><div style="width:99.1%"></div></div>
+</section>
+
+<section class="section">
+<h2>🧪 Testing Demo</h2>
+<div class="grid">
+
+<div class="card">
+<h3>🔩 Mechanical Test</h3>
+<p>Демонстрация регистрации механического испытания.</p>
+<button onclick="runTest('mechanical')">Run Test</button>
+<div class="result" id="mechanical"></div>
+</div>
+
+<div class="card">
+<h3>🧱 Material Test</h3>
+<p>Демонстрация проверки материала.</p>
+<button onclick="runTest('material')">Run Test</button>
+<div class="result" id="material"></div>
+</div>
+
+<div class="card">
+<h3>🌡️ Thermal Test</h3>
+<p>Демонстрация температурного испытания.</p>
+<button onclick="runTest('thermal')">Run Test</button>
+<div class="result" id="thermal"></div>
+</div>
+
+<div class="card">
+<h3>📦 Product Test</h3>
+<p>Демонстрация тестирования готовой продукции.</p>
+<button onclick="runTest('product')">Run Test</button>
+<div class="result" id="product"></div>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>➕ Add Testing System</h2>
+
+<div class="grid">
+<button onclick="addTest('Mechanical Testing')">🔩 Mechanical Testing</button>
+<button onclick="addTest('Material Testing')">🧱 Material Testing</button>
+<button onclick="addTest('Thermal Testing')">🌡️ Thermal Testing</button>
+<button onclick="addTest('Electrical Testing')">⚡ Electrical Testing</button>
+<button onclick="addTest('Non-Destructive Testing')">🔍 Non-Destructive Testing</button>
+<button onclick="addTest('Product Testing')">📦 Product Testing</button>
+</div>
+
+<div id="addResult" class="result"></div>
+</section>
+
+<section class="section">
+<h2>🏭 Industrial Applications</h2>
+<div class="grid">
+<div class="card"><h3>🏗️ Metal Production</h3><p>Испытания металлов и сплавов для промышленного производства.</p></div>
+<div class="card"><h3>⚙️ CNC Manufacturing</h3><p>Проверка характеристик деталей и компонентов после обработки.</p></div>
+<div class="card"><h3>🔨 Stamping</h3><p>Испытания материалов и изделий после штамповки.</p></div>
+<div class="card"><h3>🔥 Heat Treatment</h3><p>Контроль свойств материалов после термической обработки.</p></div>
+<div class="card"><h3>🛢️ Oil & Gas</h3><p>Испытания материалов и оборудования для нефтегазовой отрасли.</p></div>
+<div class="card"><h3>🚚 Industrial Supply</h3><p>Проверка качества поставляемых материалов и компонентов.</p></div>
+</div>
+</section>
+
+<section class="section">
+<h2>🔐 Testing Data & Traceability</h2>
+<div class="grid">
+<div class="card"><h3>🔑 Access Control</h3><p>Управление доступом к результатам испытаний.</p></div>
+<div class="card"><h3>📄 Test Reports</h3><p>Регистрация и хранение отчетов об испытаниях.</p></div>
+<div class="card"><h3>🔗 Traceability</h3><p>Связь результатов с образцом, партией и заказом.</p></div>
+<div class="card"><h3>🧰 Equipment Records</h3><p>Учет оборудования и записей о его проверке.</p></div>
+<div class="card"><h3>💾 Backup</h3><p>Резервное сохранение результатов и документов.</p></div>
+<div class="card"><h3>📝 Audit Trail</h3><p>Регистрация изменений и действий пользователей.</p></div>
+</div>
+</section>
+
+<section class="section">
+<div class="warning">
+⚠️ <b>Важно:</b> эта страница является демонстрационной частью WORKER PRO.
+Реальные испытания должны проводиться по подходящим методикам,
+с использованием исправного и проверенного оборудования,
+квалифицированным персоналом и с учетом требований к конкретному изделию.
+Приведенные показатели и лаборатории являются демонстрационными.
+</div>
+</section>
+
+<section class="section links">
+<h2>🔗 Related WORKER PRO Sections</h2>
+<a href="../index.html">🏠 Main</a>
+<a href="../quality-inspection/index.html">🔍 Quality Inspection</a>
+<a href="../quality-control/index.html">🛡️ Quality Control</a>
+<a href="../quality-planning/index.html">📋 Quality Planning</a>
+<a href="../quality-assurance/index.html">✅ Quality Assurance</a>
+<a href="../quality-management-system/index.html">🏆 QMS</a>
+<a href="../measurement-system-analysis/index.html">📏 MSA</a>
+<a href="../process-capability-analysis/index.html">📐 Process Capability</a>
+<a href="../statistical-process-control/index.html">📊 SPC</a>
+<a href="../production/index.html">🏭 Production</a>
+<a href="../equipment/index.html">⚙️ Equipment</a>
+<a href="../sensors/index.html">📡 Sensors</a>
+<a href="../maintennances/index.html">🔧 Maintenance</a>
+<a href="../safety/index.html">🦺 Safety</a>
+<a href="../training/index.html">🎓 Training</a>
+<a href="../specialists/index.html">👷 Specialists</a>
+<a href="../companies/index.html">🏢 Companies</a>
+<a href="../suppliers/index.html">🚚 Suppliers</a>
+<a href="../orders/index.html">📦 Orders</a>
+<a href="../logistics/index.html">🚛 Logistics</a>
+<a href="../tracking/index.html">📍 Tracking</a>
+<a href="../warehouses/index.html">🏬 Warehouses</a>
+<a href="../dashboard/index.html">📊 Dashboard</a>
+</section>
+
+</main>
+
+<footer>
+<strong>WORKER PRO</strong>
+<p>Глобальная промышленная платформа</p>
+<p>© 2026 WORKER PRO — F.S.</p>
+</footer>
+
+<script>
+function filterRows(){
+    const search=document.getElementById("search").value.toLowerCase();
+    const status=document.getElementById("statusFilter").value;
+    document.querySelectorAll("#labTable tbody tr").forEach(row=>{
+        const text=row.innerText.toLowerCase();
+        const rowStatus=row.cells[4].innerText.trim();
+        row.style.display=
+            text.includes(search) &&
+            (status==="all" || rowStatus===status)
+            ? "" : "none";
+    });
+}
+
+function runTest(id){
+    const messages={
+        mechanical:"🔩 Demo: mechanical test record created. Actual test results are not measured.",
+        material:"🧱 Demo: material test record created. Actual material properties are not measured.",
+        thermal:"🌡️ Demo: thermal test record created. No real temperature test was performed.",
+        product:"📦 Demo: product test record created. Actual product conformity is not verified."
+    };
+    const el=document.getElementById(id);
+    el.textContent=messages[id];
+    el.style.display="block";
+}
+
+function addTest(type){
+    const el=document.getElementById("addResult");
+    el.textContent="➕ Demo: selected testing system — "+type;
+    el.style.display="block";
+}
+</script>
+
+</body>
+</html>
