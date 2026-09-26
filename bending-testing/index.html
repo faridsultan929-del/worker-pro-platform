@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Bending Testing</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    text-align:center;
+}
+
+.top-languages a{
+    display:inline-block;
+    margin:4px;
+    padding:8px 12px;
+    border-radius:8px;
+    background:#0b6b3d;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.top-languages a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+header{
+    background:#0b6b3d;
+    color:white;
+    padding:28px 15px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    font-size:32px;
+}
+
+header p{
+    margin:10px 0 0;
+    font-size:17px;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    border-radius:16px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.tag{
+    display:inline-block;
+    background:#e7f5ec;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    font-size:13px;
+    text-decoration:none;
+}
+
+.tag:hover{
+    background:#b7ff35;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:7px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top:15px;
+}
+
+.flow-item{
+    background:#063d25;
+    color:white;
+    padding:11px 14px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.search-box{
+    width:100%;
+    padding:13px;
+    border:2px solid #d7e5dc;
+    border-radius:10px;
+    font-size:16px;
+    margin-bottom:15px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+th,td{
+    padding:12px;
+    border-bottom:1px solid #e4ece7;
+    text-align:left;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:15px;
+    background:#dff5e7;
+    color:#063d25;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.progress{
+    background:#e3ebe6;
+    height:12px;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:11px 16px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:4px;
+}
+
+button:hover{
+    background:#063d25;
+}
+
+.notice{
+    background:#fff8d8;
+    border-left:5px solid #b7ff35;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+footer a{
+    color:#b7ff35;
+    text-decoration:none;
+}
+
+@media(max-width:600px){
+    header h1{
+        font-size:25px;
+    }
+
+    .container{
+        padding:12px;
+    }
+
+    th,td{
+        font-size:13px;
+        padding:9px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <a href="#">AZ</a>
+    <a href="#">RU</a>
+    <a href="#">EN</a>
+    <a href="#">TR</a>
+    <a href="#">DE</a>
+    <a href="#">AR</a>
+    <a href="#">ES</a>
+    <a href="#">FR</a>
+    <a href="#">IT</a>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Global Industrial Platform — Bending Testing</p>
+</header>
+
+<div class="container">
+
+<section class="hero">
+    <h2>↪️ Bending Testing</h2>
+
+    <p>
+        Демонстрационная промышленная система WORKER PRO
+        для испытаний материалов и изделий на изгиб.
+        Платформа объединяет образцы, испытательные машины,
+        нагрузку, деформацию, измерения, анализ и отчёты.
+    </p>
+
+    <div class="tags">
+        <span class="tag">Bending Testing</span>
+        <span class="tag">Bending Strength</span>
+        <span class="tag">Flexural Strength</span>
+        <span class="tag">Load</span>
+        <span class="tag">Deflection</span>
+        <span class="tag">Strain</span>
+        <span class="tag">Test Machine</span>
+        <span class="tag">Test Report</span>
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat">
+        <strong>158</strong>
+        Bending Test Systems
+    </div>
+
+    <div class="stat">
+        <strong>7,920</strong>
+        Bending Tests
+    </div>
+
+    <div class="stat">
+        <strong>72</strong>
+        Connected Laboratories
+    </div>
+
+    <div class="stat">
+        <strong>98.0%</strong>
+        Test Record Completeness
+    </div>
+</section>
+
+<section class="hero">
+    <h2>🔄 Bending Testing Workflow</h2>
+
+    <div class="flow">
+        <div class="flow-item">Sample</div>
+        <div class="arrow">→</div>
+        <div class="flow-item">Sample ID</div>
+        <div class="arrow">→</div>
+        <div class="flow-item">Dimensions</div>
+        <div class="arrow">→</div>
+        <div class="flow-item">Setup</div>
+        <div class="arrow">→</div>
+        <div class="flow-item">Loading</div>
+        <div class="arrow">→</div>
+        <div class="flow-item">Deflection</div>
+        <div class="arrow">→</div>
+        <div class="flow-item">Analysis</div>
+        <div class="arrow">→</div>
+        <div class="flow-item">Report</div>
+    </div>
+</section>
+
+<section class="hero">
+    <h2>📐 Main Test Parameters</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Bending Strength</h3>
+            <p>
+                Определение способности материала выдерживать
+                нагрузку при изгибе.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Flexural Strength</h3>
+            <p>
+                Определение предельной прочности материала
+                при изгибающей нагрузке.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Maximum Load</h3>
+            <p>
+                Максимальная нагрузка, зарегистрированная
+                во время демонстрационного испытания.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Deflection</h3>
+            <p>
+                Измерение перемещения образца под действием нагрузки.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Strain</h3>
+            <p>
+                Относительная деформация материала во время испытания.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>Test Speed</h3>
+            <p>
+                Скорость приложения нагрузки к образцу.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="hero">
+    <h2>🧪 Demonstration Bending Test</h2>
+
+    <div class="card">
+
+        <h3>Sample: Alloy-AZ-2026-B001</h3>
+
+        <p><b>Material:</b> Alloy Steel</p>
+        <p><b>Sample Width:</b> 20 mm</p>
+        <p><b>Sample Thickness:</b> 10 mm</p>
+        <p><b>Support Span:</b> 100 mm</p>
+        <p><b>Maximum Test Force:</b> 12.8 kN</p>
+        <p><b>Maximum Deflection:</b> 4.6 mm</p>
+
+        <p>
+            <b>Demonstration Result:</b>
+            <span class="status">PASS</span>
+        </p>
+
+        <button onclick="startBending()">
+            Start Bending Test
+        </button>
+
+        <button onclick="analyzeBending()">
+            Analyze Result
+        </button>
+
+        <button onclick="createReport()">
+            Create Report
+        </button>
+
+        <p id="demoResult"></p>
+
+    </div>
+</section>
+
+<section class="hero">
+    <h2>🏭 Bending Testing Laboratories</h2>
+
+    <input
+        class="search-box"
+        type="text"
+        id="labSearch"
+        placeholder="Поиск лаборатории, страны или материала..."
+        onkeyup="filterLabs()"
+    >
+
+    <table id="labTable">
+
+        <thead>
+            <tr>
+                <th>Laboratory</th>
+                <th>Country</th>
+                <th>Material</th>
+                <th>Tests</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr>
+                <td>Baku Bending Laboratory</td>
+                <td>Azerbaijan</td>
+                <td>Steel</td>
+                <td>1,060</td>
+                <td><span class="status">Online</span></td>
+            </tr>
+
+            <tr>
+                <td>Sumqayit Materials Lab</td>
+                <td>Azerbaijan</td>
+                <td>Alloy Steel</td>
+                <td>860</td>
+                <td><span class="status">Testing</span></td>
+            </tr>
+
+            <tr>
+                <td>Istanbul Industrial Lab</td>
+                <td>Turkey</td>
+                <td>Aluminium</td>
+                <td>1,180</td>
+                <td><span class="status">Online</span></td>
+            </tr>
+
+            <tr>
+                <td>Dortmund Precision Lab</td>
+                <td>Germany</td>
+                <td>Engineering Steel</td>
+                <td>1,430</td>
+                <td><span class="status">Online</span></td>
+            </tr>
+
+            <tr>
+                <td>Milan Materials Lab</td>
+                <td>Italy</td>
+                <td>Composite</td>
+                <td>720</td>
+                <td><span class="status">Review</span></td>
+            </tr>
+
+            <tr>
+                <td>Shanghai Industrial Lab</td>
+                <td>China</td>
+                <td>Industrial Steel</td>
+                <td>1,670</td>
+                <td><span class="status">Online</span></td>
+            </tr>
+
+        </tbody>
+    </table>
+</section>
+
+<section class="hero">
+    <h2>📊 Testing Performance</h2>
+
+    <div class="card">
+        <b>Test Record Completeness — 98.0%</b>
+        <div class="progress">
+            <span style="width:98%"></span>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card">
+        <b>Sample Traceability — 97.6%</b>
+        <div class="progress">
+            <span style="width:97.6%"></span>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card">
+        <b>Report Completion — 96.9%</b>
+        <div class="progress">
+            <span style="width:96.9%"></span>
+        </div>
+    </div>
+
+    <br>
+
+    <div class="card">
+        <b>Equipment Record Coverage — 98.9%</b>
+        <div class="progress">
+            <span style="width:98.9%"></span>
+        </div>
+    </div>
+</section>
+
+<section class="hero">
+    <h2>➕ Add Bending Testing Systems</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Steel Bending Testing</h3>
+            <button onclick="addSystem('Steel Bending Testing')">
+                Add System
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>Aluminium Bending Testing</h3>
+            <button onclick="addSystem('Aluminium Bending Testing')">
+                Add System
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>Polymer Bending Testing</h3>
+            <button onclick="addSystem('Polymer Bending Testing')">
+                Add System
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>Composite Bending Testing</h3>
+            <button onclick="addSystem('Composite Bending Testing')">
+                Add System
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>Wood Bending Testing</h3>
+            <button onclick="addSystem('Wood Bending Testing')">
+                Add System
+            </button>
+        </div>
+
+        <div class="card">
+            <h3>Automated Bending Testing</h3>
+            <button onclick="addSystem('Automated Bending Testing')">
+                Add System
+            </button>
+        </div>
+
+    </div>
+
+    <p id="addResult"></p>
+</section>
+
+<section class="hero">
+    <h2>🏗️ Industrial Applications</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>⚙️ CNC Manufacturing</h3>
+            <p>
+                Контроль механических свойств металлических
+                деталей и компонентов.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🔩 Stamping</h3>
+            <p>
+                Проверка материалов после операций штамповки
+                и формования.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🔥 Heat Treatment</h3>
+            <p>
+                Контроль изменения свойств материалов после
+                термической обработки.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🛢️ Oil & Gas</h3>
+            <p>
+                Испытания материалов и компонентов
+                промышленного оборудования.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>⛏️ Mining</h3>
+            <p>
+                Контроль материалов горного оборудования
+                и конструкций.
+            </p>
+        </div>
+
+        <div class="card">
+            <h3>🏭 Heavy Industry</h3>
+            <p>
+                Испытания тяжёлых промышленных конструкций
+                и компонентов.
+            </p>
+        </div>
+
+    </div>
+</section>
+
+<section class="hero">
+    <h2>🔐 Data Security & Traceability</h2>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Access Control</h3>
+            <p>Контроль доступа пользователей.</p>
+        </div>
+
+        <div class="card">
+            <h3>Sample ID</h3>
+            <p>Уникальная идентификация каждого образца.</p>
+        </div>
+
+        <div class="card">
+            <h3>Test Reports</h3>
+            <p>Сохранение результатов испытаний.</p>
+        </div>
+
+        <div class="card">
+            <h3>Machine Records</h3>
+            <p>История испытательного оборудования.</p>
+        </div>
+
+        <div class="card">
+            <h3>Backup</h3>
+            <p>Резервное хранение данных.</p>
+        </div>
+
+        <div class="card">
+            <h3>Audit Trail</h3>
+            <p>История изменений и действий пользователей.</p>
+        </div>
+
+    </div>
+</section>
+
+<section class="notice">
+    <b>⚠️ Важно:</b>
+    эта страница является демонстрационным интерфейсом WORKER PRO.
+    Реальные испытания на изгиб должны выполняться по применимым
+    стандартам и методикам с учётом материала, геометрии образца,
+    типа испытания, оборудования, условий испытания, измерительной
+    системы и квалификации персонала.
+</section>
+
+<section class="hero">
+    <h2>🔗 Related WORKER PRO Sections</h2>
+
+    <div class="tags">
+
+        <a class="tag" href="../index.html">Main</a>
+
+        <a class="tag" href="../mechanical-testing/index.html">
+            Mechanical Testing
+        </a>
+
+        <a class="tag" href="../material-testing/index.html">
+            Material Testing
+        </a>
+
+        <a class="tag" href="../laboratory-testing/index.html">
+            Laboratory Testing
+        </a>
+
+        <a class="tag" href="../tensile-testing/index.html">
+            Tensile Testing
+        </a>
+
+        <a class="tag" href="../compression-testing/index.html">
+            Compression Testing
+        </a>
+
+        <a class="tag" href="../quality-control/index.html">
+            Quality Control
+        </a>
+
+        <a class="tag" href="../quality-inspection/index.html">
+            Quality Inspection
+        </a>
+
+        <a class="tag" href="../quality-planning/index.html">
+            Quality Planning
+        </a>
+
+        <a class="tag" href="../quality-assurance/index.html">
+            Quality Assurance
+        </a>
+
+        <a class="tag" href="../quality-management-system/index.html">
+            QMS
+        </a>
+
+        <a class="tag" href="../measurement-system-analysis/index.html">
+            MSA
+        </a>
+
+        <a class="tag" href="../process-capability-analysis/index.html">
+            Process Capability
+        </a>
+
+        <a class="tag" href="../statistical-process-control/index.html">
+            SPC
+        </a>
+
+        <a class="tag" href="../production/index.html">
+            Production
+        </a>
+
+        <a class="tag" href="../equipment/index.html">
+            Equipment
+        </a>
+
+        <a class="tag" href="../sensors/index.html">
+            Sensors
+        </a>
+
+        <a class="tag" href="../maintennances/index.html">
+            Maintenance
+        </a>
+
+        <a class="tag" href="../safety/index.html">
+            Safety
+        </a>
+
+        <a class="tag" href="../training/index.html">
+            Training
+        </a>
+
+        <a class="tag" href="../specialists/index.html">
+            Specialists
+        </a>
+
+        <a class="tag" href="../companies/index.html">
+            Companies
+        </a>
+
+        <a class="tag" href="../suppliers/index.html">
+            Suppliers
+        </a>
+
+        <a class="tag" href="../orders/index.html">
+            Orders
+        </a>
+
+        <a class="tag" href="../logistics/index.html">
+            Logistics
+        </a>
+
+        <a class="tag" href="../tracking/index.html">
+            Tracking
+        </a>
+
+        <a class="tag" href="../warehouses/index.html">
+            Warehouses
+        </a>
+
+        <a class="tag" href="../dashboard/index.html">
+            Dashboard
+        </a>
+
+    </div>
+</section>
+
+</div>
+
+<footer>
+    <strong>WORKER PRO</strong>
+    <p>Global Industrial Platform</p>
+    <p>Production • Technology • Quality • Logistics • Industry</p>
+    <p>© 2026 WORKER PRO — F.S.</p>
+</footer>
+
+<script>
+
+function filterLabs(){
+
+    const input =
+        document.getElementById("labSearch");
+
+    const filter =
+        input.value.toLowerCase();
+
+    const rows =
+        document.querySelectorAll(
+            "#labTable tbody tr"
+        );
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        row.style.display =
+            text.includes(filter) ? "" : "none";
+
+    });
+}
+
+function startBending(){
+
+    document.getElementById("demoResult").innerHTML =
+        "↪️ Bending test started. Demonstration load and deflection data are being recorded...";
+
+}
+
+function analyzeBending(){
+
+    document.getElementById("demoResult").innerHTML =
+        "📊 Analysis completed. Demonstration result: <b>PASS</b> — bending data recorded.";
+
+}
+
+function createReport(){
+
+    document.getElementById("demoResult").innerHTML =
+        "📄 Demonstration bending test report created successfully.";
+
+}
+
+function addSystem(name){
+
+    document.getElementById("addResult").innerHTML =
+        "✅ System added to demonstration list: <b>" +
+        name +
+        "</b>";
+
+}
+
+</script>
+
+</body>
+</html>
