@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Environmental Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top{
+    background:#063d25;
+    color:white;
+    padding:18px 12px;
+    position:sticky;
+    top:0;
+    z-index:1000;
+    box-shadow:0 3px 12px rgba(0,0,0,.2);
+}
+
+.logo{
+    text-align:center;
+    font-size:28px;
+    font-weight:bold;
+}
+
+.subtitle{
+    text-align:center;
+    color:#b7ff35;
+    margin:5px 0 14px;
+}
+
+.languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+}
+
+.languages button{
+    border:0;
+    padding:8px 12px;
+    border-radius:8px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px 14px 40px;
+}
+
+.hero{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    border-radius:18px;
+    padding:30px 22px;
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    margin:0 0 12px;
+    font-size:34px;
+}
+
+.hero p{
+    max-width:850px;
+    margin:auto;
+    line-height:1.6;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    margin-top:18px;
+}
+
+.tag{
+    background:#b7ff35;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:14px;
+    margin-bottom:20px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    padding:20px;
+    box-shadow:0 4px 14px rgba(0,0,0,.08);
+}
+
+.card h2,
+.card h3{
+    color:#063d25;
+    margin-top:0;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+    margin-bottom:6px;
+}
+
+.section-title{
+    background:#063d25;
+    color:white;
+    padding:14px 18px;
+    border-radius:12px;
+    margin:25px 0 14px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+}
+
+.step{
+    background:#e7f4eb;
+    border:2px solid #0b6b3d;
+    color:#063d25;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.arrow{
+    font-size:22px;
+    color:#0b6b3d;
+    font-weight:bold;
+}
+
+.method{
+    border-left:5px solid #0b6b3d;
+}
+
+.demo-box{
+    background:#f0f8f2;
+    border:1px solid #c9dfd0;
+    border-radius:12px;
+    padding:16px;
+    margin-top:12px;
+}
+
+.search-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+input,
+select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #b8cfc0;
+    border-radius:9px;
+    font-size:15px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    border-radius:9px;
+    padding:12px 18px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:4px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.lab{
+    transition:.2s;
+}
+
+.lab.hidden{
+    display:none;
+}
+
+.progress{
+    background:#dfe9e2;
+    border-radius:20px;
+    overflow:hidden;
+    height:15px;
+    margin:8px 0 15px;
+}
+
+.bar{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:10px;
+}
+
+.table th,
+.table td{
+    border-bottom:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+}
+
+.table th{
+    background:#e7f4eb;
+    color:#063d25;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #d89d00;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+.security{
+    background:#063d25;
+    color:white;
+    border-radius:15px;
+    padding:20px;
+}
+
+.security-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+}
+
+.security-item{
+    background:#0b6b3d;
+    padding:12px;
+    border-radius:9px;
+    text-align:center;
+}
+
+.related{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+}
+
+.related a{
+    color:#0b6b3d;
+    font-weight:bold;
+    text-decoration:none;
+    background:#e7f4eb;
+    padding:10px 14px;
+    border-radius:9px;
+}
+
+.related a:hover{
+    text-decoration:underline;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    .hero h1{font-size:27px}
+    .arrow{display:none}
+    .table{font-size:13px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="top">
+
+    <div class="logo">WORKER PRO</div>
+
+    <div class="subtitle">
+        Глобальная промышленная платформа
+    </div>
+
+    <div class="languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+
+<main class="container">
+
+<section class="hero">
+
+    <h1>🌍 Environmental Testing</h1>
+
+    <p>
+        Промышленная система экологических и климатических испытаний
+        материалов, компонентов и оборудования. Проверка работы изделий
+        при воздействии температуры, влажности, воды, пыли, песка,
+        ультрафиолета и циклических условий окружающей среды.
+    </p>
+
+    <div class="tags">
+        <span class="tag">Environmental Testing</span>
+        <span class="tag">Temperature</span>
+        <span class="tag">Thermal Cycling</span>
+        <span class="tag">Humidity</span>
+        <span class="tag">Water</span>
+        <span class="tag">Dust & Sand</span>
+        <span class="tag">UV</span>
+        <span class="tag">Weathering</span>
+    </div>
+
+</section>
+
+
+<div class="grid">
+
+    <div class="card stat">
+        <strong>148</strong>
+        Environmental Test Systems
+    </div>
+
+    <div class="card stat">
+        <strong>8,760</strong>
+        Environmental Tests
+    </div>
+
+    <div class="card stat">
+        <strong>72</strong>
+        Connected Laboratories
+    </div>
+
+    <div class="card stat">
+        <strong>98.2%</strong>
+        Test Record Completeness
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔄 Environmental Testing Workflow</h2>
+
+<div class="card">
+
+    <div class="flow">
+
+        <div class="step">Sample</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Sample ID</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Initial Inspection</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Environment Setup</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Exposure</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Measurement</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Analysis</div>
+        <div class="arrow">→</div>
+
+        <div class="step">Report</div>
+
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🧪 Environmental Test Methods</h2>
+
+<div class="grid">
+
+    <div class="card method">
+        <h3>🌡️ Temperature Testing</h3>
+        <p>
+            Проверка оборудования при высоких и низких температурах.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>❄️ Thermal Cycling</h3>
+        <p>
+            Циклическое изменение температуры для оценки устойчивости изделий.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>💧 Humidity Testing</h3>
+        <p>
+            Проверка материалов и компонентов при высокой влажности.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>🌧️ Water & Moisture</h3>
+        <p>
+            Испытания при воздействии воды, влаги и конденсации.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>🌪️ Dust & Sand</h3>
+        <p>
+            Проверка оборудования в условиях пыли, песка и загрязнения.
+        </p>
+    </div>
+
+    <div class="card method">
+        <h3>☀️ UV / Weathering</h3>
+        <p>
+            Исследование воздействия ультрафиолета и атмосферного старения.
+        </p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">📊 Main Environmental Parameters</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🌡️ Temperature</h3>
+        <p>Температура испытательной камеры и образца.</p>
+    </div>
+
+    <div class="card">
+        <h3>💧 Humidity</h3>
+        <p>Относительная влажность окружающей среды.</p>
+    </div>
+
+    <div class="card">
+        <h3>⏱️ Exposure Time</h3>
+        <p>Продолжительность воздействия окружающей среды.</p>
+    </div>
+
+    <div class="card">
+        <h3>🔄 Cycle Count</h3>
+        <p>Количество температурных или климатических циклов.</p>
+    </div>
+
+    <div class="card">
+        <h3>🌊 Water Exposure</h3>
+        <p>Воздействие воды, влаги и конденсации.</p>
+    </div>
+
+    <div class="card">
+        <h3>☀️ UV Exposure</h3>
+        <p>Интенсивность и продолжительность UV-воздействия.</p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">📈 Environmental Test Demo</h2>
+
+<div class="card">
+
+    <div class="demo-box">
+
+        <h3>Equipment-AZ-2026-E001</h3>
+
+        <table class="table">
+
+            <tr>
+                <th>Equipment</th>
+                <td>Industrial Control Module</td>
+            </tr>
+
+            <tr>
+                <th>Method</th>
+                <td>Thermal Cycling</td>
+            </tr>
+
+            <tr>
+                <th>Temperature Range</th>
+                <td>-20°C → +70°C</td>
+            </tr>
+
+            <tr>
+                <th>Humidity</th>
+                <td>85% RH</td>
+            </tr>
+
+            <tr>
+                <th>Cycles</th>
+                <td>120</td>
+            </tr>
+
+            <tr>
+                <th>Status</th>
+                <td>✅ PASS</td>
+            </tr>
+
+        </table>
+
+        <button class="action" onclick="startEnvironmental()">
+            ▶ Start Environmental Test
+        </button>
+
+        <button class="action" onclick="analyzeEnvironmental()">
+            🔬 Analyze Results
+        </button>
+
+        <button class="action" onclick="createReport()">
+            📄 Create Test Report
+        </button>
+
+        <p id="testResult"></p>
+
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🏭 Environmental Test Laboratories</h2>
+
+<div class="card">
+
+    <div class="search-row">
+
+        <input
+            type="text"
+            id="labSearch"
+            placeholder="Поиск лаборатории..."
+            oninput="filterLabs()"
+        >
+
+        <select
+            id="labCountry"
+            onchange="filterLabs()"
+        >
+
+            <option value="all">Все страны</option>
+            <option value="Azerbaijan">Azerbaijan</option>
+            <option value="Turkey">Turkey</option>
+            <option value="Germany">Germany</option>
+            <option value="Italy">Italy</option>
+            <option value="China">China</option>
+            <option value="USA">USA</option>
+
+        </select>
+
+    </div>
+
+
+    <div class="grid" id="labs">
+
+        <div class="card lab" data-country="Azerbaijan">
+            <h3>🇦🇿 Baku Environmental Lab</h3>
+            <p>Temperature / Humidity / Thermal Cycling</p>
+            <b>98.5%</b>
+        </div>
+
+        <div class="card lab" data-country="Azerbaijan">
+            <h3>🇦🇿 Sumqayit Climate Lab</h3>
+            <p>Water / Dust / Sand</p>
+            <b>97.9%</b>
+        </div>
+
+        <div class="card lab" data-country="Turkey">
+            <h3>🇹🇷 Istanbul Environmental Center</h3>
+            <p>Thermal Cycling / Humidity</p>
+            <b>98.2%</b>
+        </div>
+
+        <div class="card lab" data-country="Germany">
+            <h3>🇩🇪 Dortmund Climate Laboratory</h3>
+            <p>Temperature / UV / Weathering</p>
+            <b>99.1%</b>
+        </div>
+
+        <div class="card lab" data-country="Italy">
+            <h3>🇮🇹 Milan Environmental Lab</h3>
+            <p>Water / Humidity / Thermal Cycling</p>
+            <b>98.7%</b>
+        </div>
+
+        <div class="card lab" data-country="China">
+            <h3>🇨🇳 Shanghai Environmental Lab</h3>
+            <p>Dust / Sand / Temperature</p>
+            <b>98.0%</b>
+        </div>
+
+        <div class="card lab" data-country="USA">
+            <h3>🇺🇸 Houston Environmental Lab</h3>
+            <p>Oil & Gas / Temperature / Humidity</p>
+            <b>98.8%</b>
+        </div>
+
+    </div>
+
+</div>
+
+
+<h2 class="section-title">📊 Laboratory Performance</h2>
+
+<div class="card">
+
+    <p><b>Baku — 98.5%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:98.5%"></div>
+    </div>
+
+    <p><b>Sumqayit — 97.9%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:97.9%"></div>
+    </div>
+
+    <p><b>Istanbul — 98.2%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:98.2%"></div>
+    </div>
+
+    <p><b>Dortmund — 99.1%</b></p>
+    <div class="progress">
+        <div class="bar" style="width:99.1%"></div>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">➕ Add Environmental Test System</h2>
+
+<div class="grid">
+
+    <button class="action" onclick="addSystem('Temperature')">
+        🌡️ Temperature
+    </button>
+
+    <button class="action" onclick="addSystem('Thermal Cycling')">
+        ❄️ Thermal Cycling
+    </button>
+
+    <button class="action" onclick="addSystem('Humidity')">
+        💧 Humidity
+    </button>
+
+    <button class="action" onclick="addSystem('Water')">
+        🌧️ Water
+    </button>
+
+    <button class="action" onclick="addSystem('Dust & Sand')">
+        🌪️ Dust & Sand
+    </button>
+
+    <button class="action" onclick="addSystem('UV Weathering')">
+        ☀️ UV Weathering
+    </button>
+
+</div>
+
+<p id="systemResult"></p>
+
+
+<h2 class="section-title">🏗️ Industrial Applications</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🛢️ Oil & Gas</h3>
+        <p>
+            Оборудование, датчики, панели управления,
+            трубопроводы и промышленные системы.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🚗 Automotive</h3>
+        <p>
+            Электроника, детали, покрытия и автомобильные компоненты.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>✈️ Aerospace</h3>
+        <p>
+            Авиационные компоненты и оборудование для сложных условий.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>⛏️ Mining</h3>
+        <p>
+            Горное оборудование для пыльной, влажной и температурной среды.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🏭 Heavy Industry</h3>
+        <p>
+            Машины, электрика, автоматизация и производственные системы.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>⚙️ Manufacturing</h3>
+        <p>
+            CNC, stamping, sensors, automation и industrial electronics.
+        </p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔐 Security & Traceability</h2>
+
+<section class="security">
+
+    <div class="security-grid">
+
+        <div class="security-item">🔑 Access Control</div>
+        <div class="security-item">🆔 Sample ID</div>
+        <div class="security-item">🌡️ Environment Records</div>
+        <div class="security-item">📄 Test Reports</div>
+        <div class="security-item">⚙️ Equipment Records</div>
+        <div class="security-item">📋 Audit Trail</div>
+
+    </div>
+
+</section>
+
+
+<div class="notice">
+
+    ⚠️ <b>Важно:</b>
+    эта страница является демонстрационной частью WORKER PRO.
+    Реальные климатические и экологические испытания должны
+    выполняться квалифицированным персоналом с использованием
+    подходящего оборудования, процедур и действующих стандартов.
+
+</div>
+
+
+<h2 class="section-title">🔗 Related WORKER PRO Modules</h2>
+
+<div class="card">
+
+    <div class="related">
+
+        <a href="../laboratory-testing/index.html">
+            Laboratory Testing
+        </a>
+
+        <a href="../material-testing/index.html">
+            Material Testing
+        </a>
+
+        <a href="../corrosion-testing/index.html">
+            Corrosion Testing
+        </a>
+
+        <a href="../fatigue-testing/index.html">
+            Fatigue Testing
+        </a>
+
+        <a href="../creep-testing/index.html">
+            Creep Testing
+        </a>
+
+        <a href="../fracture-testing/index.html">
+            Fracture Testing
+        </a>
+
+        <a href="../hardness-testing/index.html">
+            Hardness Testing
+        </a>
+
+        <a href="../impact-testing/index.html">
+            Impact Testing
+        </a>
+
+        <a href="../quality-control/index.html">
+            Quality Control
+        </a>
+
+        <a href="../quality-assurance/index.html">
+            Quality Assurance
+        </a>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+    <h3>WORKER PRO</h3>
+
+    <p>Работа. Знания. Производство.</p>
+
+    <p>Global Industrial Platform</p>
+
+    <p>© 2026 WORKER PRO — F.S.</p>
+
+</footer>
+
+
+<script>
+
+function filterLabs(){
+
+    const search =
+        document.getElementById("labSearch")
+        .value
+        .toLowerCase();
+
+    const country =
+        document.getElementById("labCountry")
+        .value;
+
+    const labs =
+        document.querySelectorAll(".lab");
+
+    labs.forEach(function(lab){
+
+        const text =
+            lab.innerText.toLowerCase();
+
+        const labCountry =
+            lab.dataset.country;
+
+        const searchOK =
+            text.includes(search);
+
+        const countryOK =
+            country === "all" ||
+            labCountry === country;
+
+        if(searchOK && countryOK){
+            lab.classList.remove("hidden");
+        }else{
+            lab.classList.add("hidden");
+        }
+
+    });
+
+}
+
+
+function startEnvironmental(){
+
+    document.getElementById("testResult").innerHTML =
+        "🌍 Environmental Test запущен. " +
+        "Система регистрирует температуру, влажность " +
+        "и циклы воздействия.";
+
+}
+
+
+function analyzeEnvironmental(){
+
+    document.getElementById("testResult").innerHTML =
+        "🔬 Анализ завершён. " +
+        "Демонстрационные результаты готовы для проверки.";
+
+}
+
+
+function createReport(){
+
+    document.getElementById("testResult").innerHTML =
+        "📄 Демонстрационный отчёт создан. " +
+        "Sample ID: Equipment-AZ-2026-E001.";
+
+}
+
+
+function addSystem(type){
+
+    document.getElementById("systemResult").innerHTML =
+        "➕ Система <b>" +
+        type +
+        "</b> добавлена в демонстрационный список WORKER PRO.";
+
+}
+
+</script>
+
+</body>
+</html>
