@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Noise Testing</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    letter-spacing:1px;
+}
+
+.subtitle{
+    margin-top:6px;
+    color:#b7ff35;
+    font-size:15px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    border:1px solid #b7ff35;
+    background:#0b6b3d;
+    color:white;
+    padding:8px 12px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    background:#0b6b3d;
+    padding:10px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:5px 9px;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:#b7ff35;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    padding:28px;
+    border-radius:16px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    border-left:6px solid #0b6b3d;
+}
+
+.hero h1{
+    margin-top:0;
+    color:#063d25;
+}
+
+.hero p{
+    line-height:1.6;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:15px;
+}
+
+.tag{
+    background:#e5f5eb;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.section-title{
+    color:#063d25;
+    margin-top:30px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    border-radius:14px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.stat strong{
+    display:block;
+    font-size:27px;
+    color:#0b6b3d;
+}
+
+.stat span{
+    font-size:13px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+    margin-top:15px;
+}
+
+.flow-step{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:10px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.card{
+    background:white;
+    padding:18px;
+    border-radius:14px;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.card h3{
+    margin-top:0;
+    color:#0b6b3d;
+}
+
+.card p{
+    font-size:14px;
+    line-height:1.5;
+}
+
+.search-box{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+.search-box input,
+.search-box select{
+    flex:1;
+    min-width:200px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:8px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:none;
+    padding:11px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.test-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+    background:white;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.test-table th,
+.test-table td{
+    padding:12px;
+    border-bottom:1px solid #e2e9e4;
+    text-align:left;
+    font-size:13px;
+}
+
+.test-table th{
+    background:#063d25;
+    color:white;
+}
+
+.pass{
+    color:#08763f;
+    font-weight:bold;
+}
+
+.warning{
+    color:#b36b00;
+    font-weight:bold;
+}
+
+.progress{
+    height:10px;
+    background:#dce8e0;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.lab{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    padding:12px;
+    border-bottom:1px solid #e2e9e4;
+}
+
+.notice{
+    background:#fff9df;
+    border-left:5px solid #d4a000;
+    padding:16px;
+    border-radius:10px;
+    margin-top:20px;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:40px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:800px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:550px){
+    .stats,
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .flow{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .arrow{
+        text-align:center;
+        transform:rotate(90deg);
+    }
+
+    nav a{
+        display:inline-block;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">WORKER PRO</div>
+
+    <div class="subtitle">
+        Глобальная промышленная платформа
+    </div>
+
+    <div class="top-languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+<nav>
+    <a href="../index.html">Главная</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../equipment/index.html">Equipment</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+    <h1>🔉 Noise Testing</h1>
+
+    <p>
+        Система испытаний и измерения уровня шума промышленного
+        оборудования, машин, насосов, двигателей, компрессоров,
+        станков и производственных систем.
+    </p>
+
+    <div class="tags">
+        <div class="tag">Noise Testing</div>
+        <div class="tag">Sound Level</div>
+        <div class="tag">dB(A)</div>
+        <div class="tag">Frequency</div>
+        <div class="tag">Noise Measurement</div>
+        <div class="tag">Acoustic Analysis</div>
+        <div class="tag">Industrial Noise</div>
+        <div class="tag">Test Report</div>
+    </div>
+
+</section>
+
+
+<h2 class="section-title">📊 Noise Testing Platform</h2>
+
+<div class="stats">
+
+    <div class="stat">
+        <strong>136</strong>
+        <span>Noise Test Systems</span>
+    </div>
+
+    <div class="stat">
+        <strong>8,420</strong>
+        <span>Noise Tests</span>
+    </div>
+
+    <div class="stat">
+        <strong>64</strong>
+        <span>Connected Laboratories</span>
+    </div>
+
+    <div class="stat">
+        <strong>98.5%</strong>
+        <span>Test Record Completeness</span>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔄 Testing Workflow</h2>
+
+<div class="flow">
+
+    <div class="flow-step">Sample</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Sample ID</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Test Setup</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Microphone Setup</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Noise Measurement</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Frequency Analysis</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Evaluation</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Report</div>
+
+</div>
+
+
+<h2 class="section-title">🧪 Noise Testing Methods</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🔊 Sound Level Testing</h3>
+        <p>
+            Измерение общего уровня звукового давления промышленного
+            оборудования.
+        </p>
+        <button class="action" onclick="startNoise()">Start Test</button>
+    </div>
+
+    <div class="card">
+        <h3>📈 Frequency Analysis</h3>
+        <p>
+            Анализ частотного спектра и выявление источников повышенного
+            шума.
+        </p>
+        <button class="action" onclick="analyzeFrequency()">Analyze</button>
+    </div>
+
+    <div class="card">
+        <h3>🎙️ Microphone Testing</h3>
+        <p>
+            Контроль измерительных микрофонов и точности акустических
+            измерений.
+        </p>
+        <button class="action" onclick="microphoneTest()">Check</button>
+    </div>
+
+    <div class="card">
+        <h3>🗺️ Noise Mapping</h3>
+        <p>
+            Создание карты распределения шума внутри промышленной зоны.
+        </p>
+        <button class="action" onclick="noiseMap()">Create Map</button>
+    </div>
+
+    <div class="card">
+        <h3>🏭 Machine Noise</h3>
+        <p>
+            Проверка уровня шума станков, насосов, двигателей и другого
+            оборудования.
+        </p>
+        <button class="action" onclick="machineNoise()">Test Machine</button>
+    </div>
+
+    <div class="card">
+        <h3>📄 Test Report</h3>
+        <p>
+            Формирование цифрового отчёта с результатами испытаний.
+        </p>
+        <button class="action" onclick="createReport()">Create Report</button>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">⚙️ Measurement Parameters</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>Sound Pressure Level</h3>
+        <p>Измерение звукового давления в dB и dB(A).</p>
+    </div>
+
+    <div class="card">
+        <h3>Sound Power Level</h3>
+        <p>Оценка акустической мощности источника шума.</p>
+    </div>
+
+    <div class="card">
+        <h3>Frequency</h3>
+        <p>Анализ частотного диапазона оборудования.</p>
+    </div>
+
+    <div class="card">
+        <h3>Measurement Distance</h3>
+        <p>Контроль расстояния между источником и микрофоном.</p>
+    </div>
+
+    <div class="card">
+        <h3>Measurement Duration</h3>
+        <p>Контроль продолжительности измерения.</p>
+    </div>
+
+    <div class="card">
+        <h3>Ambient Noise</h3>
+        <p>Определение фонового шума перед испытанием.</p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🧾 Example Noise Test</h2>
+
+<div class="card">
+
+    <h3>Equipment-AZ-2026-N001</h3>
+
+    <p><strong>Equipment:</strong> Industrial Pump Assembly</p>
+    <p><strong>Test:</strong> Noise Level Testing</p>
+    <p><strong>Frequency:</strong> 20–20,000 Hz</p>
+    <p><strong>Distance:</strong> 1 meter</p>
+    <p><strong>Measured Level:</strong> 72 dB(A)</p>
+    <p><strong>Limit:</strong> 80 dB(A)</p>
+    <p><strong>Result:</strong> <span class="pass">PASS</span></p>
+
+    <button class="action" onclick="viewTest()">
+        View Test Details
+    </button>
+
+</div>
+
+
+<h2 class="section-title">🔎 Noise Test Database</h2>
+
+<div class="search-box">
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Поиск оборудования или лаборатории..."
+        oninput="filterTests()"
+    >
+
+    <select id="statusFilter" onchange="filterTests()">
+        <option value="all">Все результаты</option>
+        <option value="pass">PASS</option>
+        <option value="warning">WARNING</option>
+    </select>
+
+</div>
+
+<table class="test-table">
+
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Equipment</th>
+    <th>Location</th>
+    <th>Noise</th>
+    <th>Status</th>
+</tr>
+</thead>
+
+<tbody id="testTable">
+
+<tr data-status="pass">
+    <td>NT-001</td>
+    <td>Industrial Pump</td>
+    <td>Baku</td>
+    <td>72 dB(A)</td>
+    <td class="pass">PASS</td>
+</tr>
+
+<tr data-status="pass">
+    <td>NT-002</td>
+    <td>CNC Machine</td>
+    <td>Sumqayit</td>
+    <td>75 dB(A)</td>
+    <td class="pass">PASS</td>
+</tr>
+
+<tr data-status="warning">
+    <td>NT-003</td>
+    <td>Industrial Compressor</td>
+    <td>Istanbul</td>
+    <td>83 dB(A)</td>
+    <td class="warning">WARNING</td>
+</tr>
+
+<tr data-status="pass">
+    <td>NT-004</td>
+    <td>Electric Motor</td>
+    <td>Dortmund</td>
+    <td>68 dB(A)</td>
+    <td class="pass">PASS</td>
+</tr>
+
+<tr data-status="pass">
+    <td>NT-005</td>
+    <td>Industrial Fan</td>
+    <td>Milan</td>
+    <td>70 dB(A)</td>
+    <td class="pass">PASS</td>
+</tr>
+
+<tr data-status="warning">
+    <td>NT-006</td>
+    <td>Mining Crusher</td>
+    <td>Shanghai</td>
+    <td>89 dB(A)</td>
+    <td class="warning">WARNING</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<h2 class="section-title">🧪 Connected Laboratories</h2>
+
+<div class="card">
+
+    <div class="lab">
+        <span>🇦🇿 Baku Industrial Laboratory</span>
+        <strong>98.7%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇦🇿 Sumqayit Testing Center</span>
+        <strong>98.2%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇹🇷 Istanbul Acoustic Lab</span>
+        <strong>97.9%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇩🇪 Dortmund Industrial Lab</span>
+        <strong>99.1%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇮🇹 Milan Testing Center</span>
+        <strong>98.6%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇨🇳 Shanghai Industrial Lab</span>
+        <strong>98.0%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇺🇸 Houston Testing Laboratory</span>
+        <strong>99.0%</strong>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">📈 Test System Performance</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>Sound Measurement</h3>
+        <strong>98.7%</strong>
+        <div class="progress">
+            <div style="width:98.7%"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Frequency Analysis</h3>
+        <strong>98.1%</strong>
+        <div class="progress">
+            <div style="width:98.1%"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Noise Mapping</h3>
+        <strong>97.8%</strong>
+        <div class="progress">
+            <div style="width:97.8%"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Report Accuracy</h3>
+        <strong>99.2%</strong>
+        <div class="progress">
+            <div style="width:99.2%"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">➕ Add Noise Testing System</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🔊 Sound Level</h3>
+        <button class="action" onclick="addSystem('Sound Level')">
+            Add System
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>📈 Frequency Analysis</h3>
+        <button class="action" onclick="addSystem('Frequency Analysis')">
+            Add System
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>🎙️ Microphone</h3>
+        <button class="action" onclick="addSystem('Microphone')">
+            Add System
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>🗺️ Noise Mapping</h3>
+        <button class="action" onclick="addSystem('Noise Mapping')">
+            Add System
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>🏭 Machine Noise</h3>
+        <button class="action" onclick="addSystem('Machine Noise')">
+            Add System
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>📄 Digital Report</h3>
+        <button class="action" onclick="addSystem('Digital Report')">
+            Add System
+        </button>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🏭 Industrial Applications</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🛢️ Oil & Gas</h3>
+        <p>
+            Насосы, компрессоры, турбины, производственные установки.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🚗 Automotive</h3>
+        <p>
+            Двигатели, трансмиссии, автомобили и производственные линии.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>✈️ Aerospace</h3>
+        <p>
+            Авиационные компоненты и системы контроля шума.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>⛏️ Mining</h3>
+        <p>
+            Дробилки, мельницы, конвейеры и горное оборудование.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🏭 Manufacturing</h3>
+        <p>
+            Станки, прессы, роботы и производственные линии.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>⚡ Energy</h3>
+        <p>
+            Турбины, генераторы, двигатели и энергетические установки.
+        </p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔐 Data Security</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🔑 Access Control</h3>
+        <p>Контроль доступа к данным испытаний.</p>
+    </div>
+
+    <div class="card">
+        <h3>🏷️ Sample ID</h3>
+        <p>Уникальный идентификатор каждого образца.</p>
+    </div>
+
+    <div class="card">
+        <h3>🎙️ Measurement Records</h3>
+        <p>Сохранение данных измерений.</p>
+    </div>
+
+    <div class="card">
+        <h3>📊 Spectrum Data</h3>
+        <p>Сохранение частотных спектров.</p>
+    </div>
+
+    <div class="card">
+        <h3>📄 Test Reports</h3>
+        <p>История цифровых отчётов.</p>
+    </div>
+
+    <div class="card">
+        <h3>📝 Audit Trail</h3>
+        <p>История действий пользователей.</p>
+    </div>
+
+</div>
+
+
+<div class="notice">
+    ⚠️ <strong>Важно:</strong> Noise Testing на WORKER PRO является
+    демонстрационной цифровой системой. Реальные измерения должны
+    выполняться откалиброванным оборудованием и квалифицированными
+    специалистами в соответствии с применимыми стандартами.
+</div>
+
+
+<h2 class="section-title">🔗 Следующий этап промышленной цепочки</h2>
+
+<div class="flow">
+
+    <div class="flow-step">Product</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Noise Testing</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Quality</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Test Report</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Certificate</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Supplier</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Order</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Logistics</div>
+    <div class="arrow">→</div>
+
+    <div class="flow-step">Tracking</div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+    <strong>WORKER PRO</strong>
+
+    <p>
+        Производство • Технологии • Качество • Испытания •
+        Компании • Торговля • Логистика
+    </p>
+
+    <p>© 2026 WORKER PRO — Industrial Platform</p>
+
+</footer>
+
+
+<script>
+
+function startNoise(){
+    alert(
+        "Noise Test started.\n\n" +
+        "Microphone calibration → Measurement → dB(A) analysis"
+    );
+}
+
+function analyzeFrequency(){
+    alert(
+        "Frequency analysis started.\n\n" +
+        "20 Hz → 20,000 Hz\n" +
+        "Spectrum analysis completed."
+    );
+}
+
+function microphoneTest(){
+    alert(
+        "Microphone verification completed.\n\n" +
+        "Calibration status: PASS"
+    );
+}
+
+function noiseMap(){
+    alert(
+        "Noise map created.\n\n" +
+        "Measurement points: 24"
+    );
+}
+
+function machineNoise(){
+    alert(
+        "Machine Noise Test started.\n\n" +
+        "Equipment: Industrial Machine"
+    );
+}
+
+function createReport(){
+    alert(
+        "Digital Noise Test Report created.\n\n" +
+        "Report ID: NTR-2026-001"
+    );
+}
+
+function viewTest(){
+    alert(
+        "Noise Test Details\n\n" +
+        "Equipment: Industrial Pump\n" +
+        "Result: 72 dB(A)\n" +
+        "Status: PASS"
+    );
+}
+
+function addSystem(name){
+    alert(
+        name +
+        " system added to WORKER PRO Noise Testing."
+    );
+}
+
+function filterTests(){
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter")
+        .value;
+
+    const rows =
+        document.querySelectorAll("#testTable tr");
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.getAttribute("data-status");
+
+        const searchMatch =
+            text.includes(search);
+
+        const statusMatch =
+            status === "all" ||
+            rowStatus === status;
+
+        row.style.display =
+            searchMatch && statusMatch
+            ? ""
+            : "none";
+    });
+}
+
+</script>
+
+</body>
+</html>
