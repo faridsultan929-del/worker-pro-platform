@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Radiographic Testing</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#123}
+header{background:#063d25;color:white;text-align:center;padding:22px}
+.logo{font-size:30px;font-weight:bold}
+.subtitle{color:#b7ff35;margin-top:6px}
+.top-languages{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin-top:18px}
+.top-languages button{background:#0b6b3d;color:white;border:1px solid #b7ff35;padding:9px 13px;border-radius:7px;font-weight:bold}
+nav{background:#0b6b3d;padding:12px;text-align:center}
+nav a{color:white;text-decoration:none;margin:6px 9px;display:inline-block;font-size:14px}
+nav a:hover{color:#b7ff35}
+.container{max-width:1100px;margin:auto;padding:20px}
+.hero,.card,.stat{background:white;border-radius:14px;padding:20px;box-shadow:0 3px 10px #0000000c}
+.hero{border-left:6px solid #0b6b3d;padding:28px}
+h1,h2,h3{color:#063d25}
+.hero p,.card p{line-height:1.6}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.tag{background:#e5f5eb;color:#063d25;padding:8px 12px;border-radius:20px;font-size:13px}
+.section-title{margin-top:30px}
+.stats,.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-top:15px}
+.stat{text-align:center}
+.stat strong{display:block;color:#0b6b3d;font-size:27px}
+.stat span{font-size:13px}
+.grid{grid-template-columns:repeat(3,1fr)}
+.card h3{margin-top:0}
+.flow{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:15px}
+.step{background:#063d25;color:white;padding:12px 15px;border-radius:9px;font-weight:bold;font-size:13px}
+.arrow{color:#0b6b3d;font-size:20px;font-weight:bold}
+.action{background:#0b6b3d;color:white;border:0;padding:11px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
+.action:hover{background:#063d25}
+.search{display:flex;flex-wrap:wrap;gap:10px;margin:15px 0}
+.search input,.search select{flex:1;min-width:180px;padding:12px;border:1px solid #ccd8d0;border-radius:8px}
+table{width:100%;border-collapse:collapse;background:white;margin-top:15px}
+th,td{padding:12px;border-bottom:1px solid #e2e9e4;text-align:left;font-size:13px}
+th{background:#063d25;color:white}
+.pass{color:#08763f;font-weight:bold}
+.warning{color:#b36b00;font-weight:bold}
+.progress{height:10px;background:#dce8e0;border-radius:10px;overflow:hidden;margin-top:8px}
+.progress div{height:100%;background:#0b6b3d}
+.lab{padding:12px;border-bottom:1px solid #e2e9e4;display:flex;justify-content:space-between;gap:10px}
+.notice{background:#fff9df;border-left:5px solid #d4a000;padding:16px;border-radius:10px;margin-top:25px;line-height:1.6}
+footer{margin-top:40px;background:#063d25;color:white;text-align:center;padding:25px}
+footer strong{font-size:22px}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:550px){.grid,.stats{grid-template-columns:1fr}.flow{flex-direction:column;align-items:stretch}.arrow{text-align:center;transform:rotate(90deg)}}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">WORKER PRO</div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+    <div class="top-languages">
+        <button>AZ</button><button>RU</button><button>EN</button>
+        <button>TR</button><button>DE</button><button>AR</button>
+        <button>ES</button><button>FR</button><button>IT</button>
+    </div>
+</header>
+
+<nav>
+    <a href="../index.html">Главная</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../equipment/index.html">Equipment</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+    <h1>☢️ Radiographic Testing</h1>
+    <p>
+        Радиографический неразрушающий контроль промышленных материалов,
+        сварных швов, труб, металлических деталей и оборудования.
+        Метод использует рентгеновское или гамма-излучение для получения
+        изображения внутренней структуры изделия и выявления возможных дефектов.
+    </p>
+    <div class="tags">
+        <span class="tag">Radiographic Testing</span>
+        <span class="tag">RT</span>
+        <span class="tag">X-Ray Inspection</span>
+        <span class="tag">Weld Inspection</span>
+        <span class="tag">Digital Radiography</span>
+        <span class="tag">Film Radiography</span>
+        <span class="tag">Defect Detection</span>
+        <span class="tag">Test Report</span>
+    </div>
+</section>
+
+<h2 class="section-title">📊 Radiographic Testing Platform</h2>
+<div class="stats">
+    <div class="stat"><strong>126</strong><span>Radiographic Test Systems</span></div>
+    <div class="stat"><strong>7,840</strong><span>Recorded Inspections</span></div>
+    <div class="stat"><strong>58</strong><span>Connected Laboratories</span></div>
+    <div class="stat"><strong>98.2%</strong><span>Record Completeness</span></div>
+</div>
+
+<h2 class="section-title">🔄 Testing Workflow</h2>
+<div class="flow">
+    <div class="step">Component</div><div class="arrow">→</div>
+    <div class="step">Sample ID</div><div class="arrow">→</div>
+    <div class="step">Inspection Planning</div><div class="arrow">→</div>
+    <div class="step">Safety Verification</div><div class="arrow">→</div>
+    <div class="step">Radiographic Exposure</div><div class="arrow">→</div>
+    <div class="step">Image Processing</div><div class="arrow">→</div>
+    <div class="step">Image Evaluation</div><div class="arrow">→</div>
+    <div class="step">Report</div>
+</div>
+
+<h2 class="section-title">🧪 Radiographic Testing Methods</h2>
+<div class="grid">
+    <div class="card">
+        <h3>📸 X-Ray Inspection</h3>
+        <p>Получение рентгеновских изображений для проверки внутренней структуры деталей.</p>
+        <button class="action" onclick="runTest('X-Ray Inspection')">Open Demo</button>
+    </div>
+    <div class="card">
+        <h3>🎞️ Film Radiography</h3>
+        <p>Использование радиографической плёнки для фиксации изображения изделия.</p>
+        <button class="action" onclick="runTest('Film Radiography')">Open Demo</button>
+    </div>
+    <div class="card">
+        <h3>💻 Digital Radiography</h3>
+        <p>Цифровая регистрация изображений и хранение результатов контроля.</p>
+        <button class="action" onclick="runTest('Digital Radiography')">Open Demo</button>
+    </div>
+    <div class="card">
+        <h3>🔩 Weld Inspection</h3>
+        <p>Контроль сварных соединений для выявления возможных внутренних несплошностей.</p>
+        <button class="action" onclick="runTest('Weld Inspection')">Open Demo</button>
+    </div>
+    <div class="card">
+        <h3>🧩 Component Inspection</h3>
+        <p>Проверка отливок, металлических компонентов и отдельных промышленных деталей.</p>
+        <button class="action" onclick="runTest('Component Inspection')">Open Demo</button>
+    </div>
+    <div class="card">
+        <h3>📄 Digital Test Report</h3>
+        <p>Формирование демонстрационного отчёта с результатами радиографического контроля.</p>
+        <button class="action" onclick="createReport()">Create Report</button>
+    </div>
+</div>
+
+<h2 class="section-title">⚙️ Inspection Parameters</h2>
+<div class="grid">
+    <div class="card"><h3>Image Quality</h3><p>Оценка качества полученного изображения.</p></div>
+    <div class="card"><h3>Image Resolution</h3><p>Разрешение изображения для анализа деталей.</p></div>
+    <div class="card"><h3>Material Thickness</h3><p>Толщина контролируемого материала.</p></div>
+    <div class="card"><h3>Exposure Record</h3><p>Регистрация параметров проведённого контроля.</p></div>
+    <div class="card"><h3>Image Evaluation</h3><p>Оценка изображения квалифицированным специалистом.</p></div>
+    <div class="card"><h3>Traceability</h3><p>Связь изображения с изделием, заказом и отчётом.</p></div>
+</div>
+
+<h2 class="section-title">🧾 Example Inspection Record</h2>
+<div class="card">
+    <h3>RT-AZ-2026-001</h3>
+    <p><strong>Component:</strong> Industrial Steel Pipe Weld</p>
+    <p><strong>Method:</strong> Digital Radiography</p>
+    <p><strong>Material:</strong> Carbon Steel</p>
+    <p><strong>Inspection Area:</strong> Weld Joint</p>
+    <p><strong>Image Record:</strong> DEMO-IMAGE-001</p>
+    <p><strong>Status:</strong> <span class="pass">DEMO RECORD</span></p>
+    <button class="action" onclick="viewDetails()">View Details</button>
+</div>
+
+<h2 class="section-title">🔎 Inspection Database</h2>
+<div class="search">
+    <input id="searchInput" placeholder="Поиск детали или города..." oninput="filterRows()">
+    <select id="statusFilter" onchange="filterRows()">
+        <option value="all">Все результаты</option>
+        <option value="pass">PASS</option>
+        <option value="warning">WARNING</option>
+    </select>
+</div>
+
+<table>
+<thead>
+<tr><th>ID</th><th>Component</th><th>Location</th><th>Method</th><th>Status</th></tr>
+</thead>
+<tbody id="testTable">
+<tr data-status="pass"><td>RT-001</td><td>Steel Pipe Weld</td><td>Baku</td><td>Digital RT</td><td class="pass">PASS</td></tr>
+<tr data-status="pass"><td>RT-002</td><td>Pressure Vessel</td><td>Sumqayit</td><td>Film RT</td><td class="pass">PASS</td></tr>
+<tr data-status="warning"><td>RT-003</td><td>Pipeline Weld</td><td>Istanbul</td><td>Digital RT</td><td class="warning">WARNING</td></tr>
+<tr data-status="pass"><td>RT-004</td><td>Steel Casting</td><td>Dortmund</td><td>X-Ray Inspection</td><td class="pass">PASS</td></tr>
+<tr data-status="pass"><td>RT-005</td><td>Industrial Component</td><td>Milan</td><td>Digital RT</td><td class="pass">PASS</td></tr>
+<tr data-status="warning"><td>RT-006</td><td>Welded Joint</td><td>Shanghai</td><td>Film RT</td><td class="warning">WARNING</td></tr>
+</tbody>
+</table>
+
+<h2 class="section-title">🧪 Connected Laboratories</h2>
+<div class="card">
+    <div class="lab"><span>🇦🇿 Baku Industrial Laboratory</span><strong>98.7%</strong></div>
+    <div class="lab"><span>🇦🇿 Sumqayit Testing Center</span><strong>98.2%</strong></div>
+    <div class="lab"><span>🇹🇷 Istanbul NDT Laboratory</span><strong>97.9%</strong></div>
+    <div class="lab"><span>🇩🇪 Dortmund Inspection Center</span><strong>99.1%</strong></div>
+    <div class="lab"><span>🇮🇹 Milan Testing Laboratory</span><strong>98.6%</strong></div>
+    <div class="lab"><span>🇨🇳 Shanghai Industrial Lab</span><strong>98.0%</strong></div>
+    <div class="lab"><span>🇺🇸 Houston NDT Center</span><strong>99.0%</strong></div>
+</div>
+
+<h2 class="section-title">📈 System Performance</h2>
+<div class="grid">
+    <div class="card"><h3>Image Processing</h3><strong>98.6%</strong><div class="progress"><div style="width:98.6%"></div></div></div>
+    <div class="card"><h3>Inspection Records</h3><strong>97.9%</strong><div class="progress"><div style="width:97.9%"></div></div></div>
+    <div class="card"><h3>Traceability</h3><strong>98.2%</strong><div class="progress"><div style="width:98.2%"></div></div></div>
+    <div class="card"><h3>Report Completeness</h3><strong>99.1%</strong><div class="progress"><div style="width:99.1%"></div></div></div>
+</div>
+
+<h2 class="section-title">➕ Add Testing System</h2>
+<div class="grid">
+    <div class="card"><h3>📸 X-Ray Inspection</h3><button class="action" onclick="addSystem('X-Ray Inspection')">Add System</button></div>
+    <div class="card"><h3>🎞️ Film Radiography</h3><button class="action" onclick="addSystem('Film Radiography')">Add System</button></div>
+    <div class="card"><h3>💻 Digital Radiography</h3><button class="action" onclick="addSystem('Digital Radiography')">Add System</button></div>
+    <div class="card"><h3>🔩 Weld Inspection</h3><button class="action" onclick="addSystem('Weld Inspection')">Add System</button></div>
+    <div class="card"><h3>🧩 Component Inspection</h3><button class="action" onclick="addSystem('Component Inspection')">Add System</button></div>
+    <div class="card"><h3>📄 Digital Reports</h3><button class="action" onclick="addSystem('Digital Reports')">Add System</button></div>
+</div>
+
+<h2 class="section-title">🏭 Industrial Applications</h2>
+<div class="grid">
+    <div class="card"><h3>🛢️ Oil & Gas</h3><p>Контроль сварных швов трубопроводов и оборудования.</p></div>
+    <div class="card"><h3>🏭 Manufacturing</h3><p>Проверка металлических деталей и промышленных компонентов.</p></div>
+    <div class="card"><h3>🚢 Shipbuilding</h3><p>Контроль сварных соединений и металлических конструкций.</p></div>
+    <div class="card"><h3>⚡ Energy</h3><p>Обследование труб, сосудов и энергетического оборудования.</p></div>
+    <div class="card"><h3>🚗 Automotive</h3><p>Контроль отдельных металлических компонентов.</p></div>
+    <div class="card"><h3>⛏️ Mining</h3><p>Проверка отливок, деталей и конструкций горного оборудования.</p></div>
+</div>
+
+<h2 class="section-title">🔐 Data Security</h2>
+<div class="grid">
+    <div class="card"><h3>🔑 Access Control</h3><p>Контроль доступа к данным инспекции.</p></div>
+    <div class="card"><h3>🏷️ Sample ID</h3><p>Уникальный идентификатор каждого образца.</p></div>
+    <div class="card"><h3>📸 Image Records</h3><p>Сохранение изображений и результатов контроля.</p></div>
+    <div class="card"><h3>📊 Inspection Data</h3><p>Хранение данных проведённых проверок.</p></div>
+    <div class="card"><h3>📄 Test Reports</h3><p>История цифровых отчётов.</p></div>
+    <div class="card"><h3>📝 Audit Trail</h3><p>История действий пользователей.</p></div>
+</div>
+
+<div class="notice">
+    ⚠️ <strong>Важно:</strong> Эта страница является демонстрационной.
+    Реальный радиографический контроль связан с ионизирующим излучением
+    и должен выполняться квалифицированными специалистами с соблюдением
+    требований радиационной безопасности и применимых стандартов.
+    Приведённые записи и показатели не являются реальными результатами.
+</div>
+
+<h2 class="section-title">🔗 Industrial Workflow</h2>
+<div class="flow">
+    <div class="step">Product</div><div class="arrow">→</div>
+    <div class="step">Radiographic Testing</div><div class="arrow">→</div>
+    <div class="step">Quality</div><div class="arrow">→</div>
+    <div class="step">Test Report</div><div class="arrow">→</div>
+    <div class="step">Certificate</div><div class="arrow">→</div>
+    <div class="step">Supplier</div><div class="arrow">→</div>
+    <div class="step">Order</div><div class="arrow">→</div>
+    <div class="step">Logistics</div><div class="arrow">→</div>
+    <div class="step">Tracking</div>
+</div>
+
+</main>
+
+<footer>
+    <strong>WORKER PRO</strong>
+    <p>Производство • Технологии • Качество • Испытания • Торговля • Логистика</p>
+    <p>© 2026 WORKER PRO — Industrial Platform</p>
+</footer>
+
+<script>
+function runTest(name){
+    alert(name + "\n\nДемонстрационный режим. Реальные испытания не выполняются.");
+}
+function createReport(){
+    alert("Демонстрационный отчёт RT-RPT-2026-001 создан.");
+}
+function viewDetails(){
+    alert("RT-AZ-2026-001\nSteel Pipe Weld\nDEMO RECORD");
+}
+function addSystem(name){
+    alert(name + "\nДемонстрационный запрос на добавление системы.");
+}
+function filterRows(){
+    const search=document.getElementById("searchInput").value.toLowerCase();
+    const status=document.getElementById("statusFilter").value;
+    document.querySelectorAll("#testTable tr").forEach(row=>{
+        const matchesText=row.innerText.toLowerCase().includes(search);
+        const matchesStatus=status==="all" || row.dataset.status===status;
+        row.style.display=matchesText && matchesStatus ? "" : "none";
+    });
+}
+</script>
+
+</body>
+</html>
