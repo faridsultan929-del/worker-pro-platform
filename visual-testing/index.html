@@ -1,0 +1,1753 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Visual Testing</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.subtitle{
+    color:#b7ff35;
+    margin-top:6px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    background:#0b6b3d;
+    color:white;
+    border:1px solid #b7ff35;
+    padding:9px 13px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    background:#0b6b3d;
+    padding:12px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:6px 9px;
+    display:inline-block;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:#b7ff35;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card,
+.stat{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.hero{
+    border-left:6px solid #0b6b3d;
+    padding:28px;
+}
+
+h1,
+h2,
+h3{
+    color:#063d25;
+}
+
+.hero p,
+.card p{
+    line-height:1.6;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:15px;
+}
+
+.tag{
+    background:#e5f5eb;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.section-title{
+    margin-top:30px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    color:#0b6b3d;
+    font-size:27px;
+}
+
+.stat span{
+    font-size:13px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+    margin-top:15px;
+}
+
+.step{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:11px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:15px 0;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:8px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    margin-top:15px;
+}
+
+th,
+td{
+    padding:12px;
+    border-bottom:1px solid #e2e9e4;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+.pass{
+    color:#08763f;
+    font-weight:bold;
+}
+
+.warning{
+    color:#b36b00;
+    font-weight:bold;
+}
+
+.progress{
+    height:10px;
+    background:#dce8e0;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.lab{
+    padding:12px;
+    border-bottom:1px solid #e2e9e4;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.notice{
+    background:#fff9df;
+    border-left:5px solid #d4a000;
+    padding:16px;
+    border-radius:10px;
+    margin-top:25px;
+    line-height:1.6;
+}
+
+footer{
+    margin-top:40px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+footer strong{
+    font-size:22px;
+}
+
+@media(max-width:800px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:550px){
+
+    .stats,
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .flow{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .arrow{
+        text-align:center;
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        WORKER PRO
+    </div>
+
+    <div class="subtitle">
+        Глобальная промышленная платформа
+    </div>
+
+    <div class="top-languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+
+<nav>
+
+    <a href="../index.html">Главная</a>
+
+    <a href="../production/index.html">
+        Production
+    </a>
+
+    <a href="../equipment/index.html">
+        Equipment
+    </a>
+
+    <a href="../testing/index.html">
+        Testing
+    </a>
+
+    <a href="../quality/index.html">
+        Quality
+    </a>
+
+    <a href="../documents/index.html">
+        Documents
+    </a>
+
+    <a href="../companies/index.html">
+        Companies
+    </a>
+
+    <a href="../suppliers/index.html">
+        Suppliers
+    </a>
+
+    <a href="../orders/index.html">
+        Orders
+    </a>
+
+</nav>
+
+
+<main class="container">
+
+
+<section class="hero">
+
+    <h1>
+        👁️ Visual Testing
+    </h1>
+
+    <p>
+        Визуальный контроль — один из основных методов
+        неразрушающего контроля. Он применяется для оценки
+        внешнего состояния деталей, сварных соединений,
+        оборудования и конструкций, а также для выявления
+        видимых поверхностных дефектов.
+    </p>
+
+    <div class="tags">
+
+        <span class="tag">
+            Visual Testing
+        </span>
+
+        <span class="tag">
+            VT
+        </span>
+
+        <span class="tag">
+            NDT
+        </span>
+
+        <span class="tag">
+            Visual Inspection
+        </span>
+
+        <span class="tag">
+            Weld Inspection
+        </span>
+
+        <span class="tag">
+            Surface Inspection
+        </span>
+
+        <span class="tag">
+            Photography
+        </span>
+
+        <span class="tag">
+            Digital Report
+        </span>
+
+    </div>
+
+</section>
+
+
+<h2 class="section-title">
+    📊 Visual Testing Platform
+</h2>
+
+
+<div class="stats">
+
+    <div class="stat">
+        <strong>214</strong>
+        <span>
+            VT Inspection Systems
+        </span>
+    </div>
+
+    <div class="stat">
+        <strong>14,620</strong>
+        <span>
+            Recorded Inspections
+        </span>
+    </div>
+
+    <div class="stat">
+        <strong>82</strong>
+        <span>
+            Connected Inspection Teams
+        </span>
+    </div>
+
+    <div class="stat">
+        <strong>99.1%</strong>
+        <span>
+            Record Completeness
+        </span>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">
+    🔄 Inspection Workflow
+</h2>
+
+
+<div class="flow">
+
+    <div class="step">
+        Component
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Preparation
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Visual Inspection
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Measurement
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Photo / Video
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Evaluation
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Report
+    </div>
+
+</div>
+
+
+<h2 class="section-title">
+    👁️ Inspection Methods
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            👁️ Direct Visual Inspection
+        </h3>
+
+        <p>
+            Визуальная оценка доступной поверхности детали
+            или оборудования.
+        </p>
+
+        <button
+            class="action"
+            onclick="runTest('Direct Visual Inspection')">
+
+            Start Demo
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🔎 Magnified Inspection
+        </h3>
+
+        <p>
+            Демонстрационная инспекция с использованием
+            увеличения для оценки небольших особенностей.
+        </p>
+
+        <button
+            class="action"
+            onclick="runTest('Magnified Inspection')">
+
+            Inspect
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📷 Photo Inspection
+        </h3>
+
+        <p>
+            Фиксация демонстрационных фотографий
+            контролируемого объекта.
+        </p>
+
+        <button
+            class="action"
+            onclick="runTest('Photo Inspection')">
+
+            Open Demo
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🎥 Video Inspection
+        </h3>
+
+        <p>
+            Демонстрационная регистрация видео
+            для визуального контроля.
+        </p>
+
+        <button
+            class="action"
+            onclick="runTest('Video Inspection')">
+
+            Open Demo
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📏 Dimensional Check
+        </h3>
+
+        <p>
+            Регистрация демонстрационных измерений
+            размеров и геометрии.
+        </p>
+
+        <button
+            class="action"
+            onclick="runTest('Dimensional Check')">
+
+            Measure
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📄 Digital Report
+        </h3>
+
+        <p>
+            Создание демонстрационного отчёта
+            по визуальному контролю.
+        </p>
+
+        <button
+            class="action"
+            onclick="createReport()">
+
+            Create Report
+
+        </button>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    🔍 Inspection Parameters
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            💡 Lighting
+        </h3>
+
+        <p>
+            Достаточное освещение зоны контроля
+            является важным условием визуальной инспекции.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            👁️ Viewing Conditions
+        </h3>
+
+        <p>
+            Учитываются условия наблюдения, доступность
+            поверхности и направление осмотра.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🔎 Magnification
+        </h3>
+
+        <p>
+            При необходимости может использоваться
+            подходящее увеличение.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📏 Dimensions
+        </h3>
+
+        <p>
+            Регистрация размеров, геометрии и других
+            контролируемых параметров.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📷 Image Quality
+        </h3>
+
+        <p>
+            Фотографии должны позволять документировать
+            состояние контролируемой зоны.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📝 Acceptance Criteria
+        </h3>
+
+        <p>
+            Оценка результатов выполняется по применяемым
+            требованиям и утверждённым критериям.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    🧾 Example Inspection Record
+</h2>
+
+
+<div class="card">
+
+    <h3>
+        VT-AZ-2026-001
+    </h3>
+
+    <p>
+        <strong>
+            Component:
+        </strong>
+        Industrial Pipe Weld
+    </p>
+
+    <p>
+        <strong>
+            Method:
+        </strong>
+        Visual Testing
+    </p>
+
+    <p>
+        <strong>
+            Inspection Area:
+        </strong>
+        Weld Surface
+    </p>
+
+    <p>
+        <strong>
+            Documentation:
+        </strong>
+        Photo + Measurement
+    </p>
+
+    <p>
+        <strong>
+            Record:
+        </strong>
+        DEMO-VT-001
+    </p>
+
+    <p>
+        <strong>
+            Status:
+        </strong>
+
+        <span class="pass">
+            DEMO RECORD
+        </span>
+    </p>
+
+    <button
+        class="action"
+        onclick="viewDetails()">
+
+        View Details
+
+    </button>
+
+</div>
+
+
+<h2 class="section-title">
+    🔎 Inspection Database
+</h2>
+
+
+<div class="search">
+
+    <input
+        id="searchInput"
+        placeholder="Поиск детали или города..."
+        oninput="filterRows()"
+    >
+
+    <select
+        id="statusFilter"
+        onchange="filterRows()">
+
+        <option value="all">
+            Все результаты
+        </option>
+
+        <option value="pass">
+            PASS
+        </option>
+
+        <option value="warning">
+            WARNING
+        </option>
+
+    </select>
+
+</div>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>
+        ID
+    </th>
+
+    <th>
+        Component
+    </th>
+
+    <th>
+        Location
+    </th>
+
+    <th>
+        Inspection
+    </th>
+
+    <th>
+        Status
+    </th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="testTable">
+
+
+<tr data-status="pass">
+
+    <td>
+        VT-001
+    </td>
+
+    <td>
+        Industrial Pipe Weld
+    </td>
+
+    <td>
+        Baku
+    </td>
+
+    <td>
+        Visual Inspection
+    </td>
+
+    <td class="pass">
+        PASS
+    </td>
+
+</tr>
+
+
+<tr data-status="pass">
+
+    <td>
+        VT-002
+    </td>
+
+    <td>
+        Pressure Vessel
+    </td>
+
+    <td>
+        Sumqayit
+    </td>
+
+    <td>
+        Photo Inspection
+    </td>
+
+    <td class="pass">
+        PASS
+    </td>
+
+</tr>
+
+
+<tr data-status="warning">
+
+    <td>
+        VT-003
+    </td>
+
+    <td>
+        Steel Structure
+    </td>
+
+    <td>
+        Istanbul
+    </td>
+
+    <td>
+        Surface Inspection
+    </td>
+
+    <td class="warning">
+        WARNING
+    </td>
+
+</tr>
+
+
+<tr data-status="pass">
+
+    <td>
+        VT-004
+    </td>
+
+    <td>
+        Industrial Valve
+    </td>
+
+    <td>
+        Dortmund
+    </td>
+
+    <td>
+        Visual Inspection
+    </td>
+
+    <td class="pass">
+        PASS
+    </td>
+
+</tr>
+
+
+<tr data-status="pass">
+
+    <td>
+        VT-005
+    </td>
+
+    <td>
+        Machine Housing
+    </td>
+
+    <td>
+        Milan
+    </td>
+
+    <td>
+        Dimensional Check
+    </td>
+
+    <td class="pass">
+        PASS
+    </td>
+
+</tr>
+
+
+<tr data-status="warning">
+
+    <td>
+        VT-006
+    </td>
+
+    <td>
+        Pipeline Weld
+    </td>
+
+    <td>
+        Houston
+    </td>
+
+    <td>
+        Photo Inspection
+    </td>
+
+    <td class="warning">
+        WARNING
+    </td>
+
+</tr>
+
+
+</tbody>
+
+</table>
+
+
+<h2 class="section-title">
+    🧪 Connected Inspection Teams
+</h2>
+
+
+<div class="card">
+
+
+    <div class="lab">
+
+        <span>
+            🇦🇿 Baku Inspection Team
+        </span>
+
+        <strong>
+            99.0%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇦🇿 Sumqayit Quality Team
+        </span>
+
+        <strong>
+            98.7%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇹🇷 Istanbul Inspection Center
+        </span>
+
+        <strong>
+            98.5%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇩🇪 Dortmund Quality Center
+        </span>
+
+        <strong>
+            99.1%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇮🇹 Milan Inspection Laboratory
+        </span>
+
+        <strong>
+            98.8%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇨🇳 Shanghai Industrial Inspection
+        </span>
+
+        <strong>
+            98.4%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇺🇸 Houston Inspection Center
+        </span>
+
+        <strong>
+            99.0%
+        </strong>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    📈 System Performance
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            Inspection Coverage
+        </h3>
+
+        <strong>
+            99.0%
+        </strong>
+
+        <div class="progress">
+
+            <div style="width:99%"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Image Records
+        </h3>
+
+        <strong>
+            98.7%
+        </strong>
+
+        <div class="progress">
+
+            <div style="width:98.7%"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Traceability
+        </h3>
+
+        <strong>
+            99.2%
+        </strong>
+
+        <div class="progress">
+
+            <div style="width:99.2%"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Report Completeness
+        </h3>
+
+        <strong>
+            99.3%
+        </strong>
+
+        <div class="progress">
+
+            <div style="width:99.3%"></div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    ➕ Add Inspection System
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            👁️ Visual Inspection
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Visual Inspection')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📷 Photo Documentation
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Photo Documentation')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🎥 Video Inspection
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Video Inspection')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🔎 Magnified Inspection
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Magnified Inspection')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📏 Measurement
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Measurement')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📄 Digital Reports
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Digital Reports')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    🏭 Industrial Applications
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            🛢️ Oil & Gas
+        </h3>
+
+        <p>
+            Визуальная проверка трубопроводов, сварных соединений,
+            оборудования и конструкций.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🏭 Manufacturing
+        </h3>
+
+        <p>
+            Контроль деталей, оборудования, поверхностей
+            и производственных соединений.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            ⚡ Energy
+        </h3>
+
+        <p>
+            Визуальный контроль компонентов энергетического
+            оборудования и конструкций.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🚢 Shipbuilding
+        </h3>
+
+        <p>
+            Осмотр металлических конструкций и сварных соединений.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🚗 Automotive
+        </h3>
+
+        <p>
+            Контроль деталей и поверхностей автомобилей
+            и промышленного оборудования.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🏗️ Construction
+        </h3>
+
+        <p>
+            Осмотр металлических конструкций, соединений
+            и доступных поверхностей.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    🔐 Data Security
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            🔑 Access Control
+        </h3>
+
+        <p>
+            Контроль доступа к данным визуальной инспекции.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🏷️ Inspection ID
+        </h3>
+
+        <p>
+            Уникальный идентификатор каждой инспекции.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📷 Image Records
+        </h3>
+
+        <p>
+            Сохранение демонстрационных фото и материалов инспекции.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📏 Measurement Data
+        </h3>
+
+        <p>
+            Регистрация измерений и параметров объекта.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📄 Inspection Reports
+        </h3>
+
+        <p>
+            История цифровых отчётов.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📝 Audit Trail
+        </h3>
+
+        <p>
+            История действий пользователей.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<div class="notice">
+
+    ⚠️ <strong>Важно:</strong>
+    Эта страница является демонстрационной.
+    Реальный визуальный контроль должен выполняться
+    квалифицированным персоналом в соответствии с применяемыми
+    процедурами, требованиями и критериями приемки.
+    Приведённые записи, команды инспекции и показатели
+    являются демонстрационными данными.
+
+</div>
+
+
+<h2 class="section-title">
+    🔗 Industrial Workflow
+</h2>
+
+
+<div class="flow">
+
+    <div class="step">
+        Product
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Visual Testing
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Quality
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Test Report
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Certificate
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Documents
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Supplier
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Order
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Logistics
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Tracking
+    </div>
+
+</div>
+
+
+</main>
+
+
+<footer>
+
+    <strong>
+        WORKER PRO
+    </strong>
+
+    <p>
+        Производство • Технологии • Качество •
+        Испытания • Торговля • Логистика
+    </p>
+
+    <p>
+        © 2026 WORKER PRO — Industrial Platform
+    </p>
+
+</footer>
+
+
+<script>
+
+function runTest(name){
+
+    alert(
+        name +
+        "\n\nДемонстрационный режим. " +
+        "Реальная инспекция не выполняется."
+    );
+
+}
+
+
+function createReport(){
+
+    alert(
+        "Демонстрационный отчёт " +
+        "VT-RPT-2026-001 создан."
+    );
+
+}
+
+
+function viewDetails(){
+
+    alert(
+        "VT-AZ-2026-001\n" +
+        "Industrial Pipe Weld\n" +
+        "Visual Testing\n" +
+        "DEMO RECORD"
+    );
+
+}
+
+
+function addSystem(name){
+
+    alert(
+        name +
+        "\nДемонстрационный запрос " +
+        "на добавление системы."
+    );
+
+}
+
+
+function filterRows(){
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const status =
+        document
+        .getElementById("statusFilter")
+        .value;
+
+    document
+    .querySelectorAll("#testTable tr")
+    .forEach(row => {
+
+        const matchesText =
+            row.innerText
+            .toLowerCase()
+            .includes(search);
+
+        const matchesStatus =
+            status === "all" ||
+            row.dataset.status === status;
+
+        row.style.display =
+            matchesText && matchesStatus
+            ? ""
+            : "none";
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
