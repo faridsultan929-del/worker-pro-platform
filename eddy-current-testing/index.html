@@ -1,0 +1,1763 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Eddy Current Testing</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.subtitle{
+    color:#b7ff35;
+    margin-top:6px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    background:#0b6b3d;
+    color:white;
+    border:1px solid #b7ff35;
+    padding:9px 13px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    background:#0b6b3d;
+    padding:12px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:6px 9px;
+    display:inline-block;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:#b7ff35;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card,
+.stat{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.hero{
+    border-left:6px solid #0b6b3d;
+    padding:28px;
+}
+
+h1,
+h2,
+h3{
+    color:#063d25;
+}
+
+.hero p,
+.card p{
+    line-height:1.6;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:15px;
+}
+
+.tag{
+    background:#e5f5eb;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.section-title{
+    margin-top:30px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    color:#0b6b3d;
+    font-size:27px;
+}
+
+.stat span{
+    font-size:13px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+    margin-top:15px;
+}
+
+.step{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:11px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:15px 0;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:8px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    margin-top:15px;
+}
+
+th,
+td{
+    padding:12px;
+    border-bottom:1px solid #e2e9e4;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+.pass{
+    color:#08763f;
+    font-weight:bold;
+}
+
+.warning{
+    color:#b36b00;
+    font-weight:bold;
+}
+
+.progress{
+    height:10px;
+    background:#dce8e0;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.lab{
+    padding:12px;
+    border-bottom:1px solid #e2e9e4;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.notice{
+    background:#fff9df;
+    border-left:5px solid #d4a000;
+    padding:16px;
+    border-radius:10px;
+    margin-top:25px;
+    line-height:1.6;
+}
+
+footer{
+    margin-top:40px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+footer strong{
+    font-size:22px;
+}
+
+@media(max-width:800px){
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:550px){
+
+    .stats,
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .flow{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .arrow{
+        text-align:center;
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        WORKER PRO
+    </div>
+
+    <div class="subtitle">
+        Глобальная промышленная платформа
+    </div>
+
+    <div class="top-languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+
+<nav>
+
+    <a href="../index.html">Главная</a>
+
+    <a href="../production/index.html">
+        Production
+    </a>
+
+    <a href="../equipment/index.html">
+        Equipment
+    </a>
+
+    <a href="../testing/index.html">
+        Testing
+    </a>
+
+    <a href="../quality/index.html">
+        Quality
+    </a>
+
+    <a href="../documents/index.html">
+        Documents
+    </a>
+
+    <a href="../companies/index.html">
+        Companies
+    </a>
+
+    <a href="../suppliers/index.html">
+        Suppliers
+    </a>
+
+    <a href="../orders/index.html">
+        Orders
+    </a>
+
+</nav>
+
+
+<main class="container">
+
+
+<section class="hero">
+
+    <h1>
+        ⚡ Eddy Current Testing
+    </h1>
+
+    <p>
+        Вихретоковый неразрушающий контроль — метод исследования
+        электропроводящих материалов с использованием переменного
+        электромагнитного поля. Метод применяется для обнаружения
+        поверхностных и близких к поверхности дефектов, контроля
+        труб, теплообменников, деталей и оценки электропроводности.
+    </p>
+
+    <div class="tags">
+
+        <span class="tag">
+            Eddy Current Testing
+        </span>
+
+        <span class="tag">
+            ET
+        </span>
+
+        <span class="tag">
+            NDT
+        </span>
+
+        <span class="tag">
+            Electromagnetic Inspection
+        </span>
+
+        <span class="tag">
+            Crack Detection
+        </span>
+
+        <span class="tag">
+            Tube Inspection
+        </span>
+
+        <span class="tag">
+            Conductivity
+        </span>
+
+        <span class="tag">
+            Digital Report
+        </span>
+
+    </div>
+
+</section>
+
+
+<h2 class="section-title">
+    📊 Eddy Current Testing Platform
+</h2>
+
+
+<div class="stats">
+
+    <div class="stat">
+        <strong>126</strong>
+        <span>
+            ET Test Systems
+        </span>
+    </div>
+
+    <div class="stat">
+        <strong>7,940</strong>
+        <span>
+            Recorded Inspections
+        </span>
+    </div>
+
+    <div class="stat">
+        <strong>54</strong>
+        <span>
+            Connected Laboratories
+        </span>
+    </div>
+
+    <div class="stat">
+        <strong>98.5%</strong>
+        <span>
+            Record Completeness
+        </span>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">
+    🔄 Testing Workflow
+</h2>
+
+
+<div class="flow">
+
+    <div class="step">
+        Component
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Surface Preparation
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Probe Selection
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Electromagnetic Field
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Signal Acquisition
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Signal Analysis
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Evaluation
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Report
+    </div>
+
+</div>
+
+
+<h2 class="section-title">
+    🧪 Testing Methods
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            ⚡ Surface Crack Detection
+        </h3>
+
+        <p>
+            Демонстрационный поиск поверхностных и близких
+            к поверхности дефектов в электропроводящих материалах.
+        </p>
+
+        <button
+            class="action"
+            onclick="runTest('Surface Crack Detection')">
+
+            Start Demo
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🔬 Tube Inspection
+        </h3>
+
+        <p>
+            Демонстрационная проверка труб и трубных систем
+            с использованием вихретокового метода.
+        </p>
+
+        <button
+            class="action"
+            onclick="runTest('Tube Inspection')">
+
+            Inspect
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📡 Probe Testing
+        </h3>
+
+        <p>
+            Регистрация демонстрационного измерения сигнала
+            с помощью вихретокового датчика.
+        </p>
+
+        <button
+            class="action"
+            onclick="runTest('Probe Testing')">
+
+            Open Demo
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📈 Signal Analysis
+        </h3>
+
+        <p>
+            Анализ демонстрационного сигнала и признаков
+            возможного дефекта.
+        </p>
+
+        <button
+            class="action"
+            onclick="runTest('Signal Analysis')">
+
+            Analyze
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🧮 Conductivity Measurement
+        </h3>
+
+        <p>
+            Демонстрационная регистрация электропроводности
+            материала.
+        </p>
+
+        <button
+            class="action"
+            onclick="runTest('Conductivity Measurement')">
+
+            Measure
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📄 Digital Report
+        </h3>
+
+        <p>
+            Создание демонстрационного отчёта по результатам
+            вихретокового контроля.
+        </p>
+
+        <button
+            class="action"
+            onclick="createReport()">
+
+            Create Report
+
+        </button>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    ⚙️ Inspection Parameters
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            📡 Probe Frequency
+        </h3>
+
+        <p>
+            Рабочая частота является одним из параметров,
+            влияющих на чувствительность и глубину контроля.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            ⚡ Conductivity
+        </h3>
+
+        <p>
+            Электропроводность материала может использоваться
+            для оценки свойств и состояния материала.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📐 Lift-Off
+        </h3>
+
+        <p>
+            Контроль расстояния между датчиком и поверхностью
+            при проведении измерения.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🔍 Signal Response
+        </h3>
+
+        <p>
+            Регистрация реакции электромагнитного поля
+            на особенности контролируемого объекта.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🧪 Reference Standard
+        </h3>
+
+        <p>
+            Использование подходящего контрольного образца
+            согласно утверждённой процедуре.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📊 Data Evaluation
+        </h3>
+
+        <p>
+            Анализ зарегистрированных сигналов
+            и оформление результатов.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    🧾 Example Inspection Record
+</h2>
+
+
+<div class="card">
+
+    <h3>
+        ET-AZ-2026-001
+    </h3>
+
+    <p>
+        <strong>
+            Component:
+        </strong>
+        Heat Exchanger Tube
+    </p>
+
+    <p>
+        <strong>
+            Method:
+        </strong>
+        Eddy Current Testing
+    </p>
+
+    <p>
+        <strong>
+            Material:
+        </strong>
+        Conductive Metal
+    </p>
+
+    <p>
+        <strong>
+            Inspection Area:
+        </strong>
+        Tube Surface
+    </p>
+
+    <p>
+        <strong>
+            Record:
+        </strong>
+        DEMO-ET-001
+    </p>
+
+    <p>
+        <strong>
+            Status:
+        </strong>
+
+        <span class="pass">
+            DEMO RECORD
+        </span>
+    </p>
+
+    <button
+        class="action"
+        onclick="viewDetails()">
+
+        View Details
+
+    </button>
+
+</div>
+
+
+<h2 class="section-title">
+    🔎 Inspection Database
+</h2>
+
+
+<div class="search">
+
+    <input
+        id="searchInput"
+        placeholder="Поиск детали или города..."
+        oninput="filterRows()"
+    >
+
+    <select
+        id="statusFilter"
+        onchange="filterRows()">
+
+        <option value="all">
+            Все результаты
+        </option>
+
+        <option value="pass">
+            PASS
+        </option>
+
+        <option value="warning">
+            WARNING
+        </option>
+
+    </select>
+
+</div>
+
+
+<table>
+
+<thead>
+
+<tr>
+
+    <th>
+        ID
+    </th>
+
+    <th>
+        Component
+    </th>
+
+    <th>
+        Location
+    </th>
+
+    <th>
+        Method
+    </th>
+
+    <th>
+        Status
+    </th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="testTable">
+
+
+<tr data-status="pass">
+
+    <td>
+        ET-001
+    </td>
+
+    <td>
+        Heat Exchanger Tube
+    </td>
+
+    <td>
+        Baku
+    </td>
+
+    <td>
+        Tube Inspection
+    </td>
+
+    <td class="pass">
+        PASS
+    </td>
+
+</tr>
+
+
+<tr data-status="pass">
+
+    <td>
+        ET-002
+    </td>
+
+    <td>
+        Aluminium Sheet
+    </td>
+
+    <td>
+        Sumqayit
+    </td>
+
+    <td>
+        Conductivity
+    </td>
+
+    <td class="pass">
+        PASS
+    </td>
+
+</tr>
+
+
+<tr data-status="warning">
+
+    <td>
+        ET-003
+    </td>
+
+    <td>
+        Aircraft Component
+    </td>
+
+    <td>
+        Istanbul
+    </td>
+
+    <td>
+        Crack Detection
+    </td>
+
+    <td class="warning">
+        WARNING
+    </td>
+
+</tr>
+
+
+<tr data-status="pass">
+
+    <td>
+        ET-004
+    </td>
+
+    <td>
+        Steel Tube
+    </td>
+
+    <td>
+        Dortmund
+    </td>
+
+    <td>
+        Tube Inspection
+    </td>
+
+    <td class="pass">
+        PASS
+    </td>
+
+</tr>
+
+
+<tr data-status="pass">
+
+    <td>
+        ET-005
+    </td>
+
+    <td>
+        Copper Component
+    </td>
+
+    <td>
+        Milan
+    </td>
+
+    <td>
+        Conductivity
+    </td>
+
+    <td class="pass">
+        PASS
+    </td>
+
+</tr>
+
+
+<tr data-status="warning">
+
+    <td>
+        ET-006
+    </td>
+
+    <td>
+        Heat Exchanger
+    </td>
+
+    <td>
+        Houston
+    </td>
+
+    <td>
+        Signal Analysis
+    </td>
+
+    <td class="warning">
+        WARNING
+    </td>
+
+</tr>
+
+
+</tbody>
+
+</table>
+
+
+<h2 class="section-title">
+    🧪 Connected Laboratories
+</h2>
+
+
+<div class="card">
+
+
+    <div class="lab">
+
+        <span>
+            🇦🇿 Baku NDT Laboratory
+        </span>
+
+        <strong>
+            98.6%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇦🇿 Sumqayit Testing Center
+        </span>
+
+        <strong>
+            98.3%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇹🇷 Istanbul NDT Laboratory
+        </span>
+
+        <strong>
+            98.0%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇩🇪 Dortmund Inspection Center
+        </span>
+
+        <strong>
+            99.0%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇮🇹 Milan Testing Laboratory
+        </span>
+
+        <strong>
+            98.5%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇨🇳 Shanghai Industrial Lab
+        </span>
+
+        <strong>
+            98.1%
+        </strong>
+
+    </div>
+
+
+    <div class="lab">
+
+        <span>
+            🇺🇸 Houston NDT Center
+        </span>
+
+        <strong>
+            98.9%
+        </strong>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    📈 System Performance
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            Signal Quality
+        </h3>
+
+        <strong>
+            98.4%
+        </strong>
+
+        <div class="progress">
+
+            <div style="width:98.4%"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Inspection Records
+        </h3>
+
+        <strong>
+            98.7%
+        </strong>
+
+        <div class="progress">
+
+            <div style="width:98.7%"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Traceability
+        </h3>
+
+        <strong>
+            98.6%
+        </strong>
+
+        <div class="progress">
+
+            <div style="width:98.6%"></div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            Report Completeness
+        </h3>
+
+        <strong>
+            99.1%
+        </strong>
+
+        <div class="progress">
+
+            <div style="width:99.1%"></div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    ➕ Add Testing System
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            📡 Probe System
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Probe System')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🔬 Tube Inspection
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Tube Inspection')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            ⚡ Conductivity
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Conductivity Measurement')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📈 Signal Analysis
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Signal Analysis')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🔍 Crack Detection
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Crack Detection')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📄 Digital Reports
+        </h3>
+
+        <button
+            class="action"
+            onclick="addSystem('Digital Reports')">
+
+            Add System
+
+        </button>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    🏭 Industrial Applications
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            🛢️ Oil & Gas
+        </h3>
+
+        <p>
+            Контроль подходящих электропроводящих компонентов,
+            труб и теплообменного оборудования.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            ✈️ Aerospace
+        </h3>
+
+        <p>
+            Неразрушающий контроль подходящих авиационных
+            компонентов и конструкционных материалов.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            ⚡ Energy
+        </h3>
+
+        <p>
+            Контроль труб, теплообменников и других
+            электропроводящих компонентов.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🏭 Manufacturing
+        </h3>
+
+        <p>
+            Проверка металлических деталей, листов,
+            труб и обработанных компонентов.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🚗 Automotive
+        </h3>
+
+        <p>
+            Контроль подходящих металлических компонентов
+            и деталей.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🚢 Shipbuilding
+        </h3>
+
+        <p>
+            Контроль электропроводящих компонентов
+            и металлических конструкций.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<h2 class="section-title">
+    🔐 Data Security
+</h2>
+
+
+<div class="grid">
+
+
+    <div class="card">
+
+        <h3>
+            🔑 Access Control
+        </h3>
+
+        <p>
+            Контроль доступа к данным испытаний.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            🏷️ Component ID
+        </h3>
+
+        <p>
+            Уникальный идентификатор каждой детали.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📡 Probe Data
+        </h3>
+
+        <p>
+            Сохранение информации о применённом датчике.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📈 Signal Data
+        </h3>
+
+        <p>
+            Регистрация результатов анализа сигналов.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📄 Test Reports
+        </h3>
+
+        <p>
+            История цифровых отчётов.
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        <h3>
+            📝 Audit Trail
+        </h3>
+
+        <p>
+            История действий пользователей.
+        </p>
+
+    </div>
+
+
+</div>
+
+
+<div class="notice">
+
+    ⚠️ <strong>Важно:</strong>
+    Эта страница является демонстрационной.
+    Реальный вихретоковый контроль должен выполняться
+    квалифицированными специалистами с подходящим оборудованием,
+    контрольными образцами и утверждёнными процедурами.
+    Приведённые записи, лаборатории и показатели являются
+    демонстрационными данными и не являются реальными
+    результатами испытаний.
+
+</div>
+
+
+<h2 class="section-title">
+    🔗 Industrial Workflow
+</h2>
+
+
+<div class="flow">
+
+    <div class="step">
+        Product
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Eddy Current Testing
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Quality
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Test Report
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Certificate
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Documents
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Supplier
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Order
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Logistics
+    </div>
+
+    <div class="arrow">
+        →
+    </div>
+
+    <div class="step">
+        Tracking
+    </div>
+
+</div>
+
+
+</main>
+
+
+<footer>
+
+    <strong>
+        WORKER PRO
+    </strong>
+
+    <p>
+        Производство • Технологии • Качество •
+        Испытания • Торговля • Логистика
+    </p>
+
+    <p>
+        © 2026 WORKER PRO — Industrial Platform
+    </p>
+
+</footer>
+
+
+<script>
+
+function runTest(name){
+
+    alert(
+        name +
+        "\n\nДемонстрационный режим. " +
+        "Реальный контроль не выполняется."
+    );
+
+}
+
+
+function createReport(){
+
+    alert(
+        "Демонстрационный отчёт " +
+        "ET-RPT-2026-001 создан."
+    );
+
+}
+
+
+function viewDetails(){
+
+    alert(
+        "ET-AZ-2026-001\n" +
+        "Heat Exchanger Tube\n" +
+        "Eddy Current Testing\n" +
+        "DEMO RECORD"
+    );
+
+}
+
+
+function addSystem(name){
+
+    alert(
+        name +
+        "\nДемонстрационный запрос " +
+        "на добавление системы."
+    );
+
+}
+
+
+function filterRows(){
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const status =
+        document
+        .getElementById("statusFilter")
+        .value;
+
+    document
+    .querySelectorAll("#testTable tr")
+    .forEach(row => {
+
+        const matchesText =
+            row.innerText
+            .toLowerCase()
+            .includes(search);
+
+        const matchesStatus =
+            status === "all" ||
+            row.dataset.status === status;
+
+        row.style.display =
+            matchesText && matchesStatus
+            ? ""
+            : "none";
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
