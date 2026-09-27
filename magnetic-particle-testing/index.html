@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Magnetic Particle Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:22px;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.subtitle{
+    color:#b7ff35;
+    margin-top:6px;
+}
+
+.top-languages{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    margin-top:18px;
+}
+
+.top-languages button{
+    background:#0b6b3d;
+    color:white;
+    border:1px solid #b7ff35;
+    padding:9px 13px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    background:#0b6b3d;
+    padding:12px;
+    text-align:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    margin:6px 9px;
+    display:inline-block;
+    font-size:14px;
+}
+
+nav a:hover{
+    color:#b7ff35;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,
+.card,
+.stat{
+    background:white;
+    border-radius:14px;
+    padding:20px;
+    box-shadow:0 3px 10px rgba(0,0,0,.06);
+}
+
+.hero{
+    border-left:6px solid #0b6b3d;
+    padding:28px;
+}
+
+h1,h2,h3{
+    color:#063d25;
+}
+
+.hero p,
+.card p{
+    line-height:1.6;
+}
+
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:15px;
+}
+
+.tag{
+    background:#e5f5eb;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.section-title{
+    margin-top:30px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.stat{
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    color:#0b6b3d;
+    font-size:27px;
+}
+
+.stat span{
+    font-size:13px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+    margin-top:15px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    align-items:center;
+    margin-top:15px;
+}
+
+.step{
+    background:#063d25;
+    color:white;
+    padding:12px 15px;
+    border-radius:9px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.arrow{
+    color:#0b6b3d;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:11px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.search{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:15px 0;
+}
+
+.search input,
+.search select{
+    flex:1;
+    min-width:180px;
+    padding:12px;
+    border:1px solid #ccd8d0;
+    border-radius:8px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    margin-top:15px;
+}
+
+th,
+td{
+    padding:12px;
+    border-bottom:1px solid #e2e9e4;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+.pass{
+    color:#08763f;
+    font-weight:bold;
+}
+
+.warning{
+    color:#b36b00;
+    font-weight:bold;
+}
+
+.progress{
+    height:10px;
+    background:#dce8e0;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:8px;
+}
+
+.progress div{
+    height:100%;
+    background:#0b6b3d;
+}
+
+.lab{
+    padding:12px;
+    border-bottom:1px solid #e2e9e4;
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.notice{
+    background:#fff9df;
+    border-left:5px solid #d4a000;
+    padding:16px;
+    border-radius:10px;
+    margin-top:25px;
+    line-height:1.6;
+}
+
+footer{
+    margin-top:40px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+footer strong{
+    font-size:22px;
+}
+
+@media(max-width:800px){
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:550px){
+    .stats,
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .flow{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .arrow{
+        text-align:center;
+        transform:rotate(90deg);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">WORKER PRO</div>
+
+    <div class="subtitle">
+        Глобальная промышленная платформа
+    </div>
+
+    <div class="top-languages">
+        <button>AZ</button>
+        <button>RU</button>
+        <button>EN</button>
+        <button>TR</button>
+        <button>DE</button>
+        <button>AR</button>
+        <button>ES</button>
+        <button>FR</button>
+        <button>IT</button>
+    </div>
+
+</header>
+
+
+<nav>
+    <a href="../index.html">Главная</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../equipment/index.html">Equipment</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+</nav>
+
+
+<main class="container">
+
+
+<section class="hero">
+
+    <h1>🧲 Magnetic Particle Testing</h1>
+
+    <p>
+        Магнитопорошковый неразрушающий контроль ферромагнитных
+        материалов. Метод используется для обнаружения поверхностных
+        и близких к поверхности дефектов, включая трещины и несплошности.
+    </p>
+
+    <div class="tags">
+        <span class="tag">Magnetic Particle Testing</span>
+        <span class="tag">MT</span>
+        <span class="tag">NDT</span>
+        <span class="tag">Crack Detection</span>
+        <span class="tag">Weld Inspection</span>
+        <span class="tag">Surface Inspection</span>
+        <span class="tag">Magnetic Field</span>
+        <span class="tag">Test Report</span>
+    </div>
+
+</section>
+
+
+<h2 class="section-title">📊 Magnetic Particle Testing Platform</h2>
+
+<div class="stats">
+
+    <div class="stat">
+        <strong>132</strong>
+        <span>MT Test Systems</span>
+    </div>
+
+    <div class="stat">
+        <strong>8,640</strong>
+        <span>Recorded Inspections</span>
+    </div>
+
+    <div class="stat">
+        <strong>61</strong>
+        <span>Connected Laboratories</span>
+    </div>
+
+    <div class="stat">
+        <strong>98.3%</strong>
+        <span>Record Completeness</span>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔄 Testing Workflow</h2>
+
+<div class="flow">
+
+    <div class="step">Component</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Sample ID</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Surface Preparation</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Magnetization</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Particle Application</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Indication Inspection</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Evaluation</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Report</div>
+
+</div>
+
+
+<h2 class="section-title">🧪 Testing Methods</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🧲 Magnetic Field</h3>
+        <p>
+            Создание магнитного поля в контролируемой металлической детали.
+        </p>
+        <button class="action" onclick="runTest('Magnetic Field Test')">
+            Start Demo
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>🔍 Crack Detection</h3>
+        <p>
+            Демонстрационный поиск поверхностных и близких к поверхности
+            трещин.
+        </p>
+        <button class="action" onclick="runTest('Crack Detection')">
+            Inspect
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>💧 Wet Method</h3>
+        <p>
+            Демонстрация метода с использованием жидкой магнитной суспензии.
+        </p>
+        <button class="action" onclick="runTest('Wet Method')">
+            Open Demo
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>🧪 Dry Method</h3>
+        <p>
+            Демонстрационная проверка с использованием сухих магнитных
+            частиц.
+        </p>
+        <button class="action" onclick="runTest('Dry Method')">
+            Open Demo
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>🔩 Weld Inspection</h3>
+        <p>
+            Контроль сварных соединений ферромагнитных материалов.
+        </p>
+        <button class="action" onclick="runTest('Weld Inspection')">
+            Inspect
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>📄 Digital Report</h3>
+        <p>
+            Создание демонстрационного отчёта по результатам контроля.
+        </p>
+        <button class="action" onclick="createReport()">
+            Create Report
+        </button>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">⚙️ Inspection Parameters</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>Magnetic Field</h3>
+        <p>
+            Параметры магнитного поля при проведении контроля.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>Field Direction</h3>
+        <p>
+            Направление магнитного поля относительно предполагаемого дефекта.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>Particle Concentration</h3>
+        <p>
+            Контроль параметров магнитной суспензии в соответствии с процедурой.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>Surface Condition</h3>
+        <p>
+            Состояние поверхности перед проведением контроля.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>Inspection Coverage</h3>
+        <p>
+            Контроль зоны и покрытия поверхности.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>Indication Evaluation</h3>
+        <p>
+            Регистрация и оценка обнаруженных индикаций.
+        </p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🧾 Example Inspection Record</h2>
+
+<div class="card">
+
+    <h3>MT-AZ-2026-001</h3>
+
+    <p><strong>Component:</strong> Industrial Steel Shaft</p>
+    <p><strong>Method:</strong> Magnetic Particle Testing</p>
+    <p><strong>Material:</strong> Carbon Steel</p>
+    <p><strong>Inspection Area:</strong> Shaft Surface</p>
+    <p><strong>Record:</strong> DEMO-MT-001</p>
+    <p>
+        <strong>Status:</strong>
+        <span class="pass">DEMO RECORD</span>
+    </p>
+
+    <button class="action" onclick="viewDetails()">
+        View Details
+    </button>
+
+</div>
+
+
+<h2 class="section-title">🔎 Inspection Database</h2>
+
+<div class="search">
+
+    <input
+        id="searchInput"
+        placeholder="Поиск детали или города..."
+        oninput="filterRows()"
+    >
+
+    <select id="statusFilter" onchange="filterRows()">
+        <option value="all">Все результаты</option>
+        <option value="pass">PASS</option>
+        <option value="warning">WARNING</option>
+    </select>
+
+</div>
+
+
+<table>
+
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Component</th>
+    <th>Location</th>
+    <th>Method</th>
+    <th>Status</th>
+</tr>
+</thead>
+
+<tbody id="testTable">
+
+<tr data-status="pass">
+    <td>MT-001</td>
+    <td>Steel Shaft</td>
+    <td>Baku</td>
+    <td>Wet Method</td>
+    <td class="pass">PASS</td>
+</tr>
+
+<tr data-status="pass">
+    <td>MT-002</td>
+    <td>Welded Joint</td>
+    <td>Sumqayit</td>
+    <td>Magnetic Field</td>
+    <td class="pass">PASS</td>
+</tr>
+
+<tr data-status="warning">
+    <td>MT-003</td>
+    <td>Pressure Vessel</td>
+    <td>Istanbul</td>
+    <td>Crack Detection</td>
+    <td class="warning">WARNING</td>
+</tr>
+
+<tr data-status="pass">
+    <td>MT-004</td>
+    <td>Industrial Gear</td>
+    <td>Dortmund</td>
+    <td>Dry Method</td>
+    <td class="pass">PASS</td>
+</tr>
+
+<tr data-status="pass">
+    <td>MT-005</td>
+    <td>Steel Component</td>
+    <td>Milan</td>
+    <td>Weld Inspection</td>
+    <td class="pass">PASS</td>
+</tr>
+
+<tr data-status="warning">
+    <td>MT-006</td>
+    <td>Machine Shaft</td>
+    <td>Shanghai</td>
+    <td>Crack Detection</td>
+    <td class="warning">WARNING</td>
+</tr>
+
+</tbody>
+
+</table>
+
+
+<h2 class="section-title">🧪 Connected Laboratories</h2>
+
+<div class="card">
+
+    <div class="lab">
+        <span>🇦🇿 Baku NDT Laboratory</span>
+        <strong>98.7%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇦🇿 Sumqayit Testing Center</span>
+        <strong>98.2%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇹🇷 Istanbul NDT Laboratory</span>
+        <strong>97.9%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇩🇪 Dortmund Inspection Center</span>
+        <strong>99.1%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇮🇹 Milan Testing Laboratory</span>
+        <strong>98.6%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇨🇳 Shanghai Industrial Lab</span>
+        <strong>98.0%</strong>
+    </div>
+
+    <div class="lab">
+        <span>🇺🇸 Houston NDT Center</span>
+        <strong>99.0%</strong>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">📈 System Performance</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>Surface Inspection</h3>
+        <strong>98.6%</strong>
+        <div class="progress">
+            <div style="width:98.6%"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Inspection Records</h3>
+        <strong>98.0%</strong>
+        <div class="progress">
+            <div style="width:98%"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Traceability</h3>
+        <strong>98.4%</strong>
+        <div class="progress">
+            <div style="width:98.4%"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Report Completeness</h3>
+        <strong>99.1%</strong>
+        <div class="progress">
+            <div style="width:99.1%"></div>
+        </div>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">➕ Add Testing System</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🧲 Magnetic Field</h3>
+        <button class="action"
+                onclick="addSystem('Magnetic Field')">
+            Add System
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>🔍 Crack Detection</h3>
+        <button class="action"
+                onclick="addSystem('Crack Detection')">
+            Add System
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>💧 Wet Method</h3>
+        <button class="action"
+                onclick="addSystem('Wet Method')">
+            Add System
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>🧪 Dry Method</h3>
+        <button class="action"
+                onclick="addSystem('Dry Method')">
+            Add System
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>🔩 Weld Inspection</h3>
+        <button class="action"
+                onclick="addSystem('Weld Inspection')">
+            Add System
+        </button>
+    </div>
+
+    <div class="card">
+        <h3>📄 Digital Reports</h3>
+        <button class="action"
+                onclick="addSystem('Digital Reports')">
+            Add System
+        </button>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🏭 Industrial Applications</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🛢️ Oil & Gas</h3>
+        <p>
+            Контроль ферромагнитных деталей, сварных соединений
+            и оборудования.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🏭 Manufacturing</h3>
+        <p>
+            Проверка валов, шестерён, деталей и металлических компонентов.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🚢 Shipbuilding</h3>
+        <p>
+            Контроль металлических конструкций и сварных соединений.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>⚡ Energy</h3>
+        <p>
+            Контроль компонентов энергетического оборудования.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🚗 Automotive</h3>
+        <p>
+            Контроль отдельных ферромагнитных компонентов автомобилей.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>⛏️ Mining</h3>
+        <p>
+            Проверка валов, деталей и элементов горного оборудования.
+        </p>
+    </div>
+
+</div>
+
+
+<h2 class="section-title">🔐 Data Security</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>🔑 Access Control</h3>
+        <p>
+            Контроль доступа к данным инспекции.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🏷️ Sample ID</h3>
+        <p>
+            Уникальный идентификатор каждого образца.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🧲 Magnetic Records</h3>
+        <p>
+            Сохранение информации о проведённом контроле.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>🔍 Indication Data</h3>
+        <p>
+            Регистрация обнаруженных индикаций.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>📄 Test Reports</h3>
+        <p>
+            История цифровых отчётов.
+        </p>
+    </div>
+
+    <div class="card">
+        <h3>📝 Audit Trail</h3>
+        <p>
+            История действий пользователей.
+        </p>
+    </div>
+
+</div>
+
+
+<div class="notice">
+    ⚠️ <strong>Важно:</strong> Эта страница является демонстрационной.
+    Реальный магнитопорошковый контроль должен выполняться
+    квалифицированными специалистами с подходящим оборудованием,
+    материалами и утверждёнными процедурами. Приведённые записи
+    и показатели не являются реальными результатами испытаний.
+</div>
+
+
+<h2 class="section-title">🔗 Industrial Workflow</h2>
+
+<div class="flow">
+
+    <div class="step">Product</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Magnetic Particle Testing</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Quality</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Test Report</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Certificate</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Supplier</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Order</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Logistics</div>
+    <div class="arrow">→</div>
+
+    <div class="step">Tracking</div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+    <strong>WORKER PRO</strong>
+
+    <p>
+        Производство • Технологии • Качество • Испытания •
+        Торговля • Логистика
+    </p>
+
+    <p>
+        © 2026 WORKER PRO — Industrial Platform
+    </p>
+
+</footer>
+
+
+<script>
+
+function runTest(name){
+    alert(
+        name +
+        "\n\nДемонстрационный режим. " +
+        "Реальный контроль не выполняется."
+    );
+}
+
+function createReport(){
+    alert(
+        "Демонстрационный отчёт MT-RPT-2026-001 создан."
+    );
+}
+
+function viewDetails(){
+    alert(
+        "MT-AZ-2026-001\n" +
+        "Industrial Steel Shaft\n" +
+        "Magnetic Particle Testing\n" +
+        "DEMO RECORD"
+    );
+}
+
+function addSystem(name){
+    alert(
+        name +
+        "\nДемонстрационный запрос на добавление системы."
+    );
+}
+
+function filterRows(){
+
+    const search =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const status =
+        document
+        .getElementById("statusFilter")
+        .value;
+
+    document
+    .querySelectorAll("#testTable tr")
+    .forEach(row => {
+
+        const matchesText =
+            row.innerText
+            .toLowerCase()
+            .includes(search);
+
+        const matchesStatus =
+            status === "all" ||
+            row.dataset.status === status;
+
+        row.style.display =
+            matchesText && matchesStatus
+            ? ""
+            : "none";
+    });
+}
+
+</script>
+
+</body>
+</html>
