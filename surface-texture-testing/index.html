@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Surface Texture Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    padding:22px 15px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:5px;
+    font-size:14px;
+}
+
+.top-languages{
+    margin-top:15px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+}
+
+.top-languages button{
+    border:1px solid #b7ff35;
+    background:#0b6b3d;
+    color:white;
+    padding:7px 10px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    margin-top:15px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+    background:#075b34;
+    padding:8px 11px;
+    border-radius:7px;
+    font-size:13px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px 15px 50px;
+}
+
+.hero{
+    background:white;
+    border-radius:16px;
+    padding:28px 20px;
+    margin-bottom:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
+}
+
+.hero h1{
+    margin-top:0;
+    color:#063d25;
+    font-size:30px;
+}
+
+.hero p{
+    line-height:1.6;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.section-title{
+    color:#063d25;
+    margin-top:30px;
+    border-left:6px solid #b7ff35;
+    padding-left:10px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:18px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card p{
+    line-height:1.5;
+    font-size:14px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:25px;
+    margin-bottom:5px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin:20px 0;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:11px 14px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#063d25;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    margin:5px 3px 0 0;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.parameters{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:12px;
+}
+
+.parameter{
+    border-left:5px solid #0b6b3d;
+    background:#f8fbf9;
+    padding:14px;
+    border-radius:8px;
+}
+
+.parameter strong{
+    color:#063d25;
+}
+
+.search-box{
+    margin:15px 0;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.search-box input,
+.search-box select{
+    padding:11px;
+    border:1px solid #cbd8d0;
+    border-radius:8px;
+    flex:1;
+    min-width:180px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    min-width:900px;
+}
+
+th{
+    background:#063d25;
+    color:white;
+    padding:11px;
+    text-align:left;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+    background:#f0f8f3;
+}
+
+.pass{
+    color:#087b3e;
+    font-weight:bold;
+}
+
+.warning{
+    color:#c77700;
+    font-weight:bold;
+}
+
+.progress{
+    background:#dce7e0;
+    border-radius:20px;
+    overflow:hidden;
+    height:14px;
+    margin-top:8px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:6px solid #e2ad00;
+    padding:15px;
+    border-radius:10px;
+    margin-top:20px;
+    line-height:1.5;
+}
+
+.security{
+    background:#063d25;
+    color:white;
+    border-radius:14px;
+    padding:20px;
+}
+
+.security h3{
+    color:#b7ff35;
+}
+
+.result{
+    margin-top:12px;
+    padding:12px;
+    background:#eef7f1;
+    border-left:5px solid #0b6b3d;
+    border-radius:8px;
+    display:none;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+.small{
+    font-size:13px;
+    opacity:.85;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+
+<div class="subtitle">
+Глобальная промышленная платформа
+</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+<nav>
+<a href="../index.html">Главная</a>
+<a href="../production/index.html">Production</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../testing/index.html">Testing</a>
+<a href="../quality/index.html">Quality</a>
+<a href="../documents/index.html">Documents</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../orders/index.html">Orders</a>
+</nav>
+
+</header>
+
+
+<main class="container">
+
+<section class="hero">
+
+<span class="badge">№190 — TESTING</span>
+
+<h1>Surface Texture Testing</h1>
+
+<h2>Контроль текстуры поверхности</h2>
+
+<p>
+Surface Texture Testing — контроль характеристик поверхности детали,
+включая направление рисок, профиль, шероховатость и особенности
+поверхностного слоя после механической обработки.
+</p>
+
+<p>
+Платформа WORKER PRO позволяет связывать результаты контроля поверхности
+с деталью, технологическим процессом, измерительным оборудованием,
+качеством и цифровыми документами.
+</p>
+
+<button class="action" onclick="startInspection()">
+▶ Start Surface Inspection
+</button>
+
+<button class="action" onclick="createReport()">
+📄 Create Report
+</button>
+
+<div id="result" class="result"></div>
+
+</section>
+
+
+<h2 class="section-title">📊 Surface Texture Statistics</h2>
+
+<div class="stats">
+
+<div class="stat">
+<strong>142</strong>
+Texture Systems
+</div>
+
+<div class="stat">
+<strong>12,640</strong>
+Surface Records
+</div>
+
+<div class="stat">
+<strong>54</strong>
+Metrology Teams
+</div>
+
+<div class="stat">
+<strong>97.8%</strong>
+Data Completeness
+</div>
+
+</div>
+
+
+<h2 class="section-title">🔄 Surface Texture Workflow</h2>
+
+<div class="flow">
+
+<div class="flow-item">Part</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Surface Preparation</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Measurement</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Surface Profile</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Lay Direction</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Evaluation</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Report</div>
+
+</div>
+
+
+<h2 class="section-title">🔬 Surface Texture Methods</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>📏 Contact Measurement</h3>
+<p>
+Измерение поверхности контактным щупом для получения профиля.
+</p>
+<button class="action" onclick="viewDetails('Contact Measurement')">
+Подробнее
+</button>
+</div>
+
+<div class="card">
+<h3>🔭 Optical Measurement</h3>
+<p>
+Бесконтактное получение информации о поверхности с помощью
+оптической системы.
+</p>
+<button class="action" onclick="viewDetails('Optical Measurement')">
+Подробнее
+</button>
+</div>
+
+<div class="card">
+<h3>↔ Lay Direction</h3>
+<p>
+Определение основного направления рисок и следов обработки.
+</p>
+</div>
+
+<div class="card">
+<h3>📈 Surface Profile</h3>
+<p>
+Получение цифрового профиля поверхности для дальнейшего анализа.
+</p>
+</div>
+
+<div class="card">
+<h3>⚙️ Machining Texture</h3>
+<p>
+Анализ следов точения, фрезерования и других процессов обработки.
+</p>
+</div>
+
+<div class="card">
+<h3>🌀 Grinding Texture</h3>
+<p>
+Контроль направления и характера текстуры после шлифования.
+</p>
+</div>
+
+<div class="card">
+<h3>🔬 Microscopic Inspection</h3>
+<p>
+Визуальное и микроскопическое исследование состояния поверхности.
+</p>
+</div>
+
+<div class="card">
+<h3>📄 Digital Texture Report</h3>
+<p>
+Формирование цифрового отчёта с результатами контроля поверхности.
+</p>
+</div>
+
+</div>
+
+
+<h2 class="section-title">📐 Surface Parameters</h2>
+
+<div class="parameters">
+
+<div class="parameter">
+<strong>Ra</strong>
+<p>Среднее арифметическое отклонение профиля.</p>
+</div>
+
+<div class="parameter">
+<strong>Rz</strong>
+<p>Параметр высоты неровностей; конкретное определение зависит от применяемого стандарта.</p>
+</div>
+
+<div class="parameter">
+<strong>Rt</strong>
+<p>Общая высота профиля на оцениваемом участке.</p>
+</div>
+
+<div class="parameter">
+<strong>Rq</strong>
+<p>Среднеквадратическое значение отклонений профиля.</p>
+</div>
+
+<div class="parameter">
+<strong>Lay</strong>
+<p>Основное направление текстуры поверхности.</p>
+</div>
+
+<div class="parameter">
+<strong>Profile</strong>
+<p>Полученный профиль поверхности для анализа.</p>
+</div>
+
+<div class="parameter">
+<strong>Sampling Length</strong>
+<p>Длина выборки при оценке профиля.</p>
+</div>
+
+<div class="parameter">
+<strong>Measurement Direction</strong>
+<p>Направление прохождения измерительного инструмента.</p>
+</div>
+
+</div>
+
+
+<h2 class="section-title">🧪 Example Surface Inspection</h2>
+
+<div class="card">
+
+<h3>ST-AZ-2026-001</h3>
+
+<p><strong>Component:</strong> Hydraulic Cylinder Rod</p>
+
+<p><strong>Process:</strong> Grinding</p>
+
+<p><strong>Surface:</strong> Cylindrical Working Surface</p>
+
+<p><strong>Lay:</strong> Longitudinal</p>
+
+<p><strong>Ra:</strong> 0.82 µm</p>
+
+<p><strong>Rz:</strong> 4.7 µm</p>
+
+<p><strong>Instrument:</strong> Contact Surface Tester</p>
+
+<p>
+<strong>Status:</strong>
+<span class="pass">DEMO PASS</span>
+</p>
+
+<div class="progress">
+<span style="width:91%"></span>
+</div>
+
+<button class="action"
+onclick="viewDetails('ST-AZ-2026-001')">
+View Inspection
+</button>
+
+</div>
+
+
+<h2 class="section-title">🗃 Surface Texture Database</h2>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Поиск детали, города, процесса..."
+onkeyup="filterRows()"
+>
+
+<select id="statusFilter" onchange="filterRows()">
+
+<option value="all">Все статусы</option>
+<option value="pass">PASS</option>
+<option value="warning">WARNING</option>
+
+</select>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table id="textureTable">
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Component</th>
+<th>Location</th>
+<th>Process</th>
+<th>Lay</th>
+<th>Parameter</th>
+<th>Value</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>ST-001</td>
+<td>Hydraulic Rod</td>
+<td>Baku</td>
+<td>Grinding</td>
+<td>Longitudinal</td>
+<td>Ra</td>
+<td>0.82 µm</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>ST-002</td>
+<td>Pump Shaft</td>
+<td>Sumqayit</td>
+<td>Turning</td>
+<td>Circular</td>
+<td>Ra</td>
+<td>1.65 µm</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>ST-003</td>
+<td>Steel Roller</td>
+<td>Istanbul</td>
+<td>Grinding</td>
+<td>Longitudinal</td>
+<td>Rz</td>
+<td>8.2 µm</td>
+<td class="warning">WARNING</td>
+</tr>
+
+<tr>
+<td>ST-004</td>
+<td>Valve Seat</td>
+<td>Dortmund</td>
+<td>Finishing</td>
+<td>Circular</td>
+<td>Ra</td>
+<td>0.58 µm</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>ST-005</td>
+<td>Machine Plate</td>
+<td>Milan</td>
+<td>Milling</td>
+<td>Cross</td>
+<td>Rt</td>
+<td>9.4 µm</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>ST-006</td>
+<td>Pipeline Component</td>
+<td>Houston</td>
+<td>Machining</td>
+<td>Longitudinal</td>
+<td>Rz</td>
+<td>13.6 µm</td>
+<td class="warning">WARNING</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<h2 class="section-title">🌍 Connected Metrology Teams</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>🇦🇿 Baku</h3>
+<p>Surface texture and machining inspection.</p>
+<button class="action" onclick="viewDetails('Baku Team')">Open</button>
+</div>
+
+<div class="card">
+<h3>🇦🇿 Sumqayit</h3>
+<p>Industrial surface measurement.</p>
+<button class="action" onclick="viewDetails('Sumqayit Team')">Open</button>
+</div>
+
+<div class="card">
+<h3>🇹🇷 Istanbul</h3>
+<p>Machining and grinding inspection.</p>
+<button class="action" onclick="viewDetails('Istanbul Team')">Open</button>
+</div>
+
+<div class="card">
+<h3>🇩🇪 Dortmund</h3>
+<p>Precision surface evaluation.</p>
+<button class="action" onclick="viewDetails('Dortmund Team')">Open</button>
+</div>
+
+<div class="card">
+<h3>🇮🇹 Milan</h3>
+<p>Industrial texture inspection.</p>
+<button class="action" onclick="viewDetails('Milan Team')">Open</button>
+</div>
+
+<div class="card">
+<h3>🇨🇳 Shanghai</h3>
+<p>Manufacturing surface analysis.</p>
+<button class="action" onclick="viewDetails('Shanghai Team')">Open</button>
+</div>
+
+<div class="card">
+<h3>🇺🇸 Houston</h3>
+<p>Oil & Gas component surface inspection.</p>
+<button class="action" onclick="viewDetails('Houston Team')">Open</button>
+</div>
+
+</div>
+
+
+<h2 class="section-title">⚙️ Inspection Performance</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Surface Systems</h3>
+<p>Active measurement systems</p>
+<div class="progress">
+<span style="width:93%"></span>
+</div>
+</div>
+
+<div class="card">
+<h3>Data Completeness</h3>
+<p>Texture records</p>
+<div class="progress">
+<span style="width:98%"></span>
+</div>
+</div>
+
+<div class="card">
+<h3>Digital Reports</h3>
+<p>Report generation</p>
+<div class="progress">
+<span style="width:95%"></span>
+</div>
+</div>
+
+<div class="card">
+<h3>Traceability</h3>
+<p>Measurement history</p>
+<div class="progress">
+<span style="width:92%"></span>
+</div>
+</div>
+
+</div>
+
+
+<h2 class="section-title">➕ Surface Measurement Systems</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>📏 Contact Texture Tester</h3>
+<p>Контактный контроль профиля поверхности.</p>
+<button class="action" onclick="addSystem('Contact Texture Tester')">
+Add System
+</button>
+</div>
+
+<div class="card">
+<h3>🔭 Optical Surface System</h3>
+<p>Бесконтактное исследование поверхности.</p>
+<button class="action" onclick="addSystem('Optical Surface System')">
+Add System
+</button>
+</div>
+
+<div class="card">
+<h3>📱 Portable Texture Tester</h3>
+<p>Мобильный контроль на производственной площадке.</p>
+<button class="action" onclick="addSystem('Portable Texture Tester')">
+Add System
+</button>
+</div>
+
+<div class="card">
+<h3>🧊 3D Surface Scanner</h3>
+<p>Трёхмерное сканирование поверхности.</p>
+<button class="action" onclick="addSystem('3D Surface Scanner')">
+Add System
+</button>
+</div>
+
+<div class="card">
+<h3>📊 Texture Analyzer</h3>
+<p>Цифровой анализ профиля и текстуры.</p>
+<button class="action" onclick="addSystem('Texture Analyzer')">
+Add System
+</button>
+</div>
+
+<div class="card">
+<h3>💻 Digital Inspection System</h3>
+<p>Цифровая регистрация и хранение результатов.</p>
+<button class="action" onclick="addSystem('Digital Inspection System')">
+Add System
+</button>
+</div>
+
+</div>
+
+
+<h2 class="section-title">🏭 Industrial Applications</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>⚙️ Turning</h3>
+<p>Контроль текстуры поверхности после токарной обработки.</p>
+</div>
+
+<div class="card">
+<h3>🔩 Milling</h3>
+<p>Контроль следов фрезерования и направления обработки.</p>
+</div>
+
+<div class="card">
+<h3>🌀 Grinding</h3>
+<p>Контроль поверхности после шлифования.</p>
+</div>
+
+<div class="card">
+<h3>🛢 Oil & Gas</h3>
+<p>Валы, насосы, клапаны и трубопроводные компоненты.</p>
+</div>
+
+<div class="card">
+<h3>🚗 Automotive</h3>
+<p>Контроль обработанных автомобильных компонентов.</p>
+</div>
+
+<div class="card">
+<h3>✈️ Aerospace</h3>
+<p>Контроль высокоточных поверхностей.</p>
+</div>
+
+<div class="card">
+<h3>⚡ Energy</h3>
+<p>Контроль деталей энергетического оборудования.</p>
+</div>
+
+<div class="card">
+<h3>🔧 Pumps & Valves</h3>
+<p>Контроль рабочих поверхностей насосов и клапанов.</p>
+</div>
+
+</div>
+
+
+<h2 class="section-title">🔐 Data Security</h2>
+
+<section class="security">
+
+<h3>WORKER PRO Surface Data</h3>
+
+<div class="grid">
+
+<div>
+<p>🔒 Secure Records</p>
+<p>Данные измерений могут храниться вместе с идентификатором детали.</p>
+</div>
+
+<div>
+<p>📄 Digital Reports</p>
+<p>Результаты связываются с цифровыми отчётами.</p>
+</div>
+
+<div>
+<p>👤 User Access</p>
+<p>Доступ может разделяться по ролям пользователей.</p>
+</div>
+
+<div>
+<p>🔗 Traceability</p>
+<p>История контроля может связываться с Product и Quality.</p>
+</div>
+
+</div>
+
+</section>
+
+
+<div class="notice">
+
+<strong>⚠️ Важно:</strong><br>
+
+Эта страница является демонстрационной частью WORKER PRO.
+Все статистические показатели, измерения и записи являются DEMO DATA.
+
+Реальный контроль поверхности требует подходящего измерительного
+оборудования, квалифицированного персонала, корректной методики
+и применимых технических требований или стандартов.
+
+</div>
+
+
+<h2 class="section-title">🔗 WORKER PRO Industrial Workflow</h2>
+
+<div class="flow">
+
+<div class="flow-item">Product</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Surface Texture Testing</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Quality</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Test Report</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Certificate</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Documents</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Supplier</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Order</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Logistics</div>
+<div class="arrow">→</div>
+
+<div class="flow-item">Tracking</div>
+
+</div>
+
+</main>
+
+
+<footer>
+
+<strong>WORKER PRO</strong>
+
+<p>Глобальная промышленная платформа</p>
+
+<p class="small">
+Production • Equipment • Testing • Quality • Suppliers • Orders • Logistics • Tracking
+</p>
+
+<p class="small">
+© 2026 WORKER PRO — F.S.
+</p>
+
+</footer>
+
+
+<script>
+
+function showResult(message){
+
+    const result=document.getElementById("result");
+
+    result.style.display="block";
+
+    result.innerHTML=message;
+
+}
+
+
+function startInspection(){
+
+    showResult(
+        "🔬 <strong>Surface inspection started.</strong><br>" +
+        "Demo surface profile is being analyzed...<br>" +
+        "Lay: Longitudinal<br>" +
+        "Ra: 0.82 µm<br>" +
+        "<span class='pass'>Status: DEMO PASS</span>"
+    );
+
+}
+
+
+function createReport(){
+
+    showResult(
+        "📄 <strong>Digital report created.</strong><br>" +
+        "Report ID: ST-REPORT-2026-001<br>" +
+        "Inspection ID: ST-AZ-2026-001<br>" +
+        "<span class='pass'>Report status: DEMO READY</span>"
+    );
+
+}
+
+
+function viewDetails(name){
+
+    showResult(
+        "ℹ️ <strong>Selected:</strong> " +
+        name +
+        "<br>Demo information loaded."
+    );
+
+}
+
+
+function addSystem(name){
+
+    showResult(
+        "➕ <strong>Surface measurement system:</strong> " +
+        name +
+        "<br>Demo system added to the WORKER PRO registry."
+    );
+
+}
+
+
+function filterRows(){
+
+    const input=document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const status=document
+        .getElementById("statusFilter")
+        .value
+        .toLowerCase();
+
+    const rows=document
+        .querySelectorAll("#textureTable tbody tr");
+
+    rows.forEach(function(row){
+
+        const text=row.innerText.toLowerCase();
+
+        const rowStatus=row
+            .cells[7]
+            .innerText
+            .toLowerCase();
+
+        const searchMatch=text.includes(input);
+
+        const statusMatch=
+            status==="all" ||
+            rowStatus===status;
+
+        row.style.display=
+            searchMatch && statusMatch
+            ? ""
+            : "none";
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
