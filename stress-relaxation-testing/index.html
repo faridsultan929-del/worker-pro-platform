@@ -1,0 +1,1976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Stress Relaxation Testing</title>
+
+<style>
+:root{
+    --dark:#063d25;
+    --green:#0b6b3d;
+    --lime:#b7ff35;
+    --bg:#f4f7f5;
+    --white:#ffffff;
+    --text:#173b2b;
+    --muted:#687b70;
+    --border:#dce8df;
+    --orange:#a15c00;
+    --red:#b42318;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,input,select,textarea{
+    font:inherit;
+}
+
+.top-languages{
+    background:var(--dark);
+    padding:10px 4%;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.top-languages button{
+    background:transparent;
+    color:white;
+    border:1px solid #47765d;
+    border-radius:6px;
+    padding:8px 13px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.top-languages button.active,
+.top-languages button:hover{
+    background:var(--lime);
+    color:var(--dark);
+    border-color:var(--lime);
+}
+
+header{
+    background:white;
+    padding:20px 4%;
+    border-bottom:1px solid var(--border);
+}
+
+.brand{
+    color:var(--dark);
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.brand span{
+    color:var(--green);
+}
+
+.subtitle{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+nav{
+    background:var(--green);
+    padding:12px 4%;
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    padding:9px 12px;
+    border-radius:6px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:var(--lime);
+    color:var(--dark);
+}
+
+.container{
+    width:92%;
+    max-width:1250px;
+    margin:25px auto;
+}
+
+.hero{
+    background:linear-gradient(125deg,var(--dark),var(--green));
+    color:white;
+    border-radius:18px;
+    padding:35px;
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:25px;
+    align-items:center;
+}
+
+.tag{
+    display:inline-block;
+    background:var(--lime);
+    color:var(--dark);
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.hero h1{
+    font-size:clamp(28px,4vw,45px);
+    line-height:1.15;
+    margin:18px 0 12px;
+}
+
+.hero p{
+    color:#d8eadf;
+    line-height:1.7;
+}
+
+.hero-visual{
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:14px;
+    padding:25px;
+}
+
+.relax-symbol{
+    font-size:50px;
+    text-align:center;
+    color:var(--lime);
+    font-weight:bold;
+}
+
+.hero-visual h3{
+    text-align:center;
+}
+
+.hero-visual p{
+    text-align:center;
+    margin-bottom:0;
+}
+
+.btn{
+    display:inline-block;
+    border:none;
+    border-radius:8px;
+    padding:12px 17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin:6px 5px 0 0;
+}
+
+.btn-primary{
+    background:var(--lime);
+    color:var(--dark);
+}
+
+.btn-light{
+    background:white;
+    color:var(--dark);
+}
+
+.btn-green{
+    background:var(--green);
+    color:white;
+}
+
+.section-title{
+    margin:32px 0 16px;
+    color:var(--dark);
+    font-size:24px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:22px;
+}
+
+.stat,.card,.panel{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:20px;
+}
+
+.stat strong{
+    display:block;
+    font-size:27px;
+    color:var(--green);
+    margin-bottom:7px;
+}
+
+.stat span{
+    font-size:13px;
+    color:var(--muted);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.card h3{
+    margin-top:0;
+    color:var(--dark);
+}
+
+.card p{
+    line-height:1.6;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.icon{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.badge{
+    display:inline-block;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:bold;
+    background:#e4f4e9;
+    color:var(--green);
+}
+
+.badge.warning{
+    background:#fff0d6;
+    color:var(--orange);
+}
+
+.badge.danger{
+    background:#fde8e7;
+    color:var(--red);
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:10px;
+}
+
+.step{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:17px 12px;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.step b{
+    display:block;
+    background:var(--green);
+    color:white;
+    border-radius:50%;
+    width:32px;
+    height:32px;
+    line-height:32px;
+    margin:0 auto 12px;
+}
+
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.toolbar input,
+.toolbar select,
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px;
+    background:white;
+}
+
+.toolbar input{
+    flex:1;
+    min-width:220px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1250px;
+}
+
+th,td{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#eaf3ed;
+    color:var(--dark);
+}
+
+tr:hover td{
+    background:#f8fbf8;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.form-grid label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    width:100%;
+}
+
+.form-grid textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.form-grid .full{
+    grid-column:1/-1;
+}
+
+.notice{
+    background:#fff7e5;
+    border:1px solid #f0d79b;
+    color:#755000;
+    padding:16px;
+    border-radius:10px;
+    line-height:1.6;
+    font-size:14px;
+}
+
+.info-box{
+    background:#eaf4ed;
+    border-left:5px solid var(--green);
+    border-radius:8px;
+    padding:17px;
+    line-height:1.7;
+    font-size:14px;
+}
+
+footer{
+    margin-top:35px;
+    background:var(--dark);
+    color:white;
+    padding:25px 4%;
+    text-align:center;
+    font-size:13px;
+    line-height:1.8;
+}
+
+footer a{
+    color:var(--lime);
+}
+
+@media(max-width:850px){
+
+    .hero{
+        grid-template-columns:1fr;
+        padding:25px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .workflow{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:550px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .workflow{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid .full{
+        grid-column:auto;
+    }
+
+    .hero{
+        padding:20px;
+    }
+
+    .container{
+        width:94%;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat strong{
+        font-size:23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button class="active" onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+    <div class="brand">WORKER <span>PRO</span></div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<div>
+
+<span class="tag">TESTING · №198</span>
+
+<h1>Stress Relaxation Testing</h1>
+
+<p>
+Испытания для оценки снижения напряжения во времени
+при сохранении заданной деформации или перемещения
+образца.
+</p>
+
+<p>
+WORKER PRO позволяет фиксировать материал,
+начальную деформацию, начальное напряжение,
+температуру, время испытания и остаточное напряжение.
+</p>
+
+<button class="btn btn-primary"
+onclick="scrollToSection('newTest')">
++ New Relaxation Test
+</button>
+
+<button class="btn btn-light"
+onclick="scrollToSection('records')">
+View Records
+</button>
+
+</div>
+
+<div class="hero-visual">
+
+<div class="relax-symbol">σ₀ → σ(t)</div>
+
+<h3>Stress Relaxation</h3>
+
+<p>
+Strain · Stress · Temperature · Time
+</p>
+
+</div>
+
+</section>
+
+
+<section class="stats">
+
+<div class="stat">
+<strong>69</strong>
+<span>Demo relaxation programs</span>
+</div>
+
+<div class="stat">
+<strong>2,160</strong>
+<span>Demo test records</span>
+</div>
+
+<div class="stat">
+<strong>27</strong>
+<span>Demo laboratory teams</span>
+</div>
+
+<div class="stat">
+<strong>96.1%</strong>
+<span>Demo record completeness</span>
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Stress Relaxation Fundamentals
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<div class="icon">📐</div>
+
+<h3>Fixed Strain</h3>
+
+<p>
+При релаксации напряжений деформация или перемещение
+образца поддерживается на заданном уровне, пока
+напряжение изменяется со временем.
+</p>
+
+<span class="badge">
+Strain
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📉</div>
+
+<h3>Stress Reduction</h3>
+
+<p>
+Основным результатом является изменение напряжения
+от начального значения к остаточному во времени.
+</p>
+
+<span class="badge">
+Stress
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🔥</div>
+
+<h3>Temperature Effect</h3>
+
+<p>
+Температура может существенно влиять на скорость
+релаксации и поведение материала.
+</p>
+
+<span class="badge warning">
+Temperature
+</span>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Testing Parameters
+</h2>
+
+<section class="grid">
+
+<div class="card">
+<h3>Material / Grade</h3>
+<p>
+Марка материала, состояние, термообработка
+и другие характеристики образца.
+</p>
+</div>
+
+<div class="card">
+<h3>Initial Strain</h3>
+<p>
+Заданная начальная деформация или перемещение,
+которое поддерживается во время испытания.
+</p>
+</div>
+
+<div class="card">
+<h3>Initial Stress</h3>
+<p>
+Начальное напряжение фиксируется перед началом
+наблюдения за релаксацией.
+</p>
+</div>
+
+<div class="card">
+<h3>Temperature</h3>
+<p>
+Температура испытания поддерживается и контролируется
+согласно применимой процедуре.
+</p>
+</div>
+
+<div class="card">
+<h3>Test Time</h3>
+<p>
+Продолжительность испытания определяет период,
+в течение которого регистрируется изменение напряжения.
+</p>
+</div>
+
+<div class="card">
+<h3>Residual Stress</h3>
+<p>
+Конечное или остаточное напряжение используется
+для оценки степени релаксации.
+</p>
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Stress Relaxation Testing Approaches
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<div class="icon">📐</div>
+
+<h3>Constant Strain Testing</h3>
+
+<p>
+Образец удерживается при заданной деформации,
+а изменение напряжения измеряется во времени.
+</p>
+
+<span class="badge">
+Constant Strain
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🔥</div>
+
+<h3>Elevated Temperature Testing</h3>
+
+<p>
+Оценка релаксации напряжений при повышенной
+температуре и заданной деформации.
+</p>
+
+<span class="badge warning">
+High Temperature
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📊</div>
+
+<h3>Stress-Time Analysis</h3>
+
+<p>
+Построение зависимости напряжения от времени
+для анализа скорости релаксации.
+</p>
+
+<span class="badge">
+Stress-Time
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🔬</div>
+
+<h3>Material Comparison</h3>
+
+<p>
+Сравнение поведения разных материалов или
+состояний материала при одинаковых условиях.
+</p>
+
+<span class="badge">
+Comparison
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🧮</div>
+
+<h3>Relaxation Rate Evaluation</h3>
+
+<p>
+Оценка изменения напряжения и относительной
+степени релаксации в течение испытания.
+</p>
+
+<span class="badge">
+Rate
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📋</div>
+
+<h3>Technical Evaluation</h3>
+
+<p>
+Сопоставление результатов с применимой процедурой,
+спецификацией или техническим критерием.
+</p>
+
+<span class="badge">
+Review
+</span>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Stress Relaxation Workflow
+</h2>
+
+<section class="workflow">
+
+<div class="step">
+<b>1</b>
+Material Selection
+</div>
+
+<div class="step">
+<b>2</b>
+Specimen Preparation
+</div>
+
+<div class="step">
+<b>3</b>
+Initial Strain
+</div>
+
+<div class="step">
+<b>4</b>
+Stress Monitoring
+</div>
+
+<div class="step">
+<b>5</b>
+Relaxation Evaluation
+</div>
+
+<div class="step">
+<b>6</b>
+Technical Report
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Industrial Applications
+</h2>
+
+<section class="grid">
+
+<div class="card">
+<h3>Bolted Connections</h3>
+<p>
+Оценка снижения предварительного натяжения
+при длительной эксплуатации и температуре.
+</p>
+</div>
+
+<div class="card">
+<h3>Sealing Systems</h3>
+<p>
+Исследование изменения контактного напряжения
+в элементах уплотнения.
+</p>
+</div>
+
+<div class="card">
+<h3>High-Temperature Equipment</h3>
+<p>
+Оценка поведения металлических компонентов
+при длительном воздействии температуры.
+</p>
+</div>
+
+<div class="card">
+<h3>Pressure Equipment</h3>
+<p>
+Исследование материалов и соединений,
+для которых изменение напряжения во времени
+может быть важным эксплуатационным фактором.
+</p>
+</div>
+
+<div class="card">
+<h3>Fasteners</h3>
+<p>
+Оценка изменения напряжения предварительно
+нагруженных крепёжных элементов.
+</p>
+</div>
+
+<div class="card">
+<h3>Polymer & Composite Systems</h3>
+<p>
+Для подходящих материалов может оцениваться
+временная потеря напряжения при фиксированной деформации.
+</p>
+</div>
+
+</section>
+
+
+<h2 class="section-title" id="newTest">
+Create Stress Relaxation Test Record
+</h2>
+
+<section class="panel">
+
+<div class="notice" style="margin-bottom:18px;">
+
+Демонстрационная форма WORKER PRO.
+Данные сохраняются только в текущем окне страницы
+и не отправляются в реальную лабораторию.
+
+</div>
+
+<form id="testForm">
+
+<div class="form-grid">
+
+<div>
+<label for="sample">
+Sample / Component
+</label>
+
+<input id="sample"
+required
+placeholder="Example: Bolted connection specimen">
+</div>
+
+
+<div>
+<label for="material">
+Material / Grade
+</label>
+
+<input id="material"
+required
+placeholder="Example: Alloy Steel">
+</div>
+
+
+<div>
+<label for="strain">
+Initial Strain / Displacement
+</label>
+
+<input id="strain"
+required
+placeholder="Example: 1.2% strain">
+</div>
+
+
+<div>
+<label for="initialStress">
+Initial Stress (MPa)
+</label>
+
+<input id="initialStress"
+type="number"
+step="any"
+required
+placeholder="Example: 420">
+</div>
+
+
+<div>
+<label for="temperature">
+Test Temperature (°C)
+</label>
+
+<input id="temperature"
+type="number"
+step="any"
+required
+placeholder="Example: 300">
+</div>
+
+
+<div>
+<label for="duration">
+Test Duration (hours)
+</label>
+
+<input id="duration"
+type="number"
+step="any"
+required
+placeholder="Example: 500">
+</div>
+
+
+<div>
+<label for="residualStress">
+Residual Stress (MPa)
+</label>
+
+<input id="residualStress"
+type="number"
+step="any"
+placeholder="Example: 275">
+</div>
+
+
+<div>
+<label for="relaxation">
+Stress Relaxation (%)
+</label>
+
+<input id="relaxation"
+type="number"
+step="any"
+placeholder="Example: 34.5">
+</div>
+
+
+<div>
+<label for="method">
+Test Method
+</label>
+
+<select id="method" required>
+
+<option value="">
+Select method
+</option>
+
+<option>
+Constant Strain Testing
+</option>
+
+<option>
+Elevated Temperature Testing
+</option>
+
+<option>
+Stress-Time Analysis
+</option>
+
+<option>
+Material Comparison
+</option>
+
+<option>
+Relaxation Rate Evaluation
+</option>
+
+<option>
+Technical Evaluation
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="condition">
+Test Condition
+</label>
+
+<select id="condition" required>
+
+<option value="">
+Select condition
+</option>
+
+<option>
+Stable Test Condition
+</option>
+
+<option>
+Temperature Controlled
+</option>
+
+<option>
+Under Monitoring
+</option>
+
+<option>
+Test Interrupted
+</option>
+
+<option>
+Under Review
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="evaluation">
+Technical Evaluation
+</label>
+
+<select id="evaluation">
+
+<option>
+No Significant Indication
+</option>
+
+<option>
+Expected Stress Reduction
+</option>
+
+<option>
+High Relaxation Rate
+</option>
+
+<option>
+Requires Technical Review
+</option>
+
+<option>
+Procedure-Specific Evaluation
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="criteria">
+Procedure / Criteria
+</label>
+
+<input id="criteria"
+placeholder="Standard / specification / procedure">
+</div>
+
+
+<div class="full">
+
+<label for="notes">
+Technical Notes
+</label>
+
+<textarea id="notes"
+placeholder="Enter material condition, strain, stress, temperature, time and other technical information..."></textarea>
+
+</div>
+
+
+<div>
+
+<label for="status">
+Record Status
+</label>
+
+<select id="status">
+
+<option>
+Pending Review
+</option>
+
+<option>
+Reviewed
+</option>
+
+<option>
+Warning
+</option>
+
+</select>
+
+</div>
+
+
+<div class="full">
+
+<button class="btn btn-green"
+type="submit">
+Create Demo Record
+</button>
+
+<button class="btn btn-primary"
+type="button"
+onclick="resetForm()">
+Clear Form
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</section>
+
+
+<h2 class="section-title" id="records">
+Stress Relaxation Test Records
+</h2>
+
+<div class="toolbar">
+
+<input id="searchInput"
+type="search"
+placeholder="Search ID, material, stress, temperature..."
+oninput="filterRows()">
+
+<select id="statusFilter"
+onchange="filterRows()">
+
+<option value="">
+All statuses
+</option>
+
+<option value="Reviewed">
+Reviewed
+</option>
+
+<option value="Pending Review">
+Pending Review
+</option>
+
+<option value="Warning">
+Warning
+</option>
+
+</select>
+
+<button class="btn btn-green"
+onclick="exportCSV()">
+Export CSV
+</button>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table id="relaxTable">
+
+<thead>
+
+<tr>
+<th>Record ID</th>
+<th>Component</th>
+<th>Material</th>
+<th>Initial Strain</th>
+<th>Initial Stress</th>
+<th>Temperature</th>
+<th>Residual Stress</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+<tr>
+
+<td>REL-AZ-2026-001</td>
+
+<td>Bolted Connection</td>
+
+<td>Alloy Steel</td>
+
+<td>1.2%</td>
+
+<td>420 MPa</td>
+
+<td>300 °C</td>
+
+<td>275 MPa</td>
+
+<td>
+<span class="badge">
+Reviewed · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>REL-AZ-2026-002</td>
+
+<td>Fastener Assembly</td>
+
+<td>Heat-Resistant Steel</td>
+
+<td>0.9%</td>
+
+<td>380 MPa</td>
+
+<td>450 °C</td>
+
+<td>210 MPa</td>
+
+<td>
+<span class="badge warning">
+Warning · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>REL-AZ-2026-003</td>
+
+<td>Sealing Component</td>
+
+<td>Metal Alloy</td>
+
+<td>1.5%</td>
+
+<td>350 MPa</td>
+
+<td>250 °C</td>
+
+<td>248 MPa</td>
+
+<td>
+<span class="badge warning">
+Pending Review · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>REL-AZ-2026-004</td>
+
+<td>Pressure Equipment Joint</td>
+
+<td>Carbon Steel</td>
+
+<td>0.7%</td>
+
+<td>300 MPa</td>
+
+<td>200 °C</td>
+
+<td>228 MPa</td>
+
+<td>
+<span class="badge">
+Reviewed · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<h2 class="section-title">
+Quality & Documentation
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>Stress Relaxation Report</h3>
+
+<p>
+Фиксация материала, деформации, начального
+и остаточного напряжения, температуры и времени.
+</p>
+
+<button class="btn btn-green"
+onclick="createReport()">
+Create Demo Report
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Quality Review</h3>
+
+<p>
+Проверка результатов относительно применимой
+процедуры, спецификации или технического критерия.
+</p>
+
+<a class="btn btn-green"
+href="../quality/index.html">
+Open Quality
+</a>
+
+</div>
+
+
+<div class="card">
+
+<h3>Technical Documents</h3>
+
+<p>
+Связь результатов испытания с процедурами,
+спецификациями, отчётами и сертификатами.
+</p>
+
+<a class="btn btn-green"
+href="../documents/index.html">
+Open Documents
+</a>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+WORKER PRO Industrial Flow
+</h2>
+
+<section class="workflow">
+
+<div class="step">
+<b>1</b>
+Product
+</div>
+
+<div class="step">
+<b>2</b>
+Testing
+</div>
+
+<div class="step">
+<b>3</b>
+Quality
+</div>
+
+<div class="step">
+<b>4</b>
+Certificate
+</div>
+
+<div class="step">
+<b>5</b>
+Supplier
+</div>
+
+<div class="step">
+<b>6</b>
+Order & Logistics
+</div>
+
+</section>
+
+
+<div class="info-box"
+style="margin-top:20px;">
+
+<strong>Important:</strong>
+
+Все записи и показатели на этой странице являются
+демонстрационными.
+
+Stress relaxation зависит от материала, уровня
+деформации, температуры, времени, состояния материала
+и конкретной методики испытания.
+
+Реальные испытания должны выполняться с контролем
+деформации и температуры, подходящим оборудованием,
+калиброванными средствами измерений и квалифицированным
+персоналом по соответствующей методике или стандарту.
+
+</div>
+
+</main>
+
+
+<footer>
+
+<strong>WORKER PRO</strong><br>
+
+Глобальная промышленная платформа<br>
+
+Testing · Quality · Production · Logistics<br>
+
+<a href="../index.html">
+Back to Home
+</a>
+
+<br><br>
+
+© 2026 WORKER PRO · F.S
+
+</footer>
+
+
+<script>
+
+let recordCounter = 5;
+
+
+function scrollToSection(id){
+
+    document.getElementById(id).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+function setLanguage(lang){
+
+    document.querySelectorAll(
+        ".top-languages button"
+    ).forEach(button=>{
+
+        button.classList.toggle(
+            "active",
+            button.textContent.trim() === lang
+        );
+
+    });
+
+    alert(
+        "Selected language: " +
+        lang +
+        "\nДемонстрационный режим. Перевод страницы пока не подключен."
+    );
+
+}
+
+
+function resetForm(){
+
+    document.getElementById("testForm").reset();
+
+}
+
+
+function filterRows(){
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const status =
+        document.getElementById("statusFilter").value;
+
+    const rows =
+        document.querySelectorAll("#tableBody tr");
+
+
+    rows.forEach(row=>{
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[7].innerText;
+
+        const matchesSearch =
+            text.includes(search);
+
+        const matchesStatus =
+            !status ||
+            rowStatus.includes(status);
+
+        row.style.display =
+            matchesSearch && matchesStatus
+            ? ""
+            : "none";
+
+    });
+
+}
+
+
+document.getElementById("testForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    const sample =
+        document.getElementById("sample")
+        .value.trim();
+
+    const material =
+        document.getElementById("material")
+        .value.trim();
+
+    const strain =
+        document.getElementById("strain")
+        .value.trim();
+
+    const initialStress =
+        document.getElementById("initialStress")
+        .value;
+
+    const temperature =
+        document.getElementById("temperature")
+        .value;
+
+    const duration =
+        document.getElementById("duration")
+        .value;
+
+    const residualStress =
+        document.getElementById("residualStress")
+        .value || "—";
+
+    const relaxation =
+        document.getElementById("relaxation")
+        .value || "—";
+
+    const method =
+        document.getElementById("method")
+        .value;
+
+    const condition =
+        document.getElementById("condition")
+        .value;
+
+    const evaluation =
+        document.getElementById("evaluation")
+        .value;
+
+    const criteria =
+        document.getElementById("criteria")
+        .value.trim() || "Not specified";
+
+    const notes =
+        document.getElementById("notes")
+        .value.trim() || "No additional notes";
+
+    const status =
+        document.getElementById("status")
+        .value;
+
+
+    const id =
+        "REL-AZ-2026-" +
+        String(recordCounter)
+        .padStart(3,"0");
+
+    recordCounter++;
+
+
+    const row =
+        document.createElement("tr");
+
+
+    const values = [
+
+        id,
+        sample,
+        material,
+        strain,
+        initialStress + " MPa",
+        temperature + " °C",
+        residualStress + " MPa",
+        status
+
+    ];
+
+
+    values.forEach((value,index)=>{
+
+        const cell =
+            document.createElement("td");
+
+
+        if(index === 7){
+
+            const badge =
+                document.createElement("span");
+
+            badge.className =
+                status === "Warning"
+                ? "badge warning"
+                : "badge";
+
+            badge.textContent =
+                status + " · Demo";
+
+            cell.appendChild(badge);
+
+        }else{
+
+            cell.textContent =
+                value;
+
+        }
+
+        row.appendChild(cell);
+
+    });
+
+
+    const actionCell =
+        document.createElement("td");
+
+
+    const detailsButton =
+        document.createElement("button");
+
+    detailsButton.className =
+        "btn btn-green";
+
+    detailsButton.textContent =
+        "Details";
+
+
+    detailsButton.onclick =
+        function(){
+
+            alert(
+
+                "Record: " +
+                id +
+
+                "\nComponent: " +
+                sample +
+
+                "\nMaterial: " +
+                material +
+
+                "\nInitial Strain: " +
+                strain +
+
+                "\nInitial Stress: " +
+                initialStress +
+                " MPa" +
+
+                "\nTemperature: " +
+                temperature +
+                " °C" +
+
+                "\nTest Duration: " +
+                duration +
+                " h" +
+
+                "\nResidual Stress: " +
+                residualStress +
+                " MPa" +
+
+                "\nStress Relaxation: " +
+                relaxation +
+                "%" +
+
+                "\nMethod: " +
+                method +
+
+                "\nCondition: " +
+                condition +
+
+                "\nEvaluation: " +
+                evaluation +
+
+                "\nProcedure / Criteria: " +
+                criteria +
+
+                "\nNotes: " +
+                notes +
+
+                "\nStatus: " +
+                status +
+
+                "\n\nDemo record only."
+
+            );
+
+        };
+
+
+    actionCell.appendChild(
+        detailsButton
+    );
+
+    row.appendChild(
+        actionCell
+    );
+
+
+    document
+        .getElementById("tableBody")
+        .prepend(row);
+
+
+    resetForm();
+
+    filterRows();
+
+
+    alert(
+        "Demo stress relaxation record created: " +
+        id
+    );
+
+
+    scrollToSection(
+        "records"
+    );
+
+});
+
+
+function viewDetails(button){
+
+    const row =
+        button.closest("tr");
+
+    const cells =
+        row.cells;
+
+
+    alert(
+
+        "Record ID: " +
+        cells[0].innerText +
+
+        "\nComponent: " +
+        cells[1].innerText +
+
+        "\nMaterial: " +
+        cells[2].innerText +
+
+        "\nInitial Strain: " +
+        cells[3].innerText +
+
+        "\nInitial Stress: " +
+        cells[4].innerText +
+
+        "\nTemperature: " +
+        cells[5].innerText +
+
+        "\nResidual Stress: " +
+        cells[6].innerText +
+
+        "\nStatus: " +
+        cells[7].innerText +
+
+        "\n\nDemo record."
+
+    );
+
+}
+
+
+function createReport(){
+
+    alert(
+
+        "Demo Stress Relaxation Technical Report prepared.\n\n" +
+
+        "Реальный технический отчёт должен содержать " +
+        "идентификацию материала, начальную деформацию, " +
+        "начальное напряжение, температурные условия, " +
+        "временные измерения, остаточное напряжение, " +
+        "наблюдения и применимые критерии оценки."
+
+    );
+
+}
+
+
+function exportCSV(){
+
+    const rows =
+        Array.from(
+            document.querySelectorAll(
+                "#relaxTable tr"
+            )
+        );
+
+
+    const csv =
+        rows.map(row=>
+
+            Array.from(row.cells)
+            .slice(0,8)
+            .map(cell=>{
+
+                const value =
+                    cell.innerText
+                    .replace(/"/g,'""');
+
+                return '"' +
+                       value +
+                       '"';
+
+            })
+            .join(",")
+
+        ).join("\n");
+
+
+    const blob =
+        new Blob(
+            ["\uFEFF" + csv],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement("a");
+
+    link.href =
+        url;
+
+    link.download =
+        "worker-pro-stress-relaxation-testing-records.csv";
+
+    document.body.appendChild(
+        link
+    );
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+</script>
+
+</body>
+</html>
