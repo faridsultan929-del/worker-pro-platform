@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Exposure Testing</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f7f5;
+    color: #123;
+}
+
+.top-languages {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: #063d25;
+    padding: 10px;
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.top-languages button {
+    border: 0;
+    padding: 8px 13px;
+    border-radius: 8px;
+    background: #0b6b3d;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.top-languages button:hover {
+    background: #b7ff35;
+    color: #063d25;
+}
+
+header {
+    background: linear-gradient(135deg, #063d25, #0b6b3d);
+    color: white;
+    padding: 28px 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+header p {
+    margin: 8px 0 0;
+    color: #d9ffe4;
+}
+
+nav {
+    background: #075b34;
+    padding: 12px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    background: #0b6b3d;
+    padding: 9px 13px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+nav a:hover {
+    background: #b7ff35;
+    color: #063d25;
+}
+
+.container {
+    max-width: 1250px;
+    margin: auto;
+    padding: 20px;
+}
+
+.hero {
+    background: white;
+    border-left: 6px solid #0b6b3d;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
+    margin-bottom: 20px;
+}
+
+.hero h2 {
+    color: #063d25;
+    margin-top: 0;
+}
+
+.notice {
+    background: #fff9d9;
+    border-left: 5px solid #d6a700;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 18px 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.07);
+}
+
+.card h3 {
+    margin-top: 0;
+    color: #0b6b3d;
+}
+
+.stat {
+    text-align: center;
+}
+
+.stat strong {
+    display: block;
+    font-size: 30px;
+    color: #063d25;
+}
+
+.workflow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.step {
+    background: #e8f4ed;
+    border: 1px solid #b8d8c5;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 15px 0;
+}
+
+.controls input,
+.controls select,
+.form-grid input,
+.form-grid select,
+.form-grid textarea {
+    padding: 11px;
+    border: 1px solid #bfd0c5;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.controls input {
+    flex: 2;
+    min-width: 220px;
+}
+
+.controls select {
+    flex: 1;
+    min-width: 170px;
+}
+
+button.action {
+    background: #0b6b3d;
+    color: white;
+    border: 0;
+    border-radius: 8px;
+    padding: 11px 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button.action:hover {
+    background: #063d25;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.form-grid textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.full {
+    grid-column: 1 / -1;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    margin-top: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 1250px;
+    background: white;
+}
+
+th,
+td {
+    padding: 11px;
+    border-bottom: 1px solid #dce7df;
+    text-align: left;
+    vertical-align: top;
+}
+
+th {
+    background: #063d25;
+    color: white;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.reviewed {
+    background: #d9f4df;
+    color: #176b31;
+}
+
+.pending {
+    background: #fff0bd;
+    color: #805d00;
+}
+
+.warning {
+    background: #ffd8d8;
+    color: #9b1c1c;
+}
+
+footer {
+    margin-top: 30px;
+    background: #063d25;
+    color: white;
+    text-align: center;
+    padding: 25px;
+}
+
+@media (max-width: 700px) {
+    header h1 {
+        font-size: 25px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .full {
+        grid-column: auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button onclick="setLang('AZ')">AZ</button>
+    <button onclick="setLang('RU')">RU</button>
+    <button onclick="setLang('EN')">EN</button>
+    <button onclick="setLang('TR')">TR</button>
+    <button onclick="setLang('DE')">DE</button>
+    <button onclick="setLang('AR')">AR</button>
+    <button onclick="setLang('ES')">ES</button>
+    <button onclick="setLang('FR')">FR</button>
+    <button onclick="setLang('IT')">IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+    <p>№201 — Thermal Exposure Testing</p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+
+    <h2>Thermal Exposure Testing</h2>
+
+    <p>
+        Thermal Exposure Testing — испытание материалов, деталей и
+        промышленных компонентов при длительном воздействии заданной
+        температуры.
+    </p>
+
+    <p>
+        Метод позволяет оценивать изменение механических свойств,
+        размеров, массы, поверхности, покрытий, соединений и других
+        характеристик после определённого времени температурного воздействия.
+    </p>
+
+    <div class="notice">
+        <strong>WORKER PRO Demo:</strong>
+        все данные на странице являются демонстрационными.
+        Реальные испытания должны выполняться по утвержденной методике,
+        применимому стандарту, технической спецификации и требованиям
+        конкретного изделия.
+    </div>
+
+</section>
+
+<section>
+
+<div class="grid">
+
+    <div class="card stat">
+        <strong>71</strong>
+        <span>Testing Programs</span>
+    </div>
+
+    <div class="card stat">
+        <strong>2,240</strong>
+        <span>Test Records</span>
+    </div>
+
+    <div class="card stat">
+        <strong>29</strong>
+        <span>Laboratory Teams</span>
+    </div>
+
+    <div class="card stat">
+        <strong>96.1%</strong>
+        <span>Data Completeness</span>
+    </div>
+
+</div>
+
+</section>
+
+<section class="card" style="margin-top:20px;">
+
+<h2>Основные параметры испытания</h2>
+
+<div class="grid">
+
+    <div>
+        <h3>Exposure Temperature</h3>
+        <p>Температура, при которой находится образец во время испытания.</p>
+    </div>
+
+    <div>
+        <h3>Exposure Duration</h3>
+        <p>Продолжительность температурного воздействия.</p>
+    </div>
+
+    <div>
+        <h3>Temperature Stability</h3>
+        <p>Контроль стабильности температурного режима.</p>
+    </div>
+
+    <div>
+        <h3>Sample Condition</h3>
+        <p>Состояние образца до и после испытания.</p>
+    </div>
+
+    <div>
+        <h3>Dimensional Change</h3>
+        <p>Измерение изменения размеров после воздействия.</p>
+    </div>
+
+    <div>
+        <h3>Surface Condition</h3>
+        <p>Контроль поверхности, покрытия, коррозии и повреждений.</p>
+    </div>
+
+</div>
+
+</section>
+
+<section class="card" style="margin-top:20px;">
+
+<h2>Методы и подходы</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>High Temperature Exposure</h3>
+        <p>Длительное воздействие повышенной температуры.</p>
+    </div>
+
+    <div class="card">
+        <h3>Low Temperature Exposure</h3>
+        <p>Длительное воздействие низкой температуры.</p>
+    </div>
+
+    <div class="card">
+        <h3>Constant Temperature</h3>
+        <p>Выдержка при постоянном заданном температурном режиме.</p>
+    </div>
+
+    <div class="card">
+        <h3>Mass Measurement</h3>
+        <p>Контроль изменения массы до и после воздействия.</p>
+    </div>
+
+    <div class="card">
+        <h3>Dimensional Inspection</h3>
+        <p>Контроль геометрических размеров образца.</p>
+    </div>
+
+    <div class="card">
+        <h3>Surface Inspection</h3>
+        <p>Визуальная и техническая оценка поверхности.</p>
+    </div>
+
+</div>
+
+</section>
+
+<section class="card" style="margin-top:20px;">
+
+<h2>Промышленные применения</h2>
+
+<div class="grid">
+
+    <div class="card">
+        <h3>Oil & Gas</h3>
+        <p>Трубопроводы, клапаны, уплотнения и нефтегазовое оборудование.</p>
+    </div>
+
+    <div class="card">
+        <h3>Automotive</h3>
+        <p>Компоненты двигателя, электроника и автомобильные материалы.</p>
+    </div>
+
+    <div class="card">
+        <h3>Aerospace</h3>
+        <p>Материалы и компоненты авиационной техники.</p>
+    </div>
+
+    <div class="card">
+        <h3>Energy</h3>
+        <p>Энергетическое оборудование и высокотемпературные компоненты.</p>
+    </div>
+
+    <div class="card">
+        <h3>Electronics</h3>
+        <p>Корпуса, соединители, платы и электрические компоненты.</p>
+    </div>
+
+    <div class="card">
+        <h3>Industrial Equipment</h3>
+        <p>Промышленные машины, детали, покрытия и уплотнительные системы.</p>
+    </div>
+
+</div>
+
+</section>
+
+<section class="card" style="margin-top:20px;">
+
+<h2>Thermal Exposure Testing Workflow</h2>
+
+<div class="workflow">
+
+    <div class="step">1. Material Selection</div>
+    <div class="step">2. Specimen Preparation</div>
+    <div class="step">3. Temperature Setup</div>
+    <div class="step">4. Thermal Exposure</div>
+    <div class="step">5. Inspection</div>
+    <div class="step">6. Technical Report</div>
+
+</div>
+
+</section>
+
+<section class="card" style="margin-top:20px;">
+
+<h2>Добавить испытание — Demo</h2>
+
+<div class="form-grid">
+
+    <input id="sample"
+           placeholder="Sample / Component">
+
+    <input id="material"
+           placeholder="Material / Grade">
+
+    <input id="temperature"
+           type="number"
+           placeholder="Exposure Temperature °C">
+
+    <input id="duration"
+           placeholder="Exposure Duration">
+
+    <input id="stability"
+           placeholder="Temperature Stability">
+
+    <input id="massChange"
+           placeholder="Mass Change">
+
+    <input id="dimensionChange"
+           placeholder="Dimensional Change">
+
+    <input id="surface"
+           placeholder="Surface Condition">
+
+    <select id="method">
+
+        <option value="">Select Method</option>
+
+        <option>High Temperature Exposure</option>
+        <option>Low Temperature Exposure</option>
+        <option>Constant Temperature</option>
+        <option>Mass Measurement</option>
+        <option>Dimensional Inspection</option>
+        <option>Surface Inspection</option>
+
+    </select>
+
+    <select id="condition">
+
+        <option value="">Condition</option>
+        <option>Normal</option>
+        <option>Minor Change</option>
+        <option>Damaged</option>
+
+    </select>
+
+    <select id="evaluation">
+
+        <option value="">Evaluation</option>
+        <option>Pass</option>
+        <option>Review Required</option>
+        <option>Fail</option>
+
+    </select>
+
+    <select id="status">
+
+        <option>Pending Review</option>
+        <option>Reviewed</option>
+        <option>Warning</option>
+
+    </select>
+
+    <textarea id="notes"
+              class="full"
+              placeholder="Notes"></textarea>
+
+    <button class="action full"
+            onclick="addRecord()">
+
+        Add Demo Test Record
+
+    </button>
+
+</div>
+
+</section>
+
+<section class="card" style="margin-top:20px;">
+
+<h2>Thermal Exposure Test Records</h2>
+
+<div class="controls">
+
+    <input id="search"
+           onkeyup="filterTable()"
+           placeholder="Search sample, material, country...">
+
+    <select id="statusFilter"
+            onchange="filterTable()">
+
+        <option value="">All Statuses</option>
+        <option>Reviewed</option>
+        <option>Pending Review</option>
+        <option>Warning</option>
+
+    </select>
+
+    <button class="action"
+            onclick="exportCSV()">
+
+        Export CSV
+
+    </button>
+
+    <button class="action"
+            onclick="technicalReport()">
+
+        Demo Technical Report
+
+    </button>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="recordsTable">
+
+<thead>
+
+<tr>
+    <th>ID</th>
+    <th>Sample</th>
+    <th>Material</th>
+    <th>Temperature</th>
+    <th>Duration</th>
+    <th>Mass Change</th>
+    <th>Dimensional Change</th>
+    <th>Surface</th>
+    <th>Evaluation</th>
+    <th>Status</th>
+    <th>Details</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>TE-AZ-2026-001</td>
+<td>Valve Housing</td>
+<td>Carbon Steel</td>
+<td>180 °C</td>
+<td>500 h</td>
+<td>-0.2%</td>
+<td>+0.04 mm</td>
+<td>Normal</td>
+<td>Pass</td>
+
+<td>
+<span class="status reviewed">
+Reviewed
+</span>
+</td>
+
+<td>
+<button class="action"
+onclick="details('TE-AZ-2026-001')">
+View
+</button>
+</td>
+
+</tr>
+
+<tr>
+
+<td>TE-AZ-2026-002</td>
+<td>Pipe Seal</td>
+<td>Elastomer</td>
+<td>150 °C</td>
+<td>1000 h</td>
+<td>-1.1%</td>
+<td>+0.12 mm</td>
+<td>Minor Change</td>
+<td>Review Required</td>
+
+<td>
+<span class="status pending">
+Pending Review
+</span>
+</td>
+
+<td>
+<button class="action"
+onclick="details('TE-AZ-2026-002')">
+View
+</button>
+</td>
+
+</tr>
+
+<tr>
+
+<td>TE-TR-2026-003</td>
+<td>Electronic Housing</td>
+<td>Polymer Composite</td>
+<td>200 °C</td>
+<td>750 h</td>
+<td>-2.8%</td>
+<td>+0.35 mm</td>
+<td>Damaged</td>
+<td>Fail</td>
+
+<td>
+<span class="status warning">
+Warning
+</span>
+</td>
+
+<td>
+<button class="action"
+onclick="details('TE-TR-2026-003')">
+View
+</button>
+</td>
+
+</tr>
+
+<tr>
+
+<td>TE-DE-2026-004</td>
+<td>Industrial Fastener</td>
+<td>Alloy Steel</td>
+<td>220 °C</td>
+<td>600 h</td>
+<td>-0.1%</td>
+<td>+0.02 mm</td>
+<td>Normal</td>
+<td>Pass</td>
+
+<td>
+<span class="status reviewed">
+Reviewed
+</span>
+</td>
+
+<td>
+<button class="action"
+onclick="details('TE-DE-2026-004')">
+View
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="card" style="margin-top:20px;">
+
+<h2>WORKER PRO Industrial Flow</h2>
+
+<div class="workflow">
+
+    <div class="step">Product</div>
+    <div class="step">Testing</div>
+    <div class="step">Quality</div>
+    <div class="step">Test Report</div>
+    <div class="step">Certificate</div>
+    <div class="step">Documents</div>
+    <div class="step">Supplier</div>
+    <div class="step">Order</div>
+    <div class="step">Logistics</div>
+
+</div>
+
+</section>
+
+<section class="notice">
+
+<strong>Technical Disclaimer:</strong>
+
+Thermal exposure results depend on material composition,
+geometry, temperature, exposure duration, atmosphere,
+surface condition and inspection method.
+
+Actual qualification, acceptance or research testing must
+follow the applicable technical specification, standard,
+procedure and customer requirements.
+
+</section>
+
+</div>
+
+<footer>
+
+<strong>WORKER PRO</strong><br>
+
+Глобальная промышленная платформа<br><br>
+
+Testing • Quality • Documents • Suppliers • Orders • Logistics<br><br>
+
+F.S.
+
+</footer>
+
+<script>
+
+function setLang(lang) {
+
+    alert(
+        "WORKER PRO language selected: " + lang
+    );
+
+}
+
+function details(id) {
+
+    alert(
+        "WORKER PRO Demo\n\n" +
+        "Test ID: " + id + "\n\n" +
+        "Detailed technical record would open here in the future."
+    );
+
+}
+
+function technicalReport() {
+
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Thermal Exposure Testing\n\n" +
+        "The complete laboratory report module will be connected later."
+    );
+
+}
+
+function filterTable() {
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+    const status =
+        document
+        .getElementById("statusFilter")
+        .value;
+
+    const rows =
+        document.querySelectorAll(
+            "#recordsTable tbody tr"
+        );
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const searchMatch =
+            text.includes(search);
+
+        const statusMatch =
+            !status ||
+            row.innerText.includes(status);
+
+        row.style.display =
+            searchMatch && statusMatch
+            ? ""
+            : "none";
+
+    });
+
+}
+
+function addRecord() {
+
+    const sample =
+        document.getElementById("sample")
+        .value || "Demo Sample";
+
+    const material =
+        document.getElementById("material")
+        .value || "Demo Material";
+
+    const temperature =
+        document.getElementById("temperature")
+        .value || "—";
+
+    const duration =
+        document.getElementById("duration")
+        .value || "—";
+
+    const massChange =
+        document.getElementById("massChange")
+        .value || "—";
+
+    const dimensionChange =
+        document.getElementById("dimensionChange")
+        .value || "—";
+
+    const surface =
+        document.getElementById("surface")
+        .value || "—";
+
+    const method =
+        document.getElementById("method")
+        .value || "Demo Method";
+
+    const condition =
+        document.getElementById("condition")
+        .value || "Normal";
+
+    const evaluation =
+        document.getElementById("evaluation")
+        .value || "Review Required";
+
+    const status =
+        document.getElementById("status")
+        .value || "Pending Review";
+
+    const id =
+        "TE-DEMO-" +
+        String(
+            document.querySelectorAll(
+                "#recordsTable tbody tr"
+            ).length + 1
+        ).padStart(3, "0");
+
+    let statusClass = "pending";
+
+    if (status === "Reviewed") {
+        statusClass = "reviewed";
+    }
+
+    if (status === "Warning") {
+        statusClass = "warning";
+    }
+
+    const row =
+        document.createElement("tr");
+
+    row.innerHTML = `
+
+        <td>${id}</td>
+
+        <td>${sample}</td>
+
+        <td>${material}</td>
+
+        <td>${temperature} °C</td>
+
+        <td>${duration}</td>
+
+        <td>${massChange}</td>
+
+        <td>${dimensionChange}</td>
+
+        <td>${surface}</td>
+
+        <td>${evaluation}</td>
+
+        <td>
+            <span class="status ${statusClass}">
+                ${status}
+            </span>
+        </td>
+
+        <td>
+
+            <button
+                class="action"
+                onclick="details('${id}')">
+
+                View
+
+            </button>
+
+        </td>
+
+    `;
+
+    document
+        .querySelector("#recordsTable tbody")
+        .appendChild(row);
+
+    alert(
+        "Demo Thermal Exposure Test Record added."
+    );
+
+    document.querySelectorAll(
+        "#sample, #material, #temperature, #duration, #stability, #massChange, #dimensionChange, #surface, #notes"
+    ).forEach(input => {
+
+        input.value = "";
+
+    });
+
+    document.getElementById("method").value = "";
+    document.getElementById("condition").value = "";
+    document.getElementById("evaluation").value = "";
+    document.getElementById("status").value = "Pending Review";
+
+}
+
+function exportCSV() {
+
+    const rows =
+        document.querySelectorAll(
+            "#recordsTable tr"
+        );
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cols =
+            row.querySelectorAll(
+                "th, td"
+            );
+
+        const data = [];
+
+        cols.forEach(col => {
+
+            let value =
+                col.innerText
+                .replace(/"/g, '""')
+                .replace(/\n/g, " ");
+
+            data.push(
+                '"' + value + '"'
+            );
+
+        });
+
+        csv.push(
+            data.join(",")
+        );
+
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-exposure-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+</script>
+
+</body>
+</html>
