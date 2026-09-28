@@ -1,0 +1,1985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Stress Rupture Testing</title>
+
+<style>
+:root{
+    --dark:#063d25;
+    --green:#0b6b3d;
+    --lime:#b7ff35;
+    --bg:#f4f7f5;
+    --white:#fff;
+    --text:#173b2b;
+    --muted:#687b70;
+    --border:#dce8df;
+    --orange:#a15c00;
+    --red:#b42318;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,input,select,textarea{
+    font:inherit;
+}
+
+.top-languages{
+    background:var(--dark);
+    padding:10px 4%;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.top-languages button{
+    background:transparent;
+    color:white;
+    border:1px solid #47765d;
+    border-radius:6px;
+    padding:8px 13px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.top-languages button.active,
+.top-languages button:hover{
+    background:var(--lime);
+    color:var(--dark);
+    border-color:var(--lime);
+}
+
+header{
+    background:white;
+    padding:20px 4%;
+    border-bottom:1px solid var(--border);
+}
+
+.brand{
+    color:var(--dark);
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.brand span{
+    color:var(--green);
+}
+
+.subtitle{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+nav{
+    background:var(--green);
+    padding:12px 4%;
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    padding:9px 12px;
+    border-radius:6px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:var(--lime);
+    color:var(--dark);
+}
+
+.container{
+    width:92%;
+    max-width:1250px;
+    margin:25px auto;
+}
+
+.hero{
+    background:linear-gradient(125deg,var(--dark),var(--green));
+    color:white;
+    border-radius:18px;
+    padding:35px;
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:25px;
+    align-items:center;
+}
+
+.tag{
+    display:inline-block;
+    background:var(--lime);
+    color:var(--dark);
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.hero h1{
+    font-size:clamp(28px,4vw,45px);
+    line-height:1.15;
+    margin:18px 0 12px;
+}
+
+.hero p{
+    color:#d8eadf;
+    line-height:1.7;
+}
+
+.hero-visual{
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:14px;
+    padding:25px;
+}
+
+.rupture-symbol{
+    font-size:52px;
+    text-align:center;
+    color:var(--lime);
+    font-weight:bold;
+}
+
+.hero-visual h3{
+    text-align:center;
+}
+
+.hero-visual p{
+    text-align:center;
+    margin-bottom:0;
+}
+
+.btn{
+    display:inline-block;
+    border:none;
+    border-radius:8px;
+    padding:12px 17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin:6px 5px 0 0;
+}
+
+.btn-primary{
+    background:var(--lime);
+    color:var(--dark);
+}
+
+.btn-light{
+    background:white;
+    color:var(--dark);
+}
+
+.btn-green{
+    background:var(--green);
+    color:white;
+}
+
+.section-title{
+    margin:32px 0 16px;
+    color:var(--dark);
+    font-size:24px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:22px;
+}
+
+.stat,.card,.panel{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:20px;
+}
+
+.stat strong{
+    display:block;
+    font-size:27px;
+    color:var(--green);
+    margin-bottom:7px;
+}
+
+.stat span{
+    font-size:13px;
+    color:var(--muted);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.card h3{
+    margin-top:0;
+    color:var(--dark);
+}
+
+.card p{
+    line-height:1.6;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.icon{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.badge{
+    display:inline-block;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:bold;
+    background:#e4f4e9;
+    color:var(--green);
+}
+
+.badge.warning{
+    background:#fff0d6;
+    color:var(--orange);
+}
+
+.badge.danger{
+    background:#fde8e7;
+    color:var(--red);
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:10px;
+}
+
+.step{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:17px 12px;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.step b{
+    display:block;
+    background:var(--green);
+    color:white;
+    border-radius:50%;
+    width:32px;
+    height:32px;
+    line-height:32px;
+    margin:0 auto 12px;
+}
+
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.toolbar input,
+.toolbar select,
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px;
+    background:white;
+}
+
+.toolbar input{
+    flex:1;
+    min-width:220px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1250px;
+}
+
+th,td{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#eaf3ed;
+    color:var(--dark);
+}
+
+tr:hover td{
+    background:#f8fbf8;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.form-grid label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    width:100%;
+}
+
+.form-grid textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.form-grid .full{
+    grid-column:1/-1;
+}
+
+.notice{
+    background:#fff7e5;
+    border:1px solid #f0d79b;
+    color:#755000;
+    padding:16px;
+    border-radius:10px;
+    line-height:1.6;
+    font-size:14px;
+}
+
+.info-box{
+    background:#eaf4ed;
+    border-left:5px solid var(--green);
+    border-radius:8px;
+    padding:17px;
+    line-height:1.7;
+    font-size:14px;
+}
+
+footer{
+    margin-top:35px;
+    background:var(--dark);
+    color:white;
+    padding:25px 4%;
+    text-align:center;
+    font-size:13px;
+    line-height:1.8;
+}
+
+footer a{
+    color:var(--lime);
+}
+
+@media(max-width:850px){
+
+    .hero{
+        grid-template-columns:1fr;
+        padding:25px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .workflow{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:550px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .workflow{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid .full{
+        grid-column:auto;
+    }
+
+    .hero{
+        padding:20px;
+    }
+
+    .container{
+        width:94%;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat strong{
+        font-size:23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button class="active" onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+    <div class="brand">WORKER <span>PRO</span></div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<div>
+
+<span class="tag">TESTING · №197</span>
+
+<h1>Stress Rupture Testing</h1>
+
+<p>
+Испытания на длительную прочность и разрушение
+металлических материалов при заданной температуре
+и постоянном напряжении в течение продолжительного времени.
+</p>
+
+<p>
+WORKER PRO позволяет фиксировать материал,
+температуру, напряжение, время до разрушения,
+деформацию, режим испытания и техническую оценку.
+</p>
+
+<button class="btn btn-primary"
+onclick="scrollToSection('newTest')">
++ New Stress Rupture Test
+</button>
+
+<button class="btn btn-light"
+onclick="scrollToSection('records')">
+View Records
+</button>
+
+</div>
+
+<div class="hero-visual">
+
+<div class="rupture-symbol">σ + T + t</div>
+
+<h3>Stress Rupture</h3>
+
+<p>
+Stress · Temperature · Time · Rupture
+</p>
+
+</div>
+
+</section>
+
+
+<section class="stats">
+
+<div class="stat">
+<strong>74</strong>
+<span>Demo stress rupture programs</span>
+</div>
+
+<div class="stat">
+<strong>2,480</strong>
+<span>Demo test records</span>
+</div>
+
+<div class="stat">
+<strong>29</strong>
+<span>Demo laboratory teams</span>
+</div>
+
+<div class="stat">
+<strong>95.8%</strong>
+<span>Demo record completeness</span>
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Stress Rupture Fundamentals
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<div class="icon">🔥</div>
+
+<h3>Temperature</h3>
+
+<p>
+Испытание проводится при заданной температуре,
+которая существенно влияет на ползучесть,
+деформацию и время до разрушения.
+</p>
+
+<span class="badge warning">
+Temperature
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">⚙️</div>
+
+<h3>Applied Stress</h3>
+
+<p>
+Постоянное или заданное напряжение используется
+для оценки поведения материала в течение времени.
+</p>
+
+<span class="badge">
+Stress
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">⏱️</div>
+
+<h3>Time to Rupture</h3>
+
+<p>
+Измеряется продолжительность испытания до разрушения
+образца или достижения заданного критерия.
+</p>
+
+<span class="badge">
+Time
+</span>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Testing Parameters
+</h2>
+
+<section class="grid">
+
+<div class="card">
+<h3>Material / Grade</h3>
+<p>
+Марка материала, термообработка и состояние образца
+фиксируются для последующего анализа.
+</p>
+</div>
+
+<div class="card">
+<h3>Temperature</h3>
+<p>
+Температура испытания поддерживается и регистрируется
+в соответствии с применимой процедурой.
+</p>
+</div>
+
+<div class="card">
+<h3>Applied Stress</h3>
+<p>
+Заданное напряжение или нагрузка применяется
+к образцу в контролируемых условиях.
+</p>
+</div>
+
+<div class="card">
+<h3>Exposure Time</h3>
+<p>
+Продолжительность испытания и время до разрушения
+являются ключевыми измеряемыми параметрами.
+</p>
+</div>
+
+<div class="card">
+<h3>Strain / Deformation</h3>
+<p>
+Изменение длины, деформация или другие показатели
+поведения образца могут регистрироваться.
+</p>
+</div>
+
+<div class="card">
+<h3>Rupture Condition</h3>
+<p>
+Фиксируется факт разрушения, состояние поверхности
+излома и другие наблюдения.
+</p>
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Stress Rupture Testing Approaches
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<div class="icon">📏</div>
+
+<h3>Constant Stress Testing</h3>
+
+<p>
+Испытание при заданном уровне напряжения
+и контролируемой температуре.
+</p>
+
+<span class="badge">
+Constant Stress
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🔥</div>
+
+<h3>High Temperature Testing</h3>
+
+<p>
+Исследование длительного поведения материалов
+при повышенной температуре.
+</p>
+
+<span class="badge warning">
+High Temperature
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📈</div>
+
+<h3>Creep-Rupture Evaluation</h3>
+
+<p>
+Оценка взаимосвязи температуры, напряжения,
+деформации и времени до разрушения.
+</p>
+
+<span class="badge">
+Creep-Rupture
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🔬</div>
+
+<h3>Fracture Examination</h3>
+
+<p>
+Исследование излома после разрушения
+для определения характерных признаков.
+</p>
+
+<span class="badge">
+Fracture
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📊</div>
+
+<h3>Time-to-Rupture Analysis</h3>
+
+<p>
+Сравнение времени до разрушения различных
+материалов или условий испытания.
+</p>
+
+<span class="badge">
+Time Analysis
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📋</div>
+
+<h3>Technical Evaluation</h3>
+
+<p>
+Сопоставление полученных данных с применимой
+процедурой, спецификацией или техническим критерием.
+</p>
+
+<span class="badge">
+Review
+</span>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Stress Rupture Workflow
+</h2>
+
+<section class="workflow">
+
+<div class="step">
+<b>1</b>
+Material Selection
+</div>
+
+<div class="step">
+<b>2</b>
+Specimen Preparation
+</div>
+
+<div class="step">
+<b>3</b>
+Temperature Setup
+</div>
+
+<div class="step">
+<b>4</b>
+Stress Application
+</div>
+
+<div class="step">
+<b>5</b>
+Rupture Evaluation
+</div>
+
+<div class="step">
+<b>6</b>
+Technical Report
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Industrial Applications
+</h2>
+
+<section class="grid">
+
+<div class="card">
+<h3>Power Generation</h3>
+<p>
+Оценка материалов компонентов, работающих
+при высокой температуре и длительной нагрузке.
+</p>
+</div>
+
+<div class="card">
+<h3>Oil & Gas</h3>
+<p>
+Исследование материалов оборудования,
+работающего при повышенной температуре.
+</p>
+</div>
+
+<div class="card">
+<h3>Petrochemical Equipment</h3>
+<p>
+Оценка долговременного поведения материалов
+технологического оборудования.
+</p>
+</div>
+
+<div class="card">
+<h3>Boilers & Pressure Equipment</h3>
+<p>
+Испытания материалов компонентов, подвергающихся
+температуре и механической нагрузке.
+</p>
+</div>
+
+<div class="card">
+<h3>Turbine Components</h3>
+<p>
+Исследование материалов деталей энергетических
+турбин и горячих секций оборудования.
+</p>
+</div>
+
+<div class="card">
+<h3>High-Temperature Alloys</h3>
+<p>
+Оценка жаропрочных сплавов и других материалов
+для длительной эксплуатации.
+</p>
+</div>
+
+</section>
+
+
+<h2 class="section-title" id="newTest">
+Create Stress Rupture Test Record
+</h2>
+
+<section class="panel">
+
+<div class="notice" style="margin-bottom:18px;">
+
+Демонстрационная форма WORKER PRO.
+Данные сохраняются только в текущем окне страницы
+и не отправляются в реальную лабораторию.
+
+</div>
+
+<form id="testForm">
+
+<div class="form-grid">
+
+<div>
+<label for="sample">
+Sample / Component
+</label>
+
+<input id="sample"
+required
+placeholder="Example: Turbine alloy specimen">
+</div>
+
+
+<div>
+<label for="material">
+Material / Grade
+</label>
+
+<input id="material"
+required
+placeholder="Example: Nickel-based alloy">
+</div>
+
+
+<div>
+<label for="temperature">
+Test Temperature (°C)
+</label>
+
+<input id="temperature"
+type="number"
+step="any"
+required
+placeholder="Example: 650">
+</div>
+
+
+<div>
+<label for="stress">
+Applied Stress (MPa)
+</label>
+
+<input id="stress"
+type="number"
+step="any"
+required
+placeholder="Example: 180">
+</div>
+
+
+<div>
+<label for="duration">
+Test Duration (hours)
+</label>
+
+<input id="duration"
+type="number"
+step="any"
+required
+placeholder="Example: 1000">
+</div>
+
+
+<div>
+<label for="ruptureTime">
+Time to Rupture (hours)
+</label>
+
+<input id="ruptureTime"
+type="number"
+step="any"
+placeholder="Example: 842">
+</div>
+
+
+<div>
+<label for="strain">
+Strain / Deformation
+</label>
+
+<input id="strain"
+placeholder="Example: 1.8%">
+</div>
+
+
+<div>
+<label for="method">
+Test Method
+</label>
+
+<select id="method" required>
+
+<option value="">
+Select method
+</option>
+
+<option>
+Constant Stress Testing
+</option>
+
+<option>
+High Temperature Testing
+</option>
+
+<option>
+Creep-Rupture Evaluation
+</option>
+
+<option>
+Fracture Examination
+</option>
+
+<option>
+Time-to-Rupture Analysis
+</option>
+
+<option>
+Technical Evaluation
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="rupture">
+Rupture Condition
+</label>
+
+<select id="rupture" required>
+
+<option value="">
+Select condition
+</option>
+
+<option>
+Rupture Observed
+</option>
+
+<option>
+No Rupture During Program
+</option>
+
+<option>
+Test Interrupted
+</option>
+
+<option>
+Specimen Damaged
+</option>
+
+<option>
+Under Review
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="fracture">
+Fracture Observation
+</label>
+
+<select id="fracture">
+
+<option>
+Ductile Features
+</option>
+
+<option>
+Brittle Features
+</option>
+
+<option>
+Mixed Features
+</option>
+
+<option>
+Under Examination
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="criteria">
+Procedure / Criteria
+</label>
+
+<input id="criteria"
+placeholder="Standard / specification / procedure">
+</div>
+
+
+<div>
+<label for="evaluation">
+Technical Evaluation
+</label>
+
+<select id="evaluation">
+
+<option>
+No Significant Indication
+</option>
+
+<option>
+Rupture Within Program
+</option>
+
+<option>
+Requires Technical Review
+</option>
+
+<option>
+Procedure-Specific Evaluation
+</option>
+
+</select>
+</div>
+
+
+<div class="full">
+
+<label for="notes">
+Technical Notes
+</label>
+
+<textarea id="notes"
+placeholder="Enter material condition, temperature, stress, deformation, rupture observations and other technical information..."></textarea>
+
+</div>
+
+
+<div>
+
+<label for="status">
+Record Status
+</label>
+
+<select id="status">
+
+<option>
+Pending Review
+</option>
+
+<option>
+Reviewed
+</option>
+
+<option>
+Warning
+</option>
+
+</select>
+
+</div>
+
+
+<div class="full">
+
+<button class="btn btn-green"
+type="submit">
+Create Demo Record
+</button>
+
+<button class="btn btn-primary"
+type="button"
+onclick="resetForm()">
+Clear Form
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</section>
+
+
+<h2 class="section-title" id="records">
+Stress Rupture Test Records
+</h2>
+
+<div class="toolbar">
+
+<input id="searchInput"
+type="search"
+placeholder="Search ID, material, temperature, stress..."
+oninput="filterRows()">
+
+<select id="statusFilter"
+onchange="filterRows()">
+
+<option value="">
+All statuses
+</option>
+
+<option value="Reviewed">
+Reviewed
+</option>
+
+<option value="Pending Review">
+Pending Review
+</option>
+
+<option value="Warning">
+Warning
+</option>
+
+</select>
+
+<button class="btn btn-green"
+onclick="exportCSV()">
+Export CSV
+</button>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table id="ruptureTable">
+
+<thead>
+
+<tr>
+<th>Record ID</th>
+<th>Component</th>
+<th>Material</th>
+<th>Temperature</th>
+<th>Stress</th>
+<th>Time to Rupture</th>
+<th>Rupture Condition</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+<tr>
+
+<td>SR-AZ-2026-001</td>
+
+<td>Turbine Component</td>
+
+<td>Nickel-Based Alloy</td>
+
+<td>650 °C</td>
+
+<td>180 MPa</td>
+
+<td>842 h</td>
+
+<td>Rupture Observed</td>
+
+<td>
+<span class="badge">
+Reviewed · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>SR-AZ-2026-002</td>
+
+<td>Boiler Tube</td>
+
+<td>Heat-Resistant Steel</td>
+
+<td>600 °C</td>
+
+<td>145 MPa</td>
+
+<td>1,260 h</td>
+
+<td>Rupture Observed</td>
+
+<td>
+<span class="badge warning">
+Warning · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>SR-AZ-2026-003</td>
+
+<td>Pressure Component</td>
+
+<td>Alloy Steel</td>
+
+<td>550 °C</td>
+
+<td>120 MPa</td>
+
+<td>—</td>
+
+<td>No Rupture During Program</td>
+
+<td>
+<span class="badge warning">
+Pending Review · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>SR-AZ-2026-004</td>
+
+<td>High-Temperature Fastener</td>
+
+<td>Heat-Resistant Alloy</td>
+
+<td>700 °C</td>
+
+<td>210 MPa</td>
+
+<td>615 h</td>
+
+<td>Rupture Observed</td>
+
+<td>
+<span class="badge">
+Reviewed · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<h2 class="section-title">
+Quality & Documentation
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>Stress Rupture Report</h3>
+
+<p>
+Фиксация материала, температуры, напряжения,
+времени до разрушения, деформации и технической оценки.
+</p>
+
+<button class="btn btn-green"
+onclick="createReport()">
+Create Demo Report
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Quality Review</h3>
+
+<p>
+Проверка результатов относительно применимой
+процедуры, спецификации или технического критерия.
+</p>
+
+<a class="btn btn-green"
+href="../quality/index.html">
+Open Quality
+</a>
+
+</div>
+
+
+<div class="card">
+
+<h3>Technical Documents</h3>
+
+<p>
+Связь результатов испытания с процедурами,
+спецификациями, отчётами и сертификатами.
+</p>
+
+<a class="btn btn-green"
+href="../documents/index.html">
+Open Documents
+</a>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+WORKER PRO Industrial Flow
+</h2>
+
+<section class="workflow">
+
+<div class="step">
+<b>1</b>
+Product
+</div>
+
+<div class="step">
+<b>2</b>
+Testing
+</div>
+
+<div class="step">
+<b>3</b>
+Quality
+</div>
+
+<div class="step">
+<b>4</b>
+Certificate
+</div>
+
+<div class="step">
+<b>5</b>
+Supplier
+</div>
+
+<div class="step">
+<b>6</b>
+Order & Logistics
+</div>
+
+</section>
+
+
+<div class="info-box"
+style="margin-top:20px;">
+
+<strong>Important:</strong>
+
+Все записи и показатели на этой странице являются
+демонстрационными.
+
+Stress rupture и creep-rupture испытания зависят от
+материала, температуры, напряжения, геометрии образца,
+состояния материала, продолжительности испытания
+и применимой процедуры.
+
+Реальные испытания должны выполняться с контролем
+температуры и нагрузки, подходящим оборудованием,
+калиброванными средствами измерений и квалифицированным
+персоналом по соответствующей методике или стандарту.
+
+</div>
+
+</main>
+
+
+<footer>
+
+<strong>WORKER PRO</strong><br>
+
+Глобальная промышленная платформа<br>
+
+Testing · Quality · Production · Logistics<br>
+
+<a href="../index.html">
+Back to Home
+</a>
+
+<br><br>
+
+© 2026 WORKER PRO · F.S
+
+</footer>
+
+
+<script>
+
+let recordCounter = 5;
+
+
+function scrollToSection(id){
+
+    document.getElementById(id).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+function setLanguage(lang){
+
+    document.querySelectorAll(
+        ".top-languages button"
+    ).forEach(button=>{
+
+        button.classList.toggle(
+            "active",
+            button.textContent.trim() === lang
+        );
+
+    });
+
+    alert(
+        "Selected language: " +
+        lang +
+        "\nДемонстрационный режим. Перевод страницы пока не подключен."
+    );
+
+}
+
+
+function resetForm(){
+
+    document.getElementById("testForm").reset();
+
+}
+
+
+function filterRows(){
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const status =
+        document.getElementById("statusFilter").value;
+
+    const rows =
+        document.querySelectorAll("#tableBody tr");
+
+
+    rows.forEach(row=>{
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[7].innerText;
+
+        const matchesSearch =
+            text.includes(search);
+
+        const matchesStatus =
+            !status ||
+            rowStatus.includes(status);
+
+        row.style.display =
+            matchesSearch && matchesStatus
+            ? ""
+            : "none";
+
+    });
+
+}
+
+
+document.getElementById("testForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    const sample =
+        document.getElementById("sample")
+        .value.trim();
+
+    const material =
+        document.getElementById("material")
+        .value.trim();
+
+    const temperature =
+        document.getElementById("temperature")
+        .value;
+
+    const stress =
+        document.getElementById("stress")
+        .value;
+
+    const duration =
+        document.getElementById("duration")
+        .value;
+
+    const ruptureTime =
+        document.getElementById("ruptureTime")
+        .value || "—";
+
+    const strain =
+        document.getElementById("strain")
+        .value || "—";
+
+    const method =
+        document.getElementById("method")
+        .value;
+
+    const rupture =
+        document.getElementById("rupture")
+        .value;
+
+    const fracture =
+        document.getElementById("fracture")
+        .value;
+
+    const criteria =
+        document.getElementById("criteria")
+        .value.trim() || "Not specified";
+
+    const evaluation =
+        document.getElementById("evaluation")
+        .value;
+
+    const notes =
+        document.getElementById("notes")
+        .value.trim() || "No additional notes";
+
+    const status =
+        document.getElementById("status")
+        .value;
+
+
+    const id =
+        "SR-AZ-2026-" +
+        String(recordCounter)
+        .padStart(3,"0");
+
+    recordCounter++;
+
+
+    const row =
+        document.createElement("tr");
+
+
+    const values = [
+
+        id,
+        sample,
+        material,
+        temperature + " °C",
+        stress + " MPa",
+        ruptureTime + " h",
+        rupture,
+        status
+
+    ];
+
+
+    values.forEach((value,index)=>{
+
+        const cell =
+            document.createElement("td");
+
+
+        if(index === 7){
+
+            const badge =
+                document.createElement("span");
+
+            badge.className =
+                status === "Warning"
+                ? "badge warning"
+                : "badge";
+
+            badge.textContent =
+                status + " · Demo";
+
+            cell.appendChild(badge);
+
+        }else{
+
+            cell.textContent =
+                value;
+
+        }
+
+        row.appendChild(cell);
+
+    });
+
+
+    const actionCell =
+        document.createElement("td");
+
+
+    const detailsButton =
+        document.createElement("button");
+
+    detailsButton.className =
+        "btn btn-green";
+
+    detailsButton.textContent =
+        "Details";
+
+
+    detailsButton.onclick =
+        function(){
+
+            alert(
+
+                "Record: " +
+                id +
+
+                "\nComponent: " +
+                sample +
+
+                "\nMaterial: " +
+                material +
+
+                "\nTemperature: " +
+                temperature +
+                " °C" +
+
+                "\nApplied Stress: " +
+                stress +
+                " MPa" +
+
+                "\nTest Duration: " +
+                duration +
+                " h" +
+
+                "\nTime to Rupture: " +
+                ruptureTime +
+                " h" +
+
+                "\nStrain / Deformation: " +
+                strain +
+
+                "\nMethod: " +
+                method +
+
+                "\nRupture Condition: " +
+                rupture +
+
+                "\nFracture Observation: " +
+                fracture +
+
+                "\nProcedure / Criteria: " +
+                criteria +
+
+                "\nEvaluation: " +
+                evaluation +
+
+                "\nNotes: " +
+                notes +
+
+                "\nStatus: " +
+                status +
+
+                "\n\nDemo record only."
+
+            );
+
+        };
+
+
+    actionCell.appendChild(
+        detailsButton
+    );
+
+    row.appendChild(
+        actionCell
+    );
+
+
+    document
+        .getElementById("tableBody")
+        .prepend(row);
+
+
+    resetForm();
+
+    filterRows();
+
+
+    alert(
+        "Demo stress rupture record created: " +
+        id
+    );
+
+
+    scrollToSection(
+        "records"
+    );
+
+});
+
+
+function viewDetails(button){
+
+    const row =
+        button.closest("tr");
+
+    const cells =
+        row.cells;
+
+
+    alert(
+
+        "Record ID: " +
+        cells[0].innerText +
+
+        "\nComponent: " +
+        cells[1].innerText +
+
+        "\nMaterial: " +
+        cells[2].innerText +
+
+        "\nTemperature: " +
+        cells[3].innerText +
+
+        "\nStress: " +
+        cells[4].innerText +
+
+        "\nTime to Rupture: " +
+        cells[5].innerText +
+
+        "\nRupture Condition: " +
+        cells[6].innerText +
+
+        "\nStatus: " +
+        cells[7].innerText +
+
+        "\n\nDemo record."
+
+    );
+
+}
+
+
+function createReport(){
+
+    alert(
+
+        "Demo Stress Rupture Technical Report prepared.\n\n" +
+
+        "Реальный технический отчёт должен содержать " +
+        "идентификацию материала, условия температуры " +
+        "и нагрузки, измеренные значения времени, " +
+        "наблюдения за деформацией и разрушением, " +
+        "а также применимые критерии оценки."
+
+    );
+
+}
+
+
+function exportCSV(){
+
+    const rows =
+        Array.from(
+            document.querySelectorAll(
+                "#ruptureTable tr"
+            )
+        );
+
+
+    const csv =
+        rows.map(row=>
+
+            Array.from(row.cells)
+            .slice(0,8)
+            .map(cell=>{
+
+                const value =
+                    cell.innerText
+                    .replace(/"/g,'""');
+
+                return '"' +
+                       value +
+                       '"';
+
+            })
+            .join(",")
+
+        ).join("\n");
+
+
+    const blob =
+        new Blob(
+            ["\uFEFF" + csv],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement("a");
+
+    link.href =
+        url;
+
+    link.download =
+        "worker-pro-stress-rupture-testing-records.csv";
+
+    document.body.appendChild(
+        link
+    );
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+</script>
+
+</body>
+</html>
