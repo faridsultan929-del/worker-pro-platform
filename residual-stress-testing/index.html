@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Residual Stress Testing</title>
+
+<style>
+:root {
+    --dark: #063d25;
+    --green: #0b6b3d;
+    --lime: #b7ff35;
+    --bg: #f4f7f5;
+    --white: #ffffff;
+    --text: #173b2b;
+    --muted: #687b70;
+    --border: #dce8df;
+    --red: #b42318;
+    --orange: #a15c00;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+.top-languages {
+    background: var(--dark);
+    padding: 10px 4%;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.top-languages button {
+    background: transparent;
+    color: white;
+    border: 1px solid #47765d;
+    border-radius: 6px;
+    padding: 8px 13px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.top-languages button.active,
+.top-languages button:hover {
+    background: var(--lime);
+    color: var(--dark);
+    border-color: var(--lime);
+}
+
+header {
+    background: var(--white);
+    padding: 20px 4%;
+    border-bottom: 1px solid var(--border);
+}
+
+.brand {
+    color: var(--dark);
+    font-size: 30px;
+    font-weight: 900;
+    letter-spacing: 1px;
+}
+
+.brand span {
+    color: var(--green);
+}
+
+.subtitle {
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+nav {
+    background: var(--green);
+    padding: 12px 4%;
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+}
+
+nav a {
+    color: white;
+    padding: 9px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+nav a:hover {
+    background: var(--lime);
+    color: var(--dark);
+}
+
+.container {
+    width: 92%;
+    max-width: 1250px;
+    margin: 25px auto;
+}
+
+.hero {
+    background: linear-gradient(125deg, var(--dark), var(--green));
+    color: white;
+    border-radius: 18px;
+    padding: 35px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 25px;
+    align-items: center;
+}
+
+.tag {
+    display: inline-block;
+    background: var(--lime);
+    color: var(--dark);
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.hero h1 {
+    font-size: clamp(28px, 4vw, 45px);
+    line-height: 1.15;
+    margin: 18px 0 12px;
+}
+
+.hero p {
+    color: #d8eadf;
+    line-height: 1.7;
+}
+
+.hero-visual {
+    background: rgba(255,255,255,.09);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 14px;
+    padding: 25px;
+}
+
+.stress-symbol {
+    font-size: 65px;
+    text-align: center;
+    color: var(--lime);
+    font-weight: bold;
+}
+
+.hero-visual p {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.btn {
+    display: inline-block;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 17px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 6px 5px 0 0;
+}
+
+.btn-primary {
+    background: var(--lime);
+    color: var(--dark);
+}
+
+.btn-light {
+    background: white;
+    color: var(--dark);
+}
+
+.btn-green {
+    background: var(--green);
+    color: white;
+}
+
+.section-title {
+    margin: 32px 0 16px;
+    color: var(--dark);
+    font-size: 24px;
+}
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 22px;
+}
+
+.stat, .card, .panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 20px;
+}
+
+.stat strong {
+    display: block;
+    font-size: 27px;
+    color: var(--green);
+    margin-bottom: 7px;
+}
+
+.stat span {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.card h3 {
+    margin-top: 0;
+    color: var(--dark);
+}
+
+.card p {
+    line-height: 1.6;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.icon {
+    font-size: 30px;
+    margin-bottom: 12px;
+}
+
+.badge {
+    display: inline-block;
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: 12px;
+    font-weight: bold;
+    background: #e4f4e9;
+    color: var(--green);
+}
+
+.badge.warning {
+    background: #fff0d6;
+    color: var(--orange);
+}
+
+.badge.danger {
+    background: #fde8e7;
+    color: var(--red);
+}
+
+.workflow {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+}
+
+.step {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 17px 12px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.step b {
+    display: block;
+    background: var(--green);
+    color: white;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    line-height: 32px;
+    margin: 0 auto 12px;
+}
+
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.toolbar input,
+.toolbar select,
+.form-grid input,
+.form-grid select {
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    background: white;
+    min-width: 180px;
+}
+
+.toolbar input {
+    flex: 1;
+}
+
+.table-wrap {
+    overflow-x: auto;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 900px;
+}
+
+th, td {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    font-size: 13px;
+}
+
+th {
+    background: #eaf3ed;
+    color: var(--dark);
+}
+
+tr:hover td {
+    background: #f8fbf8;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 13px;
+}
+
+.form-grid label {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.form-grid input,
+.form-grid select {
+    width: 100%;
+}
+
+.form-grid .full {
+    grid-column: 1 / -1;
+}
+
+.notice {
+    background: #fff7e5;
+    border: 1px solid #f0d79b;
+    color: #755000;
+    padding: 16px;
+    border-radius: 10px;
+    line-height: 1.6;
+    font-size: 14px;
+}
+
+.info-box {
+    background: #eaf4ed;
+    border-left: 5px solid var(--green);
+    border-radius: 8px;
+    padding: 17px;
+    line-height: 1.7;
+    font-size: 14px;
+}
+
+footer {
+    margin-top: 35px;
+    background: var(--dark);
+    color: white;
+    padding: 25px 4%;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.8;
+}
+
+footer a {
+    color: var(--lime);
+}
+
+@media (max-width: 850px) {
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 25px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .workflow {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 550px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .workflow {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid .full {
+        grid-column: auto;
+    }
+
+    .hero {
+        padding: 20px;
+    }
+
+    .container {
+        width: 94%;
+    }
+
+    .stat {
+        padding: 15px;
+    }
+
+    .stat strong {
+        font-size: 23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button class="active" onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+    <div class="brand">WORKER <span>PRO</span></div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+    <section class="hero">
+        <div>
+            <span class="tag">TESTING · №192</span>
+            <h1>Residual Stress Testing</h1>
+            <p>
+                Контроль остаточных напряжений в металлах и промышленных
+                деталях после сварки, шлифования, механической обработки
+                и термической обработки.
+            </p>
+            <p>
+                Измерение, анализ распределения напряжений и подготовка
+                технических отчетов для промышленного контроля качества.
+            </p>
+            <button class="btn btn-primary" onclick="scrollToSection('newTest')">
+                + New Measurement
+            </button>
+            <button class="btn btn-light" onclick="scrollToSection('records')">
+                View Records
+            </button>
+        </div>
+
+        <div class="hero-visual">
+            <div class="stress-symbol">± σ</div>
+            <h3 style="text-align:center;">Residual Stress Analysis</h3>
+            <p>
+                Tensile Stress · Compressive Stress · Stress Distribution
+            </p>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="stat">
+            <strong>96</strong>
+            <span>Demo measurement systems</span>
+        </div>
+        <div class="stat">
+            <strong>7,420</strong>
+            <span>Demo measurement records</span>
+        </div>
+        <div class="stat">
+            <strong>38</strong>
+            <span>Demo laboratory teams</span>
+        </div>
+        <div class="stat">
+            <strong>97.4%</strong>
+            <span>Demo record completeness</span>
+        </div>
+    </section>
+
+    <h2 class="section-title">Residual Stress Types</h2>
+
+    <section class="grid">
+        <div class="card">
+            <div class="icon">↗</div>
+            <h3>Tensile Residual Stress</h3>
+            <p>
+                Растягивающие остаточные напряжения, которые могут
+                влиять на усталостную прочность и развитие трещин.
+            </p>
+            <span class="badge">Tensile</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">↙</div>
+            <h3>Compressive Residual Stress</h3>
+            <p>
+                Сжимающие остаточные напряжения. Их влияние зависит
+                от материала, геометрии детали и условий эксплуатации.
+            </p>
+            <span class="badge">Compressive</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">∿</div>
+            <h3>Stress Distribution</h3>
+            <p>
+                Анализ изменения напряжений по поверхности, направлению
+                и глубине материала.
+            </p>
+            <span class="badge">Stress Profile</span>
+        </div>
+    </section>
+
+    <h2 class="section-title">Measurement Methods</h2>
+
+    <section class="grid">
+        <div class="card">
+            <div class="icon">🔬</div>
+            <h3>X-Ray Diffraction</h3>
+            <p>
+                Рентгеновская дифракция для определения остаточных
+                напряжений в исследуемой области материала.
+            </p>
+            <span class="badge">Surface Measurement</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">📐</div>
+            <h3>Hole-Drilling Method</h3>
+            <p>
+                Метод сверления небольшого отверстия с измерением
+                деформаций. Применяется по подходящей процедуре
+                и с учетом ограничений метода.
+            </p>
+            <span class="badge">Semi-Destructive</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">🧪</div>
+            <h3>Neutron Diffraction</h3>
+            <p>
+                Специализированный метод исследования напряжений
+                внутри материала при наличии соответствующего оборудования.
+            </p>
+            <span class="badge">Specialized Method</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">📊</div>
+            <h3>Contour Method</h3>
+            <p>
+                Метод оценки распределения остаточных напряжений
+                в сечении детали по результатам измерений деформации.
+            </p>
+            <span class="badge">Stress Mapping</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">🛠️</div>
+            <h3>Strain-Gauge Method</h3>
+            <p>
+                Измерение деформаций с помощью тензодатчиков
+                в рамках выбранной методики оценки напряжений.
+            </p>
+            <span class="badge">Strain Measurement</span>
+        </div>
+
+        <div class="card">
+            <div class="icon">📋</div>
+            <h3>Technical Evaluation</h3>
+            <p>
+                Сопоставление измеренных значений с техническими
+                требованиями, чертежами и утвержденными критериями.
+            </p>
+            <span class="badge">Engineering Review</span>
+        </div>
+    </section>
+
+    <h2 class="section-title">Measurement Workflow</h2>
+
+    <section class="workflow">
+        <div class="step"><b>1</b>Part Selection</div>
+        <div class="step"><b>2</b>Surface Preparation</div>
+        <div class="step"><b>3</b>Measurement</div>
+        <div class="step"><b>4</b>Stress Analysis</div>
+        <div class="step"><b>5</b>Evaluation</div>
+        <div class="step"><b>6</b>Technical Report</div>
+    </section>
+
+    <h2 class="section-title">Industrial Applications</h2>
+
+    <section class="grid">
+        <div class="card">
+            <h3>Welding</h3>
+            <p>Контроль остаточных напряжений в сварных соединениях и конструкциях.</p>
+        </div>
+        <div class="card">
+            <h3>Grinding</h3>
+            <p>Оценка влияния шлифования на состояние поверхности и напряжения.</p>
+        </div>
+        <div class="card">
+            <h3>Heat Treatment</h3>
+            <p>Исследование напряжений после термической обработки деталей.</p>
+        </div>
+        <div class="card">
+            <h3>Machining</h3>
+            <p>Контроль деталей после токарной, фрезерной и другой обработки.</p>
+        </div>
+        <div class="card">
+            <h3>Oil & Gas</h3>
+            <p>Исследование промышленных компонентов нефтегазового оборудования.</p>
+        </div>
+        <div class="card">
+            <h3>Aerospace & Automotive</h3>
+            <p>Контроль компонентов машин, двигателей и ответственных конструкций.</p>
+        </div>
+    </section>
+
+    <h2 class="section-title" id="newTest">Create Measurement Record</h2>
+
+    <section class="panel">
+        <div class="notice" style="margin-bottom:18px;">
+            Демонстрационная форма. Запись сохраняется только в текущем
+            открытом окне страницы и не отправляется в лабораторию.
+        </div>
+
+        <form id="measurementForm">
+            <div class="form-grid">
+                <div>
+                    <label for="partName">Part / Component</label>
+                    <input id="partName" required placeholder="Example: Industrial shaft">
+                </div>
+
+                <div>
+                    <label for="material">Material</label>
+                    <input id="material" required placeholder="Example: Steel">
+                </div>
+
+                <div>
+                    <label for="process">Previous Process</label>
+                    <select id="process" required>
+                        <option value="">Select process</option>
+                        <option>Welding</option>
+                        <option>Grinding</option>
+                        <option>Heat Treatment</option>
+                        <option>Machining</option>
+                        <option>Forging</option>
+                        <option>Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="method">Measurement Method</label>
+                    <select id="method" required>
+                        <option value="">Select method</option>
+                        <option>X-Ray Diffraction</option>
+                        <option>Hole-Drilling Method</option>
+                        <option>Neutron Diffraction</option>
+                        <option>Contour Method</option>
+                        <option>Strain-Gauge Method</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="stressValue">Stress Value (MPa)</label>
+                    <input id="stressValue" type="number" step="any" required placeholder="Example: -120">
+                </div>
+
+                <div>
+                    <label for="stressType">Stress Type</label>
+                    <select id="stressType" required>
+                        <option value="">Select type</option>
+                        <option>Tensile</option>
+                        <option>Compressive</option>
+                        <option>Mixed / Other</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="location">Measurement Location</label>
+                    <input id="location" required placeholder="Example: Weld zone / surface">
+                </div>
+
+                <div>
+                    <label for="depth">Measurement Depth / Layer</label>
+                    <input id="depth" placeholder="Example: Surface / 0.5 mm">
+                </div>
+
+                <div>
+                    <label for="criteria">Acceptance Criteria</label>
+                    <input id="criteria" placeholder="Standard / drawing / procedure">
+                </div>
+
+                <div>
+                    <label for="recordStatus">Record Status</label>
+                    <select id="recordStatus">
+                        <option>Pending Review</option>
+                        <option>Reviewed</option>
+                        <option>Warning</option>
+                    </select>
+                </div>
+
+                <div class="full">
+                    <button class="btn btn-green" type="submit">Create Demo Record</button>
+                    <button class="btn btn-primary" type="button" onclick="resetForm()">Clear Form</button>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <h2 class="section-title" id="records">Measurement Records</h2>
+
+    <div class="toolbar">
+        <input id="searchInput" type="search" placeholder="Search ID, part, material, method..." oninput="filterRows()">
+
+        <select id="statusFilter" onchange="filterRows()">
+            <option value="">All statuses</option>
+            <option value="Reviewed">Reviewed</option>
+            <option value="Pending Review">Pending Review</option>
+            <option value="Warning">Warning</option>
+        </select>
+
+        <button class="btn btn-green" onclick="exportCSV()">Export CSV</button>
+    </div>
+
+    <div class="table-wrap">
+        <table id="stressTable">
+            <thead>
+                <tr>
+                    <th>Record ID</th>
+                    <th>Component</th>
+                    <th>Material</th>
+                    <th>Process</th>
+                    <th>Method</th>
+                    <th>Stress (MPa)</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="tableBody">
+                <tr>
+                    <td>RS-AZ-2026-001</td>
+                    <td>Industrial Shaft</td>
+                    <td>Steel</td>
+                    <td>Grinding</td>
+                    <td>X-Ray Diffraction</td>
+                    <td>-120</td>
+                    <td>Compressive</td>
+                    <td><span class="badge">Reviewed · Demo</span></td>
+                    <td><button class="btn btn-green" onclick="viewDetails(this)">Details</button></td>
+                </tr>
+
+                <tr>
+                    <td>RS-AZ-2026-002</td>
+                    <td>Welded Pipe</td>
+                    <td>Carbon Steel</td>
+                    <td>Welding</td>
+                    <td>Hole-Drilling Method</td>
+                    <td>185</td>
+                    <td>Tensile</td>
+                    <td><span class="badge warning">Pending Review · Demo</span></td>
+                    <td><button class="btn btn-green" onclick="viewDetails(this)">Details</button></td>
+                </tr>
+
+                <tr>
+                    <td>RS-AZ-2026-003</td>
+                    <td>Gear Component</td>
+                    <td>Alloy Steel</td>
+                    <td>Heat Treatment</td>
+                    <td>X-Ray Diffraction</td>
+                    <td>-85</td>
+                    <td>Compressive</td>
+                    <td><span class="badge warning">Warning · Demo</span></td>
+                    <td><button class="btn btn-green" onclick="viewDetails(this)">Details</button></td>
+                </tr>
+
+                <tr>
+                    <td>RS-AZ-2026-004</td>
+                    <td>Machine Bracket</td>
+                    <td>Aluminum Alloy</td>
+                    <td>Machining</td>
+                    <td>Contour Method</td>
+                    <td>65</td>
+                    <td>Tensile</td>
+                    <td><span class="badge">Reviewed · Demo</span></td>
+                    <td><button class="btn btn-green" onclick="viewDetails(this)">Details</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2 class="section-title">Quality & Documentation</h2>
+
+    <section class="grid">
+        <div class="card">
+            <h3>Measurement Report</h3>
+            <p>Запись метода, оборудования, условий, точек измерения и результатов.</p>
+            <button class="btn btn-green" onclick="createReport()">Create Demo Report</button>
+        </div>
+
+        <div class="card">
+            <h3>Quality Review</h3>
+            <p>Проверка результатов по утвержденным техническим критериям.</p>
+            <a class="btn btn-green" href="../quality/index.html">Open Quality</a>
+        </div>
+
+        <div class="card">
+            <h3>Technical Documents</h3>
+            <p>Связь результатов измерений с техническими документами и отчетами.</p>
+            <a class="btn btn-green" href="../documents/index.html">Open Documents</a>
+        </div>
+    </section>
+
+    <h2 class="section-title">WORKER PRO Industrial Flow</h2>
+
+    <section class="workflow">
+        <div class="step"><b>1</b>Product</div>
+        <div class="step"><b>2</b>Testing</div>
+        <div class="step"><b>3</b>Quality</div>
+        <div class="step"><b>4</b>Certificate</div>
+        <div class="step"><b>5</b>Supplier</div>
+        <div class="step"><b>6</b>Order & Logistics</div>
+    </section>
+
+    <div class="info-box" style="margin-top:20px;">
+        <strong>Important:</strong> Все приведенные записи и показатели
+        являются демонстрационными. Допустимость остаточных напряжений
+        определяется требованиями к конкретному изделию, материалу,
+        методу измерения и применимым техническим критериям.
+        Для реальных испытаний необходимы подходящее оборудование,
+        утвержденная методика и квалифицированный персонал.
+    </div>
+
+</main>
+
+<footer>
+    <strong>WORKER PRO</strong><br>
+    Глобальная промышленная платформа<br>
+    Testing · Quality · Production · Logistics<br>
+    <a href="../index.html">Back to Home</a><br><br>
+    © 2026 WORKER PRO · F.S
+</footer>
+
+<script>
+let recordCounter = 5;
+
+function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+function setLanguage(lang) {
+    document.querySelectorAll(".top-languages button").forEach(button => {
+        button.classList.toggle(
+            "active",
+            button.textContent.trim() === lang
+        );
+    });
+
+    alert("Selected language: " + lang +
+        "\nДемонстрационный режим. Перевод страницы пока не подключен.");
+}
+
+function resetForm() {
+    document.getElementById("measurementForm").reset();
+}
+
+function filterRows() {
+    const search = document.getElementById("searchInput")
+        .value.toLowerCase().trim();
+
+    const status = document.getElementById("statusFilter").value;
+    const rows = document.querySelectorAll("#tableBody tr");
+
+    rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const rowStatus = row.cells[7].innerText;
+
+        const matchesSearch = text.includes(search);
+        const matchesStatus = !status || rowStatus.includes(status);
+
+        row.style.display = matchesSearch && matchesStatus ? "" : "none";
+    });
+}
+
+document.getElementById("measurementForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const part = document.getElementById("partName").value.trim();
+    const material = document.getElementById("material").value.trim();
+    const process = document.getElementById("process").value;
+    const method = document.getElementById("method").value;
+    const stressValue = document.getElementById("stressValue").value;
+    const stressType = document.getElementById("stressType").value;
+    const location = document.getElementById("location").value.trim();
+    const depth = document.getElementById("depth").value.trim();
+    const criteria = document.getElementById("criteria").value.trim();
+    const status = document.getElementById("recordStatus").value;
+
+    const id = "RS-AZ-2026-" + String(recordCounter).padStart(3, "0");
+    recordCounter++;
+
+    const row = document.createElement("tr");
+
+    const values = [
+        id, part, material, process, method,
+        stressValue, stressType, status
+    ];
+
+    values.forEach(value => {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+        row.appendChild(cell);
+    });
+
+    const actionCell = document.createElement("td");
+    const detailsButton = document.createElement("button");
+    detailsButton.className = "btn btn-green";
+    detailsButton.textContent = "Details";
+    detailsButton.onclick = function() {
+        alert(
+            "Record: " + id +
+            "\nComponent: " + part +
+            "\nMaterial: " + material +
+            "\nProcess: " + process +
+            "\nMethod: " + method +
+            "\nStress: " + stressValue + " MPa" +
+            "\nType: " + stressType +
+            "\nLocation: " + location +
+            "\nDepth: " + depth +
+            "\nCriteria: " + criteria +
+            "\nStatus: " + status +
+            "\n\nDemo record only."
+        );
+    };
+
+    actionCell.appendChild(detailsButton);
+    row.appendChild(actionCell);
+
+    document.getElementById("tableBody").prepend(row);
+
+    resetForm();
+    filterRows();
+
+    alert("Demo record created: " + id);
+    scrollToSection("records");
+});
+
+function viewDetails(button) {
+    const row = button.closest("tr");
+    const cells = row.cells;
+
+    alert(
+        "Record ID: " + cells[0].innerText +
+        "\nComponent: " + cells[1].innerText +
+        "\nMaterial: " + cells[2].innerText +
+        "\nProcess: " + cells[3].innerText +
+        "\nMethod: " + cells[4].innerText +
+        "\nStress: " + cells[5].innerText + " MPa" +
+        "\nType: " + cells[6].innerText +
+        "\nStatus: " + cells[7].innerText +
+        "\n\nDemo record. Additional technical details are not stored."
+    );
+}
+
+function createReport() {
+    alert(
+        "Demo report prepared.\n\n" +
+        "A real report requires verified measurements, " +
+        "equipment details, measurement uncertainty, " +
+        "procedure and acceptance criteria."
+    );
+}
+
+function exportCSV() {
+    const rows = Array.from(
+        document.querySelectorAll("#stressTable tr")
+    );
+
+    const csv = rows.map(row =>
+        Array.from(row.cells).slice(0, 8).map(cell => {
+            const value = cell.innerText.replace(/"/g, '""');
+            return '"' + value + '"';
+        }).join(",")
+    ).join("\n");
+
+    const blob = new Blob(["\uFEFF" + csv], {
+        type: "text/csv;charset=utf-8;"
+    });
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "worker-pro-residual-stress-records.csv";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
