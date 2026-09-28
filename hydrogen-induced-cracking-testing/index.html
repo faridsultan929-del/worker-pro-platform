@@ -1,0 +1,2012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Hydrogen-Induced Cracking Testing</title>
+
+<style>
+:root{
+    --dark:#063d25;
+    --green:#0b6b3d;
+    --lime:#b7ff35;
+    --bg:#f4f7f5;
+    --white:#ffffff;
+    --text:#173b2b;
+    --muted:#687b70;
+    --border:#dce8df;
+    --red:#b42318;
+    --orange:#a15c00;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,input,select,textarea{
+    font:inherit;
+}
+
+.top-languages{
+    background:var(--dark);
+    padding:10px 4%;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.top-languages button{
+    background:transparent;
+    color:white;
+    border:1px solid #47765d;
+    border-radius:6px;
+    padding:8px 13px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.top-languages button.active,
+.top-languages button:hover{
+    background:var(--lime);
+    color:var(--dark);
+    border-color:var(--lime);
+}
+
+header{
+    background:white;
+    padding:20px 4%;
+    border-bottom:1px solid var(--border);
+}
+
+.brand{
+    color:var(--dark);
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.brand span{
+    color:var(--green);
+}
+
+.subtitle{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+nav{
+    background:var(--green);
+    padding:12px 4%;
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    padding:9px 12px;
+    border-radius:6px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:var(--lime);
+    color:var(--dark);
+}
+
+.container{
+    width:92%;
+    max-width:1250px;
+    margin:25px auto;
+}
+
+.hero{
+    background:linear-gradient(125deg,var(--dark),var(--green));
+    color:white;
+    border-radius:18px;
+    padding:35px;
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:25px;
+    align-items:center;
+}
+
+.tag{
+    display:inline-block;
+    background:var(--lime);
+    color:var(--dark);
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.hero h1{
+    font-size:clamp(28px,4vw,45px);
+    line-height:1.15;
+    margin:18px 0 12px;
+}
+
+.hero p{
+    color:#d8eadf;
+    line-height:1.7;
+}
+
+.hero-visual{
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:14px;
+    padding:25px;
+}
+
+.h-symbol{
+    font-size:72px;
+    text-align:center;
+    color:var(--lime);
+    font-weight:bold;
+}
+
+.hero-visual h3{
+    text-align:center;
+}
+
+.hero-visual p{
+    text-align:center;
+    margin-bottom:0;
+}
+
+.btn{
+    display:inline-block;
+    border:none;
+    border-radius:8px;
+    padding:12px 17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin:6px 5px 0 0;
+}
+
+.btn-primary{
+    background:var(--lime);
+    color:var(--dark);
+}
+
+.btn-light{
+    background:white;
+    color:var(--dark);
+}
+
+.btn-green{
+    background:var(--green);
+    color:white;
+}
+
+.section-title{
+    margin:32px 0 16px;
+    color:var(--dark);
+    font-size:24px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:22px;
+}
+
+.stat,.card,.panel{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:20px;
+}
+
+.stat strong{
+    display:block;
+    font-size:27px;
+    color:var(--green);
+    margin-bottom:7px;
+}
+
+.stat span{
+    font-size:13px;
+    color:var(--muted);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.card h3{
+    margin-top:0;
+    color:var(--dark);
+}
+
+.card p{
+    line-height:1.6;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.icon{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.badge{
+    display:inline-block;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:bold;
+    background:#e4f4e9;
+    color:var(--green);
+}
+
+.badge.warning{
+    background:#fff0d6;
+    color:var(--orange);
+}
+
+.badge.danger{
+    background:#fde8e7;
+    color:var(--red);
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:10px;
+}
+
+.step{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:17px 12px;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.step b{
+    display:block;
+    background:var(--green);
+    color:white;
+    border-radius:50%;
+    width:32px;
+    height:32px;
+    line-height:32px;
+    margin:0 auto 12px;
+}
+
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.toolbar input,
+.toolbar select,
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px;
+    background:white;
+}
+
+.toolbar input{
+    flex:1;
+    min-width:220px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1150px;
+}
+
+th,td{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#eaf3ed;
+    color:var(--dark);
+}
+
+tr:hover td{
+    background:#f8fbf8;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.form-grid label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    width:100%;
+}
+
+.form-grid textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.form-grid .full{
+    grid-column:1/-1;
+}
+
+.notice{
+    background:#fff7e5;
+    border:1px solid #f0d79b;
+    color:#755000;
+    padding:16px;
+    border-radius:10px;
+    line-height:1.6;
+    font-size:14px;
+}
+
+.info-box{
+    background:#eaf4ed;
+    border-left:5px solid var(--green);
+    border-radius:8px;
+    padding:17px;
+    line-height:1.7;
+    font-size:14px;
+}
+
+footer{
+    margin-top:35px;
+    background:var(--dark);
+    color:white;
+    padding:25px 4%;
+    text-align:center;
+    font-size:13px;
+    line-height:1.8;
+}
+
+footer a{
+    color:var(--lime);
+}
+
+@media(max-width:850px){
+
+    .hero{
+        grid-template-columns:1fr;
+        padding:25px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .workflow{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:550px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .workflow{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid .full{
+        grid-column:auto;
+    }
+
+    .hero{
+        padding:20px;
+    }
+
+    .container{
+        width:94%;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat strong{
+        font-size:23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button class="active" onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+    <div class="brand">WORKER <span>PRO</span></div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<div>
+
+<span class="tag">TESTING · №195</span>
+
+<h1>Hydrogen-Induced Cracking Testing</h1>
+
+<p>
+Испытания для оценки склонности металлических материалов
+к образованию водород-индуцированных трещин при воздействии
+водорода и соответствующей рабочей среды.
+</p>
+
+<p>
+WORKER PRO позволяет фиксировать материал, состояние образца,
+условия воздействия, время испытания, результаты осмотра,
+трещинообразование и технические замечания.
+</p>
+
+<button class="btn btn-primary"
+onclick="scrollToSection('newTest')">
++ New HIC Test
+</button>
+
+<button class="btn btn-light"
+onclick="scrollToSection('records')">
+View Records
+</button>
+
+</div>
+
+<div class="hero-visual">
+
+<div class="h-symbol">HIC</div>
+
+<h3>Hydrogen + Environment + Steel</h3>
+
+<p>
+Hydrogen Exposure · Crack Formation · Material Evaluation
+</p>
+
+</div>
+
+</section>
+
+
+<section class="stats">
+
+<div class="stat">
+<strong>82</strong>
+<span>Demo HIC test programs</span>
+</div>
+
+<div class="stat">
+<strong>2,760</strong>
+<span>Demo test records</span>
+</div>
+
+<div class="stat">
+<strong>31</strong>
+<span>Demo laboratory teams</span>
+</div>
+
+<div class="stat">
+<strong>96.2%</strong>
+<span>Demo record completeness</span>
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Hydrogen-Induced Cracking Factors
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<div class="icon">H₂</div>
+
+<h3>Hydrogen Environment</h3>
+
+<p>
+Фиксируются условия среды и источник водорода,
+которые определены выбранной процедурой испытания.
+</p>
+
+<span class="badge">
+Hydrogen
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🔩</div>
+
+<h3>Material Susceptibility</h3>
+
+<p>
+Учитываются материал, марка, микроструктура,
+термообработка и другие значимые характеристики.
+</p>
+
+<span class="badge">
+Material
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">⚠️</div>
+
+<h3>Crack Formation</h3>
+
+<p>
+Регистрируются признаки трещинообразования,
+геометрия и расположение обнаруженных дефектов.
+</p>
+
+<span class="badge warning">
+Cracking
+</span>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Testing Parameters
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>Material Grade</h3>
+
+<p>
+Марка материала и состояние образца записываются
+для последующего анализа результатов.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Hydrogen Source</h3>
+
+<p>
+Фиксируется источник или механизм воздействия водорода
+в рамках конкретной процедуры.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Exposure Time</h3>
+
+<p>
+Продолжительность воздействия используется
+для документирования условий испытания.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Temperature</h3>
+
+<p>
+Температура является одним из параметров,
+которые могут быть заданы процедурой.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Stress Condition</h3>
+
+<p>
+Фиксируется приложенная нагрузка или другое
+условие напряжения, если это предусмотрено методом.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Crack Evaluation</h3>
+
+<p>
+Оцениваются наличие, расположение и характеристики
+трещин в соответствии с выбранной процедурой.
+</p>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+HIC Testing Approaches
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<div class="icon">🧪</div>
+
+<h3>Hydrogen Exposure</h3>
+
+<p>
+Контролируемое воздействие среды с водородом
+на подготовленные образцы.
+</p>
+
+<span class="badge">
+Exposure
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">⚙️</div>
+
+<h3>Immersion Testing</h3>
+
+<p>
+Для соответствующих процедур образец подвергается
+воздействию заданного раствора или среды.
+</p>
+
+<span class="badge">
+Environment
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📏</div>
+
+<h3>Crack Measurement</h3>
+
+<p>
+Регистрация длины, расположения и других параметров
+обнаруженных трещин.
+</p>
+
+<span class="badge">
+Inspection
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🔬</div>
+
+<h3>Metallographic Examination</h3>
+
+<p>
+Микроскопическое исследование материала и
+характера внутренних или поверхностных дефектов.
+</p>
+
+<span class="badge">
+Microscopy
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📊</div>
+
+<h3>Crack Ratio Evaluation</h3>
+
+<p>
+Для применимых процедур могут использоваться
+расчётные показатели, установленные соответствующим методом.
+</p>
+
+<span class="badge">
+Evaluation
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📋</div>
+
+<h3>Technical Review</h3>
+
+<p>
+Результаты проверяются относительно конкретной
+спецификации, процедуры или технического критерия.
+</p>
+
+<span class="badge">
+Review
+</span>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Hydrogen-Induced Cracking Workflow
+</h2>
+
+<section class="workflow">
+
+<div class="step">
+<b>1</b>
+Material Selection
+</div>
+
+<div class="step">
+<b>2</b>
+Specimen Preparation
+</div>
+
+<div class="step">
+<b>3</b>
+Hydrogen Exposure
+</div>
+
+<div class="step">
+<b>4</b>
+Crack Inspection
+</div>
+
+<div class="step">
+<b>5</b>
+Result Evaluation
+</div>
+
+<div class="step">
+<b>6</b>
+Technical Report
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Industrial Applications
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>Oil & Gas</h3>
+
+<p>
+Исследование материалов оборудования, работающего
+в средах, где возможно водородное воздействие.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Pipeline Steel</h3>
+
+<p>
+Оценка трубных сталей и компонентов
+в рамках установленных испытательных программ.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Pressure Equipment</h3>
+
+<p>
+Контроль материалов оборудования под давлением
+при соответствующих условиях эксплуатации.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Storage Equipment</h3>
+
+<p>
+Исследование металлических компонентов систем
+хранения и промышленной инфраструктуры.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Marine Equipment</h3>
+
+<p>
+Оценка материалов оборудования, работающего
+в агрессивных и водородосодержащих средах.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Industrial Components</h3>
+
+<p>
+Испытание металлических деталей и компонентов
+для различных промышленных систем.
+</p>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title" id="newTest">
+Create HIC Test Record
+</h2>
+
+<section class="panel">
+
+<div class="notice" style="margin-bottom:18px;">
+
+Демонстрационная форма WORKER PRO.
+Данные сохраняются только в текущем окне страницы
+и не отправляются в реальную лабораторию.
+
+</div>
+
+<form id="testForm">
+
+<div class="form-grid">
+
+<div>
+<label for="sample">
+Sample / Component
+</label>
+
+<input id="sample"
+required
+placeholder="Example: Pipeline steel sample">
+</div>
+
+
+<div>
+<label for="material">
+Material / Grade
+</label>
+
+<input id="material"
+required
+placeholder="Example: Carbon steel">
+</div>
+
+
+<div>
+<label for="source">
+Hydrogen Source
+</label>
+
+<select id="source" required>
+
+<option value="">
+Select source
+</option>
+
+<option>
+Hydrogen Sulfide Environment
+</option>
+
+<option>
+Electrochemical Charging
+</option>
+
+<option>
+Laboratory Hydrogen Exposure
+</option>
+
+<option>
+Service Environment
+</option>
+
+<option>
+Other
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="environment">
+Environment
+</label>
+
+<input id="environment"
+required
+placeholder="Example: Controlled aqueous environment">
+</div>
+
+
+<div>
+<label for="temperature">
+Temperature (°C)
+</label>
+
+<input id="temperature"
+type="number"
+step="any"
+placeholder="Example: 25">
+</div>
+
+
+<div>
+<label for="time">
+Exposure Time (hours)
+</label>
+
+<input id="time"
+type="number"
+step="any"
+required
+placeholder="Example: 96">
+</div>
+
+
+<div>
+<label for="stress">
+Stress / Load Condition
+</label>
+
+<input id="stress"
+placeholder="Example: No external load">
+</div>
+
+
+<div>
+<label for="method">
+Test Method
+</label>
+
+<select id="method" required>
+
+<option value="">
+Select method
+</option>
+
+<option>
+Hydrogen Exposure
+</option>
+
+<option>
+Immersion Testing
+</option>
+
+<option>
+Crack Measurement
+</option>
+
+<option>
+Metallographic Examination
+</option>
+
+<option>
+Crack Ratio Evaluation
+</option>
+
+<option>
+Technical Review
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="crack">
+Crack Observation
+</label>
+
+<select id="crack" required>
+
+<option value="">
+Select observation
+</option>
+
+<option>
+No Crack Indication
+</option>
+
+<option>
+Crack Indication
+</option>
+
+<option>
+Internal Crack Network
+</option>
+
+<option>
+Surface Crack
+</option>
+
+<option>
+Under Review
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="severity">
+Evaluation
+</label>
+
+<select id="severity">
+
+<option>
+No Significant Indication
+</option>
+
+<option>
+Indication Detected
+</option>
+
+<option>
+Requires Review
+</option>
+
+<option>
+Procedure-Specific Evaluation
+</option>
+
+</select>
+
+</div>
+
+
+<div>
+<label for="criteria">
+Procedure / Criteria
+</label>
+
+<input id="criteria"
+placeholder="Standard / specification / procedure">
+</div>
+
+
+<div class="full">
+
+<label for="notes">
+Technical Notes
+</label>
+
+<textarea id="notes"
+placeholder="Enter inspection observations, measurements and technical information..."></textarea>
+
+</div>
+
+
+<div>
+
+<label for="status">
+Record Status
+</label>
+
+<select id="status">
+
+<option>
+Pending Review
+</option>
+
+<option>
+Reviewed
+</option>
+
+<option>
+Warning
+</option>
+
+</select>
+
+</div>
+
+
+<div class="full">
+
+<button class="btn btn-green"
+type="submit">
+Create Demo Record
+</button>
+
+<button class="btn btn-primary"
+type="button"
+onclick="resetForm()">
+Clear Form
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</section>
+
+
+<h2 class="section-title" id="records">
+HIC Test Records
+</h2>
+
+<div class="toolbar">
+
+<input id="searchInput"
+type="search"
+placeholder="Search ID, material, source, environment..."
+oninput="filterRows()">
+
+<select id="statusFilter"
+onchange="filterRows()">
+
+<option value="">
+All statuses
+</option>
+
+<option value="Reviewed">
+Reviewed
+</option>
+
+<option value="Pending Review">
+Pending Review
+</option>
+
+<option value="Warning">
+Warning
+</option>
+
+</select>
+
+<button class="btn btn-green"
+onclick="exportCSV()">
+Export CSV
+</button>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table id="hicTable">
+
+<thead>
+
+<tr>
+<th>Record ID</th>
+<th>Component</th>
+<th>Material</th>
+<th>H Source</th>
+<th>Environment</th>
+<th>Time</th>
+<th>Crack Observation</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+<tr>
+
+<td>HIC-AZ-2026-001</td>
+
+<td>Pipeline Steel</td>
+
+<td>Carbon Steel</td>
+
+<td>Hydrogen Sulfide Environment</td>
+
+<td>Controlled Aqueous</td>
+
+<td>96 h</td>
+
+<td>No Crack Indication</td>
+
+<td>
+<span class="badge">
+Reviewed · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>HIC-AZ-2026-002</td>
+
+<td>Pressure Component</td>
+
+<td>Low Alloy Steel</td>
+
+<td>Laboratory Hydrogen Exposure</td>
+
+<td>Aqueous Environment</td>
+
+<td>240 h</td>
+
+<td>Crack Indication</td>
+
+<td>
+<span class="badge warning">
+Warning · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>HIC-AZ-2026-003</td>
+
+<td>Pipeline Sample</td>
+
+<td>Carbon Steel</td>
+
+<td>Service Environment</td>
+
+<td>Industrial Environment</td>
+
+<td>168 h</td>
+
+<td>Under Review</td>
+
+<td>
+<span class="badge warning">
+Pending Review · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>HIC-AZ-2026-004</td>
+
+<td>Industrial Component</td>
+
+<td>Alloy Steel</td>
+
+<td>Electrochemical Charging</td>
+
+<td>Laboratory</td>
+
+<td>120 h</td>
+
+<td>No Crack Indication</td>
+
+<td>
+<span class="badge">
+Reviewed · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<h2 class="section-title">
+Quality & Documentation
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>HIC Test Report</h3>
+
+<p>
+Фиксация материала, среды, источника водорода,
+времени воздействия, метода и результатов оценки.
+</p>
+
+<button class="btn btn-green"
+onclick="createReport()">
+Create Demo Report
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Quality Review</h3>
+
+<p>
+Проверка результатов испытания относительно
+технической документации и заданных критериев.
+</p>
+
+<a class="btn btn-green"
+href="../quality/index.html">
+Open Quality
+</a>
+
+</div>
+
+
+<div class="card">
+
+<h3>Technical Documents</h3>
+
+<p>
+Связь результатов HIC с чертежами,
+спецификациями, процедурами и отчётами.
+</p>
+
+<a class="btn btn-green"
+href="../documents/index.html">
+Open Documents
+</a>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+WORKER PRO Industrial Flow
+</h2>
+
+<section class="workflow">
+
+<div class="step">
+<b>1</b>
+Product
+</div>
+
+<div class="step">
+<b>2</b>
+Testing
+</div>
+
+<div class="step">
+<b>3</b>
+Quality
+</div>
+
+<div class="step">
+<b>4</b>
+Certificate
+</div>
+
+<div class="step">
+<b>5</b>
+Supplier
+</div>
+
+<div class="step">
+<b>6</b>
+Order & Logistics
+</div>
+
+</section>
+
+
+<div class="info-box"
+style="margin-top:20px;">
+
+<strong>Important:</strong>
+
+Все записи и показатели на этой странице являются
+демонстрационными.
+
+Водород-индуцированное растрескивание зависит от
+материала, микроструктуры, условий среды, источника
+водорода, температуры, времени воздействия и
+конкретной процедуры испытания.
+
+Реальная оценка должна выполняться по применимой
+методике или стандарту с подходящим оборудованием,
+контролем условий и квалифицированным персоналом.
+
+</div>
+
+</main>
+
+
+<footer>
+
+<strong>WORKER PRO</strong><br>
+
+Глобальная промышленная платформа<br>
+
+Testing · Quality · Production · Logistics<br>
+
+<a href="../index.html">
+Back to Home
+</a>
+
+<br><br>
+
+© 2026 WORKER PRO · F.S
+
+</footer>
+
+
+<script>
+
+let recordCounter = 5;
+
+
+function scrollToSection(id){
+
+    document.getElementById(id).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+function setLanguage(lang){
+
+    document.querySelectorAll(
+        ".top-languages button"
+    ).forEach(button=>{
+
+        button.classList.toggle(
+            "active",
+            button.textContent.trim() === lang
+        );
+
+    });
+
+    alert(
+        "Selected language: " +
+        lang +
+        "\nДемонстрационный режим. Перевод страницы пока не подключен."
+    );
+
+}
+
+
+function resetForm(){
+
+    document.getElementById("testForm").reset();
+
+}
+
+
+function filterRows(){
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const status =
+        document.getElementById("statusFilter").value;
+
+    const rows =
+        document.querySelectorAll("#tableBody tr");
+
+
+    rows.forEach(row=>{
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[7].innerText;
+
+        const matchesSearch =
+            text.includes(search);
+
+        const matchesStatus =
+            !status ||
+            rowStatus.includes(status);
+
+        row.style.display =
+            matchesSearch && matchesStatus
+            ? ""
+            : "none";
+
+    });
+
+}
+
+
+document.getElementById("testForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    const sample =
+        document.getElementById("sample")
+        .value.trim();
+
+    const material =
+        document.getElementById("material")
+        .value.trim();
+
+    const source =
+        document.getElementById("source")
+        .value;
+
+    const environment =
+        document.getElementById("environment")
+        .value.trim();
+
+    const temperature =
+        document.getElementById("temperature")
+        .value;
+
+    const time =
+        document.getElementById("time")
+        .value;
+
+    const stress =
+        document.getElementById("stress")
+        .value.trim();
+
+    const method =
+        document.getElementById("method")
+        .value;
+
+    const crack =
+        document.getElementById("crack")
+        .value;
+
+    const severity =
+        document.getElementById("severity")
+        .value;
+
+    const criteria =
+        document.getElementById("criteria")
+        .value.trim();
+
+    const notes =
+        document.getElementById("notes")
+        .value.trim();
+
+    const status =
+        document.getElementById("status")
+        .value;
+
+
+    const id =
+        "HIC-AZ-2026-" +
+        String(recordCounter)
+        .padStart(3,"0");
+
+    recordCounter++;
+
+
+    const row =
+        document.createElement("tr");
+
+
+    const values = [
+
+        id,
+        sample,
+        material,
+        source,
+        environment,
+        time + " h",
+        crack,
+        status
+
+    ];
+
+
+    values.forEach((value,index)=>{
+
+        const cell =
+            document.createElement("td");
+
+
+        if(index === 7){
+
+            const badge =
+                document.createElement("span");
+
+            badge.className =
+                status === "Warning"
+                ? "badge warning"
+                : "badge";
+
+            badge.textContent =
+                status + " · Demo";
+
+            cell.appendChild(badge);
+
+        }else{
+
+            cell.textContent =
+                value;
+
+        }
+
+        row.appendChild(cell);
+
+    });
+
+
+    const actionCell =
+        document.createElement("td");
+
+
+    const detailsButton =
+        document.createElement("button");
+
+    detailsButton.className =
+        "btn btn-green";
+
+    detailsButton.textContent =
+        "Details";
+
+
+    detailsButton.onclick =
+        function(){
+
+            alert(
+
+                "Record: " +
+                id +
+
+                "\nComponent: " +
+                sample +
+
+                "\nMaterial: " +
+                material +
+
+                "\nHydrogen Source: " +
+                source +
+
+                "\nEnvironment: " +
+                environment +
+
+                "\nTemperature: " +
+                temperature +
+                " °C" +
+
+                "\nExposure Time: " +
+                time +
+                " h" +
+
+                "\nStress / Load: " +
+                stress +
+
+                "\nMethod: " +
+                method +
+
+                "\nCrack Observation: " +
+                crack +
+
+                "\nEvaluation: " +
+                severity +
+
+                "\nProcedure: " +
+                criteria +
+
+                "\nNotes: " +
+                notes +
+
+                "\nStatus: " +
+                status +
+
+                "\n\nDemo record only."
+
+            );
+
+        };
+
+
+    actionCell.appendChild(
+        detailsButton
+    );
+
+    row.appendChild(
+        actionCell
+    );
+
+
+    document
+        .getElementById("tableBody")
+        .prepend(row);
+
+
+    resetForm();
+
+    filterRows();
+
+
+    alert(
+        "Demo HIC test record created: " +
+        id
+    );
+
+
+    scrollToSection(
+        "records"
+    );
+
+});
+
+
+function viewDetails(button){
+
+    const row =
+        button.closest("tr");
+
+    const cells =
+        row.cells;
+
+
+    alert(
+
+        "Record ID: " +
+        cells[0].innerText +
+
+        "\nComponent: " +
+        cells[1].innerText +
+
+        "\nMaterial: " +
+        cells[2].innerText +
+
+        "\nHydrogen Source: " +
+        cells[3].innerText +
+
+        "\nEnvironment: " +
+        cells[4].innerText +
+
+        "\nExposure Time: " +
+        cells[5].innerText +
+
+        "\nCrack Observation: " +
+        cells[6].innerText +
+
+        "\nStatus: " +
+        cells[7].innerText +
+
+        "\n\nDemo record."
+
+    );
+
+}
+
+
+function createReport(){
+
+    alert(
+
+        "Demo HIC technical report prepared.\n\n" +
+
+        "Реальный технический отчёт должен содержать " +
+        "проверенные условия испытания, сведения о материале, " +
+        "методику, измерения, наблюдения и применимые критерии."
+
+    );
+
+}
+
+
+function exportCSV(){
+
+    const rows =
+        Array.from(
+            document.querySelectorAll(
+                "#hicTable tr"
+            )
+        );
+
+
+    const csv =
+        rows.map(row=>
+
+            Array.from(row.cells)
+            .slice(0,8)
+            .map(cell=>{
+
+                const value =
+                    cell.innerText
+                    .replace(/"/g,'""');
+
+                return '"' +
+                       value +
+                       '"';
+
+            })
+            .join(",")
+
+        ).join("\n");
+
+
+    const blob =
+        new Blob(
+            ["\uFEFF" + csv],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement("a");
+
+    link.href =
+        url;
+
+    link.download =
+        "worker-pro-hydrogen-induced-cracking-records.csv";
+
+    document.body.appendChild(
+        link
+    );
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+</script>
+
+</body>
+</html>
