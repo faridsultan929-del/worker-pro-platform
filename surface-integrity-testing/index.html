@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Surface Integrity Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    padding:22px 15px;
+    text-align:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:5px;
+    font-size:14px;
+}
+
+.top-languages{
+    margin-top:15px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+}
+
+.top-languages button{
+    border:1px solid #b7ff35;
+    background:#0b6b3d;
+    color:white;
+    padding:7px 10px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+nav{
+    margin-top:15px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+}
+
+nav a{
+    text-decoration:none;
+    color:white;
+    background:#075b34;
+    padding:8px 11px;
+    border-radius:7px;
+    font-size:13px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:20px 15px 50px;
+}
+
+.hero{
+    background:white;
+    border-radius:16px;
+    padding:28px 20px;
+    margin-bottom:20px;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
+}
+
+.hero h1{
+    margin-top:0;
+    color:#063d25;
+    font-size:30px;
+}
+
+.hero p{
+    line-height:1.6;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.section-title{
+    color:#063d25;
+    margin-top:30px;
+    border-left:6px solid #b7ff35;
+    padding-left:10px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:white;
+    border-radius:14px;
+    padding:18px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card p{
+    line-height:1.5;
+    font-size:14px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:25px;
+    margin-bottom:5px;
+}
+
+.flow{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    align-items:center;
+    gap:8px;
+    margin:20px 0;
+}
+
+.flow-item{
+    background:#0b6b3d;
+    color:white;
+    padding:11px 14px;
+    border-radius:10px;
+    font-weight:bold;
+}
+
+.arrow{
+    color:#063d25;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.action{
+    background:#0b6b3d;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    margin:5px 3px 0 0;
+    font-weight:bold;
+}
+
+.action:hover{
+    background:#063d25;
+}
+
+.parameters{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:12px;
+}
+
+.parameter{
+    border-left:5px solid #0b6b3d;
+    background:#f8fbf9;
+    padding:14px;
+    border-radius:8px;
+}
+
+.parameter strong{
+    color:#063d25;
+}
+
+.search-box{
+    margin:15px 0;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.search-box input,
+.search-box select{
+    padding:11px;
+    border:1px solid #cbd8d0;
+    border-radius:8px;
+    flex:1;
+    min-width:180px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    min-width:900px;
+}
+
+th{
+    background:#063d25;
+    color:white;
+    padding:11px;
+    text-align:left;
+}
+
+td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+    background:#f0f8f3;
+}
+
+.pass{
+    color:#087b3e;
+    font-weight:bold;
+}
+
+.warning{
+    color:#c77700;
+    font-weight:bold;
+}
+
+.progress{
+    background:#dce7e0;
+    border-radius:20px;
+    overflow:hidden;
+    height:14px;
+    margin-top:8px;
+}
+
+.progress span{
+    display:block;
+    height:100%;
+    background:#0b6b3d;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:6px solid #e2ad00;
+    padding:15px;
+    border-radius:10px;
+    margin-top:20px;
+    line-height:1.5;
+}
+
+.security{
+    background:#063d25;
+    color:white;
+    border-radius:14px;
+    padding:20px;
+}
+
+.security h3{
+    color:#b7ff35;
+}
+
+.result{
+    margin-top:12px;
+    padding:12px;
+    background:#eef7f1;
+    border-left:5px solid #0b6b3d;
+    border-radius:8px;
+    display:none;
+}
+
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+    margin-top:30px;
+}
+
+.small{
+    font-size:13px;
+    opacity:.85;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">WORKER PRO</div>
+<div class="subtitle">Глобальная промышленная платформа</div>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+<nav>
+<a href="../index.html">Главная</a>
+<a href="../production/index.html">Production</a>
+<a href="../equipment/index.html">Equipment</a>
+<a href="../testing/index.html">Testing</a>
+<a href="../quality/index.html">Quality</a>
+<a href="../documents/index.html">Documents</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../orders/index.html">Orders</a>
+</nav>
+
+</header>
+
+<main class="container">
+
+<section class="hero">
+
+<span class="badge">№191 — TESTING</span>
+
+<h1>Surface Integrity Testing</h1>
+
+<h2>Контроль целостности поверхности</h2>
+
+<p>
+Surface Integrity Testing — оценка состояния поверхности и поверхностного
+слоя детали после изготовления, механической обработки, шлифования
+или термического воздействия.
+</p>
+
+<p>
+Контроль может включать выявление поверхностных дефектов, микротрещин,
+прижогов, изменения структуры материала, повреждений и следов обработки.
+Результаты связываются с деталью, процессом, оборудованием и отчётом качества.
+</p>
+
+<button class="action" onclick="startInspection()">▶ Запустить проверку</button>
+<button class="action" onclick="createReport()">📄 Создать отчёт</button>
+
+<div id="result" class="result"></div>
+
+</section>
+
+<h2 class="section-title">📊 Surface Integrity Statistics</h2>
+
+<div class="stats">
+<div class="stat"><strong>128</strong>Inspection Systems</div>
+<div class="stat"><strong>9,840</strong>Inspection Records</div>
+<div class="stat"><strong>47</strong>Inspection Teams</div>
+<div class="stat"><strong>98.2%</strong>Data Completeness</div>
+</div>
+
+<h2 class="section-title">🔄 Inspection Workflow</h2>
+
+<div class="flow">
+<div class="flow-item">Part</div><div class="arrow">→</div>
+<div class="flow-item">Surface Preparation</div><div class="arrow">→</div>
+<div class="flow-item">Inspection</div><div class="arrow">→</div>
+<div class="flow-item">Defect Detection</div><div class="arrow">→</div>
+<div class="flow-item">Evaluation</div><div class="arrow">→</div>
+<div class="flow-item">Report</div>
+</div>
+
+<h2 class="section-title">🔬 Inspection Methods</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>👁 Visual Inspection</h3>
+<p>Осмотр поверхности для выявления видимых дефектов, царапин, трещин и повреждений.</p>
+<button class="action" onclick="viewDetails('Visual Inspection')">Подробнее</button>
+</div>
+
+<div class="card">
+<h3>🔍 Microscopic Inspection</h3>
+<p>Исследование поверхности с использованием микроскопического оборудования.</p>
+<button class="action" onclick="viewDetails('Microscopic Inspection')">Подробнее</button>
+</div>
+
+<div class="card">
+<h3>🧲 Magnetic Particle Testing</h3>
+<p>Выявление определённых поверхностных и близких к поверхности дефектов в ферромагнитных материалах.</p>
+</div>
+
+<div class="card">
+<h3>💧 Liquid Penetrant Testing</h3>
+<p>Выявление открытых на поверхность несплошностей с помощью пенетранта.</p>
+</div>
+
+<div class="card">
+<h3>📡 Eddy Current Testing</h3>
+<p>Электромагнитный контроль для выявления некоторых поверхностных и подповерхностных дефектов в проводящих материалах.</p>
+</div>
+
+<div class="card">
+<h3>🌡 Thermal Damage Inspection</h3>
+<p>Оценка возможных повреждений поверхности после шлифования или термического воздействия.</p>
+</div>
+
+<div class="card">
+<h3>🧪 Metallographic Examination</h3>
+<p>Исследование структуры материала на подготовленных образцах при необходимости.</p>
+</div>
+
+<div class="card">
+<h3>📄 Digital Integrity Report</h3>
+<p>Формирование отчёта с описанием метода, результатов и обнаруженных дефектов.</p>
+</div>
+
+</div>
+
+<h2 class="section-title">📐 Main Inspection Parameters</h2>
+
+<div class="parameters">
+
+<div class="parameter">
+<strong>Surface Defects</strong>
+<p>Царапины, трещины, поры и другие обнаруженные дефекты.</p>
+</div>
+
+<div class="parameter">
+<strong>Microcracks</strong>
+<p>Микротрещины, выявляемые подходящими методами контроля.</p>
+</div>
+
+<div class="parameter">
+<strong>Grinding Burns</strong>
+<p>Признаки возможного термического повреждения после шлифования.</p>
+</div>
+
+<div class="parameter">
+<strong>Surface Damage</strong>
+<p>Повреждения, возникающие при обработке или эксплуатации.</p>
+</div>
+
+<div class="parameter">
+<strong>Surface Layer</strong>
+<p>Состояние поверхностного слоя материала.</p>
+</div>
+
+<div class="parameter">
+<strong>Material Structure</strong>
+<p>Изменения структуры материала, если они исследуются применимым методом.</p>
+</div>
+
+<div class="parameter">
+<strong>Inspection Method</strong>
+<p>Метод контроля, применённый для конкретной детали.</p>
+</div>
+
+<div class="parameter">
+<strong>Evaluation Status</strong>
+<p>Результат оценки относительно установленных требований.</p>
+</div>
+
+</div>
+
+<h2 class="section-title">🧪 Example Inspection</h2>
+
+<div class="card">
+
+<h3>SI-AZ-2026-001</h3>
+<p><strong>Component:</strong> Hydraulic Shaft</p>
+<p><strong>Material:</strong> Alloy Steel</p>
+<p><strong>Process:</strong> Grinding</p>
+<p><strong>Inspection Method:</strong> Visual + Magnetic Particle Testing</p>
+<p><strong>Inspection Area:</strong> Working Surface</p>
+<p><strong>Findings:</strong> No relevant indications in demo record</p>
+<p><strong>Status:</strong> <span class="pass">DEMO PASS</span></p>
+
+<div class="progress"><span style="width:92%"></span></div>
+
+<button class="action" onclick="viewDetails('SI-AZ-2026-001')">View Inspection</button>
+
+</div>
+
+<h2 class="section-title">🗃 Surface Integrity Database</h2>
+
+<div class="search-box">
+<input type="text" id="searchInput" placeholder="Поиск детали, города, метода..." onkeyup="filterRows()">
+
+<select id="statusFilter" onchange="filterRows()">
+<option value="all">Все статусы</option>
+<option value="pass">PASS</option>
+<option value="warning">WARNING</option>
+</select>
+</div>
+
+<div class="table-wrap">
+<table id="integrityTable">
+<thead>
+<tr>
+<th>ID</th>
+<th>Component</th>
+<th>Location</th>
+<th>Method</th>
+<th>Finding</th>
+<th>Area</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>SI-001</td>
+<td>Hydraulic Shaft</td>
+<td>Baku</td>
+<td>MPI</td>
+<td>No relevant indications</td>
+<td>Working Surface</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>SI-002</td>
+<td>Pump Housing</td>
+<td>Sumqayit</td>
+<td>Visual</td>
+<td>Surface scratch</td>
+<td>Outer Surface</td>
+<td class="warning">WARNING</td>
+</tr>
+
+<tr>
+<td>SI-003</td>
+<td>Steel Roller</td>
+<td>Istanbul</td>
+<td>PT</td>
+<td>No relevant indications</td>
+<td>Contact Area</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>SI-004</td>
+<td>Valve Stem</td>
+<td>Dortmund</td>
+<td>ET</td>
+<td>Surface indication</td>
+<td>Machined Area</td>
+<td class="warning">WARNING</td>
+</tr>
+
+<tr>
+<td>SI-005</td>
+<td>Machine Plate</td>
+<td>Milan</td>
+<td>Visual</td>
+<td>No visible damage</td>
+<td>Top Surface</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>SI-006</td>
+<td>Pipeline Component</td>
+<td>Houston</td>
+<td>MPI</td>
+<td>No relevant indications</td>
+<td>Weld Area</td>
+<td class="pass">PASS</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h2 class="section-title">🌍 Connected Inspection Teams</h2>
+
+<div class="grid">
+
+<div class="card"><h3>🇦🇿 Baku</h3><p>Surface inspection and industrial NDT.</p><button class="action" onclick="viewDetails('Baku Team')">Open</button></div>
+
+<div class="card"><h3>🇦🇿 Sumqayit</h3><p>Mechanical component inspection.</p><button class="action" onclick="viewDetails('Sumqayit Team')">Open</button></div>
+
+<div class="card"><h3>🇹🇷 Istanbul</h3><p>Surface integrity and machining inspection.</p><button class="action" onclick="viewDetails('Istanbul Team')">Open</button></div>
+
+<div class="card"><h3>🇩🇪 Dortmund</h3><p>Precision component inspection.</p><button class="action" onclick="viewDetails('Dortmund Team')">Open</button></div>
+
+<div class="card"><h3>🇮🇹 Milan</h3><p>Industrial quality inspection.</p><button class="action" onclick="viewDetails('Milan Team')">Open</button></div>
+
+<div class="card"><h3>🇨🇳 Shanghai</h3><p>Manufacturing surface control.</p><button class="action" onclick="viewDetails('Shanghai Team')">Open</button></div>
+
+<div class="card"><h3>🇺🇸 Houston</h3><p>Oil & Gas component inspection.</p><button class="action" onclick="viewDetails('Houston Team')">Open</button></div>
+
+</div>
+
+<h2 class="section-title">⚙️ Inspection Performance</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Inspection Systems</h3>
+<p>Active demo systems</p>
+<div class="progress"><span style="width:93%"></span></div>
+</div>
+
+<div class="card">
+<h3>Data Completeness</h3>
+<p>Inspection records</p>
+<div class="progress"><span style="width:98%"></span></div>
+</div>
+
+<div class="card">
+<h3>Digital Reports</h3>
+<p>Report generation</p>
+<div class="progress"><span style="width:95%"></span></div>
+</div>
+
+<div class="card">
+<h3>Traceability</h3>
+<p>Inspection history</p>
+<div class="progress"><span style="width:91%"></span></div>
+</div>
+
+</div>
+
+<h2 class="section-title">➕ Inspection Systems</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>👁 Visual Inspection System</h3>
+<p>Осмотр и фотофиксация состояния поверхности.</p>
+<button class="action" onclick="addSystem('Visual Inspection System')">Add System</button>
+</div>
+
+<div class="card">
+<h3>🔍 Digital Microscope</h3>
+<p>Микроскопическое исследование поверхности.</p>
+<button class="action" onclick="addSystem('Digital Microscope')">Add System</button>
+</div>
+
+<div class="card">
+<h3>🧲 Magnetic Particle Equipment</h3>
+<p>Оборудование для магнитопорошкового контроля.</p>
+<button class="action" onclick="addSystem('Magnetic Particle Equipment')">Add System</button>
+</div>
+
+<div class="card">
+<h3>💧 Penetrant Testing Kit</h3>
+<p>Комплект для капиллярного контроля.</p>
+<button class="action" onclick="addSystem('Penetrant Testing Kit')">Add System</button>
+</div>
+
+<div class="card">
+<h3>📡 Eddy Current System</h3>
+<p>Система вихретокового контроля.</p>
+<button class="action" onclick="addSystem('Eddy Current System')">Add System</button>
+</div>
+
+<div class="card">
+<h3>💻 Digital Inspection Platform</h3>
+<p>Регистрация и хранение результатов контроля.</p>
+<button class="action" onclick="addSystem('Digital Inspection Platform')">Add System</button>
+</div>
+
+</div>
+
+<h2 class="section-title">🏭 Industrial Applications</h2>
+
+<div class="grid">
+
+<div class="card"><h3>⚙️ Machining</h3><p>Контроль состояния поверхности после механической обработки.</p></div>
+
+<div class="card"><h3>🌀 Grinding</h3><p>Проверка возможных повреждений после шлифования.</p></div>
+
+<div class="card"><h3>🛢 Oil & Gas</h3><p>Контроль валов, насосов, клапанов и трубопроводных компонентов.</p></div>
+
+<div class="card"><h3>🚗 Automotive</h3><p>Контроль поверхностей деталей автомобильного оборудования.</p></div>
+
+<div class="card"><h3>✈️ Aerospace</h3><p>Контроль поверхностных дефектов компонентов.</p></div>
+
+<div class="card"><h3>⚡ Energy</h3><p>Проверка состояния деталей энергетического оборудования.</p></div>
+
+<div class="card"><h3>🔩 Pumps & Valves</h3><p>Контроль рабочих поверхностей насосов и клапанов.</p></div>
+
+<div class="card"><h3>🏭 Industrial Maintenance</h3><p>Оценка повреждений при техническом обслуживании.</p></div>
+
+</div>
+
+<h2 class="section-title">🔐 Data Security</h2>
+
+<section class="security">
+
+<h3>WORKER PRO Surface Integrity Data</h3>
+
+<div class="grid">
+
+<div>
+<p>🔒 Secure Records</p>
+<p>Записи контроля связываются с идентификатором детали.</p>
+</div>
+
+<div>
+<p>📄 Digital Reports</p>
+<p>Результаты могут быть связаны с цифровыми отчётами.</p>
+</div>
+
+<div>
+<p>👤 User Access</p>
+<p>Доступ к данным может распределяться по ролям.</p>
+</div>
+
+<div>
+<p>🔗 Traceability</p>
+<p>История контроля связывается с Product и Quality.</p>
+</div>
+
+</div>
+
+</section>
+
+<div class="notice">
+<strong>⚠️ Важно:</strong><br>
+Эта страница является демонстрационной частью WORKER PRO.
+Все статистические показатели, записи и результаты являются DEMO DATA.
+Реальный контроль требует подходящего метода, квалифицированного персонала,
+оборудования и соблюдения применимых технических требований.
+Статус PASS должен назначаться только после оценки результатов
+относительно установленных критериев приемки.
+</div>
+
+<h2 class="section-title">🔗 WORKER PRO Industrial Workflow</h2>
+
+<div class="flow">
+<div class="flow-item">Product</div><div class="arrow">→</div>
+<div class="flow-item">Surface Integrity Testing</div><div class="arrow">→</div>
+<div class="flow-item">Quality</div><div class="arrow">→</div>
+<div class="flow-item">Test Report</div><div class="arrow">→</div>
+<div class="flow-item">Certificate</div><div class="arrow">→</div>
+<div class="flow-item">Documents</div><div class="arrow">→</div>
+<div class="flow-item">Supplier</div><div class="arrow">→</div>
+<div class="flow-item">Order</div><div class="arrow">→</div>
+<div class="flow-item">Logistics</div><div class="arrow">→</div>
+<div class="flow-item">Tracking</div>
+</div>
+
+</main>
+
+<footer>
+<strong>WORKER PRO</strong>
+<p>Глобальная промышленная платформа</p>
+<p class="small">Production • Equipment • Testing • Quality • Suppliers • Orders • Logistics • Tracking</p>
+<p class="small">© 2026 WORKER PRO — F.S.</p>
+</footer>
+
+<script>
+function showResult(message){
+    const result=document.getElementById("result");
+    result.style.display="block";
+    result.innerHTML=message;
+}
+
+function startInspection(){
+    showResult(
+        "🔬 <strong>Inspection started.</strong><br>" +
+        "Demo inspection record loaded.<br>" +
+        "Component: Hydraulic Shaft<br>" +
+        "Method: Visual + MPI<br>" +
+        "<span class='pass'>Status: DEMO PASS</span>"
+    );
+}
+
+function createReport(){
+    showResult(
+        "📄 <strong>Digital report created.</strong><br>" +
+        "Report ID: SI-REPORT-2026-001<br>" +
+        "Inspection ID: SI-AZ-2026-001<br>" +
+        "<span class='pass'>Report status: DEMO READY</span>"
+    );
+}
+
+function viewDetails(name){
+    showResult(
+        "ℹ️ <strong>Selected:</strong> " +
+        name +
+        "<br>Demo information loaded."
+    );
+}
+
+function addSystem(name){
+    showResult(
+        "➕ <strong>Inspection system:</strong> " +
+        name +
+        "<br>Demo system added to the WORKER PRO registry."
+    );
+}
+
+function filterRows(){
+    const input=document.getElementById("searchInput").value.toLowerCase();
+    const status=document.getElementById("statusFilter").value.toLowerCase();
+    const rows=document.querySelectorAll("#integrityTable tbody tr");
+
+    rows.forEach(function(row){
+        const text=row.innerText.toLowerCase();
+        const rowStatus=row.cells[6].innerText.toLowerCase();
+        const searchMatch=text.includes(input);
+        const statusMatch=status==="all" || rowStatus===status;
+
+        row.style.display=(searchMatch && statusMatch) ? "" : "none";
+    });
+}
+</script>
+
+</body>
+</html>
