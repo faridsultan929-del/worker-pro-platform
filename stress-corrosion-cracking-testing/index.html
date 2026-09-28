@@ -1,0 +1,1589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Stress Corrosion Cracking Testing</title>
+
+<style>
+:root{
+    --dark:#063d25;
+    --green:#0b6b3d;
+    --lime:#b7ff35;
+    --bg:#f4f7f5;
+    --white:#ffffff;
+    --text:#173b2b;
+    --muted:#687b70;
+    --border:#dce8df;
+    --red:#b42318;
+    --orange:#a15c00;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,input,select,textarea{
+    font:inherit;
+}
+
+.top-languages{
+    background:var(--dark);
+    padding:10px 4%;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.top-languages button{
+    background:transparent;
+    color:white;
+    border:1px solid #47765d;
+    border-radius:6px;
+    padding:8px 13px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.top-languages button.active,
+.top-languages button:hover{
+    background:var(--lime);
+    color:var(--dark);
+    border-color:var(--lime);
+}
+
+header{
+    background:white;
+    padding:20px 4%;
+    border-bottom:1px solid var(--border);
+}
+
+.brand{
+    color:var(--dark);
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.brand span{
+    color:var(--green);
+}
+
+.subtitle{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+nav{
+    background:var(--green);
+    padding:12px 4%;
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    padding:9px 12px;
+    border-radius:6px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:var(--lime);
+    color:var(--dark);
+}
+
+.container{
+    width:92%;
+    max-width:1250px;
+    margin:25px auto;
+}
+
+.hero{
+    background:linear-gradient(125deg,var(--dark),var(--green));
+    color:white;
+    border-radius:18px;
+    padding:35px;
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:25px;
+    align-items:center;
+}
+
+.tag{
+    display:inline-block;
+    background:var(--lime);
+    color:var(--dark);
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.hero h1{
+    font-size:clamp(28px,4vw,45px);
+    line-height:1.15;
+    margin:18px 0 12px;
+}
+
+.hero p{
+    color:#d8eadf;
+    line-height:1.7;
+}
+
+.hero-visual{
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:14px;
+    padding:25px;
+}
+
+.crack-symbol{
+    font-size:70px;
+    text-align:center;
+    color:var(--lime);
+    font-weight:bold;
+}
+
+.hero-visual h3{
+    text-align:center;
+}
+
+.hero-visual p{
+    text-align:center;
+    margin-bottom:0;
+}
+
+.btn{
+    display:inline-block;
+    border:none;
+    border-radius:8px;
+    padding:12px 17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin:6px 5px 0 0;
+}
+
+.btn-primary{
+    background:var(--lime);
+    color:var(--dark);
+}
+
+.btn-light{
+    background:white;
+    color:var(--dark);
+}
+
+.btn-green{
+    background:var(--green);
+    color:white;
+}
+
+.section-title{
+    margin:32px 0 16px;
+    color:var(--dark);
+    font-size:24px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:22px;
+}
+
+.stat,.card,.panel{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:20px;
+}
+
+.stat strong{
+    display:block;
+    font-size:27px;
+    color:var(--green);
+    margin-bottom:7px;
+}
+
+.stat span{
+    font-size:13px;
+    color:var(--muted);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.card h3{
+    margin-top:0;
+    color:var(--dark);
+}
+
+.card p{
+    line-height:1.6;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.icon{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.badge{
+    display:inline-block;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:bold;
+    background:#e4f4e9;
+    color:var(--green);
+}
+
+.badge.warning{
+    background:#fff0d6;
+    color:var(--orange);
+}
+
+.badge.danger{
+    background:#fde8e7;
+    color:var(--red);
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:10px;
+}
+
+.step{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:17px 12px;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.step b{
+    display:block;
+    background:var(--green);
+    color:white;
+    border-radius:50%;
+    width:32px;
+    height:32px;
+    line-height:32px;
+    margin:0 auto 12px;
+}
+
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.toolbar input,
+.toolbar select,
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px;
+    background:white;
+}
+
+.toolbar input{
+    flex:1;
+    min-width:220px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1050px;
+}
+
+th,td{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#eaf3ed;
+    color:var(--dark);
+}
+
+tr:hover td{
+    background:#f8fbf8;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.form-grid label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    width:100%;
+}
+
+.form-grid textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.form-grid .full{
+    grid-column:1/-1;
+}
+
+.notice{
+    background:#fff7e5;
+    border:1px solid #f0d79b;
+    color:#755000;
+    padding:16px;
+    border-radius:10px;
+    line-height:1.6;
+    font-size:14px;
+}
+
+.info-box{
+    background:#eaf4ed;
+    border-left:5px solid var(--green);
+    border-radius:8px;
+    padding:17px;
+    line-height:1.7;
+    font-size:14px;
+}
+
+footer{
+    margin-top:35px;
+    background:var(--dark);
+    color:white;
+    padding:25px 4%;
+    text-align:center;
+    font-size:13px;
+    line-height:1.8;
+}
+
+footer a{
+    color:var(--lime);
+}
+
+@media(max-width:850px){
+    .hero{
+        grid-template-columns:1fr;
+        padding:25px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .workflow{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:550px){
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .workflow{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid .full{
+        grid-column:auto;
+    }
+
+    .hero{
+        padding:20px;
+    }
+
+    .container{
+        width:94%;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat strong{
+        font-size:23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button class="active" onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+    <div class="brand">WORKER <span>PRO</span></div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<div>
+    <span class="tag">TESTING · №193</span>
+
+    <h1>Stress Corrosion Cracking Testing</h1>
+
+    <p>
+        Испытания на коррозионное растрескивание под напряжением
+        для оценки поведения металлических материалов и компонентов
+        в определённых коррозионных средах при наличии механического
+        напряжения.
+    </p>
+
+    <p>
+        WORKER PRO объединяет испытательные записи, материалы,
+        условия испытаний, результаты наблюдений и техническую
+        документацию в едином промышленном процессе.
+    </p>
+
+    <button class="btn btn-primary"
+            onclick="scrollToSection('newTest')">
+        + New SCC Test
+    </button>
+
+    <button class="btn btn-light"
+            onclick="scrollToSection('records')">
+        View Records
+    </button>
+</div>
+
+<div class="hero-visual">
+    <div class="crack-symbol">⚠</div>
+    <h3>Stress + Corrosion + Material</h3>
+    <p>
+        SCC Risk · Crack Observation · Environment · Load
+    </p>
+</div>
+
+</section>
+
+
+<section class="stats">
+
+<div class="stat">
+    <strong>84</strong>
+    <span>Demo SCC test programs</span>
+</div>
+
+<div class="stat">
+    <strong>2,860</strong>
+    <span>Demo test records</span>
+</div>
+
+<div class="stat">
+    <strong>31</strong>
+    <span>Demo laboratory teams</span>
+</div>
+
+<div class="stat">
+    <strong>96.8%</strong>
+    <span>Demo record completeness</span>
+</div>
+
+</section>
+
+
+<h2 class="section-title">What Is Stress Corrosion Cracking?</h2>
+
+<section class="grid">
+
+<div class="card">
+    <div class="icon">🔩</div>
+    <h3>Material</h3>
+    <p>
+        Исследование конкретного металла или сплава с учётом
+        его состава, состояния и обработки.
+    </p>
+    <span class="badge">Material</span>
+</div>
+
+<div class="card">
+    <div class="icon">⚙️</div>
+    <h3>Mechanical Stress</h3>
+    <p>
+        Испытание может учитывать приложенную нагрузку,
+        остаточные напряжения или заданное напряжённое состояние.
+    </p>
+    <span class="badge">Stress</span>
+</div>
+
+<div class="card">
+    <div class="icon">🧪</div>
+    <h3>Corrosive Environment</h3>
+    <p>
+        Условия среды фиксируются вместе с температурой,
+        составом раствора и другими параметрами процедуры.
+    </p>
+    <span class="badge">Environment</span>
+</div>
+
+</section>
+
+
+<h2 class="section-title">SCC Testing Parameters</h2>
+
+<section class="grid">
+
+<div class="card">
+    <h3>Applied Load</h3>
+    <p>
+        Заданная нагрузка, напряжение или коэффициент
+        интенсивности напряжений в соответствии с процедурой.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Environment</h3>
+    <p>
+        Коррозионная среда, концентрация, pH, температура
+        и другие параметры, установленные методикой.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Exposure Time</h3>
+    <p>
+        Продолжительность воздействия среды и нагрузки
+        с регистрацией промежуточных наблюдений.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Crack Observation</h3>
+    <p>
+        Фиксация появления, роста и расположения трещин
+        с использованием подходящего метода контроля.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Surface Condition</h3>
+    <p>
+        Состояние поверхности образца перед испытанием
+        и после воздействия среды.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Final Evaluation</h3>
+    <p>
+        Сравнение результата с требованиями конкретной
+        процедуры, материала или технической спецификации.
+    </p>
+</div>
+
+</section>
+
+
+<h2 class="section-title">Testing Methods & Approaches</h2>
+
+<section class="grid">
+
+<div class="card">
+    <div class="icon">📏</div>
+    <h3>Constant Load</h3>
+    <p>
+        Образец испытывается при заданной постоянной нагрузке
+        в определённой среде.
+    </p>
+    <span class="badge">Load Controlled</span>
+</div>
+
+<div class="card">
+    <div class="icon">📈</div>
+    <h3>Constant Displacement</h3>
+    <p>
+        Контроль испытания через заданное перемещение
+        или деформационное состояние.
+    </p>
+    <span class="badge">Displacement</span>
+</div>
+
+<div class="card">
+    <div class="icon">🔬</div>
+    <h3>Crack Monitoring</h3>
+    <p>
+        Наблюдение за развитием трещины с использованием
+        подходящей измерительной системы.
+    </p>
+    <span class="badge">Monitoring</span>
+</div>
+
+<div class="card">
+    <div class="icon">🧲</div>
+    <h3>NDT Inspection</h3>
+    <p>
+        Неразрушающий контроль может использоваться для
+        выявления и оценки дефектов в рамках соответствующей процедуры.
+    </p>
+    <span class="badge">NDT</span>
+</div>
+
+<div class="card">
+    <div class="icon">📊</div>
+    <h3>Fracture Mechanics</h3>
+    <p>
+        Для соответствующих программ испытаний могут применяться
+        параметры механики разрушения.
+    </p>
+    <span class="badge">Engineering</span>
+</div>
+
+<div class="card">
+    <div class="icon">📋</div>
+    <h3>Technical Evaluation</h3>
+    <p>
+        Результаты оформляются в соответствии с применимой
+        процедурой и установленными критериями.
+    </p>
+    <span class="badge">Evaluation</span>
+</div>
+
+</section>
+
+
+<h2 class="section-title">SCC Testing Workflow</h2>
+
+<section class="workflow">
+
+<div class="step">
+    <b>1</b>
+    Material Selection
+</div>
+
+<div class="step">
+    <b>2</b>
+    Specimen Preparation
+</div>
+
+<div class="step">
+    <b>3</b>
+    Stress Application
+</div>
+
+<div class="step">
+    <b>4</b>
+    Corrosion Exposure
+</div>
+
+<div class="step">
+    <b>5</b>
+    Crack Evaluation
+</div>
+
+<div class="step">
+    <b>6</b>
+    Technical Report
+</div>
+
+</section>
+
+
+<h2 class="section-title">Industrial Applications</h2>
+
+<section class="grid">
+
+<div class="card">
+    <h3>Oil & Gas</h3>
+    <p>
+        Исследование материалов, используемых в нефтегазовой
+        промышленности, при соответствующих условиях эксплуатации.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Pipelines</h3>
+    <p>
+        Оценка поведения материалов трубопроводных компонентов
+        в заданных условиях испытаний.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Pressure Equipment</h3>
+    <p>
+        Испытания материалов и компонентов оборудования,
+        работающего под давлением.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Marine Equipment</h3>
+    <p>
+        Исследование материалов в условиях воздействия
+        морской или другой коррозионной среды.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Automotive</h3>
+    <p>
+        Анализ поведения металлических компонентов
+        при сочетании нагрузки и коррозионного воздействия.
+    </p>
+</div>
+
+<div class="card">
+    <h3>Industrial Machinery</h3>
+    <p>
+        Контроль материалов и деталей промышленного оборудования.
+    </p>
+</div>
+
+</section>
+
+
+<h2 class="section-title" id="newTest">
+    Create SCC Test Record
+</h2>
+
+<section class="panel">
+
+<div class="notice" style="margin-bottom:18px;">
+    Демонстрационная форма WORKER PRO.
+    Введённые данные сохраняются только в текущей странице
+    браузера и не отправляются в реальную лабораторию.
+</div>
+
+<form id="testForm">
+
+<div class="form-grid">
+
+<div>
+<label for="sample">Sample / Component</label>
+<input id="sample"
+       required
+       placeholder="Example: Steel pipe specimen">
+</div>
+
+<div>
+<label for="material">Material</label>
+<input id="material"
+       required
+       placeholder="Example: Carbon Steel">
+</div>
+
+<div>
+<label for="environment">Corrosive Environment</label>
+<input id="environment"
+       required
+       placeholder="Example: Salt solution">
+</div>
+
+<div>
+<label for="temperature">Temperature (°C)</label>
+<input id="temperature"
+       type="number"
+       step="any"
+       placeholder="Example: 50">
+</div>
+
+<div>
+<label for="load">Applied Load / Stress</label>
+<input id="load"
+       required
+       placeholder="Example: 75% specified load">
+</div>
+
+<div>
+<label for="time">Exposure Time (hours)</label>
+<input id="time"
+       type="number"
+       step="any"
+       required
+       placeholder="Example: 500">
+</div>
+
+<div>
+<label for="method">Test Approach</label>
+<select id="method" required>
+<option value="">Select approach</option>
+<option>Constant Load</option>
+<option>Constant Displacement</option>
+<option>Crack Monitoring</option>
+<option>NDT Inspection</option>
+<option>Fracture Mechanics</option>
+</select>
+</div>
+
+<div>
+<label for="observation">Crack Observation</label>
+<select id="observation" required>
+<option value="">Select result</option>
+<option>No Crack Observed</option>
+<option>Crack Indication</option>
+<option>Crack Growth Observed</option>
+<option>Under Review</option>
+</select>
+</div>
+
+<div>
+<label for="standard">Procedure / Criteria</label>
+<input id="standard"
+       placeholder="Standard / specification / procedure">
+</div>
+
+<div>
+<label for="status">Record Status</label>
+<select id="status">
+<option>Pending Review</option>
+<option>Reviewed</option>
+<option>Warning</option>
+</select>
+</div>
+
+<div class="full">
+<label for="notes">Technical Notes</label>
+<textarea id="notes"
+placeholder="Enter test observations..."></textarea>
+</div>
+
+<div class="full">
+
+<button class="btn btn-green" type="submit">
+Create Demo Record
+</button>
+
+<button class="btn btn-primary"
+        type="button"
+        onclick="resetForm()">
+Clear Form
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</section>
+
+
+<h2 class="section-title" id="records">
+SCC Test Records
+</h2>
+
+<div class="toolbar">
+
+<input id="searchInput"
+       type="search"
+       placeholder="Search ID, material, environment, method..."
+       oninput="filterRows()">
+
+<select id="statusFilter"
+        onchange="filterRows()">
+
+<option value="">All statuses</option>
+<option value="Reviewed">Reviewed</option>
+<option value="Pending Review">Pending Review</option>
+<option value="Warning">Warning</option>
+
+</select>
+
+<button class="btn btn-green"
+        onclick="exportCSV()">
+Export CSV
+</button>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table id="sccTable">
+
+<thead>
+
+<tr>
+<th>Record ID</th>
+<th>Component</th>
+<th>Material</th>
+<th>Environment</th>
+<th>Load / Stress</th>
+<th>Time</th>
+<th>Observation</th>
+<th>Status</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="tableBody">
+
+<tr>
+<td>SCC-AZ-2026-001</td>
+<td>Pipeline Specimen</td>
+<td>Carbon Steel</td>
+<td>Salt Solution</td>
+<td>75% Load</td>
+<td>500 h</td>
+<td>No Crack Observed</td>
+<td>
+<span class="badge">
+Reviewed · Demo
+</span>
+</td>
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+</tr>
+
+<tr>
+<td>SCC-AZ-2026-002</td>
+<td>Pressure Component</td>
+<td>Alloy Steel</td>
+<td>Corrosive Environment</td>
+<td>80% Load</td>
+<td>720 h</td>
+<td>Crack Indication</td>
+<td>
+<span class="badge warning">
+Warning · Demo
+</span>
+</td>
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+</tr>
+
+<tr>
+<td>SCC-AZ-2026-003</td>
+<td>Welded Joint</td>
+<td>Steel</td>
+<td>Laboratory Solution</td>
+<td>65% Load</td>
+<td>300 h</td>
+<td>Under Review</td>
+<td>
+<span class="badge warning">
+Pending Review · Demo
+</span>
+</td>
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+</tr>
+
+<tr>
+<td>SCC-AZ-2026-004</td>
+<td>Industrial Valve</td>
+<td>Stainless Steel</td>
+<td>Chloride Environment</td>
+<td>70% Load</td>
+<td>600 h</td>
+<td>No Crack Observed</td>
+<td>
+<span class="badge">
+Reviewed · Demo
+</span>
+</td>
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<h2 class="section-title">
+Quality & Documentation
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>Test Report</h3>
+
+<p>
+Фиксация материала, среды, нагрузки, времени воздействия,
+наблюдений и результатов испытания.
+</p>
+
+<button class="btn btn-green"
+onclick="createReport()">
+Create Demo Report
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Quality Review</h3>
+
+<p>
+Проверка результата по утвержденным требованиям
+конкретного изделия и процедуры.
+</p>
+
+<a class="btn btn-green"
+href="../quality/index.html">
+Open Quality
+</a>
+
+</div>
+
+
+<div class="card">
+
+<h3>Technical Documents</h3>
+
+<p>
+Связь испытаний с техническими документами,
+чертежами, спецификациями и отчетами.
+</p>
+
+<a class="btn btn-green"
+href="../documents/index.html">
+Open Documents
+</a>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+WORKER PRO Industrial Flow
+</h2>
+
+<section class="workflow">
+
+<div class="step">
+<b>1</b>
+Product
+</div>
+
+<div class="step">
+<b>2</b>
+Testing
+</div>
+
+<div class="step">
+<b>3</b>
+Quality
+</div>
+
+<div class="step">
+<b>4</b>
+Certificate
+</div>
+
+<div class="step">
+<b>5</b>
+Supplier
+</div>
+
+<div class="step">
+<b>6</b>
+Order & Logistics
+</div>
+
+</section>
+
+
+<div class="info-box" style="margin-top:20px;">
+
+<strong>Important:</strong>
+
+Все записи и показатели на этой странице являются
+демонстрационными.
+
+Реальная оценка коррозионного растрескивания под напряжением
+зависит от материала, среды, уровня и вида напряжения,
+температуры, продолжительности испытания, методики,
+оборудования и установленных технических критериев.
+
+Для реальных испытаний необходимы утвержденная процедура,
+подходящее оборудование и квалифицированный персонал.
+
+</div>
+
+</main>
+
+
+<footer>
+
+<strong>WORKER PRO</strong><br>
+
+Глобальная промышленная платформа<br>
+
+Testing · Quality · Production · Logistics<br>
+
+<a href="../index.html">
+Back to Home
+</a>
+
+<br><br>
+
+© 2026 WORKER PRO · F.S
+
+</footer>
+
+
+<script>
+
+let recordCounter = 5;
+
+
+function scrollToSection(id){
+
+    document.getElementById(id).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+function setLanguage(lang){
+
+    document.querySelectorAll(
+        ".top-languages button"
+    ).forEach(button => {
+
+        button.classList.toggle(
+            "active",
+            button.textContent.trim() === lang
+        );
+
+    });
+
+    alert(
+        "Selected language: " + lang +
+        "\nДемонстрационный режим. Перевод страницы пока не подключен."
+    );
+
+}
+
+
+function resetForm(){
+
+    document.getElementById("testForm").reset();
+
+}
+
+
+function filterRows(){
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const status =
+        document.getElementById("statusFilter").value;
+
+    const rows =
+        document.querySelectorAll("#tableBody tr");
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[7].innerText;
+
+        const matchesSearch =
+            text.includes(search);
+
+        const matchesStatus =
+            !status ||
+            rowStatus.includes(status);
+
+        row.style.display =
+            matchesSearch && matchesStatus
+            ? ""
+            : "none";
+
+    });
+
+}
+
+
+document.getElementById("testForm")
+.addEventListener("submit", function(event){
+
+    event.preventDefault();
+
+    const sample =
+        document.getElementById("sample").value.trim();
+
+    const material =
+        document.getElementById("material").value.trim();
+
+    const environment =
+        document.getElementById("environment").value.trim();
+
+    const temperature =
+        document.getElementById("temperature").value;
+
+    const load =
+        document.getElementById("load").value.trim();
+
+    const time =
+        document.getElementById("time").value;
+
+    const method =
+        document.getElementById("method").value;
+
+    const observation =
+        document.getElementById("observation").value;
+
+    const standard =
+        document.getElementById("standard").value.trim();
+
+    const status =
+        document.getElementById("status").value;
+
+    const notes =
+        document.getElementById("notes").value.trim();
+
+    const id =
+        "SCC-AZ-2026-" +
+        String(recordCounter).padStart(3,"0");
+
+    recordCounter++;
+
+
+    const row =
+        document.createElement("tr");
+
+
+    const values = [
+
+        id,
+        sample,
+        material,
+        environment,
+        load,
+        time + " h",
+        observation,
+        status
+
+    ];
+
+
+    values.forEach((value,index)=>{
+
+        const cell =
+            document.createElement("td");
+
+        if(index === 7){
+
+            const badge =
+                document.createElement("span");
+
+            badge.className =
+                status === "Warning"
+                ? "badge warning"
+                : "badge";
+
+            badge.textContent =
+                status + " · Demo";
+
+            cell.appendChild(badge);
+
+        }else{
+
+            cell.textContent = value;
+
+        }
+
+        row.appendChild(cell);
+
+    });
+
+
+    const actionCell =
+        document.createElement("td");
+
+
+    const detailsButton =
+        document.createElement("button");
+
+    detailsButton.className =
+        "btn btn-green";
+
+    detailsButton.textContent =
+        "Details";
+
+
+    detailsButton.onclick = function(){
+
+        alert(
+
+            "Record: " + id +
+
+            "\nComponent: " + sample +
+
+            "\nMaterial: " + material +
+
+            "\nEnvironment: " + environment +
+
+            "\nTemperature: " + temperature + " °C" +
+
+            "\nLoad / Stress: " + load +
+
+            "\nExposure Time: " + time + " h" +
+
+            "\nMethod: " + method +
+
+            "\nObservation: " + observation +
+
+            "\nProcedure: " + standard +
+
+            "\nStatus: " + status +
+
+            "\nNotes: " + notes +
+
+            "\n\nDemo record only."
+
+        );
+
+    };
+
+
+    actionCell.appendChild(detailsButton);
+
+    row.appendChild(actionCell);
+
+
+    document
+        .getElementById("tableBody")
+        .prepend(row);
+
+
+    resetForm();
+
+    filterRows();
+
+    alert(
+        "Demo SCC record created: " + id
+    );
+
+    scrollToSection("records");
+
+});
+
+
+function viewDetails(button){
+
+    const row =
+        button.closest("tr");
+
+    const cells =
+        row.cells;
+
+
+    alert(
+
+        "Record ID: " +
+        cells[0].innerText +
+
+        "\nComponent: " +
+        cells[1].innerText +
+
+        "\nMaterial: " +
+        cells[2].innerText +
+
+        "\nEnvironment: " +
+        cells[3].innerText +
+
+        "\nLoad / Stress: " +
+        cells[4].innerText +
+
+        "\nExposure Time: " +
+        cells[5].innerText +
+
+        "\nObservation: " +
+        cells[6].innerText +
+
+        "\nStatus: " +
+        cells[7].innerText +
+
+        "\n\nDemo record."
+
+    );
+
+}
+
+
+function createReport(){
+
+    alert(
+
+        "Demo SCC report prepared.\n\n" +
+
+        "A real technical report requires verified " +
+        "test conditions, equipment information, " +
+        "procedure, observations, measurements " +
+        "and acceptance criteria."
+
+    );
+
+}
+
+
+function exportCSV(){
+
+    const rows =
+        Array.from(
+            document.querySelectorAll("#sccTable tr")
+        );
+
+
+    const csv =
+        rows.map(row =>
+
+            Array.from(row.cells)
+            .slice(0,8)
+            .map(cell => {
+
+                const value =
+                    cell.innerText
+                    .replace(/"/g,'""');
+
+                return '"' + value + '"';
+
+            })
+            .join(",")
+
+        ).join("\n");
+
+
+    const blob =
+        new Blob(
+            ["\uFEFF" + csv],
+            {
+                type:"text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-scc-test-records.csv";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(url);
+
+}
+
+</script>
+
+</body>
+</html>
