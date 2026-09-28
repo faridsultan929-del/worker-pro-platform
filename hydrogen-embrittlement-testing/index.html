@@ -1,0 +1,2008 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Hydrogen Embrittlement Testing</title>
+
+<style>
+:root{
+    --dark:#063d25;
+    --green:#0b6b3d;
+    --lime:#b7ff35;
+    --bg:#f4f7f5;
+    --white:#ffffff;
+    --text:#173b2b;
+    --muted:#687b70;
+    --border:#dce8df;
+    --red:#b42318;
+    --orange:#a15c00;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,input,select,textarea{
+    font:inherit;
+}
+
+.top-languages{
+    background:var(--dark);
+    padding:10px 4%;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+}
+
+.top-languages button{
+    background:transparent;
+    color:white;
+    border:1px solid #47765d;
+    border-radius:6px;
+    padding:8px 13px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.top-languages button.active,
+.top-languages button:hover{
+    background:var(--lime);
+    color:var(--dark);
+    border-color:var(--lime);
+}
+
+header{
+    background:white;
+    padding:20px 4%;
+    border-bottom:1px solid var(--border);
+}
+
+.brand{
+    color:var(--dark);
+    font-size:30px;
+    font-weight:900;
+    letter-spacing:1px;
+}
+
+.brand span{
+    color:var(--green);
+}
+
+.subtitle{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:14px;
+}
+
+nav{
+    background:var(--green);
+    padding:12px 4%;
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    padding:9px 12px;
+    border-radius:6px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:var(--lime);
+    color:var(--dark);
+}
+
+.container{
+    width:92%;
+    max-width:1250px;
+    margin:25px auto;
+}
+
+.hero{
+    background:linear-gradient(125deg,var(--dark),var(--green));
+    color:white;
+    border-radius:18px;
+    padding:35px;
+    display:grid;
+    grid-template-columns:1.5fr 1fr;
+    gap:25px;
+    align-items:center;
+}
+
+.tag{
+    display:inline-block;
+    background:var(--lime);
+    color:var(--dark);
+    padding:7px 12px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.hero h1{
+    font-size:clamp(28px,4vw,45px);
+    line-height:1.15;
+    margin:18px 0 12px;
+}
+
+.hero p{
+    color:#d8eadf;
+    line-height:1.7;
+}
+
+.hero-visual{
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:14px;
+    padding:25px;
+}
+
+.h-symbol{
+    font-size:75px;
+    text-align:center;
+    color:var(--lime);
+    font-weight:bold;
+}
+
+.hero-visual h3{
+    text-align:center;
+}
+
+.hero-visual p{
+    text-align:center;
+    margin-bottom:0;
+}
+
+.btn{
+    display:inline-block;
+    border:none;
+    border-radius:8px;
+    padding:12px 17px;
+    font-weight:bold;
+    cursor:pointer;
+    margin:6px 5px 0 0;
+}
+
+.btn-primary{
+    background:var(--lime);
+    color:var(--dark);
+}
+
+.btn-light{
+    background:white;
+    color:var(--dark);
+}
+
+.btn-green{
+    background:var(--green);
+    color:white;
+}
+
+.section-title{
+    margin:32px 0 16px;
+    color:var(--dark);
+    font-size:24px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-top:22px;
+}
+
+.stat,.card,.panel{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:13px;
+    padding:20px;
+}
+
+.stat strong{
+    display:block;
+    font-size:27px;
+    color:var(--green);
+    margin-bottom:7px;
+}
+
+.stat span{
+    font-size:13px;
+    color:var(--muted);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.card h3{
+    margin-top:0;
+    color:var(--dark);
+}
+
+.card p{
+    line-height:1.6;
+    color:var(--muted);
+    font-size:14px;
+}
+
+.icon{
+    font-size:30px;
+    margin-bottom:12px;
+}
+
+.badge{
+    display:inline-block;
+    border-radius:20px;
+    padding:6px 10px;
+    font-size:12px;
+    font-weight:bold;
+    background:#e4f4e9;
+    color:var(--green);
+}
+
+.badge.warning{
+    background:#fff0d6;
+    color:var(--orange);
+}
+
+.badge.danger{
+    background:#fde8e7;
+    color:var(--red);
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:10px;
+}
+
+.step{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:17px 12px;
+    text-align:center;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.step b{
+    display:block;
+    background:var(--green);
+    color:white;
+    border-radius:50%;
+    width:32px;
+    height:32px;
+    line-height:32px;
+    margin:0 auto 12px;
+}
+
+.toolbar{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.toolbar input,
+.toolbar select,
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:12px;
+    background:white;
+}
+
+.toolbar input{
+    flex:1;
+    min-width:220px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:12px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1100px;
+}
+
+th,td{
+    padding:14px;
+    border-bottom:1px solid var(--border);
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#eaf3ed;
+    color:var(--dark);
+}
+
+tr:hover td{
+    background:#f8fbf8;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:13px;
+}
+
+.form-grid label{
+    display:block;
+    font-size:13px;
+    font-weight:bold;
+    margin-bottom:7px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    width:100%;
+}
+
+.form-grid textarea{
+    min-height:100px;
+    resize:vertical;
+}
+
+.form-grid .full{
+    grid-column:1/-1;
+}
+
+.notice{
+    background:#fff7e5;
+    border:1px solid #f0d79b;
+    color:#755000;
+    padding:16px;
+    border-radius:10px;
+    line-height:1.6;
+    font-size:14px;
+}
+
+.info-box{
+    background:#eaf4ed;
+    border-left:5px solid var(--green);
+    border-radius:8px;
+    padding:17px;
+    line-height:1.7;
+    font-size:14px;
+}
+
+footer{
+    margin-top:35px;
+    background:var(--dark);
+    color:white;
+    padding:25px 4%;
+    text-align:center;
+    font-size:13px;
+    line-height:1.8;
+}
+
+footer a{
+    color:var(--lime);
+}
+
+@media(max-width:850px){
+
+    .hero{
+        grid-template-columns:1fr;
+        padding:25px;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .workflow{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:550px){
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .workflow{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid .full{
+        grid-column:auto;
+    }
+
+    .hero{
+        padding:20px;
+    }
+
+    .container{
+        width:94%;
+    }
+
+    .stat{
+        padding:15px;
+    }
+
+    .stat strong{
+        font-size:23px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button class="active" onclick="setLanguage('AZ')">AZ</button>
+    <button onclick="setLanguage('RU')">RU</button>
+    <button onclick="setLanguage('EN')">EN</button>
+    <button onclick="setLanguage('TR')">TR</button>
+    <button onclick="setLanguage('DE')">DE</button>
+    <button onclick="setLanguage('AR')">AR</button>
+    <button onclick="setLanguage('ES')">ES</button>
+    <button onclick="setLanguage('FR')">FR</button>
+    <button onclick="setLanguage('IT')">IT</button>
+</div>
+
+<header>
+    <div class="brand">WORKER <span>PRO</span></div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<div>
+
+<span class="tag">TESTING · №194</span>
+
+<h1>Hydrogen Embrittlement Testing</h1>
+
+<p>
+Испытания для оценки влияния водорода на механические свойства
+металлов и сплавов, включая снижение пластичности, образование
+трещин и изменение поведения материала при нагрузке.
+</p>
+
+<p>
+WORKER PRO позволяет фиксировать материал, источник водорода,
+условия воздействия, нагрузку, время испытания, наблюдения
+и технические результаты.
+</p>
+
+<button class="btn btn-primary"
+onclick="scrollToSection('newTest')">
++ New Hydrogen Test
+</button>
+
+<button class="btn btn-light"
+onclick="scrollToSection('records')">
+View Records
+</button>
+
+</div>
+
+<div class="hero-visual">
+
+<div class="h-symbol">H₂</div>
+
+<h3>Hydrogen + Metal + Stress</h3>
+
+<p>
+Hydrogen Exposure · Mechanical Load · Fracture Behavior
+</p>
+
+</div>
+
+</section>
+
+
+<section class="stats">
+
+<div class="stat">
+<strong>76</strong>
+<span>Demo hydrogen test programs</span>
+</div>
+
+<div class="stat">
+<strong>2,540</strong>
+<span>Demo test records</span>
+</div>
+
+<div class="stat">
+<strong>29</strong>
+<span>Demo laboratory teams</span>
+</div>
+
+<div class="stat">
+<strong>95.9%</strong>
+<span>Demo record completeness</span>
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Hydrogen Embrittlement Factors
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<div class="icon">H₂</div>
+
+<h3>Hydrogen Exposure</h3>
+
+<p>
+Источник и условия попадания водорода в материал
+фиксируются вместе с выбранной процедурой испытания.
+</p>
+
+<span class="badge">
+Hydrogen
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">⚙️</div>
+
+<h3>Mechanical Stress</h3>
+
+<p>
+Уровень нагрузки и состояние напряжения могут влиять
+на проявление водородного охрупчивания.
+</p>
+
+<span class="badge">
+Stress
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🔩</div>
+
+<h3>Material Condition</h3>
+
+<p>
+Химический состав, микроструктура, термообработка
+и состояние поверхности учитываются при интерпретации.
+</p>
+
+<span class="badge">
+Material
+</span>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Testing Parameters
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>Hydrogen Source</h3>
+
+<p>
+Указывается источник и способ воздействия водорода
+в соответствии с конкретной методикой.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Exposure Time</h3>
+
+<p>
+Продолжительность воздействия фиксируется для
+сопоставления результатов испытаний.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Temperature</h3>
+
+<p>
+Температура испытания может влиять на условия
+взаимодействия водорода с материалом.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Applied Stress</h3>
+
+<p>
+Фиксируется уровень приложенного напряжения,
+нагрузки или другого заданного параметра.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Mechanical Properties</h3>
+
+<p>
+Могут оцениваться параметры прочности, пластичности,
+деформации и разрушения в рамках выбранной процедуры.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Fracture Observation</h3>
+
+<p>
+Фиксируется характер разрушения, трещины и другие
+наблюдения после испытания.
+</p>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Testing Approaches
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<div class="icon">📏</div>
+
+<h3>Tensile Testing</h3>
+
+<p>
+Испытания на растяжение для сравнения механического
+поведения образцов в заданных условиях.
+</p>
+
+<span class="badge">
+Mechanical Test
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🔧</div>
+
+<h3>Constant Load Testing</h3>
+
+<p>
+Испытание при заданной постоянной нагрузке
+в течение установленного времени.
+</p>
+
+<span class="badge">
+Load Control
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📈</div>
+
+<h3>Slow Strain Rate Testing</h3>
+
+<p>
+Методика с контролируемой скоростью деформации
+для соответствующих программ оценки материала.
+</p>
+
+<span class="badge">
+SSRT
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🔬</div>
+
+<h3>Fracture Evaluation</h3>
+
+<p>
+Исследование поверхности разрушения и признаков
+трещинообразования после испытания.
+</p>
+
+<span class="badge">
+Fractography
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">🧪</div>
+
+<h3>Electrochemical Exposure</h3>
+
+<p>
+Для определённых программ может применяться
+контролируемое электрохимическое воздействие.
+</p>
+
+<span class="badge">
+Laboratory
+</span>
+
+</div>
+
+
+<div class="card">
+
+<div class="icon">📊</div>
+
+<h3>Comparative Testing</h3>
+
+<p>
+Сравнение образцов в различных состояниях
+при одинаково заданных условиях процедуры.
+</p>
+
+<span class="badge">
+Comparison
+</span>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Hydrogen Testing Workflow
+</h2>
+
+<section class="workflow">
+
+<div class="step">
+<b>1</b>
+Material Selection
+</div>
+
+<div class="step">
+<b>2</b>
+Specimen Preparation
+</div>
+
+<div class="step">
+<b>3</b>
+Hydrogen Exposure
+</div>
+
+<div class="step">
+<b>4</b>
+Mechanical Loading
+</div>
+
+<div class="step">
+<b>5</b>
+Fracture Evaluation
+</div>
+
+<div class="step">
+<b>6</b>
+Technical Report
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+Industrial Applications
+</h2>
+
+<section class="grid">
+
+<div class="card">
+
+<h3>Oil & Gas</h3>
+
+<p>
+Исследование материалов оборудования, работающего
+в средах, где возможно воздействие водорода.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Pipeline Components</h3>
+
+<p>
+Оценка материалов труб и компонентов в рамках
+соответствующих испытательных программ.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Fasteners</h3>
+
+<p>
+Испытания крепёжных материалов с учётом условий
+изготовления и эксплуатации.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Pressure Equipment</h3>
+
+<p>
+Контроль материалов компонентов оборудования
+под давлением при соответствующих условиях.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Automotive</h3>
+
+<p>
+Исследование металлических компонентов автомобилей
+и систем, связанных с водородной средой.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<h3>Energy Systems</h3>
+
+<p>
+Испытания материалов для оборудования энергетических
+и промышленных систем.
+</p>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title" id="newTest">
+Create Hydrogen Test Record
+</h2>
+
+<section class="panel">
+
+<div class="notice" style="margin-bottom:18px;">
+
+Демонстрационная форма WORKER PRO.
+Данные сохраняются только в текущем окне страницы
+и не отправляются в реальную лабораторию.
+
+</div>
+
+
+<form id="testForm">
+
+<div class="form-grid">
+
+<div>
+<label for="sample">
+Sample / Component
+</label>
+
+<input id="sample"
+required
+placeholder="Example: Steel fastener">
+</div>
+
+
+<div>
+<label for="material">
+Material
+</label>
+
+<input id="material"
+required
+placeholder="Example: High-strength steel">
+</div>
+
+
+<div>
+<label for="source">
+Hydrogen Source
+</label>
+
+<select id="source" required>
+
+<option value="">
+Select source
+</option>
+
+<option>
+Electrochemical Charging
+</option>
+
+<option>
+Gaseous Hydrogen
+</option>
+
+<option>
+Service Environment
+</option>
+
+<option>
+Laboratory Exposure
+</option>
+
+<option>
+Other
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="temperature">
+Temperature (°C)
+</label>
+
+<input id="temperature"
+type="number"
+step="any"
+placeholder="Example: 25">
+</div>
+
+
+<div>
+<label for="stress">
+Applied Stress / Load
+</label>
+
+<input id="stress"
+required
+placeholder="Example: 70% specified load">
+</div>
+
+
+<div>
+<label for="time">
+Exposure Time (hours)
+</label>
+
+<input id="time"
+type="number"
+step="any"
+required
+placeholder="Example: 240">
+</div>
+
+
+<div>
+<label for="method">
+Test Method
+</label>
+
+<select id="method" required>
+
+<option value="">
+Select method
+</option>
+
+<option>
+Tensile Testing
+</option>
+
+<option>
+Constant Load Testing
+</option>
+
+<option>
+Slow Strain Rate Testing
+</option>
+
+<option>
+Fracture Evaluation
+</option>
+
+<option>
+Electrochemical Exposure
+</option>
+
+<option>
+Comparative Testing
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="observation">
+Observation
+</label>
+
+<select id="observation" required>
+
+<option value="">
+Select observation
+</option>
+
+<option>
+No Crack Observed
+</option>
+
+<option>
+Crack Indication
+</option>
+
+<option>
+Reduced Ductility
+</option>
+
+<option>
+Fracture Observed
+</option>
+
+<option>
+Under Review
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="property">
+Main Property Evaluated
+</label>
+
+<select id="property">
+
+<option>
+Tensile Strength
+</option>
+
+<option>
+Elongation
+</option>
+
+<option>
+Reduction of Area
+</option>
+
+<option>
+Fracture Behavior
+</option>
+
+<option>
+Crack Growth
+</option>
+
+</select>
+</div>
+
+
+<div>
+<label for="criteria">
+Procedure / Criteria
+</label>
+
+<input id="criteria"
+placeholder="Standard / specification / procedure">
+</div>
+
+
+<div class="full">
+
+<label for="notes">
+Technical Notes
+</label>
+
+<textarea id="notes"
+placeholder="Enter test observations, equipment and other technical information..."></textarea>
+
+</div>
+
+
+<div>
+
+<label for="status">
+Record Status
+</label>
+
+<select id="status">
+
+<option>
+Pending Review
+</option>
+
+<option>
+Reviewed
+</option>
+
+<option>
+Warning
+</option>
+
+</select>
+
+</div>
+
+
+<div class="full">
+
+<button class="btn btn-green"
+type="submit">
+Create Demo Record
+</button>
+
+<button class="btn btn-primary"
+type="button"
+onclick="resetForm()">
+Clear Form
+</button>
+
+</div>
+
+</div>
+
+</form>
+
+</section>
+
+
+<h2 class="section-title" id="records">
+Hydrogen Test Records
+</h2>
+
+
+<div class="toolbar">
+
+<input id="searchInput"
+type="search"
+placeholder="Search ID, material, source, method..."
+oninput="filterRows()">
+
+
+<select id="statusFilter"
+onchange="filterRows()">
+
+<option value="">
+All statuses
+</option>
+
+<option value="Reviewed">
+Reviewed
+</option>
+
+<option value="Pending Review">
+Pending Review
+</option>
+
+<option value="Warning">
+Warning
+</option>
+
+</select>
+
+
+<button class="btn btn-green"
+onclick="exportCSV()">
+Export CSV
+</button>
+
+</div>
+
+
+<div class="table-wrap">
+
+<table id="hydrogenTable">
+
+<thead>
+
+<tr>
+
+<th>Record ID</th>
+<th>Component</th>
+<th>Material</th>
+<th>H Source</th>
+<th>Stress / Load</th>
+<th>Time</th>
+<th>Observation</th>
+<th>Status</th>
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+
+<tbody id="tableBody">
+
+<tr>
+
+<td>HE-AZ-2026-001</td>
+
+<td>Steel Fastener</td>
+
+<td>High-Strength Steel</td>
+
+<td>Electrochemical Charging</td>
+
+<td>70% Load</td>
+
+<td>240 h</td>
+
+<td>No Crack Observed</td>
+
+<td>
+<span class="badge">
+Reviewed · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>HE-AZ-2026-002</td>
+
+<td>Pipeline Component</td>
+
+<td>Carbon Steel</td>
+
+<td>Service Environment</td>
+
+<td>75% Load</td>
+
+<td>500 h</td>
+
+<td>Reduced Ductility</td>
+
+<td>
+<span class="badge warning">
+Warning · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>HE-AZ-2026-003</td>
+
+<td>Pressure Component</td>
+
+<td>Alloy Steel</td>
+
+<td>Laboratory Exposure</td>
+
+<td>80% Load</td>
+
+<td>360 h</td>
+
+<td>Under Review</td>
+
+<td>
+<span class="badge warning">
+Pending Review · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+
+<tr>
+
+<td>HE-AZ-2026-004</td>
+
+<td>Machine Component</td>
+
+<td>Stainless Steel</td>
+
+<td>Electrochemical Charging</td>
+
+<td>60% Load</td>
+
+<td>180 h</td>
+
+<td>No Crack Observed</td>
+
+<td>
+<span class="badge">
+Reviewed · Demo
+</span>
+</td>
+
+<td>
+<button class="btn btn-green"
+onclick="viewDetails(this)">
+Details
+</button>
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+
+<h2 class="section-title">
+Quality & Documentation
+</h2>
+
+
+<section class="grid">
+
+<div class="card">
+
+<h3>Hydrogen Test Report</h3>
+
+<p>
+Фиксация материала, источника водорода, нагрузки,
+времени воздействия, метода и результатов испытания.
+</p>
+
+<button class="btn btn-green"
+onclick="createReport()">
+Create Demo Report
+</button>
+
+</div>
+
+
+<div class="card">
+
+<h3>Quality Review</h3>
+
+<p>
+Проверка результатов испытания по требованиям
+конкретной продукции и технической документации.
+</p>
+
+<a class="btn btn-green"
+href="../quality/index.html">
+Open Quality
+</a>
+
+</div>
+
+
+<div class="card">
+
+<h3>Technical Documents</h3>
+
+<p>
+Связь результатов испытаний с чертежами,
+спецификациями, процедурами и отчетами.
+</p>
+
+<a class="btn btn-green"
+href="../documents/index.html">
+Open Documents
+</a>
+
+</div>
+
+</section>
+
+
+<h2 class="section-title">
+WORKER PRO Industrial Flow
+</h2>
+
+
+<section class="workflow">
+
+<div class="step">
+<b>1</b>
+Product
+</div>
+
+<div class="step">
+<b>2</b>
+Testing
+</div>
+
+<div class="step">
+<b>3</b>
+Quality
+</div>
+
+<div class="step">
+<b>4</b>
+Certificate
+</div>
+
+<div class="step">
+<b>5</b>
+Supplier
+</div>
+
+<div class="step">
+<b>6</b>
+Order & Logistics
+</div>
+
+</section>
+
+
+<div class="info-box"
+style="margin-top:20px;">
+
+<strong>Important:</strong>
+
+Все записи и показатели на этой странице являются
+демонстрационными.
+
+Водородное охрупчивание зависит от материала,
+микроструктуры, источника и содержания водорода,
+уровня напряжения, температуры, времени воздействия
+и конкретной методики испытания.
+
+Реальная оценка требует утвержденной процедуры,
+подходящего оборудования, контроля условий испытания
+и квалифицированного персонала.
+
+</div>
+
+</main>
+
+
+<footer>
+
+<strong>WORKER PRO</strong><br>
+
+Глобальная промышленная платформа<br>
+
+Testing · Quality · Production · Logistics<br>
+
+<a href="../index.html">
+Back to Home
+</a>
+
+<br><br>
+
+© 2026 WORKER PRO · F.S
+
+</footer>
+
+
+<script>
+
+let recordCounter = 5;
+
+
+function scrollToSection(id){
+
+    document.getElementById(id).scrollIntoView({
+        behavior:"smooth",
+        block:"start"
+    });
+
+}
+
+
+function setLanguage(lang){
+
+    document.querySelectorAll(
+        ".top-languages button"
+    ).forEach(button=>{
+
+        button.classList.toggle(
+            "active",
+            button.textContent.trim() === lang
+        );
+
+    });
+
+    alert(
+        "Selected language: " +
+        lang +
+        "\nДемонстрационный режим. Перевод страницы пока не подключен."
+    );
+
+}
+
+
+function resetForm(){
+
+    document.getElementById("testForm").reset();
+
+}
+
+
+function filterRows(){
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase()
+        .trim();
+
+    const status =
+        document.getElementById("statusFilter").value;
+
+    const rows =
+        document.querySelectorAll("#tableBody tr");
+
+
+    rows.forEach(row=>{
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[7].innerText;
+
+        const matchesSearch =
+            text.includes(search);
+
+        const matchesStatus =
+            !status ||
+            rowStatus.includes(status);
+
+        row.style.display =
+            matchesSearch && matchesStatus
+            ? ""
+            : "none";
+
+    });
+
+}
+
+
+document.getElementById("testForm")
+.addEventListener("submit",function(event){
+
+    event.preventDefault();
+
+
+    const sample =
+        document.getElementById("sample")
+        .value.trim();
+
+    const material =
+        document.getElementById("material")
+        .value.trim();
+
+    const source =
+        document.getElementById("source")
+        .value;
+
+    const temperature =
+        document.getElementById("temperature")
+        .value;
+
+    const stress =
+        document.getElementById("stress")
+        .value.trim();
+
+    const time =
+        document.getElementById("time")
+        .value;
+
+    const method =
+        document.getElementById("method")
+        .value;
+
+    const observation =
+        document.getElementById("observation")
+        .value;
+
+    const property =
+        document.getElementById("property")
+        .value;
+
+    const criteria =
+        document.getElementById("criteria")
+        .value.trim();
+
+    const notes =
+        document.getElementById("notes")
+        .value.trim();
+
+    const status =
+        document.getElementById("status")
+        .value;
+
+
+    const id =
+        "HE-AZ-2026-" +
+        String(recordCounter)
+        .padStart(3,"0");
+
+    recordCounter++;
+
+
+    const row =
+        document.createElement("tr");
+
+
+    const values = [
+
+        id,
+        sample,
+        material,
+        source,
+        stress,
+        time + " h",
+        observation,
+        status
+
+    ];
+
+
+    values.forEach((value,index)=>{
+
+        const cell =
+            document.createElement("td");
+
+
+        if(index === 7){
+
+            const badge =
+                document.createElement("span");
+
+            badge.className =
+                status === "Warning"
+                ? "badge warning"
+                : "badge";
+
+            badge.textContent =
+                status + " · Demo";
+
+            cell.appendChild(badge);
+
+        }else{
+
+            cell.textContent =
+                value;
+
+        }
+
+        row.appendChild(cell);
+
+    });
+
+
+    const actionCell =
+        document.createElement("td");
+
+
+    const detailsButton =
+        document.createElement("button");
+
+    detailsButton.className =
+        "btn btn-green";
+
+    detailsButton.textContent =
+        "Details";
+
+
+    detailsButton.onclick =
+        function(){
+
+            alert(
+
+                "Record: " +
+                id +
+
+                "\nComponent: " +
+                sample +
+
+                "\nMaterial: " +
+                material +
+
+                "\nHydrogen Source: " +
+                source +
+
+                "\nTemperature: " +
+                temperature +
+                " °C" +
+
+                "\nStress / Load: " +
+                stress +
+
+                "\nExposure Time: " +
+                time +
+                " h" +
+
+                "\nMethod: " +
+                method +
+
+                "\nObservation: " +
+                observation +
+
+                "\nProperty: " +
+                property +
+
+                "\nProcedure: " +
+                criteria +
+
+                "\nNotes: " +
+                notes +
+
+                "\nStatus: " +
+                status +
+
+                "\n\nDemo record only."
+
+            );
+
+        };
+
+
+    actionCell.appendChild(
+        detailsButton
+    );
+
+    row.appendChild(
+        actionCell
+    );
+
+
+    document
+        .getElementById("tableBody")
+        .prepend(row);
+
+
+    resetForm();
+
+    filterRows();
+
+
+    alert(
+        "Demo hydrogen test record created: " +
+        id
+    );
+
+
+    scrollToSection(
+        "records"
+    );
+
+});
+
+
+function viewDetails(button){
+
+    const row =
+        button.closest("tr");
+
+    const cells =
+        row.cells;
+
+
+    alert(
+
+        "Record ID: " +
+        cells[0].innerText +
+
+        "\nComponent: " +
+        cells[1].innerText +
+
+        "\nMaterial: " +
+        cells[2].innerText +
+
+        "\nHydrogen Source: " +
+        cells[3].innerText +
+
+        "\nStress / Load: " +
+        cells[4].innerText +
+
+        "\nExposure Time: " +
+        cells[5].innerText +
+
+        "\nObservation: " +
+        cells[6].innerText +
+
+        "\nStatus: " +
+        cells[7].innerText +
+
+        "\n\nDemo record."
+
+    );
+
+}
+
+
+function createReport(){
+
+    alert(
+
+        "Demo hydrogen embrittlement report prepared.\n\n" +
+
+        "A real technical report requires verified " +
+        "test conditions, material information, " +
+        "equipment details, procedure, measurements, " +
+        "observations and acceptance criteria."
+
+    );
+
+}
+
+
+function exportCSV(){
+
+    const rows =
+        Array.from(
+            document.querySelectorAll(
+                "#hydrogenTable tr"
+            )
+        );
+
+
+    const csv =
+        rows.map(row=>
+
+            Array.from(row.cells)
+            .slice(0,8)
+            .map(cell=>{
+
+                const value =
+                    cell.innerText
+                    .replace(/"/g,'""');
+
+                return '"' +
+                       value +
+                       '"';
+
+            })
+            .join(",")
+
+        ).join("\n");
+
+
+    const blob =
+        new Blob(
+            ["\uFEFF" + csv],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(
+            blob
+        );
+
+
+    const link =
+        document.createElement("a");
+
+    link.href =
+        url;
+
+    link.download =
+        "worker-pro-hydrogen-embrittlement-records.csv";
+
+    document.body.appendChild(
+        link
+    );
+
+    link.click();
+
+    link.remove();
+
+    URL.revokeObjectURL(
+        url
+    );
+
+}
+
+</script>
+
+</body>
+</html>
