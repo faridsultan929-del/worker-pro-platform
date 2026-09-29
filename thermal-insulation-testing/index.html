@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Insulation Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    justify-content:center;
+    gap:7px;
+    flex-wrap:wrap;
+    box-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+
+.top-languages button{
+    border:0;
+    border-radius:7px;
+    padding:7px 11px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#b7ff35;
+    color:#063d25;
+}
+
+header{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    padding:28px 18px;
+    text-align:center;
+}
+
+header h1{
+    margin:0;
+    font-size:32px;
+}
+
+header p{
+    margin:8px 0 0;
+    font-size:17px;
+}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    padding:8px 12px;
+    border-radius:7px;
+}
+
+nav a:hover{
+    background:#0b6b3d;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:22px;
+}
+
+.hero{
+    background:white;
+    border-radius:14px;
+    padding:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+    margin-bottom:20px;
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:6px 10px;
+    border-radius:20px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin:20px 0;
+}
+
+.stat{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.card{
+    background:white;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+.card h3{
+    margin-top:0;
+    color:#0b6b3d;
+}
+
+.card ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:8px;
+    margin-top:20px;
+}
+
+.step{
+    background:#063d25;
+    color:white;
+    padding:13px 7px;
+    border-radius:9px;
+    text-align:center;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.controls{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin:18px 0;
+}
+
+.controls input,
+.controls select{
+    padding:11px;
+    border:1px solid #ccd7d0;
+    border-radius:8px;
+    min-width:190px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:11px 15px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.table-wrap{
+    overflow-x:auto;
+    background:white;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1450px;
+}
+
+th{
+    background:#063d25;
+    color:white;
+    padding:12px;
+    text-align:left;
+}
+
+td{
+    padding:11px;
+    border-bottom:1px solid #e3e8e5;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 9px;
+    border-radius:15px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.reviewed{
+    background:#d8f5df;
+    color:#166534;
+}
+
+.pending{
+    background:#fff2c2;
+    color:#7a5b00;
+}
+
+.warning{
+    background:#ffd8d8;
+    color:#9b1c1c;
+}
+
+.form-box{
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 3px 10px rgba(0,0,0,.07);
+    margin-top:20px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+    width:100%;
+    padding:11px;
+    border:1px solid #ccd7d0;
+    border-radius:8px;
+}
+
+.form-grid textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.report{
+    background:#063d25;
+    color:white;
+    padding:20px;
+    border-radius:12px;
+    margin-top:20px;
+}
+
+.report button{
+    background:#b7ff35;
+    color:#063d25;
+    border:0;
+    padding:10px 15px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.notice{
+    background:#fff8dc;
+    border-left:5px solid #d6a800;
+    padding:16px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:1000px){
+    .workflow{
+        grid-template-columns:repeat(4,1fr);
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    header h1{
+        font-size:25px;
+    }
+
+    .container{
+        padding:13px;
+    }
+
+    .stats,
+    .grid,
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .workflow{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .controls input,
+    .controls select{
+        width:100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+
+    <span class="badge">TESTING #216</span>
+
+    <h2>Thermal Insulation Testing</h2>
+
+    <p>
+        Испытание теплоизоляционных материалов и систем для
+        оценки их способности снижать передачу тепла между
+        зонами с различной температурой.
+    </p>
+
+    <p>
+        Испытания могут включать оценку теплопроводности,
+        теплового сопротивления, теплового потока, толщины,
+        плотности, влажности и изменения характеристик
+        при температурном воздействии.
+    </p>
+
+</section>
+
+<section class="stats">
+
+    <div class="stat">
+        <strong>98</strong>
+        Programs
+    </div>
+
+    <div class="stat">
+        <strong>3,780</strong>
+        Test Records
+    </div>
+
+    <div class="stat">
+        <strong>41</strong>
+        Lab Teams
+    </div>
+
+    <div class="stat">
+        <strong>97.4%</strong>
+        Completeness
+    </div>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+
+    <h3>Основные параметры</h3>
+
+    <ul>
+        <li>Thermal Conductivity</li>
+        <li>Thermal Resistance</li>
+        <li>Heat Flux</li>
+        <li>Temperature Difference</li>
+        <li>Insulation Thickness</li>
+        <li>Density</li>
+        <li>Moisture Content</li>
+        <li>Thermal Stability</li>
+        <li>Dimensional Change</li>
+    </ul>
+
+</div>
+
+<div class="card">
+
+    <h3>Методы испытаний</h3>
+
+    <ul>
+        <li>Guarded Hot Plate</li>
+        <li>Heat Flow Meter</li>
+        <li>Thermal Resistance Method</li>
+        <li>Hot Wire Method</li>
+        <li>Steady-State Testing</li>
+        <li>Thermal Cycling</li>
+        <li>Before / After Evaluation</li>
+    </ul>
+
+</div>
+
+<div class="card">
+
+    <h3>Промышленные применения</h3>
+
+    <ul>
+        <li>Industrial Buildings</li>
+        <li>Oil & Gas Pipelines</li>
+        <li>Storage Tanks</li>
+        <li>HVAC Systems</li>
+        <li>Automotive</li>
+        <li>Aerospace</li>
+        <li>Power Plants</li>
+        <li>Industrial Equipment</li>
+    </ul>
+
+</div>
+
+</section>
+
+<section class="hero">
+
+<h2>Испытательный процесс</h2>
+
+<div class="workflow">
+
+    <div class="step">Material Selection</div>
+    <div class="step">Specimen Preparation</div>
+    <div class="step">Initial Inspection</div>
+    <div class="step">Thermal Setup</div>
+    <div class="step">Heat Flow Measurement</div>
+    <div class="step">Performance Evaluation</div>
+    <div class="step">Technical Report</div>
+
+</div>
+
+</section>
+
+<section class="hero">
+
+<h2>Thermal Insulation Test Records</h2>
+
+<div class="controls">
+
+<input
+    type="text"
+    id="search"
+    placeholder="Search sample, material, country..."
+    onkeyup="filterTable()"
+>
+
+<select
+    id="statusFilter"
+    onchange="filterTable()"
+>
+    <option value="">All Statuses</option>
+    <option value="Reviewed">Reviewed</option>
+    <option value="Pending Review">Pending Review</option>
+    <option value="Warning">Warning</option>
+</select>
+
+<select
+    id="methodFilter"
+    onchange="filterTable()"
+>
+    <option value="">All Methods</option>
+    <option value="Guarded Hot Plate">Guarded Hot Plate</option>
+    <option value="Heat Flow Meter">Heat Flow Meter</option>
+    <option value="Hot Wire">Hot Wire</option>
+    <option value="Thermal Resistance">Thermal Resistance</option>
+</select>
+
+<button class="action" onclick="exportCSV()">
+    CSV Export
+</button>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="testTable">
+
+<thead>
+<tr>
+    <th>ID</th>
+    <th>Sample</th>
+    <th>Material</th>
+    <th>Method</th>
+    <th>Thickness mm</th>
+    <th>Density kg/m³</th>
+    <th>Conductivity W/mK</th>
+    <th>Resistance m²K/W</th>
+    <th>Moisture %</th>
+    <th>Evaluation</th>
+    <th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>TIN-AZ-2026-001</td>
+<td>INS-201</td>
+<td>Mineral Wool</td>
+<td>Guarded Hot Plate</td>
+<td>80</td>
+<td>120</td>
+<td>0.039</td>
+<td>2.05</td>
+<td>1.2</td>
+<td>Pass</td>
+<td>
+<span class="status reviewed">Reviewed</span>
+</td>
+</tr>
+
+<tr>
+<td>TIN-DE-2026-002</td>
+<td>INS-214</td>
+<td>Fiberglass</td>
+<td>Heat Flow Meter</td>
+<td>100</td>
+<td>95</td>
+<td>0.036</td>
+<td>2.78</td>
+<td>0.8</td>
+<td>Pass</td>
+<td>
+<span class="status reviewed">Reviewed</span>
+</td>
+</tr>
+
+<tr>
+<td>TIN-TR-2026-003</td>
+<td>INS-225</td>
+<td>Polyurethane Foam</td>
+<td>Thermal Resistance</td>
+<td>60</td>
+<td>42</td>
+<td>0.026</td>
+<td>2.31</td>
+<td>0.6</td>
+<td>Pass</td>
+<td>
+<span class="status reviewed">Reviewed</span>
+</td>
+</tr>
+
+<tr>
+<td>TIN-IT-2026-004</td>
+<td>INS-238</td>
+<td>Ceramic Fiber</td>
+<td>Guarded Hot Plate</td>
+<td>50</td>
+<td>160</td>
+<td>0.075</td>
+<td>0.67</td>
+<td>0.4</td>
+<td>Review Required</td>
+<td>
+<span class="status pending">Pending Review</span>
+</td>
+</tr>
+
+<tr>
+<td>TIN-CN-2026-005</td>
+<td>INS-246</td>
+<td>Composite Insulation Panel</td>
+<td>Heat Flow Meter</td>
+<td>90</td>
+<td>180</td>
+<td>0.061</td>
+<td>1.48</td>
+<td>3.1</td>
+<td>Review Required</td>
+<td>
+<span class="status warning">Warning</span>
+</td>
+</tr>
+
+<tr>
+<td>TIN-US-2026-006</td>
+<td>INS-259</td>
+<td>Pipeline Insulation</td>
+<td>Hot Wire</td>
+<td>70</td>
+<td>75</td>
+<td>0.034</td>
+<td>2.06</td>
+<td>1.0</td>
+<td>Pass</td>
+<td>
+<span class="status reviewed">Reviewed</span>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="form-box">
+
+<h2 style="color:#063d25;">
+New Thermal Insulation Test — Demo
+</h2>
+
+<div class="form-grid">
+
+<input
+    id="sample"
+    placeholder="Sample ID"
+>
+
+<input
+    id="material"
+    placeholder="Material / Grade"
+>
+
+<select id="method">
+    <option value="">Select Method</option>
+    <option>Guarded Hot Plate</option>
+    <option>Heat Flow Meter</option>
+    <option>Hot Wire</option>
+    <option>Thermal Resistance</option>
+    <option>Steady-State</option>
+</select>
+
+<input
+    id="thickness"
+    type="number"
+    step="0.01"
+    placeholder="Thickness mm"
+>
+
+<input
+    id="density"
+    type="number"
+    step="0.1"
+    placeholder="Density kg/m³"
+>
+
+<input
+    id="conductivity"
+    type="number"
+    step="0.0001"
+    placeholder="Conductivity W/mK"
+>
+
+<input
+    id="resistance"
+    type="number"
+    step="0.01"
+    placeholder="Thermal Resistance m²K/W"
+>
+
+<input
+    id="moisture"
+    type="number"
+    step="0.01"
+    placeholder="Moisture %"
+>
+
+<input
+    id="hotTemp"
+    type="number"
+    placeholder="Hot Temperature °C"
+>
+
+<input
+    id="coldTemp"
+    type="number"
+    placeholder="Cold Temperature °C"
+>
+
+<select id="condition">
+    <option value="">Specimen Condition</option>
+    <option>As Received</option>
+    <option>Dry</option>
+    <option>Conditioned</option>
+    <option>Heat Aged</option>
+</select>
+
+<select id="evaluation">
+    <option value="">Evaluation</option>
+    <option>Pass</option>
+    <option>Review Required</option>
+    <option>Out of Range</option>
+</select>
+
+<select id="status">
+    <option>Reviewed</option>
+    <option>Pending Review</option>
+    <option>Warning</option>
+</select>
+
+<textarea
+    id="notes"
+    class="full"
+    placeholder="Technical notes">
+</textarea>
+
+</div>
+
+<br>
+
+<button
+    class="action"
+    onclick="addTest()"
+>
+    Add Test Record — Demo
+</button>
+
+</section>
+
+<section class="report">
+
+<h2>Demo Technical Report</h2>
+
+<p>
+Формирование технического отчёта по результатам
+испытания теплоизоляционного материала.
+</p>
+
+<button onclick="generateReport()">
+    Generate Demo Report
+</button>
+
+<p id="reportResult"></p>
+
+</section>
+
+<section class="hero">
+
+<h2>WORKER PRO Industrial Flow</h2>
+
+<p>
+Product → Testing → Quality → Test Report → Certificate →
+Documents → Supplier → Order → Logistics → Tracking → Warehouse
+</p>
+
+<div class="controls">
+
+<a href="../quality/index.html">
+<button class="action">Quality</button>
+</a>
+
+<a href="../documents/index.html">
+<button class="action">Documents</button>
+</a>
+
+<a href="../suppliers/index.html">
+<button class="action">Suppliers</button>
+</a>
+
+<a href="../orders/index.html">
+<button class="action">Orders</button>
+</a>
+
+<a href="../logistics/index.html">
+<button class="action">Logistics</button>
+</a>
+
+</div>
+
+</section>
+
+<div class="notice">
+
+<strong>Important:</strong>
+
+Это демонстрационная страница WORKER PRO.
+Все значения, записи, лаборатории и результаты являются
+demo data.
+
+Теплоизоляционные характеристики зависят от материала,
+толщины, плотности, влажности, температуры, структуры,
+контактных условий и направления теплового потока.
+
+При оценке теплоизоляции необходимо учитывать не только
+теплопроводность материала, но и тепловые мосты, контакты,
+стыки, многослойную конструкцию и условия эксплуатации.
+
+Реальные испытания требуют подходящего калиброванного
+оборудования, правильной подготовки образцов,
+контролируемых температурных условий и применимого
+стандарта или технической спецификации.
+
+Для изделий и систем большого размера результаты
+лабораторного испытания образца не всегда напрямую
+представляют поведение всей установленной системы.
+</div>
+
+</div>
+
+<footer>
+
+WORKER PRO — Глобальная промышленная платформа
+
+<br><br>
+
+Testing • Quality • Documents • Suppliers • Orders • Logistics
+
+<br><br>
+
+F.S
+
+</footer>
+
+<script>
+
+function filterTable(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter")
+        .value
+        .toLowerCase();
+
+    const method =
+        document.getElementById("methodFilter")
+        .value
+        .toLowerCase();
+
+    const rows =
+        document.querySelectorAll(
+            "#testTable tbody tr"
+        );
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[10]
+            .innerText
+            .toLowerCase();
+
+        const rowMethod =
+            row.cells[3]
+            .innerText
+            .toLowerCase();
+
+        const searchOK =
+            text.includes(search);
+
+        const statusOK =
+            !status ||
+            rowStatus.includes(status);
+
+        const methodOK =
+            !method ||
+            rowMethod.includes(method);
+
+        row.style.display =
+            searchOK &&
+            statusOK &&
+            methodOK
+            ? ""
+            : "none";
+    });
+}
+
+
+function addTest(){
+
+    const sample =
+        document.getElementById("sample")
+        .value || "NEW-001";
+
+    const material =
+        document.getElementById("material")
+        .value || "Demo Insulation";
+
+    const method =
+        document.getElementById("method")
+        .value || "Thermal Resistance";
+
+    const thickness =
+        document.getElementById("thickness")
+        .value || "50";
+
+    const density =
+        document.getElementById("density")
+        .value || "100";
+
+    const conductivity =
+        document.getElementById("conductivity")
+        .value || "0.040";
+
+    const resistance =
+        document.getElementById("resistance")
+        .value || "1.25";
+
+    const moisture =
+        document.getElementById("moisture")
+        .value || "1.0";
+
+    const evaluation =
+        document.getElementById("evaluation")
+        .value || "Review Required";
+
+    const table =
+        document.querySelector(
+            "#testTable tbody"
+        );
+
+    const row =
+        table.insertRow();
+
+    row.innerHTML = `
+        <td>TIN-DEMO-${Date.now()}</td>
+        <td>${sample}</td>
+        <td>${material}</td>
+        <td>${method}</td>
+        <td>${thickness}</td>
+        <td>${density}</td>
+        <td>${conductivity}</td>
+        <td>${resistance}</td>
+        <td>${moisture}</td>
+        <td>${evaluation}</td>
+        <td>
+            <span class="status pending">
+                Pending Review
+            </span>
+        </td>
+    `;
+
+    alert(
+        "Demo thermal insulation test record added."
+    );
+}
+
+
+function generateReport(){
+
+    document.getElementById(
+        "reportResult"
+    ).innerHTML =
+        "Demo Technical Report created successfully. " +
+        "Status: Pending Review.";
+}
+
+
+function exportCSV(){
+
+    const rows =
+        document.querySelectorAll(
+            "#testTable tr"
+        );
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cells =
+            row.querySelectorAll(
+                "th, td"
+            );
+
+        let data = [];
+
+        cells.forEach(cell => {
+
+            data.push(
+                '"' +
+                cell.innerText
+                    .replace(/"/g,'""') +
+                '"'
+            );
+
+        });
+
+        csv.push(
+            data.join(",")
+        );
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a =
+        document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+        "worker-pro-thermal-insulation-testing.csv";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>
