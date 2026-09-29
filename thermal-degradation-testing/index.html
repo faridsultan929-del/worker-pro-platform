@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Degradation Testing</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#123}
+.top-languages{position:sticky;top:0;z-index:1000;background:#063d25;padding:10px;display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.top-languages button{border:0;padding:8px 13px;border-radius:8px;background:#0b6b3d;color:white;font-weight:bold;cursor:pointer}
+.top-languages button:hover{background:#b7ff35;color:#063d25}
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;padding:28px 20px;text-align:center}
+header h1{margin:0;font-size:32px}
+header p{margin:8px 0 0;color:#d9ffe4}
+nav{background:#075b34;padding:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+nav a{color:white;text-decoration:none;background:#0b6b3d;padding:9px 13px;border-radius:8px;font-size:14px}
+nav a:hover{background:#b7ff35;color:#063d25}
+.container{max-width:1250px;margin:auto;padding:20px}
+.hero,.card{background:white;padding:22px;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.07);margin-bottom:20px}
+.hero{border-left:6px solid #0b6b3d}
+h2{color:#063d25}
+h3{color:#0b6b3d}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.stat{text-align:center}
+.stat strong{display:block;font-size:30px;color:#063d25}
+.notice{background:#fff9d9;border-left:5px solid #d6a700;padding:15px;border-radius:10px;margin:18px 0}
+.workflow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.step{background:#e8f4ed;border:1px solid #b8d8c5;padding:15px;border-radius:10px;text-align:center;font-weight:bold}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
+.controls input,.controls select,.form-grid input,.form-grid select,.form-grid textarea{padding:11px;border:1px solid #bfd0c5;border-radius:8px;width:100%}
+.controls input{flex:2;min-width:220px}
+.controls select{flex:1;min-width:170px}
+.action{background:#0b6b3d;color:white;border:0;border-radius:8px;padding:11px 16px;cursor:pointer;font-weight:bold}
+.action:hover{background:#063d25}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.form-grid textarea{min-height:90px;resize:vertical}
+.full{grid-column:1/-1}
+.table-wrap{overflow-x:auto;margin-top:15px}
+table{width:100%;border-collapse:collapse;min-width:1400px;background:white}
+th,td{padding:11px;border-bottom:1px solid #dce7df;text-align:left;vertical-align:top}
+th{background:#063d25;color:white}
+.status{display:inline-block;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:bold}
+.reviewed{background:#d9f4df;color:#176b31}
+.pending{background:#fff0bd;color:#805d00}
+.warning{background:#ffd8d8;color:#9b1c1c}
+footer{margin-top:30px;background:#063d25;color:white;text-align:center;padding:25px}
+@media(max-width:700px){header h1{font-size:25px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+<button onclick="setLang('AZ')">AZ</button>
+<button onclick="setLang('RU')">RU</button>
+<button onclick="setLang('EN')">EN</button>
+<button onclick="setLang('TR')">TR</button>
+<button onclick="setLang('DE')">DE</button>
+<button onclick="setLang('AR')">AR</button>
+<button onclick="setLang('ES')">ES</button>
+<button onclick="setLang('FR')">FR</button>
+<button onclick="setLang('IT')">IT</button>
+</div>
+
+<header>
+<h1>WORKER PRO</h1>
+<p>Глобальная промышленная платформа</p>
+<p>№203 — Thermal Degradation Testing</p>
+</header>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../production/index.html">Production</a>
+<a href="../testing/index.html">Testing</a>
+<a href="../quality/index.html">Quality</a>
+<a href="../documents/index.html">Documents</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../orders/index.html">Orders</a>
+<a href="../logistics/index.html">Logistics</a>
+<a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+<h2>Thermal Degradation Testing</h2>
+
+<p>
+Thermal Degradation Testing — испытание для оценки изменений
+свойств материалов под воздействием высокой температуры
+или длительного теплового воздействия.
+</p>
+
+<p>
+Испытания помогают выявлять снижение прочности, изменение
+пластичности, повреждение поверхности, изменение массы,
+цвета и размеров, а также другие признаки термической деградации.
+</p>
+
+<div class="notice">
+<strong>WORKER PRO Demo:</strong>
+Все записи на странице демонстрационные.
+Реальные испытания должны проводиться по утверждённой методике,
+применимому стандарту и техническим требованиям.
+</div>
+</section>
+
+<section class="grid">
+<div class="card stat"><strong>72</strong><span>Testing Programs</span></div>
+<div class="card stat"><strong>2,480</strong><span>Test Records</span></div>
+<div class="card stat"><strong>31</strong><span>Laboratory Teams</span></div>
+<div class="card stat"><strong>96.2%</strong><span>Data Completeness</span></div>
+</section>
+
+<section class="card">
+<h2>Основные параметры испытаний</h2>
+
+<div class="grid">
+<div><h3>Temperature</h3><p>Температура теплового воздействия.</p></div>
+<div><h3>Exposure Duration</h3><p>Продолжительность воздействия температуры.</p></div>
+<div><h3>Strength Change</h3><p>Изменение прочности материала.</p></div>
+<div><h3>Ductility Change</h3><p>Изменение пластичности и удлинения.</p></div>
+<div><h3>Mass Change</h3><p>Изменение массы образца.</p></div>
+<div><h3>Dimensional Change</h3><p>Изменение размеров и геометрии.</p></div>
+<div><h3>Surface Condition</h3><p>Изменение поверхности, цвета и покрытия.</p></div>
+<div><h3>Degradation Level</h3><p>Оценка признаков термической деградации.</p></div>
+</div>
+</section>
+
+<section class="card">
+<h2>Методы и подходы</h2>
+
+<div class="grid">
+<div class="card"><h3>Thermal Exposure</h3><p>Воздействие заданной температуры в течение определённого времени.</p></div>
+<div class="card"><h3>Accelerated Degradation</h3><p>Ускоренное исследование изменений материала при повышенной температуре.</p></div>
+<div class="card"><h3>Mechanical Property Testing</h3><p>Сравнение механических свойств до и после воздействия.</p></div>
+<div class="card"><h3>Mass Measurement</h3><p>Измерение изменения массы образца.</p></div>
+<div class="card"><h3>Dimensional Inspection</h3><p>Контроль изменения размеров и формы.</p></div>
+<div class="card"><h3>Surface Examination</h3><p>Осмотр поверхности, цвета, трещин и повреждений.</p></div>
+</div>
+</section>
+
+<section class="card">
+<h2>Промышленные применения</h2>
+
+<div class="grid">
+<div class="card"><h3>Oil & Gas</h3><p>Трубопроводы, клапаны, уплотнения и нефтегазовое оборудование.</p></div>
+<div class="card"><h3>Automotive</h3><p>Детали двигателей, полимеры, покрытия и электроника.</p></div>
+<div class="card"><h3>Aerospace</h3><p>Материалы и компоненты авиационной техники.</p></div>
+<div class="card"><h3>Electrical & Electronics</h3><p>Изоляция, кабели и электронные компоненты.</p></div>
+<div class="card"><h3>Energy</h3><p>Компоненты энергетического оборудования.</p></div>
+<div class="card"><h3>Industrial Equipment</h3><p>Детали машин, покрытия и промышленные материалы.</p></div>
+</div>
+</section>
+
+<section class="card">
+<h2>Thermal Degradation Testing Workflow</h2>
+<div class="workflow">
+<div class="step">1. Material Selection</div>
+<div class="step">2. Initial Inspection</div>
+<div class="step">3. Thermal Exposure</div>
+<div class="step">4. Post-Test Inspection</div>
+<div class="step">5. Property Comparison</div>
+<div class="step">6. Technical Report</div>
+</div>
+</section>
+
+<section class="card">
+<h2>Добавить испытание — Demo</h2>
+
+<div class="form-grid">
+
+<input id="sample" placeholder="Sample / Component">
+<input id="material" placeholder="Material / Grade">
+
+<input id="temperature" type="number" placeholder="Temperature °C">
+<input id="duration" placeholder="Exposure Duration">
+
+<input id="strengthBefore" placeholder="Strength Before">
+<input id="strengthAfter" placeholder="Strength After">
+
+<input id="ductilityBefore" placeholder="Ductility Before">
+<input id="ductilityAfter" placeholder="Ductility After">
+
+<input id="massChange" placeholder="Mass Change">
+<input id="dimensionChange" placeholder="Dimensional Change">
+
+<input id="surface" placeholder="Surface / Color Condition">
+<input id="degradation" placeholder="Degradation Observation">
+
+<select id="method">
+<option value="">Select Method</option>
+<option>Thermal Exposure</option>
+<option>Accelerated Degradation</option>
+<option>Mechanical Property Testing</option>
+<option>Mass Measurement</option>
+<option>Dimensional Inspection</option>
+<option>Surface Examination</option>
+</select>
+
+<select id="condition">
+<option value="">Condition</option>
+<option>Normal</option>
+<option>Minor Change</option>
+<option>Degraded</option>
+</select>
+
+<select id="evaluation">
+<option value="">Evaluation</option>
+<option>Pass</option>
+<option>Review Required</option>
+<option>Fail</option>
+</select>
+
+<select id="status">
+<option>Pending Review</option>
+<option>Reviewed</option>
+<option>Warning</option>
+</select>
+
+<textarea id="notes" class="full" placeholder="Notes"></textarea>
+
+<button class="action full" onclick="addRecord()">Add Demo Test Record</button>
+
+</div>
+</section>
+
+<section class="card">
+<h2>Thermal Degradation Test Records</h2>
+
+<div class="controls">
+<input id="search" oninput="filterTable()" placeholder="Search sample, material, country...">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">All Statuses</option>
+<option>Reviewed</option>
+<option>Pending Review</option>
+<option>Warning</option>
+</select>
+
+<button class="action" onclick="exportCSV()">Export CSV</button>
+<button class="action" onclick="technicalReport()">Demo Technical Report</button>
+</div>
+
+<div class="table-wrap">
+<table id="recordsTable">
+<thead>
+<tr>
+<th>ID</th>
+<th>Sample</th>
+<th>Material</th>
+<th>Temperature</th>
+<th>Duration</th>
+<th>Strength Before</th>
+<th>Strength After</th>
+<th>Ductility Before</th>
+<th>Ductility After</th>
+<th>Mass Change</th>
+<th>Condition</th>
+<th>Status</th>
+<th>Details</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>TD-AZ-2026-001</td>
+<td>Valve Seal</td>
+<td>Elastomer</td>
+<td>150 °C</td>
+<td>1000 h</td>
+<td>12.4 MPa</td>
+<td>10.8 MPa</td>
+<td>280%</td>
+<td>230%</td>
+<td>-0.8%</td>
+<td>Minor Change</td>
+<td><span class="status reviewed">Reviewed</span></td>
+<td><button class="action" onclick="details('TD-AZ-2026-001')">View</button></td>
+</tr>
+
+<tr>
+<td>TD-AZ-2026-002</td>
+<td>Pipe Coating</td>
+<td>Polymer Coating</td>
+<td>180 °C</td>
+<td>1500 h</td>
+<td>78 MPa</td>
+<td>61 MPa</td>
+<td>18%</td>
+<td>12%</td>
+<td>-1.4%</td>
+<td>Degraded</td>
+<td><span class="status pending">Pending Review</span></td>
+<td><button class="action" onclick="details('TD-AZ-2026-002')">View</button></td>
+</tr>
+
+<tr>
+<td>TD-TR-2026-003</td>
+<td>Electrical Housing</td>
+<td>Polymer Composite</td>
+<td>200 °C</td>
+<td>2000 h</td>
+<td>92 MPa</td>
+<td>59 MPa</td>
+<td>15%</td>
+<td>7%</td>
+<td>-3.2%</td>
+<td>Degraded</td>
+<td><span class="status warning">Warning</span></td>
+<td><button class="action" onclick="details('TD-TR-2026-003')">View</button></td>
+</tr>
+
+<tr>
+<td>TD-DE-2026-004</td>
+<td>Industrial Component</td>
+<td>Alloy Steel</td>
+<td>250 °C</td>
+<td>800 h</td>
+<td>1080 MPa</td>
+<td>1050 MPa</td>
+<td>14%</td>
+<td>13%</td>
+<td>-0.1%</td>
+<td>Normal</td>
+<td><span class="status reviewed">Reviewed</span></td>
+<td><button class="action" onclick="details('TD-DE-2026-004')">View</button></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="card">
+<h2>WORKER PRO Industrial Flow</h2>
+<div class="workflow">
+<div class="step">Product</div>
+<div class="step">Testing</div>
+<div class="step">Quality</div>
+<div class="step">Test Report</div>
+<div class="step">Certificate</div>
+<div class="step">Documents</div>
+<div class="step">Supplier</div>
+<div class="step">Order</div>
+<div class="step">Logistics</div>
+</div>
+</section>
+
+<section class="notice">
+<strong>Technical Disclaimer:</strong>
+Результаты термической деградации зависят от состава материала,
+температуры, продолжительности воздействия, окружающей среды,
+формы образца и метода испытания.
+
+Реальные испытания должны проводиться по применимому стандарту,
+технической спецификации и утверждённой процедуре с использованием
+подходящего оборудования и квалифицированного персонала.
+</section>
+
+</div>
+
+<footer>
+<strong>WORKER PRO</strong><br>
+Глобальная промышленная платформа<br><br>
+Testing • Quality • Documents • Suppliers • Orders • Logistics<br><br>
+F.S.
+</footer>
+
+<script>
+function setLang(lang){
+    alert("WORKER PRO language selected: " + lang);
+}
+
+function details(id){
+    alert(
+        "WORKER PRO Demo\n\n" +
+        "Test ID: " + id + "\n\n" +
+        "Detailed technical record will be connected in a future version."
+    );
+}
+
+function technicalReport(){
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Thermal Degradation Testing\n\n" +
+        "This is a demonstration. The full report module will be connected later."
+    );
+}
+
+function filterTable(){
+    const search = document.getElementById("search").value.toLowerCase();
+    const status = document.getElementById("statusFilter").value;
+    const rows = document.querySelectorAll("#recordsTable tbody tr");
+
+    rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const searchMatch = text.includes(search);
+        const statusMatch = !status || row.innerText.includes(status);
+        row.style.display = searchMatch && statusMatch ? "" : "none";
+    });
+}
+
+function addRecord(){
+    const fields = [
+        "sample", "material", "temperature", "duration",
+        "strengthBefore", "strengthAfter",
+        "ductilityBefore", "ductilityAfter",
+        "massChange", "dimensionChange",
+        "surface", "degradation", "method",
+        "condition", "evaluation", "status", "notes"
+    ];
+
+    const data = {};
+    fields.forEach(id => {
+        const element = document.getElementById(id);
+        data[id] = element.value.trim() || "—";
+    });
+
+    if(data.sample === "—"){
+        alert("Please enter a Sample / Component.");
+        return;
+    }
+
+    const id = "TD-DEMO-" +
+        String(document.querySelectorAll("#recordsTable tbody tr").length + 1).padStart(3,"0");
+
+    let statusClass = "pending";
+    if(data.status === "Reviewed") statusClass = "reviewed";
+    if(data.status === "Warning") statusClass = "warning";
+
+    const row = document.createElement("tr");
+
+    const values = [
+        id,
+        data.sample,
+        data.material,
+        data.temperature === "—" ? "—" : data.temperature + " °C",
+        data.duration,
+        data.strengthBefore,
+        data.strengthAfter,
+        data.ductilityBefore,
+        data.ductilityAfter,
+        data.massChange,
+        data.condition
+    ];
+
+    values.forEach(value => {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+        row.appendChild(cell);
+    });
+
+    const statusCell = document.createElement("td");
+    const badge = document.createElement("span");
+    badge.className = "status " + statusClass;
+    badge.textContent = data.status;
+    statusCell.appendChild(badge);
+    row.appendChild(statusCell);
+
+    const detailsCell = document.createElement("td");
+    const button = document.createElement("button");
+    button.className = "action";
+    button.textContent = "View";
+    button.onclick = () => details(id);
+    detailsCell.appendChild(button);
+    row.appendChild(detailsCell);
+
+    document.querySelector("#recordsTable tbody").appendChild(row);
+
+    fields.forEach(field => {
+        const element = document.getElementById(field);
+        if(element.tagName === "SELECT"){
+            element.selectedIndex = 0;
+        }else{
+            element.value = "";
+        }
+    });
+
+    document.getElementById("status").value = "Pending Review";
+
+    filterTable();
+    alert("Demo Thermal Degradation Test Record added.");
+}
+
+function exportCSV(){
+    const rows = document.querySelectorAll("#recordsTable tr");
+    const csv = [];
+
+    rows.forEach(row => {
+        if(row.style.display === "none") return;
+
+        const cols = row.querySelectorAll("th, td");
+        const data = [];
+
+        cols.forEach(col => {
+            const value = col.innerText.replace(/"/g, '""').replace(/\n/g, " ");
+            data.push('"' + value + '"');
+        });
+
+        csv.push(data.join(","));
+    });
+
+    const blob = new Blob(
+        ["\uFEFF" + csv.join("\n")],
+        {type:"text/csv;charset=utf-8;"}
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "worker-pro-thermal-degradation-testing.csv";
+    link.click();
+    URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
