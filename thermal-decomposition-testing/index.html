@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Decomposition Testing</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#123}
+.top-languages{position:sticky;top:0;z-index:1000;background:#063d25;padding:10px;display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.top-languages button{border:0;padding:8px 13px;border-radius:8px;background:#0b6b3d;color:white;font-weight:bold;cursor:pointer}
+.top-languages button:hover{background:#b7ff35;color:#063d25}
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;padding:28px 20px;text-align:center}
+header h1{margin:0;font-size:32px}
+header p{margin:8px 0 0;color:#d9ffe4}
+nav{background:#075b34;padding:12px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+nav a{color:white;text-decoration:none;background:#0b6b3d;padding:9px 13px;border-radius:8px;font-size:14px}
+nav a:hover{background:#b7ff35;color:#063d25}
+.container{max-width:1250px;margin:auto;padding:20px}
+.hero,.card{background:white;padding:22px;border-radius:12px;box-shadow:0 3px 12px rgba(0,0,0,.07);margin-bottom:20px}
+.hero{border-left:6px solid #0b6b3d}
+h2{color:#063d25}
+h3{color:#0b6b3d}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.stat{text-align:center}
+.stat strong{display:block;font-size:30px;color:#063d25}
+.notice{background:#fff9d9;border-left:5px solid #d6a700;padding:15px;border-radius:10px;margin:18px 0}
+.workflow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.step{background:#e8f4ed;border:1px solid #b8d8c5;padding:15px;border-radius:10px;text-align:center;font-weight:bold}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
+.controls input,.controls select,.form-grid input,.form-grid select,.form-grid textarea{padding:11px;border:1px solid #bfd0c5;border-radius:8px;width:100%}
+.controls input{flex:2;min-width:220px}
+.controls select{flex:1;min-width:170px}
+.action{background:#0b6b3d;color:white;border:0;border-radius:8px;padding:11px 16px;cursor:pointer;font-weight:bold}
+.action:hover{background:#063d25}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.form-grid textarea{min-height:90px;resize:vertical}
+.full{grid-column:1/-1}
+.table-wrap{overflow-x:auto;margin-top:15px}
+table{width:100%;border-collapse:collapse;min-width:1450px;background:white}
+th,td{padding:11px;border-bottom:1px solid #dce7df;text-align:left;vertical-align:top}
+th{background:#063d25;color:white}
+.status{display:inline-block;padding:5px 9px;border-radius:20px;font-size:12px;font-weight:bold}
+.reviewed{background:#d9f4df;color:#176b31}
+.pending{background:#fff0bd;color:#805d00}
+.warning{background:#ffd8d8;color:#9b1c1c}
+footer{margin-top:30px;background:#063d25;color:white;text-align:center;padding:25px}
+@media(max-width:700px){header h1{font-size:25px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+<button onclick="setLang('AZ')">AZ</button>
+<button onclick="setLang('RU')">RU</button>
+<button onclick="setLang('EN')">EN</button>
+<button onclick="setLang('TR')">TR</button>
+<button onclick="setLang('DE')">DE</button>
+<button onclick="setLang('AR')">AR</button>
+<button onclick="setLang('ES')">ES</button>
+<button onclick="setLang('FR')">FR</button>
+<button onclick="setLang('IT')">IT</button>
+</div>
+
+<header>
+<h1>WORKER PRO</h1>
+<p>Глобальная промышленная платформа</p>
+<p>№204 — Thermal Decomposition Testing</p>
+</header>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../production/index.html">Production</a>
+<a href="../testing/index.html">Testing</a>
+<a href="../quality/index.html">Quality</a>
+<a href="../documents/index.html">Documents</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../orders/index.html">Orders</a>
+<a href="../logistics/index.html">Logistics</a>
+<a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+<h2>Thermal Decomposition Testing</h2>
+
+<p>
+Thermal Decomposition Testing — исследование термического разложения
+материалов при нагревании. Испытание помогает определить температурные
+характеристики разложения, изменение массы и термическую стабильность.
+</p>
+
+<p>
+Для анализа могут применяться термогравиметрический анализ (TGA)
+и дифференциальная сканирующая калориметрия (DSC).
+Выбор метода зависит от материала и задачи исследования.
+</p>
+
+<div class="notice">
+<strong>WORKER PRO Demo:</strong>
+Все записи на странице демонстрационные.
+Реальные испытания должны проводиться по утверждённой методике,
+применимому стандарту и техническим требованиям.
+</div>
+</section>
+
+<section class="grid">
+<div class="card stat"><strong>74</strong><span>Testing Programs</span></div>
+<div class="card stat"><strong>2,520</strong><span>Test Records</span></div>
+<div class="card stat"><strong>32</strong><span>Laboratory Teams</span></div>
+<div class="card stat"><strong>96.4%</strong><span>Data Completeness</span></div>
+</section>
+
+<section class="card">
+<h2>Основные параметры испытаний</h2>
+
+<div class="grid">
+<div><h3>Decomposition Temperature</h3><p>Температура начала или характерного этапа разложения.</p></div>
+<div><h3>Mass Loss</h3><p>Изменение массы материала при нагревании.</p></div>
+<div><h3>Heating Rate</h3><p>Скорость повышения температуры во время испытания.</p></div>
+<div><h3>Temperature Range</h3><p>Диапазон температур, используемый в исследовании.</p></div>
+<div><h3>Atmosphere</h3><p>Условия газовой среды, например инертная или окислительная атмосфера.</p></div>
+<div><h3>Residual Mass</h3><p>Остаточная масса образца после заданного этапа нагревания.</p></div>
+<div><h3>Thermal Stability</h3><p>Оценка устойчивости материала к температурному воздействию.</p></div>
+<div><h3>Thermal Events</h3><p>Наблюдаемые тепловые эффекты и этапы изменения материала.</p></div>
+</div>
+</section>
+
+<section class="card">
+<h2>Методы и подходы</h2>
+
+<div class="grid">
+<div class="card"><h3>TGA — Thermogravimetric Analysis</h3><p>Измерение изменения массы образца при изменении температуры или времени.</p></div>
+<div class="card"><h3>DSC — Differential Scanning Calorimetry</h3><p>Измерение тепловых эффектов, сопровождающих физические и химические изменения материала.</p></div>
+<div class="card"><h3>Thermal Stability Analysis</h3><p>Оценка устойчивости материала к нагреванию.</p></div>
+<div class="card"><h3>Mass Loss Evaluation</h3><p>Анализ потери массы на различных этапах нагрева.</p></div>
+<div class="card"><h3>Residual Mass Analysis</h3><p>Определение остаточной массы после выбранного температурного режима.</p></div>
+<div class="card"><h3>Thermal Event Evaluation</h3><p>Исследование характерных тепловых эффектов и температурных переходов.</p></div>
+</div>
+</section>
+
+<section class="card">
+<h2>Промышленные применения</h2>
+
+<div class="grid">
+<div class="card"><h3>Polymers & Plastics</h3><p>Полимеры, пластмассы и композиционные материалы.</p></div>
+<div class="card"><h3>Oil & Gas</h3><p>Изоляционные материалы, покрытия и уплотнения.</p></div>
+<div class="card"><h3>Chemical Industry</h3><p>Химические материалы и сырьевые компоненты.</p></div>
+<div class="card"><h3>Automotive</h3><p>Полимерные детали, покрытия и технические материалы.</p></div>
+<div class="card"><h3>Electrical & Electronics</h3><p>Изоляция, кабели и электронные компоненты.</p></div>
+<div class="card"><h3>Energy & Materials</h3><p>Материалы для энергетики и промышленного оборудования.</p></div>
+</div>
+</section>
+
+<section class="card">
+<h2>Thermal Decomposition Testing Workflow</h2>
+<div class="workflow">
+<div class="step">1. Material Selection</div>
+<div class="step">2. Sample Preparation</div>
+<div class="step">3. Instrument Setup</div>
+<div class="step">4. Thermal Analysis</div>
+<div class="step">5. Result Evaluation</div>
+<div class="step">6. Technical Report</div>
+</div>
+</section>
+
+<section class="card">
+<h2>Добавить испытание — Demo</h2>
+
+<div class="form-grid">
+
+<input id="sample" placeholder="Sample / Component">
+<input id="material" placeholder="Material / Grade">
+
+<input id="startTemp" type="number" placeholder="Start Temperature °C">
+<input id="endTemp" type="number" placeholder="End Temperature °C">
+
+<input id="decompTemp" type="number" placeholder="Decomposition Temperature °C">
+<input id="heatingRate" type="number" placeholder="Heating Rate °C/min">
+
+<input id="massBefore" type="number" placeholder="Initial Mass (mg)">
+<input id="massAfter" type="number" placeholder="Residual Mass (mg)">
+
+<input id="massLoss" type="number" placeholder="Mass Loss (%)">
+<input id="atmosphere" placeholder="Atmosphere">
+
+<select id="method">
+<option value="">Select Method</option>
+<option>TGA</option>
+<option>DSC</option>
+<option>TGA + DSC</option>
+<option>Thermal Stability Analysis</option>
+<option>Mass Loss Evaluation</option>
+<option>Residual Mass Analysis</option>
+</select>
+
+<select id="condition">
+<option value="">Condition</option>
+<option>Normal</option>
+<option>Minor Change</option>
+<option>Decomposed</option>
+</select>
+
+<select id="evaluation">
+<option value="">Evaluation</option>
+<option>Pass</option>
+<option>Review Required</option>
+<option>Fail</option>
+</select>
+
+<select id="status">
+<option>Pending Review</option>
+<option>Reviewed</option>
+<option>Warning</option>
+</select>
+
+<textarea id="notes" class="full" placeholder="Notes"></textarea>
+
+<button class="action full" onclick="addRecord()">Add Demo Test Record</button>
+
+</div>
+</section>
+
+<section class="card">
+<h2>Thermal Decomposition Test Records</h2>
+
+<div class="controls">
+<input id="search" oninput="filterTable()" placeholder="Search sample, material, method...">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">All Statuses</option>
+<option>Reviewed</option>
+<option>Pending Review</option>
+<option>Warning</option>
+</select>
+
+<button class="action" onclick="exportCSV()">Export CSV</button>
+<button class="action" onclick="technicalReport()">Demo Technical Report</button>
+</div>
+
+<div class="table-wrap">
+<table id="recordsTable">
+<thead>
+<tr>
+<th>ID</th>
+<th>Sample</th>
+<th>Material</th>
+<th>Start Temp.</th>
+<th>End Temp.</th>
+<th>Decomposition Temp.</th>
+<th>Heating Rate</th>
+<th>Initial Mass</th>
+<th>Residual Mass</th>
+<th>Mass Loss</th>
+<th>Method</th>
+<th>Status</th>
+<th>Details</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>TD-AZ-2026-001</td>
+<td>Polymer Sample</td>
+<td>Thermoplastic</td>
+<td>25 °C</td>
+<td>600 °C</td>
+<td>320 °C</td>
+<td>10 °C/min</td>
+<td>12.5 mg</td>
+<td>2.1 mg</td>
+<td>83.2%</td>
+<td>TGA</td>
+<td><span class="status reviewed">Reviewed</span></td>
+<td><button class="action" onclick="details('TD-AZ-2026-001')">View</button></td>
+</tr>
+
+<tr>
+<td>TD-AZ-2026-002</td>
+<td>Coating Sample</td>
+<td>Protective Coating</td>
+<td>25 °C</td>
+<td>800 °C</td>
+<td>410 °C</td>
+<td>10 °C/min</td>
+<td>15.0 mg</td>
+<td>4.5 mg</td>
+<td>70.0%</td>
+<td>TGA + DSC</td>
+<td><span class="status pending">Pending Review</span></td>
+<td><button class="action" onclick="details('TD-AZ-2026-002')">View</button></td>
+</tr>
+
+<tr>
+<td>TD-TR-2026-003</td>
+<td>Composite Sample</td>
+<td>Polymer Composite</td>
+<td>30 °C</td>
+<td>700 °C</td>
+<td>365 °C</td>
+<td>15 °C/min</td>
+<td>10.0 mg</td>
+<td>3.0 mg</td>
+<td>70.0%</td>
+<td>TGA</td>
+<td><span class="status warning">Warning</span></td>
+<td><button class="action" onclick="details('TD-TR-2026-003')">View</button></td>
+</tr>
+
+<tr>
+<td>TD-DE-2026-004</td>
+<td>Industrial Material</td>
+<td>Engineering Polymer</td>
+<td>25 °C</td>
+<td>900 °C</td>
+<td>450 °C</td>
+<td>20 °C/min</td>
+<td>20.0 mg</td>
+<td>5.2 mg</td>
+<td>74.0%</td>
+<td>DSC</td>
+<td><span class="status reviewed">Reviewed</span></td>
+<td><button class="action" onclick="details('TD-DE-2026-004')">View</button></td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="card">
+<h2>WORKER PRO Industrial Flow</h2>
+<div class="workflow">
+<div class="step">Product</div>
+<div class="step">Testing</div>
+<div class="step">Quality</div>
+<div class="step">Test Report</div>
+<div class="step">Certificate</div>
+<div class="step">Documents</div>
+<div class="step">Supplier</div>
+<div class="step">Order</div>
+<div class="step">Logistics</div>
+</div>
+</section>
+
+<section class="notice">
+<strong>Technical Disclaimer:</strong>
+Результаты термического разложения зависят от состава материала,
+атмосферы, скорости нагрева, температурного диапазона,
+подготовки образца и метода анализа.
+
+Реальные испытания должны проводиться по применимому стандарту,
+технической спецификации и утверждённой процедуре с использованием
+подходящего оборудования и квалифицированного персонала.
+</section>
+
+</div>
+
+<footer>
+<strong>WORKER PRO</strong><br>
+Глобальная промышленная платформа<br><br>
+Testing • Quality • Documents • Suppliers • Orders • Logistics<br><br>
+F.S.
+</footer>
+
+<script>
+function setLang(lang){
+    alert("WORKER PRO language selected: " + lang);
+}
+
+function details(id){
+    alert(
+        "WORKER PRO Demo\n\n" +
+        "Test ID: " + id + "\n\n" +
+        "Detailed technical record will be connected in a future version."
+    );
+}
+
+function technicalReport(){
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Thermal Decomposition Testing\n\n" +
+        "This is a demonstration. The full report module will be connected later."
+    );
+}
+
+function filterTable(){
+    const search = document.getElementById("search").value.toLowerCase();
+    const status = document.getElementById("statusFilter").value;
+    const rows = document.querySelectorAll("#recordsTable tbody tr");
+
+    rows.forEach(row => {
+        const text = row.innerText.toLowerCase();
+        const searchMatch = text.includes(search);
+        const statusMatch = !status || row.innerText.includes(status);
+        row.style.display = searchMatch && statusMatch ? "" : "none";
+    });
+}
+
+function addRecord(){
+    const fields = [
+        "sample", "material", "startTemp", "endTemp",
+        "decompTemp", "heatingRate", "massBefore",
+        "massAfter", "massLoss", "atmosphere",
+        "method", "condition", "evaluation", "status", "notes"
+    ];
+
+    const data = {};
+    fields.forEach(id => {
+        data[id] = document.getElementById(id).value.trim() || "—";
+    });
+
+    if(data.sample === "—"){
+        alert("Please enter a Sample / Component.");
+        return;
+    }
+
+    const id = "TD-DEMO-" +
+        String(document.querySelectorAll("#recordsTable tbody tr").length + 1).padStart(3,"0");
+
+    let statusClass = "pending";
+    if(data.status === "Reviewed") statusClass = "reviewed";
+    if(data.status === "Warning") statusClass = "warning";
+
+    const values = [
+        id,
+        data.sample,
+        data.material,
+        data.startTemp === "—" ? "—" : data.startTemp + " °C",
+        data.endTemp === "—" ? "—" : data.endTemp + " °C",
+        data.decompTemp === "—" ? "—" : data.decompTemp + " °C",
+        data.heatingRate === "—" ? "—" : data.heatingRate + " °C/min",
+        data.massBefore === "—" ? "—" : data.massBefore + " mg",
+        data.massAfter === "—" ? "—" : data.massAfter + " mg",
+        data.massLoss === "—" ? "—" : data.massLoss + "%",
+        data.method
+    ];
+
+    const row = document.createElement("tr");
+
+    values.forEach(value => {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+        row.appendChild(cell);
+    });
+
+    const statusCell = document.createElement("td");
+    const badge = document.createElement("span");
+    badge.className = "status " + statusClass;
+    badge.textContent = data.status;
+    statusCell.appendChild(badge);
+    row.appendChild(statusCell);
+
+    const detailsCell = document.createElement("td");
+    const button = document.createElement("button");
+    button.className = "action";
+    button.textContent = "View";
+    button.onclick = () => details(id);
+    detailsCell.appendChild(button);
+    row.appendChild(detailsCell);
+
+    document.querySelector("#recordsTable tbody").appendChild(row);
+
+    fields.forEach(field => {
+        const element = document.getElementById(field);
+        if(element.tagName === "SELECT"){
+            element.selectedIndex = 0;
+        }else{
+            element.value = "";
+        }
+    });
+
+    document.getElementById("status").value = "Pending Review";
+
+    filterTable();
+    alert("Demo Thermal Decomposition Test Record added.");
+}
+
+function exportCSV(){
+    const rows = document.querySelectorAll("#recordsTable tr");
+    const csv = [];
+
+    rows.forEach(row => {
+        if(row.style.display === "none") return;
+
+        const cols = row.querySelectorAll("th, td");
+        const data = [];
+
+        cols.forEach(col => {
+            const value = col.innerText.replace(/"/g, '""').replace(/\n/g, " ");
+            data.push('"' + value + '"');
+        });
+
+        csv.push(data.join(","));
+    });
+
+    const blob = new Blob(
+        ["\uFEFF" + csv.join("\n")],
+        {type:"text/csv;charset=utf-8;"}
+    );
+
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "worker-pro-thermal-decomposition-testing.csv";
+    link.click();
+    URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
