@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Thermal Interface Heat Transfer Coefficient Testing</title>
+
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#17352a}
+.top-languages{position:sticky;top:0;z-index:1000;background:#063d25;padding:10px;display:flex;justify-content:center;gap:6px;flex-wrap:wrap}
+.top-languages button{border:1px solid #b7ff35;background:#0b6b3d;color:white;padding:7px 12px;border-radius:7px;font-weight:bold;cursor:pointer}
+.top-languages button:hover{background:#b7ff35;color:#063d25}
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;padding:30px 20px}
+.header-inner{max-width:1250px;margin:auto}
+.logo{font-size:34px;font-weight:900;color:#b7ff35}
+.subtitle{margin-top:5px;font-size:17px}
+nav{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+nav a{text-decoration:none;color:white;background:#075b34;padding:9px 13px;border-radius:7px}
+nav a:hover{background:#b7ff35;color:#063d25}
+.container{max-width:1250px;margin:auto;padding:25px 15px 50px}
+.hero,.section{background:white;border-radius:16px;padding:25px;box-shadow:0 5px 18px rgba(0,0,0,.07)}
+.section{margin-top:25px}
+.hero{border-left:6px solid #0b6b3d}
+.hero h1,.section h2{color:#063d25}
+.hero h1{margin-top:0}
+.hero p{line-height:1.6}
+.badge{display:inline-block;background:#b7ff35;color:#063d25;padding:6px 12px;border-radius:20px;font-weight:bold}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.card{background:#f7faf8;border:1px solid #d9e5de;border-radius:12px;padding:18px}
+.card h3{margin-top:0;color:#0b6b3d}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px}
+.stat{background:#063d25;color:white;padding:20px;border-radius:13px;text-align:center}
+.stat strong{display:block;font-size:30px;color:#b7ff35}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.step{background:#0b6b3d;color:white;padding:15px;border-radius:10px;text-align:center;font-weight:bold}
+.controls{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:15px}
+.controls input,.controls select,.form-grid input,.form-grid select{padding:11px;border:1px solid #bfd0c6;border-radius:8px;width:100%}
+.controls input{flex:2;min-width:220px}
+.controls select{flex:1;min-width:180px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:1550px}
+th{background:#063d25;color:white;padding:10px;text-align:left}
+td{padding:9px;border-bottom:1px solid #dfe8e3;white-space:nowrap}
+tr:hover{background:#f1f7f3}
+.status{font-weight:bold}
+.completed{color:#08733e}
+.review{color:#b27600}
+.delayed{color:#b21f1f}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-weight:bold;font-size:13px;color:#315347}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.btn{border:none;background:#0b6b3d;color:white;padding:11px 17px;border-radius:8px;cursor:pointer;font-weight:bold}
+.btn:hover{background:#063d25}
+.btn.alt{background:#b7ff35;color:#063d25}
+.notice{background:#fff8df;border-left:5px solid #d59c00;padding:16px;border-radius:8px;line-height:1.6}
+.small{color:#60776d;font-size:13px}
+footer{background:#063d25;color:white;text-align:center;padding:25px}
+@media(max-width:600px){
+.logo{font-size:27px}
+header{padding:22px 14px}
+.hero,.section{padding:18px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+<button>AZ</button>
+<button>RU</button>
+<button>EN</button>
+<button>TR</button>
+<button>DE</button>
+<button>AR</button>
+<button>ES</button>
+<button>FR</button>
+<button>IT</button>
+</div>
+
+<header>
+<div class="header-inner">
+
+<div class="logo">WORKER PRO</div>
+<div class="subtitle">Глобальная промышленная платформа</div>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../production/index.html">Production</a>
+<a href="../testing/index.html">Testing</a>
+<a href="../quality/index.html">Quality</a>
+<a href="../documents/index.html">Documents</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../orders/index.html">Orders</a>
+<a href="../logistics/index.html">Logistics</a>
+<a href="../tracking/index.html">Tracking</a>
+</nav>
+
+</div>
+</header>
+
+<main class="container">
+
+<section class="hero">
+<span class="badge">TESTING №229</span>
+
+<h1>Thermal Interface Heat Transfer Coefficient Testing</h1>
+
+<p>
+Thermal Interface Heat Transfer Coefficient Testing evaluates
+the ability of an interface between contacting materials or
+surfaces to transfer thermal energy under defined conditions.
+</p>
+
+<p>
+The test can determine the effective heat transfer coefficient,
+heat flux, temperature difference, interface temperature,
+thermal resistance and thermal conductance.
+</p>
+</section>
+
+<section class="section">
+<h2>Key Parameters</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Heat Transfer Coefficient</h3>
+<p>Effective coefficient describing heat transfer through the defined interface.</p>
+</div>
+
+<div class="card">
+<h3>Heat Flux</h3>
+<p>Thermal energy transferred through a unit area of the interface.</p>
+</div>
+
+<div class="card">
+<h3>Interface Temperature</h3>
+<p>Temperature measured at or near the thermal contact interface.</p>
+</div>
+
+<div class="card">
+<h3>Temperature Difference</h3>
+<p>Difference between defined hot-side and cold-side temperatures.</p>
+</div>
+
+<div class="card">
+<h3>Thermal Resistance</h3>
+<p>Resistance to heat transfer across the tested interface.</p>
+</div>
+
+<div class="card">
+<h3>Thermal Conductance</h3>
+<p>Total heat-transfer capability of the defined interface.</p>
+</div>
+
+<div class="card">
+<h3>Contact Pressure</h3>
+<p>Pressure between the contacting materials during testing.</p>
+</div>
+
+<div class="card">
+<h3>Interface Area</h3>
+<p>Effective contact area used for thermal calculations.</p>
+</div>
+
+<div class="card">
+<h3>Surface Roughness</h3>
+<p>Surface condition influencing real contact and heat transfer.</p>
+</div>
+
+<div class="card">
+<h3>Material Pair</h3>
+<p>Combination of materials forming the tested thermal interface.</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>Testing Methods</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Steady-State Method</h3>
+<p>Heat transfer coefficient is calculated after stable thermal conditions are reached.</p>
+</div>
+
+<div class="card">
+<h3>Heat Flow Meter</h3>
+<p>Measures heat flow together with the thermal gradient across the test assembly.</p>
+</div>
+
+<div class="card">
+<h3>Guarded Hot Plate</h3>
+<p>Controlled thermal-gradient method for evaluating heat transfer performance.</p>
+</div>
+
+<div class="card">
+<h3>Comparative Method</h3>
+<p>Interface performance is evaluated against a known reference configuration.</p>
+</div>
+
+<div class="card">
+<h3>Pressure-Controlled Method</h3>
+<p>Measures thermal behavior at defined interface contact pressures.</p>
+</div>
+
+<div class="card">
+<h3>Transient Method</h3>
+<p>Determines thermal response during changing temperature conditions.</p>
+</div>
+
+<div class="card">
+<h3>Thermal Test Vehicle</h3>
+<p>Integrated test configuration for practical thermal-interface evaluation.</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>Industrial Applications</h2>
+
+<div class="grid">
+<div class="card">Power Electronics</div>
+<div class="card">Semiconductors</div>
+<div class="card">Battery Systems</div>
+<div class="card">Heat Exchangers</div>
+<div class="card">Automotive</div>
+<div class="card">Aerospace</div>
+<div class="card">Composite Materials</div>
+<div class="card">Energy Systems</div>
+<div class="card">Industrial Equipment</div>
+<div class="card">Thermal Interface Materials</div>
+</div>
+</section>
+
+<section class="section">
+<h2>Testing Workflow</h2>
+
+<div class="flow">
+<div class="step">1. Material Selection</div>
+<div class="step">2. Specimen Preparation</div>
+<div class="step">3. Surface Inspection</div>
+<div class="step">4. Interface Assembly</div>
+<div class="step">5. Pressure Setup</div>
+<div class="step">6. Thermal Stabilization</div>
+<div class="step">7. Heat Transfer Measurement</div>
+<div class="step">8. Coefficient Calculation</div>
+<div class="step">9. Technical Report</div>
+</div>
+</section>
+
+<section class="section">
+<h2>Testing Statistics</h2>
+
+<div class="stats">
+
+<div class="stat">
+<strong>123</strong>
+Testing Programs
+</div>
+
+<div class="stat">
+<strong>5,520</strong>
+Test Records
+</div>
+
+<div class="stat">
+<strong>53</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>98.6%</strong>
+Data Completeness
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<h2>Heat Transfer Coefficient Test Records</h2>
+
+<div class="controls">
+
+<input id="search"
+type="text"
+placeholder="Search ID, sample, country, material, method...">
+
+<select id="statusFilter">
+<option value="all">All Status</option>
+<option value="Completed">Completed</option>
+<option value="Review">Review</option>
+<option value="Delayed">Delayed</option>
+</select>
+
+<select id="methodFilter">
+<option value="all">All Methods</option>
+<option value="Steady-State Method">Steady-State</option>
+<option value="Heat Flow Meter">Heat Flow Meter</option>
+<option value="Guarded Hot Plate">Guarded Hot Plate</option>
+<option value="Comparative Method">Comparative</option>
+<option value="Pressure-Controlled Method">Pressure-Controlled</option>
+<option value="Transient Method">Transient</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="testTable">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Sample</th>
+<th>Country</th>
+<th>Method</th>
+<th>Material Pair</th>
+<th>Pressure</th>
+<th>Area</th>
+<th>Hot °C</th>
+<th>Cold °C</th>
+<th>ΔT °C</th>
+<th>Heat Flux W/m²</th>
+<th>Coefficient W/m²K</th>
+<th>Interface °C</th>
+<th>Resistance K/W</th>
+<th>Conductance W/K</th>
+<th>Roughness µm</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>THC-AZ-2026-001</td>
+<td>Power Module Interface</td>
+<td>Azerbaijan</td>
+<td>Steady-State Method</td>
+<td>Silicon/Copper</td>
+<td>0.80 MPa</td>
+<td>25 cm²</td>
+<td>90</td>
+<td>45</td>
+<td>45</td>
+<td>12600</td>
+<td>280</td>
+<td>67</td>
+<td>0.00357</td>
+<td>280</td>
+<td>0.80</td>
+<td class="status completed">Completed</td>
+</tr>
+
+<tr>
+<td>THC-TR-2026-002</td>
+<td>Battery Thermal Interface</td>
+<td>Turkey</td>
+<td>Heat Flow Meter</td>
+<td>Aluminum/TIM</td>
+<td>1.20 MPa</td>
+<td>48 cm²</td>
+<td>75</td>
+<td>35</td>
+<td>40</td>
+<td>9900</td>
+<td>247.5</td>
+<td>55</td>
+<td>0.00408</td>
+<td>245</td>
+<td>1.10</td>
+<td class="status completed">Completed</td>
+</tr>
+
+<tr>
+<td>THC-DE-2026-003</td>
+<td>Composite Interface</td>
+<td>Germany</td>
+<td>Comparative Method</td>
+<td>Carbon/Polymer</td>
+<td>0.55 MPa</td>
+<td>80 cm²</td>
+<td>100</td>
+<td>40</td>
+<td>60</td>
+<td>7500</td>
+<td>125</td>
+<td>70</td>
+<td>0.00526</td>
+<td>190</td>
+<td>1.45</td>
+<td class="status review">Review</td>
+</tr>
+
+<tr>
+<td>THC-IT-2026-004</td>
+<td>Heat Exchanger Interface</td>
+<td>Italy</td>
+<td>Guarded Hot Plate</td>
+<td>Copper/Steel</td>
+<td>1.00 MPa</td>
+<td>120 cm²</td>
+<td>115</td>
+<td>50</td>
+<td>65</td>
+<td>15400</td>
+<td>236.9</td>
+<td>82</td>
+<td>0.00317</td>
+<td>315</td>
+<td>0.95</td>
+<td class="status completed">Completed</td>
+</tr>
+
+<tr>
+<td>THC-CN-2026-005</td>
+<td>Ceramic Power Interface</td>
+<td>China</td>
+<td>Pressure-Controlled Method</td>
+<td>Ceramic/Copper</td>
+<td>1.35 MPa</td>
+<td>32 cm²</td>
+<td>130</td>
+<td>55</td>
+<td>75</td>
+<td>18500</td>
+<td>246.7</td>
+<td>92</td>
+<td>0.00370</td>
+<td>270</td>
+<td>0.76</td>
+<td class="status completed">Completed</td>
+</tr>
+
+<tr>
+<td>THC-US-2026-006</td>
+<td>Aerospace Interface</td>
+<td>USA</td>
+<td>Transient Method</td>
+<td>Nickel/Composite</td>
+<td>0.70 MPa</td>
+<td>64 cm²</td>
+<td>155</td>
+<td>60</td>
+<td>95</td>
+<td>11800</td>
+<td>124.2</td>
+<td>108</td>
+<td>0.00488</td>
+<td>205</td>
+<td>1.25</td>
+<td class="status delayed">Delayed</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<div class="actions">
+<button class="btn" onclick="exportCSV()">Export CSV</button>
+<button class="btn alt" onclick="technicalReport()">Demo Technical Report</button>
+</div>
+</section>
+
+<section class="section">
+<h2>Add Heat Transfer Coefficient Test</h2>
+
+<div class="form-grid">
+
+<div class="field">
+<label>Sample</label>
+<input id="fSample" placeholder="Sample name">
+</div>
+
+<div class="field">
+<label>Country</label>
+<select id="fCountry">
+<option>Azerbaijan</option>
+<option>Turkey</option>
+<option>Germany</option>
+<option>Italy</option>
+<option>China</option>
+<option>USA</option>
+<option>France</option>
+<option>Spain</option>
+<option>Other</option>
+</select>
+</div>
+
+<div class="field">
+<label>Method</label>
+<select id="fMethod">
+<option>Steady-State Method</option>
+<option>Heat Flow Meter</option>
+<option>Guarded Hot Plate</option>
+<option>Comparative Method</option>
+<option>Pressure-Controlled Method</option>
+<option>Transient Method</option>
+</select>
+</div>
+
+<div class="field">
+<label>Material Pair</label>
+<input id="fMaterial" placeholder="Copper/TIM">
+</div>
+
+<div class="field">
+<label>Contact Pressure MPa</label>
+<input id="fPressure" type="number" step="0.01" placeholder="1.00">
+</div>
+
+<div class="field">
+<label>Interface Area cm²</label>
+<input id="fArea" type="number" step="0.1" placeholder="50">
+</div>
+
+<div class="field">
+<label>Hot Temperature °C</label>
+<input id="fHot" type="number" placeholder="100">
+</div>
+
+<div class="field">
+<label>Cold Temperature °C</label>
+<input id="fCold" type="number" placeholder="40">
+</div>
+
+<div class="field">
+<label>Heat Flux W/m²</label>
+<input id="fFlux" type="number" placeholder="10000">
+</div>
+
+<div class="field">
+<label>Heat Transfer Coefficient W/m²K</label>
+<input id="fCoefficient" type="number" step="0.1" placeholder="200">
+</div>
+
+<div class="field">
+<label>Thermal Resistance K/W</label>
+<input id="fResistance" type="number" step="0.00001" placeholder="0.004">
+</div>
+
+<div class="field">
+<label>Thermal Conductance W/K</label>
+<input id="fConductance" type="number" step="0.1" placeholder="250">
+</div>
+
+<div class="field">
+<label>Interface Temperature °C</label>
+<input id="fInterface" type="number" placeholder="70">
+</div>
+
+<div class="field">
+<label>Surface Roughness µm</label>
+<input id="fRoughness" type="number" step="0.01" placeholder="1.00">
+</div>
+
+</div>
+
+<div class="actions">
+<button class="btn" onclick="addTest()">Add Test Record — Demo</button>
+</div>
+
+<p class="small">
+Demo only. Records are stored in the current browser page session and are not sent to a server.
+</p>
+</section>
+
+<section class="section">
+<h2>WORKER PRO Platform Connection</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Quality</h3>
+<p>Heat-transfer test results can support industrial quality evaluation.</p>
+<a href="../quality/index.html">Open Quality</a>
+</div>
+
+<div class="card">
+<h3>Documents</h3>
+<p>Test results can later be included in technical documentation.</p>
+<a href="../documents/index.html">Open Documents</a>
+</div>
+
+<div class="card">
+<h3>Suppliers</h3>
+<p>Thermal test information can support supplier and product evaluation.</p>
+<a href="../suppliers/index.html">Open Suppliers</a>
+</div>
+
+<div class="card">
+<h3>Orders</h3>
+<p>Testing information can later be linked with industrial orders.</p>
+<a href="../orders/index.html">Open Orders</a>
+</div>
+
+<div class="card">
+<h3>Logistics</h3>
+<p>Product testing data can follow the complete logistics workflow.</p>
+<a href="../logistics/index.html">Open Logistics</a>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<div class="notice">
+<strong>Important:</strong>
+This WORKER PRO page is a demonstration interface.
+Real heat-transfer coefficient testing requires calibrated
+temperature and heat-flow measurement equipment, suitable
+specimen preparation, controlled contact pressure, defined
+interface geometry and validated test procedures. Calculated
+coefficients depend on temperature difference, heat flux,
+effective area, interface condition, material properties,
+surface roughness and measurement uncertainty. Laboratory
+results should not automatically be treated as the performance
+of a complete installed industrial system.
+</div>
+</section>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Thermal Interface Heat Transfer Coefficient Testing №229<br><br>
+F.S.
+</footer>
+
+<script>
+
+const table=document.getElementById("testTable");
+const search=document.getElementById("search");
+const statusFilter=document.getElementById("statusFilter");
+const methodFilter=document.getElementById("methodFilter");
+
+function filterTable(){
+
+    const searchText=search.value.toLowerCase();
+    const status=statusFilter.value;
+    const method=methodFilter.value;
+
+    table.querySelectorAll("tbody tr").forEach(row=>{
+
+        const text=row.innerText.toLowerCase();
+        const rowStatus=row.cells[16].innerText.trim();
+        const rowMethod=row.cells[3].innerText.trim();
+
+        const searchOK=text.includes(searchText);
+        const statusOK=status==="all" || rowStatus===status;
+        const methodOK=method==="all" || rowMethod===method;
+
+        row.style.display=
+            searchOK && statusOK && methodOK ? "" : "none";
+    });
+}
+
+search.addEventListener("input",filterTable);
+statusFilter.addEventListener("change",filterTable);
+methodFilter.addEventListener("change",filterTable);
+
+
+function addTest(){
+
+    const sample=
+        document.getElementById("fSample").value || "Demo Interface";
+
+    const country=
+        document.getElementById("fCountry").value;
+
+    const method=
+        document.getElementById("fMethod").value;
+
+    const material=
+        document.getElementById("fMaterial").value || "Unknown/Unknown";
+
+    const pressure=
+        parseFloat(document.getElementById("fPressure").value)||0;
+
+    const area=
+        parseFloat(document.getElementById("fArea").value)||0;
+
+    const hot=
+        parseFloat(document.getElementById("fHot").value)||0;
+
+    const cold=
+        parseFloat(document.getElementById("fCold").value)||0;
+
+    const flux=
+        parseFloat(document.getElementById("fFlux").value)||0;
+
+    let coefficient=
+        parseFloat(document.getElementById("fCoefficient").value)||0;
+
+    let resistance=
+        parseFloat(document.getElementById("fResistance").value)||0;
+
+    let conductance=
+        parseFloat(document.getElementById("fConductance").value)||0;
+
+    const interfaceTemp=
+        parseFloat(document.getElementById("fInterface").value)||0;
+
+    const roughness=
+        parseFloat(document.getElementById("fRoughness").value)||0;
+
+    const deltaT=hot-cold;
+
+    const areaM2=area/10000;
+
+    if(!coefficient && flux && deltaT){
+        coefficient=flux/deltaT;
+    }
+
+    if(!resistance && conductance){
+        resistance=1/conductance;
+    }
+
+    if(!conductance && resistance){
+        conductance=1/resistance;
+    }
+
+    const id="THC-DEMO-"+Date.now();
+
+    const row=table.querySelector("tbody").insertRow();
+
+    const values=[
+        id,
+        sample,
+        country,
+        method,
+        material,
+        pressure.toFixed(2)+" MPa",
+        area.toFixed(1)+" cm²",
+        hot,
+        cold,
+        deltaT.toFixed(1),
+        flux,
+        coefficient ? coefficient.toFixed(1) : "—",
+        interfaceTemp,
+        resistance ? resistance.toFixed(5) : "—",
+        conductance ? conductance.toFixed(1) : "—",
+        roughness.toFixed(2),
+        "Review"
+    ];
+
+    values.forEach((value,index)=>{
+
+        const cell=row.insertCell();
+        cell.innerText=value;
+
+        if(index===16){
+            cell.className="status review";
+        }
+    });
+
+    alert("Demo test record added: "+id);
+
+    document.getElementById("fSample").value="";
+    document.getElementById("fMaterial").value="";
+}
+
+
+function exportCSV(){
+
+    const rows=[...table.querySelectorAll("tr")];
+
+    const csv=rows.map(row=>
+        [...row.cells]
+        .map(cell=>
+            '"' + cell.innerText.replaceAll('"','""') + '"'
+        )
+        .join(",")
+    ).join("\n");
+
+    const blob=new Blob(
+        [csv],
+        {type:"text/csv;charset=utf-8;"}
+    );
+
+    const url=URL.createObjectURL(blob);
+
+    const a=document.createElement("a");
+
+    a.href=url;
+    a.download=
+        "worker-pro-thermal-interface-heat-transfer-coefficient-testing.csv";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+
+function technicalReport(){
+
+    alert(
+        "WORKER PRO — Demo Technical Report\n\n"+
+        "Thermal Interface Heat Transfer Coefficient Testing\n"+
+        "Status: DEMO\n\n"+
+        "Future report can include:\n"+
+        "• Sample identification\n"+
+        "• Material pair\n"+
+        "• Test method\n"+
+        "• Contact pressure\n"+
+        "• Interface area\n"+
+        "• Hot and cold temperature\n"+
+        "• Temperature difference\n"+
+        "• Heat flux\n"+
+        "• Heat transfer coefficient\n"+
+        "• Interface temperature\n"+
+        "• Thermal resistance\n"+
+        "• Thermal conductance\n"+
+        "• Surface roughness\n"+
+        "• Laboratory information\n"+
+        "• Test conditions\n"+
+        "• Measurement uncertainty\n"+
+        "• Technical conclusion"
+    );
+}
+
+</script>
+
+</body>
+</html>
