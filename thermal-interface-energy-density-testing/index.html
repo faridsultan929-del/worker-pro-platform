@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Energy Density Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+    padding:10px;
+    background:#063d25;
+}
+
+.top-languages button{
+    border:0;
+    border-radius:6px;
+    padding:7px 11px;
+    background:#b7ff35;
+    color:#063d25;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+header{
+    background:#0b6b3d;
+    color:white;
+    padding:25px 15px;
+    text-align:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    letter-spacing:2px;
+}
+
+.subtitle{
+    margin-top:7px;
+    opacity:.9;
+}
+
+nav{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    padding:12px;
+    background:#075b34;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    background:#063d25;
+    padding:9px 13px;
+    border-radius:6px;
+    font-size:14px;
+}
+
+.container{
+    max-width:1400px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    border-radius:12px;
+    padding:25px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.hero h1{
+    color:#063d25;
+    margin-top:0;
+}
+
+.hero p{
+    line-height:1.6;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#b7ff35;
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:10px;
+}
+
+.step{
+    background:#e8f3ec;
+    border-left:5px solid #0b6b3d;
+    padding:15px;
+    border-radius:6px;
+    font-weight:bold;
+}
+
+.controls{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:15px 0;
+}
+
+.controls input,
+.controls select{
+    padding:11px;
+    border:1px solid #bbb;
+    border-radius:6px;
+    min-width:190px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    border-radius:6px;
+    padding:11px 15px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.table-wrap{
+    overflow-x:auto;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1550px;
+}
+
+th,td{
+    padding:10px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+    white-space:nowrap;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+tr:hover{
+    background:#f0f7f2;
+}
+
+.status{
+    padding:5px 9px;
+    border-radius:15px;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.completed{
+    background:#d9f7df;
+    color:#126126;
+}
+
+.review{
+    background:#fff1c7;
+    color:#795b00;
+}
+
+.delayed{
+    background:#ffd9d9;
+    color:#8b1e1e;
+}
+
+form{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:12px;
+}
+
+form label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+    color:#063d25;
+}
+
+form input,
+form select{
+    width:100%;
+    padding:10px;
+    border:1px solid #bbb;
+    border-radius:6px;
+}
+
+.notice{
+    background:#fff7d6;
+    border-left:5px solid #d6a800;
+    padding:15px;
+    margin:20px 0;
+    line-height:1.6;
+}
+
+footer{
+    margin-top:30px;
+    padding:25px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+}
+
+.small{
+    font-size:13px;
+    opacity:.85;
+}
+
+@media(max-width:600px){
+    .container{padding:12px}
+    .hero{padding:18px}
+    .logo{font-size:25px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <div class="logo">WORKER PRO</div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+    <span class="badge">TESTING №233</span>
+
+    <h1>Thermal Interface Energy Density Testing</h1>
+
+    <p>
+        Thermal Interface Energy Density Testing — демонстрационный раздел
+        для оценки количества тепловой энергии относительно заданного
+        объёма, массы или площади интерфейсной системы.
+    </p>
+
+    <p>
+        В зависимости от конкретного материала и методики могут
+        анализироваться энергия, переданная через интерфейс, площадь
+        контакта, температурный перепад, тепловой поток, масса и объём.
+    </p>
+
+    <p>
+        В будущей рабочей системе WORKER PRO результаты могут быть
+        связаны с Product, Quality, Test Report, Certificate, Documents,
+        Supplier и Order.
+    </p>
+
+</section>
+
+<section>
+
+<h2>Основные параметры</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Energy Density</h3>
+<ul>
+<li>Energy Density</li>
+<li>Energy per Mass</li>
+<li>Energy per Volume</li>
+<li>Energy per Area</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Energy Transfer</h3>
+<ul>
+<li>Energy Transfer Rate</li>
+<li>Heat Transfer Rate</li>
+<li>Energy Flux</li>
+<li>Heat Flux</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Temperature</h3>
+<ul>
+<li>Hot Temperature</li>
+<li>Cold Temperature</li>
+<li>Temperature Difference</li>
+<li>Interface Temperature</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Interface Conditions</h3>
+<ul>
+<li>Contact Pressure</li>
+<li>Interface Area</li>
+<li>Material Pair</li>
+<li>Surface Roughness</li>
+</ul>
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>Методы испытаний</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Steady-State Energy Method</h3>
+<p>
+Оценка передачи энергии после достижения стабильного теплового режима.
+</p>
+</div>
+
+<div class="card">
+<h3>Heat Flow Measurement</h3>
+<p>
+Измерение теплового потока через интерфейсную систему.
+</p>
+</div>
+
+<div class="card">
+<h3>Guarded Hot Plate</h3>
+<p>
+Контролируемое исследование теплового поведения образца.
+</p>
+</div>
+
+<div class="card">
+<h3>Calorimetric Method</h3>
+<p>
+Определение энергетических характеристик на основе измеренного
+теплового эффекта.
+</p>
+</div>
+
+<div class="card">
+<h3>Comparative Method</h3>
+<p>
+Сравнение исследуемого интерфейса с эталонной системой.
+</p>
+</div>
+
+<div class="card">
+<h3>Transient Energy Method</h3>
+<p>
+Исследование изменения передачи энергии во времени.
+</p>
+</div>
+
+<div class="card">
+<h3>Thermal Test Vehicle</h3>
+<p>
+Испытание интерфейса в составе контролируемого технического узла.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>Промышленные применения</h2>
+
+<div class="grid">
+
+<div class="card">Power Electronics</div>
+<div class="card">Semiconductors</div>
+<div class="card">Battery Systems</div>
+<div class="card">Heat Exchangers</div>
+<div class="card">Automotive</div>
+<div class="card">Aerospace</div>
+<div class="card">Composite Materials</div>
+<div class="card">Energy Systems</div>
+<div class="card">Industrial Equipment</div>
+<div class="card">Thermal Interface Materials</div>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>WORKER PRO Testing Workflow</h2>
+
+<div class="workflow">
+
+<div class="step">1. Material Selection</div>
+<div class="step">2. Interface Preparation</div>
+<div class="step">3. Surface Inspection</div>
+<div class="step">4. Test Assembly</div>
+<div class="step">5. Thermal Stabilization</div>
+<div class="step">6. Energy Measurement</div>
+<div class="step">7. Density Calculation</div>
+<div class="step">8. Technical Report</div>
+<div class="step">9. Quality Evaluation</div>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>Статистика WORKER PRO</h2>
+
+<div class="stats">
+
+<div class="stat">
+<strong>131</strong>
+Testing Programs
+</div>
+
+<div class="stat">
+<strong>6,140</strong>
+Test Records
+</div>
+
+<div class="stat">
+<strong>57</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.0%</strong>
+Data Completeness
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>База результатов испытаний</h2>
+
+<div class="controls">
+
+<input
+id="searchInput"
+type="text"
+placeholder="Поиск по тестам..."
+>
+
+<select id="statusFilter">
+<option value="">Все статусы</option>
+<option value="Completed">Completed</option>
+<option value="Review">Review</option>
+<option value="Delayed">Delayed</option>
+</select>
+
+<select id="methodFilter">
+<option value="">Все методы</option>
+<option>Steady-State Energy Method</option>
+<option>Heat Flow Measurement</option>
+<option>Guarded Hot Plate</option>
+<option>Calorimetric Method</option>
+<option>Comparative Method</option>
+<option>Transient Energy Method</option>
+<option>Thermal Test Vehicle</option>
+</select>
+
+<button class="action" onclick="exportCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="technicalReport()">
+Demo Technical Report
+</button>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="testTable">
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Sample</th>
+<th>Country</th>
+<th>Method</th>
+<th>Material Pair</th>
+<th>Pressure</th>
+<th>Area</th>
+<th>Hot °C</th>
+<th>Cold °C</th>
+<th>ΔT</th>
+<th>Energy Transfer W</th>
+<th>Energy Density J/kg</th>
+<th>Energy Density J/cm³</th>
+<th>Energy Flux W/m²</th>
+<th>Interface Temp °C</th>
+<th>Resistance</th>
+<th>Conductance</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>TED-AZ-2026-001</td>
+<td>Power Module Interface</td>
+<td>Azerbaijan</td>
+<td>Steady-State Energy Method</td>
+<td>Silicon/Copper</td>
+<td>0.80 MPa</td>
+<td>25 cm²</td>
+<td>90</td>
+<td>45</td>
+<td>45</td>
+<td>31.50</td>
+<td>2850</td>
+<td>0.42</td>
+<td>12600</td>
+<td>67</td>
+<td>0.00357</td>
+<td>280</td>
+<td>
+<span class="status completed">Completed</span>
+</td>
+</tr>
+
+<tr>
+<td>TED-TR-2026-002</td>
+<td>Battery Thermal Interface</td>
+<td>Turkey</td>
+<td>Heat Flow Measurement</td>
+<td>Aluminum/TIM</td>
+<td>1.20 MPa</td>
+<td>48 cm²</td>
+<td>75</td>
+<td>35</td>
+<td>40</td>
+<td>47.52</td>
+<td>3120</td>
+<td>0.51</td>
+<td>9900</td>
+<td>55</td>
+<td>0.00408</td>
+<td>245</td>
+<td>
+<span class="status completed">Completed</span>
+</td>
+</tr>
+
+<tr>
+<td>TED-DE-2026-003</td>
+<td>Composite Interface</td>
+<td>Germany</td>
+<td>Comparative Method</td>
+<td>Carbon/Polymer</td>
+<td>0.55 MPa</td>
+<td>80 cm²</td>
+<td>100</td>
+<td>40</td>
+<td>60</td>
+<td>60.00</td>
+<td>2480</td>
+<td>0.37</td>
+<td>7500</td>
+<td>70</td>
+<td>0.00526</td>
+<td>190</td>
+<td>
+<span class="status review">Review</span>
+</td>
+</tr>
+
+<tr>
+<td>TED-IT-2026-004</td>
+<td>Heat Exchanger Interface</td>
+<td>Italy</td>
+<td>Guarded Hot Plate</td>
+<td>Copper/Steel</td>
+<td>1.00 MPa</td>
+<td>120 cm²</td>
+<td>115</td>
+<td>50</td>
+<td>65</td>
+<td>184.80</td>
+<td>3610</td>
+<td>0.62</td>
+<td>15400</td>
+<td>82</td>
+<td>0.00317</td>
+<td>315</td>
+<td>
+<span class="status completed">Completed</span>
+</td>
+</tr>
+
+<tr>
+<td>TED-CN-2026-005</td>
+<td>Ceramic Power Interface</td>
+<td>China</td>
+<td>Calorimetric Method</td>
+<td>Ceramic/Copper</td>
+<td>1.35 MPa</td>
+<td>32 cm²</td>
+<td>130</td>
+<td>55</td>
+<td>75</td>
+<td>59.20</td>
+<td>4050</td>
+<td>0.71</td>
+<td>18500</td>
+<td>92</td>
+<td>0.00370</td>
+<td>270</td>
+<td>
+<span class="status completed">Completed</span>
+</td>
+</tr>
+
+<tr>
+<td>TED-US-2026-006</td>
+<td>Aerospace Interface</td>
+<td>USA</td>
+<td>Transient Energy Method</td>
+<td>Nickel/Composite</td>
+<td>0.70 MPa</td>
+<td>64 cm²</td>
+<td>155</td>
+<td>60</td>
+<td>95</td>
+<td>75.52</td>
+<td>3380</td>
+<td>0.56</td>
+<td>11800</td>
+<td>108</td>
+<td>0.00488</td>
+<td>205</td>
+<td>
+<span class="status delayed">Delayed</span>
+</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section>
+
+<h2>Добавить результат испытания</h2>
+
+<form id="testForm">
+
+<div class="form-grid">
+
+<div>
+<label>Sample</label>
+<input id="sample" required>
+</div>
+
+<div>
+<label>Country</label>
+<select id="country">
+<option>Azerbaijan</option>
+<option>Turkey</option>
+<option>Germany</option>
+<option>Italy</option>
+<option>China</option>
+<option>USA</option>
+<option>Other</option>
+</select>
+</div>
+
+<div>
+<label>Method</label>
+<select id="method">
+<option>Steady-State Energy Method</option>
+<option>Heat Flow Measurement</option>
+<option>Guarded Hot Plate</option>
+<option>Calorimetric Method</option>
+<option>Comparative Method</option>
+<option>Transient Energy Method</option>
+<option>Thermal Test Vehicle</option>
+</select>
+</div>
+
+<div>
+<label>Material Pair</label>
+<input id="material" placeholder="e.g. Copper/TIM" required>
+</div>
+
+<div>
+<label>Contact Pressure MPa</label>
+<input id="pressure" type="number" step="0.01" required>
+</div>
+
+<div>
+<label>Interface Area cm²</label>
+<input id="area" type="number" step="0.01" required>
+</div>
+
+<div>
+<label>Hot Temperature °C</label>
+<input id="hot" type="number" required>
+</div>
+
+<div>
+<label>Cold Temperature °C</label>
+<input id="cold" type="number" required>
+</div>
+
+<div>
+<label>Energy Transfer Rate W</label>
+<input id="rate" type="number" step="0.01" required>
+</div>
+
+<div>
+<label>Mass kg</label>
+<input id="mass" type="number" step="0.0001" required>
+</div>
+
+<div>
+<label>Volume cm³</label>
+<input id="volume" type="number" step="0.01" required>
+</div>
+
+<div>
+<label>Energy Flux W/m²</label>
+<input id="flux" type="number" step="0.01" required>
+</div>
+
+<div>
+<label>Interface Temperature °C</label>
+<input id="interfaceTemp" type="number" required>
+</div>
+
+<div>
+<label>Thermal Resistance</label>
+<input id="resistance" type="number" step="0.00001">
+</div>
+
+<div>
+<label>Thermal Conductance</label>
+<input id="conductance" type="number" step="0.01">
+</div>
+
+</div>
+
+<br>
+
+<button class="action" type="submit">
+Add Test Record — Demo
+</button>
+
+</form>
+
+</section>
+
+<section class="notice">
+
+<strong>WORKER PRO Demo Notice</strong><br><br>
+
+Эта страница является демонстрационной частью платформы WORKER PRO.
+Представленные результаты являются примерными данными интерфейса.
+
+Energy density зависит от того, какая нормировка используется:
+на массу, объём, площадь или другой явно определённый параметр.
+Поэтому в реальной системе единицы и метод расчёта должны быть
+зафиксированы в протоколе испытания.
+
+Реальные испытания требуют подходящей методики, калиброванного
+оборудования, подготовки образцов и контроля температуры, давления,
+геометрии, площади контакта и других условий.
+
+Данные лабораторного образца не всегда напрямую характеризуют
+установленную промышленную систему.
+
+В будущем реальные результаты могут быть связаны с Quality,
+Test Report, Certificate и Documents.
+
+</section>
+
+<section>
+
+<h2>Связанные разделы WORKER PRO</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Quality</h3>
+<p>Контроль и оценка качества продукции.</p>
+<a href="../quality/index.html">Open Quality</a>
+</div>
+
+<div class="card">
+<h3>Documents</h3>
+<p>Технические документы и отчёты.</p>
+<a href="../documents/index.html">Open Documents</a>
+</div>
+
+<div class="card">
+<h3>Suppliers</h3>
+<p>Производители и поставщики.</p>
+<a href="../suppliers/index.html">Open Suppliers</a>
+</div>
+
+<div class="card">
+<h3>Orders</h3>
+<p>Переход от запроса к промышленному заказу.</p>
+<a href="../orders/index.html">Open Orders</a>
+</div>
+
+<div class="card">
+<h3>Logistics</h3>
+<p>Организация промышленной перевозки.</p>
+<a href="../logistics/index.html">Open Logistics</a>
+</div>
+
+<div class="card">
+<h3>Tracking</h3>
+<p>Отслеживание заказа.</p>
+<a href="../tracking/index.html">Open Tracking</a>
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+
+<strong>WORKER PRO</strong><br>
+
+Глобальная промышленная платформа
+
+<br><br>
+
+<span class="small">
+Testing №233 — Thermal Interface Energy Density Testing
+</span>
+
+<br><br>
+
+F.S.
+
+</footer>
+
+<script>
+
+function filterTable(){
+
+    const search =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter").value;
+
+    const method =
+        document.getElementById("methodFilter").value;
+
+    const rows =
+        document.querySelectorAll("#testTable tbody tr");
+
+    rows.forEach(row=>{
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[17].innerText.trim();
+
+        const rowMethod =
+            row.cells[3].innerText.trim();
+
+        const searchOK =
+            text.includes(search);
+
+        const statusOK =
+            !status || rowStatus === status;
+
+        const methodOK =
+            !method || rowMethod === method;
+
+        row.style.display =
+            searchOK &&
+            statusOK &&
+            methodOK
+            ? ""
+            : "none";
+    });
+}
+
+document
+.getElementById("searchInput")
+.addEventListener("input",filterTable);
+
+document
+.getElementById("statusFilter")
+.addEventListener("change",filterTable);
+
+document
+.getElementById("methodFilter")
+.addEventListener("change",filterTable);
+
+
+document
+.getElementById("testForm")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const sample =
+        document.getElementById("sample").value;
+
+    const country =
+        document.getElementById("country").value;
+
+    const method =
+        document.getElementById("method").value;
+
+    const material =
+        document.getElementById("material").value;
+
+    const pressure =
+        parseFloat(
+            document.getElementById("pressure").value
+        );
+
+    const area =
+        parseFloat(
+            document.getElementById("area").value
+        );
+
+    const hot =
+        parseFloat(
+            document.getElementById("hot").value
+        );
+
+    const cold =
+        parseFloat(
+            document.getElementById("cold").value
+        );
+
+    const rate =
+        parseFloat(
+            document.getElementById("rate").value
+        );
+
+    const mass =
+        parseFloat(
+            document.getElementById("mass").value
+        );
+
+    const volume =
+        parseFloat(
+            document.getElementById("volume").value
+        );
+
+    const flux =
+        parseFloat(
+            document.getElementById("flux").value
+        );
+
+    const interfaceTemp =
+        parseFloat(
+            document.getElementById("interfaceTemp").value
+        );
+
+    let resistance =
+        parseFloat(
+            document.getElementById("resistance").value
+        );
+
+    let conductance =
+        parseFloat(
+            document.getElementById("conductance").value
+        );
+
+    const deltaT =
+        hot - cold;
+
+    /*
+      Demonstration calculations.
+
+      J/kg:
+      energy transferred during one second
+      divided by mass.
+
+      J/cm³:
+      energy transferred during one second
+      divided by volume.
+
+      These are simplified demo indicators.
+      Real protocols must define the exact
+      energy interval and normalization basis.
+    */
+
+    const energyJ =
+        rate;
+
+    const densityMass =
+        mass > 0
+        ? energyJ / mass
+        : 0;
+
+    const densityVolume =
+        volume > 0
+        ? energyJ / volume
+        : 0;
+
+    if(!resistance && conductance){
+        resistance =
+            1 / conductance;
+    }
+
+    if(!conductance && resistance){
+        conductance =
+            1 / resistance;
+    }
+
+    if(!resistance) resistance = 0;
+    if(!conductance) conductance = 0;
+
+    const id =
+        "TED-DEMO-" + Date.now();
+
+    const row =
+        document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>${sample}</td>
+        <td>${country}</td>
+        <td>${method}</td>
+        <td>${material}</td>
+        <td>${pressure.toFixed(2)} MPa</td>
+        <td>${area.toFixed(2)} cm²</td>
+        <td>${hot}</td>
+        <td>${cold}</td>
+        <td>${deltaT.toFixed(2)}</td>
+        <td>${rate.toFixed(2)}</td>
+        <td>${densityMass.toFixed(2)}</td>
+        <td>${densityVolume.toFixed(4)}</td>
+        <td>${flux.toFixed(2)}</td>
+        <td>${interfaceTemp}</td>
+        <td>${resistance.toFixed(5)}</td>
+        <td>${conductance.toFixed(2)}</td>
+        <td>
+            <span class="status review">
+                Review
+            </span>
+        </td>
+    `;
+
+    document
+    .querySelector("#testTable tbody")
+    .appendChild(row);
+
+    this.reset();
+
+    alert(
+        "Demo test record added successfully.\n\n" +
+        "ID: " + id
+    );
+});
+
+
+function exportCSV(){
+
+    const table =
+        document.getElementById("testTable");
+
+    let csv = [];
+
+    const rows =
+        table.querySelectorAll("tr");
+
+    rows.forEach(row=>{
+
+        if(row.style.display === "none"){
+            return;
+        }
+
+        const cols =
+            row.querySelectorAll("th,td");
+
+        const data = [];
+
+        cols.forEach(col=>{
+
+            const text =
+                col.innerText
+                .replace(/"/g,'""')
+                .replace(/\n/g,' ');
+
+            data.push('"' + text + '"');
+        });
+
+        csv.push(data.join(","));
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-interface-energy-density-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+
+function technicalReport(){
+
+    alert(
+        "WORKER PRO — Demo Technical Report\n\n" +
+        "Testing №233\n" +
+        "Thermal Interface Energy Density Testing\n\n" +
+        "Report status: DEMO\n" +
+        "Data source: WORKER PRO Testing Database\n\n" +
+        "The future system will generate a structured " +
+        "technical report from verified laboratory data."
+    );
+}
+
+</script>
+
+</body>
+</html>
