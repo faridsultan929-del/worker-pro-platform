@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Energy Monitoring Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    justify-content:center;
+}
+
+.top-languages button{
+    border:1px solid #b7ff35;
+    background:#0b6b3d;
+    color:white;
+    padding:7px 11px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    padding:25px 15px;
+    text-align:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:6px;
+    font-size:15px;
+}
+
+.container{
+    width:95%;
+    max-width:1400px;
+    margin:auto;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:20px;
+    background:#b7ff35;
+    color:#063d25;
+    padding:8px 14px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+h1,h2{
+    color:#063d25;
+}
+
+.hero{
+    background:white;
+    margin:20px 0;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 2px 10px rgba(0,0,0,.08);
+}
+
+.hero h1{
+    margin-top:8px;
+    font-size:30px;
+}
+
+.hero p{
+    line-height:1.6;
+}
+
+nav{
+    background:#0b6b3d;
+    padding:12px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:8px 11px;
+    border-radius:6px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:16px;
+    margin:20px 0;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    padding:20px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:28px;
+    margin-bottom:6px;
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:10px;
+}
+
+.step{
+    background:#e8f3ec;
+    border-left:5px solid #0b6b3d;
+    padding:15px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.notice{
+    background:#fff8dc;
+    border-left:6px solid #d9a400;
+    padding:18px;
+    border-radius:8px;
+    margin:20px 0;
+    line-height:1.6;
+}
+
+.form-box{
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
+    margin:20px 0;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:12px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccd8d0;
+    border-radius:7px;
+    font-size:14px;
+}
+
+label{
+    font-weight:bold;
+    color:#063d25;
+    font-size:13px;
+}
+
+button.action{
+    margin-top:15px;
+    padding:11px 16px;
+    border:none;
+    border-radius:7px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.table-box{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    overflow-x:auto;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1500px;
+}
+
+th,td{
+    border:1px solid #d7e0da;
+    padding:9px;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+tr:nth-child(even){
+    background:#f3f8f4;
+}
+
+.status{
+    font-weight:bold;
+}
+
+.search-box{
+    margin:15px 0;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:600px){
+    .hero h1{
+        font-size:24px;
+    }
+
+    .search-box{
+        grid-template-columns:1fr;
+    }
+
+    nav a{
+        font-size:13px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <div class="logo">WORKER PRO</div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+    <div class="hero">
+        <span class="badge">TESTING №240</span>
+
+        <h1>Thermal Interface Energy Monitoring Testing</h1>
+
+        <p>
+            Тестирование мониторинга тепловой энергии на интерфейсе
+            между материалами или поверхностями. Раздел предназначен
+            для непрерывного или периодического контроля температуры,
+            теплового потока, энергопотребления, полезной теплопередачи,
+            тепловых потерь и изменения параметров во времени.
+        </p>
+
+        <p>
+            WORKER PRO позволяет организовать структуру данных для
+            мониторинга, сравнения трендов, обнаружения отклонений,
+            регистрации аварийных порогов и подготовки технического отчёта.
+        </p>
+    </div>
+
+    <section>
+        <h2>Основные параметры мониторинга</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>Energy Monitoring</h3>
+                <ul>
+                    <li>Input Energy</li>
+                    <li>Thermal Energy Consumption</li>
+                    <li>Useful Heat Transfer</li>
+                    <li>Heat Loss</li>
+                    <li>Energy Trend</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Heat Transfer</h3>
+                <ul>
+                    <li>Heat Flow Rate</li>
+                    <li>Heat Flux</li>
+                    <li>Average Heat Rate</li>
+                    <li>Peak Heat Rate</li>
+                    <li>Useful Heat</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Temperature</h3>
+                <ul>
+                    <li>Hot Temperature</li>
+                    <li>Cold Temperature</li>
+                    <li>ΔT</li>
+                    <li>Interface Temperature</li>
+                    <li>Temperature Trend</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>Monitoring Conditions</h3>
+                <ul>
+                    <li>Contact Pressure</li>
+                    <li>Area</li>
+                    <li>Monitoring Interval</li>
+                    <li>Alarm Threshold</li>
+                    <li>Material Pair</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <h2>Методы мониторинга</h2>
+
+        <div class="grid">
+
+            <div class="card">
+                <h3>Real-Time Thermal Monitoring</h3>
+                <p>Непрерывная регистрация температуры и тепловых параметров.</p>
+            </div>
+
+            <div class="card">
+                <h3>Continuous Energy Monitoring</h3>
+                <p>Постоянный контроль энергетических параметров системы.</p>
+            </div>
+
+            <div class="card">
+                <h3>Periodic Monitoring</h3>
+                <p>Измерения через заданные интервалы времени.</p>
+            </div>
+
+            <div class="card">
+                <h3>Heat Flow Monitoring</h3>
+                <p>Контроль изменения теплового потока во времени.</p>
+            </div>
+
+            <div class="card">
+                <h3>Temperature Mapping</h3>
+                <p>Сравнение температурных зон интерфейса.</p>
+            </div>
+
+            <div class="card">
+                <h3>Data Logger Monitoring</h3>
+                <p>Регистрация параметров с использованием системы сбора данных.</p>
+            </div>
+
+            <div class="card">
+                <h3>Sensor-Based Monitoring</h3>
+                <p>Контроль с помощью температурных и тепловых датчиков.</p>
+            </div>
+
+            <div class="card">
+                <h3>Thermal Cycle Monitoring</h3>
+                <p>Мониторинг поведения интерфейса во время температурных циклов.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section>
+        <h2>Промышленные применения</h2>
+
+        <div class="grid">
+
+            <div class="card">Power Electronics</div>
+            <div class="card">Semiconductors</div>
+            <div class="card">Battery Systems</div>
+            <div class="card">Heat Exchangers</div>
+            <div class="card">Data Centers</div>
+            <div class="card">Automotive</div>
+            <div class="card">Aerospace</div>
+            <div class="card">Industrial Cooling</div>
+            <div class="card">Energy Systems</div>
+            <div class="card">Oil & Gas Equipment</div>
+
+        </div>
+    </section>
+
+    <section>
+        <h2>Workflow</h2>
+
+        <div class="workflow">
+            <div class="step">1. Define Monitoring Target</div>
+            <div class="step">2. Select Sensors</div>
+            <div class="step">3. Install Sensors</div>
+            <div class="step">4. Calibrate System</div>
+            <div class="step">5. Start Monitoring</div>
+            <div class="step">6. Collect Data</div>
+            <div class="step">7. Analyze Trends</div>
+            <div class="step">8. Detect Anomalies</div>
+            <div class="step">9. Technical Report</div>
+        </div>
+    </section>
+
+    <section>
+        <h2>WORKER PRO Monitoring Statistics</h2>
+
+        <div class="stats">
+            <div class="stat">
+                <strong>145</strong>
+                Testing Programs
+            </div>
+
+            <div class="stat">
+                <strong>7,240</strong>
+                Test Records
+            </div>
+
+            <div class="stat">
+                <strong>64</strong>
+                Lab Teams
+            </div>
+
+            <div class="stat">
+                <strong>99.7%</strong>
+                Data Completeness
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Test Records</h2>
+
+        <div class="search-box">
+            <input
+                type="text"
+                id="searchInput"
+                placeholder="Search sample, country, method, material..."
+                onkeyup="filterTable()">
+
+            <select id="statusFilter" onchange="filterTable()">
+                <option value="">All Status</option>
+                <option value="Completed">Completed</option>
+                <option value="Review">Review</option>
+                <option value="Delayed">Delayed</option>
+            </select>
+        </div>
+
+        <div class="table-box">
+            <table id="recordsTable">
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Sample</th>
+                        <th>Country</th>
+                        <th>Method</th>
+                        <th>Material Pair</th>
+                        <th>Pressure MPa</th>
+                        <th>Area cm²</th>
+                        <th>Input Energy J</th>
+                        <th>Useful Heat J</th>
+                        <th>Heat Loss J</th>
+                        <th>Avg Heat Rate W</th>
+                        <th>Peak Heat Rate W</th>
+                        <th>Hot °C</th>
+                        <th>Cold °C</th>
+                        <th>Interface °C</th>
+                        <th>Interval s</th>
+                        <th>Alarm °C</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>TEMO-AZ-2026-001</td>
+                        <td>Power Module Interface</td>
+                        <td>Azerbaijan</td>
+                        <td>Real-Time Thermal Monitoring</td>
+                        <td>Silicon/Copper</td>
+                        <td>0.80</td>
+                        <td>25</td>
+                        <td>12500</td>
+                        <td>10400</td>
+                        <td>2100</td>
+                        <td>520</td>
+                        <td>610</td>
+                        <td>92</td>
+                        <td>42</td>
+                        <td>68</td>
+                        <td>5</td>
+                        <td>85</td>
+                        <td class="status">Completed</td>
+                    </tr>
+
+                    <tr>
+                        <td>TEMO-TR-2026-002</td>
+                        <td>Battery Thermal Interface</td>
+                        <td>Turkey</td>
+                        <td>Continuous Energy Monitoring</td>
+                        <td>Aluminum/TIM</td>
+                        <td>1.20</td>
+                        <td>48</td>
+                        <td>15800</td>
+                        <td>13100</td>
+                        <td>2700</td>
+                        <td>655</td>
+                        <td>740</td>
+                        <td>78</td>
+                        <td>35</td>
+                        <td>56</td>
+                        <td>10</td>
+                        <td>72</td>
+                        <td class="status">Completed</td>
+                    </tr>
+
+                    <tr>
+                        <td>TEMO-DE-2026-003</td>
+                        <td>Composite Interface</td>
+                        <td>Germany</td>
+                        <td>Periodic Monitoring</td>
+                        <td>Carbon/Polymer</td>
+                        <td>0.55</td>
+                        <td>80</td>
+                        <td>17600</td>
+                        <td>14100</td>
+                        <td>3500</td>
+                        <td>705</td>
+                        <td>820</td>
+                        <td>105</td>
+                        <td>40</td>
+                        <td>74</td>
+                        <td>30</td>
+                        <td>98</td>
+                        <td class="status">Review</td>
+                    </tr>
+
+                    <tr>
+                        <td>TEMO-IT-2026-004</td>
+                        <td>Heat Exchanger Interface</td>
+                        <td>Italy</td>
+                        <td>Heat Flow Monitoring</td>
+                        <td>Copper/Steel</td>
+                        <td>1.00</td>
+                        <td>120</td>
+                        <td>22400</td>
+                        <td>19400</td>
+                        <td>3000</td>
+                        <td>970</td>
+                        <td>1120</td>
+                        <td>118</td>
+                        <td>48</td>
+                        <td>83</td>
+                        <td>15</td>
+                        <td>108</td>
+                        <td class="status">Completed</td>
+                    </tr>
+
+                    <tr>
+                        <td>TEMO-CN-2026-005</td>
+                        <td>Ceramic Power Interface</td>
+                        <td>China</td>
+                        <td>Sensor-Based Monitoring</td>
+                        <td>Ceramic/Copper</td>
+                        <td>1.35</td>
+                        <td>32</td>
+                        <td>28600</td>
+                        <td>23100</td>
+                        <td>5500</td>
+                        <td>1155</td>
+                        <td>1360</td>
+                        <td>132</td>
+                        <td>55</td>
+                        <td>94</td>
+                        <td>5</td>
+                        <td>120</td>
+                        <td class="status">Completed</td>
+                    </tr>
+
+                    <tr>
+                        <td>TEMO-US-2026-006</td>
+                        <td>Aerospace Interface</td>
+                        <td>USA</td>
+                        <td>Thermal Cycle Monitoring</td>
+                        <td>Nickel/Composite</td>
+                        <td>0.70</td>
+                        <td>64</td>
+                        <td>19800</td>
+                        <td>15700</td>
+                        <td>4100</td>
+                        <td>785</td>
+                        <td>940</td>
+                        <td>155</td>
+                        <td>60</td>
+                        <td>108</td>
+                        <td>20</td>
+                        <td>145</td>
+                        <td class="status">Delayed</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="form-box">
+        <h2>Add Test Record — Demo</h2>
+
+        <div class="form-grid">
+
+            <div>
+                <label>Sample</label>
+                <input id="sample" placeholder="Sample name">
+            </div>
+
+            <div>
+                <label>Country</label>
+                <select id="country">
+                    <option>Azerbaijan</option>
+                    <option>Turkey</option>
+                    <option>Germany</option>
+                    <option>Italy</option>
+                    <option>China</option>
+                    <option>USA</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Method</label>
+                <select id="method">
+                    <option>Real-Time Thermal Monitoring</option>
+                    <option>Continuous Energy Monitoring</option>
+                    <option>Periodic Monitoring</option>
+                    <option>Heat Flow Monitoring</option>
+                    <option>Temperature Mapping</option>
+                    <option>Data Logger Monitoring</option>
+                    <option>Sensor-Based Monitoring</option>
+                    <option>Thermal Cycle Monitoring</option>
+                </select>
+            </div>
+
+            <div>
+                <label>Material Pair</label>
+                <input id="material" placeholder="Copper/TIM">
+            </div>
+
+            <div>
+                <label>Pressure MPa</label>
+                <input id="pressure" type="number" step="0.01" placeholder="1.00">
+            </div>
+
+            <div>
+                <label>Area cm²</label>
+                <input id="area" type="number" step="0.1" placeholder="50">
+            </div>
+
+            <div>
+                <label>Input Energy J</label>
+                <input id="inputEnergy" type="number" step="0.1" placeholder="15000">
+            </div>
+
+            <div>
+                <label>Useful Heat J</label>
+                <input id="usefulHeat" type="number" step="0.1" placeholder="12000">
+            </div>
+
+            <div>
+                <label>Monitoring Time s</label>
+                <input id="time" type="number" step="1" placeholder="20">
+            </div>
+
+            <div>
+                <label>Average Heat Rate W</label>
+                <input id="avgRate" type="number" step="0.1" placeholder="600">
+            </div>
+
+            <div>
+                <label>Peak Heat Rate W</label>
+                <input id="peakRate" type="number" step="0.1" placeholder="750">
+            </div>
+
+            <div>
+                <label>Hot °C</label>
+                <input id="hot" type="number" step="0.1" placeholder="100">
+            </div>
+
+            <div>
+                <label>Cold °C</label>
+                <input id="cold" type="number" step="0.1" placeholder="40">
+            </div>
+
+            <div>
+                <label>Interface °C</label>
+                <input id="interfaceTemp" type="number" step="0.1" placeholder="70">
+            </div>
+
+            <div>
+                <label>Monitoring Interval s</label>
+                <input id="interval" type="number" step="1" placeholder="5">
+            </div>
+
+            <div>
+                <label>Alarm Threshold °C</label>
+                <input id="alarm" type="number" step="0.1" placeholder="90">
+            </div>
+
+        </div>
+
+        <button class="action" onclick="addTest()">Add Test Record</button>
+        <button class="action" onclick="downloadCSV()">Export CSV</button>
+        <button class="action" onclick="technicalReport()">Demo Technical Report</button>
+    </section>
+
+    <section>
+        <h2>Technical Monitoring Report</h2>
+
+        <div class="card">
+            <h3>Monitoring Target</h3>
+            <p>
+                Контроль тепловой энергии, температуры, теплового потока
+                и тепловых потерь на промышленном интерфейсе.
+            </p>
+
+            <h3>Sensor Setup</h3>
+            <p>
+                Температурные датчики, датчики теплового потока и система
+                сбора данных должны быть размещены в соответствии с
+                определённой схемой измерения.
+            </p>
+
+            <h3>Energy Trend</h3>
+            <p>
+                Сравниваются входная энергия, полезная теплопередача,
+                тепловые потери и скорость изменения параметров.
+            </p>
+
+            <h3>Temperature Trend</h3>
+            <p>
+                Анализируются горячая, холодная и интерфейсная температуры
+                на протяжении всего периода мониторинга.
+            </p>
+
+            <h3>Alarm Events</h3>
+            <p>
+                Система может регистрировать превышение заданного
+                температурного или энергетического порога.
+            </p>
+
+            <h3>Anomaly Review</h3>
+            <p>
+                Резкие изменения, нестабильность, превышение порогов
+                и необычные тренды требуют дополнительной проверки.
+            </p>
+        </div>
+    </section>
+
+    <div class="notice">
+        <strong>Важно:</strong><br>
+        Данные на этой странице являются демонстрационными.
+        Реальный Thermal Interface Energy Monitoring Testing требует
+        откалиброванных датчиков, системы сбора данных, установленного
+        интервала дискретизации, правильного размещения сенсоров,
+        определённых тепловых границ, синхронизации измерений и
+        заранее заданных критериев аварийных сигналов.
+        Демонстрационные значения не являются результатами реального
+        лабораторного испытания или сертификационного протокола.
+    </div>
+
+</div>
+
+<footer>
+    <strong>WORKER PRO</strong><br>
+    Глобальная промышленная платформа<br><br>
+    Testing №240 — Thermal Interface Energy Monitoring Testing<br><br>
+    F.S.
+</footer>
+
+<script>
+
+function filterTable(){
+
+    const search =
+        document.getElementById("searchInput").value.toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter").value.toLowerCase();
+
+    const rows =
+        document.querySelectorAll("#recordsTable tbody tr");
+
+    rows.forEach(row => {
+
+        const text = row.innerText.toLowerCase();
+
+        const statusCell =
+            row.cells[row.cells.length - 1].innerText.toLowerCase();
+
+        const searchMatch =
+            text.includes(search);
+
+        const statusMatch =
+            !status || statusCell === status;
+
+        row.style.display =
+            searchMatch && statusMatch ? "" : "none";
+    });
+}
+
+function addTest(){
+
+    const sample =
+        document.getElementById("sample").value || "Demo Thermal Interface";
+
+    const country =
+        document.getElementById("country").value;
+
+    const method =
+        document.getElementById("method").value;
+
+    const material =
+        document.getElementById("material").value || "Copper/TIM";
+
+    const pressure =
+        parseFloat(document.getElementById("pressure").value) || 0;
+
+    const area =
+        parseFloat(document.getElementById("area").value) || 0;
+
+    const inputEnergy =
+        parseFloat(document.getElementById("inputEnergy").value) || 0;
+
+    const usefulHeat =
+        parseFloat(document.getElementById("usefulHeat").value) || 0;
+
+    const time =
+        parseFloat(document.getElementById("time").value) || 0;
+
+    let avgRate =
+        parseFloat(document.getElementById("avgRate").value) || 0;
+
+    const peakRate =
+        parseFloat(document.getElementById("peakRate").value) || 0;
+
+    const hot =
+        parseFloat(document.getElementById("hot").value) || 0;
+
+    const cold =
+        parseFloat(document.getElementById("cold").value) || 0;
+
+    const interfaceTemp =
+        parseFloat(document.getElementById("interfaceTemp").value) || 0;
+
+    const interval =
+        parseFloat(document.getElementById("interval").value) || 0;
+
+    const alarm =
+        parseFloat(document.getElementById("alarm").value) || 0;
+
+    const heatLoss =
+        Math.max(inputEnergy - usefulHeat, 0);
+
+    if(!avgRate && time > 0){
+        avgRate = usefulHeat / time;
+    }
+
+    const id =
+        "TEMO-DEMO-" + Date.now();
+
+    const table =
+        document.querySelector("#recordsTable tbody");
+
+    const row =
+        table.insertRow(0);
+
+    const values = [
+        id,
+        sample,
+        country,
+        method,
+        material,
+        pressure.toFixed(2),
+        area.toFixed(1),
+        inputEnergy.toFixed(1),
+        usefulHeat.toFixed(1),
+        heatLoss.toFixed(1),
+        avgRate.toFixed(2),
+        peakRate.toFixed(2),
+        hot.toFixed(1),
+        cold.toFixed(1),
+        interfaceTemp.toFixed(1),
+        interval,
+        alarm,
+        "Review"
+    ];
+
+    values.forEach((value,index)=>{
+
+        const cell = row.insertCell();
+
+        cell.textContent = value;
+
+        if(index === values.length - 1){
+            cell.className = "status";
+        }
+    });
+
+    alert(
+        "Demo test record added: " +
+        id +
+        "\nHeat Loss: " +
+        heatLoss.toFixed(2) +
+        " J"
+    );
+}
+
+function downloadCSV(){
+
+    const rows =
+        document.querySelectorAll("#recordsTable tr");
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cells =
+            row.querySelectorAll("th,td");
+
+        const line =
+            Array.from(cells).map(cell => {
+
+                let text =
+                    cell.innerText.replace(/"/g,'""');
+
+                return '"' + text + '"';
+
+            }).join(",");
+
+        csv.push(line);
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-interface-energy-monitoring-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function technicalReport(){
+
+    const report =
+`WORKER PRO — DEMO TECHNICAL REPORT
+
+Testing No: 240
+Test: Thermal Interface Energy Monitoring Testing
+
+Monitoring Target:
+Continuous or periodic monitoring of thermal energy,
+temperature, heat flow and energy losses.
+
+Monitoring Elements:
+- Input Energy
+- Useful Heat Transfer
+- Heat Loss
+- Heat Flow Rate
+- Heat Flux
+- Hot Temperature
+- Cold Temperature
+- Interface Temperature
+- Monitoring Interval
+- Alarm Threshold
+
+Sensor Setup:
+Temperature and thermal monitoring sensors with
+defined acquisition and calibration procedures.
+
+Energy Trend:
+Input energy, useful heat and calculated losses
+are compared over the monitoring period.
+
+Temperature Trend:
+Hot, cold and interface temperatures are monitored
+for stability and abnormal changes.
+
+Alarm Events:
+Temperature or energy thresholds can be used to
+identify possible abnormal conditions.
+
+Anomaly Review:
+Sudden changes, instability or threshold violations
+should be reviewed by qualified personnel.
+
+Status:
+DEMO ONLY
+
+WORKER PRO
+F.S.`;
+
+    const blob =
+        new Blob([report],{type:"text/plain;charset=utf-8;"});
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-interface-energy-monitoring-report.txt";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>
