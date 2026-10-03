@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Monitoring & Alarm Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#063d25;
+    padding:8px;
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+.top-languages button{
+    border:0;
+    border-radius:6px;
+    padding:7px 10px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+header{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    padding:28px 18px;
+    text-align:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:6px;
+    font-size:16px;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:15px;
+    background:#b7ff35;
+    color:#063d25;
+    padding:8px 14px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+nav{
+    background:#075b34;
+    padding:10px;
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    justify-content:center;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:8px 11px;
+    border-radius:6px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    padding:25px;
+    border-radius:14px;
+    box-shadow:0 3px 12px #0001;
+    margin-bottom:20px;
+}
+
+.hero h1{
+    color:#063d25;
+    margin-top:0;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+    margin:20px 0;
+}
+
+.card{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 2px 10px #0001;
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+    margin-bottom:5px;
+}
+
+.section{
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    margin:20px 0;
+    box-shadow:0 2px 10px #0001;
+}
+
+.section h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:10px;
+}
+
+.step{
+    background:#eef5f0;
+    border-left:5px solid #0b6b3d;
+    padding:13px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+form{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:12px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccd8d0;
+    border-radius:7px;
+    font-size:14px;
+}
+
+textarea{
+    min-height:90px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:11px 16px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1250px;
+}
+
+th,td{
+    padding:9px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+    white-space:nowrap;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+.status{
+    padding:5px 8px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:bold;
+    background:#e8f5ea;
+    color:#17652f;
+}
+
+.warning{
+    background:#fff8df;
+    border-left:5px solid #d6a400;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
+}
+
+.search-row{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.alarm{
+    background:#fff0f0;
+    border-left:5px solid #c62828;
+    padding:14px;
+    border-radius:8px;
+    margin:8px 0;
+}
+
+.monitor{
+    background:#063d25;
+    color:white;
+    border-radius:12px;
+    padding:20px;
+}
+
+.monitor-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:12px;
+}
+
+.monitor-box{
+    background:#0b6b3d;
+    padding:15px;
+    border-radius:9px;
+}
+
+.monitor-box span{
+    display:block;
+    color:#b7ff35;
+    font-size:22px;
+    font-weight:bold;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:700px){
+    .search-row{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:12px;
+    }
+
+    header{
+        padding:22px 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <div class="logo">WORKER PRO</div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+    <div class="badge">TESTING №243</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+    <h1>Thermal Interface Monitoring & Alarm Testing</h1>
+
+    <p>
+        Промышленный раздел для мониторинга теплового интерфейса,
+        контроля температуры и теплового потока, регистрации отклонений
+        и автоматического обнаружения аварийных состояний.
+    </p>
+
+    <p>
+        Основная задача — не просто измерить один параметр,
+        а постоянно контролировать состояние интерфейса и фиксировать
+        момент выхода параметров за установленные пределы.
+    </p>
+</section>
+
+<section class="monitor">
+
+    <h2 style="color:#b7ff35">LIVE MONITORING DEMO</h2>
+
+    <div class="monitor-grid">
+
+        <div class="monitor-box">
+            Interface Temperature
+            <span id="liveTemp">72.4 °C</span>
+        </div>
+
+        <div class="monitor-box">
+            Heat Flux
+            <span id="liveFlux">12.8 kW/m²</span>
+        </div>
+
+        <div class="monitor-box">
+            Alarm Threshold
+            <span id="liveAlarm">90 °C</span>
+        </div>
+
+        <div class="monitor-box">
+            System Status
+            <span id="liveStatus">NORMAL</span>
+        </div>
+
+    </div>
+
+    <br>
+
+    <button class="action" onclick="simulateMonitoring()">
+        Start Monitoring Demo
+    </button>
+
+</section>
+
+<div class="stats">
+
+    <div class="stat">
+        <strong>151</strong>
+        Monitoring Programs
+    </div>
+
+    <div class="stat">
+        <strong>7,840</strong>
+        Monitoring Records
+    </div>
+
+    <div class="stat">
+        <strong>67</strong>
+        Lab Teams
+    </div>
+
+    <div class="stat">
+        <strong>99.9%</strong>
+        Data Completeness
+    </div>
+
+</div>
+
+<section class="section">
+
+<h2>Основные параметры</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Temperature</h3>
+<p>Hot Temperature</p>
+<p>Cold Temperature</p>
+<p>Interface Temperature</p>
+<p>Temperature Difference</p>
+</div>
+
+<div class="card">
+<h3>Heat Transfer</h3>
+<p>Heat Flux</p>
+<p>Heat Transfer Rate</p>
+<p>Thermal Conductance</p>
+<p>Thermal Resistance</p>
+</div>
+
+<div class="card">
+<h3>Interface</h3>
+<p>Contact Pressure</p>
+<p>Contact Area</p>
+<p>Surface Roughness</p>
+<p>Material Pair</p>
+</div>
+
+<div class="card">
+<h3>Alarm Control</h3>
+<p>Alarm Threshold</p>
+<p>Warning Threshold</p>
+<p>Alarm Duration</p>
+<p>Event Time</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Методы мониторинга</h2>
+
+<div class="grid">
+
+<div class="card">Real-Time Thermal Monitoring</div>
+<div class="card">Temperature Sensor Monitoring</div>
+<div class="card">Heat Flux Monitoring</div>
+<div class="card">Continuous Data Logging</div>
+<div class="card">Periodic Monitoring</div>
+<div class="card">Alarm Event Monitoring</div>
+<div class="card">Trend Monitoring</div>
+<div class="card">Sensor-Based Monitoring</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Для чего используется</h2>
+
+<div class="grid">
+
+<div class="card">Power Electronics</div>
+<div class="card">Semiconductors</div>
+<div class="card">Battery Systems</div>
+<div class="card">Heat Exchangers</div>
+<div class="card">Automotive</div>
+<div class="card">Aerospace</div>
+<div class="card">Data Centers</div>
+<div class="card">Industrial Cooling</div>
+<div class="card">Oil & Gas Equipment</div>
+<div class="card">Thermal Interface Materials</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Workflow</h2>
+
+<div class="workflow">
+
+<div class="step">1. Define Monitoring Target</div>
+<div class="step">2. Select Sensors</div>
+<div class="step">3. Define Limits</div>
+<div class="step">4. Install Sensors</div>
+<div class="step">5. Calibrate System</div>
+<div class="step">6. Start Monitoring</div>
+<div class="step">7. Collect Data</div>
+<div class="step">8. Detect Alarm</div>
+<div class="step">9. Analyze Event</div>
+<div class="step">10. Technical Report</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Alarm Event Log</h2>
+
+<div id="alarmLog">
+
+<div class="alarm">
+<strong>ALM-243-001</strong><br>
+Interface temperature reached 91.2 °C.
+Threshold: 90 °C.
+Status: Review Required.
+</div>
+
+<div class="alarm">
+<strong>ALM-243-002</strong><br>
+Heat flux exceeded configured warning level.
+Status: Monitoring.
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Test Records</h2>
+
+<div class="search-row">
+
+<input
+    id="search"
+    type="text"
+    placeholder="Search sample, country, material..."
+    oninput="filterTable()"
+>
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">All Status</option>
+<option value="Normal">Normal</option>
+<option value="Alarm">Alarm</option>
+<option value="Review">Review</option>
+</select>
+
+<select id="countryFilter" onchange="filterTable()">
+<option value="">All Countries</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Turkey">Turkey</option>
+<option value="Germany">Germany</option>
+<option value="Italy">Italy</option>
+<option value="China">China</option>
+<option value="USA">USA</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="recordsTable">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Sample</th>
+<th>Country</th>
+<th>Method</th>
+<th>Material Pair</th>
+<th>Pressure MPa</th>
+<th>Area cm²</th>
+<th>Hot °C</th>
+<th>Cold °C</th>
+<th>Interface °C</th>
+<th>Heat Flux W/m²</th>
+<th>Alarm °C</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>TMA-AZ-2026-001</td>
+<td>Power Module Interface</td>
+<td>Azerbaijan</td>
+<td>Real-Time Monitoring</td>
+<td>Silicon/Copper</td>
+<td>0.80</td>
+<td>25</td>
+<td>95</td>
+<td>45</td>
+<td>72</td>
+<td>12800</td>
+<td>90</td>
+<td><span class="status">Normal</span></td>
+</tr>
+
+<tr>
+<td>TMA-TR-2026-002</td>
+<td>Battery Interface</td>
+<td>Turkey</td>
+<td>Sensor Monitoring</td>
+<td>Aluminum/TIM</td>
+<td>1.20</td>
+<td>48</td>
+<td>82</td>
+<td>35</td>
+<td>68</td>
+<td>10400</td>
+<td>85</td>
+<td><span class="status">Normal</span></td>
+</tr>
+
+<tr>
+<td>TMA-DE-2026-003</td>
+<td>Composite Interface</td>
+<td>Germany</td>
+<td>Trend Monitoring</td>
+<td>Carbon/Polymer</td>
+<td>0.55</td>
+<td>80</td>
+<td>100</td>
+<td>40</td>
+<td>91</td>
+<td>13900</td>
+<td>90</td>
+<td><span class="status">Alarm</span></td>
+</tr>
+
+<tr>
+<td>TMA-IT-2026-004</td>
+<td>Heat Exchanger Interface</td>
+<td>Italy</td>
+<td>Heat Flux Monitoring</td>
+<td>Copper/Steel</td>
+<td>1.00</td>
+<td>120</td>
+<td>115</td>
+<td>50</td>
+<td>82</td>
+<td>15400</td>
+<td>95</td>
+<td><span class="status">Normal</span></td>
+</tr>
+
+<tr>
+<td>TMA-CN-2026-005</td>
+<td>Ceramic Power Interface</td>
+<td>China</td>
+<td>Alarm Monitoring</td>
+<td>Ceramic/Copper</td>
+<td>1.35</td>
+<td>32</td>
+<td>130</td>
+<td>55</td>
+<td>96</td>
+<td>18500</td>
+<td>90</td>
+<td><span class="status">Alarm</span></td>
+</tr>
+
+<tr>
+<td>TMA-US-2026-006</td>
+<td>Aerospace Interface</td>
+<td>USA</td>
+<td>Continuous Logging</td>
+<td>Nickel/Composite</td>
+<td>0.70</td>
+<td>64</td>
+<td>155</td>
+<td>60</td>
+<td>88</td>
+<td>11800</td>
+<td>95</td>
+<td><span class="status">Review</span></td>
+</tr>
+
+</tbody>
+</table>
+
+</div>
+
+<br>
+
+<button class="action" onclick="downloadCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="addDemoRecord()">
+Add Test Record Demo
+</button>
+
+<button class="action" onclick="technicalReport()">
+Demo Technical Report
+</button>
+
+</section>
+
+<section class="section">
+
+<h2>Add Monitoring Record</h2>
+
+<form id="testForm">
+
+<input id="sample" placeholder="Sample name" required>
+
+<select id="country" required>
+<option value="">Country</option>
+<option>Azerbaijan</option>
+<option>Turkey</option>
+<option>Germany</option>
+<option>Italy</option>
+<option>China</option>
+<option>USA</option>
+</select>
+
+<select id="method">
+<option>Real-Time Monitoring</option>
+<option>Sensor Monitoring</option>
+<option>Heat Flux Monitoring</option>
+<option>Continuous Data Logging</option>
+<option>Periodic Monitoring</option>
+<option>Alarm Event Monitoring</option>
+</select>
+
+<input id="material" placeholder="Material Pair">
+
+<input id="pressure" type="number" step="0.01" placeholder="Pressure MPa">
+
+<input id="area" type="number" step="0.01" placeholder="Area cm²">
+
+<input id="hot" type="number" step="0.1" placeholder="Hot °C">
+
+<input id="cold" type="number" step="0.1" placeholder="Cold °C">
+
+<input id="interfaceTemp" type="number" step="0.1" placeholder="Interface °C">
+
+<input id="flux" type="number" step="0.1" placeholder="Heat Flux W/m²">
+
+<input id="alarm" type="number" step="0.1" placeholder="Alarm Threshold °C">
+
+<input id="duration" type="number" step="1" placeholder="Monitoring Duration s">
+
+<textarea id="notes" class="full" placeholder="Monitoring notes"></textarea>
+
+<button class="action full" type="submit">
+Save Monitoring Record Demo
+</button>
+
+</form>
+
+</section>
+
+<section class="section">
+
+<h2>Alarm Rules</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Normal</h3>
+<p>Measured value remains below the configured warning threshold.</p>
+</div>
+
+<div class="card">
+<h3>Warning</h3>
+<p>Parameter approaches the configured operating limit.</p>
+</div>
+
+<div class="card">
+<h3>Alarm</h3>
+<p>Measured value exceeds the defined alarm threshold.</p>
+</div>
+
+<div class="card">
+<h3>Review</h3>
+<p>Event requires technical investigation and report.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Пример технического отчёта</h2>
+
+<div id="reportBox">
+Нажмите «Demo Technical Report», чтобы сформировать демонстрационный отчёт.
+</div>
+
+<div class="warning">
+<strong>Важно:</strong>
+данная страница является демонстрационной частью WORKER PRO.
+Реальный промышленный мониторинг требует откалиброванных датчиков,
+системы сбора данных, заданных интервалов измерения, правильного
+размещения датчиков, синхронизации времени и утверждённых критериев
+предупреждения и аварии.
+</div>
+
+</section>
+
+</div>
+
+<footer>
+    WORKER PRO — Global Industrial Platform<br><br>
+    Thermal Interface Monitoring & Alarm Testing №243<br><br>
+    F.S.
+</footer>
+
+<script>
+
+function filterTable(){
+
+    const search =
+        document.getElementById("search").value.toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter").value;
+
+    const country =
+        document.getElementById("countryFilter").value;
+
+    const rows =
+        document.querySelectorAll("#recordsTable tbody tr");
+
+    rows.forEach(row=>{
+
+        const text=row.innerText.toLowerCase();
+
+        const rowStatus=row.cells[12].innerText;
+        const rowCountry=row.cells[2].innerText;
+
+        const okSearch=text.includes(search);
+        const okStatus=!status || rowStatus===status;
+        const okCountry=!country || rowCountry===country;
+
+        row.style.display=
+            okSearch && okStatus && okCountry
+            ? ""
+            : "none";
+
+    });
+}
+
+function simulateMonitoring(){
+
+    const temp=document.getElementById("liveTemp");
+    const status=document.getElementById("liveStatus");
+
+    let value=72;
+
+    const interval=setInterval(()=>{
+
+        value += (Math.random()*8)-2;
+
+        temp.innerText=value.toFixed(1)+" °C";
+
+        if(value>=90){
+
+            status.innerText="ALARM";
+            status.style.color="#ff7777";
+
+            clearInterval(interval);
+
+            addAlarmEvent(value);
+
+        }else{
+
+            status.innerText="NORMAL";
+            status.style.color="#b7ff35";
+
+        }
+
+    },800);
+}
+
+function addAlarmEvent(value){
+
+    const log=document.getElementById("alarmLog");
+
+    const div=document.createElement("div");
+
+    div.className="alarm";
+
+    div.innerHTML=
+        "<strong>ALM-243-"+Date.now()+"</strong><br>"+
+        "Interface temperature reached "+
+        value.toFixed(1)+
+        " °C. Alarm threshold exceeded.<br>"+
+        "Status: Review Required.";
+
+    log.prepend(div);
+}
+
+function addDemoRecord(){
+
+    document.getElementById("sample").value=
+        "Demo Thermal Interface";
+
+    document.getElementById("country").value=
+        "Azerbaijan";
+
+    document.getElementById("method").value=
+        "Real-Time Monitoring";
+
+    document.getElementById("material").value=
+        "Copper/TIM";
+
+    document.getElementById("pressure").value=
+        "1.00";
+
+    document.getElementById("area").value=
+        "40";
+
+    document.getElementById("hot").value=
+        "110";
+
+    document.getElementById("cold").value=
+        "45";
+
+    document.getElementById("interfaceTemp").value=
+        "78";
+
+    document.getElementById("flux").value=
+        "13500";
+
+    document.getElementById("alarm").value=
+        "90";
+
+    document.getElementById("duration").value=
+        "600";
+
+    document.getElementById("notes").value=
+        "Demo monitoring record.";
+
+    window.scrollTo({
+        top:document.getElementById("testForm").offsetTop-80,
+        behavior:"smooth"
+    });
+}
+
+document.getElementById("testForm")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const sample=
+        document.getElementById("sample").value;
+
+    const country=
+        document.getElementById("country").value;
+
+    const method=
+        document.getElementById("method").value;
+
+    const material=
+        document.getElementById("material").value;
+
+    const pressure=
+        document.getElementById("pressure").value;
+
+    const area=
+        document.getElementById("area").value;
+
+    const hot=
+        Number(document.getElementById("hot").value);
+
+    const cold=
+        Number(document.getElementById("cold").value);
+
+    const interfaceTemp=
+        Number(document.getElementById("interfaceTemp").value);
+
+    const flux=
+        document.getElementById("flux").value;
+
+    const alarm=
+        Number(document.getElementById("alarm").value);
+
+    const deltaT=
+        hot-cold;
+
+    let status="Normal";
+
+    if(interfaceTemp>=alarm){
+        status="Alarm";
+    }else if(interfaceTemp>=alarm*0.9){
+        status="Review";
+    }
+
+    const id=
+        "TMA-DEMO-"+Date.now();
+
+    const tbody=
+        document.querySelector("#recordsTable tbody");
+
+    const row=
+        document.createElement("tr");
+
+    row.innerHTML=`
+        <td>${id}</td>
+        <td>${sample}</td>
+        <td>${country}</td>
+        <td>${method}</td>
+        <td>${material}</td>
+        <td>${pressure}</td>
+        <td>${area}</td>
+        <td>${hot}</td>
+        <td>${cold}</td>
+        <td>${interfaceTemp}</td>
+        <td>${flux}</td>
+        <td>${alarm}</td>
+        <td><span class="status">${status}</span></td>
+    `;
+
+    tbody.prepend(row);
+
+    alert(
+        "Monitoring Record создан.\n"+
+        "ID: "+id+
+        "\nΔT: "+deltaT.toFixed(1)+" °C"+
+        "\nStatus: "+status
+    );
+
+    this.reset();
+
+});
+
+function technicalReport(){
+
+    const report=document.getElementById("reportBox");
+
+    report.innerHTML=`
+
+    <h3>WORKER PRO — Demo Technical Report</h3>
+
+    <p><strong>Test:</strong>
+    Thermal Interface Monitoring & Alarm Testing</p>
+
+    <p><strong>Monitoring objective:</strong>
+    Continuous observation of interface temperature,
+    heat flux and alarm conditions.</p>
+
+    <p><strong>Measured parameters:</strong>
+    Interface Temperature, Hot Temperature, Cold Temperature,
+    Heat Flux, Monitoring Interval and Alarm Threshold.</p>
+
+    <p><strong>Alarm evaluation:</strong>
+    Compare each measured value with the configured operating
+    and alarm limits.</p>
+
+    <p><strong>Event analysis:</strong>
+    Record timestamp, measured value, threshold,
+    duration and system status.</p>
+
+    <p><strong>Result:</strong>
+    Demonstration report generated successfully.</p>
+
+    `;
+
+}
+
+function downloadCSV(){
+
+    const table=
+        document.getElementById("recordsTable");
+
+    let csv=[];
+
+    const rows=
+        table.querySelectorAll("tr");
+
+    rows.forEach(row=>{
+
+        const cols=
+            row.querySelectorAll("th,td");
+
+        const data=[];
+
+        cols.forEach(col=>{
+
+            let value=
+                col.innerText
+                .replace(/"/g,'""');
+
+            data.push('"'+value+'"');
+
+        });
+
+        csv.push(data.join(","));
+
+    });
+
+    const blob=
+        new Blob(
+            [csv.join("\n")],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+    const url=
+        URL.createObjectURL(blob);
+
+    const a=
+        document.createElement("a");
+
+    a.href=url;
+
+    a.download=
+        "worker-pro-thermal-interface-monitoring-alarm-testing.csv";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+
+}
+
+</script>
+
+</body>
+</html>
