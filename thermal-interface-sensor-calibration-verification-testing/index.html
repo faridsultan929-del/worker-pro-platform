@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Calibration Verification Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#063d25;
+    padding:8px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+}
+
+.top-languages button{
+    border:0;
+    border-radius:6px;
+    padding:7px 11px;
+    background:#0b6b3d;
+    color:#fff;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+header{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    text-align:center;
+    padding:28px 15px;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:6px;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:14px;
+    padding:8px 14px;
+    border-radius:20px;
+    background:#b7ff35;
+    color:#063d25;
+    font-weight:bold;
+}
+
+nav{
+    background:#075b34;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    padding:8px 10px;
+    border-radius:6px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,.section{
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px #0001;
+}
+
+.hero h1,.section h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:white;
+    padding:17px;
+    border-radius:12px;
+    box-shadow:0 2px 9px #0001;
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:18px;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+    margin-bottom:5px;
+}
+
+.verification-panel{
+    background:#063d25;
+    color:#fff;
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:20px;
+}
+
+.verify-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:12px;
+}
+
+.verify-box{
+    background:#0b6b3d;
+    padding:15px;
+    border-radius:9px;
+}
+
+.verify-box span{
+    display:block;
+    color:#b7ff35;
+    font-size:21px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.pass{color:#b7ff35!important}
+.fail{color:#ff7777!important}
+.review{color:#ffd45a!important}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+}
+
+.step{
+    background:#eef5f0;
+    border-left:5px solid #0b6b3d;
+    padding:13px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.search-row{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccd8d0;
+    border-radius:7px;
+    font-size:14px;
+}
+
+textarea{
+    min-height:90px;
+}
+
+form{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:12px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+button.action{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:11px 16px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:4px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1400px;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:9px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+    white-space:nowrap;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+.status{
+    padding:5px 8px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:bold;
+    background:#e8f5ea;
+    color:#17652f;
+}
+
+.event{
+    padding:13px;
+    border-radius:8px;
+    margin:8px 0;
+    background:#f0f7f2;
+    border-left:5px solid #0b6b3d;
+}
+
+.event.fail-event{
+    background:#fff0f0;
+    border-left-color:#c62828;
+}
+
+.event.review-event{
+    background:#fff8df;
+    border-left-color:#d6a400;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #d6a400;
+    padding:15px;
+    border-radius:8px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:700px){
+    .search-row{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <div class="logo">WORKER PRO</div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+    <div class="badge">TESTING №245</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+
+<h1>Thermal Interface Sensor Calibration Verification Testing</h1>
+
+<p>
+Раздел для проверки того, соответствует ли фактическое показание
+датчика установленному эталонному значению в определённых точках
+калибровочного диапазона.
+</p>
+
+<p>
+Здесь основной объект проверки — <strong>калибровочная точность</strong>:
+Reference → Measured → Error → Tolerance → Result.
+</p>
+
+</section>
+
+<section class="verification-panel">
+
+<h2 style="color:#b7ff35;margin-top:0">
+CALIBRATION VERIFICATION DEMO
+</h2>
+
+<div class="verify-grid">
+
+<div class="verify-box">
+Reference
+<span id="referenceValue">75.0 °C</span>
+</div>
+
+<div class="verify-box">
+Measured
+<span id="measuredValue">75.3 °C</span>
+</div>
+
+<div class="verify-box">
+Error
+<span id="errorValue">+0.3 °C</span>
+</div>
+
+<div class="verify-box">
+Tolerance
+<span id="toleranceValue">±1.0 °C</span>
+</div>
+
+<div class="verify-box">
+Calibration Status
+<span id="calibrationStatus">VALID</span>
+</div>
+
+<div class="verify-box">
+Result
+<span id="verificationResult">PASS</span>
+</div>
+
+</div>
+
+<br>
+
+<button class="action" onclick="runVerification()">
+Run Verification
+</button>
+
+<button class="action" onclick="simulateFailure()">
+Simulate Calibration Failure
+</button>
+
+</section>
+
+<div class="stats">
+
+<div class="stat">
+<strong>155</strong>
+Calibration Programs
+</div>
+
+<div class="stat">
+<strong>8,260</strong>
+Verification Records
+</div>
+
+<div class="stat">
+<strong>69</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Verification Completeness
+</div>
+
+</div>
+
+<section class="section">
+
+<h2>Что проверяется</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Reference Point</h3>
+<p>Эталонное значение, с которым сравнивается датчик.</p>
+</div>
+
+<div class="card">
+<h3>Measured Value</h3>
+<p>Фактическое показание проверяемого датчика.</p>
+</div>
+
+<div class="card">
+<h3>Measurement Error</h3>
+<p>Разница между измеренным и эталонным значением.</p>
+</div>
+
+<div class="card">
+<h3>Tolerance</h3>
+<p>Допустимое отклонение, установленное процедурой.</p>
+</div>
+
+<div class="card">
+<h3>Calibration Status</h3>
+<p>Проверка актуальности калибровки.</p>
+</div>
+
+<div class="card">
+<h3>Verification Result</h3>
+<p>PASS, REVIEW или FAIL.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Калибровочные точки</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Low Point</h3>
+<p>Нижняя точка рабочего диапазона.</p>
+</div>
+
+<div class="card">
+<h3>Mid Point</h3>
+<p>Средняя точка рабочего диапазона.</p>
+</div>
+
+<div class="card">
+<h3>High Point</h3>
+<p>Верхняя точка рабочего диапазона.</p>
+</div>
+
+<div class="card">
+<h3>Multi-Point</h3>
+<p>Проверка нескольких точек для оценки поведения датчика по диапазону.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Параметры</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Calibration</h3>
+<p>Calibration Date</p>
+<p>Next Verification Date</p>
+<p>Calibration Certificate</p>
+</div>
+
+<div class="card">
+<h3>Measurement</h3>
+<p>Reference Value</p>
+<p>Measured Value</p>
+<p>Error</p>
+</div>
+
+<div class="card">
+<h3>Acceptance</h3>
+<p>Tolerance</p>
+<p>Pass/Fail Limit</p>
+<p>Verification Result</p>
+</div>
+
+<div class="card">
+<h3>Environment</h3>
+<p>Ambient Temperature</p>
+<p>Test Conditions</p>
+<p>Stabilization Time</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Методы проверки</h2>
+
+<div class="grid">
+
+<div class="card">Single-Point Verification</div>
+<div class="card">Two-Point Verification</div>
+<div class="card">Multi-Point Verification</div>
+<div class="card">Reference Comparison</div>
+<div class="card">Calibration Certificate Review</div>
+<div class="card">Tolerance Verification</div>
+<div class="card">As-Found Verification</div>
+<div class="card">As-Left Verification</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Workflow</h2>
+
+<div class="workflow">
+
+<div class="step">1. Identify Sensor</div>
+<div class="step">2. Check Certificate</div>
+<div class="step">3. Select Reference</div>
+<div class="step">4. Stabilize Sensor</div>
+<div class="step">5. Apply Reference</div>
+<div class="step">6. Record Measurement</div>
+<div class="step">7. Calculate Error</div>
+<div class="step">8. Compare Tolerance</div>
+<div class="step">9. Determine Result</div>
+<div class="step">10. Issue Report</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Verification Event Log</h2>
+
+<div id="eventLog">
+
+<div class="event">
+<strong>CAL-245-001</strong><br>
+Sensor S-001: reference 75.0 °C,
+measured 75.3 °C, error +0.3 °C.
+Result: PASS.
+</div>
+
+<div class="event review-event">
+<strong>CAL-245-002</strong><br>
+Sensor S-014: error +0.8 °C.
+Tolerance approaching limit.
+Result: REVIEW.
+</div>
+
+<div class="event fail-event">
+<strong>CAL-245-003</strong><br>
+Sensor S-022: error +2.4 °C.
+Allowed tolerance ±1.0 °C exceeded.
+Result: FAIL.
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Calibration Verification Records</h2>
+
+<div class="search-row">
+
+<input
+id="search"
+placeholder="Search sensor, sample, country..."
+oninput="filterTable()"
+>
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">All Results</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+<select id="countryFilter" onchange="filterTable()">
+<option value="">All Countries</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Turkey">Turkey</option>
+<option value="Germany">Germany</option>
+<option value="Italy">Italy</option>
+<option value="China">China</option>
+<option value="USA">USA</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="recordsTable">
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Sensor</th>
+<th>Country</th>
+<th>Type</th>
+<th>Sample</th>
+<th>Reference °C</th>
+<th>Measured °C</th>
+<th>Error °C</th>
+<th>Tolerance °C</th>
+<th>Calibration Date</th>
+<th>Next Verification</th>
+<th>Certificate</th>
+<th>Result</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>CV-AZ-2026-001</td>
+<td>S-001</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>Power Module</td>
+<td>75.0</td>
+<td>75.3</td>
+<td>+0.3</td>
+<td>±1.0</td>
+<td>2026-06-12</td>
+<td>2027-06-12</td>
+<td>Valid</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+<tr>
+<td>CV-TR-2026-002</td>
+<td>S-014</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>Battery Interface</td>
+<td>80.0</td>
+<td>80.8</td>
+<td>+0.8</td>
+<td>±1.0</td>
+<td>2026-04-20</td>
+<td>2027-04-20</td>
+<td>Valid</td>
+<td><span class="status">REVIEW</span></td>
+</tr>
+
+<tr>
+<td>CV-DE-2026-003</td>
+<td>S-022</td>
+<td>Germany</td>
+<td>Thermistor</td>
+<td>Composite Interface</td>
+<td>70.0</td>
+<td>72.4</td>
+<td>+2.4</td>
+<td>±1.0</td>
+<td>2025-09-15</td>
+<td>2026-09-15</td>
+<td>Expired</td>
+<td><span class="status">FAIL</span></td>
+</tr>
+
+<tr>
+<td>CV-IT-2026-004</td>
+<td>S-031</td>
+<td>Italy</td>
+<td>RTD</td>
+<td>Heat Exchanger</td>
+<td>90.0</td>
+<td>89.7</td>
+<td>-0.3</td>
+<td>±1.0</td>
+<td>2026-07-03</td>
+<td>2027-07-03</td>
+<td>Valid</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+<tr>
+<td>CV-CN-2026-005</td>
+<td>S-044</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>Ceramic Interface</td>
+<td>100.0</td>
+<td>101.1</td>
+<td>+1.1</td>
+<td>±1.0</td>
+<td>2026-02-11</td>
+<td>2027-02-11</td>
+<td>Valid</td>
+<td><span class="status">FAIL</span></td>
+</tr>
+
+<tr>
+<td>CV-US-2026-006</td>
+<td>S-051</td>
+<td>USA</td>
+<td>Fiber Sensor</td>
+<td>Aerospace Interface</td>
+<td>110.0</td>
+<td>109.6</td>
+<td>-0.4</td>
+<td>±1.0</td>
+<td>2026-05-29</td>
+<td>2027-05-29</td>
+<td>Valid</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<br>
+
+<button class="action" onclick="downloadCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="loadDemoRecord()">
+Add Verification Demo
+</button>
+
+<button class="action" onclick="technicalReport()">
+Demo Calibration Report
+</button>
+
+</section>
+
+<section class="section">
+
+<h2>Add Calibration Verification Record</h2>
+
+<form id="testForm">
+
+<input id="sensorId" placeholder="Sensor ID" required>
+
+<input id="sample" placeholder="Sample">
+
+<select id="country">
+<option>Azerbaijan</option>
+<option>Turkey</option>
+<option>Germany</option>
+<option>Italy</option>
+<option>China</option>
+<option>USA</option>
+</select>
+
+<select id="sensorType">
+<option>RTD</option>
+<option>Thermocouple</option>
+<option>Thermistor</option>
+<option>Fiber Sensor</option>
+<option>Infrared Sensor</option>
+</select>
+
+<input
+id="reference"
+type="number"
+step="0.1"
+placeholder="Reference °C"
+required
+>
+
+<input
+id="measured"
+type="number"
+step="0.1"
+placeholder="Measured °C"
+required
+>
+
+<input
+id="tolerance"
+type="number"
+step="0.1"
+value="1.0"
+placeholder="Tolerance °C"
+required
+>
+
+<input
+id="calDate"
+type="date"
+>
+
+<input
+id="nextDate"
+type="date"
+>
+
+<select id="certificate">
+<option>Valid</option>
+<option>Due</option>
+<option>Expired</option>
+<option>Not Available</option>
+</select>
+
+<input
+id="ambient"
+type="number"
+step="0.1"
+placeholder="Ambient °C"
+>
+
+<textarea
+id="notes"
+class="full"
+placeholder="Verification notes"
+></textarea>
+
+<button class="action full" type="submit">
+Save Verification Record Demo
+</button>
+
+</form>
+
+</section>
+
+<section class="section">
+
+<h2>Результаты проверки</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>PASS</h3>
+<p>Абсолютная ошибка находится в пределах установленного допуска.</p>
+</div>
+
+<div class="card">
+<h3>REVIEW</h3>
+<p>Результат требует дополнительной оценки, например при приближении к пределу или проблемах с документацией.</p>
+</div>
+
+<div class="card">
+<h3>FAIL</h3>
+<p>Ошибка превышает установленный допуск или калибровочный статус неприемлем.</p>
+</div>
+
+<div class="card">
+<h3>Certificate</h3>
+<p>Калибровочный сертификат должен быть действительным и прослеживаемым.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Demo Calibration Report</h2>
+
+<div id="reportBox">
+Нажмите «Demo Calibration Report», чтобы сформировать демонстрационный отчёт.
+</div>
+
+<div class="notice">
+
+<strong>Важно:</strong>
+это демонстрационный интерфейс WORKER PRO.
+Реальная проверка калибровки должна выполняться с использованием
+прослеживаемого эталона, утверждённой процедуры, подходящего диапазона,
+контролируемых условий и требований применимого стандарта.
+Демонстрационный расчёт не является действительным калибровочным сертификатом.
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+
+WORKER PRO — Global Industrial Platform<br><br>
+Thermal Interface Sensor Calibration Verification Testing №245<br><br>
+F.S.
+
+</footer>
+
+<script>
+
+function runVerification(){
+
+    const reference=75.0;
+    const measured=75.3;
+    const tolerance=1.0;
+
+    const error=measured-reference;
+
+    document.getElementById("referenceValue")
+        .innerText=reference.toFixed(1)+" °C";
+
+    document.getElementById("measuredValue")
+        .innerText=measured.toFixed(1)+" °C";
+
+    document.getElementById("errorValue")
+        .innerText=(error>=0?"+":"")+error.toFixed(1)+" °C";
+
+    document.getElementById("toleranceValue")
+        .innerText="±"+tolerance.toFixed(1)+" °C";
+
+    document.getElementById("calibrationStatus")
+        .innerText="VALID";
+
+    document.getElementById("calibrationStatus")
+        .className="pass";
+
+    document.getElementById("verificationResult")
+        .innerText="PASS";
+
+    document.getElementById("verificationResult")
+        .className="pass";
+
+    addEvent(
+        "Verification completed. Error "+
+        (error>=0?"+":"")+
+        error.toFixed(1)+
+        " °C is within ±"+
+        tolerance.toFixed(1)+
+        " °C tolerance.",
+        ""
+    );
+}
+
+function simulateFailure(){
+
+    const reference=75.0;
+    const measured=77.4;
+    const tolerance=1.0;
+
+    const error=measured-reference;
+
+    document.getElementById("referenceValue")
+        .innerText=reference.toFixed(1)+" °C";
+
+    document.getElementById("measuredValue")
+        .innerText=measured.toFixed(1)+" °C";
+
+    document.getElementById("errorValue")
+        .innerText="+"+error.toFixed(1)+" °C";
+
+    document.getElementById("toleranceValue")
+        .innerText="±"+tolerance.toFixed(1)+" °C";
+
+    document.getElementById("calibrationStatus")
+        .innerText="CHECK";
+
+    document.getElementById("calibrationStatus")
+        .className="fail";
+
+    document.getElementById("verificationResult")
+        .innerText="FAIL";
+
+    document.getElementById("verificationResult")
+        .className="fail";
+
+    addEvent(
+        "Calibration verification failed. "+
+        "Error +"+
+        error.toFixed(1)+
+        " °C exceeds ±"+
+        tolerance.toFixed(1)+
+        " °C tolerance.",
+        "fail-event"
+    );
+}
+
+function addEvent(text,type){
+
+    const log=document.getElementById("eventLog");
+
+    const div=document.createElement("div");
+
+    div.className="event "+type;
+
+    div.innerHTML=
+        "<strong>CAL-245-"+Date.now()+
+        "</strong><br>"+text;
+
+    log.prepend(div);
+}
+
+function filterTable(){
+
+    const search=
+        document.getElementById("search")
+        .value.toLowerCase();
+
+    const status=
+        document.getElementById("statusFilter").value;
+
+    const country=
+        document.getElementById("countryFilter").value;
+
+    const rows=
+        document.querySelectorAll(
+            "#recordsTable tbody tr"
+        );
+
+    rows.forEach(row=>{
+
+        const text=row.innerText.toLowerCase();
+
+        const rowStatus=row.cells[12].innerText;
+
+        const rowCountry=row.cells[2].innerText;
+
+        const okSearch=text.includes(search);
+
+        const okStatus=
+            !status || rowStatus===status;
+
+        const okCountry=
+            !country || rowCountry===country;
+
+        row.style.display=
+            okSearch &&
+            okStatus &&
+            okCountry
+            ? ""
+            : "none";
+
+    });
+}
+
+function loadDemoRecord(){
+
+    document.getElementById("sensorId").value=
+        "S-DEMO-245";
+
+    document.getElementById("sample").value=
+        "Demo Thermal Interface";
+
+    document.getElementById("country").value=
+        "Azerbaijan";
+
+    document.getElementById("sensorType").value=
+        "RTD";
+
+    document.getElementById("reference").value=
+        "80";
+
+    document.getElementById("measured").value=
+        "80.4";
+
+    document.getElementById("tolerance").value=
+        "1.0";
+
+    document.getElementById("certificate").value=
+        "Valid";
+
+    document.getElementById("ambient").value=
+        "23";
+
+    document.getElementById("notes").value=
+        "Demo calibration verification.";
+
+    window.scrollTo({
+        top:
+        document.getElementById("testForm").offsetTop-80,
+        behavior:"smooth"
+    });
+}
+
+document.getElementById("testForm")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const sensor=
+        document.getElementById("sensorId").value;
+
+    const sample=
+        document.getElementById("sample").value;
+
+    const country=
+        document.getElementById("country").value;
+
+    const type=
+        document.getElementById("sensorType").value;
+
+    const reference=
+        Number(
+            document.getElementById("reference").value
+        );
+
+    const measured=
+        Number(
+            document.getElementById("measured").value
+        );
+
+    const tolerance=
+        Math.abs(
+            Number(
+                document.getElementById("tolerance").value
+            )
+        );
+
+    const certificate=
+        document.getElementById("certificate").value;
+
+    const calDate=
+        document.getElementById("calDate").value;
+
+    const nextDate=
+        document.getElementById("nextDate").value;
+
+    const error=measured-reference;
+
+    const absError=Math.abs(error);
+
+    let result="PASS";
+
+    if(
+        absError>tolerance ||
+        certificate==="Expired" ||
+        certificate==="Not Available"
+    ){
+
+        result="FAIL";
+
+    }else if(
+        absError>=tolerance*0.8 ||
+        certificate==="Due"
+    ){
+
+        result="REVIEW";
+    }
+
+    const id=
+        "CV-DEMO-"+Date.now();
+
+    const tbody=
+        document.querySelector(
+            "#recordsTable tbody"
+        );
+
+    const row=
+        document.createElement("tr");
+
+    row.innerHTML=`
+
+        <td>${id}</td>
+        <td>${sensor}</td>
+        <td>${country}</td>
+        <td>${type}</td>
+        <td>${sample}</td>
+        <td>${reference.toFixed(1)}</td>
+        <td>${measured.toFixed(1)}</td>
+        <td>${error>=0?"+":""}${error.toFixed(1)}</td>
+        <td>±${tolerance.toFixed(1)}</td>
+        <td>${calDate || "Not entered"}</td>
+        <td>${nextDate || "Not entered"}</td>
+        <td>${certificate}</td>
+        <td><span class="status">${result}</span></td>
+
+    `;
+
+    tbody.prepend(row);
+
+    addEvent(
+        "New verification record "+id+
+        ". Error: "+
+        (error>=0?"+":"")+
+        error.toFixed(1)+
+        " °C. Result: "+result+".",
+        result==="FAIL"
+        ? "fail-event"
+        : result==="REVIEW"
+        ? "review-event"
+        : ""
+    );
+
+    alert(
+        "Calibration Verification создан.\n"+
+        "ID: "+id+
+        "\nError: "+
+        (error>=0?"+":"")+
+        error.toFixed(1)+
+        " °C"+
+        "\nResult: "+result
+    );
+
+    this.reset();
+
+});
+
+function technicalReport(){
+
+    const report=
+        document.getElementById("reportBox");
+
+    report.innerHTML=`
+
+    <h3>WORKER PRO — Demo Calibration Verification Report</h3>
+
+    <p>
+    <strong>Test:</strong>
+    Thermal Interface Sensor Calibration Verification Testing
+    </p>
+
+    <p>
+    <strong>Objective:</strong>
+    Verify the agreement between sensor measurements and
+    traceable reference values within defined tolerance limits.
+    </p>
+
+    <p>
+    <strong>Evaluation:</strong>
+    Reference value, measured value, measurement error,
+    tolerance and calibration documentation were reviewed.
+    </p>
+
+    <p>
+    <strong>Acceptance:</strong>
+    The verification result is determined by comparing the
+    absolute measurement error with the specified tolerance.
+    </p>
+
+    <p>
+    <strong>Result:</strong>
+    Demonstration calibration verification report generated.
+    </p>
+
+    `;
+
+}
+
+function downloadCSV(){
+
+    const table=
+        document.getElementById("recordsTable");
+
+    const rows=
+        table.querySelectorAll("tr");
+
+    let csv=[];
+
+    rows.forEach(row=>{
+
+        const cols=
+            row.querySelectorAll("th,td");
+
+        let data=[];
+
+        cols.forEach(col=>{
+
+            const value=
+                col.innerText
+                .replace(/"/g,'""');
+
+            data.push('"'+value+'"');
+
+        });
+
+        csv.push(data.join(","));
+
+    });
+
+    const blob=
+        new Blob(
+            [csv.join("\n")],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+    const url=
+        URL.createObjectURL(blob);
+
+    const a=
+        document.createElement("a");
+
+    a.href=url;
+
+    a.download=
+        "worker-pro-thermal-interface-sensor-calibration-verification-testing.csv";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>
