@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Sensitivity Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#063d25;
+    padding:8px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+}
+
+.top-languages button{
+    border:0;
+    border-radius:6px;
+    padding:7px 10px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+.logo-title{
+    font-size:34px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:7px;
+    font-size:16px;
+}
+
+nav{
+    background:#0b6b3d;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    padding:10px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    padding:8px 10px;
+    border-radius:6px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    border-left:7px solid #0b6b3d;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.hero h1{
+    margin-top:0;
+    color:#063d25;
+}
+
+.hero p{
+    line-height:1.6;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    font-weight:bold;
+    padding:7px 12px;
+    border-radius:20px;
+}
+
+.section{
+    margin-top:22px;
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+.section h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:#f4f7f5;
+    border-left:5px solid #0b6b3d;
+    padding:16px;
+    border-radius:8px;
+}
+
+.card h3{
+    margin-top:0;
+    color:#0b6b3d;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:18px;
+    border-radius:10px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+}
+
+.step{
+    background:#0b6b3d;
+    color:white;
+    padding:15px;
+    border-radius:8px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:12px;
+}
+
+label{
+    font-weight:bold;
+    color:#063d25;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #b9c8bf;
+    border-radius:7px;
+    font-size:15px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:11px 16px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:6px 5px 6px 0;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+button.secondary{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.result-box{
+    margin-top:15px;
+    padding:18px;
+    background:#eef8f0;
+    border-left:6px solid #0b6b3d;
+    border-radius:8px;
+}
+
+.pass{color:#08752f;font-weight:bold}
+.review{color:#a36a00;font-weight:bold}
+.fail{color:#b00020;font-weight:bold}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1200px;
+}
+
+th{
+    background:#063d25;
+    color:white;
+    padding:10px;
+}
+
+td{
+    padding:9px;
+    border-bottom:1px solid #ddd;
+}
+
+tr:nth-child(even){
+    background:#f4f7f5;
+}
+
+.search-row{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:6px solid #d39e00;
+    padding:15px;
+    border-radius:8px;
+    line-height:1.5;
+}
+
+.monitor{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+.monitor-box{
+    background:#063d25;
+    color:white;
+    border-radius:10px;
+    padding:18px;
+    text-align:center;
+}
+
+.monitor-box strong{
+    display:block;
+    color:#b7ff35;
+    font-size:25px;
+    margin-top:8px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:600px){
+    .logo-title{font-size:27px}
+    .search-row{grid-template-columns:1fr}
+    .container{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <div class="logo-title">WORKER PRO</div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<span class="badge">TESTING #252</span>
+
+<h1>Thermal Interface Sensor Sensitivity Testing</h1>
+
+<p>
+Thermal Interface Sensor Sensitivity Testing evaluates how strongly
+the sensor output changes when the thermal input changes.
+</p>
+
+<p>
+The main characteristic is the sensitivity slope between input
+temperature and sensor output.
+</p>
+
+<p>
+The test can identify sensitivity loss, excessive sensitivity,
+non-uniform response and deviation from the specified sensor
+characteristic.
+</p>
+
+</section>
+
+<section class="section">
+
+<h2>Live Sensitivity Demo</h2>
+
+<div class="monitor">
+
+<div class="monitor-box">
+Temperature Input
+<strong id="inputTemp">100 °C</strong>
+</div>
+
+<div class="monitor-box">
+Sensor Output
+<strong id="outputValue">1.00 V</strong>
+</div>
+
+<div class="monitor-box">
+Measured Sensitivity
+<strong id="sensitivityValue">0.0100 V/°C</strong>
+</div>
+
+<div class="monitor-box">
+Result
+<strong id="sensitivityStatus">PASS</strong>
+</div>
+
+</div>
+
+<br>
+
+<button class="action" onclick="simulateNormal()">
+Simulate Normal Sensitivity
+</button>
+
+<button class="action" onclick="simulateLow()">
+Simulate Low Sensitivity
+</button>
+
+<button class="action" onclick="simulateHigh()">
+Simulate High Sensitivity
+</button>
+
+</section>
+
+<section class="section">
+
+<h2>What Is Tested?</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Input Response</h3>
+<p>Change in sensor output caused by a defined thermal input change.</p>
+</div>
+
+<div class="card">
+<h3>Sensitivity Slope</h3>
+<p>Relationship between sensor output change and temperature change.</p>
+</div>
+
+<div class="card">
+<h3>Reference Sensitivity</h3>
+<p>Comparison with the specified or calibrated sensor sensitivity.</p>
+</div>
+
+<div class="card">
+<h3>Sensitivity Error</h3>
+<p>Difference between measured and reference sensitivity.</p>
+</div>
+
+<div class="card">
+<h3>Multi-Point Response</h3>
+<p>Sensitivity is evaluated across several thermal input points.</p>
+</div>
+
+<div class="card">
+<h3>Operating Range</h3>
+<p>Verification of sensitivity throughout the defined temperature range.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Key Parameters</h2>
+
+<div class="grid">
+
+<div class="card">Reference Temperature</div>
+<div class="card">Measured Temperature</div>
+<div class="card">Reference Output</div>
+<div class="card">Measured Output</div>
+<div class="card">Input Change</div>
+<div class="card">Output Change</div>
+<div class="card">Reference Sensitivity</div>
+<div class="card">Measured Sensitivity</div>
+<div class="card">Sensitivity Error</div>
+<div class="card">Sensitivity Error %</div>
+<div class="card">Temperature Range</div>
+<div class="card">Number of Points</div>
+<div class="card">Linearity of Response</div>
+<div class="card">Calibration Status</div>
+<div class="card">Acceptance Limit</div>
+<div class="card">Final Result</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Sensitivity Testing Methods</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Two-Point Sensitivity</h3>
+<p>Sensitivity is calculated between two defined thermal points.</p>
+</div>
+
+<div class="card">
+<h3>Multi-Point Sensitivity</h3>
+<p>Several reference temperatures are used to evaluate the response.</p>
+</div>
+
+<div class="card">
+<h3>Temperature Ramp</h3>
+<p>The input temperature is gradually changed while sensor output is recorded.</p>
+</div>
+
+<div class="card">
+<h3>Step Response Sensitivity</h3>
+<p>A defined temperature step is applied and output change is measured.</p>
+</div>
+
+<div class="card">
+<h3>Reference Comparison</h3>
+<p>Measured sensitivity is compared with the specified sensor characteristic.</p>
+</div>
+
+<div class="card">
+<h3>Operating Range Test</h3>
+<p>Sensitivity is evaluated across the intended working temperature range.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Industrial Applications</h2>
+
+<div class="grid">
+
+<div class="card">Power Electronics</div>
+<div class="card">Semiconductors</div>
+<div class="card">Battery Systems</div>
+<div class="card">Heat Exchangers</div>
+<div class="card">Industrial Cooling</div>
+<div class="card">Automotive</div>
+<div class="card">Aerospace</div>
+<div class="card">Oil & Gas</div>
+<div class="card">Data Centers</div>
+<div class="card">Thermal Management</div>
+<div class="card">Industrial Equipment</div>
+<div class="card">Thermal Interface Materials</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Testing Workflow</h2>
+
+<div class="workflow">
+
+<div class="step">1. Identify Sensor</div>
+<div class="step">2. Verify Calibration</div>
+<div class="step">3. Define Input Range</div>
+<div class="step">4. Select Reference Points</div>
+<div class="step">5. Apply Thermal Input</div>
+<div class="step">6. Record Sensor Output</div>
+<div class="step">7. Calculate Sensitivity</div>
+<div class="step">8. Compare Reference</div>
+<div class="step">9. Determine Result</div>
+<div class="step">10. Issue Report</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>WORKER PRO Testing Statistics</h2>
+
+<div class="stats">
+
+<div class="stat">
+<strong>169</strong>
+Sensitivity Programs
+</div>
+
+<div class="stat">
+<strong>9,460</strong>
+Sensitivity Records
+</div>
+
+<div class="stat">
+<strong>76</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Sensitivity Calculator</h2>
+
+<p>
+Enter two thermal input points and their sensor outputs.
+The system calculates measured sensitivity and sensitivity error.
+</p>
+
+<div class="form-grid">
+
+<div>
+<label>Reference Sensitivity V/°C</label>
+<input id="referenceSensitivity" type="number" value="0.0100" step="0.0001">
+</div>
+
+<div>
+<label>Initial Temperature °C</label>
+<input id="temp1" type="number" value="50" step="0.1">
+</div>
+
+<div>
+<label>Final Temperature °C</label>
+<input id="temp2" type="number" value="150" step="0.1">
+</div>
+
+<div>
+<label>Initial Output V</label>
+<input id="output1" type="number" value="0.50" step="0.001">
+</div>
+
+<div>
+<label>Final Output V</label>
+<input id="output2" type="number" value="1.50" step="0.001">
+</div>
+
+<div>
+<label>Allowed Sensitivity Error %</label>
+<input id="tolerance" type="number" value="5" step="0.1">
+</div>
+
+</div>
+
+<br>
+
+<button class="action" onclick="calculateSensitivity()">
+Calculate Sensitivity
+</button>
+
+<button class="action secondary" onclick="resetCalculator()">
+Reset
+</button>
+
+<div id="calcResult" class="result-box">
+Enter test values and calculate the sensitivity result.
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Sensitivity Test Records</h2>
+
+<div class="search-row">
+
+<input
+id="searchInput"
+type="text"
+placeholder="Search sensor, country, ID..."
+oninput="filterTable()">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="all">All Status</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="recordsTable">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sensor</th>
+<th>Temp 1 °C</th>
+<th>Temp 2 °C</th>
+<th>Output 1 V</th>
+<th>Output 2 V</th>
+<th>Measured Sensitivity</th>
+<th>Error %</th>
+<th>Result</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>SEN-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>Thermal Sensor A</td>
+<td>50</td>
+<td>150</td>
+<td>0.500</td>
+<td>1.500</td>
+<td>0.0100</td>
+<td>0.0</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>SEN-DE-2026-002</td>
+<td>Germany</td>
+<td>Interface Sensor B</td>
+<td>40</td>
+<td>140</td>
+<td>0.400</td>
+<td>1.420</td>
+<td>0.0102</td>
+<td>2.0</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>SEN-TR-2026-003</td>
+<td>Turkey</td>
+<td>Temperature Probe</td>
+<td>60</td>
+<td>160</td>
+<td>0.600</td>
+<td>1.645</td>
+<td>0.01045</td>
+<td>4.5</td>
+<td class="review">REVIEW</td>
+</tr>
+
+<tr>
+<td>SEN-IT-2026-004</td>
+<td>Italy</td>
+<td>Thermal Sensor C</td>
+<td>50</td>
+<td>150</td>
+<td>0.500</td>
+<td>1.570</td>
+<td>0.0107</td>
+<td>7.0</td>
+<td class="fail">FAIL</td>
+</tr>
+
+<tr>
+<td>SEN-US-2026-005</td>
+<td>USA</td>
+<td>High Temperature Sensor</td>
+<td>100</td>
+<td>200</td>
+<td>1.000</td>
+<td>2.030</td>
+<td>0.0103</td>
+<td>3.0</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>SEN-CN-2026-006</td>
+<td>China</td>
+<td>Thermal Interface Probe</td>
+<td>30</td>
+<td>130</td>
+<td>0.300</td>
+<td>1.340</td>
+<td>0.0104</td>
+<td>4.0</td>
+<td class="review">REVIEW</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<br>
+
+<button class="action" onclick="addTestRecord()">
+Add Test Record — Demo
+</button>
+
+<button class="action" onclick="downloadCSV()">
+Export CSV
+</button>
+
+<button class="action secondary" onclick="technicalReport()">
+Demo Technical Report
+</button>
+
+</section>
+
+<section class="section">
+
+<h2>Sensitivity Event Log</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Time</th>
+<th>Sensor</th>
+<th>Input Change</th>
+<th>Output Change</th>
+<th>Sensitivity</th>
+<th>Reference</th>
+<th>Error</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="eventBody">
+
+<tr>
+<td>09:15</td>
+<td>Sensor A</td>
+<td>100 °C</td>
+<td>1.000 V</td>
+<td>0.0100 V/°C</td>
+<td>0.0100</td>
+<td>0.0%</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>11:30</td>
+<td>Sensor B</td>
+<td>100 °C</td>
+<td>1.020 V</td>
+<td>0.0102 V/°C</td>
+<td>0.0100</td>
+<td>2.0%</td>
+<td class="pass">PASS</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Quality Decision</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>PASS</h3>
+<p>
+Measured sensitivity remains within the defined acceptance range.
+</p>
+</div>
+
+<div class="card">
+<h3>REVIEW</h3>
+<p>
+Sensitivity deviation is approaching the specified acceptance limit.
+</p>
+</div>
+
+<div class="card">
+<h3>FAIL</h3>
+<p>
+Measured sensitivity exceeds the defined acceptance limit.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Technical Report</h2>
+
+<ul>
+<li>Sensor identification</li>
+<li>Temperature input points</li>
+<li>Sensor output points</li>
+<li>Input temperature change</li>
+<li>Output signal change</li>
+<li>Reference sensitivity</li>
+<li>Measured sensitivity</li>
+<li>Sensitivity error</li>
+<li>Sensitivity error percentage</li>
+<li>Operating temperature range</li>
+<li>Calibration information</li>
+<li>Acceptance criterion</li>
+<li>Final result</li>
+</ul>
+
+</section>
+
+<section class="section">
+
+<div class="notice">
+
+<strong>Important:</strong>
+This WORKER PRO page is a demonstration interface.
+Real sensor sensitivity testing depends on sensor technology,
+output type, calibration, temperature range, reference equipment,
+thermal stabilization and the applicable technical standard.
+
+Actual laboratory testing requires calibrated reference equipment,
+controlled thermal conditions and defined acceptance criteria.
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Thermal Interface Sensor Sensitivity Testing #252<br><br>
+F.S. — WORKER PRO
+</footer>
+
+<script>
+
+function n(id){
+    return parseFloat(document.getElementById(id).value);
+}
+
+function sensitivityData(){
+
+    const reference = n("referenceSensitivity");
+    const temp1 = n("temp1");
+    const temp2 = n("temp2");
+    const output1 = n("output1");
+    const output2 = n("output2");
+    const tolerance = n("tolerance");
+
+    const values=[
+        reference,
+        temp1,
+        temp2,
+        output1,
+        output2,
+        tolerance
+    ];
+
+    if(values.some(Number.isNaN)){
+        return null;
+    }
+
+    const deltaT = temp2 - temp1;
+    const deltaOutput = output2 - output1;
+
+    if(deltaT === 0 || reference === 0 || tolerance < 0){
+        return null;
+    }
+
+    const measured =
+        deltaOutput / deltaT;
+
+    const error =
+        ((measured-reference)/Math.abs(reference))*100;
+
+    const absoluteError =
+        Math.abs(error);
+
+    let result="PASS";
+    let cls="pass";
+
+    if(absoluteError > tolerance){
+
+        result="FAIL";
+        cls="fail";
+
+    }else if(absoluteError >= tolerance*0.8){
+
+        result="REVIEW";
+        cls="review";
+    }
+
+    return {
+        reference,
+        temp1,
+        temp2,
+        output1,
+        output2,
+        tolerance,
+        deltaT,
+        deltaOutput,
+        measured,
+        error,
+        absoluteError,
+        result,
+        cls
+    };
+}
+
+function calculateSensitivity(){
+
+    const d=sensitivityData();
+
+    if(!d){
+
+        document.getElementById("calcResult").innerHTML=
+        "<strong>Please enter valid test values.</strong>";
+
+        return;
+    }
+
+    document.getElementById("calcResult").innerHTML=`
+
+    <h3>Sensor Sensitivity Result</h3>
+
+    <p>
+    <strong>Temperature Change:</strong>
+    ${d.deltaT.toFixed(2)} °C
+    </p>
+
+    <p>
+    <strong>Output Change:</strong>
+    ${d.deltaOutput.toFixed(4)} V
+    </p>
+
+    <p>
+    <strong>Reference Sensitivity:</strong>
+    ${d.reference.toFixed(5)} V/°C
+    </p>
+
+    <p>
+    <strong>Measured Sensitivity:</strong>
+    ${d.measured.toFixed(5)} V/°C
+    </p>
+
+    <p>
+    <strong>Sensitivity Error:</strong>
+    ${d.error >= 0 ? "+" : ""}
+    ${d.error.toFixed(2)} %
+    </p>
+
+    <p>
+    <strong>Allowed Error:</strong>
+    ${d.tolerance.toFixed(2)} %
+    </p>
+
+    <h3 class="${d.cls}">
+    Result: ${d.result}
+    </h3>
+
+    `;
+}
+
+function resetCalculator(){
+
+    document.getElementById("referenceSensitivity").value=0.0100;
+    document.getElementById("temp1").value=50;
+    document.getElementById("temp2").value=150;
+    document.getElementById("output1").value=0.50;
+    document.getElementById("output2").value=1.50;
+    document.getElementById("tolerance").value=5;
+
+    document.getElementById("calcResult").innerHTML=
+    "Enter test values and calculate the sensitivity result.";
+}
+
+function updateMonitor(temp,output){
+
+    const sensitivity =
+    output / temp;
+
+    document.getElementById("inputTemp").innerText=
+    temp.toFixed(1)+" °C";
+
+    document.getElementById("outputValue").innerText=
+    output.toFixed(3)+" V";
+
+    document.getElementById("sensitivityValue").innerText=
+    sensitivity.toFixed(4)+" V/°C";
+
+    let status="PASS";
+
+    if(sensitivity < 0.0095){
+        status="LOW";
+    }else if(sensitivity > 0.0105){
+        status="HIGH";
+    }
+
+    document.getElementById("sensitivityStatus").innerText=
+    status;
+}
+
+function simulateNormal(){
+
+    updateMonitor(100,1.000);
+}
+
+function simulateLow(){
+
+    updateMonitor(100,0.850);
+}
+
+function simulateHigh(){
+
+    updateMonitor(100,1.180);
+}
+
+function addTestRecord(){
+
+    const d=sensitivityData();
+
+    if(!d){
+
+        alert("Please enter valid test values.");
+
+        return;
+    }
+
+    const id=
+    "SEN-DEMO-"+Date.now();
+
+    const row=
+    document.createElement("tr");
+
+    row.innerHTML=`
+        <td>${id}</td>
+        <td>Demo</td>
+        <td>Thermal Interface Sensor</td>
+        <td>${d.temp1.toFixed(1)}</td>
+        <td>${d.temp2.toFixed(1)}</td>
+        <td>${d.output1.toFixed(3)}</td>
+        <td>${d.output2.toFixed(3)}</td>
+        <td>${d.measured.toFixed(5)}</td>
+        <td>${d.error.toFixed(2)}%</td>
+        <td class="${d.cls}">${d.result}</td>
+    `;
+
+    document.querySelector("#recordsTable tbody")
+    .prepend(row);
+
+    const event=
+    document.createElement("tr");
+
+    const time=
+    new Date().toLocaleTimeString([],{
+        hour:"2-digit",
+        minute:"2-digit"
+    });
+
+    event.innerHTML=`
+        <td>${time}</td>
+        <td>Thermal Interface Sensor</td>
+        <td>${d.deltaT.toFixed(2)} °C</td>
+        <td>${d.deltaOutput.toFixed(4)} V</td>
+        <td>${d.measured.toFixed(5)}</td>
+        <td>${d.reference.toFixed(5)}</td>
+        <td>${d.error.toFixed(2)}%</td>
+        <td class="${d.cls}">${d.result}</td>
+    `;
+
+    document.getElementById("eventBody")
+    .prepend(event);
+
+    alert(
+        "Demo sensitivity record added.\n\n"+
+        "ID: "+id+
+        "\nResult: "+d.result
+    );
+}
+
+function filterTable(){
+
+    const search=
+    document.getElementById("searchInput")
+    .value.toLowerCase();
+
+    const status=
+    document.getElementById("statusFilter").value;
+
+    const rows=
+    document.querySelectorAll("#recordsTable tbody tr");
+
+    rows.forEach(row=>{
+
+        const text=
+        row.innerText.toLowerCase();
+
+        const result=
+        row.cells[row.cells.length-1]
+        ? row.cells[row.cells.length-1].innerText
+        : "";
+
+        const searchMatch=
+        text.includes(search);
+
+        const statusMatch=
+        status==="all" ||
+        result===status;
+
+        row.style.display=
+        searchMatch && statusMatch
+        ? ""
+        : "none";
+    });
+}
+
+function downloadCSV(){
+
+    const rows=
+    [...document.querySelectorAll("#recordsTable tr")];
+
+    const csv=
+    rows.map(row=>
+        [...row.children]
+        .map(cell=>
+            '"'+
+            cell.innerText.replace(/"/g,'""')+
+            '"'
+        ).join(",")
+    ).join("\n");
+
+    const blob=
+    new Blob([csv],{
+        type:"text/csv;charset=utf-8;"
+    });
+
+    const url=
+    URL.createObjectURL(blob);
+
+    const a=
+    document.createElement("a");
+
+    a.href=url;
+
+    a.download=
+    "worker-pro-thermal-interface-sensor-sensitivity-testing.csv";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+}
+
+function technicalReport(){
+
+    const d=sensitivityData();
+
+    if(!d){
+
+        alert("Enter valid test values first.");
+
+        return;
+    }
+
+    alert(
+        "WORKER PRO DEMO TECHNICAL REPORT\n\n"+
+        "Thermal Interface Sensor Sensitivity Testing\n\n"+
+        "Temperature Change: "+
+        d.deltaT.toFixed(2)+" °C\n"+
+        "Output Change: "+
+        d.deltaOutput.toFixed(4)+" V\n"+
+        "Reference Sensitivity: "+
+        d.reference.toFixed(5)+" V/°C\n"+
+        "Measured Sensitivity: "+
+        d.measured.toFixed(5)+" V/°C\n"+
+        "Sensitivity Error: "+
+        d.error.toFixed(2)+"%\n"+
+        "Allowed Error: "+
+        d.tolerance.toFixed(2)+"%\n"+
+        "Result: "+
+        d.result
+    );
+}
+
+</script>
+
+</body>
+</html>
