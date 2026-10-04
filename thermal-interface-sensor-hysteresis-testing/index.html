@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Hysteresis Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#063d25;
+    padding:8px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:#fff;
+    padding:7px 11px;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+header{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    text-align:center;
+    padding:28px 15px;
+}
+
+.logo{
+    color:#b7ff35;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.subtitle{
+    margin-top:6px;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:14px;
+    padding:8px 14px;
+    border-radius:20px;
+    background:#b7ff35;
+    color:#063d25;
+    font-weight:bold;
+}
+
+nav{
+    background:#075b34;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:8px 10px;
+    border-radius:6px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,.section{
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px #0001;
+}
+
+.hero h1,.section h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:white;
+    padding:17px;
+    border-radius:12px;
+    box-shadow:0 2px 9px #0001;
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:18px;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+    margin-bottom:5px;
+}
+
+.hysteresis-panel{
+    background:#063d25;
+    color:white;
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:20px;
+}
+
+.hysteresis-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:12px;
+}
+
+.hysteresis-box{
+    background:#0b6b3d;
+    padding:15px;
+    border-radius:9px;
+}
+
+.hysteresis-box span{
+    display:block;
+    color:#b7ff35;
+    font-size:21px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.pass{color:#b7ff35!important}
+.fail{color:#ff7777!important}
+.review{color:#ffd45a!important}
+
+.chart{
+    height:260px;
+    background:#f0f5f1;
+    border-radius:10px;
+    position:relative;
+    overflow:hidden;
+    margin-top:15px;
+    border:1px solid #d6e2da;
+}
+
+.chart-line{
+    position:absolute;
+    left:5%;
+    right:5%;
+    top:50%;
+    height:2px;
+    background:#0b6b3d;
+}
+
+.chart-line.up{
+    transform:rotate(-15deg);
+    transform-origin:left center;
+}
+
+.chart-line.down{
+    transform:rotate(15deg);
+    transform-origin:right center;
+}
+
+.chart-label{
+    position:absolute;
+    font-size:12px;
+    font-weight:bold;
+    color:#063d25;
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+}
+
+.step{
+    background:#eef5f0;
+    border-left:5px solid #0b6b3d;
+    padding:13px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.search-row{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccd8d0;
+    border-radius:7px;
+    font-size:14px;
+}
+
+textarea{
+    min-height:90px;
+}
+
+form{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:12px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+button.action{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:11px 16px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:4px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1500px;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:9px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+    white-space:nowrap;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+.status{
+    padding:5px 8px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:bold;
+    background:#e8f5ea;
+    color:#17652f;
+}
+
+.event{
+    padding:13px;
+    border-radius:8px;
+    margin:8px 0;
+    background:#f0f7f2;
+    border-left:5px solid #0b6b3d;
+}
+
+.fail-event{
+    background:#fff0f0;
+    border-left-color:#c62828;
+}
+
+.review-event{
+    background:#fff8df;
+    border-left-color:#d6a400;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #d6a400;
+    padding:15px;
+    border-radius:8px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:700px){
+    .search-row{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <div class="logo">WORKER PRO</div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+    <div class="badge">TESTING №247</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+
+<h1>Thermal Interface Sensor Hysteresis Testing</h1>
+
+<p>
+Раздел предназначен для определения гистерезиса датчика:
+разницы показаний при прохождении одного и того же диапазона
+температур в направлении нагрева и охлаждения.
+</p>
+
+<p>
+Основная идея:
+<strong>нагрев → измерение → охлаждение → повторное измерение → сравнение</strong>.
+</p>
+
+</section>
+
+<section class="hysteresis-panel">
+
+<h2 style="color:#b7ff35;margin-top:0">
+HYSTERESIS ANALYSIS DEMO
+</h2>
+
+<div class="hysteresis-grid">
+
+<div class="hysteresis-box">
+Heating Reading
+<span id="heatingReading">100.8 °C</span>
+</div>
+
+<div class="hysteresis-box">
+Cooling Reading
+<span id="coolingReading">99.6 °C</span>
+</div>
+
+<div class="hysteresis-box">
+Hysteresis Error
+<span id="hysteresisError">1.2 °C</span>
+</div>
+
+<div class="hysteresis-box">
+Allowed Hysteresis
+<span id="allowedHysteresis">2.0 °C</span>
+</div>
+
+<div class="hysteresis-box">
+Repeatability
+<span id="repeatability">0.6 °C</span>
+</div>
+
+<div class="hysteresis-box">
+Result
+<span id="hysteresisResult" class="pass">PASS</span>
+</div>
+
+</div>
+
+<div class="chart">
+
+<div class="chart-label" style="left:6%;top:10%">
+Heating
+</div>
+
+<div class="chart-label" style="right:6%;bottom:10%">
+Cooling
+</div>
+
+<div class="chart-line up"></div>
+<div class="chart-line down"></div>
+
+</div>
+
+<br>
+
+<button class="action" onclick="runHysteresisTest()">
+Start Hysteresis Test
+</button>
+
+<button class="action" onclick="simulateHighHysteresis()">
+Simulate High Hysteresis
+</button>
+
+</section>
+
+<div class="stats">
+
+<div class="stat">
+<strong>159</strong>
+Hysteresis Programs
+</div>
+
+<div class="stat">
+<strong>8,620</strong>
+Hysteresis Records
+</div>
+
+<div class="stat">
+<strong>71</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+<section class="section">
+
+<h2>Что проверяется</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Heating Response</h3>
+<p>Показания датчика при повышении температуры.</p>
+</div>
+
+<div class="card">
+<h3>Cooling Response</h3>
+<p>Показания датчика при снижении температуры.</p>
+</div>
+
+<div class="card">
+<h3>Hysteresis Error</h3>
+<p>Разница показаний при одинаковой температуре в разных направлениях.</p>
+</div>
+
+<div class="card">
+<h3>Repeatability</h3>
+<p>Стабильность результата при повторных циклах.</p>
+</div>
+
+<div class="card">
+<h3>Cycle Difference</h3>
+<p>Изменение гистерезиса между последовательными циклами.</p>
+</div>
+
+<div class="card">
+<h3>Acceptance Limit</h3>
+<p>Сравнение измеренного значения с допустимым пределом.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Параметры теста</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Temperature Range</h3>
+<p>Minimum Temperature</p>
+<p>Maximum Temperature</p>
+<p>Reference Temperature</p>
+</div>
+
+<div class="card">
+<h3>Sensor Readings</h3>
+<p>Heating Reading</p>
+<p>Cooling Reading</p>
+<p>Reference Reading</p>
+</div>
+
+<div class="card">
+<h3>Hysteresis</h3>
+<p>Hysteresis Error</p>
+<p>Allowed Hysteresis</p>
+<p>Cycle Difference</p>
+</div>
+
+<div class="card">
+<h3>Stability</h3>
+<p>Repeatability</p>
+<p>Cycle Count</p>
+<p>Drift Between Cycles</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Методы</h2>
+
+<div class="grid">
+
+<div class="card">Heating-Cooling Cycle</div>
+<div class="card">Temperature Loop Test</div>
+<div class="card">Up-Down Comparison</div>
+<div class="card">Multi-Cycle Hysteresis</div>
+<div class="card">Reference Comparison</div>
+<div class="card">Repeatability Test</div>
+<div class="card">Temperature Ramp Hysteresis</div>
+<div class="card">Stability Loop Test</div>
+<div class="card">Acceptance Limit Verification</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Workflow</h2>
+
+<div class="workflow">
+
+<div class="step">1. Select Sensor</div>
+<div class="step">2. Define Temperature Range</div>
+<div class="step">3. Stabilize Sensor</div>
+<div class="step">4. Start Heating Cycle</div>
+<div class="step">5. Record Heating Values</div>
+<div class="step">6. Start Cooling Cycle</div>
+<div class="step">7. Record Cooling Values</div>
+<div class="step">8. Calculate Hysteresis</div>
+<div class="step">9. Check Repeatability</div>
+<div class="step">10. Issue Report</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Hysteresis Event Log</h2>
+
+<div id="eventLog">
+
+<div class="event">
+<strong>HY-247-001</strong><br>
+Reference temperature 100 °C:
+heating 100.8 °C, cooling 99.6 °C.
+Hysteresis = 1.2 °C. Result: PASS.
+</div>
+
+<div class="event review-event">
+<strong>HY-247-002</strong><br>
+Measured hysteresis approached the allowed limit.
+Additional cycle recommended. Result: REVIEW.
+</div>
+
+<div class="event fail-event">
+<strong>HY-247-003</strong><br>
+Heating and cooling readings exceeded the allowed difference.
+Result: FAIL.
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Hysteresis Records</h2>
+
+<div class="search-row">
+
+<input
+id="search"
+placeholder="Search sensor, sample, country..."
+oninput="filterTable()"
+>
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">All Results</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+<select id="countryFilter" onchange="filterTable()">
+<option value="">All Countries</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Turkey">Turkey</option>
+<option value="Germany">Germany</option>
+<option value="Italy">Italy</option>
+<option value="China">China</option>
+<option value="USA">USA</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="recordsTable">
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Sensor</th>
+<th>Country</th>
+<th>Type</th>
+<th>Sample</th>
+<th>Reference °C</th>
+<th>Heating °C</th>
+<th>Cooling °C</th>
+<th>Hysteresis °C</th>
+<th>Allowed °C</th>
+<th>Repeatability °C</th>
+<th>Cycles</th>
+<th>Result</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>HY-AZ-2026-001</td>
+<td>S-061</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>Power Module</td>
+<td>100</td>
+<td>100.8</td>
+<td>99.6</td>
+<td>1.2</td>
+<td>2.0</td>
+<td>0.6</td>
+<td>5</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+<tr>
+<td>HY-TR-2026-002</td>
+<td>S-074</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>Battery Interface</td>
+<td>80</td>
+<td>81.4</td>
+<td>79.7</td>
+<td>1.7</td>
+<td>2.0</td>
+<td>0.8</td>
+<td>4</td>
+<td><span class="status">REVIEW</span></td>
+</tr>
+
+<tr>
+<td>HY-DE-2026-003</td>
+<td>S-086</td>
+<td>Germany</td>
+<td>Thermistor</td>
+<td>Composite Interface</td>
+<td>120</td>
+<td>123.2</td>
+<td>118.9</td>
+<td>4.3</td>
+<td>2.5</td>
+<td>1.5</td>
+<td>5</td>
+<td><span class="status">FAIL</span></td>
+</tr>
+
+<tr>
+<td>HY-IT-2026-004</td>
+<td>S-092</td>
+<td>Italy</td>
+<td>RTD</td>
+<td>Heat Exchanger</td>
+<td>110</td>
+<td>110.7</td>
+<td>109.8</td>
+<td>0.9</td>
+<td>2.0</td>
+<td>0.4</td>
+<td>6</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+<tr>
+<td>HY-CN-2026-005</td>
+<td>S-104</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>Ceramic Interface</td>
+<td>130</td>
+<td>131.2</td>
+<td>130.1</td>
+<td>1.1</td>
+<td>2.0</td>
+<td>0.5</td>
+<td>5</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+<tr>
+<td>HY-US-2026-006</td>
+<td>S-119</td>
+<td>USA</td>
+<td>Fiber Sensor</td>
+<td>Aerospace Interface</td>
+<td>150</td>
+<td>151.5</td>
+<td>150.3</td>
+<td>1.2</td>
+<td>2.0</td>
+<td>0.7</td>
+<td>5</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<br>
+
+<button class="action" onclick="downloadCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="loadDemoRecord()">
+Add Hysteresis Test Demo
+</button>
+
+<button class="action" onclick="technicalReport()">
+Demo Technical Report
+</button>
+
+</section>
+
+<section class="section">
+
+<h2>Add Hysteresis Record</h2>
+
+<form id="testForm">
+
+<input id="sensorId" placeholder="Sensor ID" required>
+
+<input id="sample" placeholder="Sample">
+
+<select id="country">
+<option>Azerbaijan</option>
+<option>Turkey</option>
+<option>Germany</option>
+<option>Italy</option>
+<option>China</option>
+<option>USA</option>
+</select>
+
+<select id="sensorType">
+<option>RTD</option>
+<option>Thermocouple</option>
+<option>Thermistor</option>
+<option>Fiber Sensor</option>
+<option>Infrared Sensor</option>
+</select>
+
+<input
+id="referenceTemp"
+type="number"
+step="0.1"
+placeholder="Reference Temperature °C"
+required
+>
+
+<input
+id="heating"
+type="number"
+step="0.1"
+placeholder="Heating Reading °C"
+required
+>
+
+<input
+id="cooling"
+type="number"
+step="0.1"
+placeholder="Cooling Reading °C"
+required
+>
+
+<input
+id="allowed"
+type="number"
+step="0.1"
+value="2"
+placeholder="Allowed Hysteresis °C"
+required
+>
+
+<input
+id="repeatability"
+type="number"
+step="0.1"
+placeholder="Repeatability °C"
+>
+
+<input
+id="cycles"
+type="number"
+step="1"
+value="5"
+placeholder="Cycle Count"
+>
+
+<input
+id="cycleDifference"
+type="number"
+step="0.1"
+placeholder="Cycle Difference °C"
+>
+
+<textarea
+id="notes"
+class="full"
+placeholder="Hysteresis test notes"
+></textarea>
+
+<button class="action full" type="submit">
+Save Hysteresis Record Demo
+</button>
+
+</form>
+
+</section>
+
+<section class="section">
+
+<h2>Interpretation</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>PASS</h3>
+<p>
+Разница между показаниями при нагреве и охлаждении
+не превышает установленный предел.
+</p>
+</div>
+
+<div class="card">
+<h3>REVIEW</h3>
+<p>
+Гистерезис находится близко к пределу и требует
+дополнительного цикла или проверки.
+</p>
+</div>
+
+<div class="card">
+<h3>FAIL</h3>
+<p>
+Измеренный гистерезис превышает установленный
+критерий приемки.
+</p>
+</div>
+
+<div class="card">
+<h3>Repeatability</h3>
+<p>
+Повторные температурные циклы помогают определить,
+является ли эффект стабильным.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Demo Technical Report</h2>
+
+<div id="reportBox">
+Нажмите «Demo Technical Report», чтобы сформировать
+демонстрационный отчёт.
+</div>
+
+<div class="notice">
+
+<strong>Важно:</strong>
+данные страницы демонстрационные. Реальный тест гистерезиса
+зависит от типа датчика, температурного диапазона, скорости
+нагрева и охлаждения, времени стабилизации, монтажа, тепловой
+массы, системы сбора данных и применяемого стандарта испытаний.
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+
+WORKER PRO — Global Industrial Platform<br><br>
+Thermal Interface Sensor Hysteresis Testing №247<br><br>
+F.S.
+
+</footer>
+
+<script>
+
+function runHysteresisTest(){
+
+    const heating=100.8;
+    const cooling=99.6;
+
+    const error=Math.abs(heating-cooling);
+
+    document.getElementById("heatingReading")
+        .innerText=heating.toFixed(1)+" °C";
+
+    document.getElementById("coolingReading")
+        .innerText=cooling.toFixed(1)+" °C";
+
+    document.getElementById("hysteresisError")
+        .innerText=error.toFixed(1)+" °C";
+
+    document.getElementById("allowedHysteresis")
+        .innerText="2.0 °C";
+
+    document.getElementById("repeatability")
+        .innerText="0.6 °C";
+
+    const result=
+        document.getElementById("hysteresisResult");
+
+    if(error>2){
+        result.innerText="FAIL";
+        result.className="fail";
+    }else if(error>=1.6){
+        result.innerText="REVIEW";
+        result.className="review";
+    }else{
+        result.innerText="PASS";
+        result.className="pass";
+    }
+
+    addEvent(
+        "Hysteresis test completed: "+
+        "heating "+heating.toFixed(1)+
+        " °C, cooling "+cooling.toFixed(1)+
+        " °C, hysteresis "+
+        error.toFixed(1)+" °C."
+    );
+}
+
+function simulateHighHysteresis(){
+
+    const heating=104.8;
+    const cooling=100.9;
+    const error=Math.abs(heating-cooling);
+
+    document.getElementById("heatingReading")
+        .innerText=heating.toFixed(1)+" °C";
+
+    document.getElementById("coolingReading")
+        .innerText=cooling.toFixed(1)+" °C";
+
+    document.getElementById("hysteresisError")
+        .innerText=error.toFixed(1)+" °C";
+
+    const result=
+        document.getElementById("hysteresisResult");
+
+    result.innerText="FAIL";
+    result.className="fail";
+
+    addEvent(
+        "High hysteresis simulation: "+
+        error.toFixed(1)+
+        " °C exceeds the 2.0 °C limit.",
+        "fail-event"
+    );
+}
+
+function addEvent(text,type=""){
+
+    const log=
+        document.getElementById("eventLog");
+
+    const div=
+        document.createElement("div");
+
+    div.className="event "+type;
+
+    div.innerHTML=
+        "<strong>HY-247-"+
+        Date.now()+
+        "</strong><br>"+
+        text;
+
+    log.prepend(div);
+}
+
+function filterTable(){
+
+    const search=
+        document.getElementById("search")
+        .value.toLowerCase();
+
+    const status=
+        document.getElementById("statusFilter")
+        .value;
+
+    const country=
+        document.getElementById("countryFilter")
+        .value;
+
+    const rows=
+        document.querySelectorAll(
+            "#recordsTable tbody tr"
+        );
+
+    rows.forEach(row=>{
+
+        const text=
+            row.innerText.toLowerCase();
+
+        const rowStatus=
+            row.cells[12].innerText;
+
+        const rowCountry=
+            row.cells[2].innerText;
+
+        row.style.display=
+            text.includes(search) &&
+            (!status || rowStatus===status) &&
+            (!country || rowCountry===country)
+            ? ""
+            : "none";
+    });
+}
+
+function loadDemoRecord(){
+
+    document.getElementById("sensorId").value=
+        "S-DEMO-247";
+
+    document.getElementById("sample").value=
+        "Demo Thermal Interface";
+
+    document.getElementById("country").value=
+        "Azerbaijan";
+
+    document.getElementById("sensorType").value=
+        "RTD";
+
+    document.getElementById("referenceTemp").value=
+        "100";
+
+    document.getElementById("heating").value=
+        "100.8";
+
+    document.getElementById("cooling").value=
+        "99.6";
+
+    document.getElementById("allowed").value=
+        "2";
+
+    document.getElementById("repeatability").value=
+        "0.6";
+
+    document.getElementById("cycles").value=
+        "5";
+
+    document.getElementById("cycleDifference").value=
+        "0.4";
+
+    document.getElementById("notes").value=
+        "Demo hysteresis test.";
+
+    window.scrollTo({
+        top:
+        document.getElementById("testForm")
+        .offsetTop-80,
+        behavior:"smooth"
+    });
+}
+
+document.getElementById("testForm")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const sensor=
+        document.getElementById("sensorId").value;
+
+    const sample=
+        document.getElementById("sample").value;
+
+    const country=
+        document.getElementById("country").value;
+
+    const type=
+        document.getElementById("sensorType").value;
+
+    const reference=
+        Number(
+            document.getElementById("referenceTemp").value
+        );
+
+    const heating=
+        Number(
+            document.getElementById("heating").value
+        );
+
+    const cooling=
+        Number(
+            document.getElementById("cooling").value
+        );
+
+    const allowed=
+        Number(
+            document.getElementById("allowed").value
+        );
+
+    const repeatability=
+        Number(
+            document.getElementById("repeatability").value || 0
+        );
+
+    const cycles=
+        Number(
+            document.getElementById("cycles").value || 0
+        );
+
+    const cycleDifference=
+        Number(
+            document.getElementById("cycleDifference").value || 0
+        );
+
+    const hysteresis=
+        Math.abs(heating-cooling);
+
+    let result="PASS";
+
+    if(hysteresis>allowed){
+        result="FAIL";
+    }else if(hysteresis>=allowed*0.8){
+        result="REVIEW";
+    }
+
+    const id=
+        "HY-DEMO-"+Date.now();
+
+    const tbody=
+        document.querySelector(
+            "#recordsTable tbody"
+        );
+
+    const row=
+        document.createElement("tr");
+
+    row.innerHTML=`
+
+        <td>${id}</td>
+        <td>${sensor}</td>
+        <td>${country}</td>
+        <td>${type}</td>
+        <td>${sample}</td>
+        <td>${reference.toFixed(1)}</td>
+        <td>${heating.toFixed(1)}</td>
+        <td>${cooling.toFixed(1)}</td>
+        <td>${hysteresis.toFixed(1)}</td>
+        <td>${allowed.toFixed(1)}</td>
+        <td>${repeatability.toFixed(1)}</td>
+        <td>${cycles}</td>
+        <td><span class="status">${result}</span></td>
+
+    `;
+
+    tbody.prepend(row);
+
+    addEvent(
+        "Record "+id+
+        " created. Hysteresis = "+
+        hysteresis.toFixed(1)+
+        " °C. Result: "+result,
+        result==="FAIL"
+        ? "fail-event"
+        : result==="REVIEW"
+        ? "review-event"
+        : ""
+    );
+
+    alert(
+        "Hysteresis Record создан.\n"+
+        "ID: "+id+
+        "\nHysteresis: "+
+        hysteresis.toFixed(1)+
+        " °C"+
+        "\nResult: "+result
+    );
+
+    this.reset();
+
+});
+
+function technicalReport(){
+
+    document.getElementById("reportBox").innerHTML=`
+
+    <h3>WORKER PRO — Demo Hysteresis Report</h3>
+
+    <p>
+    <strong>Test:</strong>
+    Thermal Interface Sensor Hysteresis Testing
+    </p>
+
+    <p>
+    <strong>Objective:</strong>
+    Compare sensor readings during heating and cooling
+    at the same reference temperature.
+    </p>
+
+    <p>
+    <strong>Evaluation:</strong>
+    Hysteresis is determined from the absolute difference
+    between the heating and cooling readings.
+    </p>
+
+    <p>
+    <strong>Additional evaluation:</strong>
+    Repeatability and cycle-to-cycle behavior can be used
+    to identify unstable sensor characteristics.
+    </p>
+
+    <p>
+    <strong>Result:</strong>
+    Demonstration hysteresis report generated successfully.
+    </p>
+
+    `;
+}
+
+function downloadCSV(){
+
+    const table=
+        document.getElementById("recordsTable");
+
+    const rows=
+        table.querySelectorAll("tr");
+
+    let csv=[];
+
+    rows.forEach(row=>{
+
+        const cols=
+            row.querySelectorAll("th,td");
+
+        const data=[];
+
+        cols.forEach(col=>{
+
+            const value=
+                col.innerText
+                .replace(/"/g,'""');
+
+            data.push('"'+value+'"');
+
+        });
+
+        csv.push(data.join(","));
+
+    });
+
+    const blob=
+        new Blob(
+            [csv.join("\n")],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+    const url=
+        URL.createObjectURL(blob);
+
+    const a=
+        document.createElement("a");
+
+    a.href=url;
+
+    a.download=
+        "worker-pro-thermal-interface-sensor-hysteresis-testing.csv";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>
