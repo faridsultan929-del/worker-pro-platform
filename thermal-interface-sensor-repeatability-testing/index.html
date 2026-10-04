@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Repeatability Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#063d25;
+    padding:8px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+}
+
+.top-languages button{
+    border:0;
+    border-radius:6px;
+    padding:7px 10px;
+    background:#0b6b3d;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+header{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px 15px;
+}
+
+.logo-title{
+    font-size:34px;
+    font-weight:bold;
+    color:#b7ff35;
+}
+
+.subtitle{
+    margin-top:7px;
+    font-size:16px;
+}
+
+nav{
+    background:#0b6b3d;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+    padding:10px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    padding:8px 10px;
+    border-radius:6px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:white;
+    border-left:7px solid #0b6b3d;
+    border-radius:12px;
+    padding:25px;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.hero h1{
+    margin-top:0;
+    color:#063d25;
+}
+
+.hero p{
+    line-height:1.6;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    font-weight:bold;
+    padding:7px 12px;
+    border-radius:20px;
+}
+
+.section{
+    margin-top:22px;
+    background:white;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+}
+
+.section h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:#f4f7f5;
+    border-left:5px solid #0b6b3d;
+    padding:16px;
+    border-radius:8px;
+}
+
+.card h3{
+    margin-top:0;
+    color:#0b6b3d;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:18px;
+    border-radius:10px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+}
+
+.step{
+    background:#0b6b3d;
+    color:white;
+    padding:15px;
+    border-radius:8px;
+    text-align:center;
+    font-weight:bold;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:12px;
+}
+
+label{
+    font-weight:bold;
+    color:#063d25;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #b9c8bf;
+    border-radius:7px;
+    font-size:15px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:11px 16px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:6px 5px 6px 0;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+button.secondary{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.result-box{
+    margin-top:15px;
+    padding:18px;
+    background:#eef8f0;
+    border-left:6px solid #0b6b3d;
+    border-radius:8px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1050px;
+}
+
+th{
+    background:#063d25;
+    color:white;
+    padding:10px;
+}
+
+td{
+    padding:9px;
+    border-bottom:1px solid #ddd;
+}
+
+tr:nth-child(even){
+    background:#f4f7f5;
+}
+
+.status{
+    font-weight:bold;
+}
+
+.pass{color:#08752f}
+.review{color:#a36a00}
+.fail{color:#b00020}
+
+.search-row{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:6px solid #d39e00;
+    padding:15px;
+    border-radius:8px;
+    line-height:1.5;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:600px){
+    .logo-title{font-size:27px}
+    .search-row{grid-template-columns:1fr}
+    .container{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <div class="logo-title">WORKER PRO</div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+    <span class="badge">TESTING #249</span>
+
+    <h1>Thermal Interface Sensor Repeatability Testing</h1>
+
+    <p>
+        Thermal Interface Sensor Repeatability Testing evaluates whether
+        a sensor produces consistent readings when the same measurement
+        is repeated under the same defined conditions.
+    </p>
+
+    <p>
+        The test focuses on measurement spread, average value, standard
+        deviation, range and repeatability error.
+    </p>
+
+    <p>
+        Repeatability is different from linearity, calibration, response
+        time and hysteresis: the main question is whether repeated
+        measurements remain close to each other.
+    </p>
+</section>
+
+<section class="section">
+
+<h2>What Is Tested?</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Repeated Readings</h3>
+<p>Multiple measurements are taken from the same sensor under controlled conditions.</p>
+</div>
+
+<div class="card">
+<h3>Measurement Mean</h3>
+<p>The average of all repeated readings is calculated.</p>
+</div>
+
+<div class="card">
+<h3>Measurement Range</h3>
+<p>The difference between the highest and lowest repeated readings.</p>
+</div>
+
+<div class="card">
+<h3>Standard Deviation</h3>
+<p>Describes the statistical spread of repeated measurements.</p>
+</div>
+
+<div class="card">
+<h3>Repeatability Error</h3>
+<p>Maximum observed deviation from the repeated measurement group.</p>
+</div>
+
+<div class="card">
+<h3>Consistency</h3>
+<p>Determines whether the sensor remains stable under identical conditions.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Key Parameters</h2>
+
+<div class="grid">
+
+<div class="card">Reference Temperature</div>
+<div class="card">Measurement Temperature</div>
+<div class="card">Number of Repetitions</div>
+<div class="card">Mean Value</div>
+<div class="card">Minimum Reading</div>
+<div class="card">Maximum Reading</div>
+<div class="card">Measurement Range</div>
+<div class="card">Standard Deviation</div>
+<div class="card">Repeatability Error</div>
+<div class="card">Allowed Range</div>
+<div class="card">Sampling Interval</div>
+<div class="card">Ambient Temperature</div>
+<div class="card">Sensor Position</div>
+<div class="card">Test Conditions</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Repeatability Methods</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Repeated Measurement</h3>
+<p>Repeat the same measurement several times without changing the setup.</p>
+</div>
+
+<div class="card">
+<h3>Short-Term Repeatability</h3>
+<p>Measurements are repeated within a short controlled time period.</p>
+</div>
+
+<div class="card">
+<h3>Multi-Cycle Repeatability</h3>
+<p>The same measurement is repeated over several measurement cycles.</p>
+</div>
+
+<div class="card">
+<h3>Reference-Point Repeatability</h3>
+<p>Repeated readings are compared at a defined reference temperature.</p>
+</div>
+
+<div class="card">
+<h3>Position Repeatability</h3>
+<p>Evaluates measurement consistency at a controlled sensor position.</p>
+</div>
+
+<div class="card">
+<h3>Statistical Repeatability</h3>
+<p>Uses range and standard deviation to evaluate measurement spread.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Industrial Applications</h2>
+
+<div class="grid">
+
+<div class="card">Power Electronics</div>
+<div class="card">Semiconductors</div>
+<div class="card">Battery Systems</div>
+<div class="card">Heat Exchangers</div>
+<div class="card">Industrial Cooling</div>
+<div class="card">Automotive</div>
+<div class="card">Aerospace</div>
+<div class="card">Data Centers</div>
+<div class="card">Oil & Gas</div>
+<div class="card">Thermal Management</div>
+<div class="card">Industrial Equipment</div>
+<div class="card">Thermal Interface Materials</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Testing Workflow</h2>
+
+<div class="workflow">
+
+<div class="step">1. Define Test Point</div>
+<div class="step">2. Stabilize Conditions</div>
+<div class="step">3. Position Sensor</div>
+<div class="step">4. Start Measurement</div>
+<div class="step">5. Repeat Reading</div>
+<div class="step">6. Record Data</div>
+<div class="step">7. Calculate Statistics</div>
+<div class="step">8. Evaluate Spread</div>
+<div class="step">9. Determine Result</div>
+<div class="step">10. Issue Report</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>WORKER PRO Testing Statistics</h2>
+
+<div class="stats">
+
+<div class="stat">
+<strong>163</strong>
+Repeatability Programs
+</div>
+
+<div class="stat">
+<strong>8,960</strong>
+Repeatability Records
+</div>
+
+<div class="stat">
+<strong>73</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Repeatability Test Calculator</h2>
+
+<p>
+Enter repeated sensor readings obtained under the same conditions.
+The system calculates the average, minimum, maximum, range,
+standard deviation and repeatability error.
+</p>
+
+<div class="form-grid">
+
+<div>
+<label>Reference Temperature °C</label>
+<input id="reference" type="number" value="100">
+</div>
+
+<div>
+<label>Allowed Range °C</label>
+<input id="tolerance" type="number" value="1.0" step="0.1">
+</div>
+
+<div>
+<label>Reading 1 °C</label>
+<input id="v1" type="number" value="100.2" step="0.01">
+</div>
+
+<div>
+<label>Reading 2 °C</label>
+<input id="v2" type="number" value="100.1" step="0.01">
+</div>
+
+<div>
+<label>Reading 3 °C</label>
+<input id="v3" type="number" value="100.3" step="0.01">
+</div>
+
+<div>
+<label>Reading 4 °C</label>
+<input id="v4" type="number" value="100.0" step="0.01">
+</div>
+
+<div>
+<label>Reading 5 °C</label>
+<input id="v5" type="number" value="100.2" step="0.01">
+</div>
+
+<div>
+<label>Reading 6 °C</label>
+<input id="v6" type="number" value="100.1" step="0.01">
+</div>
+
+</div>
+
+<br>
+
+<button class="action" onclick="calculateRepeatability()">
+Calculate Repeatability
+</button>
+
+<button class="action secondary" onclick="resetCalculator()">
+Reset
+</button>
+
+<div id="calcResult" class="result-box">
+Enter repeated measurements and calculate the test result.
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Test Records</h2>
+
+<div class="search-row">
+
+<input
+id="searchInput"
+type="text"
+placeholder="Search sensor, country, ID..."
+oninput="filterTable()">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="all">All Status</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="recordsTable">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sensor</th>
+<th>Reference °C</th>
+<th>Mean °C</th>
+<th>Range °C</th>
+<th>Std Dev</th>
+<th>Repeatability Error</th>
+<th>Result</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>REP-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>Thermal Sensor A</td>
+<td>100</td>
+<td>100.15</td>
+<td>0.30</td>
+<td>0.112</td>
+<td>0.15</td>
+<td class="status pass">PASS</td>
+</tr>
+
+<tr>
+<td>REP-DE-2026-002</td>
+<td>Germany</td>
+<td>Interface Sensor B</td>
+<td>80</td>
+<td>80.44</td>
+<td>0.82</td>
+<td>0.296</td>
+<td>0.44</td>
+<td class="status review">REVIEW</td>
+</tr>
+
+<tr>
+<td>REP-TR-2026-003</td>
+<td>Turkey</td>
+<td>Temperature Probe</td>
+<td>120</td>
+<td>120.12</td>
+<td>0.24</td>
+<td>0.086</td>
+<td>0.12</td>
+<td class="status pass">PASS</td>
+</tr>
+
+<tr>
+<td>REP-IT-2026-004</td>
+<td>Italy</td>
+<td>Thermal Sensor C</td>
+<td>150</td>
+<td>151.18</td>
+<td>2.10</td>
+<td>0.701</td>
+<td>1.18</td>
+<td class="status fail">FAIL</td>
+</tr>
+
+<tr>
+<td>REP-US-2026-005</td>
+<td>USA</td>
+<td>High Temperature Sensor</td>
+<td>200</td>
+<td>200.09</td>
+<td>0.22</td>
+<td>0.081</td>
+<td>0.11</td>
+<td class="status pass">PASS</td>
+</tr>
+
+<tr>
+<td>REP-CN-2026-006</td>
+<td>China</td>
+<td>Thermal Interface Probe</td>
+<td>90</td>
+<td>90.27</td>
+<td>0.58</td>
+<td>0.201</td>
+<td>0.27</td>
+<td class="status pass">PASS</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<br>
+
+<button class="action" onclick="addTestRecord()">
+Add Test Record — Demo
+</button>
+
+<button class="action" onclick="downloadCSV()">
+Export CSV
+</button>
+
+<button class="action secondary" onclick="technicalReport()">
+Demo Technical Report
+</button>
+
+</section>
+
+<section class="section">
+
+<h2>Repeatability Event Log</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+<tr>
+<th>Time</th>
+<th>Sensor</th>
+<th>Reference</th>
+<th>Mean</th>
+<th>Range</th>
+<th>Std Dev</th>
+<th>Repeatability Error</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody id="eventBody">
+
+<tr>
+<td>09:20</td>
+<td>Sensor A</td>
+<td>100 °C</td>
+<td>100.15 °C</td>
+<td>0.30 °C</td>
+<td>0.112</td>
+<td>0.15 °C</td>
+<td class="pass">PASS</td>
+</tr>
+
+<tr>
+<td>10:45</td>
+<td>Sensor B</td>
+<td>80 °C</td>
+<td>80.44 °C</td>
+<td>0.82 °C</td>
+<td>0.296</td>
+<td>0.44 °C</td>
+<td class="review">REVIEW</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Quality Decision</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>PASS</h3>
+<p>
+Repeated measurements remain within the defined acceptance range.
+</p>
+</div>
+
+<div class="card">
+<h3>REVIEW</h3>
+<p>
+Measurement spread is approaching the acceptance limit and requires technical review.
+</p>
+</div>
+
+<div class="card">
+<h3>FAIL</h3>
+<p>
+Repeated measurement spread exceeds the defined acceptance limit.
+</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Technical Report</h2>
+
+<ul>
+<li>Sensor identification</li>
+<li>Reference temperature</li>
+<li>Test conditions</li>
+<li>Number of repetitions</li>
+<li>All repeated readings</li>
+<li>Mean value</li>
+<li>Minimum reading</li>
+<li>Maximum reading</li>
+<li>Measurement range</li>
+<li>Standard deviation</li>
+<li>Repeatability error</li>
+<li>Acceptance limit</li>
+<li>Final result</li>
+</ul>
+
+</section>
+
+<section class="section">
+
+<div class="notice">
+
+<strong>Important:</strong>
+This WORKER PRO page is a demonstration interface.
+Real repeatability testing depends on sensor type, reference equipment,
+temperature stability, sensor positioning, measurement resolution,
+sampling conditions, environmental conditions, number of repetitions
+and the applicable technical standard.
+
+Actual laboratory verification requires calibrated equipment,
+controlled conditions and qualified procedures.
+
+</div>
+
+</section>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Thermal Interface Sensor Repeatability Testing #249<br><br>
+F.S. — WORKER PRO
+</footer>
+
+<script>
+
+function num(id){
+    return parseFloat(document.getElementById(id).value);
+}
+
+function getReadings(){
+
+    return [
+        num("v1"),
+        num("v2"),
+        num("v3"),
+        num("v4"),
+        num("v5"),
+        num("v6")
+    ];
+}
+
+function calculateData(){
+
+    const readings = getReadings();
+
+    if(readings.some(Number.isNaN)){
+        return null;
+    }
+
+    const reference = num("reference");
+    const tolerance = num("tolerance");
+
+    if(Number.isNaN(reference) || Number.isNaN(tolerance)){
+        return null;
+    }
+
+    const mean =
+        readings.reduce((a,b)=>a+b,0) / readings.length;
+
+    const min =
+        Math.min(...readings);
+
+    const max =
+        Math.max(...readings);
+
+    const range =
+        max - min;
+
+    const variance =
+        readings.reduce(
+            (sum,value)=>sum + Math.pow(value-mean,2),
+            0
+        ) / readings.length;
+
+    const stdDev =
+        Math.sqrt(variance);
+
+    const repeatabilityError =
+        Math.max(
+            Math.abs(max-reference),
+            Math.abs(min-reference)
+        );
+
+    let result = "PASS";
+    let cls = "pass";
+
+    if(repeatabilityError > tolerance){
+
+        result = "FAIL";
+        cls = "fail";
+
+    }else if(repeatabilityError >= tolerance * 0.8){
+
+        result = "REVIEW";
+        cls = "review";
+    }
+
+    return {
+        readings,
+        reference,
+        tolerance,
+        mean,
+        min,
+        max,
+        range,
+        stdDev,
+        repeatabilityError,
+        result,
+        cls
+    };
+}
+
+function calculateRepeatability(){
+
+    const d = calculateData();
+
+    if(!d){
+
+        document.getElementById("calcResult").innerHTML =
+        "<strong>Please enter valid numerical values.</strong>";
+
+        return;
+    }
+
+    document.getElementById("calcResult").innerHTML = `
+
+    <h3>Repeatability Test Result</h3>
+
+    <p>
+    <strong>Reference Temperature:</strong>
+    ${d.reference.toFixed(2)} °C
+    </p>
+
+    <p>
+    <strong>Number of Measurements:</strong>
+    ${d.readings.length}
+    </p>
+
+    <p>
+    <strong>Mean:</strong>
+    ${d.mean.toFixed(3)} °C
+    </p>
+
+    <p>
+    <strong>Minimum:</strong>
+    ${d.min.toFixed(3)} °C
+    </p>
+
+    <p>
+    <strong>Maximum:</strong>
+    ${d.max.toFixed(3)} °C
+    </p>
+
+    <p>
+    <strong>Measurement Range:</strong>
+    ${d.range.toFixed(3)} °C
+    </p>
+
+    <p>
+    <strong>Standard Deviation:</strong>
+    ${d.stdDev.toFixed(4)} °C
+    </p>
+
+    <p>
+    <strong>Repeatability Error:</strong>
+    ${d.repeatabilityError.toFixed(3)} °C
+    </p>
+
+    <p>
+    <strong>Allowed Range:</strong>
+    ${d.tolerance.toFixed(3)} °C
+    </p>
+
+    <h3 class="${d.cls}">
+    Result: ${d.result}
+    </h3>
+
+    `;
+}
+
+function resetCalculator(){
+
+    document.getElementById("reference").value = 100;
+    document.getElementById("tolerance").value = 1.0;
+
+    document.getElementById("v1").value = 100.2;
+    document.getElementById("v2").value = 100.1;
+    document.getElementById("v3").value = 100.3;
+    document.getElementById("v4").value = 100.0;
+    document.getElementById("v5").value = 100.2;
+    document.getElementById("v6").value = 100.1;
+
+    document.getElementById("calcResult").innerHTML =
+    "Enter repeated measurements and calculate the test result.";
+}
+
+function addTestRecord(){
+
+    const d = calculateData();
+
+    if(!d){
+
+        alert("Please enter valid numerical values.");
+
+        return;
+    }
+
+    const id =
+    "REP-DEMO-" + Date.now();
+
+    const row =
+    document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>Demo</td>
+        <td>Thermal Interface Sensor</td>
+        <td>${d.reference.toFixed(2)}</td>
+        <td>${d.mean.toFixed(3)}</td>
+        <td>${d.range.toFixed(3)}</td>
+        <td>${d.stdDev.toFixed(4)}</td>
+        <td>${d.repeatabilityError.toFixed(3)}</td>
+        <td class="status ${d.cls}">${d.result}</td>
+    `;
+
+    document.querySelector("#recordsTable tbody")
+    .prepend(row);
+
+    const event =
+    document.createElement("tr");
+
+    const time =
+    new Date().toLocaleTimeString([],{
+        hour:"2-digit",
+        minute:"2-digit"
+    });
+
+    event.innerHTML = `
+        <td>${time}</td>
+        <td>Thermal Interface Sensor</td>
+        <td>${d.reference.toFixed(2)} °C</td>
+        <td>${d.mean.toFixed(3)} °C</td>
+        <td>${d.range.toFixed(3)} °C</td>
+        <td>${d.stdDev.toFixed(4)}</td>
+        <td>${d.repeatabilityError.toFixed(3)} °C</td>
+        <td class="${d.cls}">${d.result}</td>
+    `;
+
+    document.getElementById("eventBody")
+    .prepend(event);
+
+    alert(
+        "Demo test record added.\n\n" +
+        "ID: " + id +
+        "\nResult: " + d.result
+    );
+}
+
+function filterTable(){
+
+    const search =
+    document.getElementById("searchInput")
+    .value.toLowerCase();
+
+    const status =
+    document.getElementById("statusFilter").value;
+
+    const rows =
+    document.querySelectorAll("#recordsTable tbody tr");
+
+    rows.forEach(row=>{
+
+        const text =
+        row.innerText.toLowerCase();
+
+        const resultCell =
+        row.cells[row.cells.length-1];
+
+        const result =
+        resultCell
+        ? resultCell.innerText
+        : "";
+
+        const matchSearch =
+        text.includes(search);
+
+        const matchStatus =
+        status === "all" ||
+        result === status;
+
+        row.style.display =
+        matchSearch && matchStatus
+        ? ""
+        : "none";
+    });
+}
+
+function downloadCSV(){
+
+    const rows =
+    [...document.querySelectorAll("#recordsTable tr")];
+
+    const csv =
+    rows.map(row =>
+        [...row.children]
+        .map(cell =>
+            '"' +
+            cell.innerText.replace(/"/g,'""') +
+            '"'
+        )
+        .join(",")
+    ).join("\n");
+
+    const blob =
+    new Blob([csv],{
+        type:"text/csv;charset=utf-8;"
+    });
+
+    const url =
+    URL.createObjectURL(blob);
+
+    const a =
+    document.createElement("a");
+
+    a.href = url;
+
+    a.download =
+    "worker-pro-thermal-interface-sensor-repeatability-testing.csv";
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    document.body.removeChild(a);
+
+    URL.revokeObjectURL(url);
+}
+
+function technicalReport(){
+
+    const d = calculateData();
+
+    if(!d){
+
+        alert("Enter valid test values first.");
+
+        return;
+    }
+
+    alert(
+        "WORKER PRO DEMO TECHNICAL REPORT\n\n" +
+        "Thermal Interface Sensor Repeatability Testing\n\n" +
+        "Reference: " + d.reference.toFixed(2) + " °C\n" +
+        "Mean: " + d.mean.toFixed(3) + " °C\n" +
+        "Minimum: " + d.min.toFixed(3) + " °C\n" +
+        "Maximum: " + d.max.toFixed(3) + " °C\n" +
+        "Range: " + d.range.toFixed(3) + " °C\n" +
+        "Standard Deviation: " + d.stdDev.toFixed(4) + " °C\n" +
+        "Repeatability Error: " +
+        d.repeatabilityError.toFixed(3) + " °C\n" +
+        "Acceptance Limit: " +
+        d.tolerance.toFixed(3) + " °C\n" +
+        "Result: " + d.result
+    );
+}
+
+</script>
+
+</body>
+</html>
