@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Response Time Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:#063d25;
+    padding:8px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:6px;
+}
+
+.top-languages button{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:7px 11px;
+    border-radius:6px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+header{
+    background:linear-gradient(135deg,#063d25,#0b6b3d);
+    color:white;
+    text-align:center;
+    padding:28px 15px;
+}
+
+.logo{
+    color:#b7ff35;
+    font-size:30px;
+    font-weight:bold;
+}
+
+.subtitle{
+    margin-top:6px;
+}
+
+.badge{
+    display:inline-block;
+    margin-top:14px;
+    padding:8px 14px;
+    border-radius:20px;
+    background:#b7ff35;
+    color:#063d25;
+    font-weight:bold;
+}
+
+nav{
+    background:#075b34;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:8px 10px;
+    border-radius:6px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero,.section{
+    background:white;
+    padding:22px;
+    border-radius:14px;
+    margin-bottom:20px;
+    box-shadow:0 2px 10px #0001;
+}
+
+.hero h1,.section h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:15px;
+}
+
+.card{
+    background:white;
+    padding:17px;
+    border-radius:12px;
+    box-shadow:0 2px 9px #0001;
+}
+
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.stat{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:18px;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+    margin-bottom:5px;
+}
+
+.response-panel{
+    background:#063d25;
+    color:white;
+    padding:20px;
+    border-radius:14px;
+    margin-bottom:20px;
+}
+
+.response-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:12px;
+}
+
+.response-box{
+    background:#0b6b3d;
+    padding:15px;
+    border-radius:9px;
+}
+
+.response-box span{
+    display:block;
+    color:#b7ff35;
+    font-size:21px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+.pass{color:#b7ff35!important}
+.fail{color:#ff7777!important}
+.review{color:#ffd45a!important}
+
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+    gap:10px;
+}
+
+.step{
+    background:#eef5f0;
+    border-left:5px solid #0b6b3d;
+    padding:13px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+.search-row{
+    display:grid;
+    grid-template-columns:2fr 1fr 1fr;
+    gap:10px;
+    margin-bottom:15px;
+}
+
+input,select,textarea{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccd8d0;
+    border-radius:7px;
+    font-size:14px;
+}
+
+textarea{
+    min-height:90px;
+}
+
+form{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:12px;
+}
+
+.full{
+    grid-column:1/-1;
+}
+
+button.action{
+    border:0;
+    background:#0b6b3d;
+    color:white;
+    padding:11px 16px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin:4px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1450px;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:9px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+    white-space:nowrap;
+}
+
+th{
+    background:#063d25;
+    color:white;
+}
+
+.status{
+    padding:5px 8px;
+    border-radius:12px;
+    font-size:12px;
+    font-weight:bold;
+    background:#e8f5ea;
+    color:#17652f;
+}
+
+.event{
+    padding:13px;
+    border-radius:8px;
+    margin:8px 0;
+    background:#f0f7f2;
+    border-left:5px solid #0b6b3d;
+}
+
+.event.fail-event{
+    background:#fff0f0;
+    border-left-color:#c62828;
+}
+
+.event.review-event{
+    background:#fff8df;
+    border-left-color:#d6a400;
+}
+
+.notice{
+    background:#fff8df;
+    border-left:5px solid #d6a400;
+    padding:15px;
+    border-radius:8px;
+}
+
+.progress{
+    height:18px;
+    background:#dce8df;
+    border-radius:10px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.progress-bar{
+    width:0%;
+    height:100%;
+    background:#b7ff35;
+    transition:width .2s;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:700px){
+    .search-row{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        padding:12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <div class="logo">WORKER PRO</div>
+    <div class="subtitle">Глобальная промышленная платформа</div>
+    <div class="badge">TESTING №246</div>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+
+<h1>Thermal Interface Sensor Response Time Testing</h1>
+
+<p>
+Раздел предназначен для определения того, насколько быстро датчик
+реагирует на изменение температуры или другого контролируемого
+теплового параметра.
+</p>
+
+<p>
+Основной принцип: <strong>изменение входного воздействия → изменение
+сигнала датчика → измерение времени отклика</strong>.
+</p>
+
+</section>
+
+<section class="response-panel">
+
+<h2 style="color:#b7ff35;margin-top:0">
+RESPONSE TIME DEMO
+</h2>
+
+<div class="response-grid">
+
+<div class="response-box">
+Initial Temperature
+<span id="initialTemp">40 °C</span>
+</div>
+
+<div class="response-box">
+Target Temperature
+<span id="targetTemp">100 °C</span>
+</div>
+
+<div class="response-box">
+Current Response
+<span id="currentResponse">0%</span>
+</div>
+
+<div class="response-box">
+T50
+<span id="t50">—</span>
+</div>
+
+<div class="response-box">
+T90
+<span id="t90">—</span>
+</div>
+
+<div class="response-box">
+Result
+<span id="responseResult">READY</span>
+</div>
+
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progressBar"></div>
+</div>
+
+<br>
+
+<button class="action" onclick="runResponseTest()">
+Start Response Test
+</button>
+
+<button class="action" onclick="simulateSlowSensor()">
+Simulate Slow Sensor
+</button>
+
+</section>
+
+<div class="stats">
+
+<div class="stat">
+<strong>157</strong>
+Response Programs
+</div>
+
+<div class="stat">
+<strong>8,440</strong>
+Response Records
+</div>
+
+<div class="stat">
+<strong>70</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+<section class="section">
+
+<h2>Что измеряется</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Response Time</h3>
+<p>Общее время реакции датчика на изменение входного параметра.</p>
+</div>
+
+<div class="card">
+<h3>T50</h3>
+<p>Время достижения примерно 50% изменения сигнала.</p>
+</div>
+
+<div class="card">
+<h3>T90</h3>
+<p>Время достижения примерно 90% изменения сигнала.</p>
+</div>
+
+<div class="card">
+<h3>Rise Time</h3>
+<p>Время реакции при увеличении температуры.</p>
+</div>
+
+<div class="card">
+<h3>Fall Time</h3>
+<p>Время реакции при уменьшении температуры.</p>
+</div>
+
+<div class="card">
+<h3>Signal Delay</h3>
+<p>Задержка между изменением физического параметра и реакцией системы.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Параметры теста</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>Input</h3>
+<p>Initial Temperature</p>
+<p>Target Temperature</p>
+<p>Temperature Step</p>
+</div>
+
+<div class="card">
+<h3>Timing</h3>
+<p>Response Time</p>
+<p>T50</p>
+<p>T90</p>
+<p>Sampling Interval</p>
+</div>
+
+<div class="card">
+<h3>Sensor</h3>
+<p>Sensor Type</p>
+<p>Sensor Position</p>
+<p>Signal Output</p>
+</div>
+
+<div class="card">
+<h3>Acceptance</h3>
+<p>Maximum Response Time</p>
+<p>Allowed Delay</p>
+<p>PASS / REVIEW / FAIL</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Методы</h2>
+
+<div class="grid">
+
+<div class="card">Temperature Step Test</div>
+<div class="card">Thermal Ramp Test</div>
+<div class="card">T50 Response Test</div>
+<div class="card">T90 Response Test</div>
+<div class="card">Rise Time Test</div>
+<div class="card">Fall Time Test</div>
+<div class="card">Dynamic Response Test</div>
+<div class="card">Sensor Comparison Test</div>
+<div class="card">Repeated Response Test</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Workflow</h2>
+
+<div class="workflow">
+
+<div class="step">1. Select Sensor</div>
+<div class="step">2. Define Initial State</div>
+<div class="step">3. Define Target State</div>
+<div class="step">4. Stabilize Sensor</div>
+<div class="step">5. Apply Temperature Step</div>
+<div class="step">6. Record Signal</div>
+<div class="step">7. Calculate T50</div>
+<div class="step">8. Calculate T90</div>
+<div class="step">9. Compare Limit</div>
+<div class="step">10. Technical Report</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Response Event Log</h2>
+
+<div id="eventLog">
+
+<div class="event">
+<strong>RT-246-001</strong><br>
+Sensor S-001 reached 50% response in 2.4 s
+and 90% response in 5.8 s.
+Result: PASS.
+</div>
+
+<div class="event review-event">
+<strong>RT-246-002</strong><br>
+Sensor S-014 response time approached the configured limit.
+Result: REVIEW.
+</div>
+
+<div class="event fail-event">
+<strong>RT-246-003</strong><br>
+Sensor S-022 exceeded maximum response time.
+Result: FAIL.
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Response Time Records</h2>
+
+<div class="search-row">
+
+<input
+id="search"
+placeholder="Search sensor, sample, country..."
+oninput="filterTable()"
+>
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">All Results</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+<select id="countryFilter" onchange="filterTable()">
+<option value="">All Countries</option>
+<option value="Azerbaijan">Azerbaijan</option>
+<option value="Turkey">Turkey</option>
+<option value="Germany">Germany</option>
+<option value="Italy">Italy</option>
+<option value="China">China</option>
+<option value="USA">USA</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="recordsTable">
+
+<thead>
+
+<tr>
+<th>ID</th>
+<th>Sensor</th>
+<th>Country</th>
+<th>Type</th>
+<th>Sample</th>
+<th>Initial °C</th>
+<th>Target °C</th>
+<th>T50 s</th>
+<th>T90 s</th>
+<th>Rise Time s</th>
+<th>Fall Time s</th>
+<th>Max Limit s</th>
+<th>Result</th>
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>RT-AZ-2026-001</td>
+<td>S-001</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>Power Module</td>
+<td>40</td>
+<td>100</td>
+<td>2.4</td>
+<td>5.8</td>
+<td>5.8</td>
+<td>6.1</td>
+<td>8.0</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+<tr>
+<td>RT-TR-2026-002</td>
+<td>S-014</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>Battery Interface</td>
+<td>35</td>
+<td>90</td>
+<td>3.2</td>
+<td>7.4</td>
+<td>7.4</td>
+<td>7.9</td>
+<td>8.0</td>
+<td><span class="status">REVIEW</span></td>
+</tr>
+
+<tr>
+<td>RT-DE-2026-003</td>
+<td>S-022</td>
+<td>Germany</td>
+<td>Thermistor</td>
+<td>Composite Interface</td>
+<td>30</td>
+<td>110</td>
+<td>4.8</td>
+<td>10.9</td>
+<td>10.9</td>
+<td>11.5</td>
+<td>8.0</td>
+<td><span class="status">FAIL</span></td>
+</tr>
+
+<tr>
+<td>RT-IT-2026-004</td>
+<td>S-031</td>
+<td>Italy</td>
+<td>RTD</td>
+<td>Heat Exchanger</td>
+<td>45</td>
+<td>120</td>
+<td>2.1</td>
+<td>5.2</td>
+<td>5.2</td>
+<td>5.6</td>
+<td>8.0</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+<tr>
+<td>RT-CN-2026-005</td>
+<td>S-044</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>Ceramic Interface</td>
+<td>50</td>
+<td>130</td>
+<td>3.8</td>
+<td>8.6</td>
+<td>8.6</td>
+<td>9.0</td>
+<td>10.0</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+<tr>
+<td>RT-US-2026-006</td>
+<td>S-051</td>
+<td>USA</td>
+<td>Fiber Sensor</td>
+<td>Aerospace Interface</td>
+<td>25</td>
+<td>150</td>
+<td>2.9</td>
+<td>6.7</td>
+<td>6.7</td>
+<td>7.1</td>
+<td>8.0</td>
+<td><span class="status">PASS</span></td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<br>
+
+<button class="action" onclick="downloadCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="loadDemoRecord()">
+Add Response Test Demo
+</button>
+
+<button class="action" onclick="technicalReport()">
+Demo Technical Report
+</button>
+
+</section>
+
+<section class="section">
+
+<h2>Add Response Time Record</h2>
+
+<form id="testForm">
+
+<input id="sensorId" placeholder="Sensor ID" required>
+
+<input id="sample" placeholder="Sample">
+
+<select id="country">
+<option>Azerbaijan</option>
+<option>Turkey</option>
+<option>Germany</option>
+<option>Italy</option>
+<option>China</option>
+<option>USA</option>
+</select>
+
+<select id="sensorType">
+<option>RTD</option>
+<option>Thermocouple</option>
+<option>Thermistor</option>
+<option>Fiber Sensor</option>
+<option>Infrared Sensor</option>
+</select>
+
+<input id="initialTemp" type="number" step="0.1" placeholder="Initial °C" required>
+
+<input id="targetTemperature" type="number" step="0.1" placeholder="Target °C" required>
+
+<input id="t50Input" type="number" step="0.1" placeholder="T50 s" required>
+
+<input id="t90Input" type="number" step="0.1" placeholder="T90 s" required>
+
+<input id="riseTime" type="number" step="0.1" placeholder="Rise Time s">
+
+<input id="fallTime" type="number" step="0.1" placeholder="Fall Time s">
+
+<input id="maxLimit" type="number" step="0.1" value="8" placeholder="Maximum Time s">
+
+<input id="sampling" type="number" step="0.1" placeholder="Sampling Interval s">
+
+<textarea id="notes" class="full" placeholder="Response test notes"></textarea>
+
+<button class="action full" type="submit">
+Save Response Record Demo
+</button>
+
+</form>
+
+</section>
+
+<section class="section">
+
+<h2>Результаты</h2>
+
+<div class="grid">
+
+<div class="card">
+<h3>PASS</h3>
+<p>T90 находится в пределах установленного максимального времени отклика.</p>
+</div>
+
+<div class="card">
+<h3>REVIEW</h3>
+<p>Результат близок к пределу и требует дополнительной проверки.</p>
+</div>
+
+<div class="card">
+<h3>FAIL</h3>
+<p>Время реакции превышает установленный предел.</p>
+</div>
+
+<div class="card">
+<h3>Dynamic Behavior</h3>
+<p>Для реального теста необходимо учитывать форму воздействия, частоту измерений и условия окружающей среды.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<h2>Demo Technical Report</h2>
+
+<div id="reportBox">
+Нажмите «Demo Technical Report», чтобы сформировать демонстрационный отчёт.
+</div>
+
+<div class="notice">
+
+<strong>Важно:</strong>
+данные страницы демонстрационные. Реальное испытание времени отклика
+должно учитывать тип сенсора, способ изменения температуры, скорость
+изменения воздействия, расположение датчика, интервал выборки,
+системную задержку и установленный критерий приемки.
+
+</div>
+
+</section>
+
+</div>
+
+<footer>
+
+WORKER PRO — Global Industrial Platform<br><br>
+Thermal Interface Sensor Response Time Testing №246<br><br>
+F.S.
+
+</footer>
+
+<script>
+
+function runResponseTest(){
+
+    const bar=document.getElementById("progressBar");
+
+    const result=
+        document.getElementById("responseResult");
+
+    const current=
+        document.getElementById("currentResponse");
+
+    const t50=
+        document.getElementById("t50");
+
+    const t90=
+        document.getElementById("t90");
+
+    let progress=0;
+
+    result.innerText="RUNNING";
+    result.className="review";
+
+    const timer=setInterval(()=>{
+
+        progress+=5;
+
+        if(progress>100){
+            progress=100;
+        }
+
+        bar.style.width=progress+"%";
+        current.innerText=progress+"%";
+
+        if(progress>=50 && t50.innerText==="—"){
+            t50.innerText="2.4 s";
+        }
+
+        if(progress>=90 && t90.innerText==="—"){
+            t90.innerText="5.8 s";
+        }
+
+        if(progress>=100){
+
+            clearInterval(timer);
+
+            result.innerText="PASS";
+            result.className="pass";
+
+            addEvent(
+                "Response test completed. "+
+                "T50 = 2.4 s, T90 = 5.8 s. Result: PASS.",
+                ""
+            );
+        }
+
+    },120);
+}
+
+function simulateSlowSensor(){
+
+    const bar=document.getElementById("progressBar");
+
+    const result=
+        document.getElementById("responseResult");
+
+    const t50=
+        document.getElementById("t50");
+
+    const t90=
+        document.getElementById("t90");
+
+    let progress=0;
+
+    t50.innerText="6.2 s";
+    t90.innerText="12.4 s";
+
+    result.innerText="FAIL";
+    result.className="fail";
+
+    const timer=setInterval(()=>{
+
+        progress+=3;
+
+        if(progress>=100){
+            progress=100;
+            clearInterval(timer);
+        }
+
+        bar.style.width=progress+"%";
+        document.getElementById("currentResponse")
+            .innerText=progress+"%";
+
+    },120);
+
+    addEvent(
+        "Slow sensor simulation: T90 = 12.4 s, "+
+        "above the configured 8.0 s limit. Result: FAIL.",
+        "fail-event"
+    );
+}
+
+function addEvent(text,type){
+
+    const log=document.getElementById("eventLog");
+
+    const div=document.createElement("div");
+
+    div.className="event "+type;
+
+    div.innerHTML=
+        "<strong>RT-246-"+Date.now()+
+        "</strong><br>"+text;
+
+    log.prepend(div);
+}
+
+function filterTable(){
+
+    const search=
+        document.getElementById("search")
+        .value.toLowerCase();
+
+    const status=
+        document.getElementById("statusFilter").value;
+
+    const country=
+        document.getElementById("countryFilter").value;
+
+    const rows=
+        document.querySelectorAll(
+            "#recordsTable tbody tr"
+        );
+
+    rows.forEach(row=>{
+
+        const text=row.innerText.toLowerCase();
+
+        const rowStatus=row.cells[12].innerText;
+
+        const rowCountry=row.cells[2].innerText;
+
+        const okSearch=text.includes(search);
+
+        const okStatus=
+            !status || rowStatus===status;
+
+        const okCountry=
+            !country || rowCountry===country;
+
+        row.style.display=
+            okSearch &&
+            okStatus &&
+            okCountry
+            ? ""
+            : "none";
+    });
+}
+
+function loadDemoRecord(){
+
+    document.getElementById("sensorId").value=
+        "S-DEMO-246";
+
+    document.getElementById("sample").value=
+        "Demo Thermal Interface";
+
+    document.getElementById("country").value=
+        "Azerbaijan";
+
+    document.getElementById("sensorType").value=
+        "RTD";
+
+    document.getElementById("initialTemp").value=
+        "40";
+
+    document.getElementById("targetTemperature").value=
+        "100";
+
+    document.getElementById("t50Input").value=
+        "2.6";
+
+    document.getElementById("t90Input").value=
+        "6.1";
+
+    document.getElementById("riseTime").value=
+        "6.1";
+
+    document.getElementById("fallTime").value=
+        "6.5";
+
+    document.getElementById("maxLimit").value=
+        "8";
+
+    document.getElementById("sampling").value=
+        "0.5";
+
+    document.getElementById("notes").value=
+        "Demo response time test.";
+
+    window.scrollTo({
+        top:
+        document.getElementById("testForm")
+        .offsetTop-80,
+        behavior:"smooth"
+    });
+}
+
+document.getElementById("testForm")
+.addEventListener("submit",function(e){
+
+    e.preventDefault();
+
+    const sensor=
+        document.getElementById("sensorId").value;
+
+    const sample=
+        document.getElementById("sample").value;
+
+    const country=
+        document.getElementById("country").value;
+
+    const type=
+        document.getElementById("sensorType").value;
+
+    const initial=
+        Number(
+            document.getElementById("initialTemp").value
+        );
+
+    const target=
+        Number(
+            document.getElementById("targetTemperature").value
+        );
+
+    const t50=
+        Number(
+            document.getElementById("t50Input").value
+        );
+
+    const t90=
+        Number(
+            document.getElementById("t90Input").value
+        );
+
+    const rise=
+        Number(
+            document.getElementById("riseTime").value || t90
+        );
+
+    const fall=
+        Number(
+            document.getElementById("fallTime").value || t90
+        );
+
+    const maxLimit=
+        Number(
+            document.getElementById("maxLimit").value
+        );
+
+    let result="PASS";
+
+    if(t90>maxLimit){
+        result="FAIL";
+    }else if(t90>=maxLimit*0.8){
+        result="REVIEW";
+    }
+
+    const id=
+        "RT-DEMO-"+Date.now();
+
+    const tbody=
+        document.querySelector(
+            "#recordsTable tbody"
+        );
+
+    const row=
+        document.createElement("tr");
+
+    row.innerHTML=`
+
+        <td>${id}</td>
+        <td>${sensor}</td>
+        <td>${country}</td>
+        <td>${type}</td>
+        <td>${sample}</td>
+        <td>${initial.toFixed(1)}</td>
+        <td>${target.toFixed(1)}</td>
+        <td>${t50.toFixed(1)}</td>
+        <td>${t90.toFixed(1)}</td>
+        <td>${rise.toFixed(1)}</td>
+        <td>${fall.toFixed(1)}</td>
+        <td>${maxLimit.toFixed(1)}</td>
+        <td><span class="status">${result}</span></td>
+
+    `;
+
+    tbody.prepend(row);
+
+    addEvent(
+        "Response record "+id+
+        " created. T90 = "+
+        t90.toFixed(1)+
+        " s. Result: "+result+".",
+        result==="FAIL"
+        ? "fail-event"
+        : result==="REVIEW"
+        ? "review-event"
+        : ""
+    );
+
+    alert(
+        "Response Time Record создан.\n"+
+        "ID: "+id+
+        "\nT50: "+t50.toFixed(1)+" s"+
+        "\nT90: "+t90.toFixed(1)+" s"+
+        "\nResult: "+result
+    );
+
+    this.reset();
+
+});
+
+function technicalReport(){
+
+    document.getElementById("reportBox").innerHTML=`
+
+    <h3>WORKER PRO — Demo Response Time Report</h3>
+
+    <p>
+    <strong>Test:</strong>
+    Thermal Interface Sensor Response Time Testing
+    </p>
+
+    <p>
+    <strong>Objective:</strong>
+    Determine how quickly the sensor responds to a defined
+    thermal input change.
+    </p>
+
+    <p>
+    <strong>Measured indicators:</strong>
+    T50, T90, rise time, fall time, sampling interval
+    and maximum allowed response time.
+    </p>
+
+    <p>
+    <strong>Acceptance:</strong>
+    Compare the measured response time with the specified
+    maximum response-time criterion.
+    </p>
+
+    <p>
+    <strong>Result:</strong>
+    Demonstration response-time report generated successfully.
+    </p>
+
+    `;
+}
+
+function downloadCSV(){
+
+    const table=
+        document.getElementById("recordsTable");
+
+    const rows=
+        table.querySelectorAll("tr");
+
+    let csv=[];
+
+    rows.forEach(row=>{
+
+        const cols=
+            row.querySelectorAll("th,td");
+
+        const data=[];
+
+        cols.forEach(col=>{
+
+            const value=
+                col.innerText.replace(/"/g,'""');
+
+            data.push('"'+value+'"');
+
+        });
+
+        csv.push(data.join(","));
+
+    });
+
+    const blob=
+        new Blob(
+            [csv.join("\n")],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+    const url=
+        URL.createObjectURL(blob);
+
+    const a=
+        document.createElement("a");
+
+    a.href=url;
+
+    a.download=
+        "worker-pro-thermal-interface-sensor-response-time-testing.csv";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+</script>
+
+</body>
+</html>
