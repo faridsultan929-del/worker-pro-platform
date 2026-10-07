@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Output Saturation Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    justify-content:center;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.top-languages button{
+    border:0;
+    border-radius:7px;
+    padding:8px 12px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#fff;
+    color:#063d25;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+}
+
+header{
+    background:#0b6b3d;
+    color:#fff;
+    padding:24px 18px;
+}
+
+header h1{
+    margin:0 0 7px;
+    font-size:30px;
+}
+
+header p{
+    margin:0;
+    opacity:.92;
+}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    background:#063d25;
+    padding:9px 13px;
+    border-radius:7px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:#fff;
+    border-left:7px solid #0b6b3d;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 2px 9px #00000012;
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+    margin-bottom:12px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:#fff;
+    border-radius:12px;
+    padding:18px;
+    text-align:center;
+}
+
+.stat strong{
+    display:block;
+    font-size:27px;
+    color:#b7ff35;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 2px 8px #00000010;
+}
+
+.card h2,
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.demo{
+    background:#eaf5ef;
+    border:1px solid #b9d9c7;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.demo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+label{
+    font-weight:bold;
+    display:block;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #aaa;
+    border-radius:7px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:#fff;
+    border:0;
+    padding:11px 15px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.result{
+    margin-top:15px;
+    background:#fff;
+    border-radius:10px;
+    padding:15px;
+    line-height:1.7;
+}
+
+.bar{
+    width:100%;
+    height:28px;
+    background:#dce8e1;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.bar-fill{
+    height:100%;
+    width:0;
+    background:#0b6b3d;
+    transition:.5s;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    margin-top:15px;
+    min-width:1150px;
+}
+
+th,td{
+    padding:10px;
+    border:1px solid #ddd;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:#fff;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.notice{
+    background:#fff7d6;
+    border-left:6px solid #d5a900;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    margin-top:30px;
+    background:#063d25;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+}
+
+@media(max-width:600px){
+    header h1{font-size:24px}
+    .container{padding:12px}
+    .filters{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+    <span class="badge">TESTING №257</span>
+
+    <h2>Thermal Interface Sensor Output Saturation Testing</h2>
+
+    <p>
+        Проверка момента и поведения выходного сигнала температурного
+        датчика, когда его выход достигает установленного максимального
+        или минимального значения и дальнейшее изменение входной
+        температуры уже не приводит к пропорциональному изменению выхода.
+    </p>
+
+    <p>
+        Тест помогает определить уровень насыщения, точку начала
+        насыщения, величину отклонения и корректность поведения
+        выходного сигнала в предельной области.
+    </p>
+</section>
+
+<div class="stats">
+    <div class="stat">
+        <strong>179</strong>
+        Saturation Programs
+    </div>
+
+    <div class="stat">
+        <strong>10,280</strong>
+        Saturation Records
+    </div>
+
+    <div class="stat">
+        <strong>81</strong>
+        Lab Teams
+    </div>
+
+    <div class="stat">
+        <strong>99.9%</strong>
+        Data Completeness
+    </div>
+</div>
+
+<section class="grid">
+
+<div class="card">
+<h3>Что проверяется</h3>
+<ul>
+<li>Максимальный выходной уровень</li>
+<li>Минимальный выходной уровень</li>
+<li>Точка начала насыщения</li>
+<li>Входная температура</li>
+<li>Выходной сигнал</li>
+<li>Выходное ограничение</li>
+<li>Ошибка насыщения</li>
+<li>Поведение после насыщения</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Ключевые параметры</h3>
+<ul>
+<li>Input Temperature</li>
+<li>Input Range</li>
+<li>Output Range</li>
+<li>Expected Output</li>
+<li>Measured Output</li>
+<li>Saturation Limit</li>
+<li>Saturation Point</li>
+<li>Saturation Error</li>
+<li>Output Span</li>
+<li>Sensor Type</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Методы</h3>
+<ul>
+<li>Upper Saturation Test</li>
+<li>Lower Saturation Test</li>
+<li>Temperature Ramp</li>
+<li>Temperature Step</li>
+<li>Output Limit Test</li>
+<li>Input-Output Sweep</li>
+<li>Pre-Saturation Test</li>
+<li>Post-Saturation Test</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Применение</h3>
+<ul>
+<li>Power Electronics</li>
+<li>Semiconductors</li>
+<li>Battery Systems</li>
+<li>Heat Exchangers</li>
+<li>Industrial Cooling</li>
+<li>Automotive</li>
+<li>Aerospace</li>
+<li>Oil & Gas</li>
+<li>Data Centers</li>
+<li>Thermal Protection</li>
+</ul>
+</div>
+
+</section>
+
+<section class="demo">
+
+<h2>Saturation Test Calculator</h2>
+
+<div class="demo-grid">
+
+<div>
+<label>Input Temperature °C</label>
+<input id="inputTemp" type="number" value="150">
+</div>
+
+<div>
+<label>Normal Maximum Temperature °C</label>
+<input id="normalMax" type="number" value="120">
+</div>
+
+<div>
+<label>Expected Output</label>
+<input id="expectedOutput" type="number" value="100">
+</div>
+
+<div>
+<label>Measured Output</label>
+<input id="measuredOutput" type="number" value="100">
+</div>
+
+<div>
+<label>Saturation Limit</label>
+<input id="satLimit" type="number" value="100">
+</div>
+
+<div>
+<label>Allowed Output Error</label>
+<input id="allowedError" type="number" value="2">
+</div>
+
+<div>
+<label>Previous Output</label>
+<input id="previousOutput" type="number" value="99">
+</div>
+
+<div>
+<label>Input Step °C</label>
+<input id="inputStep" type="number" value="10">
+</div>
+
+</div>
+
+<button class="action" onclick="calculateSaturation()">
+Calculate Saturation
+</button>
+
+<div class="bar">
+    <div class="bar-fill" id="saturationBar"></div>
+</div>
+
+<div id="result" class="result">
+Результат появится здесь.
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Рабочий процесс</h2>
+
+<div class="grid">
+
+<div>
+<h3>1. Define Input Range</h3>
+<p>Определить диапазон входной температуры.</p>
+</div>
+
+<div>
+<h3>2. Define Output Range</h3>
+<p>Определить допустимый выходной диапазон датчика.</p>
+</div>
+
+<div>
+<h3>3. Establish Reference</h3>
+<p>Получить исходные значения до достижения предельной области.</p>
+</div>
+
+<div>
+<h3>4. Increase Input</h3>
+<p>Постепенно увеличить входную температуру.</p>
+</div>
+
+<div>
+<h3>5. Record Output</h3>
+<p>Записывать выходной сигнал на каждой точке.</p>
+</div>
+
+<div>
+<h3>6. Identify Saturation</h3>
+<p>Определить точку, где выход перестаёт следовать входному изменению.</p>
+</div>
+
+<div>
+<h3>7. Check Limit</h3>
+<p>Сравнить выход с установленным пределом.</p>
+</div>
+
+<div>
+<h3>8. Calculate Error</h3>
+<p>Рассчитать отклонение от ожидаемого выходного значения.</p>
+</div>
+
+<div>
+<h3>9. Return Input</h3>
+<p>Вернуть входной параметр в нормальный диапазон.</p>
+</div>
+
+<div>
+<h3>10. Technical Report</h3>
+<p>Сформировать технический отчёт.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Saturation Test Records</h2>
+
+<div class="filters">
+
+<input
+    id="search"
+    type="text"
+    placeholder="Поиск по ID, стране, датчику..."
+    oninput="filterTable()">
+
+<select id="statusFilter" onchange="filterTable()">
+    <option value="">Все статусы</option>
+    <option value="PASS">PASS</option>
+    <option value="REVIEW">REVIEW</option>
+    <option value="FAIL">FAIL</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="records">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sensor</th>
+<th>Input °C</th>
+<th>Expected Output</th>
+<th>Measured Output</th>
+<th>Saturation Limit</th>
+<th>Saturation Point °C</th>
+<th>Error</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>SAT-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>150</td>
+<td>100</td>
+<td>100</td>
+<td>100</td>
+<td>142</td>
+<td>0</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>SAT-TR-2026-002</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>220</td>
+<td>100</td>
+<td>99</td>
+<td>100</td>
+<td>205</td>
+<td>1</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>SAT-DE-2026-003</td>
+<td>Germany</td>
+<td>RTD</td>
+<td>175</td>
+<td>100</td>
+<td>98</td>
+<td>100</td>
+<td>160</td>
+<td>2</td>
+<td>REVIEW</td>
+</tr>
+
+<tr>
+<td>SAT-IT-2026-004</td>
+<td>Italy</td>
+<td>Thermistor</td>
+<td>140</td>
+<td>100</td>
+<td>94</td>
+<td>100</td>
+<td>128</td>
+<td>6</td>
+<td>FAIL</td>
+</tr>
+
+<tr>
+<td>SAT-CN-2026-005</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>275</td>
+<td>100</td>
+<td>100</td>
+<td>100</td>
+<td>260</td>
+<td>0</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>SAT-US-2026-006</td>
+<td>USA</td>
+<td>Infrared Sensor</td>
+<td>130</td>
+<td>100</td>
+<td>101</td>
+<td>100</td>
+<td>122</td>
+<td>1</td>
+<td>REVIEW</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<button class="action" onclick="exportCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="addDemoRecord()">
+Add Test Record — Demo
+</button>
+
+<button class="action" onclick="demoReport()">
+Technical Report — Demo
+</button>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+<h3>Saturation Point</h3>
+<p>
+Температурная или входная точка, после которой выходной сигнал
+начинает ограничиваться установленным пределом.
+</p>
+</div>
+
+<div class="card">
+<h3>Output Limit</h3>
+<p>
+Максимальное или минимальное значение, которое способен выдать
+измерительный канал в установленной конфигурации.
+</p>
+</div>
+
+<div class="card">
+<h3>Saturation Error</h3>
+<p>
+Разница между ожидаемым и фактически измеренным выходным сигналом
+в области насыщения.
+</p>
+</div>
+
+<div class="card">
+<h3>Post-Saturation Behavior</h3>
+<p>
+Проверка поведения выхода после возвращения входного параметра
+из предельной области.
+</p>
+</div>
+
+</section>
+
+<div class="notice">
+<strong>Важно:</strong>
+эта страница является демонстрационной частью WORKER PRO.
+Реальные испытания должны выполняться по техническим требованиям
+производителя, соответствующим стандартам, требованиям безопасности
+и с использованием калиброванного оборудования.
+Демонстрационные критерии PASS/REVIEW/FAIL не являются нормативными
+критериями приемки.
+</div>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Testing №257 — Thermal Interface Sensor Output Saturation Testing<br><br>
+Султанов Фарид Рафиг оглы — F.S.
+</footer>
+
+<script>
+
+function calculateSaturation(){
+
+    const inputTemp =
+        Number(document.getElementById("inputTemp").value);
+
+    const normalMax =
+        Number(document.getElementById("normalMax").value);
+
+    const expectedOutput =
+        Number(document.getElementById("expectedOutput").value);
+
+    const measuredOutput =
+        Number(document.getElementById("measuredOutput").value);
+
+    const satLimit =
+        Number(document.getElementById("satLimit").value);
+
+    const allowedError =
+        Number(document.getElementById("allowedError").value);
+
+    const previousOutput =
+        Number(document.getElementById("previousOutput").value);
+
+    const inputStep =
+        Number(document.getElementById("inputStep").value);
+
+    const outputError =
+        Math.abs(measuredOutput - expectedOutput);
+
+    const outputChange =
+        Math.abs(measuredOutput - previousOutput);
+
+    const inputOver =
+        Math.max(0,inputTemp - normalMax);
+
+    const saturationRatio =
+        satLimit !== 0
+        ? Math.min(
+            100,
+            Math.abs(measuredOutput / satLimit) * 100
+        )
+        : 0;
+
+    let status = "PASS";
+
+    if(outputError > allowedError){
+        status = "FAIL";
+    }
+    else if(outputError >= allowedError * 0.8){
+        status = "REVIEW";
+    }
+
+    document.getElementById("saturationBar").style.width =
+        saturationRatio + "%";
+
+    document.getElementById("result").innerHTML =
+
+        "Input Temperature: " +
+        inputTemp.toFixed(2) +
+        " °C<br>" +
+
+        "Normal Maximum: " +
+        normalMax.toFixed(2) +
+        " °C<br>" +
+
+        "Input Above Normal Range: " +
+        inputOver.toFixed(2) +
+        " °C<br>" +
+
+        "Expected Output: " +
+        expectedOutput.toFixed(2) +
+        "<br>" +
+
+        "Measured Output: " +
+        measuredOutput.toFixed(2) +
+        "<br>" +
+
+        "Output Error: " +
+        outputError.toFixed(2) +
+        "<br>" +
+
+        "Output Change From Previous Point: " +
+        outputChange.toFixed(2) +
+        "<br>" +
+
+        "Input Step: " +
+        inputStep.toFixed(2) +
+        " °C<br>" +
+
+        "Output Limit Utilization: " +
+        saturationRatio.toFixed(1) +
+        "%<br>" +
+
+        "Result: <strong>" +
+        status +
+        "</strong>";
+}
+
+function filterTable(){
+
+    const search =
+        document.getElementById("search").value.toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter").value;
+
+    const rows =
+        document.querySelectorAll("#records tbody tr");
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[row.cells.length - 1].innerText.trim();
+
+        const matchSearch =
+            text.includes(search);
+
+        const matchStatus =
+            !status || rowStatus === status;
+
+        row.style.display =
+            matchSearch && matchStatus ? "" : "none";
+    });
+}
+
+function addDemoRecord(){
+
+    const tbody =
+        document.querySelector("#records tbody");
+
+    const id =
+        "SAT-DEMO-" + Date.now();
+
+    const row =
+        document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>Demo</td>
+        <td>Demo Sensor</td>
+        <td>150</td>
+        <td>100</td>
+        <td>100</td>
+        <td>100</td>
+        <td>142</td>
+        <td>0</td>
+        <td>PASS</td>
+    `;
+
+    tbody.appendChild(row);
+
+    alert("Demo saturation test record added.");
+}
+
+function exportCSV(){
+
+    const rows =
+        document.querySelectorAll("#records tr");
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cols =
+            row.querySelectorAll("th,td");
+
+        const data =
+            Array.from(cols).map(col =>
+                '"' +
+                col.innerText.replace(/"/g,'""') +
+                '"'
+            );
+
+        csv.push(data.join(","));
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-interface-sensor-output-saturation-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function demoReport(){
+
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Test: Thermal Interface Sensor Output Saturation Testing\n" +
+        "Status: DEMO\n\n" +
+        "Real technical reports require validated laboratory data."
+    );
+}
+
+</script>
+
+</body>
+</html>
