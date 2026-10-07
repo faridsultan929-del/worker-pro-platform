@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Output Range Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.top-languages button{
+    border:0;
+    background:#fff;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+}
+
+header{
+    background:#0b6b3d;
+    color:#fff;
+    padding:24px 18px;
+}
+
+header h1{
+    margin:0 0 7px;
+    font-size:30px;
+}
+
+header p{
+    margin:0;
+}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:9px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    background:#063d25;
+    padding:9px 13px;
+    border-radius:7px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:#fff;
+    border-left:7px solid #0b6b3d;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 2px 9px #00000012;
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:#fff;
+    padding:18px;
+    text-align:center;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 2px 8px #00000010;
+}
+
+.card h2,
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.demo{
+    background:#eaf5ef;
+    border:1px solid #b9d9c7;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.demo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #aaa;
+    border-radius:7px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:#fff;
+    border:0;
+    padding:11px 15px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.result{
+    background:#fff;
+    border-radius:10px;
+    padding:15px;
+    margin-top:15px;
+    line-height:1.7;
+}
+
+.range-box{
+    background:#fff;
+    border-radius:10px;
+    padding:15px;
+    margin-top:15px;
+}
+
+.range-track{
+    height:32px;
+    background:#dce8e1;
+    border-radius:20px;
+    position:relative;
+    overflow:hidden;
+    margin-top:10px;
+}
+
+.range-active{
+    position:absolute;
+    left:0;
+    height:100%;
+    width:0;
+    background:#0b6b3d;
+    transition:.5s;
+}
+
+.range-marker{
+    position:absolute;
+    top:0;
+    width:3px;
+    height:100%;
+    background:#063d25;
+    display:none;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1250px;
+    border-collapse:collapse;
+    background:#fff;
+    margin-top:15px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:#fff;
+}
+
+.notice{
+    background:#fff7d6;
+    border-left:6px solid #d5a900;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    background:#063d25;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    header h1{font-size:24px}
+    .container{padding:12px}
+    .filters{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<span class="badge">TESTING №260</span>
+
+<h2>Thermal Interface Sensor Output Range Testing</h2>
+
+<p>
+Проверка фактического диапазона выходного сигнала температурного
+датчика в заданных условиях эксплуатации.
+</p>
+
+<p>
+Испытание определяет минимальный и максимальный доступный выход,
+ширину диапазона, рабочую область, симметрию диапазона и соответствие
+заданной спецификации. Основной объект проверки — полный output range,
+а не только отдельный верхний или нижний лимит.
+</p>
+
+</section>
+
+<div class="stats">
+
+<div class="stat">
+<strong>185</strong>
+Range Programs
+</div>
+
+<div class="stat">
+<strong>10,820</strong>
+Range Records
+</div>
+
+<div class="stat">
+<strong>84</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+<section class="grid">
+
+<div class="card">
+<h3>Что проверяется</h3>
+<ul>
+<li>Минимальный выход</li>
+<li>Максимальный выход</li>
+<li>Output span</li>
+<li>Центр диапазона</li>
+<li>Рабочая область</li>
+<li>Верхняя граница</li>
+<li>Нижняя граница</li>
+<li>Диапазон относительно спецификации</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Ключевые параметры</h3>
+<ul>
+<li>Input Temperature</li>
+<li>Minimum Output</li>
+<li>Maximum Output</li>
+<li>Measured Span</li>
+<li>Specified Minimum</li>
+<li>Specified Maximum</li>
+<li>Range Error</li>
+<li>Midpoint</li>
+<li>Output Resolution</li>
+<li>Sensor Type</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Методы</h3>
+<ul>
+<li>Full Range Sweep</li>
+<li>Minimum Point Test</li>
+<li>Maximum Point Test</li>
+<li>Multi-Point Test</li>
+<li>Ramp Test</li>
+<li>Step Test</li>
+<li>Return Sweep</li>
+<li>Repeated Range Test</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Применение</h3>
+<ul>
+<li>Thermal Management</li>
+<li>Power Electronics</li>
+<li>Semiconductors</li>
+<li>Battery Systems</li>
+<li>Heat Exchangers</li>
+<li>Industrial Cooling</li>
+<li>Automotive</li>
+<li>Aerospace</li>
+<li>Oil & Gas</li>
+<li>Data Centers</li>
+</ul>
+</div>
+
+</section>
+
+<section class="demo">
+
+<h2>Output Range Calculator</h2>
+
+<div class="demo-grid">
+
+<div>
+<label>Minimum Input Temperature °C</label>
+<input id="inputMin" type="number" value="20">
+</div>
+
+<div>
+<label>Maximum Input Temperature °C</label>
+<input id="inputMax" type="number" value="180">
+</div>
+
+<div>
+<label>Measured Minimum Output</label>
+<input id="outputMin" type="number" value="10">
+</div>
+
+<div>
+<label>Measured Maximum Output</label>
+<input id="outputMax" type="number" value="98">
+</div>
+
+<div>
+<label>Specified Minimum Output</label>
+<input id="specMin" type="number" value="10">
+</div>
+
+<div>
+<label>Specified Maximum Output</label>
+<input id="specMax" type="number" value="100">
+</div>
+
+<div>
+<label>Allowed Range Error</label>
+<input id="allowedError" type="number" value="3">
+</div>
+
+<div>
+<label>Output Resolution</label>
+<input id="resolution" type="number" value="0.1">
+</div>
+
+</div>
+
+<div class="range-box">
+
+<strong>Measured Output Range</strong>
+
+<div class="range-track">
+<div class="range-active" id="rangeActive"></div>
+<div class="range-marker" id="rangeMarkerMin"></div>
+<div class="range-marker" id="rangeMarkerMax"></div>
+</div>
+
+</div>
+
+<button class="action" onclick="calculateRange()">
+Calculate Output Range
+</button>
+
+<div id="result" class="result">
+Результат появится здесь.
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Рабочий процесс</h2>
+
+<div class="grid">
+
+<div>
+<h3>1. Define Input Range</h3>
+<p>Установить минимальную и максимальную входную температуру.</p>
+</div>
+
+<div>
+<h3>2. Define Output Specification</h3>
+<p>Зафиксировать допустимый выходной диапазон.</p>
+</div>
+
+<div>
+<h3>3. Establish Minimum Point</h3>
+<p>Измерить выход при минимальном входном значении.</p>
+</div>
+
+<div>
+<h3>4. Establish Maximum Point</h3>
+<p>Измерить выход при максимальном входном значении.</p>
+</div>
+
+<div>
+<h3>5. Sweep Full Range</h3>
+<p>Проверить промежуточные точки диапазона.</p>
+</div>
+
+<div>
+<h3>6. Calculate Span</h3>
+<p>Рассчитать фактическую ширину выходного диапазона.</p>
+</div>
+
+<div>
+<h3>7. Compare Specification</h3>
+<p>Сравнить фактический диапазон со спецификацией.</p>
+</div>
+
+<div>
+<h3>8. Check Resolution</h3>
+<p>Проверить способность системы различать изменения выхода.</p>
+</div>
+
+<div>
+<h3>9. Repeat Measurement</h3>
+<p>Повторить измерения для проверки стабильности диапазона.</p>
+</div>
+
+<div>
+<h3>10. Final Report</h3>
+<p>Сформировать технический отчёт.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Output Range Test Records</h2>
+
+<div class="filters">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск по ID, стране, датчику..."
+oninput="filterTable()">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">Все статусы</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="records">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sensor</th>
+<th>Input Range °C</th>
+<th>Min Output</th>
+<th>Max Output</th>
+<th>Measured Span</th>
+<th>Specified Span</th>
+<th>Range Error</th>
+<th>Resolution</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>RNG-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>20–180</td>
+<td>10</td>
+<td>98</td>
+<td>88</td>
+<td>90</td>
+<td>2</td>
+<td>0.1</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>RNG-TR-2026-002</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>0–250</td>
+<td>4</td>
+<td>96</td>
+<td>92</td>
+<td>95</td>
+<td>3</td>
+<td>0.1</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>RNG-DE-2026-003</td>
+<td>Germany</td>
+<td>RTD</td>
+<td>20–200</td>
+<td>11</td>
+<td>97</td>
+<td>86</td>
+<td>90</td>
+<td>4</td>
+<td>0.05</td>
+<td>REVIEW</td>
+</tr>
+
+<tr>
+<td>RNG-IT-2026-004</td>
+<td>Italy</td>
+<td>Thermistor</td>
+<td>0–150</td>
+<td>8</td>
+<td>91</td>
+<td>83</td>
+<td>90</td>
+<td>7</td>
+<td>0.2</td>
+<td>FAIL</td>
+</tr>
+
+<tr>
+<td>RNG-CN-2026-005</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>0–300</td>
+<td>3</td>
+<td>99</td>
+<td>96</td>
+<td>100</td>
+<td>4</td>
+<td>0.1</td>
+<td>REVIEW</td>
+</tr>
+
+<tr>
+<td>RNG-US-2026-006</td>
+<td>USA</td>
+<td>Infrared Sensor</td>
+<td>25–200</td>
+<td>12</td>
+<td>99</td>
+<td>87</td>
+<td>90</td>
+<td>3</td>
+<td>0.1</td>
+<td>PASS</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<button class="action" onclick="exportCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="addDemoRecord()">
+Add Test Record — Demo
+</button>
+
+<button class="action" onclick="demoReport()">
+Technical Report — Demo
+</button>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+<h3>Output Span</h3>
+<p>
+Разница между максимальным и минимальным фактически измеренным
+выходным сигналом.
+</p>
+</div>
+
+<div class="card">
+<h3>Measured Range</h3>
+<p>
+Фактический диапазон выходных значений, полученный во время
+испытания.
+</p>
+</div>
+
+<div class="card">
+<h3>Range Error</h3>
+<p>
+Разница между заданной и измеренной шириной выходного диапазона.
+</p>
+</div>
+
+<div class="card">
+<h3>Range Coverage</h3>
+<p>
+Степень соответствия фактического выходного диапазона
+требуемому диапазону датчика.
+</p>
+</div>
+
+</section>
+
+<div class="notice">
+<strong>Важно:</strong>
+страница является демонстрационной частью WORKER PRO.
+Реальные испытания должны выполняться по техническим требованиям
+производителя, применимым стандартам, требованиям безопасности
+и с использованием калиброванного оборудования.
+Демонстрационные критерии PASS/REVIEW/FAIL не являются
+нормативными критериями приемки.
+</div>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Testing №260 — Thermal Interface Sensor Output Range Testing<br><br>
+Султанов Фарид Рафиг оглы — F.S.
+</footer>
+
+<script>
+
+function calculateRange(){
+
+    const inputMin =
+        Number(document.getElementById("inputMin").value);
+
+    const inputMax =
+        Number(document.getElementById("inputMax").value);
+
+    const outputMin =
+        Number(document.getElementById("outputMin").value);
+
+    const outputMax =
+        Number(document.getElementById("outputMax").value);
+
+    const specMin =
+        Number(document.getElementById("specMin").value);
+
+    const specMax =
+        Number(document.getElementById("specMax").value);
+
+    const allowedError =
+        Number(document.getElementById("allowedError").value);
+
+    const resolution =
+        Number(document.getElementById("resolution").value);
+
+    const measuredSpan =
+        outputMax - outputMin;
+
+    const specifiedSpan =
+        specMax - specMin;
+
+    const rangeError =
+        Math.abs(specifiedSpan - measuredSpan);
+
+    const midpoint =
+        (outputMax + outputMin) / 2;
+
+    const inputSpan =
+        inputMax - inputMin;
+
+    let coverage = 0;
+
+    if(specifiedSpan > 0){
+        coverage =
+            (measuredSpan / specifiedSpan) * 100;
+    }
+
+    let status = "PASS";
+
+    if(rangeError > allowedError){
+        status = "FAIL";
+    }
+    else if(rangeError >= allowedError * 0.8){
+        status = "REVIEW";
+    }
+
+    const displayPercent =
+        Math.max(0,Math.min(100,coverage));
+
+    document.getElementById("rangeActive").style.width =
+        displayPercent + "%";
+
+    document.getElementById("rangeMarkerMin").style.display =
+        "block";
+
+    document.getElementById("rangeMarkerMin").style.left =
+        "0%";
+
+    document.getElementById("rangeMarkerMax").style.display =
+        "block";
+
+    document.getElementById("rangeMarkerMax").style.left =
+        displayPercent + "%";
+
+    document.getElementById("result").innerHTML =
+
+        "Input Range: " +
+        inputMin.toFixed(2) +
+        " – " +
+        inputMax.toFixed(2) +
+        " °C<br>" +
+
+        "Input Span: " +
+        inputSpan.toFixed(2) +
+        " °C<br>" +
+
+        "Measured Minimum Output: " +
+        outputMin.toFixed(2) +
+        "<br>" +
+
+        "Measured Maximum Output: " +
+        outputMax.toFixed(2) +
+        "<br>" +
+
+        "Measured Output Span: " +
+        measuredSpan.toFixed(2) +
+        "<br>" +
+
+        "Specified Output Span: " +
+        specifiedSpan.toFixed(2) +
+        "<br>" +
+
+        "Range Error: " +
+        rangeError.toFixed(2) +
+        "<br>" +
+
+        "Output Midpoint: " +
+        midpoint.toFixed(2) +
+        "<br>" +
+
+        "Range Coverage: " +
+        coverage.toFixed(1) +
+        "%<br>" +
+
+        "Output Resolution: " +
+        resolution.toFixed(3) +
+        "<br>" +
+
+        "Result: <strong>" +
+        status +
+        "</strong>";
+}
+
+function filterTable(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter")
+        .value;
+
+    const rows =
+        document.querySelectorAll("#records tbody tr");
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[row.cells.length - 1]
+            .innerText
+            .trim();
+
+        const matchSearch =
+            text.includes(search);
+
+        const matchStatus =
+            !status || rowStatus === status;
+
+        row.style.display =
+            matchSearch && matchStatus
+            ? ""
+            : "none";
+    });
+}
+
+function addDemoRecord(){
+
+    const tbody =
+        document.querySelector("#records tbody");
+
+    const id =
+        "RNG-DEMO-" + Date.now();
+
+    const row =
+        document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>Demo</td>
+        <td>Demo Sensor</td>
+        <td>20–180</td>
+        <td>10</td>
+        <td>98</td>
+        <td>88</td>
+        <td>90</td>
+        <td>2</td>
+        <td>0.1</td>
+        <td>PASS</td>
+    `;
+
+    tbody.appendChild(row);
+
+    alert("Demo output range record added.");
+}
+
+function exportCSV(){
+
+    const rows =
+        document.querySelectorAll("#records tr");
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cols =
+            row.querySelectorAll("th,td");
+
+        const data =
+            Array.from(cols).map(col =>
+                '"' +
+                col.innerText.replace(/"/g,'""') +
+                '"'
+            );
+
+        csv.push(data.join(","));
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-interface-sensor-output-range-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function demoReport(){
+
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Test: Thermal Interface Sensor Output Range Testing\n" +
+        "Status: DEMO\n\n" +
+        "Real technical reports require validated laboratory data."
+    );
+}
+
+</script>
+
+</body>
+</html>
