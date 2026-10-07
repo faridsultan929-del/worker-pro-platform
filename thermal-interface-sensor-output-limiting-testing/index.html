@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Output Limiting Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.top-languages button{
+    border:0;
+    background:#fff;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+}
+
+header{
+    background:#0b6b3d;
+    color:#fff;
+    padding:24px 18px;
+}
+
+header h1{
+    margin:0 0 7px;
+    font-size:30px;
+}
+
+header p{
+    margin:0;
+}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:9px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    background:#063d25;
+    padding:9px 13px;
+    border-radius:7px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:#fff;
+    border-left:7px solid #0b6b3d;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 2px 9px #00000012;
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:#fff;
+    padding:18px;
+    text-align:center;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 2px 8px #00000010;
+}
+
+.card h2,
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.demo{
+    background:#eaf5ef;
+    border:1px solid #b9d9c7;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.demo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #aaa;
+    border-radius:7px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:#fff;
+    border:0;
+    padding:11px 15px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.result{
+    background:#fff;
+    border-radius:10px;
+    padding:15px;
+    margin-top:15px;
+    line-height:1.7;
+}
+
+.limit-panel{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+    margin-top:15px;
+}
+
+.limit-box{
+    background:#fff;
+    padding:15px;
+    border-radius:10px;
+    border:1px solid #d4e3da;
+}
+
+.bar{
+    width:100%;
+    height:28px;
+    background:#dce8e1;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:12px;
+}
+
+.bar-fill{
+    height:100%;
+    width:0;
+    background:#0b6b3d;
+    transition:.5s;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1250px;
+    border-collapse:collapse;
+    background:#fff;
+    margin-top:15px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:#fff;
+}
+
+.notice{
+    background:#fff7d6;
+    border-left:6px solid #d5a900;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    background:#063d25;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    header h1{font-size:24px}
+    .container{padding:12px}
+    .filters{grid-template-columns:1fr}
+    .limit-panel{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<span class="badge">TESTING №259</span>
+
+<h2>Thermal Interface Sensor Output Limiting Testing</h2>
+
+<p>
+Проверка работы заданных ограничителей выходного сигнала
+температурного датчика. Испытание определяет, насколько точно
+система удерживает выход внутри установленного верхнего и
+нижнего предела.
+</p>
+
+<p>
+В отличие от проверки clipping, здесь основной объект контроля —
+именно функция ограничения выходного диапазона: величина лимита,
+точность его срабатывания, устойчивость удержания и корректность
+возврата в рабочую область.
+</p>
+
+</section>
+
+<div class="stats">
+
+<div class="stat">
+<strong>183</strong>
+Limiting Programs
+</div>
+
+<div class="stat">
+<strong>10,640</strong>
+Limiting Records
+</div>
+
+<div class="stat">
+<strong>83</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+<section class="grid">
+
+<div class="card">
+<h3>Что проверяется</h3>
+<ul>
+<li>Верхний предел выхода</li>
+<li>Нижний предел выхода</li>
+<li>Точка срабатывания лимита</li>
+<li>Точность ограничения</li>
+<li>Стабильность ограниченного выхода</li>
+<li>Время реакции</li>
+<li>Гистерезис ограничения</li>
+<li>Возврат в рабочий диапазон</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Ключевые параметры</h3>
+<ul>
+<li>Input Temperature</li>
+<li>Expected Output</li>
+<li>Measured Output</li>
+<li>Upper Limit</li>
+<li>Lower Limit</li>
+<li>Limit Activation Point</li>
+<li>Limit Error</li>
+<li>Response Time</li>
+<li>Hysteresis</li>
+<li>Recovery Output</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Методы</h3>
+<ul>
+<li>Upper Limit Test</li>
+<li>Lower Limit Test</li>
+<li>Ramp Test</li>
+<li>Step Test</li>
+<li>Limit Hold</li>
+<li>Limit Release</li>
+<li>Hysteresis Test</li>
+<li>Repeated Limit Test</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Применение</h3>
+<ul>
+<li>Power Electronics</li>
+<li>Semiconductors</li>
+<li>Battery Systems</li>
+<li>Thermal Management</li>
+<li>Heat Exchangers</li>
+<li>Industrial Cooling</li>
+<li>Automotive</li>
+<li>Aerospace</li>
+<li>Oil & Gas</li>
+<li>Data Centers</li>
+</ul>
+</div>
+
+</section>
+
+<section class="demo">
+
+<h2>Output Limiting Calculator</h2>
+
+<div class="demo-grid">
+
+<div>
+<label>Input Temperature °C</label>
+<input id="inputTemp" type="number" value="170">
+</div>
+
+<div>
+<label>Expected Output</label>
+<input id="expectedOutput" type="number" value="108">
+</div>
+
+<div>
+<label>Measured Output</label>
+<input id="measuredOutput" type="number" value="100">
+</div>
+
+<div>
+<label>Upper Output Limit</label>
+<input id="upperLimit" type="number" value="100">
+</div>
+
+<div>
+<label>Lower Output Limit</label>
+<input id="lowerLimit" type="number" value="0">
+</div>
+
+<div>
+<label>Activation Output</label>
+<input id="activationOutput" type="number" value="100">
+</div>
+
+<div>
+<label>Recovery Output</label>
+<input id="recoveryOutput" type="number" value="98">
+</div>
+
+<div>
+<label>Allowed Limit Error</label>
+<input id="allowedError" type="number" value="3">
+</div>
+
+<div>
+<label>Response Time ms</label>
+<input id="responseTime" type="number" value="120">
+</div>
+
+<div>
+<label>Maximum Response Time ms</label>
+<input id="maxResponseTime" type="number" value="200">
+</div>
+
+</div>
+
+<div class="limit-panel">
+
+<div class="limit-box">
+<strong>Upper Limit</strong>
+<div class="bar">
+<div class="bar-fill" id="upperBar"></div>
+</div>
+</div>
+
+<div class="limit-box">
+<strong>Lower Limit</strong>
+<div class="bar">
+<div class="bar-fill" id="lowerBar"></div>
+</div>
+</div>
+
+</div>
+
+<button class="action" onclick="calculateLimit()">
+Calculate Output Limit
+</button>
+
+<div id="result" class="result">
+Результат появится здесь.
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Рабочий процесс</h2>
+
+<div class="grid">
+
+<div>
+<h3>1. Define Limits</h3>
+<p>Установить верхний и нижний пределы выходного сигнала.</p>
+</div>
+
+<div>
+<h3>2. Verify Reference</h3>
+<p>Проверить исходную характеристику датчика.</p>
+</div>
+
+<div>
+<h3>3. Apply Input</h3>
+<p>Изменять входную температуру по заданной программе.</p>
+</div>
+
+<div>
+<h3>4. Detect Activation</h3>
+<p>Определить момент срабатывания ограничения.</p>
+</div>
+
+<div>
+<h3>5. Measure Output</h3>
+<p>Зафиксировать фактический ограниченный сигнал.</p>
+</div>
+
+<div>
+<h3>6. Calculate Limit Error</h3>
+<p>Сравнить фактическое и заданное значение ограничения.</p>
+</div>
+
+<div>
+<h3>7. Check Response</h3>
+<p>Оценить время реакции ограничителя.</p>
+</div>
+
+<div>
+<h3>8. Check Hysteresis</h3>
+<p>Проверить поведение при увеличении и уменьшении входа.</p>
+</div>
+
+<div>
+<h3>9. Release Limit</h3>
+<p>Вернуть входной параметр в нормальную область.</p>
+</div>
+
+<div>
+<h3>10. Final Report</h3>
+<p>Сформировать технический отчёт испытания.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Output Limiting Test Records</h2>
+
+<div class="filters">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск по ID, стране, датчику..."
+oninput="filterTable()">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">Все статусы</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="records">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sensor</th>
+<th>Input °C</th>
+<th>Expected Output</th>
+<th>Measured Output</th>
+<th>Upper Limit</th>
+<th>Lower Limit</th>
+<th>Limit Error</th>
+<th>Response ms</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>LIM-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>170</td>
+<td>108</td>
+<td>100</td>
+<td>100</td>
+<td>0</td>
+<td>0</td>
+<td>120</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>LIM-TR-2026-002</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>230</td>
+<td>104</td>
+<td>100</td>
+<td>100</td>
+<td>0</td>
+<td>0</td>
+<td>145</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>LIM-DE-2026-003</td>
+<td>Germany</td>
+<td>RTD</td>
+<td>155</td>
+<td>102</td>
+<td>99</td>
+<td>100</td>
+<td>0</td>
+<td>1</td>
+<td>175</td>
+<td>REVIEW</td>
+</tr>
+
+<tr>
+<td>LIM-IT-2026-004</td>
+<td>Italy</td>
+<td>Thermistor</td>
+<td>135</td>
+<td>111</td>
+<td>96</td>
+<td>100</td>
+<td>0</td>
+<td>4</td>
+<td>240</td>
+<td>FAIL</td>
+</tr>
+
+<tr>
+<td>LIM-CN-2026-005</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>260</td>
+<td>106</td>
+<td>100</td>
+<td>100</td>
+<td>0</td>
+<td>0</td>
+<td>110</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>LIM-US-2026-006</td>
+<td>USA</td>
+<td>Infrared Sensor</td>
+<td>145</td>
+<td>103</td>
+<td>98</td>
+<td>100</td>
+<td>0</td>
+<td>2</td>
+<td>210</td>
+<td>REVIEW</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<button class="action" onclick="exportCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="addDemoRecord()">
+Add Test Record — Demo
+</button>
+
+<button class="action" onclick="demoReport()">
+Technical Report — Demo
+</button>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+<h3>Output Limit</h3>
+<p>
+Заданное максимальное или минимальное значение, выше или ниже
+которого выходной сигнал не должен переходить в установленной
+конфигурации.
+</p>
+</div>
+
+<div class="card">
+<h3>Limit Activation</h3>
+<p>
+Момент, когда система начинает применять заданное ограничение
+к выходному сигналу.
+</p>
+</div>
+
+<div class="card">
+<h3>Limit Error</h3>
+<p>
+Разница между фактическим уровнем ограниченного выхода и
+заданным значением лимита.
+</p>
+</div>
+
+<div class="card">
+<h3>Limit Hysteresis</h3>
+<p>
+Разница между условиями срабатывания и освобождения ограничения
+при изменении входного параметра в противоположных направлениях.
+</p>
+</div>
+
+</section>
+
+<div class="notice">
+<strong>Важно:</strong>
+страница является демонстрационной частью WORKER PRO.
+Реальные испытания должны выполняться по техническим требованиям
+производителя, применимым стандартам, требованиям безопасности
+и с использованием калиброванного оборудования.
+Демонстрационные критерии PASS/REVIEW/FAIL не являются
+нормативными критериями приемки.
+</div>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Testing №259 — Thermal Interface Sensor Output Limiting Testing<br><br>
+Султанов Фарид Рафиг оглы — F.S.
+</footer>
+
+<script>
+
+function calculateLimit(){
+
+    const inputTemp =
+        Number(document.getElementById("inputTemp").value);
+
+    const expected =
+        Number(document.getElementById("expectedOutput").value);
+
+    const measured =
+        Number(document.getElementById("measuredOutput").value);
+
+    const upper =
+        Number(document.getElementById("upperLimit").value);
+
+    const lower =
+        Number(document.getElementById("lowerLimit").value);
+
+    const activation =
+        Number(document.getElementById("activationOutput").value);
+
+    const recovery =
+        Number(document.getElementById("recoveryOutput").value);
+
+    const allowed =
+        Number(document.getElementById("allowedError").value);
+
+    const response =
+        Number(document.getElementById("responseTime").value);
+
+    const maxResponse =
+        Number(document.getElementById("maxResponseTime").value);
+
+    const limitError =
+        Math.abs(measured - upper);
+
+    const recoveryShift =
+        Math.abs(recovery - activation);
+
+    const hysteresis =
+        Math.abs(activation - recovery);
+
+    let activationStatus = "NOT ACTIVE";
+
+    if(measured >= upper){
+        activationStatus = "UPPER LIMIT ACTIVE";
+    }
+    else if(measured <= lower){
+        activationStatus = "LOWER LIMIT ACTIVE";
+    }
+
+    let status = "PASS";
+
+    if(limitError > allowed){
+        status = "FAIL";
+    }
+    else if(
+        limitError >= allowed * 0.8 ||
+        response > maxResponse
+    ){
+        status = "REVIEW";
+    }
+
+    const range =
+        upper - lower;
+
+    let upperPercent = 0;
+    let lowerPercent = 0;
+
+    if(range > 0){
+
+        upperPercent =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    ((measured - lower) / range) * 100
+                )
+            );
+
+        lowerPercent =
+            Math.max(
+                0,
+                Math.min(
+                    100,
+                    ((upper - measured) / range) * 100
+                )
+            );
+    }
+
+    document.getElementById("upperBar").style.width =
+        upperPercent + "%";
+
+    document.getElementById("lowerBar").style.width =
+        lowerPercent + "%";
+
+    document.getElementById("result").innerHTML =
+
+        "Input Temperature: " +
+        inputTemp.toFixed(2) +
+        " °C<br>" +
+
+        "Expected Output: " +
+        expected.toFixed(2) +
+        "<br>" +
+
+        "Measured Output: " +
+        measured.toFixed(2) +
+        "<br>" +
+
+        "Upper Limit: " +
+        upper.toFixed(2) +
+        "<br>" +
+
+        "Lower Limit: " +
+        lower.toFixed(2) +
+        "<br>" +
+
+        "Activation Status: <strong>" +
+        activationStatus +
+        "</strong><br>" +
+
+        "Limit Error: " +
+        limitError.toFixed(2) +
+        "<br>" +
+
+        "Recovery Shift: " +
+        recoveryShift.toFixed(2) +
+        "<br>" +
+
+        "Limit Hysteresis: " +
+        hysteresis.toFixed(2) +
+        "<br>" +
+
+        "Response Time: " +
+        response.toFixed(2) +
+        " ms<br>" +
+
+        "Maximum Response Time: " +
+        maxResponse.toFixed(2) +
+        " ms<br>" +
+
+        "Result: <strong>" +
+        status +
+        "</strong>";
+}
+
+function filterTable(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter")
+        .value;
+
+    const rows =
+        document.querySelectorAll("#records tbody tr");
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[row.cells.length - 1]
+            .innerText
+            .trim();
+
+        const matchSearch =
+            text.includes(search);
+
+        const matchStatus =
+            !status || rowStatus === status;
+
+        row.style.display =
+            matchSearch && matchStatus
+            ? ""
+            : "none";
+    });
+}
+
+function addDemoRecord(){
+
+    const tbody =
+        document.querySelector("#records tbody");
+
+    const id =
+        "LIM-DEMO-" + Date.now();
+
+    const row =
+        document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>Demo</td>
+        <td>Demo Sensor</td>
+        <td>170</td>
+        <td>108</td>
+        <td>100</td>
+        <td>100</td>
+        <td>0</td>
+        <td>0</td>
+        <td>120</td>
+        <td>PASS</td>
+    `;
+
+    tbody.appendChild(row);
+
+    alert("Demo output limiting record added.");
+}
+
+function exportCSV(){
+
+    const rows =
+        document.querySelectorAll("#records tr");
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cols =
+            row.querySelectorAll("th,td");
+
+        const data =
+            Array.from(cols).map(col =>
+                '"' +
+                col.innerText.replace(/"/g,'""') +
+                '"'
+            );
+
+        csv.push(data.join(","));
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {type:"text/csv;charset=utf-8;"}
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-interface-sensor-output-limiting-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function demoReport(){
+
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Test: Thermal Interface Sensor Output Limiting Testing\n" +
+        "Status: DEMO\n\n" +
+        "Real technical reports require validated laboratory data."
+    );
+}
+
+</script>
+
+</body>
+</html>
