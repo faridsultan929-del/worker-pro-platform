@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Output Gain Stability Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.top-languages button{
+    border:0;
+    background:#fff;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+}
+
+header{
+    background:#0b6b3d;
+    color:#fff;
+    padding:24px 18px;
+}
+
+header h1{
+    margin:0 0 7px;
+    font-size:30px;
+}
+
+header p{
+    margin:0;
+}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:9px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    background:#063d25;
+    padding:9px 13px;
+    border-radius:7px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:#fff;
+    border-left:7px solid #0b6b3d;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 2px 9px #00000012;
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:#fff;
+    padding:18px;
+    text-align:center;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 2px 8px #00000010;
+}
+
+.card h2,
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.demo{
+    background:#eaf5ef;
+    border:1px solid #b9d9c7;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.demo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:12px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #aaa;
+    border-radius:7px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:#fff;
+    border:0;
+    padding:11px 15px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.result{
+    background:#fff;
+    border-radius:10px;
+    padding:15px;
+    margin-top:15px;
+    line-height:1.7;
+}
+
+.stability-panel{
+    background:#fff;
+    border-radius:10px;
+    padding:18px;
+    margin-top:18px;
+}
+
+.stability-track{
+    height:34px;
+    background:#dce8e1;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+    margin-top:12px;
+}
+
+.stability-fill{
+    height:100%;
+    width:0;
+    background:#0b6b3d;
+    transition:.5s;
+}
+
+.stability-marker{
+    position:absolute;
+    top:0;
+    width:4px;
+    height:100%;
+    background:#063d25;
+    display:none;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1500px;
+    border-collapse:collapse;
+    background:#fff;
+    margin-top:15px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:#fff;
+}
+
+.notice{
+    background:#fff7d6;
+    border-left:6px solid #d5a900;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    background:#063d25;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    header h1{font-size:24px}
+    .container{padding:12px}
+    .filters{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<span class="badge">TESTING №265</span>
+
+<h2>Thermal Interface Sensor Output Gain Stability Testing</h2>
+
+<p>
+Проверка стабильности коэффициента усиления выходного сигнала
+температурного датчика во времени и при повторных измерениях.
+</p>
+
+<p>
+Испытание оценивает начальный и конечный Gain, дрейф Gain,
+скорость дрейфа, максимальное отклонение, повторяемость
+и соответствие установленному пределу стабильности.
+</p>
+
+</section>
+
+<div class="stats">
+
+<div class="stat">
+<strong>195</strong>
+Stability Programs
+</div>
+
+<div class="stat">
+<strong>11,720</strong>
+Stability Records
+</div>
+
+<div class="stat">
+<strong>89</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+<section class="grid">
+
+<div class="card">
+<h3>Что проверяется</h3>
+<ul>
+<li>Initial Gain</li>
+<li>Final Gain</li>
+<li>Current Gain</li>
+<li>Gain Drift</li>
+<li>Gain Drift Rate</li>
+<li>Maximum Gain Deviation</li>
+<li>Repeatability</li>
+<li>Stability Limit</li>
+<li>Long-Term Stability</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Ключевые параметры</h3>
+<ul>
+<li>Reference Gain</li>
+<li>Initial Gain</li>
+<li>Final Gain</li>
+<li>Observation Time</li>
+<li>Sampling Interval</li>
+<li>Maximum Gain</li>
+<li>Minimum Gain</li>
+<li>Gain Range</li>
+<li>Allowed Drift</li>
+<li>Sensor ID</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Методы</h3>
+<ul>
+<li>Continuous Stability</li>
+<li>Periodic Gain Measurement</li>
+<li>Long-Term Gain Test</li>
+<li>Reference Comparison</li>
+<li>Drift Monitoring</li>
+<li>Repeated Gain Test</li>
+<li>Thermal Cycle Stability</li>
+<li>Trend Analysis</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Применение</h3>
+<ul>
+<li>Thermal Management</li>
+<li>Industrial Cooling</li>
+<li>Battery Systems</li>
+<li>Power Electronics</li>
+<li>Heat Exchangers</li>
+<li>Automotive</li>
+<li>Aerospace</li>
+<li>Oil & Gas</li>
+<li>Data Centers</li>
+<li>Industrial Automation</li>
+</ul>
+</div>
+
+</section>
+
+<section class="demo">
+
+<h2>Gain Stability Calculator</h2>
+
+<div class="demo-grid">
+
+<div>
+<label>Initial Gain</label>
+<input id="initialGain" type="number" step="0.000001" value="0.5000">
+</div>
+
+<div>
+<label>Final Gain</label>
+<input id="finalGain" type="number" step="0.000001" value="0.5030">
+</div>
+
+<div>
+<label>Reference Gain</label>
+<input id="referenceGain" type="number" step="0.000001" value="0.5000">
+</div>
+
+<div>
+<label>Allowed Drift</label>
+<input id="allowedDrift" type="number" step="0.000001" value="0.0100">
+</div>
+
+<div>
+<label>Maximum Gain</label>
+<input id="maxGain" type="number" step="0.000001" value="0.5050">
+</div>
+
+<div>
+<label>Minimum Gain</label>
+<input id="minGain" type="number" step="0.000001" value="0.4970">
+</div>
+
+<div>
+<label>Observation Time, h</label>
+<input id="observationTime" type="number" value="24">
+</div>
+
+<div>
+<label>Repeat Gain</label>
+<input id="repeatGain" type="number" step="0.000001" value="0.5010">
+</div>
+
+<div>
+<label>Sensor ID</label>
+<input id="sensorId" type="text" value="STB-DEMO-265">
+</div>
+
+</div>
+
+<div class="stability-panel">
+
+<strong>Gain Stability Indicator</strong>
+
+<div class="stability-track">
+<div class="stability-fill" id="stabilityFill"></div>
+<div class="stability-marker" id="stabilityMarker"></div>
+</div>
+
+</div>
+
+<button class="action" onclick="calculateStability()">
+Calculate Gain Stability
+</button>
+
+<div id="result" class="result">
+Результат появится здесь.
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Рабочий процесс</h2>
+
+<div class="grid">
+
+<div>
+<h3>1. Define Reference</h3>
+<p>Определить эталонный коэффициент Gain.</p>
+</div>
+
+<div>
+<h3>2. Initial Measurement</h3>
+<p>Зафиксировать начальное значение Gain.</p>
+</div>
+
+<div>
+<h3>3. Observation</h3>
+<p>Проводить измерения в течение заданного периода.</p>
+</div>
+
+<div>
+<h3>4. Record Maximum</h3>
+<p>Определить максимальный измеренный Gain.</p>
+</div>
+
+<div>
+<h3>5. Record Minimum</h3>
+<p>Определить минимальный измеренный Gain.</p>
+</div>
+
+<div>
+<h3>6. Calculate Drift</h3>
+<p>Рассчитать изменение Gain между началом и концом испытания.</p>
+</div>
+
+<div>
+<h3>7. Calculate Drift Rate</h3>
+<p>Определить скорость изменения Gain относительно времени наблюдения.</p>
+</div>
+
+<div>
+<h3>8. Check Repeatability</h3>
+<p>Сравнить повторное измерение с текущим Gain.</p>
+</div>
+
+<div>
+<h3>9. Evaluate Stability</h3>
+<p>Сравнить максимальное отклонение с установленным пределом.</p>
+</div>
+
+<div>
+<h3>10. Final Report</h3>
+<p>Сформировать технический отчёт.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Gain Stability Test Records</h2>
+
+<div class="filters">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск по ID, стране, датчику..."
+oninput="filterTable()">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">Все статусы</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="records">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sensor</th>
+<th>Initial Gain</th>
+<th>Final Gain</th>
+<th>Min Gain</th>
+<th>Max Gain</th>
+<th>Gain Drift</th>
+<th>Drift Rate</th>
+<th>Deviation %</th>
+<th>Repeat Gain</th>
+<th>Stability Limit</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>GST-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>0.5000</td>
+<td>0.5010</td>
+<td>0.4980</td>
+<td>0.5030</td>
+<td>0.0010</td>
+<td>0.000042/h</td>
+<td>0.20</td>
+<td>0.5005</td>
+<td>0.0100</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GST-TR-2026-002</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>0.5000</td>
+<td>0.5030</td>
+<td>0.4975</td>
+<td>0.5040</td>
+<td>0.0030</td>
+<td>0.000125/h</td>
+<td>0.60</td>
+<td>0.5020</td>
+<td>0.0100</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GST-DE-2026-003</td>
+<td>Germany</td>
+<td>RTD</td>
+<td>0.5000</td>
+<td>0.5065</td>
+<td>0.4960</td>
+<td>0.5070</td>
+<td>0.0065</td>
+<td>0.000271/h</td>
+<td>1.30</td>
+<td>0.5055</td>
+<td>0.0100</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GST-IT-2026-004</td>
+<td>Italy</td>
+<td>Thermistor</td>
+<td>0.5000</td>
+<td>0.5090</td>
+<td>0.4950</td>
+<td>0.5100</td>
+<td>0.0090</td>
+<td>0.000375/h</td>
+<td>1.80</td>
+<td>0.5080</td>
+<td>0.0100</td>
+<td>REVIEW</td>
+</tr>
+
+<tr>
+<td>GST-CN-2026-005</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>0.5000</td>
+<td>0.4990</td>
+<td>0.4965</td>
+<td>0.5020</td>
+<td>-0.0010</td>
+<td>-0.000042/h</td>
+<td>0.20</td>
+<td>0.4995</td>
+<td>0.0100</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GST-US-2026-006</td>
+<td>USA</td>
+<td>Infrared Sensor</td>
+<td>0.5000</td>
+<td>0.5120</td>
+<td>0.4930</td>
+<td>0.5140</td>
+<td>0.0120</td>
+<td>0.000500/h</td>
+<td>2.40</td>
+<td>0.5110</td>
+<td>0.0100</td>
+<td>FAIL</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<button class="action" onclick="exportCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="addDemoRecord()">
+Add Test Record — Demo
+</button>
+
+<button class="action" onclick="demoReport()">
+Technical Report — Demo
+</button>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+<h3>Gain Drift</h3>
+<p>
+Разница между начальным и конечным значением коэффициента усиления.
+</p>
+</div>
+
+<div class="card">
+<h3>Gain Drift Rate</h3>
+<p>
+Скорость изменения коэффициента усиления за единицу времени наблюдения.
+</p>
+</div>
+
+<div class="card">
+<h3>Gain Range</h3>
+<p>
+Разница между максимальным и минимальным измеренным Gain.
+</p>
+</div>
+
+<div class="card">
+<h3>Gain Stability</h3>
+<p>
+Способность датчика сохранять коэффициент усиления в установленном
+диапазоне во время длительного или повторного испытания.
+</p>
+</div>
+
+</section>
+
+<div class="notice">
+<strong>Важно:</strong>
+страница является демонстрационной частью WORKER PRO.
+Реальные испытания должны выполняться по техническим требованиям
+производителя, применимым стандартам, требованиям безопасности
+и с использованием калиброванного оборудования.
+Демонстрационные критерии PASS/REVIEW/FAIL не являются
+нормативными критериями приемки.
+</div>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Testing №265 — Thermal Interface Sensor Output Gain Stability Testing<br><br>
+Султанов Фарид Рафиг оглы — F.S.
+</footer>
+
+<script>
+
+function calculateStability(){
+
+    const initialGain =
+        Number(document.getElementById("initialGain").value);
+
+    const finalGain =
+        Number(document.getElementById("finalGain").value);
+
+    const referenceGain =
+        Number(document.getElementById("referenceGain").value);
+
+    const allowedDrift =
+        Number(document.getElementById("allowedDrift").value);
+
+    const maxGain =
+        Number(document.getElementById("maxGain").value);
+
+    const minGain =
+        Number(document.getElementById("minGain").value);
+
+    const observationTime =
+        Number(document.getElementById("observationTime").value);
+
+    const repeatGain =
+        Number(document.getElementById("repeatGain").value);
+
+    const sensorId =
+        document.getElementById("sensorId").value;
+
+    const gainDrift =
+        finalGain - initialGain;
+
+    const gainRange =
+        maxGain - minGain;
+
+    const maxDeviation =
+        Math.max(
+            Math.abs(maxGain - referenceGain),
+            Math.abs(minGain - referenceGain)
+        );
+
+    const deviationPercent =
+        referenceGain !== 0
+        ? (
+            maxDeviation /
+            Math.abs(referenceGain)
+        ) * 100
+        : 0;
+
+    const driftRate =
+        observationTime > 0
+        ? gainDrift / observationTime
+        : 0;
+
+    const repeatDifference =
+        Math.abs(
+            finalGain - repeatGain
+        );
+
+    let status = "PASS";
+
+    if(
+        maxDeviation >
+        allowedDrift
+    ){
+        status = "FAIL";
+    }
+    else if(
+        maxDeviation >=
+        allowedDrift * 0.8
+    ){
+        status = "REVIEW";
+    }
+
+    /*
+       Стабильность отображается как
+       100% при нулевом отклонении.
+       При достижении allowedDrift
+       индикатор показывает 0%.
+    */
+
+    let stabilityPercent =
+        allowedDrift > 0
+        ? (
+            1 -
+            (
+                maxDeviation /
+                allowedDrift
+            )
+        ) * 100
+        : 0;
+
+    stabilityPercent =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                stabilityPercent
+            )
+        );
+
+    document.getElementById(
+        "stabilityFill"
+    ).style.width =
+        stabilityPercent + "%";
+
+    const marker =
+        document.getElementById(
+            "stabilityMarker"
+        );
+
+    marker.style.display = "block";
+
+    let markerPosition =
+        allowedDrift > 0
+        ? (
+            maxDeviation /
+            allowedDrift
+        ) * 100
+        : 0;
+
+    markerPosition =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                markerPosition
+            )
+        );
+
+    marker.style.left =
+        markerPosition + "%";
+
+    document.getElementById(
+        "result"
+    ).innerHTML =
+
+        "Sensor ID: " +
+        sensorId +
+        "<br>" +
+
+        "Initial Gain: " +
+        initialGain.toFixed(6) +
+        "<br>" +
+
+        "Final Gain: " +
+        finalGain.toFixed(6) +
+        "<br>" +
+
+        "Reference Gain: " +
+        referenceGain.toFixed(6) +
+        "<br>" +
+
+        "Gain Drift: " +
+        gainDrift.toFixed(6) +
+        "<br>" +
+
+        "Gain Drift Rate: " +
+        driftRate.toFixed(8) +
+        " /h<br>" +
+
+        "Minimum Gain: " +
+        minGain.toFixed(6) +
+        "<br>" +
+
+        "Maximum Gain: " +
+        maxGain.toFixed(6) +
+        "<br>" +
+
+        "Gain Range: " +
+        gainRange.toFixed(6) +
+        "<br>" +
+
+        "Maximum Gain Deviation: " +
+        maxDeviation.toFixed(6) +
+        "<br>" +
+
+        "Deviation: " +
+        deviationPercent.toFixed(2) +
+        "%<br>" +
+
+        "Repeat Gain: " +
+        repeatGain.toFixed(6) +
+        "<br>" +
+
+        "Repeat Difference: " +
+        repeatDifference.toFixed(6) +
+        "<br>" +
+
+        "Stability Limit: " +
+        allowedDrift.toFixed(6) +
+        "<br>" +
+
+        "Stability Indicator: " +
+        stabilityPercent.toFixed(1) +
+        "%<br>" +
+
+        "Result: <strong>" +
+        status +
+        "</strong>";
+}
+
+function filterTable(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter")
+        .value;
+
+    const rows =
+        document.querySelectorAll(
+            "#records tbody tr"
+        );
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[
+                row.cells.length - 1
+            ].innerText.trim();
+
+        const matchSearch =
+            text.includes(search);
+
+        const matchStatus =
+            !status ||
+            rowStatus === status;
+
+        row.style.display =
+            matchSearch &&
+            matchStatus
+            ? ""
+            : "none";
+    });
+}
+
+function addDemoRecord(){
+
+    const tbody =
+        document.querySelector(
+            "#records tbody"
+        );
+
+    const id =
+        "GST-DEMO-" +
+        Date.now();
+
+    const row =
+        document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>Demo</td>
+        <td>Demo Sensor</td>
+        <td>0.5000</td>
+        <td>0.5015</td>
+        <td>0.4985</td>
+        <td>0.5030</td>
+        <td>0.0015</td>
+        <td>0.000063/h</td>
+        <td>0.30</td>
+        <td>0.5010</td>
+        <td>0.0100</td>
+        <td>PASS</td>
+    `;
+
+    tbody.appendChild(row);
+
+    alert(
+        "Demo gain stability record added."
+    );
+}
+
+function exportCSV(){
+
+    const rows =
+        document.querySelectorAll(
+            "#records tr"
+        );
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cols =
+            row.querySelectorAll(
+                "th,td"
+            );
+
+        const data =
+            Array.from(cols).map(col =>
+                '"' +
+                col.innerText
+                    .replace(/"/g,'""') +
+                '"'
+            );
+
+        csv.push(
+            data.join(",")
+        );
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-interface-sensor-output-gain-stability-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function demoReport(){
+
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Test: Thermal Interface Sensor Output Gain Stability Testing\n" +
+        "Status: DEMO\n\n" +
+        "Real technical reports require validated laboratory data."
+    );
+}
+
+</script>
+
+</body>
+</html>
