@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Crude Oil Testing</title>
+
+<style>
+*{box-sizing:border-box}
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#17352a;
+}
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    gap:7px;
+    flex-wrap:wrap;
+    justify-content:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+.top-languages button{
+    border:1px solid #b7ff35;
+    background:#0b6b3d;
+    color:white;
+    padding:7px 12px;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+}
+.top-languages button:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+header{
+    background:#0b6b3d;
+    color:white;
+    padding:24px 18px;
+    text-align:center;
+}
+header h1{
+    margin:0;
+    font-size:32px;
+}
+header p{
+    margin:8px 0 0;
+}
+nav{
+    background:#075b34;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:8px;
+}
+nav a{
+    color:white;
+    text-decoration:none;
+    padding:8px 12px;
+    border-radius:8px;
+}
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+.hero{
+    background:white;
+    border-left:7px solid #0b6b3d;
+    padding:22px;
+    border-radius:12px;
+    box-shadow:0 3px 12px #0001;
+}
+.hero h2{
+    margin-top:0;
+    color:#063d25;
+}
+.notice{
+    background:#fff9d9;
+    border:1px solid #e5cf65;
+    padding:14px;
+    border-radius:10px;
+    margin:18px 0;
+}
+.stats{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin:20px 0;
+}
+.stat{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 2px 10px #0001;
+}
+.stat strong{
+    display:block;
+    font-size:28px;
+    color:#0b6b3d;
+}
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+.card{
+    background:white;
+    padding:18px;
+    border-radius:12px;
+    box-shadow:0 2px 10px #0001;
+}
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+.tags{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+}
+.tag{
+    background:#e8f6ed;
+    color:#075b34;
+    padding:6px 9px;
+    border-radius:15px;
+    font-size:13px;
+}
+.workflow{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:8px;
+    margin-top:15px;
+}
+.step{
+    background:#063d25;
+    color:white;
+    padding:12px 5px;
+    text-align:center;
+    border-radius:8px;
+    font-size:13px;
+}
+.section{
+    margin-top:25px;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    min-width:1000px;
+}
+th,td{
+    border:1px solid #d8e2dc;
+    padding:9px;
+    text-align:left;
+}
+th{
+    background:#063d25;
+    color:white;
+}
+.table-wrap{
+    overflow:auto;
+    border-radius:10px;
+}
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #cbd8d0;
+    border-radius:7px;
+    margin-top:5px;
+}
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+}
+label{
+    font-weight:bold;
+    font-size:14px;
+}
+.actions{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+button.action{
+    background:#0b6b3d;
+    color:white;
+    border:0;
+    padding:11px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+}
+button.action:hover{
+    background:#063d25;
+}
+.result{
+    background:#edf8f1;
+    border:1px solid #b8ddc6;
+    padding:15px;
+    margin-top:15px;
+    border-radius:10px;
+}
+.progress{
+    height:18px;
+    background:#dce8e1;
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:10px;
+}
+.progress-bar{
+    height:100%;
+    width:0%;
+    background:#0b6b3d;
+    transition:.4s;
+}
+.search-box{
+    margin:15px 0;
+}
+footer{
+    background:#063d25;
+    color:white;
+    text-align:center;
+    padding:25px;
+    margin-top:35px;
+}
+@media(max-width:900px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .grid{grid-template-columns:1fr}
+    .workflow{grid-template-columns:repeat(2,1fr)}
+    .form-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+    header h1{font-size:25px}
+    .container{padding:12px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+    <p><strong>№270 — Crude Oil Testing</strong></p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+    <h2>Crude Oil Testing — Испытание сырой нефти</h2>
+    <p>
+        Комплексное лабораторное испытание сырой нефти для определения
+        физических, химических и эксплуатационных характеристик перед
+        транспортировкой, хранением, переработкой и коммерческой передачей.
+    </p>
+
+    <div class="notice">
+        <strong>WORKER PRO:</strong>
+        демонстрационный промышленный раздел. Реальные лабораторные
+        результаты, сертификаты и коммерческие решения требуют
+        подтверждённых данных и соответствующих стандартов/лабораторий.
+    </div>
+</section>
+
+<section class="stats">
+    <div class="stat">
+        <strong>205</strong>
+        Test Programs
+    </div>
+    <div class="stat">
+        <strong>12,560</strong>
+        Test Records
+    </div>
+    <div class="stat">
+        <strong>94</strong>
+        Lab Teams
+    </div>
+    <div class="stat">
+        <strong>99.9%</strong>
+        Data Availability
+    </div>
+</section>
+
+<section class="section grid">
+
+<div class="card">
+<h3>Основные параметры</h3>
+<div class="tags">
+<span class="tag">Density</span>
+<span class="tag">API Gravity</span>
+<span class="tag">Viscosity</span>
+<span class="tag">Sulfur</span>
+<span class="tag">Water</span>
+<span class="tag">Sediment</span>
+<span class="tag">Salt</span>
+<span class="tag">Flash Point</span>
+<span class="tag">Pour Point</span>
+<span class="tag">Distillation</span>
+</div>
+</div>
+
+<div class="card">
+<h3>Химические характеристики</h3>
+<div class="tags">
+<span class="tag">Sulfur Content</span>
+<span class="tag">Nitrogen</span>
+<span class="tag">Acidity</span>
+<span class="tag">Mercury</span>
+<span class="tag">Metals</span>
+<span class="tag">Hydrocarbon Composition</span>
+<span class="tag">Asphaltenes</span>
+<span class="tag">Resins</span>
+</div>
+</div>
+
+<div class="card">
+<h3>Контроль качества</h3>
+<div class="tags">
+<span class="tag">Sampling</span>
+<span class="tag">Laboratory Analysis</span>
+<span class="tag">Specification Check</span>
+<span class="tag">Batch Verification</span>
+<span class="tag">Certificate Review</span>
+<span class="tag">Traceability</span>
+</div>
+</div>
+
+</section>
+
+<section class="section card">
+<h3>Методы испытаний</h3>
+
+<div class="tags">
+<span class="tag">Laboratory Analysis</span>
+<span class="tag">Density Measurement</span>
+<span class="tag">Viscosity Measurement</span>
+<span class="tag">Sulfur Analysis</span>
+<span class="tag">Water & Sediment Analysis</span>
+<span class="tag">Salt Analysis</span>
+<span class="tag">Distillation</span>
+<span class="tag">Flash Point</span>
+<span class="tag">Pour Point</span>
+<span class="tag">Pourability</span>
+<span class="tag">Chromatographic Analysis</span>
+<span class="tag">Spectrometric Analysis</span>
+</div>
+</section>
+
+<section class="section card">
+<h3>Рабочий процесс</h3>
+
+<div class="workflow">
+    <div class="step">1. Sample</div>
+    <div class="step">2. Identification</div>
+    <div class="step">3. Preparation</div>
+    <div class="step">4. Testing</div>
+    <div class="step">5. Analysis</div>
+    <div class="step">6. Quality Check</div>
+    <div class="step">7. Report</div>
+</div>
+</section>
+
+<section class="section grid">
+
+<div class="card">
+<h3>Где применяется</h3>
+<ul>
+<li>Oil Production</li>
+<li>Oil Refining</li>
+<li>Oil Terminals</li>
+<li>Storage Facilities</li>
+<li>Pipeline Transportation</li>
+<li>Marine Transportation</li>
+<li>Oil Trading</li>
+<li>Export Operations</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Основные цели</h3>
+<ul>
+<li>Определение качества сырой нефти</li>
+<li>Контроль партии</li>
+<li>Подтверждение спецификации</li>
+<li>Подготовка коммерческих данных</li>
+<li>Контроль транспортировки</li>
+<li>Контроль хранения</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Результат</h3>
+<ul>
+<li>Test Record</li>
+<li>Laboratory Result</li>
+<li>Quality Status</li>
+<li>Technical Report</li>
+<li>Traceability Record</li>
+<li>Certificate Data</li>
+</ul>
+</div>
+
+</section>
+
+<section class="section card">
+<h3>Добавить демонстрационное испытание</h3>
+
+<div class="form-grid">
+
+<div>
+<label>Country</label>
+<select id="country">
+<option>Azerbaijan</option>
+<option>Turkey</option>
+<option>Germany</option>
+<option>Italy</option>
+<option>Saudi Arabia</option>
+<option>United Arab Emirates</option>
+<option>USA</option>
+</select>
+</div>
+
+<div>
+<label>Sample ID</label>
+<input id="sample" placeholder="CO-2026-007">
+</div>
+
+<div>
+<label>Density kg/m³</label>
+<input id="density" type="number" value="840">
+</div>
+
+<div>
+<label>API Gravity</label>
+<input id="api" type="number" value="36">
+</div>
+
+<div>
+<label>Viscosity cSt</label>
+<input id="viscosity" type="number" value="8.5">
+</div>
+
+<div>
+<label>Sulfur %</label>
+<input id="sulfur" type="number" step="0.01" value="0.65">
+</div>
+
+<div>
+<label>Water %</label>
+<input id="water" type="number" step="0.01" value="0.30">
+</div>
+
+<div>
+<label>Sediment %</label>
+<input id="sediment" type="number" step="0.01" value="0.05">
+</div>
+
+<div>
+<label>Test Temperature °C</label>
+<input id="temperature" type="number" value="20">
+</div>
+
+</div>
+
+<div class="actions">
+<button class="action" onclick="addTest()">Add Test</button>
+<button class="action" onclick="exportCSV()">Export CSV</button>
+<button class="action" onclick="technicalReport()">Technical Report</button>
+</div>
+
+<div id="result" class="result">
+Введите параметры и нажмите <strong>Add Test</strong>.
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="qualityBar"></div>
+</div>
+
+</section>
+
+<section class="section card">
+<h3>Поиск испытаний</h3>
+
+<div class="search-box">
+<input id="search" oninput="filterTable()" placeholder="Поиск по ID, стране, образцу...">
+</div>
+
+<div class="table-wrap">
+<table id="records">
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sample</th>
+<th>Density</th>
+<th>API</th>
+<th>Viscosity</th>
+<th>Sulfur %</th>
+<th>Water %</th>
+<th>Sediment %</th>
+<th>Temperature</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>CO-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>AZ-CRUDE-001</td>
+<td>842</td>
+<td>35.8</td>
+<td>8.2</td>
+<td>0.62</td>
+<td>0.28</td>
+<td>0.04</td>
+<td>20</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>CO-TR-2026-002</td>
+<td>Turkey</td>
+<td>TR-CRUDE-002</td>
+<td>855</td>
+<td>33.7</td>
+<td>9.4</td>
+<td>0.71</td>
+<td>0.34</td>
+<td>0.06</td>
+<td>20</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>CO-DE-2026-003</td>
+<td>Germany</td>
+<td>DE-CRUDE-003</td>
+<td>830</td>
+<td>38.1</td>
+<td>7.6</td>
+<td>0.41</td>
+<td>0.22</td>
+<td>0.03</td>
+<td>20</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>CO-IT-2026-004</td>
+<td>Italy</td>
+<td>IT-CRUDE-004</td>
+<td>865</td>
+<td>31.9</td>
+<td>10.8</td>
+<td>0.83</td>
+<td>0.42</td>
+<td>0.08</td>
+<td>20</td>
+<td>REVIEW</td>
+</tr>
+
+<tr>
+<td>CO-SA-2026-005</td>
+<td>Saudi Arabia</td>
+<td>SA-CRUDE-005</td>
+<td>810</td>
+<td>43.1</td>
+<td>6.5</td>
+<td>0.25</td>
+<td>0.18</td>
+<td>0.02</td>
+<td>20</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>CO-US-2026-006</td>
+<td>USA</td>
+<td>US-CRUDE-006</td>
+<td>875</td>
+<td>30.4</td>
+<td>12.2</td>
+<td>0.91</td>
+<td>0.55</td>
+<td>0.10</td>
+<td>20</td>
+<td>REVIEW</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="section card">
+<h3>Что будет в полноценной версии WORKER PRO</h3>
+
+<ul>
+<li>Регистрация лаборатории и компании</li>
+<li>Загрузка результатов испытаний</li>
+<li>Проверка образца и партии</li>
+<li>Связь Test Record с Quality</li>
+<li>Формирование Technical Report</li>
+<li>Связь с Documents</li>
+<li>Certificate management</li>
+<li>Связь с Supplier</li>
+<li>Request → Quote → Order</li>
+<li>Дальнейшая Logistics → Transport → Tracking</li>
+</ul>
+</section>
+
+<div class="notice">
+<strong>Важно:</strong> значения на странице являются демонстрационными.
+Для реальной торговли, сертификации и приёмки нефти необходимо использовать
+утверждённые методики, стандарты, лабораторные процедуры и реальные измерения.
+</div>
+
+</div>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Crude Oil Testing №270<br><br>
+F.S.
+</footer>
+
+<script>
+
+function addTest(){
+
+    const country = document.getElementById("country").value;
+    const sample = document.getElementById("sample").value ||
+        "CO-DEMO-" + Date.now();
+
+    const density = parseFloat(document.getElementById("density").value) || 0;
+    const api = parseFloat(document.getElementById("api").value) || 0;
+    const viscosity = parseFloat(document.getElementById("viscosity").value) || 0;
+    const sulfur = parseFloat(document.getElementById("sulfur").value) || 0;
+    const water = parseFloat(document.getElementById("water").value) || 0;
+    const sediment = parseFloat(document.getElementById("sediment").value) || 0;
+    const temperature = parseFloat(document.getElementById("temperature").value) || 0;
+
+    let status = "PASS";
+
+    if(sulfur > 1.0 || water > 1.0 || sediment > 0.20){
+        status = "REVIEW";
+    }
+
+    if(sulfur > 2.0 || water > 2.0 || sediment > 0.50){
+        status = "FAIL";
+    }
+
+    const id = "CO-DEMO-" + Date.now();
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>${country}</td>
+        <td>${sample}</td>
+        <td>${density}</td>
+        <td>${api}</td>
+        <td>${viscosity}</td>
+        <td>${sulfur}</td>
+        <td>${water}</td>
+        <td>${sediment}</td>
+        <td>${temperature}</td>
+        <td>${status}</td>
+    `;
+
+    document.querySelector("#records tbody").prepend(row);
+
+    let score = 98;
+
+    if(status === "REVIEW") score = 75;
+    if(status === "FAIL") score = 45;
+
+    document.getElementById("qualityBar").style.width = score + "%";
+
+    document.getElementById("result").innerHTML = `
+        <strong>Test created:</strong> ${id}<br><br>
+        Sample: ${sample}<br>
+        Country: ${country}<br>
+        Density: ${density} kg/m³<br>
+        API Gravity: ${api}<br>
+        Viscosity: ${viscosity} cSt<br>
+        Sulfur: ${sulfur}%<br>
+        Water: ${water}%<br>
+        Sediment: ${sediment}%<br>
+        Temperature: ${temperature} °C<br><br>
+        <strong>Status: ${status}</strong>
+    `;
+}
+
+function filterTable(){
+
+    const value =
+        document.getElementById("search").value.toLowerCase();
+
+    const rows =
+        document.querySelectorAll("#records tbody tr");
+
+    rows.forEach(row => {
+
+        const text = row.innerText.toLowerCase();
+
+        row.style.display =
+            text.includes(value) ? "" : "none";
+
+    });
+}
+
+function exportCSV(){
+
+    const rows =
+        document.querySelectorAll("#records tr");
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cells = row.querySelectorAll("th,td");
+
+        const line = [];
+
+        cells.forEach(cell => {
+            line.push(
+                '"' +
+                cell.innerText.replace(/"/g,'""') +
+                '"'
+            );
+        });
+
+        csv.push(line.join(","));
+    });
+
+    const blob =
+        new Blob([csv.join("\n")],
+        {type:"text/csv;charset=utf-8;"});
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+
+    a.href = url;
+    a.download =
+        "worker-pro-crude-oil-testing.csv";
+
+    a.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function technicalReport(){
+
+    alert(
+        "WORKER PRO Technical Report\n\n" +
+        "Crude Oil Testing — №270\n\n" +
+        "This is a demonstration report.\n" +
+        "Real laboratory results must be verified."
+    );
+}
+
+</script>
+
+</body>
+</html>
