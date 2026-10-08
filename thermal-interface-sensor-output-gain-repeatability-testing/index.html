@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Output Gain Repeatability Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.top-languages button{
+    border:0;
+    background:#fff;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+}
+
+header{
+    background:#0b6b3d;
+    color:#fff;
+    padding:24px 18px;
+}
+
+header h1{
+    margin:0 0 7px;
+    font-size:30px;
+}
+
+header p{
+    margin:0;
+}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:9px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    background:#063d25;
+    padding:9px 13px;
+    border-radius:7px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:#fff;
+    border-left:7px solid #0b6b3d;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 2px 9px #00000012;
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:#fff;
+    padding:18px;
+    text-align:center;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 2px 8px #00000010;
+}
+
+.card h2,
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.demo{
+    background:#eaf5ef;
+    border:1px solid #b9d9c7;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.demo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:12px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #aaa;
+    border-radius:7px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:#fff;
+    border:0;
+    padding:11px 15px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.result{
+    background:#fff;
+    border-radius:10px;
+    padding:15px;
+    margin-top:15px;
+    line-height:1.7;
+}
+
+.repeat-panel{
+    background:#fff;
+    border-radius:10px;
+    padding:18px;
+    margin-top:18px;
+}
+
+.repeat-track{
+    height:34px;
+    background:#dce8e1;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+    margin-top:12px;
+}
+
+.repeat-fill{
+    height:100%;
+    width:0;
+    background:#0b6b3d;
+    transition:.5s;
+}
+
+.repeat-marker{
+    position:absolute;
+    top:0;
+    width:4px;
+    height:100%;
+    background:#063d25;
+    display:none;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1600px;
+    border-collapse:collapse;
+    background:#fff;
+    margin-top:15px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:#fff;
+}
+
+.notice{
+    background:#fff7d6;
+    border-left:6px solid #d5a900;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    background:#063d25;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    header h1{font-size:24px}
+    .container{padding:12px}
+    .filters{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<span class="badge">TESTING №266</span>
+
+<h2>Thermal Interface Sensor Output Gain Repeatability Testing</h2>
+
+<p>
+Проверка повторяемости коэффициента усиления выходного сигнала
+температурного датчика при повторных измерениях в одинаковых
+или контролируемых условиях.
+</p>
+
+<p>
+Испытание определяет средний Gain, минимальный и максимальный Gain,
+диапазон повторяемости, стандартное отклонение, Repeatability Error
+и процент повторяемости.
+</p>
+
+</section>
+
+<div class="stats">
+
+<div class="stat">
+<strong>197</strong>
+Repeatability Programs
+</div>
+
+<div class="stat">
+<strong>11,900</strong>
+Repeatability Records
+</div>
+
+<div class="stat">
+<strong>90</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+<section class="grid">
+
+<div class="card">
+<h3>Что проверяется</h3>
+<ul>
+<li>Repeated Gain</li>
+<li>Average Gain</li>
+<li>Minimum Gain</li>
+<li>Maximum Gain</li>
+<li>Gain Range</li>
+<li>Standard Deviation</li>
+<li>Repeatability Error</li>
+<li>Repeatability %</li>
+<li>Measurement Consistency</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Ключевые параметры</h3>
+<ul>
+<li>Reference Gain</li>
+<li>Gain 1</li>
+<li>Gain 2</li>
+<li>Gain 3</li>
+<li>Gain 4</li>
+<li>Gain 5</li>
+<li>Allowed Repeatability</li>
+<li>Test Temperature</li>
+<li>Sensor ID</li>
+<li>Measurement Interval</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Методы</h3>
+<ul>
+<li>Repeated Gain Test</li>
+<li>Short-Term Repeatability</li>
+<li>Multi-Cycle Gain</li>
+<li>Same-Point Repetition</li>
+<li>Reference Gain Comparison</li>
+<li>Ascending Repetition</li>
+<li>Descending Repetition</li>
+<li>Thermal Cycle Repeatability</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Применение</h3>
+<ul>
+<li>Thermal Management</li>
+<li>Industrial Cooling</li>
+<li>Battery Systems</li>
+<li>Power Electronics</li>
+<li>Heat Exchangers</li>
+<li>Automotive</li>
+<li>Aerospace</li>
+<li>Oil & Gas</li>
+<li>Data Centers</li>
+<li>Industrial Automation</li>
+</ul>
+</div>
+
+</section>
+
+<section class="demo">
+
+<h2>Gain Repeatability Calculator</h2>
+
+<div class="demo-grid">
+
+<div>
+<label>Gain 1</label>
+<input id="gain1" type="number" step="0.000001" value="0.5000">
+</div>
+
+<div>
+<label>Gain 2</label>
+<input id="gain2" type="number" step="0.000001" value="0.5010">
+</div>
+
+<div>
+<label>Gain 3</label>
+<input id="gain3" type="number" step="0.000001" value="0.4990">
+</div>
+
+<div>
+<label>Gain 4</label>
+<input id="gain4" type="number" step="0.000001" value="0.5005">
+</div>
+
+<div>
+<label>Gain 5</label>
+<input id="gain5" type="number" step="0.000001" value="0.5002">
+</div>
+
+<div>
+<label>Reference Gain</label>
+<input id="referenceGain" type="number" step="0.000001" value="0.5000">
+</div>
+
+<div>
+<label>Allowed Repeatability</label>
+<input id="allowedRepeatability" type="number" step="0.000001" value="0.0050">
+</div>
+
+<div>
+<label>Test Temperature °C</label>
+<input id="testTemperature" type="number" value="100">
+</div>
+
+<div>
+<label>Sensor ID</label>
+<input id="sensorId" type="text" value="REP-DEMO-266">
+</div>
+
+</div>
+
+<div class="repeat-panel">
+
+<strong>Repeatability Indicator</strong>
+
+<div class="repeat-track">
+<div class="repeat-fill" id="repeatFill"></div>
+<div class="repeat-marker" id="repeatMarker"></div>
+</div>
+
+</div>
+
+<button class="action" onclick="calculateRepeatability()">
+Calculate Gain Repeatability
+</button>
+
+<div id="result" class="result">
+Результат появится здесь.
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Рабочий процесс</h2>
+
+<div class="grid">
+
+<div>
+<h3>1. Define Test Conditions</h3>
+<p>Зафиксировать температуру, диапазон и условия измерения.</p>
+</div>
+
+<div>
+<h3>2. Reference Gain</h3>
+<p>Определить эталонный коэффициент усиления.</p>
+</div>
+
+<div>
+<h3>3. First Measurement</h3>
+<p>Получить первое значение Gain.</p>
+</div>
+
+<div>
+<h3>4. Repeated Measurements</h3>
+<p>Выполнить несколько повторных измерений.</p>
+</div>
+
+<div>
+<h3>5. Calculate Average</h3>
+<p>Рассчитать среднее значение Gain.</p>
+</div>
+
+<div>
+<h3>6. Determine Range</h3>
+<p>Найти разницу между максимальным и минимальным Gain.</p>
+</div>
+
+<div>
+<h3>7. Calculate Deviation</h3>
+<p>Определить отклонение результатов от среднего значения.</p>
+</div>
+
+<div>
+<h3>8. Calculate Repeatability</h3>
+<p>Рассчитать ошибку и процент повторяемости.</p>
+</div>
+
+<div>
+<h3>9. Compare Limit</h3>
+<p>Сравнить результат с установленным пределом.</p>
+</div>
+
+<div>
+<h3>10. Final Report</h3>
+<p>Сформировать технический отчёт.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Gain Repeatability Test Records</h2>
+
+<div class="filters">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск по ID, стране, датчику..."
+oninput="filterTable()">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">Все статусы</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="records">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sensor</th>
+<th>Gain 1</th>
+<th>Gain 2</th>
+<th>Gain 3</th>
+<th>Gain 4</th>
+<th>Gain 5</th>
+<th>Average Gain</th>
+<th>Min Gain</th>
+<th>Max Gain</th>
+<th>Range</th>
+<th>Std Dev</th>
+<th>Repeatability %</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>GRP-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>0.5000</td>
+<td>0.5010</td>
+<td>0.4990</td>
+<td>0.5005</td>
+<td>0.5002</td>
+<td>0.50014</td>
+<td>0.4990</td>
+<td>0.5010</td>
+<td>0.0020</td>
+<td>0.00067</td>
+<td>0.13</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GRP-TR-2026-002</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>0.5000</td>
+<td>0.5020</td>
+<td>0.4990</td>
+<td>0.5010</td>
+<td>0.5005</td>
+<td>0.50050</td>
+<td>0.4990</td>
+<td>0.5020</td>
+<td>0.0030</td>
+<td>0.00112</td>
+<td>0.22</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GRP-DE-2026-003</td>
+<td>Germany</td>
+<td>RTD</td>
+<td>0.5000</td>
+<td>0.5030</td>
+<td>0.4985</td>
+<td>0.5015</td>
+<td>0.5005</td>
+<td>0.50070</td>
+<td>0.4985</td>
+<td>0.5030</td>
+<td>0.0045</td>
+<td>0.00155</td>
+<td>0.31</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GRP-IT-2026-004</td>
+<td>Italy</td>
+<td>Thermistor</td>
+<td>0.5000</td>
+<td>0.5050</td>
+<td>0.4970</td>
+<td>0.5040</td>
+<td>0.5020</td>
+<td>0.50160</td>
+<td>0.4970</td>
+<td>0.5050</td>
+<td>0.0080</td>
+<td>0.00283</td>
+<td>0.56</td>
+<td>REVIEW</td>
+</tr>
+
+<tr>
+<td>GRP-CN-2026-005</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>0.5000</td>
+<td>0.5005</td>
+<td>0.4995</td>
+<td>0.5002</td>
+<td>0.4998</td>
+<td>0.50000</td>
+<td>0.4995</td>
+<td>0.5005</td>
+<td>0.0010</td>
+<td>0.00035</td>
+<td>0.07</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GRP-US-2026-006</td>
+<td>USA</td>
+<td>Infrared Sensor</td>
+<td>0.5000</td>
+<td>0.5070</td>
+<td>0.4960</td>
+<td>0.5050</td>
+<td>0.4980</td>
+<td>0.50120</td>
+<td>0.4960</td>
+<td>0.5070</td>
+<td>0.0110</td>
+<td>0.00406</td>
+<td>0.81</td>
+<td>FAIL</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<button class="action" onclick="exportCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="addDemoRecord()">
+Add Test Record — Demo
+</button>
+
+<button class="action" onclick="demoReport()">
+Technical Report — Demo
+</button>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+<h3>Average Gain</h3>
+<p>
+Среднее значение коэффициента усиления по всем повторным измерениям.
+</p>
+</div>
+
+<div class="card">
+<h3>Gain Range</h3>
+<p>
+Разница между максимальным и минимальным измеренным Gain.
+</p>
+</div>
+
+<div class="card">
+<h3>Standard Deviation</h3>
+<p>
+Статистическая оценка разброса повторных значений Gain относительно среднего.
+</p>
+</div>
+
+<div class="card">
+<h3>Repeatability Error</h3>
+<p>
+Максимальная разница между повторными измерениями в заданных условиях.
+</p>
+</div>
+
+</section>
+
+<div class="notice">
+<strong>Важно:</strong>
+страница является демонстрационной частью WORKER PRO.
+Реальные испытания должны выполняться по техническим требованиям
+производителя, применимым стандартам, требованиям безопасности
+и с использованием калиброванного оборудования.
+Демонстрационные критерии PASS/REVIEW/FAIL не являются
+нормативными критериями приемки.
+</div>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Testing №266 — Thermal Interface Sensor Output Gain Repeatability Testing<br><br>
+Султанов Фарид Рафиг оглы — F.S.
+</footer>
+
+<script>
+
+function calculateRepeatability(){
+
+    const gains = [
+        Number(document.getElementById("gain1").value),
+        Number(document.getElementById("gain2").value),
+        Number(document.getElementById("gain3").value),
+        Number(document.getElementById("gain4").value),
+        Number(document.getElementById("gain5").value)
+    ];
+
+    const referenceGain =
+        Number(
+            document.getElementById(
+                "referenceGain"
+            ).value
+        );
+
+    const allowedRepeatability =
+        Number(
+            document.getElementById(
+                "allowedRepeatability"
+            ).value
+        );
+
+    const temperature =
+        Number(
+            document.getElementById(
+                "testTemperature"
+            ).value
+        );
+
+    const sensorId =
+        document.getElementById(
+            "sensorId"
+        ).value;
+
+    const average =
+        gains.reduce(
+            (sum,value) => sum + value,
+            0
+        ) / gains.length;
+
+    const minGain =
+        Math.min(...gains);
+
+    const maxGain =
+        Math.max(...gains);
+
+    const range =
+        maxGain - minGain;
+
+    const variance =
+        gains.reduce(
+            (sum,value) =>
+                sum +
+                Math.pow(
+                    value - average,
+                    2
+                ),
+            0
+        ) / gains.length;
+
+    const standardDeviation =
+        Math.sqrt(variance);
+
+    const repeatabilityError =
+        range;
+
+    const repeatabilityPercent =
+        referenceGain !== 0
+        ? (
+            repeatabilityError /
+            Math.abs(referenceGain)
+        ) * 100
+        : 0;
+
+    const averageDeviation =
+        referenceGain !== 0
+        ? (
+            Math.abs(
+                average -
+                referenceGain
+            ) /
+            Math.abs(referenceGain)
+        ) * 100
+        : 0;
+
+    let status = "PASS";
+
+    if(
+        repeatabilityError >
+        allowedRepeatability
+    ){
+        status = "FAIL";
+    }
+    else if(
+        repeatabilityError >=
+        allowedRepeatability * 0.8
+    ){
+        status = "REVIEW";
+    }
+
+    /*
+       Индикатор показывает качество
+       повторяемости:
+       100% — минимальный разброс,
+       0% — предел повторяемости достигнут.
+    */
+
+    let repeatabilityScore =
+        allowedRepeatability > 0
+        ? (
+            1 -
+            repeatabilityError /
+            allowedRepeatability
+        ) * 100
+        : 0;
+
+    repeatabilityScore =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                repeatabilityScore
+            )
+        );
+
+    document.getElementById(
+        "repeatFill"
+    ).style.width =
+        repeatabilityScore + "%";
+
+    const marker =
+        document.getElementById(
+            "repeatMarker"
+        );
+
+    marker.style.display = "block";
+
+    let markerPosition =
+        allowedRepeatability > 0
+        ? (
+            repeatabilityError /
+            allowedRepeatability
+        ) * 100
+        : 0;
+
+    markerPosition =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                markerPosition
+            )
+        );
+
+    marker.style.left =
+        markerPosition + "%";
+
+    document.getElementById(
+        "result"
+    ).innerHTML =
+
+        "Sensor ID: " +
+        sensorId +
+        "<br>" +
+
+        "Test Temperature: " +
+        temperature.toFixed(2) +
+        " °C<br>" +
+
+        "Gain 1: " +
+        gains[0].toFixed(6) +
+        "<br>" +
+
+        "Gain 2: " +
+        gains[1].toFixed(6) +
+        "<br>" +
+
+        "Gain 3: " +
+        gains[2].toFixed(6) +
+        "<br>" +
+
+        "Gain 4: " +
+        gains[3].toFixed(6) +
+        "<br>" +
+
+        "Gain 5: " +
+        gains[4].toFixed(6) +
+        "<br>" +
+
+        "Average Gain: " +
+        average.toFixed(6) +
+        "<br>" +
+
+        "Minimum Gain: " +
+        minGain.toFixed(6) +
+        "<br>" +
+
+        "Maximum Gain: " +
+        maxGain.toFixed(6) +
+        "<br>" +
+
+        "Gain Range: " +
+        range.toFixed(6) +
+        "<br>" +
+
+        "Standard Deviation: " +
+        standardDeviation.toFixed(6) +
+        "<br>" +
+
+        "Repeatability Error: " +
+        repeatabilityError.toFixed(6) +
+        "<br>" +
+
+        "Repeatability: " +
+        repeatabilityPercent.toFixed(2) +
+        "%<br>" +
+
+        "Average Deviation from Reference: " +
+        averageDeviation.toFixed(2) +
+        "%<br>" +
+
+        "Allowed Repeatability: " +
+        allowedRepeatability.toFixed(6) +
+        "<br>" +
+
+        "Repeatability Score: " +
+        repeatabilityScore.toFixed(1) +
+        "%<br>" +
+
+        "Result: <strong>" +
+        status +
+        "</strong>";
+}
+
+function filterTable(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter")
+        .value;
+
+    const rows =
+        document.querySelectorAll(
+            "#records tbody tr"
+        );
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[
+                row.cells.length - 1
+            ].innerText.trim();
+
+        const matchSearch =
+            text.includes(search);
+
+        const matchStatus =
+            !status ||
+            rowStatus === status;
+
+        row.style.display =
+            matchSearch &&
+            matchStatus
+            ? ""
+            : "none";
+    });
+}
+
+function addDemoRecord(){
+
+    const tbody =
+        document.querySelector(
+            "#records tbody"
+        );
+
+    const id =
+        "GRP-DEMO-" +
+        Date.now();
+
+    const row =
+        document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>Demo</td>
+        <td>Demo Sensor</td>
+        <td>0.5000</td>
+        <td>0.5008</td>
+        <td>0.4995</td>
+        <td>0.5003</td>
+        <td>0.5001</td>
+        <td>0.50014</td>
+        <td>0.4995</td>
+        <td>0.5008</td>
+        <td>0.0013</td>
+        <td>0.00044</td>
+        <td>0.09</td>
+        <td>PASS</td>
+    `;
+
+    tbody.appendChild(row);
+
+    alert(
+        "Demo gain repeatability record added."
+    );
+}
+
+function exportCSV(){
+
+    const rows =
+        document.querySelectorAll(
+            "#records tr"
+        );
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cols =
+            row.querySelectorAll(
+                "th,td"
+            );
+
+        const data =
+            Array.from(cols).map(col =>
+                '"' +
+                col.innerText
+                    .replace(/"/g,'""') +
+                '"'
+            );
+
+        csv.push(
+            data.join(",")
+        );
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-interface-sensor-output-gain-repeatability-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function demoReport(){
+
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Test: Thermal Interface Sensor Output Gain Repeatability Testing\n" +
+        "Status: DEMO\n\n" +
+        "Real technical reports require validated laboratory data."
+    );
+}
+
+</script>
+
+</body>
+</html>
