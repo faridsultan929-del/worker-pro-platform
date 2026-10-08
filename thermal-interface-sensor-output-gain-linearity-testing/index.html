@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Output Gain Linearity Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.top-languages button{
+    border:0;
+    background:#fff;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+}
+
+header{
+    background:#0b6b3d;
+    color:#fff;
+    padding:24px 18px;
+}
+
+header h1{
+    margin:0 0 7px;
+    font-size:30px;
+}
+
+header p{margin:0}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:9px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    background:#063d25;
+    padding:9px 13px;
+    border-radius:7px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:#fff;
+    border-left:7px solid #0b6b3d;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 2px 9px #00000012;
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:#fff;
+    padding:18px;
+    text-align:center;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 2px 8px #00000010;
+}
+
+.card h2,
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.demo{
+    background:#eaf5ef;
+    border:1px solid #b9d9c7;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.demo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:12px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #aaa;
+    border-radius:7px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:#fff;
+    border:0;
+    padding:11px 15px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.result{
+    background:#fff;
+    border-radius:10px;
+    padding:15px;
+    margin-top:15px;
+    line-height:1.7;
+}
+
+.linearity-panel{
+    background:#fff;
+    border-radius:10px;
+    padding:18px;
+    margin-top:18px;
+}
+
+.chart{
+    width:100%;
+    height:240px;
+    border:1px solid #ccd8d0;
+    background:#f8fbf9;
+    border-radius:8px;
+    position:relative;
+    overflow:hidden;
+    margin-top:12px;
+}
+
+.chart canvas{
+    width:100%;
+    height:100%;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1450px;
+    border-collapse:collapse;
+    background:#fff;
+    margin-top:15px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:#fff;
+}
+
+.notice{
+    background:#fff7d6;
+    border-left:6px solid #d5a900;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    background:#063d25;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    header h1{font-size:24px}
+    .container{padding:12px}
+    .filters{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<span class="badge">TESTING №268</span>
+
+<h2>Thermal Interface Sensor Output Gain Linearity Testing</h2>
+
+<p>
+Проверка линейности коэффициента усиления выходного сигнала
+температурного датчика по нескольким измерительным точкам.
+</p>
+
+<p>
+Испытание сравнивает измеренный Gain с эталонным Gain,
+определяет отклонение, максимальную ошибку, среднюю ошибку,
+наклон характеристики и коэффициент R².
+</p>
+
+</section>
+
+<div class="stats">
+
+<div class="stat">
+<strong>201</strong>
+Linearity Programs
+</div>
+
+<div class="stat">
+<strong>12,240</strong>
+Linearity Records
+</div>
+
+<div class="stat">
+<strong>92</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+<section class="grid">
+
+<div class="card">
+<h3>Что проверяется</h3>
+<ul>
+<li>Measured Gain</li>
+<li>Reference Gain</li>
+<li>Gain Error</li>
+<li>Maximum Linearity Error</li>
+<li>Average Error</li>
+<li>Linearity %FS</li>
+<li>Slope</li>
+<li>Intercept</li>
+<li>R²</li>
+<li>Linearity Limit</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Ключевые параметры</h3>
+<ul>
+<li>Input Temperature</li>
+<li>Reference Output</li>
+<li>Measured Output</li>
+<li>Input Change</li>
+<li>Output Change</li>
+<li>Measured Gain</li>
+<li>Reference Gain</li>
+<li>Gain Error</li>
+<li>Sensor ID</li>
+<li>Acceptance Limit</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Методы</h3>
+<ul>
+<li>Two-Point Gain Linearity</li>
+<li>Multi-Point Linearity</li>
+<li>Full Range Sweep</li>
+<li>Ascending Sweep</li>
+<li>Descending Sweep</li>
+<li>Ramp Input</li>
+<li>Step Input</li>
+<li>Reference Comparison</li>
+<li>Regression Analysis</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Применение</h3>
+<ul>
+<li>Industrial Sensors</li>
+<li>Thermal Management</li>
+<li>Battery Systems</li>
+<li>Power Electronics</li>
+<li>Heat Exchangers</li>
+<li>Automotive</li>
+<li>Aerospace</li>
+<li>Oil & Gas</li>
+<li>HVAC</li>
+<li>Industrial Automation</li>
+</ul>
+</div>
+
+</section>
+
+<section class="demo">
+
+<h2>Gain Linearity Calculator</h2>
+
+<p>
+Введите пять измерительных точек. Для каждой точки указывается
+изменение входного параметра и соответствующее изменение выхода.
+</p>
+
+<div class="demo-grid">
+
+<div>
+<label>Input Δ1</label>
+<input id="in1" type="number" step="0.001" value="10">
+</div>
+
+<div>
+<label>Output Δ1</label>
+<input id="out1" type="number" step="0.001" value="5.02">
+</div>
+
+<div>
+<label>Input Δ2</label>
+<input id="in2" type="number" step="0.001" value="20">
+</div>
+
+<div>
+<label>Output Δ2</label>
+<input id="out2" type="number" step="0.001" value="10.06">
+</div>
+
+<div>
+<label>Input Δ3</label>
+<input id="in3" type="number" step="0.001" value="30">
+</div>
+
+<div>
+<label>Output Δ3</label>
+<input id="out3" type="number" step="0.001" value="14.94">
+</div>
+
+<div>
+<label>Input Δ4</label>
+<input id="in4" type="number" step="0.001" value="40">
+</div>
+
+<div>
+<label>Output Δ4</label>
+<input id="out4" type="number" step="0.001" value="20.12">
+</div>
+
+<div>
+<label>Input Δ5</label>
+<input id="in5" type="number" step="0.001" value="50">
+</div>
+
+<div>
+<label>Output Δ5</label>
+<input id="out5" type="number" step="0.001" value="24.85">
+</div>
+
+<div>
+<label>Reference Gain</label>
+<input id="referenceGain" type="number" step="0.000001" value="0.5000">
+</div>
+
+<div>
+<label>Linearity Limit %</label>
+<input id="linearityLimit" type="number" step="0.01" value="3">
+</div>
+
+<div>
+<label>Full Scale Output</label>
+<input id="fullScale" type="number" step="0.001" value="25">
+</div>
+
+<div>
+<label>Sensor ID</label>
+<input id="sensorId" type="text" value="LIN-DEMO-268">
+</div>
+
+</div>
+
+<button class="action" onclick="calculateLinearity()">
+Calculate Gain Linearity
+</button>
+
+<div class="linearity-panel">
+
+<strong>Linearity Characteristic</strong>
+
+<div class="chart">
+<canvas id="linearityCanvas"></canvas>
+</div>
+
+</div>
+
+<div id="result" class="result">
+Результат появится здесь.
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Рабочий процесс</h2>
+
+<div class="grid">
+
+<div>
+<h3>1. Define Range</h3>
+<p>Определить рабочий диапазон входного параметра.</p>
+</div>
+
+<div>
+<h3>2. Select Points</h3>
+<p>Выбрать несколько измерительных точек.</p>
+</div>
+
+<div>
+<h3>3. Apply Input</h3>
+<p>Последовательно подать контролируемые входные значения.</p>
+</div>
+
+<div>
+<h3>4. Measure Output</h3>
+<p>Зафиксировать выходной сигнал датчика.</p>
+</div>
+
+<div>
+<h3>5. Calculate Gain</h3>
+<p>Определить Gain для каждой точки.</p>
+</div>
+
+<div>
+<h3>6. Compare Reference</h3>
+<p>Сравнить измеренные значения с Reference Gain.</p>
+</div>
+
+<div>
+<h3>7. Regression</h3>
+<p>Рассчитать линейную зависимость и R².</p>
+</div>
+
+<div>
+<h3>8. Determine Error</h3>
+<p>Определить максимальное и среднее отклонение.</p>
+</div>
+
+<div>
+<h3>9. Evaluate Limit</h3>
+<p>Сравнить результат с установленным пределом линейности.</p>
+</div>
+
+<div>
+<h3>10. Technical Report</h3>
+<p>Сформировать технический отчёт.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Gain Linearity Test Records</h2>
+
+<div class="filters">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск по ID, стране, датчику..."
+oninput="filterTable()">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">Все статусы</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="records">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sensor</th>
+<th>Reference Gain</th>
+<th>Measured Gain</th>
+<th>Gain Error</th>
+<th>Max Linearity Error</th>
+<th>Average Error</th>
+<th>Linearity %FS</th>
+<th>Slope</th>
+<th>Intercept</th>
+<th>R²</th>
+<th>Limit</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>GLN-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>0.5000</td>
+<td>0.5010</td>
+<td>0.0010</td>
+<td>0.80%</td>
+<td>0.42%</td>
+<td>0.80%</td>
+<td>0.501</td>
+<td>0.02</td>
+<td>0.9997</td>
+<td>3.00%</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GLN-TR-2026-002</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>0.5000</td>
+<td>0.5030</td>
+<td>0.0030</td>
+<td>1.20%</td>
+<td>0.61%</td>
+<td>1.20%</td>
+<td>0.503</td>
+<td>0.01</td>
+<td>0.9992</td>
+<td>3.00%</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GLN-DE-2026-003</td>
+<td>Germany</td>
+<td>RTD</td>
+<td>0.5000</td>
+<td>0.5070</td>
+<td>0.0070</td>
+<td>2.40%</td>
+<td>1.35%</td>
+<td>2.40%</td>
+<td>0.507</td>
+<td>0.03</td>
+<td>0.9978</td>
+<td>3.00%</td>
+<td>REVIEW</td>
+</tr>
+
+<tr>
+<td>GLN-IT-2026-004</td>
+<td>Italy</td>
+<td>Thermistor</td>
+<td>0.5000</td>
+<td>0.5160</td>
+<td>0.0160</td>
+<td>4.80%</td>
+<td>2.70%</td>
+<td>4.80%</td>
+<td>0.516</td>
+<td>0.05</td>
+<td>0.9934</td>
+<td>3.00%</td>
+<td>FAIL</td>
+</tr>
+
+<tr>
+<td>GLN-CN-2026-005</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>0.5000</td>
+<td>0.5020</td>
+<td>0.0020</td>
+<td>0.95%</td>
+<td>0.48%</td>
+<td>0.95%</td>
+<td>0.502</td>
+<td>0.02</td>
+<td>0.9995</td>
+<td>3.00%</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GLN-US-2026-006</td>
+<td>USA</td>
+<td>Infrared Sensor</td>
+<td>0.5000</td>
+<td>0.5100</td>
+<td>0.0100</td>
+<td>3.20%</td>
+<td>1.85%</td>
+<td>3.20%</td>
+<td>0.510</td>
+<td>0.04</td>
+<td>0.9951</td>
+<td>3.00%</td>
+<td>FAIL</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<button class="action" onclick="exportCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="addDemoRecord()">
+Add Test Record — Demo
+</button>
+
+<button class="action" onclick="demoReport()">
+Technical Report — Demo
+</button>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+<h3>Gain Error</h3>
+<p>
+Разница между измеренным коэффициентом усиления и эталонным Gain.
+</p>
+</div>
+
+<div class="card">
+<h3>Linearity Error</h3>
+<p>
+Максимальное отклонение измеренной характеристики
+от выбранной линейной зависимости.
+</p>
+</div>
+
+<div class="card">
+<h3>R²</h3>
+<p>
+Коэффициент детерминации, показывающий соответствие данных
+линейной регрессионной модели.
+</p>
+</div>
+
+<div class="card">
+<h3>Linearity %FS</h3>
+<p>
+Максимальная ошибка, выраженная относительно заданного
+полного диапазона выходного сигнала.
+</p>
+</div>
+
+</section>
+
+<div class="notice">
+<strong>Важно:</strong>
+страница является демонстрационной частью WORKER PRO.
+Реальные испытания должны выполняться по техническим требованиям
+производителя, применимым стандартам, требованиям безопасности
+и с использованием калиброванного оборудования.
+Демонстрационные критерии PASS/REVIEW/FAIL не являются
+нормативными критериями приемки.
+</div>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Testing №268 — Thermal Interface Sensor Output Gain Linearity Testing<br><br>
+Султанов Фарид Рафиг оглы — F.S.
+</footer>
+
+<script>
+
+function getPoints(){
+
+    return [
+        {
+            x:Number(document.getElementById("in1").value),
+            y:Number(document.getElementById("out1").value)
+        },
+        {
+            x:Number(document.getElementById("in2").value),
+            y:Number(document.getElementById("out2").value)
+        },
+        {
+            x:Number(document.getElementById("in3").value),
+            y:Number(document.getElementById("out3").value)
+        },
+        {
+            x:Number(document.getElementById("in4").value),
+            y:Number(document.getElementById("out4").value)
+        },
+        {
+            x:Number(document.getElementById("in5").value),
+            y:Number(document.getElementById("out5").value)
+        }
+    ];
+}
+
+function calculateLinearity(){
+
+    const points=getPoints();
+
+    const referenceGain=
+        Number(
+            document.getElementById(
+                "referenceGain"
+            ).value
+        );
+
+    const linearityLimit=
+        Number(
+            document.getElementById(
+                "linearityLimit"
+            ).value
+        );
+
+    const fullScale=
+        Number(
+            document.getElementById(
+                "fullScale"
+            ).value
+        );
+
+    const sensorId=
+        document.getElementById(
+            "sensorId"
+        ).value;
+
+    if(
+        points.some(
+            p =>
+                !Number.isFinite(p.x) ||
+                !Number.isFinite(p.y)
+        )
+    ){
+        alert(
+            "Проверьте все измерительные точки."
+        );
+        return;
+    }
+
+    /*
+       Для каждой точки:
+       Gain = Output / Input
+    */
+
+    const gains=
+        points.map(
+            p =>
+                p.x !== 0
+                ? p.y / p.x
+                : 0
+        );
+
+    const measuredGain=
+        gains.reduce(
+            (a,b)=>a+b,
+            0
+        ) / gains.length;
+
+    const gainErrors=
+        gains.map(
+            g =>
+                g -
+                referenceGain
+        );
+
+    const absErrors=
+        gainErrors.map(
+            e=>Math.abs(e)
+        );
+
+    const maxGainError=
+        Math.max(
+            ...absErrors
+        );
+
+    const averageError=
+        absErrors.reduce(
+            (a,b)=>a+b,
+            0
+        ) / absErrors.length;
+
+    /*
+       Линейная регрессия
+    */
+
+    const n=points.length;
+
+    const sumX=
+        points.reduce(
+            (s,p)=>s+p.x,
+            0
+        );
+
+    const sumY=
+        points.reduce(
+            (s,p)=>s+p.y,
+            0
+        );
+
+    const sumXY=
+        points.reduce(
+            (s,p)=>s+p.x*p.y,
+            0
+        );
+
+    const sumX2=
+        points.reduce(
+            (s,p)=>s+p.x*p.x,
+            0
+        );
+
+    const denominator=
+        n*sumX2 -
+        sumX*sumX;
+
+    const slope=
+        denominator !== 0
+        ? (
+            n*sumXY -
+            sumX*sumY
+        ) / denominator
+        : 0;
+
+    const intercept=
+        (
+            sumY -
+            slope*sumX
+        ) / n;
+
+    const meanY=
+        sumY/n;
+
+    let ssRes=0;
+    let ssTot=0;
+
+    points.forEach(p=>{
+
+        const predicted=
+            slope*p.x+
+            intercept;
+
+        ssRes+=
+            Math.pow(
+                p.y-predicted,
+                2
+            );
+
+        ssTot+=
+            Math.pow(
+                p.y-meanY,
+                2
+            );
+
+    });
+
+    const r2=
+        ssTot !== 0
+        ? 1 -
+          ssRes/ssTot
+        : 1;
+
+    /*
+       Максимальное отклонение
+       от линейной регрессии.
+    */
+
+    const regressionErrors=
+        points.map(
+            p=>Math.abs(
+                p.y -
+                (
+                    slope*p.x+
+                    intercept
+                )
+            )
+        );
+
+    const maxRegressionError=
+        Math.max(
+            ...regressionErrors
+        );
+
+    const linearityPercent=
+        fullScale !== 0
+        ? (
+            maxRegressionError /
+            Math.abs(fullScale)
+        ) * 100
+        : 0;
+
+    let status="PASS";
+
+    if(
+        linearityPercent >
+        linearityLimit
+    ){
+        status="FAIL";
+    }
+    else if(
+        linearityPercent >=
+        linearityLimit*0.8
+    ){
+        status="REVIEW";
+    }
+
+    drawChart(
+        points,
+        slope,
+        intercept
+    );
+
+    document.getElementById(
+        "result"
+    ).innerHTML=
+
+        "Sensor ID: " +
+        sensorId +
+        "<br>" +
+
+        "Reference Gain: " +
+        referenceGain.toFixed(6) +
+        "<br>" +
+
+        "Average Measured Gain: " +
+        measuredGain.toFixed(6) +
+        "<br>" +
+
+        "Maximum Gain Error: " +
+        maxGainError.toFixed(6) +
+        "<br>" +
+
+        "Average Gain Error: " +
+        averageError.toFixed(6) +
+        "<br>" +
+
+        "Maximum Regression Error: " +
+        maxRegressionError.toFixed(6) +
+        "<br>" +
+
+        "Linearity %FS: " +
+        linearityPercent.toFixed(3) +
+        "%<br>" +
+
+        "Slope: " +
+        slope.toFixed(6) +
+        "<br>" +
+
+        "Intercept: " +
+        intercept.toFixed(6) +
+        "<br>" +
+
+        "R²: " +
+        r2.toFixed(6) +
+        "<br>" +
+
+        "Linearity Limit: " +
+        linearityLimit.toFixed(3) +
+        "%<br>" +
+
+        "Result: <strong>" +
+        status +
+        "</strong>";
+}
+
+function drawChart(
+    points,
+    slope,
+    intercept
+){
+
+    const canvas=
+        document.getElementById(
+            "linearityCanvas"
+        );
+
+    const rect=
+        canvas.parentElement
+            .getBoundingClientRect();
+
+    const dpr=
+        window.devicePixelRatio ||
+        1;
+
+    canvas.width=
+        rect.width*dpr;
+
+    canvas.height=
+        rect.height*dpr;
+
+    const ctx=
+        canvas.getContext("2d");
+
+    ctx.scale(
+        dpr,
+        dpr
+    );
+
+    const width=
+        rect.width;
+
+    const height=
+        rect.height;
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+    const minX=
+        Math.min(
+            ...points.map(
+                p=>p.x
+            )
+        );
+
+    const maxX=
+        Math.max(
+            ...points.map(
+                p=>p.x
+            )
+        );
+
+    const minY=
+        Math.min(
+            ...points.map(
+                p=>p.y
+            )
+        );
+
+    const maxY=
+        Math.max(
+            ...points.map(
+                p=>p.y
+            )
+        );
+
+    const rangeX=
+        maxX-minX || 1;
+
+    const rangeY=
+        maxY-minY || 1;
+
+    const pad=35;
+
+    function px(x){
+        return pad+
+            (
+                (x-minX)/
+                rangeX
+            )*
+            (
+                width-pad*2
+            );
+    }
+
+    function py(y){
+        return height-pad-
+            (
+                (y-minY)/
+                rangeY
+            )*
+            (
+                height-pad*2
+            );
+    }
+
+    /*
+       Axes
+    */
+
+    ctx.strokeStyle=
+        "#9aaea3";
+
+    ctx.lineWidth=1;
+
+    ctx.beginPath();
+    ctx.moveTo(
+        pad,
+        height-pad
+    );
+    ctx.lineTo(
+        width-pad,
+        height-pad
+    );
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.moveTo(
+        pad,
+        pad
+    );
+    ctx.lineTo(
+        pad,
+        height-pad
+    );
+    ctx.stroke();
+
+    /*
+       Regression line
+    */
+
+    ctx.strokeStyle=
+        "#063d25";
+
+    ctx.lineWidth=3;
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+        px(minX),
+        py(
+            slope*minX+
+            intercept
+        )
+    );
+
+    ctx.lineTo(
+        px(maxX),
+        py(
+            slope*maxX+
+            intercept
+        )
+    );
+
+    ctx.stroke();
+
+    /*
+       Measurement points
+    */
+
+    ctx.fillStyle=
+        "#0b6b3d";
+
+    points.forEach(
+        p=>{
+
+            ctx.beginPath();
+
+            ctx.arc(
+                px(p.x),
+                py(p.y),
+                5,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fill();
+
+        }
+    );
+
+}
+
+function filterTable(){
+
+    const search=
+        document.getElementById(
+            "search"
+        ).value.toLowerCase();
+
+    const status=
+        document.getElementById(
+            "statusFilter"
+        ).value;
+
+    const rows=
+        document.querySelectorAll(
+            "#records tbody tr"
+        );
+
+    rows.forEach(row=>{
+
+        const text=
+            row.innerText.toLowerCase();
+
+        const rowStatus=
+            row.cells[
+                row.cells.length-1
+            ].innerText.trim();
+
+        const matchSearch=
+            text.includes(search);
+
+        const matchStatus=
+            !status ||
+            rowStatus===status;
+
+        row.style.display=
+            matchSearch &&
+            matchStatus
+            ? ""
+            : "none";
+
+    });
+}
+
+function addDemoRecord(){
+
+    const tbody=
+        document.querySelector(
+            "#records tbody"
+        );
+
+    const id=
+        "GLN-DEMO-" +
+        Date.now();
+
+    const row=
+        document.createElement(
+            "tr"
+        );
+
+    row.innerHTML=`
+        <td>${id}</td>
+        <td>Demo</td>
+        <td>Demo Sensor</td>
+        <td>0.5000</td>
+        <td>0.5025</td>
+        <td>0.0025</td>
+        <td>1.10%</td>
+        <td>0.55%</td>
+        <td>1.10%</td>
+        <td>0.5025</td>
+        <td>0.02</td>
+        <td>0.9991</td>
+        <td>3.00%</td>
+        <td>PASS</td>
+    `;
+
+    tbody.appendChild(row);
+
+    alert(
+        "Demo gain linearity record added."
+    );
+}
+
+function exportCSV(){
+
+    const rows=
+        document.querySelectorAll(
+            "#records tr"
+        );
+
+    let csv=[];
+
+    rows.forEach(row=>{
+
+        const cols=
+            row.querySelectorAll(
+                "th,td"
+            );
+
+        const data=
+            Array.from(
+                cols
+            ).map(
+                col=>
+                    '"' +
+                    col.innerText
+                        .replace(
+                            /"/g,
+                            '""'
+                        ) +
+                    '"'
+            );
+
+        csv.push(
+            data.join(",")
+        );
+
+    });
+
+    const blob=
+        new Blob(
+            [csv.join("\n")],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+    const url=
+        URL.createObjectURL(
+            blob
+        );
+
+    const link=
+        document.createElement(
+            "a"
+        );
+
+    link.href=url;
+
+    link.download=
+        "worker-pro-thermal-interface-sensor-output-gain-linearity-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function demoReport(){
+
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Test: Thermal Interface Sensor Output Gain Linearity Testing\n" +
+        "Status: DEMO\n\n" +
+        "Real technical reports require validated laboratory data."
+    );
+}
+
+window.addEventListener(
+    "load",
+    calculateLinearity
+);
+
+window.addEventListener(
+    "resize",
+    calculateLinearity
+);
+
+</script>
+
+</body>
+</html>
