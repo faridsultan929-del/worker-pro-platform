@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Output Gain Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.top-languages button{
+    border:0;
+    background:#fff;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+}
+
+header{
+    background:#0b6b3d;
+    color:#fff;
+    padding:24px 18px;
+}
+
+header h1{
+    margin:0 0 7px;
+    font-size:30px;
+}
+
+header p{
+    margin:0;
+}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:9px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    background:#063d25;
+    padding:9px 13px;
+    border-radius:7px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:#fff;
+    border-left:7px solid #0b6b3d;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 2px 9px #00000012;
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:#fff;
+    padding:18px;
+    text-align:center;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 2px 8px #00000010;
+}
+
+.card h2,
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.demo{
+    background:#eaf5ef;
+    border:1px solid #b9d9c7;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.demo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:12px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #aaa;
+    border-radius:7px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:#fff;
+    border:0;
+    padding:11px 15px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.result{
+    background:#fff;
+    border-radius:10px;
+    padding:15px;
+    margin-top:15px;
+    line-height:1.7;
+}
+
+.gain-panel{
+    background:#fff;
+    border-radius:10px;
+    padding:18px;
+    margin-top:18px;
+}
+
+.gain-track{
+    height:34px;
+    background:#dce8e1;
+    border-radius:20px;
+    overflow:hidden;
+    position:relative;
+    margin-top:12px;
+}
+
+.gain-fill{
+    height:100%;
+    width:0;
+    background:#0b6b3d;
+    transition:.5s;
+}
+
+.gain-marker{
+    position:absolute;
+    top:0;
+    width:4px;
+    height:100%;
+    background:#063d25;
+    display:none;
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1450px;
+    border-collapse:collapse;
+    background:#fff;
+    margin-top:15px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:#fff;
+}
+
+.notice{
+    background:#fff7d6;
+    border-left:6px solid #d5a900;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    background:#063d25;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    header h1{font-size:24px}
+    .container{padding:12px}
+    .filters{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<span class="badge">TESTING №264</span>
+
+<h2>Thermal Interface Sensor Output Gain Testing</h2>
+
+<p>
+Проверка коэффициента усиления выходного сигнала температурного
+датчика относительно изменения входного параметра.
+</p>
+
+<p>
+Испытание определяет фактический Output Gain, сравнивает его
+с эталонным коэффициентом, рассчитывает ошибку Gain,
+относительное отклонение, повторяемость и стабильность.
+</p>
+
+</section>
+
+<div class="stats">
+
+<div class="stat">
+<strong>193</strong>
+Gain Programs
+</div>
+
+<div class="stat">
+<strong>11,540</strong>
+Gain Records
+</div>
+
+<div class="stat">
+<strong>88</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+<section class="grid">
+
+<div class="card">
+<h3>Что проверяется</h3>
+<ul>
+<li>Input Change</li>
+<li>Output Change</li>
+<li>Measured Gain</li>
+<li>Reference Gain</li>
+<li>Gain Error</li>
+<li>Gain Deviation %</li>
+<li>Gain Stability</li>
+<li>Gain Repeatability</li>
+<li>Response Ratio</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Ключевые параметры</h3>
+<ul>
+<li>Input Start</li>
+<li>Input End</li>
+<li>Input Change</li>
+<li>Output Start</li>
+<li>Output End</li>
+<li>Output Change</li>
+<li>Measured Gain</li>
+<li>Reference Gain</li>
+<li>Gain Error</li>
+<li>Sensor Type</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Методы</h3>
+<ul>
+<li>Two-Point Gain</li>
+<li>Full Range Sweep</li>
+<li>Multi-Point Gain</li>
+<li>Ramp Test</li>
+<li>Step Test</li>
+<li>Repeated Gain Test</li>
+<li>Ascending Sweep</li>
+<li>Descending Sweep</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Применение</h3>
+<ul>
+<li>Thermal Management</li>
+<li>Power Electronics</li>
+<li>Semiconductors</li>
+<li>Battery Systems</li>
+<li>Industrial Cooling</li>
+<li>Heat Exchangers</li>
+<li>Automotive</li>
+<li>Aerospace</li>
+<li>Oil & Gas</li>
+<li>Data Centers</li>
+</ul>
+</div>
+
+</section>
+
+<section class="demo">
+
+<h2>Output Gain Calculator</h2>
+
+<div class="demo-grid">
+
+<div>
+<label>Input Start °C</label>
+<input id="inputStart" type="number" value="20">
+</div>
+
+<div>
+<label>Input End °C</label>
+<input id="inputEnd" type="number" value="180">
+</div>
+
+<div>
+<label>Output Start</label>
+<input id="outputStart" type="number" value="10">
+</div>
+
+<div>
+<label>Output End</label>
+<input id="outputEnd" type="number" value="90">
+</div>
+
+<div>
+<label>Reference Gain</label>
+<input id="referenceGain" type="number" value="0.50">
+</div>
+
+<div>
+<label>Allowed Gain Error</label>
+<input id="allowedError" type="number" value="0.03">
+</div>
+
+<div>
+<label>Previous Gain</label>
+<input id="previousGain" type="number" value="0.49">
+</div>
+
+<div>
+<label>Repeat Output End</label>
+<input id="repeatOutputEnd" type="number" value="89.5">
+</div>
+
+<div>
+<label>Sensor ID</label>
+<input id="sensorId" type="text" value="GAIN-DEMO-264">
+</div>
+
+</div>
+
+<div class="gain-panel">
+
+<strong>Measured Gain</strong>
+
+<div class="gain-track">
+<div class="gain-fill" id="gainFill"></div>
+<div class="gain-marker" id="gainMarker"></div>
+</div>
+
+</div>
+
+<button class="action" onclick="calculateGain()">
+Calculate Output Gain
+</button>
+
+<div id="result" class="result">
+Результат появится здесь.
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Рабочий процесс</h2>
+
+<div class="grid">
+
+<div>
+<h3>1. Define Input Range</h3>
+<p>Определить начальное и конечное входные значения.</p>
+</div>
+
+<div>
+<h3>2. Measure Initial Output</h3>
+<p>Зафиксировать выходной сигнал в начальной точке.</p>
+</div>
+
+<div>
+<h3>3. Measure Final Output</h3>
+<p>Зафиксировать выходной сигнал в конечной точке.</p>
+</div>
+
+<div>
+<h3>4. Calculate Input Change</h3>
+<p>Определить изменение входного параметра.</p>
+</div>
+
+<div>
+<h3>5. Calculate Output Change</h3>
+<p>Определить изменение выходного сигнала.</p>
+</div>
+
+<div>
+<h3>6. Calculate Gain</h3>
+<p>Рассчитать отношение изменения выхода к изменению входа.</p>
+</div>
+
+<div>
+<h3>7. Compare Reference</h3>
+<p>Сравнить измеренный Gain с эталонным значением.</p>
+</div>
+
+<div>
+<h3>8. Repeat Test</h3>
+<p>Проверить воспроизводимость коэффициента.</p>
+</div>
+
+<div>
+<h3>9. Evaluate Stability</h3>
+<p>Сравнить текущий Gain с предыдущими измерениями.</p>
+</div>
+
+<div>
+<h3>10. Final Report</h3>
+<p>Сформировать технический отчёт.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Output Gain Test Records</h2>
+
+<div class="filters">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск по ID, стране, датчику..."
+oninput="filterTable()">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">Все статусы</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="records">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sensor</th>
+<th>Input Change</th>
+<th>Output Change</th>
+<th>Measured Gain</th>
+<th>Reference Gain</th>
+<th>Gain Error</th>
+<th>Deviation %</th>
+<th>Repeat Gain</th>
+<th>Gain Change</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>GAN-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>160</td>
+<td>80</td>
+<td>0.5000</td>
+<td>0.5000</td>
+<td>0.0000</td>
+<td>0.00</td>
+<td>0.497</td>
+<td>0.003</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GAN-TR-2026-002</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>200</td>
+<td>101</td>
+<td>0.5050</td>
+<td>0.5000</td>
+<td>0.0050</td>
+<td>1.00</td>
+<td>0.503</td>
+<td>0.002</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GAN-DE-2026-003</td>
+<td>Germany</td>
+<td>RTD</td>
+<td>180</td>
+<td>91</td>
+<td>0.5056</td>
+<td>0.5000</td>
+<td>0.0056</td>
+<td>1.11</td>
+<td>0.504</td>
+<td>0.002</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GAN-IT-2026-004</td>
+<td>Italy</td>
+<td>Thermistor</td>
+<td>150</td>
+<td>78</td>
+<td>0.5200</td>
+<td>0.5000</td>
+<td>0.0200</td>
+<td>4.00</td>
+<td>0.518</td>
+<td>0.002</td>
+<td>REVIEW</td>
+</tr>
+
+<tr>
+<td>GAN-CN-2026-005</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>250</td>
+<td>122</td>
+<td>0.4880</td>
+<td>0.5000</td>
+<td>0.0120</td>
+<td>2.40</td>
+<td>0.490</td>
+<td>0.002</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>GAN-US-2026-006</td>
+<td>USA</td>
+<td>Infrared Sensor</td>
+<td>175</td>
+<td>85</td>
+<td>0.4857</td>
+<td>0.5000</td>
+<td>0.0143</td>
+<td>2.86</td>
+<td>0.487</td>
+<td>0.001</td>
+<td>PASS</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<button class="action" onclick="exportCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="addDemoRecord()">
+Add Test Record — Demo
+</button>
+
+<button class="action" onclick="demoReport()">
+Technical Report — Demo
+</button>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+<h3>Output Gain</h3>
+<p>
+Отношение изменения выходного сигнала к изменению входного
+параметра в заданном испытательном диапазоне.
+</p>
+</div>
+
+<div class="card">
+<h3>Gain Error</h3>
+<p>
+Абсолютная разница между измеренным и заданным коэффициентом Gain.
+</p>
+</div>
+
+<div class="card">
+<h3>Gain Deviation</h3>
+<p>
+Относительное отклонение измеренного Gain от эталонного значения,
+выраженное в процентах.
+</p>
+</div>
+
+<div class="card">
+<h3>Gain Stability</h3>
+<p>
+Способность датчика сохранять близкий коэффициент усиления
+при повторных измерениях и изменении условий.
+</p>
+</div>
+
+</section>
+
+<div class="notice">
+<strong>Важно:</strong>
+страница является демонстрационной частью WORKER PRO.
+Реальные испытания должны выполняться по техническим требованиям
+производителя, применимым стандартам, требованиям безопасности
+и с использованием калиброванного оборудования.
+Демонстрационные критерии PASS/REVIEW/FAIL не являются
+нормативными критериями приемки.
+</div>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Testing №264 — Thermal Interface Sensor Output Gain Testing<br><br>
+Султанов Фарид Рафиг оглы — F.S.
+</footer>
+
+<script>
+
+function calculateGain(){
+
+    const inputStart =
+        Number(document.getElementById("inputStart").value);
+
+    const inputEnd =
+        Number(document.getElementById("inputEnd").value);
+
+    const outputStart =
+        Number(document.getElementById("outputStart").value);
+
+    const outputEnd =
+        Number(document.getElementById("outputEnd").value);
+
+    const referenceGain =
+        Number(document.getElementById("referenceGain").value);
+
+    const allowedError =
+        Number(document.getElementById("allowedError").value);
+
+    const previousGain =
+        Number(document.getElementById("previousGain").value);
+
+    const repeatOutputEnd =
+        Number(document.getElementById("repeatOutputEnd").value);
+
+    const sensorId =
+        document.getElementById("sensorId").value;
+
+    const inputChange =
+        inputEnd - inputStart;
+
+    const outputChange =
+        outputEnd - outputStart;
+
+    const measuredGain =
+        inputChange !== 0
+        ? outputChange / inputChange
+        : 0;
+
+    const gainError =
+        Math.abs(
+            measuredGain -
+            referenceGain
+        );
+
+    const deviation =
+        referenceGain !== 0
+        ? (
+            gainError /
+            Math.abs(referenceGain)
+        ) * 100
+        : 0;
+
+    const repeatOutputChange =
+        repeatOutputEnd -
+        outputStart;
+
+    const repeatGain =
+        inputChange !== 0
+        ? repeatOutputChange /
+          inputChange
+        : 0;
+
+    const gainChange =
+        measuredGain -
+        previousGain;
+
+    const repeatDifference =
+        Math.abs(
+            measuredGain -
+            repeatGain
+        );
+
+    let status = "PASS";
+
+    if(gainError > allowedError){
+        status = "FAIL";
+    }
+    else if(
+        gainError >=
+        allowedError * 0.8
+    ){
+        status = "REVIEW";
+    }
+
+    /*
+       Визуализация Gain:
+       0% = нулевой Gain.
+       100% = 2 × referenceGain.
+       Значение ограничивается 0–100%.
+    */
+
+    let fill =
+        referenceGain !== 0
+        ? (
+            measuredGain /
+            (referenceGain * 2)
+        ) * 100
+        : 0;
+
+    fill =
+        Math.min(
+            100,
+            Math.max(0, fill)
+        );
+
+    document.getElementById(
+        "gainFill"
+    ).style.width =
+        fill + "%";
+
+    const marker =
+        document.getElementById(
+            "gainMarker"
+        );
+
+    marker.style.display = "block";
+    marker.style.left =
+        Math.min(
+            100,
+            Math.max(
+                0,
+                (
+                    referenceGain !== 0
+                    ? (
+                        measuredGain /
+                        (referenceGain * 2)
+                    ) * 100
+                    : 50
+                )
+            )
+        ) + "%";
+
+    document.getElementById(
+        "result"
+    ).innerHTML =
+
+        "Sensor ID: " +
+        sensorId +
+        "<br>" +
+
+        "Input Start: " +
+        inputStart.toFixed(3) +
+        "<br>" +
+
+        "Input End: " +
+        inputEnd.toFixed(3) +
+        "<br>" +
+
+        "Input Change: " +
+        inputChange.toFixed(3) +
+        "<br>" +
+
+        "Output Start: " +
+        outputStart.toFixed(3) +
+        "<br>" +
+
+        "Output End: " +
+        outputEnd.toFixed(3) +
+        "<br>" +
+
+        "Output Change: " +
+        outputChange.toFixed(3) +
+        "<br>" +
+
+        "Measured Gain: " +
+        measuredGain.toFixed(6) +
+        "<br>" +
+
+        "Reference Gain: " +
+        referenceGain.toFixed(6) +
+        "<br>" +
+
+        "Gain Error: " +
+        gainError.toFixed(6) +
+        "<br>" +
+
+        "Gain Deviation: " +
+        deviation.toFixed(2) +
+        "%<br>" +
+
+        "Previous Gain: " +
+        previousGain.toFixed(6) +
+        "<br>" +
+
+        "Gain Change: " +
+        gainChange.toFixed(6) +
+        "<br>" +
+
+        "Repeat Gain: " +
+        repeatGain.toFixed(6) +
+        "<br>" +
+
+        "Repeat Difference: " +
+        repeatDifference.toFixed(6) +
+        "<br>" +
+
+        "Result: <strong>" +
+        status +
+        "</strong>";
+}
+
+function filterTable(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter")
+        .value;
+
+    const rows =
+        document.querySelectorAll(
+            "#records tbody tr"
+        );
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[
+                row.cells.length - 1
+            ].innerText.trim();
+
+        const matchSearch =
+            text.includes(search);
+
+        const matchStatus =
+            !status ||
+            rowStatus === status;
+
+        row.style.display =
+            matchSearch &&
+            matchStatus
+            ? ""
+            : "none";
+    });
+}
+
+function addDemoRecord(){
+
+    const tbody =
+        document.querySelector(
+            "#records tbody"
+        );
+
+    const id =
+        "GAN-DEMO-" +
+        Date.now();
+
+    const row =
+        document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>Demo</td>
+        <td>Demo Sensor</td>
+        <td>160</td>
+        <td>80</td>
+        <td>0.5000</td>
+        <td>0.5000</td>
+        <td>0.0000</td>
+        <td>0.00</td>
+        <td>0.497</td>
+        <td>0.003</td>
+        <td>PASS</td>
+    `;
+
+    tbody.appendChild(row);
+
+    alert(
+        "Demo output gain record added."
+    );
+}
+
+function exportCSV(){
+
+    const rows =
+        document.querySelectorAll(
+            "#records tr"
+        );
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cols =
+            row.querySelectorAll(
+                "th,td"
+            );
+
+        const data =
+            Array.from(cols).map(col =>
+                '"' +
+                col.innerText
+                    .replace(/"/g,'""') +
+                '"'
+            );
+
+        csv.push(
+            data.join(",")
+        );
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-interface-sensor-output-gain-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function demoReport(){
+
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Test: Thermal Interface Sensor Output Gain Testing\n" +
+        "Status: DEMO\n\n" +
+        "Real technical reports require validated laboratory data."
+    );
+}
+
+</script>
+
+</body>
+</html>
