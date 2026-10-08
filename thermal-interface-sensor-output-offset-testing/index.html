@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>WORKER PRO — Thermal Interface Sensor Output Offset Testing</title>
+
+<style>
+*{box-sizing:border-box}
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f4f7f5;
+    color:#123;
+}
+
+.top-languages{
+    background:#063d25;
+    padding:10px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:7px;
+    position:sticky;
+    top:0;
+    z-index:20;
+}
+
+.top-languages button{
+    border:0;
+    background:#fff;
+    color:#063d25;
+    padding:8px 12px;
+    border-radius:7px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.top-languages button:hover{
+    background:#b7ff35;
+}
+
+header{
+    background:#0b6b3d;
+    color:#fff;
+    padding:24px 18px;
+}
+
+header h1{
+    margin:0 0 7px;
+    font-size:30px;
+}
+
+header p{
+    margin:0;
+}
+
+nav{
+    background:#075b34;
+    padding:12px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:9px;
+}
+
+nav a{
+    color:#fff;
+    text-decoration:none;
+    background:#063d25;
+    padding:9px 13px;
+    border-radius:7px;
+    font-size:14px;
+}
+
+nav a:hover{
+    background:#b7ff35;
+    color:#063d25;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+    padding:20px;
+}
+
+.hero{
+    background:#fff;
+    border-left:7px solid #0b6b3d;
+    border-radius:12px;
+    padding:22px;
+    box-shadow:0 2px 9px #00000012;
+}
+
+.hero h2{
+    color:#063d25;
+    margin-top:0;
+}
+
+.badge{
+    display:inline-block;
+    background:#b7ff35;
+    color:#063d25;
+    padding:7px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:12px;
+    margin:20px 0;
+}
+
+.stat{
+    background:#063d25;
+    color:#fff;
+    padding:18px;
+    text-align:center;
+    border-radius:12px;
+}
+
+.stat strong{
+    display:block;
+    color:#b7ff35;
+    font-size:27px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:15px;
+    margin-top:18px;
+}
+
+.card{
+    background:#fff;
+    border-radius:12px;
+    padding:18px;
+    box-shadow:0 2px 8px #00000010;
+}
+
+.card h2,
+.card h3{
+    color:#0b6b3d;
+    margin-top:0;
+}
+
+.card ul{
+    padding-left:20px;
+    line-height:1.7;
+}
+
+.demo{
+    background:#eaf5ef;
+    border:1px solid #b9d9c7;
+    border-radius:12px;
+    padding:20px;
+    margin-top:20px;
+}
+
+.demo-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:12px;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+input,select{
+    width:100%;
+    padding:10px;
+    border:1px solid #aaa;
+    border-radius:7px;
+}
+
+button.action{
+    background:#0b6b3d;
+    color:#fff;
+    border:0;
+    padding:11px 15px;
+    border-radius:7px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-top:12px;
+}
+
+button.action:hover{
+    background:#063d25;
+}
+
+.result{
+    background:#fff;
+    border-radius:10px;
+    padding:15px;
+    margin-top:15px;
+    line-height:1.7;
+}
+
+.offset-panel{
+    background:#fff;
+    border-radius:10px;
+    padding:18px;
+    margin-top:18px;
+}
+
+.offset-track{
+    height:32px;
+    background:#dce8e1;
+    border-radius:20px;
+    position:relative;
+    overflow:hidden;
+    margin-top:12px;
+}
+
+.offset-zero{
+    position:absolute;
+    left:50%;
+    top:0;
+    width:3px;
+    height:100%;
+    background:#063d25;
+}
+
+.offset-marker{
+    position:absolute;
+    top:4px;
+    width:24px;
+    height:24px;
+    border-radius:50%;
+    background:#0b6b3d;
+    transform:translateX(-50%);
+}
+
+.filters{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.table-wrap{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    min-width:1350px;
+    border-collapse:collapse;
+    background:#fff;
+    margin-top:15px;
+}
+
+th,td{
+    border:1px solid #ddd;
+    padding:10px;
+    text-align:left;
+    font-size:13px;
+}
+
+th{
+    background:#063d25;
+    color:#fff;
+}
+
+.notice{
+    background:#fff7d6;
+    border-left:6px solid #d5a900;
+    padding:15px;
+    border-radius:8px;
+    margin-top:20px;
+}
+
+footer{
+    background:#063d25;
+    color:#fff;
+    text-align:center;
+    padding:25px;
+    margin-top:30px;
+}
+
+@media(max-width:600px){
+    header h1{font-size:24px}
+    .container{padding:12px}
+    .filters{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<div class="top-languages">
+    <button>AZ</button>
+    <button>RU</button>
+    <button>EN</button>
+    <button>TR</button>
+    <button>DE</button>
+    <button>AR</button>
+    <button>ES</button>
+    <button>FR</button>
+    <button>IT</button>
+</div>
+
+<header>
+    <h1>WORKER PRO</h1>
+    <p>Глобальная промышленная платформа</p>
+</header>
+
+<nav>
+    <a href="../index.html">Home</a>
+    <a href="../production/index.html">Production</a>
+    <a href="../testing/index.html">Testing</a>
+    <a href="../quality/index.html">Quality</a>
+    <a href="../documents/index.html">Documents</a>
+    <a href="../companies/index.html">Companies</a>
+    <a href="../suppliers/index.html">Suppliers</a>
+    <a href="../orders/index.html">Orders</a>
+    <a href="../logistics/index.html">Logistics</a>
+    <a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+
+<section class="hero">
+
+<span class="badge">TESTING №263</span>
+
+<h2>Thermal Interface Sensor Output Offset Testing</h2>
+
+<p>
+Проверка выходного смещения температурного датчика относительно
+заданного эталонного выходного значения при определённом
+входном состоянии.
+</p>
+
+<p>
+Испытание позволяет определить положительный или отрицательный
+Output Offset, абсолютную ошибку, относительное отклонение,
+повторяемость и стабильность смещения.
+</p>
+
+</section>
+
+<div class="stats">
+
+<div class="stat">
+<strong>191</strong>
+Offset Programs
+</div>
+
+<div class="stat">
+<strong>11,360</strong>
+Offset Records
+</div>
+
+<div class="stat">
+<strong>87</strong>
+Lab Teams
+</div>
+
+<div class="stat">
+<strong>99.9%</strong>
+Data Completeness
+</div>
+
+</div>
+
+<section class="grid">
+
+<div class="card">
+<h3>Что проверяется</h3>
+<ul>
+<li>Reference Output</li>
+<li>Measured Output</li>
+<li>Output Offset</li>
+<li>Absolute Offset Error</li>
+<li>Offset Deviation %</li>
+<li>Offset Stability</li>
+<li>Offset Repeatability</li>
+<li>Zero-Point Shift</li>
+<li>Post-Test Offset</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Ключевые параметры</h3>
+<ul>
+<li>Input Temperature</li>
+<li>Reference Output</li>
+<li>Measured Output</li>
+<li>Offset</li>
+<li>Allowed Offset</li>
+<li>Offset Error</li>
+<li>Deviation %</li>
+<li>Previous Offset</li>
+<li>Repeat Offset</li>
+<li>Sensor Type</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Методы</h3>
+<ul>
+<li>Zero-Point Test</li>
+<li>Reference-Point Test</li>
+<li>Two-Point Offset</li>
+<li>Multi-Point Offset</li>
+<li>Repeated Measurement</li>
+<li>Before/After Test</li>
+<li>Thermal Cycle</li>
+<li>Stability Test</li>
+</ul>
+</div>
+
+<div class="card">
+<h3>Применение</h3>
+<ul>
+<li>Thermal Management</li>
+<li>Power Electronics</li>
+<li>Semiconductors</li>
+<li>Battery Systems</li>
+<li>Industrial Cooling</li>
+<li>Heat Exchangers</li>
+<li>Automotive</li>
+<li>Aerospace</li>
+<li>Oil & Gas</li>
+<li>Data Centers</li>
+</ul>
+</div>
+
+</section>
+
+<section class="demo">
+
+<h2>Output Offset Calculator</h2>
+
+<div class="demo-grid">
+
+<div>
+<label>Input Temperature °C</label>
+<input id="inputTemp" type="number" value="25">
+</div>
+
+<div>
+<label>Reference Output</label>
+<input id="referenceOutput" type="number" value="50">
+</div>
+
+<div>
+<label>Measured Output</label>
+<input id="measuredOutput" type="number" value="51.2">
+</div>
+
+<div>
+<label>Allowed Offset</label>
+<input id="allowedOffset" type="number" value="2">
+</div>
+
+<div>
+<label>Previous Offset</label>
+<input id="previousOffset" type="number" value="0.8">
+</div>
+
+<div>
+<label>Repeat Measurement</label>
+<input id="repeatOutput" type="number" value="51.0">
+</div>
+
+<div>
+<label>Output Span</label>
+<input id="outputSpan" type="number" value="90">
+</div>
+
+<div>
+<label>Sensor ID</label>
+<input id="sensorId" type="text" value="SENSOR-DEMO-263">
+</div>
+
+</div>
+
+<div class="offset-panel">
+
+<strong>Offset Position</strong>
+
+<div class="offset-track">
+    <div class="offset-zero"></div>
+    <div class="offset-marker" id="offsetMarker"></div>
+</div>
+
+<p>
+Центральная линия = 0 Offset.
+Маркер показывает направление и относительную величину смещения.
+</p>
+
+</div>
+
+<button class="action" onclick="calculateOffset()">
+Calculate Output Offset
+</button>
+
+<div id="result" class="result">
+Результат появится здесь.
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Рабочий процесс</h2>
+
+<div class="grid">
+
+<div>
+<h3>1. Define Reference</h3>
+<p>Определить эталонный выходной сигнал.</p>
+</div>
+
+<div>
+<h3>2. Set Input Condition</h3>
+<p>Установить заданную температуру или другое входное состояние.</p>
+</div>
+
+<div>
+<h3>3. Measure Output</h3>
+<p>Получить фактический выход датчика.</p>
+</div>
+
+<div>
+<h3>4. Calculate Offset</h3>
+<p>Рассчитать разницу между измеренным и эталонным выходом.</p>
+</div>
+
+<div>
+<h3>5. Calculate Error</h3>
+<p>Определить абсолютную величину смещения.</p>
+</div>
+
+<div>
+<h3>6. Calculate Deviation</h3>
+<p>Определить относительное отклонение в процентах.</p>
+</div>
+
+<div>
+<h3>7. Repeat Measurement</h3>
+<p>Проверить повторяемость результата.</p>
+</div>
+
+<div>
+<h3>8. Compare Previous</h3>
+<p>Сравнить текущее смещение с предыдущим испытанием.</p>
+</div>
+
+<div>
+<h3>9. Evaluate Stability</h3>
+<p>Проверить изменение Offset во времени или после цикла.</p>
+</div>
+
+<div>
+<h3>10. Final Report</h3>
+<p>Сформировать технический отчёт.</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="card">
+
+<h2>Output Offset Test Records</h2>
+
+<div class="filters">
+
+<input
+id="search"
+type="text"
+placeholder="Поиск по ID, стране, датчику..."
+oninput="filterTable()">
+
+<select id="statusFilter" onchange="filterTable()">
+<option value="">Все статусы</option>
+<option value="PASS">PASS</option>
+<option value="REVIEW">REVIEW</option>
+<option value="FAIL">FAIL</option>
+</select>
+
+</div>
+
+<div class="table-wrap">
+
+<table id="records">
+
+<thead>
+<tr>
+<th>ID</th>
+<th>Country</th>
+<th>Sensor</th>
+<th>Input °C</th>
+<th>Reference Output</th>
+<th>Measured Output</th>
+<th>Offset</th>
+<th>Allowed Offset</th>
+<th>Deviation %</th>
+<th>Repeat Output</th>
+<th>Repeat Difference</th>
+<th>Status</th>
+</tr>
+</thead>
+
+<tbody>
+
+<tr>
+<td>OFF-AZ-2026-001</td>
+<td>Azerbaijan</td>
+<td>RTD</td>
+<td>25</td>
+<td>50</td>
+<td>51.2</td>
+<td>+1.2</td>
+<td>2</td>
+<td>2.40</td>
+<td>51.0</td>
+<td>0.2</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>OFF-TR-2026-002</td>
+<td>Turkey</td>
+<td>Thermocouple</td>
+<td>50</td>
+<td>40</td>
+<td>39.1</td>
+<td>-0.9</td>
+<td>2</td>
+<td>2.25</td>
+<td>39.3</td>
+<td>0.2</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>OFF-DE-2026-003</td>
+<td>Germany</td>
+<td>RTD</td>
+<td>80</td>
+<td>60</td>
+<td>61.5</td>
+<td>+1.5</td>
+<td>2</td>
+<td>2.50</td>
+<td>61.2</td>
+<td>0.3</td>
+<td>PASS</td>
+</tr>
+
+<tr>
+<td>OFF-IT-2026-004</td>
+<td>Italy</td>
+<td>Thermistor</td>
+<td>100</td>
+<td>70</td>
+<td>72.4</td>
+<td>+2.4</td>
+<td>2</td>
+<td>3.43</td>
+<td>72.0</td>
+<td>0.4</td>
+<td>FAIL</td>
+</tr>
+
+<tr>
+<td>OFF-CN-2026-005</td>
+<td>China</td>
+<td>Thermocouple</td>
+<td>150</td>
+<td>80</td>
+<td>81.6</td>
+<td>+1.6</td>
+<td>2</td>
+<td>2.00</td>
+<td>81.4</td>
+<td>0.2</td>
+<td>REVIEW</td>
+</tr>
+
+<tr>
+<td>OFF-US-2026-006</td>
+<td>USA</td>
+<td>Infrared Sensor</td>
+<td>30</td>
+<td>55</td>
+<td>54.2</td>
+<td>-0.8</td>
+<td>2</td>
+<td>1.45</td>
+<td>54.3</td>
+<td>0.1</td>
+<td>PASS</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+<button class="action" onclick="exportCSV()">
+Export CSV
+</button>
+
+<button class="action" onclick="addDemoRecord()">
+Add Test Record — Demo
+</button>
+
+<button class="action" onclick="demoReport()">
+Technical Report — Demo
+</button>
+
+</section>
+
+<section class="grid">
+
+<div class="card">
+<h3>Output Offset</h3>
+<p>
+Разница между фактическим выходом датчика и заданным эталонным
+выходным значением.
+</p>
+</div>
+
+<div class="card">
+<h3>Offset Error</h3>
+<p>
+Абсолютная величина выходного смещения относительно эталона.
+</p>
+</div>
+
+<div class="card">
+<h3>Offset Deviation</h3>
+<p>
+Относительное отклонение смещения от эталонного выхода,
+выраженное в процентах.
+</p>
+</div>
+
+<div class="card">
+<h3>Zero-Point Shift</h3>
+<p>
+Изменение выходного значения датчика в заданной точке после
+воздействия или повторного испытания.
+</p>
+</div>
+
+</section>
+
+<div class="notice">
+<strong>Важно:</strong>
+страница является демонстрационной частью WORKER PRO.
+Реальные испытания должны выполняться по техническим требованиям
+производителя, применимым стандартам, требованиям безопасности
+и с использованием калиброванного оборудования.
+Демонстрационные критерии PASS/REVIEW/FAIL не являются
+нормативными критериями приемки.
+</div>
+
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Testing №263 — Thermal Interface Sensor Output Offset Testing<br><br>
+Султанов Фарид Рафиг оглы — F.S.
+</footer>
+
+<script>
+
+function calculateOffset(){
+
+    const inputTemp =
+        Number(document.getElementById("inputTemp").value);
+
+    const referenceOutput =
+        Number(document.getElementById("referenceOutput").value);
+
+    const measuredOutput =
+        Number(document.getElementById("measuredOutput").value);
+
+    const allowedOffset =
+        Number(document.getElementById("allowedOffset").value);
+
+    const previousOffset =
+        Number(document.getElementById("previousOffset").value);
+
+    const repeatOutput =
+        Number(document.getElementById("repeatOutput").value);
+
+    const outputSpan =
+        Number(document.getElementById("outputSpan").value);
+
+    const sensorId =
+        document.getElementById("sensorId").value;
+
+    const offset =
+        measuredOutput - referenceOutput;
+
+    const absoluteOffset =
+        Math.abs(offset);
+
+    const deviation =
+        referenceOutput !== 0
+        ? (
+            absoluteOffset /
+            Math.abs(referenceOutput)
+        ) * 100
+        : 0;
+
+    const repeatOffset =
+        repeatOutput - referenceOutput;
+
+    const repeatDifference =
+        Math.abs(
+            offset -
+            repeatOffset
+        );
+
+    const offsetChange =
+        offset -
+        previousOffset;
+
+    let status = "PASS";
+
+    if(absoluteOffset > allowedOffset){
+        status = "FAIL";
+    }
+    else if(
+        absoluteOffset >=
+        allowedOffset * 0.8
+    ){
+        status = "REVIEW";
+    }
+
+    /*
+       Демо-визуализация:
+       центр шкалы = 0.
+       Максимальное отображаемое смещение
+       ограничивается половиной Output Span.
+    */
+
+    const scale =
+        outputSpan > 0
+        ? outputSpan / 2
+        : Math.max(
+            allowedOffset * 5,
+            10
+        );
+
+    let position =
+        50 +
+        (offset / scale) * 50;
+
+    position =
+        Math.min(
+            95,
+            Math.max(5, position)
+        );
+
+    document.getElementById(
+        "offsetMarker"
+    ).style.left =
+        position + "%";
+
+    document.getElementById(
+        "result"
+    ).innerHTML =
+
+        "Sensor ID: " +
+        sensorId +
+        "<br>" +
+
+        "Input Temperature: " +
+        inputTemp.toFixed(2) +
+        " °C<br>" +
+
+        "Reference Output: " +
+        referenceOutput.toFixed(3) +
+        "<br>" +
+
+        "Measured Output: " +
+        measuredOutput.toFixed(3) +
+        "<br>" +
+
+        "Output Offset: " +
+        (offset >= 0 ? "+" : "") +
+        offset.toFixed(3) +
+        "<br>" +
+
+        "Absolute Offset Error: " +
+        absoluteOffset.toFixed(3) +
+        "<br>" +
+
+        "Offset Deviation: " +
+        deviation.toFixed(2) +
+        "%<br>" +
+
+        "Previous Offset: " +
+        (previousOffset >= 0 ? "+" : "") +
+        previousOffset.toFixed(3) +
+        "<br>" +
+
+        "Offset Change: " +
+        (offsetChange >= 0 ? "+" : "") +
+        offsetChange.toFixed(3) +
+        "<br>" +
+
+        "Repeat Output: " +
+        repeatOutput.toFixed(3) +
+        "<br>" +
+
+        "Repeat Offset: " +
+        (repeatOffset >= 0 ? "+" : "") +
+        repeatOffset.toFixed(3) +
+        "<br>" +
+
+        "Repeat Difference: " +
+        repeatDifference.toFixed(3) +
+        "<br>" +
+
+        "Result: <strong>" +
+        status +
+        "</strong>";
+}
+
+function filterTable(){
+
+    const search =
+        document.getElementById("search")
+        .value
+        .toLowerCase();
+
+    const status =
+        document.getElementById("statusFilter")
+        .value;
+
+    const rows =
+        document.querySelectorAll(
+            "#records tbody tr"
+        );
+
+    rows.forEach(row => {
+
+        const text =
+            row.innerText.toLowerCase();
+
+        const rowStatus =
+            row.cells[
+                row.cells.length - 1
+            ].innerText.trim();
+
+        const matchSearch =
+            text.includes(search);
+
+        const matchStatus =
+            !status ||
+            rowStatus === status;
+
+        row.style.display =
+            matchSearch &&
+            matchStatus
+            ? ""
+            : "none";
+    });
+}
+
+function addDemoRecord(){
+
+    const tbody =
+        document.querySelector(
+            "#records tbody"
+        );
+
+    const id =
+        "OFF-DEMO-" +
+        Date.now();
+
+    const row =
+        document.createElement("tr");
+
+    row.innerHTML = `
+        <td>${id}</td>
+        <td>Demo</td>
+        <td>Demo Sensor</td>
+        <td>25</td>
+        <td>50</td>
+        <td>51.2</td>
+        <td>+1.2</td>
+        <td>2</td>
+        <td>2.40</td>
+        <td>51.0</td>
+        <td>0.2</td>
+        <td>PASS</td>
+    `;
+
+    tbody.appendChild(row);
+
+    alert(
+        "Demo output offset record added."
+    );
+}
+
+function exportCSV(){
+
+    const rows =
+        document.querySelectorAll(
+            "#records tr"
+        );
+
+    let csv = [];
+
+    rows.forEach(row => {
+
+        const cols =
+            row.querySelectorAll(
+                "th,td"
+            );
+
+        const data =
+            Array.from(cols).map(col =>
+                '"' +
+                col.innerText
+                    .replace(/"/g,'""') +
+                '"'
+            );
+
+        csv.push(
+            data.join(",")
+        );
+    });
+
+    const blob =
+        new Blob(
+            [csv.join("\n")],
+            {
+                type:
+                "text/csv;charset=utf-8;"
+            }
+        );
+
+    const url =
+        URL.createObjectURL(blob);
+
+    const link =
+        document.createElement("a");
+
+    link.href = url;
+
+    link.download =
+        "worker-pro-thermal-interface-sensor-output-offset-testing.csv";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+function demoReport(){
+
+    alert(
+        "WORKER PRO Demo Technical Report\n\n" +
+        "Test: Thermal Interface Sensor Output Offset Testing\n" +
+        "Status: DEMO\n\n" +
+        "Real technical reports require validated laboratory data."
+    );
+}
+
+</script>
+
+</body>
+</html>
