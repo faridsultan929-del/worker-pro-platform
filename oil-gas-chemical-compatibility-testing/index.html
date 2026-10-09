@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Oil & Gas Chemical Compatibility Testing</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#17352a}
+.top-languages{position:sticky;top:0;z-index:1000;background:#063d25;padding:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
+.top-languages button{background:#0b6b3d;color:#fff;border:1px solid #b7ff35;border-radius:20px;padding:7px 12px;font-weight:bold}
+header{background:#0b6b3d;color:#fff;text-align:center;padding:24px 12px}
+header h1{margin:0;font-size:29px}
+nav{background:#075b34;padding:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
+nav a{color:white;text-decoration:none;padding:8px 10px;border-radius:7px}
+nav a:hover{background:#b7ff35;color:#063d25}
+.container{max-width:1200px;margin:auto;padding:18px}
+.hero,.card,.stat{background:#fff;border-radius:12px;padding:18px;box-shadow:0 2px 9px #0001}
+.hero{border-left:6px solid #0b6b3d}
+h2,h3{color:#075b34}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:18px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:18px}
+.stat{text-align:center}
+.stat strong{display:block;font-size:26px;color:#0b6b3d}
+.tags{display:flex;flex-wrap:wrap;gap:7px}
+.tag{background:#e8f6ed;color:#075b34;border-radius:20px;padding:6px 9px;font-size:13px}
+.notice{margin-top:15px;background:#fff8d9;border:1px solid #e2ce70;border-radius:10px;padding:14px}
+.workflow{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.step{background:#063d25;color:white;text-align:center;padding:12px 6px;border-radius:8px;font-size:13px}
+.form-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+label{font-size:14px;font-weight:bold}
+input,select,textarea{width:100%;padding:10px;margin-top:5px;border:1px solid #cbd8d0;border-radius:7px;font:inherit}
+textarea{min-height:75px}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+.action{background:#0b6b3d;color:white;border:0;border-radius:8px;padding:11px 15px;font-weight:bold;cursor:pointer}
+.action:hover{background:#063d25}
+.result{background:#edf8f1;border:1px solid #b8ddc6;border-radius:9px;padding:13px;margin-top:15px;overflow-wrap:anywhere}
+.search{margin:12px 0}
+.table-wrap{overflow:auto}
+table{width:100%;min-width:1200px;border-collapse:collapse;background:white}
+th,td{border:1px solid #d8e2dc;padding:9px;text-align:left}
+th{background:#063d25;color:white}
+footer{background:#063d25;color:white;text-align:center;padding:24px;margin-top:30px}
+@media(max-width:850px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr 1fr}.workflow{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.form-grid{grid-template-columns:1fr}.workflow{grid-template-columns:repeat(2,1fr)}header h1{font-size:23px}.container{padding:11px}}
+</style>
+</head>
+<body>
+
+<div class="top-languages">
+<button type="button">AZ</button><button type="button">RU</button>
+<button type="button">EN</button><button type="button">TR</button>
+<button type="button">DE</button><button type="button">AR</button>
+<button type="button">ES</button><button type="button">FR</button>
+<button type="button">IT</button>
+</div>
+
+<header>
+<h1>WORKER PRO</h1>
+<p>Глобальная промышленная платформа</p>
+<p><strong>№275 — Oil &amp; Gas Chemical Compatibility Testing</strong></p>
+</header>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../production/index.html">Production</a>
+<a href="../testing/index.html">Testing</a>
+<a href="../quality/index.html">Quality</a>
+<a href="../documents/index.html">Documents</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../orders/index.html">Orders</a>
+<a href="../logistics/index.html">Logistics</a>
+<a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<main class="container">
+<section class="hero">
+<h2>Oil &amp; Gas Chemical Compatibility Testing</h2>
+<p>Раздел для регистрации лабораторных и производственных проверок совместимости материалов с химическими реагентами, применяемыми в нефтегазовой отрасли. Можно учитывать воздействие ингибиторов коррозии, деэмульгаторов, очистителей, растворителей, буровых и технологических жидкостей.</p>
+<p>Фиксируйте материал, реагент, концентрацию, температуру, продолжительность воздействия, изменение массы и размеров, внешний вид и ссылки на лабораторные отчёты.</p>
+<div class="notice"><strong>Важно:</strong> демонстрационный журнал не подтверждает химическую совместимость и не является разрешением на применение реагента. Реальные испытания должны выполняться по утверждённой методике с учётом безопасности, требований изготовителя и условий эксплуатации.</div>
+</section>
+
+<section class="stats">
+<div class="stat"><strong id="total">6</strong>Demo Records</div>
+<div class="stat"><strong>8</strong>Test Categories</div>
+<div class="stat"><strong>9</strong>Languages Listed</div>
+<div class="stat"><strong>3</strong>Review Fields</div>
+</section>
+
+<section class="grid">
+<div class="card">
+<h3>Химические реагенты</h3>
+<div class="tags">
+<span class="tag">Corrosion Inhibitors</span><span class="tag">Demulsifiers</span>
+<span class="tag">Scale Inhibitors</span><span class="tag">Biocides</span>
+<span class="tag">Solvents</span><span class="tag">Cleaning Agents</span>
+<span class="tag">Drilling Fluids</span><span class="tag">Production Chemicals</span>
+</div>
+</div>
+<div class="card">
+<h3>Материалы</h3>
+<div class="tags">
+<span class="tag">Carbon Steel</span><span class="tag">Stainless Steel</span>
+<span class="tag">Elastomers</span><span class="tag">Polymers</span>
+<span class="tag">Coatings</span><span class="tag">Seals</span>
+<span class="tag">Gaskets</span><span class="tag">Composite Materials</span>
+</div>
+</div>
+<div class="card">
+<h3>Проверяемые параметры</h3>
+<div class="tags">
+<span class="tag">Mass Change</span><span class="tag">Dimensional Change</span>
+<span class="tag">Hardness Change</span><span class="tag">Swelling</span>
+<span class="tag">Discoloration</span><span class="tag">Cracking</span>
+<span class="tag">Surface Condition</span><span class="tag">Visual Changes</span>
+</div>
+</div>
+</section>
+
+<section class="card" style="margin-top:18px">
+<h3>Процесс испытания</h3>
+<div class="workflow">
+<div class="step">1. Identify</div>
+<div class="step">2. Select Material</div>
+<div class="step">3. Define Exposure</div>
+<div class="step">4. Test</div>
+<div class="step">5. Record Results</div>
+<div class="step">6. Review</div>
+</div>
+</section>
+
+<section class="grid">
+<div class="card">
+<h3>Где применяется</h3>
+<ul>
+<li>Добыча нефти и газа</li>
+<li>Бурение и заканчивание скважин</li>
+<li>Подготовка нефти и воды</li>
+<li>Нефтеперерабатывающие заводы</li>
+<li>Трубопроводные системы</li>
+<li>Уплотнения, прокладки и покрытия</li>
+</ul>
+</div>
+<div class="card">
+<h3>Данные образца</h3>
+<ul>
+<li>Идентификатор и материал</li>
+<li>Марка и изготовитель</li>
+<li>Номер партии реагента</li>
+<li>Концентрация и состав среды</li>
+<li>Температура и время экспозиции</li>
+<li>Подготовка и состояние образца</li>
+</ul>
+</div>
+<div class="card">
+<h3>Выходные документы</h3>
+<ul>
+<li>Compatibility Test Record</li>
+<li>Material Exposure Log</li>
+<li>Laboratory Report Reference</li>
+<li>Photo / Attachment Reference</li>
+<li>Engineering Review Status</li>
+<li>Technical Report</li>
+</ul>
+</div>
+</section>
+
+<section class="card" style="margin-top:18px">
+<h3>Добавить запись испытания</h3>
+<div class="form-grid">
+<div><label>Sample ID</label><input id="sample" placeholder="CHEM-AZ-001"></div>
+<div><label>Country</label>
+<select id="country">
+<option>Azerbaijan</option><option>Turkey</option><option>Germany</option>
+<option>Italy</option><option>Saudi Arabia</option><option>UAE</option>
+<option>USA</option><option>Other</option>
+</select></div>
+<div><label>Material Category</label>
+<select id="material">
+<option>Carbon Steel</option><option>Stainless Steel</option>
+<option>Elastomer</option><option>Polymer</option>
+<option>Coating</option><option>Seal / Gasket</option>
+<option>Composite</option><option>Other</option>
+</select></div>
+<div><label>Chemical Category</label>
+<select id="chemical">
+<option>Corrosion Inhibitor</option><option>Demulsifier</option>
+<option>Scale Inhibitor</option><option>Biocide</option>
+<option>Solvent</option><option>Cleaning Agent</option>
+<option>Drilling Fluid</option><option>Other</option>
+</select></div>
+<div><label>Test Method</label>
+<select id="method">
+<option>Immersion Exposure</option><option>Mass Change Measurement</option>
+<option>Dimensional Measurement</option><option>Hardness Measurement</option>
+<option>Visual Inspection</option><option>Laboratory Compatibility Test</option>
+</select></div>
+<div><label>Exposure Time (hours)</label><input id="hours" type="number" min="0" step="0.1" placeholder="168"></div>
+<div><label>Concentration (%)</label><input id="concentration" type="number" min="0" max="100" step="0.01" placeholder="5"></div>
+<div><label>Temperature (°C)</label><input id="temperature" type="number" step="0.1" placeholder="25"></div>
+<div><label>Initial Mass (g)</label><input id="massBefore" type="number" min="0" step="0.001" placeholder="100.000"></div>
+<div><label>Final Mass (g)</label><input id="massAfter" type="number" min="0" step="0.001" placeholder="99.950"></div>
+<div><label>Initial Dimension (mm)</label><input id="dimBefore" type="number" min="0" step="0.001" placeholder="10.000"></div>
+<div><label>Final Dimension (mm)</label><input id="dimAfter" type="number" min="0" step="0.001" placeholder="10.020"></div>
+<div><label>Test Date</label><input id="date" type="date"></div>
+<div><label>Laboratory / Inspector</label><input id="lab" placeholder="Lab or inspector ID"></div>
+<div><label>Equipment / Asset</label><input id="asset" placeholder="Pipe, seal, valve..."></div>
+<div><label>Report Reference</label><input id="report" placeholder="Report number"></div>
+<div style="grid-column:1/-1"><label>Observations / Notes</label><textarea id="notes" placeholder="Visual changes, swelling, cracking, deposits, attachment reference..."></textarea></div>
+</div>
+<div class="actions">
+<button class="action" type="button" onclick="addRecord()">Add Record</button>
+<button class="action" type="button" onclick="exportCSV()">Export CSV</button>
+<button class="action" type="button" onclick="makeReport()">Technical Report</button>
+</div>
+<div id="result" class="result">Заполните данные и нажмите Add Record.</div>
+</section>
+
+<section class="card" style="margin-top:18px">
+<h3>Журнал совместимости материалов</h3>
+<input id="search" class="search" oninput="filterRows()" placeholder="Поиск по образцу, материалу, реагенту, стране...">
+<div class="table-wrap">
+<table id="table">
+<thead><tr>
+<th>Record ID</th><th>Sample ID</th><th>Country</th><th>Material</th>
+<th>Chemical</th><th>Method</th><th>Hours</th><th>Concentration %</th>
+<th>Temperature °C</th><th>Mass Change g</th><th>Dimension Change mm</th>
+<th>Date</th><th>Lab</th><th>Status</th>
+</tr></thead>
+<tbody>
+<tr><td>CHC-DEMO-001</td><td>CHEM-AZ-001</td><td>Azerbaijan</td><td>Carbon Steel</td><td>Corrosion Inhibitor</td><td>Immersion Exposure</td><td>168</td><td>5</td><td>25</td><td>-0.050</td><td>0.000</td><td>2026-09-10</td><td>LAB-AZ-01</td><td>Review</td></tr>
+<tr><td>CHC-DEMO-002</td><td>CHEM-TR-002</td><td>Turkey</td><td>Elastomer</td><td>Solvent</td><td>Visual Inspection</td><td>72</td><td>10</td><td>25</td><td>Not entered</td><td>0.120</td><td>2026-09-12</td><td>LAB-TR-02</td><td>Review</td></tr>
+<tr><td>CHC-DEMO-003</td><td>CHEM-DE-003</td><td>Germany</td><td>Stainless Steel</td><td>Cleaning Agent</td><td>Visual Inspection</td><td>48</td><td>2</td><td>30</td><td>Not entered</td><td>Not entered</td><td>2026-09-14</td><td>LAB-DE-01</td><td>Recorded</td></tr>
+<tr><td>CHC-DEMO-004</td><td>CHEM-IT-004</td><td>Italy</td><td>Polymer</td><td>Scale Inhibitor</td><td>Dimensional Measurement</td><td>120</td><td>3</td><td>40</td><td>Not entered</td><td>0.080</td><td>2026-09-15</td><td>LAB-IT-03</td><td>Review</td></tr>
+<tr><td>CHC-DEMO-005</td><td>CHEM-SA-005</td><td>Saudi Arabia</td><td>Seal / Gasket</td><td>Demulsifier</td><td>Laboratory Compatibility Test</td><td>336</td><td>1</td><td>60</td><td>Not entered</td><td>Not entered</td><td>2026-09-17</td><td>LAB-SA-02</td><td>Review</td></tr>
+<tr><td>CHC-DEMO-006</td><td>CHEM-US-006</td><td>USA</td><td>Coating</td><td>Biocide</td><td>Visual Inspection</td><td>24</td><td>0.5</td><td>25</td><td>Not entered</td><td>Not entered</td><td>2026-09-18</td><td>LAB-US-01</td><td>Recorded</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<div class="notice">
+<strong>Техническое ограничение:</strong> изменение массы или размера не доказывает совместимость материала. Оценка должна учитывать конкретную марку материала, состав реагента, концентрацию, температуру, давление, длительность воздействия и применимый метод испытаний. Не используйте демонстрационные записи для принятия эксплуатационных решений.
+</div>
+</main>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Oil &amp; Gas Chemical Compatibility Testing №275<br><br>F.S.
+</footer>
+
+<script>
+function v(id){return document.getElementById(id).value.trim();}
+function esc(s){
+ return String(s).replace(/[&<>"']/g,function(c){
+  return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
+ });
+}
+function numOrBlank(id){
+ const s=v(id);
+ return s===""?null:Number(s);
+}
+function addRecord(){
+ const sample=v("sample");
+ if(!sample){
+  document.getElementById("result").textContent="Введите Sample ID.";
+  return;
+ }
+ const hours=numOrBlank("hours");
+ const concentration=numOrBlank("concentration");
+ const temperature=numOrBlank("temperature");
+ const mb=numOrBlank("massBefore");
+ const ma=numOrBlank("massAfter");
+ const db=numOrBlank("dimBefore");
+ const da=numOrBlank("dimAfter");
+
+ const numbers=[
+  ["Exposure Time",hours,0],
+  ["Concentration",concentration,0,100],
+  ["Initial Mass",mb,0],
+  ["Final Mass",ma,0],
+  ["Initial Dimension",db,0],
+  ["Final Dimension",da,0]
+ ];
+ for(const item of numbers){
+  if(item[1]!==null && (!Number.isFinite(item[1])||item[1]<item[2]||
+    (item.length===4&&item[1]>item[3]))){
+   document.getElementById("result").textContent="Проверьте числовое поле: "+item[0]+".";
+   return;
+  }
+ }
+ if(temperature!==null&&!Number.isFinite(temperature)){
+  document.getElementById("result").textContent="Проверьте температуру.";
+  return;
+ }
+
+ const massChange=mb!==null&&ma!==null?(ma-mb).toFixed(3):"Not entered";
+ const dimChange=db!==null&&da!==null?(da-db).toFixed(3):"Not entered";
+ const recordId="CHC-DEMO-"+Date.now();
+ const fields=[
+  recordId,sample,v("country"),v("material"),v("chemical"),v("method"),
+  hours===null?"Not entered":hours,
+  concentration===null?"Not entered":concentration,
+  temperature===null?"Not entered":temperature,
+  massChange,dimChange,v("date")||"Not specified",
+  v("lab")||"Not specified","Review"
+ ];
+ const tr=document.createElement("tr");
+ fields.forEach(function(field){
+  const td=document.createElement("td");
+  td.textContent=field;
+  tr.appendChild(td);
+ });
+ document.querySelector("#table tbody").prepend(tr);
+ document.getElementById("total").textContent=
+  document.querySelectorAll("#table tbody tr").length;
+
+ document.getElementById("result").innerHTML=
+  "<strong>Record created:</strong> "+esc(recordId)+
+  "<br>Sample: "+esc(sample)+
+  "<br>Material: "+esc(v("material"))+
+  "<br>Chemical: "+esc(v("chemical"))+
+  "<br>Method: "+esc(v("method"))+
+  "<br>Mass change (final minus initial): "+esc(massChange)+" g"+
+  "<br>Dimension change (final minus initial): "+esc(dimChange)+" mm"+
+  "<br>Temperature: "+(temperature===null?"Not entered":temperature+" °C")+
+  "<br>Review status: Review"+
+  "<br>Asset: "+esc(v("asset")||"Not specified")+
+  "<br>Report reference: "+esc(v("report")||"Not specified")+
+  "<br>Notes: "+esc(v("notes")||"None")+
+  "<br><br>Демонстрационная запись. Совместимость не подтверждена.";
+ filterRows();
+}
+function filterRows(){
+ const q=v("search").toLowerCase();
+ document.querySelectorAll("#table tbody tr").forEach(function(row){
+  row.style.display=row.innerText.toLowerCase().includes(q)?"":"none";
+ });
+}
+function exportCSV(){
+ const rows=Array.from(document.querySelectorAll("#table tr"));
+ const csv=rows.map(function(row){
+  return Array.from(row.querySelectorAll("th,td")).map(function(cell){
+   return '"'+cell.innerText.replace(/"/g,'""')+'"';
+  }).join(",");
+ }).join("\r\n");
+ const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download="worker-pro-chemical-compatibility.csv";
+ a.click();URL.revokeObjectURL(url);
+}
+function makeReport(){
+ const rows=Array.from(document.querySelectorAll("#table tbody tr"))
+  .filter(row=>row.style.display!=="none");
+ const lines=[
+  "WORKER PRO — Oil & Gas Chemical Compatibility Testing",
+  "Section №275",
+  "Generated: "+new Date().toISOString(),
+  "Visible records: "+rows.length,
+  "",
+  "DEMO REPORT — not a certified compatibility assessment.",
+  "Engineering review and approved test procedures are required."
+ ];
+ rows.forEach(function(row){lines.push(row.innerText.replace(/\t/g," | "));});
+ const blob=new Blob([lines.join("\r\n")],{type:"text/plain;charset=utf-8;"});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download="worker-pro-chemical-compatibility-report.txt";
+ a.click();URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
