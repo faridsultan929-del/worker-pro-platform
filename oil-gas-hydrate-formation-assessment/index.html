@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Gas Hydrate Formation Assessment</title>
+<style>
+:root{--dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;--bg:#f4f7f5;--text:#18352a;--muted:#64776d;--border:#dce7df}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.languages{position:sticky;top:0;z-index:10;display:flex;justify-content:center;flex-wrap:wrap;gap:7px;padding:10px;background:var(--dark)}
+.languages button{padding:8px 12px;border:1px solid #56836a;border-radius:7px;background:transparent;color:#fff;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:var(--lime);color:var(--dark)}
+header{padding:28px 16px;background:linear-gradient(130deg,var(--dark),var(--green));color:white}
+.wrap{max-width:1200px;margin:auto}
+.brand{font-size:30px;font-weight:900;letter-spacing:1px}
+.brand span{color:var(--lime)}
+.subtitle{margin-top:5px;color:#d6e8dc}
+.number{display:inline-block;margin-top:18px;padding:7px 11px;background:var(--lime);color:var(--dark);border-radius:7px;font-weight:bold}
+h1{font-size:clamp(25px,4vw,37px);margin:14px 0 10px}
+header p{max-width:850px;line-height:1.6;color:#e5f1e9}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+nav a{padding:9px 11px;border:1px solid #ffffff40;border-radius:8px;background:#ffffff18;color:white;text-decoration:none;font-size:14px}
+nav a:hover{background:var(--lime);color:var(--dark)}
+main{max-width:1200px;margin:22px auto;padding:0 15px}
+.notice{padding:14px 16px;border:1px solid #ead89a;border-radius:10px;background:#fff8df;line-height:1.55;margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+.stat,.card{padding:17px;border:1px solid var(--border);border-radius:13px;background:white;box-shadow:0 3px 12px #173d2610}
+.stat strong{display:block;margin-bottom:6px;color:var(--green);font-size:27px}
+.stat span{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}
+h2{margin:0 0 13px;color:var(--dark);font-size:21px}
+h3{margin:0 0 8px;font-size:16px}
+p{line-height:1.55}
+.muted{color:var(--muted);font-size:13px;line-height:1.5}
+.types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.type{padding:12px;border:1px solid var(--border);border-radius:9px;background:#fbfdfb}
+.type strong{display:block;margin-bottom:5px}
+.steps{padding-left:20px;line-height:1.8;margin:0}
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+label{font-size:13px;font-weight:bold;color:#345344}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbdacf;border-radius:8px;background:white;font:inherit;color:var(--text)}
+textarea{min-height:85px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.btn{padding:11px 15px;border:0;border-radius:8px;background:var(--green);color:white;font-weight:bold;cursor:pointer}
+.btn.secondary{border:1px solid var(--border);background:#e7f0e9;color:var(--dark)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.toolbar input,.toolbar select{flex:1;min-width:180px}
+.table-wrap{overflow-x:auto}
+table{width:100%;min-width:900px;border-collapse:collapse;background:white}
+th,td{padding:11px;border-bottom:1px solid var(--border);text-align:left;vertical-align:top;font-size:13px}
+th{background:#eaf3ec;color:var(--dark)}
+.tag{display:inline-block;padding:5px 8px;border-radius:6px;background:#fff0d4;color:#77510a;font-size:12px;font-weight:bold}
+.hidden{display:none}
+#report{white-space:pre-wrap;overflow-wrap:anywhere;padding:14px;border:1px solid var(--border);border-radius:8px;background:#f7faf7;line-height:1.6}
+footer{margin-top:28px;padding:24px 15px;background:var(--dark);color:#e5f1e9;text-align:center;font-size:13px;line-height:1.8}
+[dir="rtl"]{text-align:right}
+@media(max-width:750px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid,form{grid-template-columns:1fr}.field.full{grid-column:auto}.brand{font-size:26px}}
+@media(max-width:380px){.stats,.types{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div class="languages">
+<button class="active" data-lang="ru">RU</button>
+<button data-lang="az">AZ</button>
+<button data-lang="en">EN</button>
+<button data-lang="tr">TR</button>
+<button data-lang="de">DE</button>
+<button data-lang="ar">AR</button>
+<button data-lang="es">ES</button>
+<button data-lang="fr">FR</button>
+<button data-lang="it">IT</button>
+</div>
+
+<header>
+<div class="wrap">
+<div class="brand">WORKER <span>PRO</span></div>
+<div class="subtitle" data-i18n="subtitle">Глобальная промышленная платформа</div>
+<div class="number">№277 · OIL &amp; GAS</div>
+<h1 data-i18n="title">Оценка образования газовых гидратов</h1>
+<p data-i18n="intro">Регистрация лабораторных наблюдений, образцов и условий, связанных с образованием газовых гидратов в нефтегазовых системах. Данные предназначены для документирования и последующей оценки специалистами.</p>
+<nav>
+<a href="../index.html" data-i18n="home">Главная</a>
+<a href="../production/index.html" data-i18n="production">Производство</a>
+<a href="../testing/index.html" data-i18n="testing">Испытания</a>
+<a href="../quality/index.html" data-i18n="quality">Качество</a>
+<a href="../documents/index.html" data-i18n="documents">Документы</a>
+<a href="../companies/index.html" data-i18n="companies">Компании</a>
+<a href="../suppliers/index.html" data-i18n="suppliers">Поставщики</a>
+<a href="../orders/index.html" data-i18n="orders">Заказы</a>
+<a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+</div>
+</header>
+
+<main>
+<div class="notice">
+<strong data-i18n="demoTitle">Демонстрационный режим.</strong>
+<span data-i18n="demoText">Записи ниже являются примерами интерфейса, а не реальными результатами. Страница не рассчитывает безопасные рабочие условия и не заменяет инженерную оценку или заключение лаборатории.</span>
+</div>
+
+<section class="stats">
+<div class="stat"><strong id="totalCount">3</strong><span data-i18n="statTotal">Записи в журнале</span></div>
+<div class="stat"><strong id="reviewCount">3</strong><span data-i18n="statReview">Требуют проверки</span></div>
+<div class="stat"><strong>4</strong><span data-i18n="statFactors">Группы наблюдений</span></div>
+<div class="stat"><strong>9</strong><span data-i18n="statLanguages">Языков интерфейса</span></div>
+</section>
+
+<div class="grid">
+<section class="card">
+<h2 data-i18n="factorsTitle">Факторы для документирования</h2>
+<div class="types">
+<div class="type"><strong data-i18n="factor1">Температура и давление</strong><span data-i18n="factor1d">Записывать фактические показания, единицы и источник данных.</span></div>
+<div class="type"><strong data-i18n="factor2">Состав газа</strong><span data-i18n="factor2d">Метан и другие компоненты по результатам анализа.</span></div>
+<div class="type"><strong data-i18n="factor3">Вода и жидкая фаза</strong><span data-i18n="factor3d">Наличие воды, состав жидкости и описание образца.</span></div>
+<div class="type"><strong data-i18n="factor4">Наблюдаемые признаки</strong><span data-i18n="factor4d">Помутнение, твёрдая фаза, закупорка или другие наблюдения.</span></div>
+</div>
+<p class="muted" data-i18n="factorNote">Сам по себе один показатель не подтверждает наличие гидратов. Интерпретация требует подходящего метода и квалифицированного специалиста.</p>
+</section>
+
+<section class="card">
+<h2 data-i18n="workflowTitle">Рабочий процесс</h2>
+<ol class="steps">
+<li data-i18n="step1">Зарегистрировать образец и источник данных.</li>
+<li data-i18n="step2">Зафиксировать условия измерения с единицами.</li>
+<li data-i18n="step3">Указать метод наблюдения или анализа.</li>
+<li data-i18n="step4">Сохранить результаты и замечания.</li>
+<li data-i18n="step5">Передать запись на проверку ответственному специалисту.</li>
+</ol>
+<p class="muted" data-i18n="workflowNote">Не используйте демонстрационную страницу для определения безопасных режимов эксплуатации или настройки технологического оборудования.</p>
+</section>
+</div>
+
+<section class="card">
+<h2 data-i18n="formTitle">Регистрация наблюдения</h2>
+<form id="hydrateForm">
+<div class="field">
+<label for="sample" data-i18n="sampleLabel">Номер образца *</label>
+<input id="sample" required placeholder="HYD-2026-004">
+</div>
+<div class="field">
+<label for="country" data-i18n="countryLabel">Страна</label>
+<select id="country">
+<option>Azerbaijan</option><option>Türkiye</option><option>Germany</option><option>Italy</option><option>Saudi Arabia</option><option>United Arab Emirates</option><option>United States</option><option>Other</option>
+</select>
+</div>
+<div class="field">
+<label for="asset" data-i18n="assetLabel">Объект / установка</label>
+<input id="asset" placeholder="Pipeline / Gas processing unit">
+</div>
+<div class="field">
+<label for="source" data-i18n="sourceLabel">Источник образца</label>
+<select id="source">
+<option value="Pipeline">Pipeline</option><option value="Gas processing">Gas processing unit</option><option value="Laboratory sample">Laboratory sample</option><option value="Separator">Separator</option><option value="Other">Other</option>
+</select>
+</div>
+<div class="field">
+<label for="temperature" data-i18n="temperatureLabel">Температура наблюдения (°C)</label>
+<input id="temperature" type="number" step="any" placeholder="Введите измеренное значение">
+</div>
+<div class="field">
+<label for="pressure" data-i18n="pressureLabel">Давление наблюдения</label>
+<input id="pressure" type="number" step="any" placeholder="Укажите единицы в примечаниях">
+</div>
+<div class="field">
+<label for="gas" data-i18n="gasLabel">Описание состава газа</label>
+<input id="gas" placeholder="Например, ссылка на лабораторный анализ">
+</div>
+<div class="field">
+<label for="water" data-i18n="waterLabel">Водная фаза</label>
+<select id="water">
+<option value="Not recorded">Not recorded</option><option value="Observed">Observed</option><option value="Not observed">Not observed</option><option value="Laboratory analyzed">Laboratory analyzed</option>
+</select>
+</div>
+<div class="field">
+<label for="method" data-i18n="methodLabel">Метод наблюдения</label>
+<select id="method">
+<option value="Visual observation">Visual observation</option><option value="Laboratory analysis">Laboratory analysis</option><option value="Microscopy">Microscopy</option><option value="Instrument data review">Instrument data review</option><option value="Other / not specified">Other / not specified</option>
+</select>
+</div>
+<div class="field">
+<label for="date" data-i18n="dateLabel">Дата наблюдения</label>
+<input id="date" type="date">
+</div>
+<div class="field">
+<label for="lab" data-i18n="labLabel">Лаборатория / ответственный</label>
+<input id="lab" placeholder="Название лаборатории">
+</div>
+<div class="field">
+<label for="status" data-i18n="statusLabel">Статус записи</label>
+<select id="status"><option value="Review">Review</option><option value="In progress">In progress</option><option value="Completed">Completed</option><option value="Archived">Archived</option></select>
+</div>
+<div class="field full">
+<label for="observations" data-i18n="observationsLabel">Наблюдения / результаты</label>
+<textarea id="observations" placeholder="Описание фактических наблюдений, результатов анализа и ограничений данных."></textarea>
+</div>
+<div class="field full">
+<label for="notes" data-i18n="notesLabel">Примечания и единицы измерения</label>
+<textarea id="notes" placeholder="Единицы давления, номер процедуры, прибор, отчёт или другие сведения."></textarea>
+</div>
+</form>
+<div class="actions">
+<button class="btn" id="addBtn" type="button" data-i18n="addBtn">Добавить запись</button>
+<button class="btn secondary" id="clearBtn" type="button" data-i18n="clearBtn">Очистить форму</button>
+</div>
+</section>
+
+<section class="card" style="margin-top:16px">
+<h2 data-i18n="recordsTitle">Журнал наблюдений</h2>
+<div class="toolbar">
+<input id="search" data-i18n-placeholder="searchPlaceholder" placeholder="Поиск по образцу, объекту, методу или статусу...">
+<select id="filterStatus">
+<option value="" data-i18n="allStatuses">Все статусы</option>
+<option value="Review">Review</option><option value="In progress">In progress</option><option value="Completed">Completed</option><option value="Archived">Archived</option>
+</select>
+<button class="btn secondary" id="csvBtn" type="button" data-i18n="csvBtn">Экспорт CSV</button>
+<button class="btn secondary" id="reportBtn" type="button" data-i18n="reportBtn">Создать отчёт</button>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr>
+<th data-i18n="thSample">Образец</th>
+<th data-i18n="thAsset">Объект</th>
+<th data-i18n="thTemperature">Температура °C</th>
+<th data-i18n="thPressure">Давление</th>
+<th data-i18n="thMethod">Метод</th>
+<th data-i18n="thDate">Дата</th>
+<th data-i18n="thStatus">Статус</th>
+<th data-i18n="thAction">Действие</th>
+</tr></thead>
+<tbody id="records"></tbody>
+</table>
+</div>
+<p class="muted" data-i18n="tableNote">Все встроенные записи являются демонстрационными. Данные в этом прототипе хранятся только в текущей открытой странице.</p>
+<div id="reportBox" class="hidden">
+<h2 data-i18n="reportTitle">Технический отчёт</h2>
+<pre id="report"></pre>
+<div class="actions"><button class="btn" id="downloadReport" type="button" data-i18n="downloadReport">Скачать отчёт TXT</button></div>
+</div>
+</section>
+</main>
+
+<footer>
+<strong>WORKER PRO</strong> — <span data-i18n="footerSubtitle">Глобальная промышленная платформа</span><br>
+<span data-i18n="footerText">Раздел №277 · Oil & Gas Hydrate Formation Assessment · Демонстрационный интерфейс.</span><br>
+<span data-i18n="footerDisclaimer">Не является инженерным заключением, лабораторной сертификацией или подтверждением безопасности оборудования.</span><br>
+© 2026 WORKER PRO · F.S.
+</footer>
+
+<script>
+const translations={
+ru:{
+subtitle:"Глобальная промышленная платформа",title:"Оценка образования газовых гидратов",intro:"Регистрация лабораторных наблюдений, образцов и условий, связанных с образованием газовых гидратов в нефтегазовых системах. Данные предназначены для документирования и последующей оценки специалистами.",
+home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",suppliers:"Поставщики",orders:"Заказы",tracking:"Отслеживание",
+demoTitle:"Демонстрационный режим.",demoText:"Записи ниже являются примерами интерфейса, а не реальными результатами. Страница не рассчитывает безопасные рабочие условия и не заменяет инженерную оценку или заключение лаборатории.",
+statTotal:"Записи в журнале",statReview:"Требуют проверки",statFactors:"Группы наблюдений",statLanguages:"Языков интерфейса",
+factorsTitle:"Факторы для документирования",factor1:"Температура и давление",factor1d:"Записывать фактические показания, единицы и источник данных.",factor2:"Состав газа",factor2d:"Метан и другие компоненты по результатам анализа.",factor3:"Вода и жидкая фаза",factor3d:"Наличие воды, состав жидкости и описание образца.",factor4:"Наблюдаемые признаки",factor4d:"Помутнение, твёрдая фаза, закупорка или другие наблюдения.",factorNote:"Сам по себе один показатель не подтверждает наличие гидратов. Интерпретация требует подходящего метода и квалифицированного специалиста.",
+workflowTitle:"Рабочий процесс",step1:"Зарегистрировать образец и источник данных.",step2:"Зафиксировать условия измерения с единицами.",step3:"Указать метод наблюдения или анализа.",step4:"Сохранить результаты и замечания.",step5:"Передать запись на проверку ответственному специалисту.",workflowNote:"Не используйте демонстрационную страницу для определения безопасных режимов эксплуатации или настройки технологического оборудования.",
+formTitle:"Регистрация наблюдения",sampleLabel:"Номер образца *",countryLabel:"Страна",assetLabel:"Объект / установка",sourceLabel:"Источник образца",temperatureLabel:"Температура наблюдения (°C)",pressureLabel:"Давление наблюдения",gasLabel:"Описание состава газа",waterLabel:"Водная фаза",methodLabel:"Метод наблюдения",dateLabel:"Дата наблюдения",labLabel:"Лаборатория / ответственный",statusLabel:"Статус записи",observationsLabel:"Наблюдения / результаты",notesLabel:"Примечания и единицы измерения",addBtn:"Добавить запись",clearBtn:"Очистить форму",
+recordsTitle:"Журнал наблюдений",searchPlaceholder:"Поиск по образцу, объекту, методу или статусу...",allStatuses:"Все статусы",csvBtn:"Экспорт CSV",reportBtn:"Создать отчёт",thSample:"Образец",thAsset:"Объект",thTemperature:"Температура °C",thPressure:"Давление",thMethod:"Метод",thDate:"Дата",thStatus:"Статус",thAction:"Действие",tableNote:"Все встроенные записи являются демонстрационными. Данные в этом прототипе хранятся только в текущей открытой странице.",reportTitle:"Технический отчёт",downloadReport:"Скачать отчёт TXT",footerSubtitle:"Глобальная промышленная платформа",footerText:"Раздел №277 · Oil & Gas Hydrate Formation Assessment · Демонстрационный интерфейс.",footerDisclaimer:"Не является инженерным заключением, лабораторной сертификацией или подтверждением безопасности оборудования.",delete:"Удалить",empty:"Записей не найдено",reportGenerated:"ДЕМОНСТРАЦИОННЫЙ ОТЧЁТ",reportCount:"Количество записей",generatedAt:"Дата формирования",reportNotice:"Этот документ создан демонстрационным интерфейсом и не является лабораторным заключением."
+},
+en:{
+subtitle:"Global Industrial Platform",title:"Oil & Gas Hydrate Formation Assessment",intro:"Register laboratory observations, samples and conditions related to gas hydrate formation in oil and gas systems. Records are intended for documentation and subsequent specialist review.",
+home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",suppliers:"Suppliers",orders:"Orders",tracking:"Tracking",
+demoTitle:"Demo mode.",demoText:"The records below are interface examples, not real results. This page does not calculate safe operating conditions or replace an engineering assessment or laboratory conclusion.",
+statTotal:"Journal records",statReview:"Require review",statFactors:"Observation groups",statLanguages:"Interface languages",
+factorsTitle:"Factors to document",factor1:"Temperature and pressure",factor1d:"Record measured values, units and data sources.",factor2:"Gas composition",factor2d:"Methane and other components based on analysis.",factor3:"Water and liquid phase",factor3d:"Water presence, liquid composition and sample description.",factor4:"Observed indications",factor4d:"Cloudiness, solid phase, blockage or other observations.",factorNote:"A single measurement does not confirm hydrate presence. Interpretation requires a suitable method and qualified specialist.",
+workflowTitle:"Workflow",step1:"Register the sample and data source.",step2:"Record measurement conditions and units.",step3:"Specify the observation or analysis method.",step4:"Save results and notes.",step5:"Submit the record for responsible specialist review.",workflowNote:"Do not use this demo page to determine safe operating conditions or configure process equipment.",
+formTitle:"Register an observation",sampleLabel:"Sample ID *",countryLabel:"Country",assetLabel:"Asset / installation",sourceLabel:"Sample source",temperatureLabel:"Observation temperature (°C)",pressureLabel:"Observation pressure",gasLabel:"Gas composition description",waterLabel:"Water phase",methodLabel:"Observation method",dateLabel:"Observation date",labLabel:"Laboratory / responsible person",statusLabel:"Record status",observationsLabel:"Observations / results",notesLabel:"Notes and measurement units",addBtn:"Add record",clearBtn:"Clear form",
+recordsTitle:"Observation journal",searchPlaceholder:"Search sample, asset, method or status...",allStatuses:"All statuses",csvBtn:"Export CSV",reportBtn:"Generate report",thSample:"Sample",thAsset:"Asset",thTemperature:"Temperature °C",thPressure:"Pressure",thMethod:"Method",thDate:"Date",thStatus:"Status",thAction:"Action",tableNote:"All built-in entries are demonstrations. This prototype stores data only in the currently open page.",reportTitle:"Technical report",downloadReport:"Download TXT report",footerSubtitle:"Global Industrial Platform",footerText:"Section #277 · Oil & Gas Hydrate Formation Assessment · Demo interface.",footerDisclaimer:"Not an engineering conclusion, laboratory certification or confirmation of equipment safety.",delete:"Delete",empty:"No records found",reportGenerated:"DEMONSTRATION REPORT",reportCount:"Record count",generatedAt:"Generated on",reportNotice:"Generated by a demonstration interface; this is not a laboratory conclusion."
+},
+az:{
+subtitle:"Qlobal Sənaye Platforması",title:"Neft-qaz sistemlərində qaz hidratlarının yaranmasının qiymətləndirilməsi",intro:"Neft-qaz sistemlərində qaz hidratları ilə bağlı nümunələri, müşahidələri və şərtləri qeyd edin.",
+home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",tracking:"İzləmə",
+demoTitle:"Demo rejimi.",demoText:"Qeydlər nümunədir, real nəticə deyil. Bu səhifə təhlükəsiz iş şəraitini müəyyən etmir və mütəxəssis rəyini əvəz etmir.",
+statTotal:"Jurnal qeydləri",statReview:"Yoxlanılmalıdır",statFactors:"Müşahidə qrupları",statLanguages:"İnterfeys dilləri",
+factorsTitle:"Qeyd ediləcək amillər",factor1:"Temperatur və təzyiq",factor1d:"Ölçülmüş göstəriciləri, vahidləri və məlumat mənbəyini yazın.",factor2:"Qazın tərkibi",factor2d:"Analiz nəticələrinə əsasən metan və digər komponentlər.",factor3:"Su və maye faza",factor3d:"Suyun mövcudluğu, mayenin tərkibi və nümunənin təsviri.",factor4:"Müşahidə əlamətləri",factor4d:"Bulanıqlıq, bərk faza, tıxanma və digər müşahidələr.",factorNote:"Tək bir ölçü hidratların mövcudluğunu təsdiq etmir. Qiymətləndirmə üçün uyğun metod və mütəxəssis tələb olunur.",
+workflowTitle:"İş prosesi",step1:"Nümunəni və məlumat mənbəyini qeyd edin.",step2:"Ölçmə şəraitini və vahidləri yazın.",step3:"Müşahidə və ya analiz metodunu göstərin.",step4:"Nəticələri və qeydləri saxlayın.",step5:"Qeydi məsul mütəxəssisə yoxlama üçün göndərin.",workflowNote:"Demo səhifədən təhlükəsiz iş rejimini müəyyən etmək üçün istifadə etməyin.",
+formTitle:"Müşahidənin qeydiyyatı",sampleLabel:"Nümunə ID-si *",countryLabel:"Ölkə",assetLabel:"Obyekt / qurğu",sourceLabel:"Nümunə mənbəyi",temperatureLabel:"Müşahidə temperaturu (°C)",pressureLabel:"Müşahidə təzyiqi",gasLabel:"Qaz tərkibinin təsviri",waterLabel:"Su fazası",methodLabel:"Müşahidə metodu",dateLabel:"Müşahidə tarixi",labLabel:"Laboratoriya / məsul şəxs",statusLabel:"Qeyd statusu",observationsLabel:"Müşahidələr / nəticələr",notesLabel:"Qeydlər və ölçü vahidləri",addBtn:"Qeyd əlavə et",clearBtn:"Formanı təmizlə",
+recordsTitle:"Müşahidə jurnalı",searchPlaceholder:"Nümunə, obyekt, metod və ya status üzrə axtar...",allStatuses:"Bütün statuslar",csvBtn:"CSV ixracı",reportBtn:"Hesabat yarat",thSample:"Nümunə",thAsset:"Obyekt",thTemperature:"Temperatur °C",thPressure:"Təzyiq",thMethod:"Metod",thDate:"Tarix",thStatus:"Status",thAction:"Əməliyyat",tableNote:"Bütün ilkin qeydlər demodur. Bu prototip məlumatları yalnız açıq səhifədə saxlayır.",reportTitle:"Texniki hesabat",downloadReport:"TXT hesabatını yüklə",footerSubtitle:"Qlobal Sənaye Platforması",footerText:"Bölmə №277 · Qaz hidratlarının qiymətləndirilməsi · Demo interfeys.",footerDisclaimer:"Mühəndis rəyi, laboratoriya sertifikatı və ya təhlükəsizlik təsdiqi deyil.",delete:"Sil",empty:"Qeyd tapılmadı",reportGenerated:"DEMO HESABATI",reportCount:"Qeydlərin sayı",generatedAt:"Yaradılma tarixi",reportNotice:"Demo interfeys tərəfindən yaradılıb; laboratoriya rəyi deyil."
+}
+};
+
+const shared={
+tr:{subtitle:"Küresel Endüstri Platformu",title:"Petrol ve Gaz Sistemlerinde Gaz Hidratı Oluşumunun Değerlendirilmesi",intro:"Petrol ve gaz sistemlerindeki gaz hidratlarıyla ilgili numune, gözlem ve koşulları kaydedin.",demoTitle:"Demo modu.",demoText:"Kayıtlar örnektir, gerçek sonuç değildir. Bu sayfa güvenli çalışma koşullarını belirlemez.",statTotal:"Kayıtlar",statReview:"İnceleme gerekli",statFactors:"Gözlem grupları",statLanguages:"Arayüz dilleri",factorsTitle:"Kaydedilecek faktörler",factor1:"Sıcaklık ve basınç",factor1d:"Ölçülen değerleri, birimleri ve veri kaynağını kaydedin.",factor2:"Gaz bileşimi",factor2d:"Analiz sonuçlarına göre metan ve diğer bileşenler.",factor3:"Su ve sıvı faz",factor3d:"Su varlığı, sıvı bileşimi ve numune açıklaması.",factor4:"Gözlenen belirtiler",factor4d:"Bulanıklık, katı faz, tıkanma veya diğer gözlemler.",factorNote:"Tek bir ölçüm hidrat varlığını doğrulamaz.",workflowTitle:"İş akışı",step1:"Numuneyi ve veri kaynağını kaydedin.",step2:"Ölçüm koşullarını ve birimleri yazın.",step3:"Gözlem veya analiz yöntemini belirtin.",step4:"Sonuçları ve notları kaydedin.",step5:"Kaydı uzman incelemesine gönderin.",workflowNote:"Demo sayfasını güvenli çalışma koşullarını belirlemek için kullanmayın.",formTitle:"Gözlem kaydı",sampleLabel:"Numune kimliği *",countryLabel:"Ülke",assetLabel:"Tesis / ekipman",sourceLabel:"Numune kaynağı",temperatureLabel:"Gözlem sıcaklığı (°C)",pressureLabel:"Gözlem basıncı",gasLabel:"Gaz bileşimi açıklaması",waterLabel:"Su fazı",methodLabel:"Gözlem yöntemi",dateLabel:"Gözlem tarihi",labLabel:"Laboratuvar / sorumlu",statusLabel:"Kayıt durumu",observationsLabel:"Gözlemler / sonuçlar",notesLabel:"Notlar ve ölçü birimleri",addBtn:"Kayıt ekle",clearBtn:"Formu temizle",recordsTitle:"Gözlem kayıtları",searchPlaceholder:"Numune, tesis, yöntem veya durumda ara...",allStatuses:"Tüm durumlar",csvBtn:"CSV dışa aktar",reportBtn:"Rapor oluştur",thSample:"Numune",thAsset:"Tesis",thTemperature:"Sıcaklık °C",thPressure:"Basınç",thMethod:"Yöntem",thDate:"Tarih",thStatus:"Durum",thAction:"İşlem",tableNote:"Başlangıç kayıtları demodur.",reportTitle:"Teknik rapor",downloadReport:"TXT raporunu indir",footerSubtitle:"Küresel Endüstri Platformu",footerText:"Bölüm #277 · Gaz hidratı değerlendirmesi · Demo arayüz.",footerDisclaimer:"Mühendislik görüşü veya güvenlik onayı değildir.",delete:"Sil",empty:"Kayıt bulunamadı",reportGenerated:"DEMO RAPORU",reportCount:"Kayıt sayısı",generatedAt:"Oluşturulma tarihi",reportNotice:"Demo arayüz tarafından oluşturulmuştur."},
+de:{subtitle:"Globale Industrieplattform",title:"Bewertung der Gas-Hydratbildung in Öl- und Gassystemen",intro:"Proben, Beobachtungen und Bedingungen zur Gas-Hydratbildung in Öl- und Gassystemen dokumentieren.",demoTitle:"Demomodus.",demoText:"Die Einträge sind Beispiele und keine realen Ergebnisse. Diese Seite bestimmt keine sicheren Betriebsbedingungen.",statTotal:"Protokolleinträge",statReview:"Zu prüfen",statFactors:"Beobachtungsgruppen",statLanguages:"Oberflächensprachen",factorsTitle:"Zu dokumentierende Faktoren",factor1:"Temperatur und Druck",factor1d:"Messwerte, Einheiten und Datenquellen erfassen.",factor2:"Gaszusammensetzung",factor2d:"Methan und andere Komponenten gemäß Analyse.",factor3:"Wasser und Flüssigphase",factor3d:"Wasservorkommen, Flüssigkeitszusammensetzung und Probe.",factor4:"Beobachtete Hinweise",factor4d:"Trübung, Festphase, Verstopfung oder andere Beobachtungen.",factorNote:"Eine einzelne Messung bestätigt keine Hydratbildung.",workflowTitle:"Arbeitsablauf",step1:"Probe und Datenquelle registrieren.",step2:"Messbedingungen und Einheiten erfassen.",step3:"Beobachtungs- oder Analysemethode angeben.",step4:"Ergebnisse und Notizen speichern.",step5:"Datensatz zur fachlichen Prüfung vorlegen.",workflowNote:"Die Demoseite nicht zur Festlegung sicherer Betriebsbedingungen verwenden.",formTitle:"Beobachtung registrieren",sampleLabel:"Proben-ID *",countryLabel:"Land",assetLabel:"Anlage / Ausrüstung",sourceLabel:"Probenquelle",temperatureLabel:"Beobachtungstemperatur (°C)",pressureLabel:"Beobachtungsdruck",gasLabel:"Beschreibung der Gaszusammensetzung",waterLabel:"Wasserphase",methodLabel:"Beobachtungsmethode",dateLabel:"Beobachtungsdatum",labLabel:"Labor / Verantwortliche Person",statusLabel:"Datensatzstatus",observationsLabel:"Beobachtungen / Ergebnisse",notesLabel:"Notizen und Maßeinheiten",addBtn:"Eintrag hinzufügen",clearBtn:"Formular leeren",recordsTitle:"Beobachtungsprotokoll",searchPlaceholder:"Nach Probe, Anlage, Methode oder Status suchen...",allStatuses:"Alle Status",csvBtn:"CSV exportieren",reportBtn:"Bericht erstellen",thSample:"Probe",thAsset:"Anlage",thTemperature:"Temperatur °C",thPressure:"Druck",thMethod:"Methode",thDate:"Datum",thStatus:"Status",thAction:"Aktion",tableNote:"Die Einträge sind Demonstrationen.",reportTitle:"Technischer Bericht",downloadReport:"TXT-Bericht herunterladen",footerSubtitle:"Globale Industrieplattform",footerText:"Abschnitt #277 · Gas-Hydrat-Bewertung · Demooberfläche.",footerDisclaimer:"Keine technische Sicherheitsfreigabe.",delete:"Löschen",empty:"Keine Einträge gefunden",reportGenerated:"DEMONSTRATIONSBERICHT",reportCount:"Anzahl der Einträge",generatedAt:"Erstellt am",reportNotice:"Von einer Demooberfläche erstellt."},
+ar:{subtitle:"منصة صناعية عالمية",title:"تقييم تكوّن هيدرات الغاز في أنظمة النفط والغاز",intro:"تسجيل العينات والملاحظات والظروف المتعلقة بتكوّن هيدرات الغاز.",demoTitle:"وضع تجريبي.",demoText:"السجلات أمثلة وليست نتائج حقيقية. لا تحدد هذه الصفحة ظروف تشغيل آمنة.",statTotal:"السجلات",statReview:"تحتاج إلى مراجعة",statFactors:"مجموعات الملاحظة",statLanguages:"لغات الواجهة",factorsTitle:"العوامل المطلوب تسجيلها",factor1:"درجة الحرارة والضغط",factor1d:"تسجيل القراءات والوحدات ومصدر البيانات.",factor2:"تركيب الغاز",factor2d:"الميثان والمكونات الأخرى حسب التحليل.",factor3:"الماء والطور السائل",factor3d:"وجود الماء وتركيب السائل ووصف العينة.",factor4:"الملاحظات المرئية",factor4d:"العكارة أو الطور الصلب أو الانسداد.",factorNote:"لا تؤكد قراءة واحدة وجود الهيدرات.",workflowTitle:"سير العمل",step1:"تسجيل العينة ومصدر البيانات.",step2:"تسجيل ظروف القياس والوحدات.",step3:"تحديد طريقة الملاحظة أو التحليل.",step4:"حفظ النتائج والملاحظات.",step5:"إرسال السجل للمراجعة المختصة.",workflowNote:"لا تستخدم الصفحة التجريبية لتحديد ظروف تشغيل آمنة.",formTitle:"تسجيل ملاحظة",sampleLabel:"معرّف العينة *",countryLabel:"الدولة",assetLabel:"الموقع / المعدات",sourceLabel:"مصدر العينة",temperatureLabel:"درجة حرارة الملاحظة (°C)",pressureLabel:"ضغط الملاحظة",gasLabel:"وصف تركيب الغاز",waterLabel:"الطور المائي",methodLabel:"طريقة الملاحظة",dateLabel:"تاريخ الملاحظة",labLabel:"المختبر / المسؤول",statusLabel:"حالة السجل",observationsLabel:"الملاحظات / النتائج",notesLabel:"ملاحظات ووحدات القياس",addBtn:"إضافة سجل",clearBtn:"مسح النموذج",recordsTitle:"سجل الملاحظات",searchPlaceholder:"البحث عن العينة أو الموقع أو الطريقة أو الحالة...",allStatuses:"كل الحالات",csvBtn:"تصدير CSV",reportBtn:"إنشاء تقرير",thSample:"العينة",thAsset:"الموقع",thTemperature:"الحرارة °C",thPressure:"الضغط",thMethod:"الطريقة",thDate:"التاريخ",thStatus:"الحالة",thAction:"إجراء",tableNote:"السجلات أمثلة توضيحية.",reportTitle:"تقرير فني",downloadReport:"تنزيل تقرير TXT",footerSubtitle:"منصة صناعية عالمية",footerText:"القسم 277 · تقييم هيدرات الغاز · واجهة تجريبية.",footerDisclaimer:"ليس اعتمادًا هندسيًا للسلامة.",delete:"حذف",empty:"لم يتم العثور على سجلات",reportGenerated:"تقرير تجريبي",reportCount:"عدد السجلات",generatedAt:"تاريخ الإنشاء",reportNotice:"تم إنشاؤه بواسطة واجهة تجريبية."},
+es:{subtitle:"Plataforma Industrial Global",title:"Evaluación de formación de hidratos de gas",intro:"Registre muestras, observaciones y condiciones relacionadas con la formación de hidratos de gas.",demoTitle:"Modo de demostración.",demoText:"Los registros son ejemplos, no resultados reales. Esta página no determina condiciones de operación seguras.",statTotal:"Registros",statReview:"Requieren revisión",statFactors:"Grupos de observación",statLanguages:"Idiomas de interfaz",factorsTitle:"Factores que documentar",factor1:"Temperatura y presión",factor1d:"Registrar valores, unidades y fuentes.",factor2:"Composición del gas",factor2d:"Metano y otros componentes según análisis.",factor3:"Agua y fase líquida",factor3d:"Presencia de agua y descripción de la muestra.",factor4:"Indicaciones observadas",factor4d:"Turbidez, fase sólida, obstrucción u otras observaciones.",factorNote:"Una sola medición no confirma la presencia de hidratos.",workflowTitle:"Flujo de trabajo",step1:"Registrar la muestra y la fuente de datos.",step2:"Anotar condiciones de medición y unidades.",step3:"Indicar el método de observación o análisis.",step4:"Guardar resultados y notas.",step5:"Enviar el registro a revisión especializada.",workflowNote:"No utilizar esta página demo para establecer condiciones de operación seguras.",formTitle:"Registrar observación",sampleLabel:"ID de muestra *",countryLabel:"País",assetLabel:"Instalación / equipo",sourceLabel:"Origen de muestra",temperatureLabel:"Temperatura de observación (°C)",pressureLabel:"Presión de observación",gasLabel:"Descripción de composición del gas",waterLabel:"Fase acuosa",methodLabel:"Método de observación",dateLabel:"Fecha de observación",labLabel:"Laboratorio / responsable",statusLabel:"Estado del registro",observationsLabel:"Observaciones / resultados",notesLabel:"Notas y unidades",addBtn:"Añadir registro",clearBtn:"Limpiar formulario",recordsTitle:"Registro de observaciones",searchPlaceholder:"Buscar muestra, instalación, método o estado...",allStatuses:"Todos los estados",csvBtn:"Exportar CSV",reportBtn:"Crear informe",thSample:"Muestra",thAsset:"Instalación",thTemperature:"Temperatura °C",thPressure:"Presión",thMethod:"Método",thDate:"Fecha",thStatus:"Estado",thAction:"Acción",tableNote:"Los registros son ejemplos de demostración.",reportTitle:"Informe técnico",downloadReport:"Descargar informe TXT",footerSubtitle:"Plataforma Industrial Global",footerText:"Sección 277 · Evaluación de hidratos · Interfaz demo.",footerDisclaimer:"No es una aprobación de seguridad de ingeniería.",delete:"Eliminar",empty:"No se encontraron registros",reportGenerated:"INFORME DE DEMOSTRACIÓN",reportCount:"Número de registros",generatedAt:"Fecha de creación",reportNotice:"Generado por una interfaz de demostración."},
+fr:{subtitle:"Plateforme industrielle mondiale",title:"Évaluation de la formation d’hydrates de gaz",intro:"Enregistrer les échantillons, observations et conditions liés à la formation d’hydrates de gaz.",demoTitle:"Mode démo.",demoText:"Les enregistrements sont des exemples et non des résultats réels. Cette page ne définit pas de conditions d’exploitation sûres.",statTotal:"Enregistrements",statReview:"À vérifier",statFactors:"Groupes d’observation",statLanguages:"Langues de l’interface",factorsTitle:"Facteurs à documenter",factor1:"Température et pression",factor1d:"Noter les valeurs, unités et sources.",factor2:"Composition du gaz",factor2d:"Méthane et autres composants selon l’analyse.",factor3:"Eau et phase liquide",factor3d:"Présence d’eau et description de l’échantillon.",factor4:"Indices observés",factor4d:"Turbidité, phase solide, obstruction ou autres observations.",factorNote:"Une seule mesure ne confirme pas la présence d’hydrates.",workflowTitle:"Processus",step1:"Enregistrer l’échantillon et la source des données.",step2:"Noter les conditions de mesure et les unités.",step3:"Indiquer la méthode d’observation ou d’analyse.",step4:"Enregistrer les résultats et les notes.",step5:"Soumettre l’enregistrement à un spécialiste.",workflowNote:"Ne pas utiliser cette page démo pour définir des conditions sûres.",formTitle:"Enregistrer une observation",sampleLabel:"ID échantillon *",countryLabel:"Pays",assetLabel:"Installation / équipement",sourceLabel:"Source de l’échantillon",temperatureLabel:"Température d’observation (°C)",pressureLabel:"Pression d’observation",gasLabel:"Description de la composition du gaz",waterLabel:"Phase aqueuse",methodLabel:"Méthode d’observation",dateLabel:"Date d’observation",labLabel:"Laboratoire / responsable",statusLabel:"Statut de l’enregistrement",observationsLabel:"Observations / résultats",notesLabel:"Notes et unités",addBtn:"Ajouter",clearBtn:"Effacer le formulaire",recordsTitle:"Journal des observations",searchPlaceholder:"Rechercher par échantillon, installation, méthode ou statut...",allStatuses:"Tous les statuts",csvBtn:"Exporter CSV",reportBtn:"Créer un rapport",thSample:"Échantillon",thAsset:"Installation",thTemperature:"Température °C",thPressure:"Pression",thMethod:"Méthode",thDate:"Date",thStatus:"Statut",thAction:"Action",tableNote:"Les enregistrements sont des exemples.",reportTitle:"Rapport technique",downloadReport:"Télécharger le rapport TXT",footerSubtitle:"Plateforme industrielle mondiale",footerText:"Section 277 · Évaluation des hydrates · Interface démo.",footerDisclaimer:"Ne constitue pas une validation de sécurité.",delete:"Supprimer",empty:"Aucun enregistrement trouvé",reportGenerated:"RAPPORT DE DÉMONSTRATION",reportCount:"Nombre d’enregistrements",generatedAt:"Date de création",reportNotice:"Généré par une interface de démonstration."},
+it:{subtitle:"Piattaforma industriale globale",title:"Valutazione della formazione di idrati di gas",intro:"Registrare campioni, osservazioni e condizioni legate alla formazione di idrati di gas.",demoTitle:"Modalità demo.",demoText:"Le registrazioni sono esempi e non risultati reali. Questa pagina non determina condizioni operative sicure.",statTotal:"Registrazioni",statReview:"Da verificare",statFactors:"Gruppi di osservazione",statLanguages:"Lingue dell’interfaccia",factorsTitle:"Fattori da documentare",factor1:"Temperatura e pressione",factor1d:"Registrare valori misurati, unità e fonti.",factor2:"Composizione del gas",factor2d:"Metano e altri componenti secondo l’analisi.",factor3:"Acqua e fase liquida",factor3d:"Presenza d’acqua e descrizione del campione.",factor4:"Segni osservati",factor4d:"Torbidità, fase solida, ostruzione o altre osservazioni.",factorNote:"Una singola misura non conferma la presenza di idrati.",workflowTitle:"Flusso di lavoro",step1:"Registrare il campione e la fonte dei dati.",step2:"Annotare condizioni di misura e unità.",step3:"Indicare il metodo di osservazione o analisi.",step4:"Salvare risultati e note.",step5:"Inviare la registrazione a uno specialista.",workflowNote:"Non utilizzare questa pagina demo per stabilire condizioni operative sicure.",formTitle:"Registra osservazione",sampleLabel:"ID campione *",countryLabel:"Paese",assetLabel:"Impianto / apparecchiatura",sourceLabel:"Fonte del campione",temperatureLabel:"Temperatura di osservazione (°C)",pressureLabel:"Pressione di osservazione",gasLabel:"Descrizione della composizione del gas",waterLabel:"Fase acquosa",methodLabel:"Metodo di osservazione",dateLabel:"Data di osservazione",labLabel:"Laboratorio / responsabile",statusLabel:"Stato registrazione",observationsLabel:"Osservazioni / risultati",notesLabel:"Note e unità di misura",addBtn:"Aggiungi registrazione",clearBtn:"Svuota modulo",recordsTitle:"Registro osservazioni",searchPlaceholder:"Cerca campione, impianto, metodo o stato...",allStatuses:"Tutti gli stati",csvBtn:"Esporta CSV",reportBtn:"Crea rapporto",thSample:"Campione",thAsset:"Impianto",thTemperature:"Temperatura °C",thPressure:"Pressione",thMethod:"Metodo",thDate:"Data",thStatus:"Stato",thAction:"Azione",tableNote:"Le registrazioni sono esempi dimostrativi.",reportTitle:"Rapporto tecnico",downloadReport:"Scarica rapporto TXT",footerSubtitle:"Piattaforma industriale globale",footerText:"Sezione 277 · Valutazione idrati · Interfaccia demo.",footerDisclaimer:"Non è una convalida della sicurezza.",delete:"Elimina",empty:"Nessuna registrazione trovata",reportGenerated:"RAPPORTO DIMOSTRATIVO",reportCount:"Numero di registrazioni",generatedAt:"Data di generazione",reportNotice:"Generato da un’interfaccia dimostrativa."}
+};
+Object.assign(translations.tr,shared.tr);
+Object.assign(translations.de,shared.de);
+Object.assign(translations.ar,shared.ar);
+Object.assign(translations.es,shared.es);
+Object.assign(translations.fr,shared.fr);
+Object.assign(translations.it,shared.it);
+
+const demoRecords=[
+{sample:"HYD-DEMO-001",country:"Azerbaijan",asset:"Gas pipeline",source:"Pipeline",temperature:"",pressure:"",gas:"Example composition record",water:"Not recorded",method:"Visual observation",date:"2026-09-18",lab:"",status:"Review",observations:"Illustrative record only.",notes:"No real result."},
+{sample:"HYD-DEMO-002",country:"Türkiye",asset:"Gas processing unit",source:"Gas processing",temperature:"",pressure:"",gas:"See hypothetical lab record",water:"Observed",method:"Laboratory analysis",date:"2026-09-20",lab:"",status:"Review",observations:"Example record; no result verified.",notes:"Demonstration only."},
+{sample:"HYD-DEMO-003",country:"Italy",asset:"Laboratory sample",source:"Laboratory sample",temperature:"",pressure:"",gas:"Not recorded",water:"Not recorded",method:"Instrument data review",date:"2026-09-22",lab:"",status:"Review",observations:"Example record requiring specialist review.",notes:"Not an operating recommendation."}
+];
+let records=[...demoRecords],currentLanguage="ru",latestReport="";
+
+function tr(key){return (translations[currentLanguage]&&translations[currentLanguage][key])||translations.en[key]||translations.ru[key]||key}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function setLanguage(lang){
+ currentLanguage=lang;
+ document.documentElement.lang=lang;
+ document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+ document.querySelectorAll("[data-i18n]").forEach(el=>{el.textContent=tr(el.dataset.i18n)});
+ document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{el.placeholder=tr(el.dataset.i18nPlaceholder)});
+ document.querySelectorAll(".languages button").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));
+ renderRecords();
+}
+function renderRecords(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const status=document.getElementById("filterStatus").value;
+ const filtered=records.filter(r=>[r.sample,r.country,r.asset,r.source,r.gas,r.method,r.status,r.observations].join(" ").toLowerCase().includes(q)&&(!status||r.status===status));
+ const body=document.getElementById("records");body.innerHTML="";
+ filtered.forEach(r=>{
+  const i=records.indexOf(r),row=document.createElement("tr");
+  row.innerHTML=`<td><strong>${esc(r.sample)}</strong><br><span class="muted">${esc(r.country)}</span></td>
+  <td>${esc(r.asset||"—")}</td><td>${esc(r.temperature||"—")}</td><td>${esc(r.pressure||"—")}</td>
+  <td>${esc(r.method)}</td><td>${esc(r.date||"—")}</td><td><span class="tag">${esc(r.status)}</span></td>
+  <td><button class="btn secondary delete-record" data-index="${i}" type="button">${esc(tr("delete"))}</button></td>`;
+  body.appendChild(row);
+ });
+ if(!filtered.length){const row=document.createElement("tr");row.innerHTML=`<td colspan="8">${esc(tr("empty"))}</td>`;body.appendChild(row)}
+ document.getElementById("totalCount").textContent=records.length;
+ document.getElementById("reviewCount").textContent=records.filter(r=>r.status==="Review"||r.status==="In progress").length;
+}
+function formData(){
+ const val=id=>document.getElementById(id).value.trim();
+ return {sample:val("sample"),country:val("country"),asset:val("asset"),source:val("source"),temperature:val("temperature"),pressure:val("pressure"),gas:val("gas"),water:val("water"),method:val("method"),date:val("date"),lab:val("lab"),status:val("status"),observations:val("observations"),notes:val("notes")};
+}
+document.getElementById("addBtn").addEventListener("click",()=>{
+ const form=document.getElementById("hydrateForm");if(!form.reportValidity())return;
+ const r=formData();
+ if(records.some(x=>x.sample.toLowerCase()===r.sample.toLowerCase())){
+  alert(currentLanguage==="ru"?"Такой номер образца уже существует.":"This sample ID already exists.");return;
+ }
+ records.unshift(r);form.reset();renderRecords();
+ alert(currentLanguage==="ru"?"Демонстрационная запись добавлена.":"Demo record added.");
+});
+document.getElementById("clearBtn").addEventListener("click",()=>document.getElementById("hydrateForm").reset());
+document.getElementById("search").addEventListener("input",renderRecords);
+document.getElementById("filterStatus").addEventListener("change",renderRecords);
+document.getElementById("records").addEventListener("click",e=>{
+ const b=e.target.closest(".delete-record");if(!b)return;
+ const i=Number(b.dataset.index);if(!Number.isInteger(i)||i<0||i>=records.length)return;
+ records.splice(i,1);renderRecords();
+});
+function csvCell(v){return '"'+String(v??"").replace(/"/g,'""')+'"'}
+function downloadBlob(blob,name){
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+document.getElementById("csvBtn").addEventListener("click",()=>{
+ const keys=["sample","country","asset","source","temperature","pressure","gas","water","method","date","lab","status","observations","notes"];
+ const header=["Sample ID","Country","Asset","Source","Temperature C","Pressure (unit unspecified)","Gas composition","Water phase","Method","Date","Laboratory","Status","Observations","Notes"];
+ const rows=[header.map(csvCell).join(","),...records.map(r=>keys.map(k=>csvCell(r[k])).join(","))];
+ downloadBlob(new Blob(["\uFEFF"+rows.join("\r\n")],{type:"text/csv;charset=utf-8;"}),"worker-pro-gas-hydrate-records.csv");
+});
+function makeReport(){
+ const lines=[tr("reportGenerated"),"WORKER PRO — Section #277","Oil & Gas Hydrate Formation Assessment",tr("generatedAt")+": "+new Date().toLocaleString(),tr("reportCount")+": "+records.length,"",tr("reportNotice"),""];
+ records.forEach((r,i)=>lines.push(`${i+1}. ${r.sample}`,`Country: ${r.country||"—"}`,`Asset: ${r.asset||"—"}`,`Source: ${r.source||"—"}`,`Temperature °C: ${r.temperature||"—"}`,`Pressure (unit to confirm): ${r.pressure||"—"}`,`Gas: ${r.gas||"—"}`,`Water phase: ${r.water||"—"}`,`Method: ${r.method||"—"}`,`Date: ${r.date||"—"}`,`Laboratory: ${r.lab||"—"}`,`Status: ${r.status||"—"}`,`Observations: ${r.observations||"—"}`,`Notes: ${r.notes||"—"}`,""));
+ latestReport=lines.join("\n");
+ document.getElementById("report").textContent=latestReport;
+ document.getElementById("reportBox").classList.remove("hidden");
+}
+document.getElementById("reportBtn").addEventListener("click",makeReport);
+document.getElementById("downloadReport").addEventListener("click",()=>{
+ if(!latestReport)makeReport();
+ downloadBlob(new Blob([latestReport],{type:"text/plain;charset=utf-8"}),"worker-pro-gas-hydrate-report.txt");
+});
+document.querySelectorAll(".languages button").forEach(b=>b.addEventListener("click",()=>setLanguage(b.dataset.lang)));
+setLanguage("ru");
+</script>
+</body>
+</html>
