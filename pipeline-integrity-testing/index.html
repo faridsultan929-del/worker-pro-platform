@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Pipeline Integrity Testing</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#17352a}
+.top-languages{background:#063d25;padding:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;position:sticky;top:0;z-index:1000}
+.top-languages button{background:#0b6b3d;color:white;border:1px solid #b7ff35;border-radius:20px;padding:7px 12px;font-weight:bold;cursor:pointer}
+.top-languages button:hover{background:#b7ff35;color:#063d25}
+header{background:#0b6b3d;color:white;text-align:center;padding:24px 15px}
+header h1{margin:0;font-size:32px}
+header p{margin:8px 0 0}
+nav{background:#075b34;padding:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:7px}
+nav a{color:white;text-decoration:none;padding:8px 11px;border-radius:8px}
+nav a:hover{background:#b7ff35;color:#063d25}
+.container{max-width:1250px;margin:auto;padding:20px}
+.hero,.card{background:white;border-radius:12px;box-shadow:0 2px 10px #0001}
+.hero{padding:22px;border-left:7px solid #0b6b3d}
+.hero h2{margin-top:0;color:#063d25}
+.section{margin-top:22px}
+.notice{background:#fff9d9;border:1px solid #e5cf65;padding:14px;border-radius:10px;margin-top:18px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0}
+.stat{background:white;padding:18px;border-radius:12px;text-align:center;box-shadow:0 2px 10px #0001}
+.stat strong{display:block;color:#0b6b3d;font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.card{padding:18px}
+.card h3{margin-top:0;color:#0b6b3d}
+.tags{display:flex;flex-wrap:wrap;gap:7px}
+.tag{background:#e8f6ed;color:#075b34;padding:6px 9px;border-radius:15px;font-size:13px}
+.workflow{display:grid;grid-template-columns:repeat(7,1fr);gap:8px}
+.step{background:#063d25;color:white;padding:12px 5px;text-align:center;border-radius:8px;font-size:13px}
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+label{font-weight:bold;font-size:14px}
+input,select,textarea{width:100%;padding:10px;margin-top:5px;border:1px solid #cbd8d0;border-radius:7px;font:inherit}
+textarea{min-height:75px;resize:vertical}
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:15px}
+.action{background:#0b6b3d;color:white;border:0;padding:11px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
+.action:hover{background:#063d25}
+.result{background:#edf8f1;border:1px solid #b8ddc6;border-radius:10px;padding:15px;margin-top:15px;overflow-wrap:anywhere}
+.search{margin:15px 0}
+.table-wrap{overflow:auto;border-radius:10px}
+table{width:100%;min-width:1350px;border-collapse:collapse;background:white}
+th,td{border:1px solid #d8e2dc;padding:9px;text-align:left}
+th{background:#063d25;color:white}
+.status{font-weight:bold}
+footer{background:#063d25;color:white;text-align:center;padding:25px;margin-top:35px}
+@media(max-width:900px){.stats{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.workflow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){header h1{font-size:25px}.container{padding:12px}}
+</style>
+</head>
+<body>
+
+<div class="top-languages">
+<button type="button">AZ</button><button type="button">RU</button>
+<button type="button">EN</button><button type="button">TR</button>
+<button type="button">DE</button><button type="button">AR</button>
+<button type="button">ES</button><button type="button">FR</button>
+<button type="button">IT</button>
+</div>
+
+<header>
+<h1>WORKER PRO</h1>
+<p>Глобальная промышленная платформа</p>
+<p><strong>№273 — Pipeline Integrity Testing</strong></p>
+</header>
+
+<nav>
+<a href="../index.html">Home</a>
+<a href="../production/index.html">Production</a>
+<a href="../testing/index.html">Testing</a>
+<a href="../quality/index.html">Quality</a>
+<a href="../documents/index.html">Documents</a>
+<a href="../companies/index.html">Companies</a>
+<a href="../suppliers/index.html">Suppliers</a>
+<a href="../orders/index.html">Orders</a>
+<a href="../logistics/index.html">Logistics</a>
+<a href="../tracking/index.html">Tracking</a>
+</nav>
+
+<div class="container">
+
+<section class="hero">
+<h2>Pipeline Integrity Testing — Испытание целостности трубопроводов</h2>
+<p>Систематическая оценка состояния нефтяных, газовых и промышленных трубопроводов. Раздел предназначен для учёта инспекций, коррозионных повреждений, трещин, дефектов сварных соединений, потери толщины стенки и результатов неразрушающего контроля.</p>
+<div class="notice"><strong>Важно:</strong> это демонстрационный интерфейс учёта. Он не определяет безопасность трубопровода и не заменяет инженерную оценку, утверждённые процедуры, применимые нормы или заключение квалифицированного специалиста.</div>
+</section>
+
+<section class="stats">
+<div class="stat"><strong>208</strong>Test Programs</div>
+<div class="stat"><strong>13,040</strong>Demo Records</div>
+<div class="stat"><strong>97</strong>Inspection Teams</div>
+<div class="stat"><strong>99.9%</strong>Data Availability</div>
+</section>
+
+<section class="section grid">
+<div class="card">
+<h3>Типы трубопроводов</h3>
+<div class="tags">
+<span class="tag">Crude Oil Pipelines</span><span class="tag">Natural Gas Pipelines</span>
+<span class="tag">Product Pipelines</span><span class="tag">Gathering Lines</span>
+<span class="tag">Process Piping</span><span class="tag">Offshore Pipelines</span>
+<span class="tag">Onshore Pipelines</span><span class="tag">Transmission Lines</span>
+</div>
+</div>
+<div class="card">
+<h3>Типы дефектов</h3>
+<div class="tags">
+<span class="tag">Metal Loss</span><span class="tag">Corrosion</span>
+<span class="tag">Cracks</span><span class="tag">Dents</span>
+<span class="tag">Gouges</span><span class="tag">Weld Defects</span>
+<span class="tag">Deformation</span><span class="tag">Coating Damage</span>
+<span class="tag">Leak Indications</span>
+</div>
+</div>
+<div class="card">
+<h3>Методы инспекции</h3>
+<div class="tags">
+<span class="tag">Ultrasonic Testing</span><span class="tag">Radiographic Testing</span>
+<span class="tag">Magnetic Testing</span><span class="tag">Liquid Penetrant</span>
+<span class="tag">Visual Inspection</span><span class="tag">In-Line Inspection</span>
+<span class="tag">Wall Thickness Survey</span><span class="tag">Pressure Monitoring</span>
+</div>
+</div>
+</section>
+
+<section class="section card">
+<h3>Рабочий процесс</h3>
+<div class="workflow">
+<div class="step">1. Identify</div><div class="step">2. Plan</div>
+<div class="step">3. Inspect</div><div class="step">4. Record</div>
+<div class="step">5. Assess</div><div class="step">6. Review</div>
+<div class="step">7. Report</div>
+</div>
+</section>
+
+<section class="section grid">
+<div class="card">
+<h3>Что фиксируется</h3>
+<ul>
+<li>Идентификатор трубопровода и участка</li>
+<li>Местоположение и дата инспекции</li>
+<li>Материал, диаметр и номинальная толщина</li>
+<li>Измеренная толщина стенки</li>
+<li>Тип и размер обнаруженного дефекта</li>
+<li>Метод контроля и оборудование</li>
+<li>Фотографии и ссылки на документы</li>
+</ul>
+</div>
+<div class="card">
+<h3>Где применяется</h3>
+<ul>
+<li>Нефтедобыча и газодобыча</li>
+<li>Магистральные трубопроводы</li>
+<li>Нефтеперерабатывающие заводы</li>
+<li>Газоперерабатывающие предприятия</li>
+<li>Морские нефтегазовые объекты</li>
+<li>Промышленные технологические линии</li>
+</ul>
+</div>
+<div class="card">
+<h3>Результаты</h3>
+<ul>
+<li>Inspection Record</li>
+<li>Defect Register</li>
+<li>NDT Report Reference</li>
+<li>Engineering Review Status</li>
+<li>Maintenance Recommendation</li>
+<li>Technical Report</li>
+</ul>
+</div>
+</section>
+
+<section class="section card">
+<h3>Добавить демонстрационную запись инспекции</h3>
+<div class="form-grid">
+<div><label>Pipeline ID</label><input id="pipe" placeholder="PL-AZ-001"></div>
+<div><label>Country</label>
+<select id="country">
+<option>Azerbaijan</option><option>Turkey</option><option>Germany</option>
+<option>Italy</option><option>Saudi Arabia</option>
+<option>United Arab Emirates</option><option>USA</option>
+</select></div>
+<div><label>Pipeline Type</label>
+<select id="type">
+<option>Crude Oil</option><option>Natural Gas</option>
+<option>Petroleum Products</option><option>Process Piping</option>
+<option>Offshore Pipeline</option>
+</select></div>
+<div><label>Inspection Method</label>
+<select id="method">
+<option>Ultrasonic Testing</option><option>Visual Inspection</option>
+<option>Radiographic Testing</option><option>Magnetic Testing</option>
+<option>In-Line Inspection</option><option>Wall Thickness Survey</option>
+</select></div>
+<div><label>Nominal Wall Thickness (mm)</label><input id="nominal" type="number" min="0.01" step="0.01" value="10"></div>
+<div><label>Measured Wall Thickness (mm)</label><input id="measured" type="number" min="0" step="0.01" value="9.6"></div>
+<div><label>Indication Type</label>
+<select id="defect">
+<option>No Indication Recorded</option><option>Metal Loss</option>
+<option>Corrosion</option><option>Crack Indication</option>
+<option>Weld Indication</option><option>Deformation</option>
+<option>Coating Damage</option><option>Requires Review</option>
+</select></div>
+<div><label>Inspection Date</label><input id="date" type="date"></div>
+<div><label>Inspection Reference</label><input id="reference" placeholder="Report / work order number"></div>
+<div><label>Location / Chainage</label><input id="location" placeholder="Section or chainage"></div>
+<div><label>Inspector / Team</label><input id="inspector" placeholder="Team or inspector ID"></div>
+<div><label>Record Notes</label><input id="notes" placeholder="Observations or document reference"></div>
+</div>
+<div class="actions">
+<button class="action" type="button" onclick="addRecord()">Add Inspection</button>
+<button class="action" type="button" onclick="exportCSV()">Export CSV</button>
+<button class="action" type="button" onclick="technicalReport()">Technical Report</button>
+</div>
+<div id="result" class="result">Заполните поля и нажмите <strong>Add Inspection</strong>.</div>
+</section>
+
+<section class="section card">
+<h3>Журнал инспекций</h3>
+<input class="search" id="search" oninput="filterTable()" placeholder="Поиск по ID, трубопроводу, стране, дефекту...">
+<div class="table-wrap">
+<table id="records">
+<thead><tr>
+<th>Record ID</th><th>Pipeline ID</th><th>Country</th><th>Type</th>
+<th>Method</th><th>Nominal mm</th><th>Measured mm</th>
+<th>Difference mm</th><th>Indication</th><th>Date</th>
+<th>Location</th><th>Inspector</th><th>Status</th>
+</tr></thead>
+<tbody>
+<tr><td>PI-AZ-2026-001</td><td>PL-AZ-001</td><td>Azerbaijan</td><td>Crude Oil</td><td>Ultrasonic Testing</td><td>10.00</td><td>9.60</td><td>0.40</td><td>Metal Loss</td><td>2026-09-10</td><td>Section A</td><td>TEAM-AZ-01</td><td>Engineering Review</td></tr>
+<tr><td>PI-TR-2026-002</td><td>PL-TR-014</td><td>Turkey</td><td>Natural Gas</td><td>In-Line Inspection</td><td>12.00</td><td>11.80</td><td>0.20</td><td>No Indication Recorded</td><td>2026-09-12</td><td>Section B</td><td>TEAM-TR-02</td><td>Recorded</td></tr>
+<tr><td>PI-DE-2026-003</td><td>PL-DE-007</td><td>Germany</td><td>Process Piping</td><td>Radiographic Testing</td><td>8.00</td><td>7.90</td><td>0.10</td><td>Weld Indication</td><td>2026-09-14</td><td>Joint 24</td><td>TEAM-DE-01</td><td>Engineering Review</td></tr>
+<tr><td>PI-IT-2026-004</td><td>PL-IT-021</td><td>Italy</td><td>Petroleum Products</td><td>Visual Inspection</td><td>9.00</td><td>9.00</td><td>0.00</td><td>No Indication Recorded</td><td>2026-09-15</td><td>Section C</td><td>TEAM-IT-03</td><td>Recorded</td></tr>
+<tr><td>PI-SA-2026-005</td><td>PL-SA-009</td><td>Saudi Arabia</td><td>Crude Oil</td><td>Wall Thickness Survey</td><td>11.00</td><td>8.70</td><td>2.30</td><td>Corrosion</td><td>2026-09-17</td><td>Section D</td><td>TEAM-SA-02</td><td>Engineering Review</td></tr>
+<tr><td>PI-US-2026-006</td><td>PL-US-032</td><td>USA</td><td>Natural Gas</td><td>Ultrasonic Testing</td><td>10.00</td><td>9.90</td><td>0.10</td><td>No Indication Recorded</td><td>2026-09-18</td><td>Section E</td><td>TEAM-US-01</td><td>Recorded</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="section card">
+<h3>Связь с WORKER PRO</h3>
+<ul>
+<li>Inspection Record → Quality</li>
+<li>Inspection Record → Documents</li>
+<li>Defect Register → Maintenance Planning</li>
+<li>Engineering Review → Approved Decision</li>
+<li>Technical Report → Company / Asset Record</li>
+</ul>
+</section>
+
+<div class="notice">
+<strong>Безопасность:</strong> сравнение толщины в этой демонстрационной форме является только арифметическим показателем. Оно не оценивает допустимость дефекта, остаточный ресурс или возможность эксплуатации. Для таких решений требуются применимые инженерные процедуры и квалифицированная оценка.
+</div>
+
+</div>
+
+<footer>
+WORKER PRO — Global Industrial Platform<br>
+Pipeline Integrity Testing №273<br><br>F.S.
+</footer>
+
+<script>
+function value(id){
+    return document.getElementById(id).value.trim();
+}
+function escapeHTML(text){
+    return String(text).replace(/[&<>"']/g,function(ch){
+        return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch];
+    });
+}
+function addRecord(){
+    const pipeline=value("pipe");
+    const country=value("country");
+    const type=value("type");
+    const method=value("method");
+    const nominal=Number(value("nominal"));
+    const measured=Number(value("measured"));
+    const defect=value("defect");
+    const date=value("date");
+    const reference=value("reference");
+    const location=value("location");
+    const inspector=value("inspector");
+    const notes=value("notes");
+
+    if(!pipeline || !value("nominal") || !value("measured") ||
+       !Number.isFinite(nominal) || !Number.isFinite(measured) ||
+       nominal<=0 || measured<0){
+        document.getElementById("result").textContent=
+            "Проверьте Pipeline ID и значения толщины. Номинальная толщина должна быть больше нуля, измеренная — неотрицательной.";
+        return;
+    }
+
+    const difference=nominal-measured;
+    const recordId="PI-DEMO-"+Date.now();
+    const status=(defect==="No Indication Recorded")
+        ? "Recorded" : "Engineering Review";
+
+    const row=document.createElement("tr");
+    const cells=[
+        recordId,pipeline,country,type,method,
+        nominal.toFixed(2),measured.toFixed(2),difference.toFixed(2),
+        defect,date||"Not specified",location||"Not specified",
+        inspector||"Not specified",status
+    ];
+    cells.forEach(function(item){
+        const td=document.createElement("td");
+        td.textContent=item;
+        row.appendChild(td);
+    });
+    document.querySelector("#records tbody").prepend(row);
+
+    document.getElementById("result").innerHTML=
+        "<strong>Inspection record created:</strong> "+escapeHTML(recordId)+
+        "<br>Pipeline: "+escapeHTML(pipeline)+
+        "<br>Country: "+escapeHTML(country)+
+        "<br>Type: "+escapeHTML(type)+
+        "<br>Method: "+escapeHTML(method)+
+        "<br>Nominal thickness: "+nominal.toFixed(2)+" mm"+
+        "<br>Measured thickness: "+measured.toFixed(2)+" mm"+
+        "<br>Arithmetic difference: "+difference.toFixed(2)+" mm"+
+        "<br>Indication: "+escapeHTML(defect)+
+        "<br>Status: <strong>"+status+"</strong>"+
+        "<br>Reference: "+escapeHTML(reference||"Not specified")+
+        "<br>Notes: "+escapeHTML(notes||"None")+
+        "<br><br>Это демонстрационная запись; статус не является заключением о безопасности.";
+    filterTable();
+}
+function filterTable(){
+    const query=value("search").toLowerCase();
+    document.querySelectorAll("#records tbody tr").forEach(function(row){
+        row.style.display=row.innerText.toLowerCase().includes(query)?"":"none";
+    });
+}
+function exportCSV(){
+    const rows=Array.from(document.querySelectorAll("#records tr"));
+    const csv=rows.map(function(row){
+        return Array.from(row.querySelectorAll("th,td")).map(function(cell){
+            return '"'+cell.innerText.replace(/"/g,'""')+'"';
+        }).join(",");
+    }).join("\r\n");
+    const blob=new Blob(["\uFEFF"+csv],{type:"text/csv;charset=utf-8;"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download="worker-pro-pipeline-integrity-testing.csv";
+    a.click();
+    URL.revokeObjectURL(url);
+}
+function technicalReport(){
+    const visibleRows=Array.from(document.querySelectorAll("#records tbody tr"))
+        .filter(row=>row.style.display!=="none");
+    const reviewCount=visibleRows.filter(row=>
+        row.cells[12].innerText==="Engineering Review").length;
+    const report=[
+        "WORKER PRO — Technical Report",
+        "Pipeline Integrity Testing №273",
+        "Generated: "+new Date().toISOString(),
+        "Visible records: "+visibleRows.length,
+        "Records requiring engineering review: "+reviewCount,
+        "",
+        "This demo report is not an engineering fitness-for-service assessment."
+    ].join("\n");
+    const blob=new Blob([report],{type:"text/plain;charset=utf-8;"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url;
+    a.download="worker-pro-pipeline-integrity-report.txt";
+    a.click();
+    URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>
