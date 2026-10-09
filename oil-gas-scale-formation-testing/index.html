@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Oil & Gas Scale Formation Testing</title>
+<style>
+:root {
+  --dark:#063d25;
+  --green:#0b6b3d;
+  --lime:#b7ff35;
+  --bg:#f4f7f5;
+  --white:#fff;
+  --text:#18352a;
+  --muted:#64776d;
+  --border:#dce7df;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.languages{position:sticky;top:0;z-index:20;background:var(--dark);padding:10px;display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+.languages button{border:1px solid #56836a;background:transparent;color:white;border-radius:7px;padding:8px 12px;cursor:pointer;font-weight:bold}
+.languages button.active,.languages button:hover{background:var(--lime);color:var(--dark);border-color:var(--lime)}
+header{background:linear-gradient(130deg,var(--dark),var(--green));color:white;padding:30px 18px}
+.wrap{max-width:1200px;margin:auto}
+.brand{font-size:30px;font-weight:900;letter-spacing:1px}
+.brand span{color:var(--lime)}
+.subtitle{margin-top:6px;color:#d6e8dc}
+.section-number{display:inline-block;margin-top:20px;padding:7px 11px;background:var(--lime);color:var(--dark);border-radius:7px;font-weight:bold}
+h1{font-size:clamp(25px,4vw,38px);margin:14px 0 10px}
+header p{max-width:850px;line-height:1.65;color:#e5f1e9}
+nav{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+nav a{color:white;text-decoration:none;background:#ffffff18;border:1px solid #ffffff40;padding:9px 12px;border-radius:8px;font-size:14px}
+nav a:hover{background:var(--lime);color:var(--dark)}
+main{max-width:1200px;margin:22px auto;padding:0 15px}
+.notice{padding:14px 16px;background:#fff8df;border:1px solid #ead89a;border-radius:10px;line-height:1.55;margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+.stat,.card{background:white;border:1px solid var(--border);border-radius:13px;padding:17px;box-shadow:0 3px 12px #173d2610}
+.stat strong{display:block;color:var(--green);font-size:27px;margin-bottom:6px}
+.stat span{font-size:13px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:16px 0}
+h2{font-size:21px;margin:0 0 13px;color:var(--dark)}
+h3{font-size:16px;margin:0 0 8px}
+p{line-height:1.55}
+.muted{color:var(--muted);font-size:14px}
+.types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.type{padding:12px;border:1px solid var(--border);border-radius:9px;background:#fbfdfb}
+.type strong{display:block;margin-bottom:5px}
+.steps{padding-left:20px;line-height:1.8;margin:0}
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+label{font-size:13px;font-weight:bold;color:#345344}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbdacf;border-radius:8px;background:white;font:inherit;color:var(--text)}
+textarea{min-height:85px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.btn{border:0;border-radius:8px;padding:11px 15px;background:var(--green);color:white;font-weight:bold;cursor:pointer}
+.btn.secondary{background:#e7f0e9;color:var(--dark);border:1px solid var(--border)}
+.btn:hover{filter:brightness(.95)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.toolbar input,.toolbar select{flex:1;min-width:180px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:850px;background:white}
+th,td{padding:11px;border-bottom:1px solid var(--border);text-align:left;font-size:13px;vertical-align:top}
+th{background:#eaf3ec;color:var(--dark)}
+.tag{display:inline-block;padding:5px 8px;border-radius:6px;background:#fff0d4;color:#77510a;font-weight:bold;font-size:12px}
+footer{background:var(--dark);color:#e5f1e9;margin-top:28px;padding:24px 15px;text-align:center;font-size:13px;line-height:1.7}
+.hidden{display:none}
+#report{white-space:pre-wrap;background:#f7faf7;padding:14px;border-radius:8px;border:1px solid var(--border);line-height:1.6;overflow-wrap:anywhere}
+[dir="rtl"]{text-align:right}
+@media(max-width:750px){
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .grid{grid-template-columns:1fr}
+ form{grid-template-columns:1fr}
+ .field.full{grid-column:auto}
+ .brand{font-size:26px}
+}
+@media(max-width:380px){.stats,.types{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="languages" aria-label="Language selector">
+  <button type="button" class="active" data-lang="ru">RU</button>
+  <button type="button" data-lang="az">AZ</button>
+  <button type="button" data-lang="en">EN</button>
+  <button type="button" data-lang="tr">TR</button>
+  <button type="button" data-lang="de">DE</button>
+  <button type="button" data-lang="ar">AR</button>
+  <button type="button" data-lang="es">ES</button>
+  <button type="button" data-lang="fr">FR</button>
+  <button type="button" data-lang="it">IT</button>
+</div>
+
+<header>
+  <div class="wrap">
+    <div class="brand">WORKER <span>PRO</span></div>
+    <div class="subtitle" data-i18n="subtitle">Глобальная промышленная платформа</div>
+    <div class="section-number">№276 · OIL &amp; GAS</div>
+    <h1 data-i18n="title">Испытания образования минеральных отложений</h1>
+    <p data-i18n="intro">Раздел для регистрации образцов, наблюдений и лабораторных данных об образовании минеральных отложений в нефтегазовых системах. Используйте записи для организации испытаний, анализа и подготовки отчётов.</p>
+    <nav>
+      <a href="../index.html" data-i18n="navHome">Главная</a>
+      <a href="../production/index.html" data-i18n="navProduction">Производство</a>
+      <a href="../testing/index.html" data-i18n="navTesting">Испытания</a>
+      <a href="../quality/index.html" data-i18n="navQuality">Качество</a>
+      <a href="../documents/index.html" data-i18n="navDocuments">Документы</a>
+      <a href="../companies/index.html" data-i18n="navCompanies">Компании</a>
+      <a href="../suppliers/index.html" data-i18n="navSuppliers">Поставщики</a>
+      <a href="../orders/index.html" data-i18n="navOrders">Заказы</a>
+      <a href="../tracking/index.html" data-i18n="navTracking">Отслеживание</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="notice">
+    <strong data-i18n="demoTitle">Демонстрационный режим.</strong>
+    <span data-i18n="demoText">Приведённые записи являются примерами интерфейса, а не реальными лабораторными результатами. Страница не определяет безопасность оборудования, не подтверждает соответствие стандартам и не заменяет заключение квалифицированной лаборатории.</span>
+  </div>
+
+  <section class="stats">
+    <div class="stat"><strong id="totalCount">3</strong><span data-i18n="statTotal">Записи в журнале</span></div>
+    <div class="stat"><strong id="reviewCount">3</strong><span data-i18n="statReview">Требуют проверки</span></div>
+    <div class="stat"><strong>6</strong><span data-i18n="statTypes">Примеров типов отложений</span></div>
+    <div class="stat"><strong>9</strong><span data-i18n="statLang">Языков интерфейса</span></div>
+  </section>
+
+  <div class="grid">
+    <section class="card">
+      <h2 data-i18n="typesTitle">Типы минеральных отложений</h2>
+      <div class="types">
+        <div class="type"><strong>CaCO₃</strong><span data-i18n="type1">Карбонат кальция</span></div>
+        <div class="type"><strong>BaSO₄</strong><span data-i18n="type2">Сульфат бария</span></div>
+        <div class="type"><strong>SrSO₄</strong><span data-i18n="type3">Сульфат стронция</span></div>
+        <div class="type"><strong>CaSO₄</strong><span data-i18n="type4">Сульфат кальция</span></div>
+        <div class="type"><strong>FeS / оксиды железа</strong><span data-i18n="type5">Соединения железа</span></div>
+        <div class="type"><strong data-i18n="otherType">Другие</strong><span data-i18n="type6">Смешанные или неидентифицированные отложения</span></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 data-i18n="workflowTitle">Рабочий процесс</h2>
+      <ol class="steps">
+        <li data-i18n="step1">Зарегистрировать образец и место отбора.</li>
+        <li data-i18n="step2">Указать известные условия процесса и состав воды.</li>
+        <li data-i18n="step3">Зафиксировать метод анализа и наблюдения.</li>
+        <li data-i18n="step4">Проверить данные и приложенные документы.</li>
+        <li data-i18n="step5">Подготовить отчёт для ответственного специалиста.</li>
+      </ol>
+      <p class="muted" data-i18n="workflowNote">Методы, условия испытаний и критерии оценки должны соответствовать применимым процедурам и спецификациям.</p>
+    </section>
+  </div>
+
+  <section class="card">
+    <h2 data-i18n="formTitle">Регистрация испытания</h2>
+    <form id="scaleForm">
+      <div class="field">
+        <label for="sample" data-i18n="sampleLabel">Номер образца *</label>
+        <input id="sample" required placeholder="SCL-2026-004">
+      </div>
+      <div class="field">
+        <label for="country" data-i18n="countryLabel">Страна</label>
+        <select id="country">
+          <option>Azerbaijan</option><option>Türkiye</option><option>Germany</option>
+          <option>Italy</option><option>Saudi Arabia</option><option>United Arab Emirates</option>
+          <option>United States</option><option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="asset" data-i18n="assetLabel">Объект / установка</label>
+        <input id="asset" placeholder="Well / Pipeline / Separator">
+      </div>
+      <div class="field">
+        <label for="scaleType" data-i18n="scaleLabel">Предполагаемый тип отложений</label>
+        <select id="scaleType">
+          <option value="CaCO3">CaCO₃ — Calcium carbonate</option>
+          <option value="BaSO4">BaSO₄ — Barium sulfate</option>
+          <option value="SrSO4">SrSO₄ — Strontium sulfate</option>
+          <option value="CaSO4">CaSO₄ — Calcium sulfate</option>
+          <option value="Iron compounds">Iron compounds</option>
+          <option value="Mixed / unknown">Mixed / unknown</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="sampleSource" data-i18n="sourceLabel">Источник образца</label>
+        <select id="sampleSource">
+          <option value="Produced water">Produced water</option>
+          <option value="Pipeline">Pipeline</option>
+          <option value="Well equipment">Well equipment</option>
+          <option value="Separator">Separator</option>
+          <option value="Laboratory preparation">Laboratory preparation</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="method" data-i18n="methodLabel">Метод анализа</label>
+        <select id="method">
+          <option value="Visual inspection">Visual inspection</option>
+          <option value="Microscopy">Microscopy</option>
+          <option value="XRD">X-ray diffraction (XRD)</option>
+          <option value="SEM-EDS">SEM-EDS</option>
+          <option value="Chemical analysis">Chemical analysis</option>
+          <option value="Other / not specified">Other / not specified</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="temperature" data-i18n="tempLabel">Температура при наблюдении (°C)</label>
+        <input id="temperature" type="number" step="any" placeholder="Например, 65">
+      </div>
+      <div class="field">
+        <label for="pressure" data-i18n="pressureLabel">Давление при наблюдении (единицы указать в заметках)</label>
+        <input id="pressure" type="number" step="any" placeholder="Необязательно">
+      </div>
+      <div class="field">
+        <label for="duration" data-i18n="durationLabel">Продолжительность наблюдения (ч)</label>
+        <input id="duration" type="number" min="0" step="any" placeholder="Например, 24">
+      </div>
+      <div class="field">
+        <label for="date" data-i18n="dateLabel">Дата испытания</label>
+        <input id="date" type="date">
+      </div>
+      <div class="field">
+        <label for="lab" data-i18n="labLabel">Лаборатория / ответственный</label>
+        <input id="lab" placeholder="Название лаборатории">
+      </div>
+      <div class="field">
+        <label for="status" data-i18n="statusLabel">Статус записи</label>
+        <select id="status">
+          <option value="Review">Review</option>
+          <option value="In progress">In progress</option>
+          <option value="Completed">Completed</option>
+          <option value="Archived">Archived</option>
+        </select>
+      </div>
+      <div class="field full">
+        <label for="observations" data-i18n="observationsLabel">Наблюдения / результаты анализа</label>
+        <textarea id="observations" placeholder="Опишите внешний вид, массу, состав, метод измерения и ограничения данных."></textarea>
+      </div>
+      <div class="field full">
+        <label for="notes" data-i18n="notesLabel">Примечания и единицы измерения</label>
+        <textarea id="notes" placeholder="Единицы давления, идентификатор процедуры, номер отчёта, условия отбора и хранения."></textarea>
+      </div>
+    </form>
+    <div class="actions">
+      <button class="btn" type="button" id="addBtn" data-i18n="addBtn">Добавить запись</button>
+      <button class="btn secondary" type="button" id="clearBtn" data-i18n="clearBtn">Очистить форму</button>
+    </div>
+  </section>
+
+  <section class="card" style="margin-top:16px">
+    <h2 data-i18n="recordsTitle">Журнал испытаний</h2>
+    <div class="toolbar">
+      <input id="search" placeholder="Поиск по образцу, объекту, типу или методу..." data-i18n-placeholder="searchPlaceholder">
+      <select id="filterStatus">
+        <option value="" data-i18n="allStatuses">Все статусы</option>
+        <option value="Review">Review</option>
+        <option value="In progress">In progress</option>
+        <option value="Completed">Completed</option>
+        <option value="Archived">Archived</option>
+      </select>
+      <button class="btn secondary" type="button" id="csvBtn" data-i18n="csvBtn">Экспорт CSV</button>
+      <button class="btn secondary" type="button" id="reportBtn" data-i18n="reportBtn">Создать отчёт</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="thSample">Образец</th>
+            <th data-i18n="thAsset">Объект</th>
+            <th data-i18n="thType">Тип отложений</th>
+            <th data-i18n="thSource">Источник</th>
+            <th data-i18n="thMethod">Метод</th>
+            <th data-i18n="thDate">Дата</th>
+            <th data-i18n="thStatus">Статус</th>
+            <th data-i18n="thAction">Действие</th>
+          </tr>
+        </thead>
+        <tbody id="records"></tbody>
+      </table>
+    </div>
+    <p class="muted" data-i18n="tableNote">Демонстрационные данные не являются подтверждёнными результатами реальных испытаний.</p>
+    <div id="reportBox" class="hidden">
+      <h2 data-i18n="reportTitle">Технический отчёт</h2>
+      <pre id="report"></pre>
+      <div class="actions">
+        <button class="btn" type="button" id="downloadReport" data-i18n="downloadReport">Скачать отчёт TXT</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div><strong>WORKER PRO</strong> — <span data-i18n="footerSubtitle">Глобальная промышленная платформа</span></div>
+  <div data-i18n="footerText">Раздел №276 · Oil & Gas Scale Formation Testing · Демонстрационный интерфейс.</div>
+  <div data-i18n="footerDisclaimer">Не является лабораторной сертификацией, инженерным заключением или подтверждением безопасности оборудования.</div>
+  <div>© 2026 WORKER PRO · F.S.</div>
+</footer>
+
+<script>
+const translations = {
+ru:{
+ subtitle:"Глобальная промышленная платформа",title:"Испытания образования минеральных отложений",
+ intro:"Раздел для регистрации образцов, наблюдений и лабораторных данных об образовании минеральных отложений в нефтегазовых системах. Используйте записи для организации испытаний, анализа и подготовки отчётов.",
+ navHome:"Главная",navProduction:"Производство",navTesting:"Испытания",navQuality:"Качество",navDocuments:"Документы",navCompanies:"Компании",navSuppliers:"Поставщики",navOrders:"Заказы",navTracking:"Отслеживание",
+ demoTitle:"Демонстрационный режим.",demoText:"Приведённые записи являются примерами интерфейса, а не реальными лабораторными результатами. Страница не определяет безопасность оборудования, не подтверждает соответствие стандартам и не заменяет заключение квалифицированной лаборатории.",
+ statTotal:"Записи в журнале",statReview:"Требуют проверки",statTypes:"Примеров типов отложений",statLang:"Языков интерфейса",
+ typesTitle:"Типы минеральных отложений",type1:"Карбонат кальция",type2:"Сульфат бария",type3:"Сульфат стронция",type4:"Сульфат кальция",type5:"Соединения железа",otherType:"Другие",type6:"Смешанные или неидентифицированные отложения",
+ workflowTitle:"Рабочий процесс",step1:"Зарегистрировать образец и место отбора.",step2:"Указать известные условия процесса и состав воды.",step3:"Зафиксировать метод анализа и наблюдения.",step4:"Проверить данные и приложенные документы.",step5:"Подготовить отчёт для ответственного специалиста.",workflowNote:"Методы, условия испытаний и критерии оценки должны соответствовать применимым процедурам и спецификациям.",
+ formTitle:"Регистрация испытания",sampleLabel:"Номер образца *",countryLabel:"Страна",assetLabel:"Объект / установка",scaleLabel:"Предполагаемый тип отложений",sourceLabel:"Источник образца",methodLabel:"Метод анализа",tempLabel:"Температура при наблюдении (°C)",pressureLabel:"Давление при наблюдении (единицы указать в заметках)",durationLabel:"Продолжительность наблюдения (ч)",dateLabel:"Дата испытания",labLabel:"Лаборатория / ответственный",statusLabel:"Статус записи",observationsLabel:"Наблюдения / результаты анализа",notesLabel:"Примечания и единицы измерения",addBtn:"Добавить запись",clearBtn:"Очистить форму",
+ recordsTitle:"Журнал испытаний",searchPlaceholder:"Поиск по образцу, объекту, типу или методу...",allStatuses:"Все статусы",csvBtn:"Экспорт CSV",reportBtn:"Создать отчёт",thSample:"Образец",thAsset:"Объект",thType:"Тип отложений",thSource:"Источник",thMethod:"Метод",thDate:"Дата",thStatus:"Статус",thAction:"Действие",tableNote:"Демонстрационные данные не являются подтверждёнными результатами реальных испытаний.",reportTitle:"Технический отчёт",downloadReport:"Скачать отчёт TXT",footerSubtitle:"Глобальная промышленная платформа",footerText:"Раздел №276 · Oil & Gas Scale Formation Testing · Демонстрационный интерфейс.",footerDisclaimer:"Не является лабораторной сертификацией, инженерным заключением или подтверждением безопасности оборудования.",delete:"Удалить",empty:"Записей не найдено",reportGenerated:"ДЕМОНСТРАЦИОННЫЙ ОТЧЁТ",reportCount:"Количество записей",generatedAt:"Дата формирования",reportNotice:"Этот документ сформирован демонстрационным интерфейсом. Он не является лабораторным заключением."
+},
+en:{
+ subtitle:"Global Industrial Platform",title:"Oil & Gas Scale Formation Testing",
+ intro:"Register samples, observations and laboratory data related to mineral scale formation in oil and gas systems. Organize test records, analysis notes and technical reports.",
+ navHome:"Home",navProduction:"Production",navTesting:"Testing",navQuality:"Quality",navDocuments:"Documents",navCompanies:"Companies",navSuppliers:"Suppliers",navOrders:"Orders",navTracking:"Tracking",
+ demoTitle:"Demo mode.",demoText:"The records are interface examples, not real laboratory results. This page does not assess equipment safety, certify compliance or replace a qualified laboratory's findings.",
+ statTotal:"Journal records",statReview:"Require review",statTypes:"Example scale types",statLang:"Interface languages",
+ typesTitle:"Mineral scale types",type1:"Calcium carbonate",type2:"Barium sulfate",type3:"Strontium sulfate",type4:"Calcium sulfate",type5:"Iron compounds",otherType:"Other",type6:"Mixed or unidentified deposits",
+ workflowTitle:"Workflow",step1:"Register the sample and collection location.",step2:"Record known process conditions and water chemistry.",step3:"Document the analytical method and observations.",step4:"Review data and supporting documents.",step5:"Prepare a report for the responsible specialist.",workflowNote:"Methods, test conditions and evaluation criteria must follow applicable procedures and specifications.",
+ formTitle:"Register a test",sampleLabel:"Sample ID *",countryLabel:"Country",assetLabel:"Asset / installation",scaleLabel:"Suspected scale type",sourceLabel:"Sample source",methodLabel:"Analysis method",tempLabel:"Observation temperature (°C)",pressureLabel:"Observation pressure (specify units in notes)",durationLabel:"Observation duration (h)",dateLabel:"Test date",labLabel:"Laboratory / responsible person",statusLabel:"Record status",observationsLabel:"Observations / analysis results",notesLabel:"Notes and measurement units",addBtn:"Add record",clearBtn:"Clear form",
+ recordsTitle:"Test journal",searchPlaceholder:"Search sample, asset, type or method...",allStatuses:"All statuses",csvBtn:"Export CSV",reportBtn:"Generate report",thSample:"Sample",thAsset:"Asset",thType:"Scale type",thSource:"Source",thMethod:"Method",thDate:"Date",thStatus:"Status",thAction:"Action",tableNote:"Demo data are not verified results of actual tests.",reportTitle:"Technical report",downloadReport:"Download TXT report",footerSubtitle:"Global Industrial Platform",footerText:"Section #276 · Oil & Gas Scale Formation Testing · Demo interface.",footerDisclaimer:"Not a laboratory certification, engineering assessment or confirmation of equipment safety.",delete:"Delete",empty:"No records found",reportGenerated:"DEMONSTRATION REPORT",reportCount:"Record count",generatedAt:"Generated on",reportNotice:"Generated by a demonstration interface. This is not a laboratory conclusion."
+},
+az:{
+ subtitle:"Qlobal Sənaye Platforması",title:"Neft-qaz sistemlərində mineral çöküntülərin yaranmasının sınağı",intro:"Neft-qaz sistemlərində mineral çöküntülərlə bağlı nümunələri, müşahidələri və laboratoriya məlumatlarını qeyd edin.",
+ navHome:"Ana səhifə",navProduction:"İstehsalat",navTesting:"Sınaqlar",navQuality:"Keyfiyyət",navDocuments:"Sənədlər",navCompanies:"Şirkətlər",navSuppliers:"Təchizatçılar",navOrders:"Sifarişlər",navTracking:"İzləmə",
+ demoTitle:"Demo rejimi.",demoText:"Qeydlər interfeys nümunələridir, real laboratoriya nəticələri deyil. Bu səhifə avadanlığın təhlükəsizliyini və standartlara uyğunluğunu təsdiq etmir.",
+ statTotal:"Jurnal qeydləri",statReview:"Yoxlanılmalıdır",statTypes:"Çöküntü nümunələri",statLang:"İnterfeys dilləri",
+ typesTitle:"Mineral çöküntü növləri",type1:"Kalsium karbonat",type2:"Barium sulfat",type3:"Stronsium sulfat",type4:"Kalsium sulfat",type5:"Dəmir birləşmələri",otherType:"Digər",type6:"Qarışıq və ya müəyyən edilməmiş çöküntülər",
+ workflowTitle:"İş prosesi",step1:"Nümunəni və götürülmə yerini qeyd edin.",step2:"Məlum proses şərtlərini və suyun tərkibini daxil edin.",step3:"Analiz metodunu və müşahidələri yazın.",step4:"Məlumatları və sənədləri yoxlayın.",step5:"Məsul mütəxəssis üçün hesabat hazırlayın.",workflowNote:"Metodlar və qiymətləndirmə meyarları müvafiq prosedurlara uyğun olmalıdır.",
+ formTitle:"Sınağın qeydiyyatı",sampleLabel:"Nümunə nömrəsi *",countryLabel:"Ölkə",assetLabel:"Obyekt / qurğu",scaleLabel:"Ehtimal olunan çöküntü növü",sourceLabel:"Nümunənin mənbəyi",methodLabel:"Analiz metodu",tempLabel:"Müşahidə temperaturu (°C)",pressureLabel:"Müşahidə təzyiqi (vahidi qeyddə göstərin)",durationLabel:"Müşahidə müddəti (saat)",dateLabel:"Sınaq tarixi",labLabel:"Laboratoriya / məsul şəxs",statusLabel:"Qeyd statusu",observationsLabel:"Müşahidələr / analiz nəticələri",notesLabel:"Qeydlər və ölçü vahidləri",addBtn:"Qeyd əlavə et",clearBtn:"Formanı təmizlə",
+ recordsTitle:"Sınaq jurnalı",searchPlaceholder:"Nümunə, obyekt, növ və ya metoda görə axtar...",allStatuses:"Bütün statuslar",csvBtn:"CSV ixracı",reportBtn:"Hesabat yarat",thSample:"Nümunə",thAsset:"Obyekt",thType:"Çöküntü növü",thSource:"Mənbə",thMethod:"Metod",thDate:"Tarix",thStatus:"Status",thAction:"Əməliyyat",tableNote:"Demo məlumatları real sınaqların təsdiqlənmiş nəticələri deyil.",reportTitle:"Texniki hesabat",downloadReport:"TXT hesabatını yüklə",footerSubtitle:"Qlobal Sənaye Platforması",footerText:"Bölmə №276 · Mineral çöküntülərin sınağı · Demo interfeys.",footerDisclaimer:"Laboratoriya sertifikatı və ya avadanlığın təhlükəsizliyinin təsdiqi deyil.",delete:"Sil",empty:"Qeyd tapılmadı",reportGenerated:"DEMO HESABATI",reportCount:"Qeydlərin sayı",generatedAt:"Yaradılma tarixi",reportNotice:"Demo interfeys tərəfindən yaradılıb. Laboratoriya rəyi deyil."
+},
+tr:{
+ subtitle:"Küresel Endüstri Platformu",title:"Petrol ve Gaz Sistemlerinde Mineral Tortu Oluşumu Testi",intro:"Petrol ve gaz sistemlerindeki mineral tortularla ilgili numuneleri, gözlemleri ve laboratuvar verilerini kaydedin.",
+ navHome:"Ana Sayfa",navProduction:"Üretim",navTesting:"Testler",navQuality:"Kalite",navDocuments:"Belgeler",navCompanies:"Şirketler",navSuppliers:"Tedarikçiler",navOrders:"Siparişler",navTracking:"Takip",
+ demoTitle:"Demo modu.",demoText:"Kayıtlar arayüz örnekleridir; gerçek laboratuvar sonuçları değildir. Bu sayfa ekipman güvenliğini veya standartlara uygunluğu doğrulamaz.",
+ statTotal:"Kayıtlar",statReview:"İnceleme gerekli",statTypes:"Tortu türü örnekleri",statLang:"Arayüz dilleri",
+ typesTitle:"Mineral tortu türleri",type1:"Kalsiyum karbonat",type2:"Baryum sülfat",type3:"Stronsiyum sülfat",type4:"Kalsiyum sülfat",type5:"Demir bileşikleri",otherType:"Diğer",type6:"Karışık veya tanımlanmamış tortular",
+ workflowTitle:"İş akışı",step1:"Numuneyi ve alındığı yeri kaydedin.",step2:"Bilinen proses koşullarını ve su kimyasını girin.",step3:"Analiz yöntemini ve gözlemleri kaydedin.",step4:"Verileri ve belgeleri kontrol edin.",step5:"Sorumlu uzman için rapor hazırlayın.",workflowNote:"Yöntemler ve değerlendirme kriterleri ilgili prosedürlere uygun olmalıdır.",
+ formTitle:"Test kaydı",sampleLabel:"Numune kimliği *",countryLabel:"Ülke",assetLabel:"Tesis / ekipman",scaleLabel:"Şüphelenilen tortu türü",sourceLabel:"Numune kaynağı",methodLabel:"Analiz yöntemi",tempLabel:"Gözlem sıcaklığı (°C)",pressureLabel:"Gözlem basıncı (birimi notlarda belirtin)",durationLabel:"Gözlem süresi (saat)",dateLabel:"Test tarihi",labLabel:"Laboratuvar / sorumlu",statusLabel:"Kayıt durumu",observationsLabel:"Gözlemler / analiz sonuçları",notesLabel:"Notlar ve ölçü birimleri",addBtn:"Kayıt ekle",clearBtn:"Formu temizle",
+ recordsTitle:"Test kayıtları",searchPlaceholder:"Numune, tesis, tür veya yöntemde ara...",allStatuses:"Tüm durumlar",csvBtn:"CSV dışa aktar",reportBtn:"Rapor oluştur",thSample:"Numune",thAsset:"Tesis",thType:"Tortu türü",thSource:"Kaynak",thMethod:"Yöntem",thDate:"Tarih",thStatus:"Durum",thAction:"İşlem",tableNote:"Demo verileri gerçek testlerin doğrulanmış sonuçları değildir.",reportTitle:"Teknik rapor",downloadReport:"TXT raporunu indir",footerSubtitle:"Küresel Endüstri Platformu",footerText:"Bölüm #276 · Mineral tortu testi · Demo arayüz.",footerDisclaimer:"Laboratuvar sertifikası veya ekipman güvenliği onayı değildir.",delete:"Sil",empty:"Kayıt bulunamadı",reportGenerated:"DEMO RAPORU",reportCount:"Kayıt sayısı",generatedAt:"Oluşturulma tarihi",reportNotice:"Demo arayüz tarafından oluşturulmuştur; laboratuvar sonucu değildir."
+},
+de:{
+ subtitle:"Globale Industrieplattform",title:"Prüfung der mineralischen Ablagerungsbildung in Öl- und Gassystemen",intro:"Proben, Beobachtungen und Labordaten zu mineralischen Ablagerungen in Öl- und Gassystemen dokumentieren.",
+ navHome:"Startseite",navProduction:"Produktion",navTesting:"Prüfungen",navQuality:"Qualität",navDocuments:"Dokumente",navCompanies:"Unternehmen",navSuppliers:"Lieferanten",navOrders:"Bestellungen",navTracking:"Sendungsverfolgung",
+ demoTitle:"Demomodus.",demoText:"Die Einträge sind Schnittstellenbeispiele und keine echten Laborergebnisse. Diese Seite bewertet weder die Anlagensicherheit noch die Normkonformität.",
+ statTotal:"Protokolleinträge",statReview:"Zu prüfen",statTypes:"Beispieltypen",statLang:"Oberflächensprachen",
+ typesTitle:"Arten mineralischer Ablagerungen",type1:"Calciumcarbonat",type2:"Bariumsulfat",type3:"Strontiumsulfat",type4:"Calciumsulfat",type5:"Eisenverbindungen",otherType:"Andere",type6:"Gemischte oder nicht identifizierte Ablagerungen",
+ workflowTitle:"Arbeitsablauf",step1:"Probe und Entnahmestelle registrieren.",step2:"Bekannte Prozessbedingungen und Wasserchemie erfassen.",step3:"Analysemethode und Beobachtungen dokumentieren.",step4:"Daten und Belege prüfen.",step5:"Bericht für die zuständige Fachkraft erstellen.",workflowNote:"Methoden und Bewertungskriterien müssen den geltenden Verfahren entsprechen.",
+ formTitle:"Prüfung registrieren",sampleLabel:"Proben-ID *",countryLabel:"Land",assetLabel:"Anlage / Ausrüstung",scaleLabel:"Vermuteter Ablagerungstyp",sourceLabel:"Probenquelle",methodLabel:"Analysemethode",tempLabel:"Beobachtungstemperatur (°C)",pressureLabel:"Beobachtungsdruck (Einheit in Notizen angeben)",durationLabel:"Beobachtungsdauer (h)",dateLabel:"Prüfdatum",labLabel:"Labor / Verantwortliche Person",statusLabel:"Datensatzstatus",observationsLabel:"Beobachtungen / Analyseergebnisse",notesLabel:"Notizen und Maßeinheiten",addBtn:"Eintrag hinzufügen",clearBtn:"Formular leeren",
+ recordsTitle:"Prüfprotokoll",searchPlaceholder:"Nach Probe, Anlage, Typ oder Methode suchen...",allStatuses:"Alle Status",csvBtn:"CSV exportieren",reportBtn:"Bericht erstellen",thSample:"Probe",thAsset:"Anlage",thType:"Ablagerungstyp",thSource:"Quelle",thMethod:"Methode",thDate:"Datum",thStatus:"Status",thAction:"Aktion",tableNote:"Demodaten sind keine verifizierten Ergebnisse tatsächlicher Prüfungen.",reportTitle:"Technischer Bericht",downloadReport:"TXT-Bericht herunterladen",footerSubtitle:"Globale Industrieplattform",footerText:"Abschnitt #276 · Prüfung mineralischer Ablagerungen · Demooberfläche.",footerDisclaimer:"Keine Laborzertifizierung und keine Bestätigung der Anlagensicherheit.",delete:"Löschen",empty:"Keine Einträge gefunden",reportGenerated:"DEMONSTRATIONSBERICHT",reportCount:"Anzahl der Einträge",generatedAt:"Erstellt am",reportNotice:"Von einer Demooberfläche erstellt; kein Laborbefund."
+},
+ar:{
+ subtitle:"منصة صناعية عالمية",title:"اختبار تكوّن الترسبات المعدنية في أنظمة النفط والغاز",intro:"تسجيل العينات والملاحظات والبيانات المخبرية المتعلقة بالترسبات المعدنية في أنظمة النفط والغاز.",
+ navHome:"الرئيسية",navProduction:"الإنتاج",navTesting:"الاختبارات",navQuality:"الجودة",navDocuments:"المستندات",navCompanies:"الشركات",navSuppliers:"الموردون",navOrders:"الطلبات",navTracking:"التتبع",
+ demoTitle:"وضع تجريبي.",demoText:"السجلات أمثلة للواجهة وليست نتائج مخبرية حقيقية. لا تقيّم هذه الصفحة سلامة المعدات أو تؤكد المطابقة للمعايير.",
+ statTotal:"السجلات",statReview:"تحتاج إلى مراجعة",statTypes:"أمثلة للترسبات",statLang:"لغات الواجهة",
+ typesTitle:"أنواع الترسبات المعدنية",type1:"كربونات الكالسيوم",type2:"كبريتات الباريوم",type3:"كبريتات السترونشيوم",type4:"كبريتات الكالسيوم",type5:"مركبات الحديد",otherType:"أخرى",type6:"ترسبات مختلطة أو غير محددة",
+ workflowTitle:"سير العمل",step1:"تسجيل العينة ومكان جمعها.",step2:"تسجيل ظروف العملية المعروفة وكيمياء المياه.",step3:"توثيق طريقة التحليل والملاحظات.",step4:"مراجعة البيانات والمستندات.",step5:"إعداد تقرير للمختص المسؤول.",workflowNote:"يجب أن تتبع الطرق ومعايير التقييم الإجراءات والمواصفات المعمول بها.",
+ formTitle:"تسجيل اختبار",sampleLabel:"معرّف العينة *",countryLabel:"الدولة",assetLabel:"الموقع / المعدات",scaleLabel:"نوع الترسب المتوقع",sourceLabel:"مصدر العينة",methodLabel:"طريقة التحليل",tempLabel:"درجة حرارة الملاحظة (°C)",pressureLabel:"ضغط الملاحظة (اذكر الوحدة في الملاحظات)",durationLabel:"مدة الملاحظة (ساعة)",dateLabel:"تاريخ الاختبار",labLabel:"المختبر / المسؤول",statusLabel:"حالة السجل",observationsLabel:"الملاحظات / نتائج التحليل",notesLabel:"ملاحظات ووحدات القياس",addBtn:"إضافة سجل",clearBtn:"مسح النموذج",
+ recordsTitle:"سجل الاختبارات",searchPlaceholder:"البحث عن العينة أو الموقع أو النوع أو الطريقة...",allStatuses:"كل الحالات",csvBtn:"تصدير CSV",reportBtn:"إنشاء تقرير",thSample:"العينة",thAsset:"الموقع",thType:"نوع الترسب",thSource:"المصدر",thMethod:"الطريقة",thDate:"التاريخ",thStatus:"الحالة",thAction:"إجراء",tableNote:"البيانات التجريبية ليست نتائج مؤكدة لاختبارات فعلية.",reportTitle:"تقرير فني",downloadReport:"تنزيل تقرير TXT",footerSubtitle:"منصة صناعية عالمية",footerText:"القسم 276 · اختبار الترسبات المعدنية · واجهة تجريبية.",footerDisclaimer:"ليس شهادة مختبرية ولا تأكيدًا لسلامة المعدات.",delete:"حذف",empty:"لم يتم العثور على سجلات",reportGenerated:"تقرير تجريبي",reportCount:"عدد السجلات",generatedAt:"تاريخ الإنشاء",reportNotice:"تم إنشاؤه بواسطة واجهة تجريبية وليس تقريرًا مخبريًا."
+},
+es:{
+ subtitle:"Plataforma Industrial Global",title:"Pruebas de formación de incrustaciones minerales en petróleo y gas",intro:"Registre muestras, observaciones y datos de laboratorio relacionados con incrustaciones minerales en sistemas de petróleo y gas.",
+ navHome:"Inicio",navProduction:"Producción",navTesting:"Pruebas",navQuality:"Calidad",navDocuments:"Documentos",navCompanies:"Empresas",navSuppliers:"Proveedores",navOrders:"Pedidos",navTracking:"Seguimiento",
+ demoTitle:"Modo de demostración.",demoText:"Los registros son ejemplos de interfaz, no resultados reales de laboratorio. Esta página no evalúa la seguridad de los equipos ni certifica el cumplimiento de normas.",
+ statTotal:"Registros",statReview:"Requieren revisión",statTypes:"Tipos de ejemplo",statLang:"Idiomas de interfaz",
+ typesTitle:"Tipos de incrustaciones minerales",type1:"Carbonato de calcio",type2:"Sulfato de bario",type3:"Sulfato de estroncio",type4:"Sulfato de calcio",type5:"Compuestos de hierro",otherType:"Otros",type6:"Depósitos mixtos o no identificados",
+ workflowTitle:"Flujo de trabajo",step1:"Registrar la muestra y el lugar de toma.",step2:"Anotar las condiciones conocidas del proceso y la química del agua.",step3:"Documentar el método analítico y las observaciones.",step4:"Revisar datos y documentos.",step5:"Preparar un informe para el especialista responsable.",workflowNote:"Los métodos y criterios de evaluación deben seguir los procedimientos aplicables.",
+ formTitle:"Registrar prueba",sampleLabel:"ID de muestra *",countryLabel:"País",assetLabel:"Instalación / equipo",scaleLabel:"Tipo de incrustación sospechado",sourceLabel:"Origen de la muestra",methodLabel:"Método de análisis",tempLabel:"Temperatura de observación (°C)",pressureLabel:"Presión de observación (indique la unidad en notas)",durationLabel:"Duración de observación (h)",dateLabel:"Fecha de prueba",labLabel:"Laboratorio / responsable",statusLabel:"Estado del registro",observationsLabel:"Observaciones / resultados",notesLabel:"Notas y unidades",addBtn:"Añadir registro",clearBtn:"Limpiar formulario",
+ recordsTitle:"Registro de pruebas",searchPlaceholder:"Buscar muestra, instalación, tipo o método...",allStatuses:"Todos los estados",csvBtn:"Exportar CSV",reportBtn:"Crear informe",thSample:"Muestra",thAsset:"Instalación",thType:"Tipo",thSource:"Origen",thMethod:"Método",thDate:"Fecha",thStatus:"Estado",thAction:"Acción",tableNote:"Los datos de demostración no son resultados verificados de pruebas reales.",reportTitle:"Informe técnico",downloadReport:"Descargar informe TXT",footerSubtitle:"Plataforma Industrial Global",footerText:"Sección 276 · Pruebas de incrustaciones minerales · Interfaz demo.",footerDisclaimer:"No es una certificación de laboratorio ni una confirmación de seguridad.",delete:"Eliminar",empty:"No se encontraron registros",reportGenerated:"INFORME DE DEMOSTRACIÓN",reportCount:"Número de registros",generatedAt:"Fecha de creación",reportNotice:"Generado por una interfaz de demostración; no es un informe de laboratorio."
+},
+fr:{
+ subtitle:"Plateforme industrielle mondiale",title:"Essais de formation de dépôts minéraux dans les systèmes pétroliers et gaziers",intro:"Enregistrez les échantillons, observations et données de laboratoire concernant les dépôts minéraux dans les systèmes pétroliers et gaziers.",
+ navHome:"Accueil",navProduction:"Production",navTesting:"Essais",navQuality:"Qualité",navDocuments:"Documents",navCompanies:"Entreprises",navSuppliers:"Fournisseurs",navOrders:"Commandes",navTracking:"Suivi",
+ demoTitle:"Mode démo.",demoText:"Les enregistrements sont des exemples d’interface, et non des résultats de laboratoire réels. Cette page n’évalue pas la sécurité des équipements et ne certifie aucune conformité.",
+ statTotal:"Enregistrements",statReview:"À vérifier",statTypes:"Types de dépôts",statLang:"Langues de l’interface",
+ typesTitle:"Types de dépôts minéraux",type1:"Carbonate de calcium",type2:"Sulfate de baryum",type3:"Sulfate de strontium",type4:"Sulfate de calcium",type5:"Composés du fer",otherType:"Autres",type6:"Dépôts mixtes ou non identifiés",
+ workflowTitle:"Processus de travail",step1:"Enregistrer l’échantillon et le lieu de prélèvement.",step2:"Saisir les conditions connues du procédé et la chimie de l’eau.",step3:"Documenter la méthode d’analyse et les observations.",step4:"Vérifier les données et les documents.",step5:"Préparer un rapport pour le spécialiste responsable.",workflowNote:"Les méthodes et critères d’évaluation doivent respecter les procédures applicables.",
+ formTitle:"Enregistrer un essai",sampleLabel:"ID de l’échantillon *",countryLabel:"Pays",assetLabel:"Installation / équipement",scaleLabel:"Type de dépôt suspecté",sourceLabel:"Source de l’échantillon",methodLabel:"Méthode d’analyse",tempLabel:"Température d’observation (°C)",pressureLabel:"Pression d’observation (préciser l’unité dans les notes)",durationLabel:"Durée d’observation (h)",dateLabel:"Date de l’essai",labLabel:"Laboratoire / responsable",statusLabel:"Statut de l’enregistrement",observationsLabel:"Observations / résultats d’analyse",notesLabel:"Notes et unités de mesure",addBtn:"Ajouter",clearBtn:"Effacer le formulaire",
+ recordsTitle:"Journal des essais",searchPlaceholder:"Rechercher par échantillon, installation, type ou méthode...",allStatuses:"Tous les statuts",csvBtn:"Exporter CSV",reportBtn:"Créer un rapport",thSample:"Échantillon",thAsset:"Installation",thType:"Type de dépôt",thSource:"Source",thMethod:"Méthode",thDate:"Date",thStatus:"Statut",thAction:"Action",tableNote:"Les données de démonstration ne sont pas des résultats vérifiés d’essais réels.",reportTitle:"Rapport technique",downloadReport:"Télécharger le rapport TXT",footerSubtitle:"Plateforme industrielle mondiale",footerText:"Section 276 · Essais de dépôts minéraux · Interface démo.",footerDisclaimer:"Ne constitue ni une certification de laboratoire ni une confirmation de sécurité.",delete:"Supprimer",empty:"Aucun enregistrement trouvé",reportGenerated:"RAPPORT DE DÉMONSTRATION",reportCount:"Nombre d’enregistrements",generatedAt:"Date de création",reportNotice:"Généré par une interface de démonstration; ce n’est pas un rapport de laboratoire."
+},
+it:{
+ subtitle:"Piattaforma industriale globale",title:"Prove di formazione di depositi minerali nei sistemi Oil & Gas",intro:"Registrare campioni, osservazioni e dati di laboratorio relativi alla formazione di depositi minerali nei sistemi petroliferi e del gas.",
+ navHome:"Home",navProduction:"Produzione",navTesting:"Prove",navQuality:"Qualità",navDocuments:"Documenti",navCompanies:"Aziende",navSuppliers:"Fornitori",navOrders:"Ordini",navTracking:"Tracciamento",
+ demoTitle:"Modalità demo.",demoText:"Le registrazioni sono esempi dell’interfaccia e non risultati di laboratorio reali. Questa pagina non valuta la sicurezza delle apparecchiature né certifica la conformità.",
+ statTotal:"Registrazioni",statReview:"Da verificare",statTypes:"Tipi di deposito",statLang:"Lingue dell’interfaccia",
+ typesTitle:"Tipi di depositi minerali",type1:"Carbonato di calcio",type2:"Solfato di bario",type3:"Solfato di stronzio",type4:"Solfato di calcio",type5:"Composti del ferro",otherType:"Altri",type6:"Depositi misti o non identificati",
+ workflowTitle:"Flusso di lavoro",step1:"Registrare il campione e il luogo di prelievo.",step2:"Inserire le condizioni note del processo e la chimica dell’acqua.",step3:"Documentare il metodo di analisi e le osservazioni.",step4:"Verificare dati e documenti.",step5:"Preparare un rapporto per lo specialista responsabile.",workflowNote:"Metodi e criteri di valutazione devono seguire le procedure applicabili.",
+ formTitle:"Registrazione della prova",sampleLabel:"ID campione *",countryLabel:"Paese",assetLabel:"Impianto / apparecchiatura",scaleLabel:"Tipo di deposito sospettato",sourceLabel:"Fonte del campione",methodLabel:"Metodo di analisi",tempLabel:"Temperatura di osservazione (°C)",pressureLabel:"Pressione di osservazione (specificare l’unità nelle note)",durationLabel:"Durata osservazione (h)",dateLabel:"Data della prova",labLabel:"Laboratorio / responsabile",statusLabel:"Stato della registrazione",observationsLabel:"Osservazioni / risultati",notesLabel:"Note e unità di misura",addBtn:"Aggiungi registrazione",clearBtn:"Svuota modulo",
+ recordsTitle:"Registro delle prove",searchPlaceholder:"Cerca campione, impianto, tipo o metodo...",allStatuses:"Tutti gli stati",csvBtn:"Esporta CSV",reportBtn:"Crea rapporto",thSample:"Campione",thAsset:"Impianto",thType:"Tipo deposito",thSource:"Fonte",thMethod:"Metodo",thDate:"Data",thStatus:"Stato",thAction:"Azione",tableNote:"I dati demo non sono risultati verificati di prove reali.",reportTitle:"Rapporto tecnico",downloadReport:"Scarica rapporto TXT",footerSubtitle:"Piattaforma industriale globale",footerText:"Sezione 276 · Prove di depositi minerali · Interfaccia demo.",footerDisclaimer:"Non è una certificazione di laboratorio né una conferma di sicurezza.",delete:"Elimina",empty:"Nessuna registrazione trovata",reportGenerated:"RAPPORTO DIMOSTRATIVO",reportCount:"Numero di registrazioni",generatedAt:"Data di generazione",reportNotice:"Generato da un’interfaccia demo; non è un rapporto di laboratorio."
+}
+};
+
+const demoRecords = [
+ {sample:"SCL-DEMO-001",country:"Azerbaijan",asset:"Produced-water line",scaleType:"CaCO3",sampleSource:"Produced water",method:"Visual inspection",date:"2026-09-18",status:"Review",observations:"Illustrative record only.",notes:"Not a real laboratory result."},
+ {sample:"SCL-DEMO-002",country:"Türkiye",asset:"Water injection system",scaleType:"BaSO4",sampleSource:"Pipeline",method:"XRD",date:"2026-09-20",status:"Review",observations:"Example record; analysis not verified.",notes:"Demonstration only."},
+ {sample:"SCL-DEMO-003",country:"Italy",asset:"Separator",scaleType:"Mixed / unknown",sampleSource:"Separator",method:"Chemical analysis",date:"2026-09-22",status:"Review",observations:"Example record requiring specialist review.",notes:"No safety determination."}
+];
+let records = [...demoRecords];
+let currentLanguage = "ru";
+let latestReport = "";
+
+function tr(key){return (translations[currentLanguage] && translations[currentLanguage][key]) || translations.en[key] || translations.ru[key] || key;}
+function esc(value){
+ return String(value ?? "").replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+}
+function setLanguage(lang){
+ currentLanguage = lang;
+ document.documentElement.lang = lang;
+ document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
+ document.querySelectorAll("[data-i18n]").forEach(el=>{
+   const key = el.getAttribute("data-i18n");
+   const value = tr(key);
+   if(value) el.textContent = value;
+ });
+ document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+   const key = el.getAttribute("data-i18n-placeholder");
+   el.placeholder = tr(key);
+ });
+ document.querySelectorAll(".languages button").forEach(btn=>btn.classList.toggle("active",btn.dataset.lang===lang));
+ renderRecords();
+}
+function renderRecords(){
+ const query = document.getElementById("search").value.trim().toLowerCase();
+ const status = document.getElementById("filterStatus").value;
+ const filtered = records.filter(r=>{
+   const text = [r.sample,r.asset,r.scaleType,r.sampleSource,r.method,r.country,r.status].join(" ").toLowerCase();
+   return text.includes(query) && (!status || r.status === status);
+ });
+ const tbody = document.getElementById("records");
+ tbody.innerHTML = "";
+ filtered.forEach((r)=>{
+   const index = records.indexOf(r);
+   const trEl = document.createElement("tr");
+   trEl.innerHTML = `
+    <td><strong>${esc(r.sample)}</strong><br><span class="muted">${esc(r.country)}</span></td>
+    <td>${esc(r.asset || "—")}</td>
+    <td>${esc(r.scaleType)}</td>
+    <td>${esc(r.sampleSource)}</td>
+    <td>${esc(r.method)}</td>
+    <td>${esc(r.date || "—")}</td>
+    <td><span class="tag">${esc(r.status)}</span></td>
+    <td><button class="btn secondary delete-record" type="button" data-index="${index}">${esc(tr("delete"))}</button></td>`;
+   tbody.appendChild(trEl);
+ });
+ if(!filtered.length){
+   const row = document.createElement("tr");
+   row.innerHTML = `<td colspan="8">${esc(tr("empty"))}</td>`;
+   tbody.appendChild(row);
+ }
+ document.getElementById("totalCount").textContent = records.length;
+ document.getElementById("reviewCount").textContent = records.filter(r=>r.status==="Review" || r.status==="In progress").length;
+}
+function getFormRecord(){
+ const value = id => document.getElementById(id).value.trim();
+ return {
+  sample:value("sample"),
+  country:value("country"),
+  asset:value("asset"),
+  scaleType:value("scaleType"),
+  sampleSource:value("sampleSource"),
+  method:value("method"),
+  temperature:value("temperature"),
+  pressure:value("pressure"),
+  duration:value("duration"),
+  date:value("date"),
+  lab:value("lab"),
+  status:value("status"),
+  observations:value("observations"),
+  notes:value("notes")
+ };
+}
+document.getElementById("addBtn").addEventListener("click",()=>{
+ const form = document.getElementById("scaleForm");
+ if(!form.reportValidity()) return;
+ const entry = getFormRecord();
+ if(records.some(r=>r.sample.toLowerCase()===entry.sample.toLowerCase())){
+   alert(currentLanguage==="ru" ? "Такой номер образца уже существует." : "A record with this sample ID already exists.");
+   return;
+ }
+ records.unshift(entry);
+ form.reset();
+ renderRecords();
+ alert(currentLanguage==="ru" ? "Демонстрационная запись добавлена." : "Demo record added.");
+});
+document.getElementById("clearBtn").addEventListener("click",()=>document.getElementById("scaleForm").reset());
+document.getElementById("search").addEventListener("input",renderRecords);
+document.getElementById("filterStatus").addEventListener("change",renderRecords);
+document.getElementById("records").addEventListener("click",e=>{
+ const btn = e.target.closest(".delete-record");
+ if(!btn) return;
+ const index = Number(btn.dataset.index);
+ if(!Number.isInteger(index) || index < 0 || index >= records.length) return;
+ records.splice(index,1);
+ renderRecords();
+});
+function csvCell(value){return '"' + String(value ?? "").replace(/"/g,'""') + '"';}
+document.getElementById("csvBtn").addEventListener("click",()=>{
+ const headers = ["Sample ID","Country","Asset","Scale Type","Source","Method","Temperature C","Pressure","Duration h","Date","Laboratory","Status","Observations","Notes"];
+ const keys = ["sample","country","asset","scaleType","sampleSource","method","temperature","pressure","duration","date","lab","status","observations","notes"];
+ const lines = [headers.map(csvCell).join(",")];
+ records.forEach(r=>lines.push(keys.map(k=>csvCell(r[k])).join(",")));
+ const blob = new Blob(["\uFEFF"+lines.join("\r\n")],{type:"text/csv;charset=utf-8;"});
+ downloadBlob(blob,"worker-pro-scale-formation-records.csv");
+});
+function makeReport(){
+ const lines = [
+  tr("reportGenerated"),
+  "WORKER PRO — Section #276",
+  "Oil & Gas Scale Formation Testing",
+  tr("generatedAt")+": "+new Date().toLocaleString(),
+  tr("reportCount")+": "+records.length,
+  "",
+  tr("reportNotice"),
+  "",
+  ...records.map((r,i)=>[
+   `${i+1}. ${r.sample}`,
+   `Country: ${r.country || "—"}`,
+   `Asset: ${r.asset || "—"}`,
+   `Scale type: ${r.scaleType || "—"}`,
+   `Source: ${r.sampleSource || "—"}`,
+   `Method: ${r.method || "—"}`,
+   `Temperature (°C): ${r.temperature || "—"}`,
+   `Pressure (unit to be confirmed): ${r.pressure || "—"}`,
+   `Duration (h): ${r.duration || "—"}`,
+   `Date: ${r.date || "—"}`,
+   `Laboratory: ${r.lab || "—"}`,
+   `Status: ${r.status || "—"}`,
+   `Observations: ${r.observations || "—"}`,
+   `Notes: ${r.notes || "—"}`,
+   ""
+  ].join("\n"))
+ ];
+ latestReport = lines.join("\n");
+ document.getElementById("report").textContent = latestReport;
+ document.getElementById("reportBox").classList.remove("hidden");
+}
+document.getElementById("reportBtn").addEventListener("click",makeReport);
+document.getElementById("downloadReport").addEventListener("click",()=>{
+ if(!latestReport) makeReport();
+ downloadBlob(new Blob([latestReport],{type:"text/plain;charset=utf-8"}),"worker-pro-scale-formation-report.txt");
+});
+function downloadBlob(blob,name){
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement("a");
+ a.href = url;
+ a.download = name;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+document.querySelectorAll(".languages button").forEach(btn=>btn.addEventListener("click",()=>setLanguage(btn.dataset.lang)));
+setLanguage("ru");
+</script>
+</body>
+</html>
