@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Cementing Slurry Testing</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#17352a}
+.languages{position:sticky;top:0;z-index:10;background:#063d25;padding:10px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.languages button{border:1px solid #b7ff35;background:#0b6b3d;color:white;padding:8px 10px;border-radius:7px;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:#b7ff35;color:#063d25}
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;padding:25px 16px}
+header h1{margin:10px 0;font-size:28px}
+header p{margin:6px 0}
+.badge{display:inline-block;background:#b7ff35;color:#063d25;border-radius:20px;padding:6px 11px;font-weight:bold}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+nav a{color:white;text-decoration:none;background:#ffffff18;border:1px solid #ffffff45;padding:8px 10px;border-radius:7px}
+main{max-width:1200px;margin:auto;padding:16px}
+.card{background:white;border:1px solid #dce7df;border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 3px 12px #063d250b}
+h2{color:#075b34;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.stat{background:#eaf5ed;border-radius:10px;padding:14px}
+.stat strong{display:block;font-size:24px;color:#075b34;margin-bottom:5px}
+label{font-weight:bold;font-size:13px;display:block;margin-bottom:5px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cbd9cf;border-radius:7px;background:white;font:inherit}
+textarea{min-height:75px;resize:vertical}
+button.action{background:#0b6b3d;color:white;border:0;border-radius:8px;padding:11px 15px;font-weight:bold;cursor:pointer;margin:5px 5px 5px 0}
+button.secondary{background:#e4efe7;color:#063d25}
+.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:850px}
+th,td{padding:10px;border-bottom:1px solid #e1e9e3;text-align:left;font-size:13px}
+th{background:#eaf5ed;color:#063d25}
+.status{display:inline-block;padding:4px 8px;border-radius:12px;background:#fff2d9;color:#795400}
+.notice{background:#fff6df;border-left:5px solid #e4ae34;padding:13px;border-radius:7px}
+.small{font-size:13px;color:#53675c}
+footer{text-align:center;background:#063d25;color:white;padding:20px;margin-top:25px}
+[dir="rtl"]{text-align:right}
+@media(max-width:600px){header h1{font-size:23px}.card{padding:13px}main{padding:10px}}
+</style>
+</head>
+<body>
+<div class="languages">
+<button class="active" onclick="setLang('ru')">RU</button>
+<button onclick="setLang('az')">AZ</button>
+<button onclick="setLang('en')">EN</button>
+<button onclick="setLang('tr')">TR</button>
+<button onclick="setLang('de')">DE</button>
+<button onclick="setLang('ar')">AR</button>
+<button onclick="setLang('es')">ES</button>
+<button onclick="setLang('fr')">FR</button>
+<button onclick="setLang('it')">IT</button>
+</div>
+
+<header>
+<span class="badge">SECTION №280</span>
+<h1 data-i18n="title">Cementing Slurry Testing</h1>
+<p data-i18n="subtitle">Испытания цементировочного раствора для нефтегазовых скважин</p>
+<p>WORKER PRO — <span data-i18n="platform">Глобальная промышленная платформа</span></p>
+<nav>
+<a href="../index.html" data-i18n="home">Главная</a>
+<a href="../production/index.html" data-i18n="production">Производство</a>
+<a href="../testing/index.html" data-i18n="testing">Испытания</a>
+<a href="../quality/index.html" data-i18n="quality">Качество</a>
+<a href="../documents/index.html" data-i18n="documents">Документы</a>
+<a href="../companies/index.html" data-i18n="companies">Компании</a>
+<a href="../suppliers/index.html" data-i18n="suppliers">Поставщики</a>
+<a href="../orders/index.html" data-i18n="orders">Заказы</a>
+<a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+</header>
+
+<main>
+<section class="card">
+<h2 data-i18n="overview">Обзор раздела</h2>
+<p data-i18n="intro">Раздел предназначен для регистрации лабораторных испытаний цементировочных растворов, используемых при строительстве нефтегазовых скважин. Записи помогают систематизировать данные образцов, условия испытаний и результаты.</p>
+<div class="grid">
+<div class="stat"><strong>01</strong><span data-i18n="sample">Регистрация образца</span></div>
+<div class="stat"><strong>02</strong><span data-i18n="density">Плотность и реология</span></div>
+<div class="stat"><strong>03</strong><span data-i18n="thickening">Время загустевания</span></div>
+<div class="stat"><strong>04</strong><span data-i18n="strength">Испытания прочности</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-i18n="parameters">Основные параметры испытаний</h2>
+<div class="grid">
+<div><b data-i18n="densitytitle">Плотность раствора</b><p data-i18n="densitydesc">Измеренная плотность с указанием единиц и условий измерения.</p></div>
+<div><b data-i18n="rheology">Реологические свойства</b><p data-i18n="rheologydesc">Записи показаний и методики измерения текучести раствора.</p></div>
+<div><b data-i18n="thickeningtitle">Время загустевания</b><p data-i18n="thickeningdesc">Время до установленного критерия загустевания при заданных условиях испытания.</p></div>
+<div><b data-i18n="fluidloss">Потери жидкости</b><p data-i18n="fluidlossdesc">Результаты измерения фильтрации по выбранной методике.</p></div>
+<div><b data-i18n="compressive">Прочность на сжатие</b><p data-i18n="compressivedesc">Результаты испытания затвердевшего образца с указанием возраста и условий выдержки.</p></div>
+<div><b data-i18n="freefluid">Свободная жидкость</b><p data-i18n="freefluiddesc">Наличие и количество отделившейся жидкости, если методика предусматривает измерение.</p></div>
+</div>
+<p class="small" data-i18n="methodnote">Программа испытаний, методики и критерии оценки выбираются квалифицированными специалистами согласно требованиям проекта.</p>
+</section>
+
+<section class="card">
+<h2 data-i18n="workflow">Рабочий процесс</h2>
+<div class="grid">
+<div class="stat">1. <span data-i18n="step1">Идентифицировать скважину и образец</span></div>
+<div class="stat">2. <span data-i18n="step2">Записать состав и условия подготовки</span></div>
+<div class="stat">3. <span data-i18n="step3">Выполнить назначенные испытания</span></div>
+<div class="stat">4. <span data-i18n="step4">Проверить единицы и результаты</span></div>
+<div class="stat">5. <span data-i18n="step5">Подготовить отчёт для проверки</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-i18n="newrecord">Добавить запись испытания</h2>
+<form id="testForm">
+<div class="formgrid">
+<div><label data-i18n="sampleid">ID образца *</label><input id="sampleId" required placeholder="CS-280-001"></div>
+<div><label data-i18n="country">Страна</label><input id="country" placeholder="Azerbaijan"></div>
+<div><label data-i18n="well">Скважина / объект</label><input id="well" placeholder="Well / field"></div>
+<div><label data-i18n="cementtype">Тип цементного раствора</label>
+<select id="cementType"><option>Class G cement slurry</option><option>Lightweight cement slurry</option><option>Heavyweight cement slurry</option><option>Foamed cement slurry</option><option>Other / review</option></select></div>
+<div><label data-i18n="date">Дата испытания</label><input id="date" type="date"></div>
+<div><label data-i18n="lab">Лаборатория / оператор</label><input id="lab" placeholder="Laboratory / operator"></div>
+<div><label data-i18n="densityfield">Плотность (значение и единицы)</label><input id="densityVal" placeholder="Value + unit"></div>
+<div><label data-i18n="rheologyfield">Реология (метод и показания)</label><input id="rheologyVal" placeholder="Method + readings"></div>
+<div><label data-i18n="thickeningfield">Время загустевания</label><input id="thickeningVal" placeholder="Duration + test conditions"></div>
+<div><label data-i18n="fluidlossfield">Потери жидкости</label><input id="fluidLossVal" placeholder="Value + unit + method"></div>
+<div><label data-i18n="strengthfield">Прочность на сжатие</label><input id="strengthVal" placeholder="Value + unit + curing age"></div>
+<div><label data-i18n="freefluidfield">Свободная жидкость</label><input id="freeFluidVal" placeholder="Value + unit"></div>
+<div><label data-i18n="method">Метод испытания</label><input id="method" placeholder="Method / standard"></div>
+<div><label data-i18n="status">Статус записи</label>
+<select id="status"><option value="Review">Review / На проверке</option><option value="Draft">Draft / Черновик</option><option value="Complete">Complete / Завершено</option></select></div>
+</div>
+<div style="margin-top:12px"><label data-i18n="notes">Наблюдения и примечания</label><textarea id="notes" placeholder="Mixing details, curing conditions, observations..."></textarea></div>
+<button class="action" type="submit" data-i18n="save">Сохранить запись</button>
+<button class="action secondary" type="reset" data-i18n="clear">Очистить форму</button>
+</form>
+</section>
+
+<section class="card">
+<h2 data-i18n="database">Журнал испытаний</h2>
+<div class="formgrid">
+<div><label data-i18n="search">Поиск</label><input id="searchBox" placeholder="ID, скважина, страна, тип..."></div>
+<div><label data-i18n="filterstatus">Фильтр статуса</label>
+<select id="statusFilter"><option value="">All</option><option>Review</option><option>Draft</option><option>Complete</option></select></div>
+</div>
+<div style="margin:12px 0">
+<button class="action" onclick="exportCSV()" data-i18n="csv">Экспорт CSV</button>
+<button class="action" onclick="makeReport()" data-i18n="makereport">Создать текстовый отчёт</button>
+</div>
+<div class="tablewrap">
+<table>
+<thead><tr>
+<th data-i18n="thid">ID образца</th><th data-i18n="thcountry">Страна</th><th data-i18n="thwell">Скважина / объект</th><th data-i18n="thtype">Тип цемента</th><th data-i18n="thdensity">Плотность</th><th data-i18n="ththickening">Загустевание</th><th data-i18n="thdate">Дата</th><th data-i18n="thstatus">Статус</th>
+</tr></thead>
+<tbody id="recordsBody"></tbody>
+</table>
+</div>
+<p class="small" data-i18n="demodata">Начальные строки — демонстрационные. Новые записи хранятся в памяти страницы до перезагрузки.</p>
+</section>
+
+<section class="card">
+<h2 data-i18n="limitations">Важные ограничения</h2>
+<div class="notice" data-i18n="warning">Это демонстрационный журнал, а не лабораторная информационная система и не сертификат соответствия. Он не подтверждает пригодность раствора для скважины и не заменяет утверждённые методы испытаний, инженерную оценку или требования проекта.</div>
+</section>
+</main>
+
+<footer>WORKER PRO © 2026 · F.S. · Section 280</footer>
+
+<script>
+const translations={
+ru:{
+title:"Cementing Slurry Testing",subtitle:"Испытания цементировочного раствора для нефтегазовых скважин",platform:"Глобальная промышленная платформа",home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",suppliers:"Поставщики",orders:"Заказы",tracking:"Отслеживание",overview:"Обзор раздела",intro:"Раздел предназначен для регистрации лабораторных испытаний цементировочных растворов, используемых при строительстве нефтегазовых скважин. Записи помогают систематизировать данные образцов, условия испытаний и результаты.",sample:"Регистрация образца",density:"Плотность и реология",thickening:"Время загустевания",strength:"Испытания прочности",parameters:"Основные параметры испытаний",densitytitle:"Плотность раствора",densitydesc:"Измеренная плотность с указанием единиц и условий измерения.",rheology:"Реологические свойства",rheologydesc:"Записи показаний и методики измерения текучести раствора.",thickeningtitle:"Время загустевания",thickeningdesc:"Время до установленного критерия загустевания при заданных условиях испытания.",fluidloss:"Потери жидкости",fluidlossdesc:"Результаты измерения фильтрации по выбранной методике.",compressive:"Прочность на сжатие",compressivedesc:"Результаты испытания затвердевшего образца с указанием возраста и условий выдержки.",freefluid:"Свободная жидкость",freefluiddesc:"Наличие и количество отделившейся жидкости, если методика предусматривает измерение.",methodnote:"Программа испытаний, методики и критерии оценки выбираются квалифицированными специалистами согласно требованиям проекта.",workflow:"Рабочий процесс",step1:"Идентифицировать скважину и образец",step2:"Записать состав и условия подготовки",step3:"Выполнить назначенные испытания",step4:"Проверить единицы и результаты",step5:"Подготовить отчёт для проверки",newrecord:"Добавить запись испытания",sampleid:"ID образца *",country:"Страна",well:"Скважина / объект",cementtype:"Тип цементного раствора",date:"Дата испытания",lab:"Лаборатория / оператор",densityfield:"Плотность (значение и единицы)",rheologyfield:"Реология (метод и показания)",thickeningfield:"Время загустевания",fluidlossfield:"Потери жидкости",strengthfield:"Прочность на сжатие",freefluidfield:"Свободная жидкость",method:"Метод испытания",status:"Статус записи",notes:"Наблюдения и примечания",save:"Сохранить запись",clear:"Очистить форму",database:"Журнал испытаний",search:"Поиск",filterstatus:"Фильтр статуса",csv:"Экспорт CSV",makereport:"Создать текстовый отчёт",thid:"ID образца",thcountry:"Страна",thwell:"Скважина / объект",thtype:"Тип цемента",thdensity:"Плотность",ththickening:"Загустевание",thdate:"Дата",thstatus:"Статус",demodata:"Начальные строки — демонстрационные. Новые записи хранятся в памяти страницы до перезагрузки.",limitations:"Важные ограничения",warning:"Это демонстрационный журнал, а не лабораторная информационная система и не сертификат соответствия. Он не подтверждает пригодность раствора для скважины и не заменяет утверждённые методы испытаний, инженерную оценку или требования проекта.",added:"Запись добавлена.",reporttitle:"WORKER PRO — ОТЧЁТ ПО ИСПЫТАНИЯМ ЦЕМЕНТИРОВОЧНОГО РАСТВОРА"},
+en:{
+title:"Cementing Slurry Testing",subtitle:"Cement slurry testing records for oil and gas wells",platform:"Global Industrial Platform",home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",suppliers:"Suppliers",orders:"Orders",tracking:"Tracking",overview:"Section overview",intro:"Register laboratory tests for cement slurries used in oil and gas well construction. Organize sample details, test conditions and results.",sample:"Sample registration",density:"Density and rheology",thickening:"Thickening time",strength:"Strength testing",parameters:"Main test parameters",densitytitle:"Slurry density",densitydesc:"Measured density with units and measurement conditions.",rheology:"Rheological properties",rheologydesc:"Recorded readings and method used to assess slurry flow behavior.",thickeningtitle:"Thickening time",thickeningdesc:"Time to a defined thickening criterion under stated test conditions.",fluidloss:"Fluid loss",fluidlossdesc:"Filtration measurement results using the selected method.",compressive:"Compressive strength",compressivedesc:"Hardened sample strength with curing age and conditions.",freefluid:"Free fluid",freefluiddesc:"Presence and amount of separated liquid where the method includes this measurement.",methodnote:"Qualified personnel select the test plan, methods and acceptance criteria according to project requirements.",workflow:"Workflow",step1:"Identify well and sample",step2:"Record mix and preparation conditions",step3:"Perform assigned tests",step4:"Review units and results",step5:"Prepare a review report",newrecord:"Add test record",sampleid:"Sample ID *",country:"Country",well:"Well / asset",cementtype:"Cement slurry type",date:"Test date",lab:"Laboratory / operator",densityfield:"Density (value and units)",rheologyfield:"Rheology (method and readings)",thickeningfield:"Thickening time",fluidlossfield:"Fluid loss",strengthfield:"Compressive strength",freefluidfield:"Free fluid",method:"Test method",status:"Record status",notes:"Observations and notes",save:"Save record",clear:"Clear form",database:"Test register",search:"Search",filterstatus:"Status filter",csv:"Export CSV",makereport:"Create text report",thid:"Sample ID",thcountry:"Country",thwell:"Well / asset",thtype:"Cement type",thdensity:"Density",ththickening:"Thickening",thdate:"Date",thstatus:"Status",demodata:"Initial rows are demo data. New entries remain in page memory until reload.",limitations:"Important limitations",warning:"This is a demonstration log, not a laboratory information system or certificate. It does not certify slurry suitability for a well or replace approved methods, engineering review or project requirements.",added:"Record added.",reporttitle:"WORKER PRO — CEMENTING SLURRY TEST REPORT"},
+az:{
+title:"Cementing Slurry Testing",subtitle:"Neft-qaz quyuları üçün sement məhlulunun sınaqları",platform:"Qlobal sənaye platforması",home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",tracking:"İzləmə",overview:"Bölməyə ümumi baxış",intro:"Neft-qaz quyularının tikintisində istifadə edilən sement məhlullarının laboratoriya sınaqlarını qeyd edin.",sample:"Nümunə qeydiyyatı",density:"Sıxlıq və reologiya",thickening:"Qatılaşma vaxtı",strength:"Möhkəmlik sınaqları",parameters:"Əsas sınaq parametrləri",densitytitle:"Məhlulun sıxlığı",densitydesc:"Vahidlər və ölçmə şəraiti ilə ölçülmüş sıxlıq.",rheology:"Reoloji xüsusiyyətlər",rheologydesc:"Məhlulun axın davranışı üçün qeydə alınmış göstəricilər və metod.",thickeningtitle:"Qatılaşma vaxtı",thickeningdesc:"Müəyyən edilmiş sınaq şəraitində qatılaşma meyarına çatma vaxtı.",fluidloss:"Maye itkisi",fluidlossdesc:"Seçilmiş metod üzrə filtrasiya ölçmələrinin nəticələri.",compressive:"Sıxılma möhkəmliyi",compressivedesc:"Bərkimə müddəti və şəraiti göstərilməklə bərkimiş nümunənin möhkəmliyi.",freefluid:"Sərbəst maye",freefluiddesc:"Metod nəzərdə tutduqda ayrılmış mayenin olması və miqdarı.",methodnote:"Sınaq planı, metodlar və qiymətləndirmə meyarları layihə tələblərinə uyğun seçilməlidir.",workflow:"İş prosesi",step1:"Quyunu və nümunəni müəyyən edin",step2:"Qarışıq və hazırlıq şəraitini qeyd edin",step3:"Təyin edilmiş sınaqları aparın",step4:"Vahidləri və nəticələri yoxlayın",step5:"Yoxlama hesabatı hazırlayın",newrecord:"Sınaq qeydi əlavə edin",sampleid:"Nümunə ID *",country:"Ölkə",well:"Quyu / obyekt",cementtype:"Sement məhlulunun növü",date:"Sınaq tarixi",lab:"Laboratoriya / operator",densityfield:"Sıxlıq (qiymət və vahid)",rheologyfield:"Reologiya (metod və göstəricilər)",thickeningfield:"Qatılaşma vaxtı",fluidlossfield:"Maye itkisi",strengthfield:"Sıxılma möhkəmliyi",freefluidfield:"Sərbəst maye",method:"Sınaq metodu",status:"Qeyd statusu",notes:"Müşahidələr və qeydlər",save:"Qeydi saxla",clear:"Formanı təmizlə",database:"Sınaq jurnalı",search:"Axtarış",filterstatus:"Status filtri",csv:"CSV ixracı",makereport:"Mətn hesabatı yarat",thid:"Nümunə ID",thcountry:"Ölkə",thwell:"Quyu / obyekt",thtype:"Sement növü",thdensity:"Sıxlıq",ththickening:"Qatılaşma",thdate:"Tarix",thstatus:"Status",demodata:"İlkin sətirlər nümayiş məlumatlarıdır. Yeni qeydlər səhifə yenilənənədək yaddaşda qalır.",limitations:"Vacib məhdudiyyətlər",warning:"Bu, nümayiş jurnalidir, laboratoriya sistemi və ya sertifikat deyil. Məhlulun quyu üçün uyğunluğunu təsdiqləmir və təsdiqlənmiş metodları, mühəndis qiymətləndirməsini və layihə tələblərini əvəz etmir.",added:"Qeyd əlavə edildi.",reporttitle:"WORKER PRO — SEMENT MƏHLULU SINAQ HESABATI"}
+};
+const shared={
+tr:{platform:"Küresel Endüstriyel Platform",home:"Ana Sayfa",production:"Üretim",testing:"Testler",quality:"Kalite",documents:"Belgeler",companies:"Şirketler",suppliers:"Tedarikçiler",orders:"Siparişler",tracking:"Takip",overview:"Bölüm özeti",workflow:"İş akışı",newrecord:"Test kaydı ekle",save:"Kaydı kaydet",clear:"Formu temizle",database:"Test kayıtları",search:"Ara",csv:"CSV dışa aktar",limitations:"Önemli sınırlamalar",warning:"Bu bir demo kaydıdır; laboratuvar sistemi veya uygunluk sertifikası değildir."},
+de:{platform:"Globale Industrieplattform",home:"Startseite",production:"Produktion",testing:"Prüfung",quality:"Qualität",documents:"Dokumente",companies:"Unternehmen",suppliers:"Lieferanten",orders:"Bestellungen",tracking:"Sendungsverfolgung",overview:"Abschnittsübersicht",workflow:"Arbeitsablauf",newrecord:"Prüfdatensatz hinzufügen",save:"Datensatz speichern",clear:"Formular leeren",database:"Prüfregister",search:"Suche",csv:"CSV exportieren",limitations:"Wichtige Einschränkungen",warning:"Dies ist ein Demo-Protokoll, kein Laborsystem oder Konformitätszertifikat."},
+ar:{platform:"منصة صناعية عالمية",home:"الرئيسية",production:"الإنتاج",testing:"الاختبارات",quality:"الجودة",documents:"المستندات",companies:"الشركات",suppliers:"الموردون",orders:"الطلبات",tracking:"التتبع",overview:"نظرة عامة",workflow:"سير العمل",newrecord:"إضافة سجل اختبار",save:"حفظ السجل",clear:"مسح النموذج",database:"سجل الاختبارات",search:"بحث",csv:"تصدير CSV",limitations:"قيود مهمة",warning:"هذا سجل تجريبي وليس نظام مختبر أو شهادة مطابقة."},
+es:{platform:"Plataforma industrial global",home:"Inicio",production:"Producción",testing:"Ensayos",quality:"Calidad",documents:"Documentos",companies:"Empresas",suppliers:"Proveedores",orders:"Pedidos",tracking:"Seguimiento",overview:"Resumen",workflow:"Flujo de trabajo",newrecord:"Añadir ensayo",save:"Guardar registro",clear:"Limpiar formulario",database:"Registro de ensayos",search:"Buscar",csv:"Exportar CSV",limitations:"Limitaciones importantes",warning:"Este registro de demostración no es un sistema de laboratorio ni un certificado."},
+fr:{platform:"Plateforme industrielle mondiale",home:"Accueil",production:"Production",testing:"Essais",quality:"Qualité",documents:"Documents",companies:"Entreprises",suppliers:"Fournisseurs",orders:"Commandes",tracking:"Suivi",overview:"Présentation",workflow:"Flux de travail",newrecord:"Ajouter un essai",save:"Enregistrer",clear:"Effacer le formulaire",database:"Registre des essais",search:"Rechercher",csv:"Exporter CSV",limitations:"Limites importantes",warning:"Ce registre de démonstration n'est pas un système de laboratoire ni un certificat."},
+it:{platform:"Piattaforma industriale globale",home:"Home",production:"Produzione",testing:"Prove",quality:"Qualità",documents:"Documenti",companies:"Aziende",suppliers:"Fornitori",orders:"Ordini",tracking:"Tracciamento",overview:"Panoramica",workflow:"Flusso di lavoro",newrecord:"Aggiungi prova",save:"Salva record",clear:"Cancella modulo",database:"Registro prove",search:"Cerca",csv:"Esporta CSV",limitations:"Limitazioni importanti",warning:"Questo è un registro dimostrativo, non un sistema di laboratorio o un certificato."}
+};
+Object.keys(shared).forEach(l=>translations[l]=Object.assign({},translations.en,shared[l]));
+let currentLang="ru";
+let records=[
+{sampleId:"CS-DEMO-001",country:"Azerbaijan",well:"Demo Well A",cementType:"Class G cement slurry",densityVal:"Recorded separately",thickeningVal:"Test required",date:"2026-09-18",status:"Review"},
+{sampleId:"CS-DEMO-002",country:"Turkey",well:"Demo Well B",cementType:"Lightweight cement slurry",densityVal:"Not entered",thickeningVal:"Not entered",date:"2026-09-20",status:"Draft"},
+{sampleId:"CS-DEMO-003",country:"Italy",well:"Demo Well C",cementType:"Foamed cement slurry",densityVal:"Recorded separately",thickeningVal:"Test required",date:"2026-09-21",status:"Complete"}
+];
+const $=id=>document.getElementById(id);
+function setLang(lang){
+currentLang=lang;
+document.documentElement.lang=lang;
+document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+document.querySelectorAll(".languages button").forEach(b=>b.classList.toggle("active",b.textContent.toLowerCase()===lang));
+document.querySelectorAll("[data-i18n]").forEach(el=>{
+const key=el.getAttribute("data-i18n");
+if(translations[lang]&&translations[lang][key])el.textContent=translations[lang][key];
+});
+renderRecords();
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function renderRecords(){
+const q=$("searchBox").value.toLowerCase(),s=$("statusFilter").value;
+const list=records.filter(r=>(!s||r.status===s)&&Object.values(r).join(" ").toLowerCase().includes(q));
+$("recordsBody").innerHTML=list.map(r=>`<tr><td>${esc(r.sampleId)}</td><td>${esc(r.country)}</td><td>${esc(r.well)}</td><td>${esc(r.cementType)}</td><td>${esc(r.densityVal||"—")}</td><td>${esc(r.thickeningVal||"—")}</td><td>${esc(r.date||"—")}</td><td><span class="status">${esc(r.status)}</span></td></tr>`).join("");
+}
+$("testForm").addEventListener("submit",e=>{
+e.preventDefault();
+const r={
+sampleId:$("sampleId").value.trim(),country:$("country").value.trim(),well:$("well").value.trim(),
+cementType:$("cementType").value,date:$("date").value,lab:$("lab").value.trim(),
+densityVal:$("densityVal").value,rheologyVal:$("rheologyVal").value,
+thickeningVal:$("thickeningVal").value,fluidLossVal:$("fluidLossVal").value,
+strengthVal:$("strengthVal").value,freeFluidVal:$("freeFluidVal").value,
+method:$("method").value.trim(),status:$("status").value,notes:$("notes").value.trim()
+};
+if(records.some(x=>x.sampleId.toLowerCase()===r.sampleId.toLowerCase())){alert("Sample ID already exists.");return;}
+records.unshift(r);renderRecords();e.target.reset();alert(translations[currentLang].added||"Record added.");
+});
+$("searchBox").addEventListener("input",renderRecords);
+$("statusFilter").addEventListener("change",renderRecords);
+function downloadFile(name,content,type){
+const blob=new Blob(["\ufeff"+content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);
+}
+function exportCSV(){
+const keys=["sampleId","country","well","cementType","date","lab","densityVal","rheologyVal","thickeningVal","fluidLossVal","strengthVal","freeFluidVal","method","status","notes"];
+const csv=[keys.join(","),...records.map(r=>keys.map(k=>'"'+String(r[k]??"").replace(/"/g,'""')+'"').join(","))].join("\r\n");
+downloadFile("worker-pro-cementing-slurry-records.csv",csv,"text/csv;charset=utf-8");
+}
+function makeReport(){
+let out=(translations[currentLang].reporttitle||"WORKER PRO — CEMENTING SLURRY TEST REPORT")+"\n";
+out+="Generated: "+new Date().toLocaleString()+"\nTotal records: "+records.length+"\n\n";
+records.forEach((r,i)=>{out+=`${i+1}. Sample ID: ${r.sampleId}\nCountry: ${r.country}\nWell / asset: ${r.well}\nCement type: ${r.cementType}\nDate: ${r.date}\nLaboratory: ${r.lab}\nDensity: ${r.densityVal}\nRheology: ${r.rheologyVal}\nThickening time: ${r.thickeningVal}\nFluid loss: ${r.fluidLossVal}\nCompressive strength: ${r.strengthVal}\nFree fluid: ${r.freeFluidVal}\nMethod: ${r.method}\nStatus: ${r.status}\nNotes: ${r.notes}\n\n`;});
+out+="DEMO ONLY. This report does not certify cement slurry suitability or well integrity.";
+downloadFile("worker-pro-cementing-slurry-report.txt",out,"text/plain;charset=utf-8");
+}
+renderRecords();
+</script>
+</body>
+</html>
