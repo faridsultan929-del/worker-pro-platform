@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Separator Performance Testing</title>
+<style>
+:root{
+  --dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;
+  --bg:#f4f7f5;--white:#fff;--text:#18352a;--muted:#64776d;
+  --border:#dce7df;--red:#a83232;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.languages{position:sticky;top:0;z-index:20;background:var(--dark);
+  padding:10px;display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+.languages button{border:1px solid #6b927c;background:transparent;color:white;
+  padding:8px 11px;border-radius:7px;cursor:pointer;font-weight:bold}
+.languages button.active,.languages button:hover{background:var(--lime);color:var(--dark)}
+header{background:linear-gradient(130deg,var(--dark),var(--green));color:white;
+  padding:25px 16px;text-align:center}
+.logo{font-size:28px;font-weight:900;letter-spacing:1px}
+.logo span{color:var(--lime)}
+header p{margin:8px 0;color:#e2f2e8}
+.tag{display:inline-block;background:var(--lime);color:var(--dark);
+  padding:7px 12px;border-radius:20px;font-weight:bold;margin-top:8px}
+nav{background:white;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;
+  padding:12px;border-bottom:1px solid var(--border)}
+nav a{color:var(--green);text-decoration:none;font-weight:bold;font-size:13px;
+  padding:7px 9px;border-radius:6px}
+nav a:hover{background:#e8f4ec}
+main{max-width:1250px;margin:auto;padding:18px}
+h1{font-size:26px;color:var(--dark);margin:8px 0}
+h2{font-size:19px;color:var(--dark);margin-top:0}
+.intro{line-height:1.6;color:#52665b}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+.stat,.panel{background:white;border:1px solid var(--border);border-radius:12px;
+  padding:16px;box-shadow:0 2px 8px #0a40200a}
+.stat small{display:block;color:var(--muted);margin-bottom:8px}
+.stat strong{font-size:26px;color:var(--green)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:15px}
+label{display:block;font-size:13px;font-weight:bold;margin-bottom:5px;color:#345342}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cbd9cf;
+  border-radius:7px;font:inherit;background:white;color:var(--text)}
+textarea{min-height:75px;resize:vertical}
+.field{margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button.action{border:0;border-radius:7px;background:var(--green);color:white;
+  padding:10px 13px;font-weight:bold;cursor:pointer;margin:3px 3px 3px 0}
+button.action:hover{background:var(--dark)}
+button.secondary{background:#e6f1e9;color:var(--dark);border:1px solid var(--border)}
+button.danger{background:#a83232}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:9px;margin:12px 0}
+.table-wrap{overflow-x:auto;margin-top:12px}
+table{border-collapse:collapse;width:100%;min-width:850px;background:white}
+th,td{padding:10px;border-bottom:1px solid var(--border);text-align:left;
+  font-size:13px;vertical-align:top}
+th{background:#e9f3ec;color:var(--dark)}
+tr:hover td{background:#f8fbf8}
+.status{display:inline-block;border-radius:20px;padding:5px 8px;
+  background:#fff0d5;color:#80551b;font-weight:bold;font-size:11px}
+.status.complete{background:#dff5e5;color:#176339}
+.status.draft{background:#e9edf0;color:#4b5c64}
+.workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:12px 0}
+.step{border:1px solid var(--border);border-radius:9px;padding:12px;background:#f8fbf8}
+.step b{color:var(--green);display:block;margin-bottom:5px}
+.note{background:#fff7df;border-left:4px solid #d6a32e;padding:12px;
+  border-radius:5px;line-height:1.5;font-size:13px;margin:16px 0}
+footer{text-align:center;padding:20px;background:var(--dark);color:white;margin-top:25px}
+.muted{font-size:12px;color:var(--muted)}
+.empty{padding:20px;text-align:center;color:var(--muted)}
+@media(max-width:850px){
+ .layout{grid-template-columns:1fr}
+ .stats{grid-template-columns:repeat(2,1fr)}
+ .workflow{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:500px){
+ main{padding:11px}
+ .grid2,.filters{grid-template-columns:1fr}
+ h1{font-size:22px}
+ .stat{padding:12px}
+ .stat strong{font-size:22px}
+}
+</style>
+</head>
+<body>
+
+<div class="languages" aria-label="Language selector">
+  <button class="active" data-lang="RU">RU</button>
+  <button data-lang="AZ">AZ</button>
+  <button data-lang="EN">EN</button>
+  <button data-lang="TR">TR</button>
+  <button data-lang="DE">DE</button>
+  <button data-lang="AR">AR</button>
+  <button data-lang="ES">ES</button>
+  <button data-lang="FR">FR</button>
+  <button data-lang="IT">IT</button>
+</div>
+
+<header>
+  <div class="logo">WORKER <span>PRO</span></div>
+  <p data-i18n="subtitle">Глобальная промышленная платформа</p>
+  <div class="tag">№284 · SEPARATOR PERFORMANCE TESTING</div>
+</header>
+
+<nav>
+  <a href="../index.html" data-i18n="home">Главная</a>
+  <a href="../production/index.html" data-i18n="production">Производство</a>
+  <a href="../testing/index.html" data-i18n="testing">Испытания</a>
+  <a href="../quality/index.html" data-i18n="quality">Качество</a>
+  <a href="../documents/index.html" data-i18n="documents">Документы</a>
+  <a href="../companies/index.html" data-i18n="companies">Компании</a>
+  <a href="../orders/index.html" data-i18n="orders">Заказы</a>
+  <a href="../logistics/index.html" data-i18n="logistics">Логистика</a>
+  <a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+
+<main>
+  <h1 data-i18n="title">Испытания производительности сепараторов</h1>
+  <p class="intro" data-i18n="intro">
+    Раздел для регистрации испытаний промышленных сепараторов нефти и газа:
+    параметров входного и выходного потока, давления, температуры, расхода,
+    наблюдений за разделением фаз и ссылок на отчёты.
+  </p>
+
+  <div class="stats">
+    <div class="stat"><small data-i18n="total">Всего записей</small><strong id="totalCount">0</strong></div>
+    <div class="stat"><small data-i18n="review">На проверке</small><strong id="reviewCount">0</strong></div>
+    <div class="stat"><small data-i18n="complete">Завершено</small><strong id="completeCount">0</strong></div>
+    <div class="stat"><small data-i18n="types">Типы сепараторов</small><strong id="typeCount">0</strong></div>
+  </div>
+
+  <section class="panel">
+    <h2 data-i18n="workflowTitle">Рабочий процесс</h2>
+    <div class="workflow">
+      <div class="step"><b>01</b><span data-i18n="step1">Регистрация оборудования и образца</span></div>
+      <div class="step"><b>02</b><span data-i18n="step2">Внесение параметров испытания</span></div>
+      <div class="step"><b>03</b><span data-i18n="step3">Проверка записей и наблюдений</span></div>
+      <div class="step"><b>04</b><span data-i18n="step4">Экспорт данных и отчёт</span></div>
+    </div>
+  </section>
+
+  <div class="layout" style="margin-top:15px">
+    <section class="panel">
+      <h2 data-i18n="formTitle">Новая запись испытания</h2>
+      <form id="testForm">
+        <div class="grid2">
+          <div class="field">
+            <label for="recordId" data-i18n="recordId">ID записи</label>
+            <input id="recordId" required placeholder="SEP-284-007">
+          </div>
+          <div class="field">
+            <label for="country" data-i18n="country">Страна</label>
+            <input id="country" required placeholder="Azerbaijan">
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="asset" data-i18n="asset">Объект / месторождение</label>
+            <input id="asset" required>
+          </div>
+          <div class="field">
+            <label for="separatorType" data-i18n="separatorType">Тип сепаратора</label>
+            <select id="separatorType" required>
+              <option value="Two-phase">Two-phase / двухфазный</option>
+              <option value="Three-phase">Three-phase / трёхфазный</option>
+              <option value="Test separator">Test separator / испытательный</option>
+              <option value="Gas-liquid">Gas-liquid / газожидкостный</option>
+              <option value="Other">Other / другой</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="manufacturer" data-i18n="manufacturer">Производитель</label>
+            <input id="manufacturer">
+          </div>
+          <div class="field">
+            <label for="model" data-i18n="model">Модель / серийный номер</label>
+            <input id="model">
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="testDate" data-i18n="date">Дата испытания</label>
+            <input id="testDate" type="date" required>
+          </div>
+          <div class="field">
+            <label for="technician" data-i18n="technician">Лаборатория / специалист</label>
+            <input id="technician">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="stream" data-i18n="stream">Описание входного потока</label>
+          <input id="stream" placeholder="Gas, oil, water mixture">
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="inletPressure" data-i18n="inletPressure">Входное давление (единицы)</label>
+            <input id="inletPressure" placeholder="e.g. 12 bar">
+          </div>
+          <div class="field">
+            <label for="outletPressure" data-i18n="outletPressure">Выходное давление (единицы)</label>
+            <input id="outletPressure" placeholder="e.g. 10 bar">
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="temperature" data-i18n="temperature">Температура (единицы)</label>
+            <input id="temperature" placeholder="e.g. 35 °C">
+          </div>
+          <div class="field">
+            <label for="diffPressure" data-i18n="diffPressure">Перепад давления (единицы)</label>
+            <input id="diffPressure" placeholder="e.g. 2 bar">
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="gasFlow" data-i18n="gasFlow">Расход газа (единицы)</label>
+            <input id="gasFlow" placeholder="e.g. 1200 m³/h">
+          </div>
+          <div class="field">
+            <label for="oilFlow" data-i18n="oilFlow">Расход нефти / жидкости</label>
+            <input id="oilFlow" placeholder="e.g. 45 m³/h">
+          </div>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="waterFlow" data-i18n="waterFlow">Расход воды (единицы)</label>
+            <input id="waterFlow" placeholder="e.g. 8 m³/h">
+          </div>
+          <div class="field">
+            <label for="method" data-i18n="method">Метод / стандарт испытания</label>
+            <input id="method">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="levelObservations" data-i18n="levelObservations">Наблюдения за уровнями фаз</label>
+          <textarea id="levelObservations"></textarea>
+        </div>
+        <div class="field">
+          <label for="carryover" data-i18n="carryover">Наблюдения за уносом жидкости / газа</label>
+          <textarea id="carryover"></textarea>
+        </div>
+
+        <div class="grid2">
+          <div class="field">
+            <label for="status" data-i18n="status">Статус записи</label>
+            <select id="status">
+              <option value="Review">Review / На проверке</option>
+              <option value="Draft">Draft / Черновик</option>
+              <option value="Complete">Complete / Завершено</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="reportRef" data-i18n="reportRef">Ссылка на отчёт</label>
+            <input id="reportRef">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="remarks" data-i18n="remarks">Замечания / дальнейшие действия</label>
+          <textarea id="remarks"></textarea>
+        </div>
+        <div class="field">
+          <label for="notes" data-i18n="notes">Примечания</label>
+          <textarea id="notes"></textarea>
+        </div>
+
+        <button class="action" type="submit" data-i18n="save">Сохранить запись</button>
+        <button class="action secondary" type="reset" data-i18n="clear">Очистить форму</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <h2 data-i18n="recordsTitle">Журнал испытаний</h2>
+      <div class="filters">
+        <input id="search" placeholder="Поиск по ID, объекту, производителю..." data-i18n-placeholder="searchPlaceholder">
+        <select id="statusFilter">
+          <option value="" data-i18n="allStatuses">Все статусы</option>
+          <option value="Review">Review</option>
+          <option value="Draft">Draft</option>
+          <option value="Complete">Complete</option>
+        </select>
+        <select id="typeFilter">
+          <option value="" data-i18n="allTypes">Все типы</option>
+          <option value="Two-phase">Two-phase</option>
+          <option value="Three-phase">Three-phase</option>
+          <option value="Test separator">Test separator</option>
+          <option value="Gas-liquid">Gas-liquid</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="toolbar">
+        <button class="action" id="exportCsv" type="button" data-i18n="exportCsv">Экспорт CSV</button>
+        <button class="action" id="makeReport" type="button" data-i18n="makeReport">Сформировать отчёт</button>
+        <button class="action secondary" id="resetDemo" type="button" data-i18n="resetDemo">Восстановить демо-данные</button>
+      </div>
+      <p class="muted" data-i18n="demoHint">
+        Данные примеров предназначены только для демонстрации. Используйте свои записи для реальной работы.
+      </p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="thId">ID / дата</th>
+              <th data-i18n="thAsset">Объект / тип</th>
+              <th data-i18n="thEquipment">Оборудование</th>
+              <th data-i18n="thConditions">Параметры испытания</th>
+              <th data-i18n="thStatus">Статус</th>
+              <th data-i18n="thActions">Действия</th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody"></tbody>
+        </table>
+      </div>
+      <p id="emptyMessage" class="empty" hidden data-i18n="noRecords">Записи не найдены.</p>
+    </section>
+  </div>
+
+  <div class="note">
+    <strong data-i18n="disclaimerTitle">Важное уведомление</strong><br>
+    <span data-i18n="disclaimer">
+      Эта страница является демонстрационным журналом данных, а не сертифицированной системой испытаний.
+      Она не подтверждает эффективность разделения, производительность, допустимое давление,
+      безопасность эксплуатации или соответствие нормативам. Критерии оценки определяются
+      применимыми стандартами, спецификацией оборудования и квалифицированными специалистами.
+      Не используйте демонстрационные значения для управления технологическим процессом.
+    </span>
+  </div>
+</main>
+
+<footer>
+  WORKER PRO · Separator Performance Testing · №284
+  <div class="muted" style="color:#d5e7db;margin-top:7px">F.S. · Demo version</div>
+</footer>
+
+<script>
+const translations = {
+  RU:{
+    subtitle:"Глобальная промышленная платформа",home:"Главная",production:"Производство",
+    testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",
+    orders:"Заказы",logistics:"Логистика",tracking:"Отслеживание",
+    title:"Испытания производительности сепараторов",
+    intro:"Раздел для регистрации испытаний промышленных сепараторов нефти и газа: параметров входного и выходного потока, давления, температуры, расхода, наблюдений за разделением фаз и ссылок на отчёты.",
+    total:"Всего записей",review:"На проверке",complete:"Завершено",types:"Типы сепараторов",
+    workflowTitle:"Рабочий процесс",step1:"Регистрация оборудования и образца",
+    step2:"Внесение параметров испытания",step3:"Проверка записей и наблюдений",
+    step4:"Экспорт данных и отчёт",formTitle:"Новая запись испытания",
+    recordId:"ID записи",country:"Страна",asset:"Объект / месторождение",
+    separatorType:"Тип сепаратора",manufacturer:"Производитель",
+    model:"Модель / серийный номер",date:"Дата испытания",
+    technician:"Лаборатория / специалист",stream:"Описание входного потока",
+    inletPressure:"Входное давление (единицы)",outletPressure:"Выходное давление (единицы)",
+    temperature:"Температура (единицы)",diffPressure:"Перепад давления (единицы)",
+    gasFlow:"Расход газа (единицы)",oilFlow:"Расход нефти / жидкости",
+    waterFlow:"Расход воды (единицы)",method:"Метод / стандарт испытания",
+    levelObservations:"Наблюдения за уровнями фаз",
+    carryover:"Наблюдения за уносом жидкости / газа",status:"Статус записи",
+    reportRef:"Ссылка на отчёт",remarks:"Замечания / дальнейшие действия",
+    notes:"Примечания",save:"Сохранить запись",clear:"Очистить форму",
+    recordsTitle:"Журнал испытаний",searchPlaceholder:"Поиск по ID, объекту, производителю...",
+    allStatuses:"Все статусы",allTypes:"Все типы",exportCsv:"Экспорт CSV",
+    makeReport:"Сформировать отчёт",resetDemo:"Восстановить демо-данные",
+    demoHint:"Данные примеров предназначены только для демонстрации. Используйте свои записи для реальной работы.",
+    thId:"ID / дата",thAsset:"Объект / тип",thEquipment:"Оборудование",
+    thConditions:"Параметры испытания",thStatus:"Статус",thActions:"Действия",
+    noRecords:"Записи не найдены.",disclaimerTitle:"Важное уведомление",
+    disclaimer:"Эта страница является демонстрационным журналом данных, а не сертифицированной системой испытаний. Она не подтверждает эффективность разделения, производительность, допустимое давление, безопасность эксплуатации или соответствие нормативам. Критерии оценки определяются применимыми стандартами, спецификацией оборудования и квалифицированными специалистами. Не используйте демонстрационные значения для управления технологическим процессом.",
+    delete:"Удалить",edit:"Загрузить",confirmDelete:"Удалить эту запись?",
+    saved:"Запись добавлена в журнал.",csvDone:"CSV-файл подготовлен.",
+    reportDone:"Текстовый отчёт подготовлен.",noExport:"Нет записей для экспорта.",
+    idRequired:"Укажите ID записи.",demoRestored:"Демо-данные восстановлены.",
+    units:"Указывайте единицы измерения для всех числовых значений."
+  },
+  EN:{
+    subtitle:"Global Industrial Platform",home:"Home",production:"Production",testing:"Testing",
+    quality:"Quality",documents:"Documents",companies:"Companies",orders:"Orders",
+    logistics:"Logistics",tracking:"Tracking",title:"Separator Performance Testing",
+    intro:"Register industrial oil and gas separator test records, including inlet and outlet conditions, pressure, temperature, flow rates, phase-separation observations and report references.",
+    total:"Total records",review:"Under review",complete:"Completed",types:"Separator types",
+    workflowTitle:"Workflow",step1:"Register equipment and sample",step2:"Enter test parameters",
+    step3:"Review records and observations",step4:"Export data and report",
+    formTitle:"New test record",recordId:"Record ID",country:"Country",
+    asset:"Asset / field",separatorType:"Separator type",manufacturer:"Manufacturer",
+    model:"Model / serial number",date:"Test date",technician:"Lab / technician",
+    stream:"Inlet stream description",inletPressure:"Inlet pressure (units)",
+    outletPressure:"Outlet pressure (units)",temperature:"Temperature (units)",
+    diffPressure:"Differential pressure (units)",gasFlow:"Gas flow (units)",
+    oilFlow:"Oil / liquid flow",waterFlow:"Water flow (units)",
+    method:"Test method / standard",levelObservations:"Phase level observations",
+    carryover:"Liquid / gas carryover observations",status:"Record status",
+    reportRef:"Report reference",remarks:"Remarks / follow-up",notes:"Notes",
+    save:"Save record",clear:"Clear form",recordsTitle:"Test register",
+    searchPlaceholder:"Search ID, asset, manufacturer...",allStatuses:"All statuses",
+    allTypes:"All types",exportCsv:"Export CSV",makeReport:"Generate report",
+    resetDemo:"Restore demo data",demoHint:"Example data is for demonstration only. Use your own records for actual work.",
+    thId:"ID / date",thAsset:"Asset / type",thEquipment:"Equipment",
+    thConditions:"Test conditions",thStatus:"Status",thActions:"Actions",
+    noRecords:"No records found.",disclaimerTitle:"Important notice",
+    disclaimer:"This page is a demonstration log, not a certified testing system. It does not certify separation efficiency, capacity, pressure rating, operational safety or regulatory compliance. Evaluation criteria must come from applicable standards, equipment specifications and qualified professionals. Do not use demonstration values to operate a process.",
+    delete:"Delete",edit:"Load",confirmDelete:"Delete this record?",
+    saved:"Record added to the register.",csvDone:"CSV file prepared.",
+    reportDone:"Text report prepared.",noExport:"No records to export.",
+    idRequired:"Enter a record ID.",demoRestored:"Demo data restored.",
+    units:"Include measurement units with all numeric values."
+  },
+  AZ:{
+    subtitle:"Qlobal Sənaye Platforması",home:"Ana səhifə",production:"İstehsalat",
+    testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",
+    orders:"Sifarişlər",logistics:"Logistika",tracking:"İzləmə",
+    title:"Separatorların məhsuldarlıq sınaqları",
+    intro:"Neft və qaz separatorlarının sınaq qeydlərini, giriş və çıxış axınını, təzyiqi, temperaturu, sərfiyyatı və fazaların ayrılması müşahidələrini qeyd edin.",
+    total:"Bütün qeydlər",review:"Yoxlamada",complete:"Tamamlanıb",types:"Separator növləri",
+    workflowTitle:"İş prosesi",step1:"Avadanlıq və nümunənin qeydiyyatı",
+    step2:"Sınaq parametrlərinin daxil edilməsi",step3:"Qeydlərin yoxlanması",
+    step4:"Məlumatların ixracı və hesabat",formTitle:"Yeni sınaq qeydi",
+    recordId:"Qeyd ID-si",country:"Ölkə",asset:"Obyekt / yataq",
+    separatorType:"Separator növü",manufacturer:"İstehsalçı",model:"Model / seriya nömrəsi",
+    date:"Sınaq tarixi",technician:"Laboratoriya / mütəxəssis",
+    stream:"Giriş axınının təsviri",inletPressure:"Giriş təzyiqi (vahid)",
+    outletPressure:"Çıxış təzyiqi (vahid)",temperature:"Temperatur (vahid)",
+    diffPressure:"Təzyiq fərqi (vahid)",gasFlow:"Qaz sərfi (vahid)",
+    oilFlow:"Neft / maye sərfi",waterFlow:"Su sərfi (vahid)",
+    method:"Sınaq metodu / standart",levelObservations:"Fazaların səviyyəsi üzrə müşahidələr",
+    carryover:"Maye / qaz daşınması üzrə müşahidələr",status:"Qeydin statusu",
+    reportRef:"Hesabata istinad",remarks:"Qeydlər / növbəti tədbirlər",notes:"Əlavə qeydlər",
+    save:"Qeydi saxla",clear:"Formanı təmizlə",recordsTitle:"Sınaq jurnalı",
+    searchPlaceholder:"ID, obyekt və istehsalçı üzrə axtarış...",
+    allStatuses:"Bütün statuslar",allTypes:"Bütün növlər",exportCsv:"CSV ixracı",
+    makeReport:"Hesabat yarat",resetDemo:"Demo məlumatlarını bərpa et",
+    demoHint:"Nümunə məlumatları yalnız nümayiş üçündür.",
+    thId:"ID / tarix",thAsset:"Obyekt / növ",thEquipment:"Avadanlıq",
+    thConditions:"Sınaq parametrləri",thStatus:"Status",thActions:"Əməliyyatlar",
+    noRecords:"Qeyd tapılmadı.",disclaimerTitle:"Vacib bildiriş",
+    disclaimer:"Bu səhifə nümayiş jurnalıdır, sertifikatlaşdırılmış sınaq sistemi deyil. Ayırma səmərəliliyini, məhsuldarlığı, təzyiq reytinqini, istismar təhlükəsizliyini və ya normativ uyğunluğu təsdiqləmir. Qiymətləndirmə tətbiq olunan standartlara, avadanlıq spesifikasiyasına və ixtisaslı mütəxəssislərə əsaslanmalıdır. Nümayiş məlumatlarından prosesin idarə olunması üçün istifadə etməyin.",
+    delete:"Sil",edit:"Yüklə",confirmDelete:"Bu qeyd silinsin?",
+    saved:"Qeyd jurnala əlavə edildi.",csvDone:"CSV faylı hazırlandı.",
+    reportDone:"Mətn hesabatı hazırlandı.",noExport:"İxrac üçün qeyd yoxdur.",
+    idRequired:"Qeyd ID-sini daxil edin.",demoRestored:"Demo məlumatları bərpa edildi.",
+    units:"Bütün rəqəmsal dəyərlərdə ölçü vahidlərini göstərin."
+  }
+};
+
+const fallback = {
+  TR:{subtitle:"Küresel Endüstriyel Platform",home:"Ana sayfa",production:"Üretim",testing:"Testler",quality:"Kalite",documents:"Belgeler",companies:"Şirketler",orders:"Siparişler",logistics:"Lojistik",tracking:"Takip",title:"Separatör Performans Testleri",formTitle:"Yeni test kaydı",recordsTitle:"Test kayıtları",save:"Kaydı kaydet",clear:"Formu temizle",exportCsv:"CSV dışa aktar",makeReport:"Rapor oluştur",resetDemo:"Demo verilerini geri yükle",total:"Toplam kayıt",review:"İncelemede",complete:"Tamamlandı",types:"Separatör türleri",noRecords:"Kayıt bulunamadı.",delete:"Sil",edit:"Yükle",status:"Kayıt durumu",country:"Ülke",asset:"Tesis / saha",recordId:"Kayıt ID",date:"Test tarihi",manufacturer:"Üretici",model:"Model / seri numarası",technician:"Laboratuvar / uzman",remarks:"Notlar / takip işlemi",notes:"Notlar",method:"Test yöntemi / standart",disclaimerTitle:"Önemli bildirim",disclaimer:"Bu sayfa yalnızca demo kaydıdır. Ayırma verimliliğini, kapasiteyi, basınç sınıfını, işletme güvenliğini veya mevzuata uygunluğu belgelemez."},
+  DE:{subtitle:"Globale Industrieplattform",home:"Startseite",production:"Produktion",testing:"Prüfungen",quality:"Qualität",documents:"Dokumente",companies:"Unternehmen",orders:"Bestellungen",logistics:"Logistik",tracking:"Sendungsverfolgung",title:"Leistungsprüfung von Separatoren",formTitle:"Neuer Prüfdatensatz",recordsTitle:"Prüfregister",save:"Datensatz speichern",clear:"Formular leeren",exportCsv:"CSV exportieren",makeReport:"Bericht erstellen",resetDemo:"Demodaten wiederherstellen",total:"Datensätze gesamt",review:"In Prüfung",complete:"Abgeschlossen",types:"Separatortypen",noRecords:"Keine Datensätze gefunden.",delete:"Löschen",edit:"Laden",status:"Datensatzstatus",country:"Land",asset:"Anlage / Feld",recordId:"Datensatz-ID",date:"Prüfdatum",manufacturer:"Hersteller",model:"Modell / Seriennummer",technician:"Labor / Fachkraft",remarks:"Bemerkungen / Folgemaßnahmen",notes:"Notizen",method:"Prüfmethode / Norm",disclaimerTitle:"Wichtiger Hinweis",disclaimer:"Diese Seite ist ein Demo-Protokoll und keine zertifizierte Prüfanlage. Sie bescheinigt weder Trennleistung noch Kapazität, Druckfestigkeit, Betriebssicherheit oder Normkonformität."},
+  AR:{subtitle:"منصة صناعية عالمية",home:"الرئيسية",production:"الإنتاج",testing:"الاختبارات",quality:"الجودة",documents:"الوثائق",companies:"الشركات",orders:"الطلبات",logistics:"الخدمات اللوجستية",tracking:"التتبع",title:"اختبار أداء الفواصل",formTitle:"سجل اختبار جديد",recordsTitle:"سجل الاختبارات",save:"حفظ السجل",clear:"مسح النموذج",exportCsv:"تصدير CSV",makeReport:"إنشاء تقرير",resetDemo:"استعادة البيانات التجريبية",total:"إجمالي السجلات",review:"قيد المراجعة",complete:"مكتمل",types:"أنواع الفواصل",noRecords:"لم يتم العثور على سجلات.",delete:"حذف",edit:"تحميل",status:"حالة السجل",country:"الدولة",asset:"الموقع / الحقل",recordId:"معرّف السجل",date:"تاريخ الاختبار",manufacturer:"الشركة المصنعة",model:"الطراز / الرقم التسلسلي",technician:"المختبر / المختص",remarks:"ملاحظات / متابعة",notes:"ملاحظات",method:"طريقة الاختبار / المعيار",disclaimerTitle:"تنبيه مهم",disclaimer:"هذه الصفحة سجل تجريبي وليست نظام اختبار معتمداً. ولا تصادق على كفاءة الفصل أو السعة أو تصنيف الضغط أو سلامة التشغيل أو الامتثال."},
+  ES:{subtitle:"Plataforma Industrial Global",home:"Inicio",production:"Producción",testing:"Pruebas",quality:"Calidad",documents:"Documentos",companies:"Empresas",orders:"Pedidos",logistics:"Logística",tracking:"Seguimiento",title:"Pruebas de rendimiento de separadores",formTitle:"Nuevo registro de prueba",recordsTitle:"Registro de pruebas",save:"Guardar registro",clear:"Limpiar formulario",exportCsv:"Exportar CSV",makeReport:"Generar informe",resetDemo:"Restaurar datos de demostración",total:"Registros totales",review:"En revisión",complete:"Completado",types:"Tipos de separador",noRecords:"No se encontraron registros.",delete:"Eliminar",edit:"Cargar",status:"Estado del registro",country:"País",asset:"Instalación / campo",recordId:"ID del registro",date:"Fecha de prueba",manufacturer:"Fabricante",model:"Modelo / número de serie",technician:"Laboratorio / especialista",remarks:"Observaciones / seguimiento",notes:"Notas",method:"Método / norma de prueba",disclaimerTitle:"Aviso importante",disclaimer:"Esta página es un registro de demostración, no un sistema de pruebas certificado. No certifica la eficiencia de separación, capacidad, presión nominal, seguridad operativa ni cumplimiento normativo."},
+  FR:{subtitle:"Plateforme industrielle mondiale",home:"Accueil",production:"Production",testing:"Essais",quality:"Qualité",documents:"Documents",companies:"Entreprises",orders:"Commandes",logistics:"Logistique",tracking:"Suivi",title:"Essais de performance des séparateurs",formTitle:"Nouvel enregistrement d’essai",recordsTitle:"Registre des essais",save:"Enregistrer",clear:"Effacer le formulaire",exportCsv:"Exporter CSV",makeReport:"Créer un rapport",resetDemo:"Restaurer les données de démonstration",total:"Nombre d’enregistrements",review:"En révision",complete:"Terminé",types:"Types de séparateurs",noRecords:"Aucun enregistrement trouvé.",delete:"Supprimer",edit:"Charger",status:"Statut",country:"Pays",asset:"Installation / champ",recordId:"ID d’enregistrement",date:"Date d’essai",manufacturer:"Fabricant",model:"Modèle / numéro de série",technician:"Laboratoire / spécialiste",remarks:"Remarques / suivi",notes:"Notes",method:"Méthode / norme d’essai",disclaimerTitle:"Avis important",disclaimer:"Cette page est un registre de démonstration, pas un système d’essai certifié. Elle ne certifie ni l’efficacité de séparation, ni la capacité, ni la pression nominale, ni la sécurité d’exploitation ou la conformité."},
+  IT:{subtitle:"Piattaforma industriale globale",home:"Home",production:"Produzione",testing:"Prove",quality:"Qualità",documents:"Documenti",companies:"Aziende",orders:"Ordini",logistics:"Logistica",tracking:"Tracciamento",title:"Prove di prestazione dei separatori",formTitle:"Nuova registrazione di prova",recordsTitle:"Registro delle prove",save:"Salva registrazione",clear:"Pulisci modulo",exportCsv:"Esporta CSV",makeReport:"Crea rapporto",resetDemo:"Ripristina dati demo",total:"Registrazioni totali",review:"In revisione",complete:"Completato",types:"Tipi di separatore",noRecords:"Nessuna registrazione trovata.",delete:"Elimina",edit:"Carica",status:"Stato della registrazione",country:"Paese",asset:"Impianto / campo",recordId:"ID registrazione",date:"Data della prova",manufacturer:"Produttore",model:"Modello / numero di serie",technician:"Laboratorio / specialista",remarks:"Note / azioni successive",notes:"Note",method:"Metodo / norma di prova",disclaimerTitle:"Avviso importante",disclaimer:"Questa pagina è un registro dimostrativo, non un sistema di prova certificato. Non certifica efficienza di separazione, capacità, pressione nominale, sicurezza operativa o conformità normativa."}
+};
+
+let language = "RU";
+let records = [];
+
+const demoRecords = [
+ {
+ recordId:"SEP-284-001",country:"Azerbaijan",asset:"Demo Field A",
+ separatorType:"Three-phase",manufacturer:"Demo Manufacturer",model:"SEP-A100",
+ testDate:"2026-09-18",technician:"Demo Lab",stream:"Gas, oil and water",
+ inletPressure:"12 bar",outletPressure:"10 bar",temperature:"35 °C",
+ diffPressure:"2 bar",gasFlow:"1200 m³/h",oilFlow:"45 m³/h",waterFlow:"8 m³/h",
+ method:"Project test procedure",levelObservations:"Demo observation: stable level recorded",
+ carryover:"No verified conclusion entered",status:"Review",reportRef:"DEMO-REPORT-001",
+ remarks:"Example only",notes:"Illustrative record"
+ },
+ {
+ recordId:"SEP-284-002",country:"Turkey",asset:"Demo Processing Unit B",
+ separatorType:"Two-phase",manufacturer:"Example Industrial",model:"SEP-B220",
+ testDate:"2026-09-19",technician:"Example Team",stream:"Gas and liquid",
+ inletPressure:"18 bar",outletPressure:"16 bar",temperature:"42 °C",
+ diffPressure:"2 bar",gasFlow:"950 m³/h",oilFlow:"31 m³/h",waterFlow:"",
+ method:"Site procedure reference",levelObservations:"Demo observation recorded",
+ carryover:"Requires qualified review",status:"Draft",reportRef:"",
+ remarks:"Review source data",notes:"Illustrative record"
+ },
+ {
+ recordId:"SEP-284-003",country:"Italy",asset:"Demo Test Facility C",
+ separatorType:"Test separator",manufacturer:"Sample Equipment Co.",model:"TS-30",
+ testDate:"2026-09-20",technician:"Demo Test Team",stream:"Mixed production stream",
+ inletPressure:"8 bar",outletPressure:"7 bar",temperature:"28 °C",
+ diffPressure:"1 bar",gasFlow:"400 m³/h",oilFlow:"15 m³/h",waterFlow:"3 m³/h",
+ method:"Specified project method",levelObservations:"Observation recorded for demonstration",
+ carryover:"No acceptance decision made",status:"Complete",reportRef:"DEMO-REPORT-003",
+ remarks:"Example record completed",notes:"Not an engineering result"
+ }
+];
+
+const fields = [
+ "recordId","country","asset","separatorType","manufacturer","model","testDate",
+ "technician","stream","inletPressure","outletPressure","temperature","diffPressure",
+ "gasFlow","oilFlow","waterFlow","method","levelObservations","carryover","status",
+ "reportRef","remarks","notes"
+];
+
+function t(key){
+ return (translations[language] && translations[language][key]) ||
+        (fallback[language] && fallback[language][key]) ||
+        translations.RU[key] || key;
+}
+
+function applyLanguage(lang){
+ language = lang;
+ document.documentElement.lang = lang.toLowerCase();
+ document.querySelectorAll("[data-lang]").forEach(btn=>{
+   btn.classList.toggle("active",btn.dataset.lang===lang);
+ });
+ document.querySelectorAll("[data-i18n]").forEach(el=>{
+   const key = el.dataset.i18n;
+   const value = t(key);
+   if(value) el.textContent = value;
+ });
+ document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>{
+   el.placeholder = t(el.dataset.i18nPlaceholder);
+ });
+ render();
+}
+
+document.querySelectorAll("[data-lang]").forEach(btn=>{
+ btn.addEventListener("click",()=>applyLanguage(btn.dataset.lang));
+});
+
+function safe(value){
+ return String(value ?? "").replace(/[&<>"']/g, char=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ })[char]);
+}
+
+function statusClass(status){
+ if(status==="Complete") return "complete";
+ if(status==="Draft") return "draft";
+ return "";
+}
+
+function statusLabel(status){
+ if(status==="Complete") return t("complete");
+ if(status==="Draft") return "Draft";
+ return t("review");
+}
+
+function render(){
+ const query = document.getElementById("search").value.toLowerCase().trim();
+ const status = document.getElementById("statusFilter").value;
+ const type = document.getElementById("typeFilter").value;
+
+ const filtered = records.filter(r=>{
+   const searchable = fields.map(f=>r[f]||"").join(" ").toLowerCase();
+   return (!query || searchable.includes(query)) &&
+          (!status || r.status===status) &&
+          (!type || r.separatorType===type);
+ });
+
+ document.getElementById("totalCount").textContent = records.length;
+ document.getElementById("reviewCount").textContent =
+   records.filter(r=>r.status==="Review").length;
+ document.getElementById("completeCount").textContent =
+   records.filter(r=>r.status==="Complete").length;
+ document.getElementById("typeCount").textContent =
+   new Set(records.map(r=>r.separatorType)).size;
+
+ const body = document.getElementById("recordsBody");
+ body.innerHTML = "";
+
+ filtered.forEach((r)=>{
+   const originalIndex = records.indexOf(r);
+   const tr = document.createElement("tr");
+   tr.innerHTML = `
+    <td><strong>${safe(r.recordId)}</strong><br>${safe(r.testDate)}</td>
+    <td>${safe(r.asset)}<br><span class="muted">${safe(r.separatorType)}</span></td>
+    <td>${safe(r.manufacturer)}<br><span class="muted">${safe(r.model)}</span></td>
+    <td>
+      ${safe(r.inletPressure)} → ${safe(r.outletPressure)}<br>
+      T: ${safe(r.temperature)}<br>
+      Gas: ${safe(r.gasFlow)}<br>
+      Liquid: ${safe(r.oilFlow)}<br>
+      Water: ${safe(r.waterFlow)}
+    </td>
+    <td><span class="status ${statusClass(r.status)}">${safe(statusLabel(r.status))}</span></td>
+    <td>
+      <button class="action secondary" data-edit="${originalIndex}" type="button">${safe(t("edit"))}</button>
+      <button class="action danger" data-delete="${originalIndex}" type="button">${safe(t("delete"))}</button>
+    </td>`;
+   body.appendChild(tr);
+ });
+
+ document.getElementById("emptyMessage").hidden = filtered.length !== 0;
+}
+
+function downloadFile(filename, content, mime){
+ const blob = new Blob(["\uFEFF",content],{type:mime});
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement("a");
+ a.href = url;
+ a.download = filename;
+ document.body.appendChild(a);
+ a.click();
+ a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function csvCell(value){
+ return '"' + String(value ?? "").replace(/"/g,'""') + '"';
+}
+
+document.getElementById("testForm").addEventListener("submit",event=>{
+ event.preventDefault();
+ const item = {};
+ fields.forEach(key=>{
+   item[key] = document.getElementById(key).value.trim();
+ });
+
+ if(!item.recordId){
+   alert(t("idRequired"));
+   return;
+ }
+
+ const existing = records.findIndex(r=>r.recordId===item.recordId);
+ if(existing >= 0){
+   records[existing] = item;
+ }else{
+   records.unshift(item);
+ }
+
+ render();
+ event.target.reset();
+ alert(t("saved"));
+});
+
+document.getElementById("recordsBody").addEventListener("click",event=>{
+ const editButton = event.target.closest("[data-edit]");
+ const deleteButton = event.target.closest("[data-delete]");
+
+ if(editButton){
+   const index = Number(editButton.dataset.edit);
+   const item = records[index];
+   if(!item) return;
+   fields.forEach(key=>{
+     const input = document.getElementById(key);
+     if(input) input.value = item[key] || "";
+   });
+   document.getElementById("testForm").scrollIntoView({behavior:"smooth",block:"start"});
+ }
+
+ if(deleteButton){
+   const index = Number(deleteButton.dataset.delete);
+   if(!records[index]) return;
+   if(confirm(t("confirmDelete"))){
+     records.splice(index,1);
+     render();
+   }
+ }
+});
+
+["search","statusFilter","typeFilter"].forEach(id=>{
+ document.getElementById(id).addEventListener("input",render);
+ document.getElementById(id).addEventListener("change",render);
+});
+
+document.getElementById("exportCsv").addEventListener("click",()=>{
+ if(!records.length){
+   alert(t("noExport"));
+   return;
+ }
+ const headers = fields;
+ const rows = records.map(r=>headers.map(key=>csvCell(r[key])).join(","));
+ downloadFile("worker-pro-separator-tests.csv",
+   [headers.join(","),...rows].join("\r\n"),"text/csv;charset=utf-8");
+ alert(t("csvDone"));
+});
+
+document.getElementById("makeReport").addEventListener("click",()=>{
+ if(!records.length){
+   alert(t("noExport"));
+   return;
+ }
+ const lines = [
+  "WORKER PRO — Separator Performance Testing",
+  "Section 284",
+  "Generated: " + new Date().toISOString(),
+  "NOTE: Demo register only. Not a certification or safety assessment.",
+  ""
+ ];
+ records.forEach((r,i)=>{
+   lines.push("RECORD " + (i+1));
+   fields.forEach(key=>lines.push(key + ": " + (r[key] || "")));
+   lines.push("----------------------------------------");
+ });
+ downloadFile("worker-pro-separator-report.txt",lines.join("\r\n"),"text/plain;charset=utf-8");
+ alert(t("reportDone"));
+});
+
+document.getElementById("resetDemo").addEventListener("click",()=>{
+ records = demoRecords.map(r=>({...r}));
+ render();
+ alert(t("demoRestored"));
+});
+
+records = demoRecords.map(r=>({...r}));
+document.getElementById("testDate").value = new Date().toISOString().slice(0,10);
+applyLanguage("RU");
+</script>
+</body>
+</html>
