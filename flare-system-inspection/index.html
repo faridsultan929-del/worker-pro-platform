@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Flare System Inspection</title>
+<style>
+:root{--dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;--bg:#f4f7f5;--border:#d9e5dd;--muted:#607168}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#173528;line-height:1.5}
+.languages{position:sticky;top:0;z-index:10;background:var(--dark);padding:10px;display:flex;gap:7px;justify-content:center;flex-wrap:wrap;box-shadow:0 2px 8px #0002}
+.languages button{border:1px solid #ffffff55;background:#ffffff12;color:white;border-radius:7px;padding:8px 11px;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:var(--lime);color:var(--dark)}
+header{background:linear-gradient(130deg,var(--dark),var(--green));color:white;padding:28px 16px;text-align:center}
+.logo{display:inline-block;background:var(--lime);color:var(--dark);padding:6px 12px;border-radius:7px;font-weight:900;letter-spacing:1px}
+header h1{margin:14px 0 6px;font-size:clamp(24px,5vw,38px)}
+header p{margin:6px auto;max-width:850px}
+main{max-width:1200px;margin:auto;padding:18px}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+nav a{color:var(--green);background:white;border:1px solid var(--border);padding:8px 11px;border-radius:8px;text-decoration:none;font-weight:bold;font-size:14px}
+nav a:hover{background:var(--lime);color:var(--dark)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.stat,.card{background:white;border:1px solid var(--border);border-radius:13px;padding:17px;box-shadow:0 3px 12px #063d2508}
+.stat span{display:block;color:var(--muted);font-size:13px}
+.stat strong{font-size:27px;color:var(--green)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{margin-bottom:16px}
+.card h2{margin:0 0 14px;color:var(--dark);font-size:21px}
+.card h3{color:var(--green)}
+label{display:block;font-weight:bold;font-size:13px;margin-bottom:5px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cbd9d0;border-radius:8px;background:white;color:#173528;font:inherit;min-width:0}
+textarea{min-height:80px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:2px solid #b7ff3577;border-color:var(--green)}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{min-width:0}
+.full{grid-column:1/-1}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn{border:0;border-radius:8px;background:var(--green);color:white;padding:10px 14px;font-weight:bold;cursor:pointer}
+.btn:hover{filter:brightness(1.1)}
+.btn.secondary{background:#e9f2ec;color:var(--dark);border:1px solid var(--border)}
+.btn.lime{background:var(--lime);color:var(--dark)}
+.toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:9px}
+table{width:100%;border-collapse:collapse;min-width:1000px;background:white}
+th,td{padding:10px;border-bottom:1px solid #e5ece7;text-align:left;font-size:13px}
+th{background:#eaf3ed;color:var(--dark);white-space:nowrap}
+tbody tr:hover{background:#f6faf7}
+.pill{display:inline-block;border-radius:20px;padding:4px 8px;font-size:12px;font-weight:bold;background:#edf1ee}
+.pill.review{background:#fff1ce;color:#795500}
+.pill.recorded{background:#dff4e5;color:#145b30}
+.pill.maintenance{background:#fbe2df;color:#8a2e24}
+.notice{padding:13px;border-radius:9px;background:#fff7df;border:1px solid #ead79a;color:#624d16;font-size:13px}
+.muted{color:var(--muted);font-size:13px}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:13px}
+[dir="rtl"]{text-align:right}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:1fr}.toolbar{grid-template-columns:1fr}main{padding:12px}}
+@media(max-width:440px){.formgrid{grid-template-columns:1fr}.full{grid-column:auto}.stat{padding:12px}.stat strong{font-size:23px}}
+@media print{.languages,nav,.actions,.toolbar,.delete-record{display:none!important}body{background:white}.card,.stat{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="languages">
+<button data-lang="az">AZ</button><button data-lang="ru" class="active">RU</button>
+<button data-lang="en">EN</button><button data-lang="tr">TR</button>
+<button data-lang="de">DE</button><button data-lang="ar">AR</button>
+<button data-lang="es">ES</button><button data-lang="fr">FR</button><button data-lang="it">IT</button>
+</div>
+
+<header>
+<div class="logo">WORKER PRO</div>
+<h1 data-i18n="title">№289 — Инспекция факельных систем</h1>
+<p data-i18n="subtitle">Журнал осмотра оборудования промышленных факельных установок</p>
+<p><span data-i18n="platform">Глобальная промышленная платформа</span> · <span data-i18n="demo">Демонстрационный модуль</span></p>
+</header>
+
+<main>
+<nav>
+<a href="../index.html" data-i18n="home">Главная</a>
+<a href="../production/index.html" data-i18n="production">Производство</a>
+<a href="../testing/index.html" data-i18n="testing">Испытания</a>
+<a href="../quality/index.html" data-i18n="quality">Качество</a>
+<a href="../documents/index.html" data-i18n="documents">Документы</a>
+<a href="../companies/index.html" data-i18n="companies">Компании</a>
+<a href="../orders/index.html" data-i18n="orders">Заказы</a>
+<a href="../logistics/index.html" data-i18n="logistics">Логистика</a>
+<a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+
+<section class="stats">
+<div class="stat"><span data-i18n="total">Всего записей</span><strong id="statTotal">0</strong></div>
+<div class="stat"><span data-i18n="reviewCount">Требуют проверки</span><strong id="statReview">0</strong></div>
+<div class="stat"><span data-i18n="maintenanceCount">Обслуживание</span><strong id="statMaintenance">0</strong></div>
+<div class="stat"><span data-i18n="recordedCount">Зафиксировано</span><strong id="statRecorded">0</strong></div>
+</section>
+
+<div class="notice" data-i18n="warning">
+Важно: это демонстрационный журнал. Он не подтверждает безопасную работу факельной установки, исправность оборудования или соответствие нормативам. Осмотры и технические решения выполняются квалифицированными специалистами по утверждённым процедурам.
+</div>
+
+<section class="grid" style="margin-top:16px">
+<div class="card">
+<h2 data-i18n="newRecord">Новая запись инспекции</h2>
+<form id="recordForm">
+<div class="formgrid">
+<div class="field"><label for="recordId" data-i18n="recordId">ID записи</label><input id="recordId" required placeholder="FLR-289-001"></div>
+<div class="field"><label for="country" data-i18n="country">Страна</label>
+<select id="country"><option>Azerbaijan</option><option>Turkey</option><option>Germany</option><option>Italy</option><option>China</option><option>USA</option><option>Other</option></select></div>
+<div class="field"><label for="asset" data-i18n="asset">Объект / установка</label><input id="asset" required placeholder="Refinery / Gas Plant"></div>
+<div class="field"><label for="flareType" data-i18n="flareType">Тип факельной системы</label>
+<select id="flareType"><option>Elevated flare</option><option>Ground flare</option><option>Enclosed flare</option><option>Other / Unknown</option></select></div>
+<div class="field"><label for="component" data-i18n="component">Компонент оборудования</label>
+<select id="component"><option>Flare tip / burner</option><option>Pilot / ignition system</option><option>Flame monitoring</option><option>Stack / structure</option><option>Knockout drum</option><option>Header / piping</option><option>Instrument / sensor</option><option>Other</option></select></div>
+<div class="field"><label for="manufacturer" data-i18n="manufacturer">Производитель / модель</label><input id="manufacturer" placeholder="Manufacturer / Model"></div>
+<div class="field"><label for="serial" data-i18n="serial">Серийный номер / тег</label><input id="serial"></div>
+<div class="field"><label for="inspectionDate" data-i18n="inspectionDate">Дата осмотра</label><input id="inspectionDate" type="date" required></div>
+<div class="field"><label for="inspector" data-i18n="inspector">Инспектор / специалист</label><input id="inspector"></div>
+<div class="field"><label for="inspectionType" data-i18n="inspectionType">Тип инспекции</label>
+<select id="inspectionType"><option>Visual inspection</option><option>Document review</option><option>Instrument inspection</option><option>Maintenance inspection</option><option>Other</option></select></div>
+<div class="field"><label for="condition" data-i18n="condition">Наблюдаемое состояние</label>
+<select id="condition"><option>Not assessed</option><option>Observation recorded</option><option>Maintenance noted</option><option>Further review required</option></select></div>
+<div class="field"><label for="pilotStatus" data-i18n="pilotStatus">Сведения о запальнике</label>
+<select id="pilotStatus"><option>Not assessed</option><option>Record available</option><option>Observation noted</option><option>Not applicable</option></select></div>
+<div class="field"><label for="monitoring" data-i18n="monitoring">Контроль пламени / приборы</label>
+<select id="monitoring"><option>Not assessed</option><option>Record reviewed</option><option>Observation noted</option><option>Not applicable</option></select></div>
+<div class="field"><label for="maintenanceDate" data-i18n="maintenanceDate">Дата последнего обслуживания</label><input id="maintenanceDate" type="date"></div>
+<div class="field"><label for="status" data-i18n="status">Статус записи</label>
+<select id="status"><option value="Review">Review / Требует проверки</option><option value="Recorded">Recorded / Зафиксировано</option><option value="Maintenance">Maintenance / Обслуживание</option></select></div>
+<div class="field"><label for="report" data-i18n="report">Номер отчёта / документа</label><input id="report" placeholder="Report reference"></div>
+<div class="field full"><label for="observations" data-i18n="observations">Наблюдения / замечания</label><textarea id="observations" placeholder="Опишите фактические наблюдения, не делая автоматических выводов о безопасности"></textarea></div>
+<div class="field full"><label for="followup" data-i18n="followup">Необходимые последующие действия</label><textarea id="followup" placeholder="Ссылка на задачу или утверждённый план работ"></textarea></div>
+</div>
+<div class="actions">
+<button class="btn lime" type="submit" data-i18n="add">Добавить запись</button>
+<button class="btn secondary" type="reset" data-i18n="clear">Очистить форму</button>
+</div>
+</form>
+</div>
+
+<div class="card">
+<h2 data-i18n="workflow">Рабочий процесс</h2>
+<ol>
+<li data-i18n="step1">Определить объект, установку и компонент.</li>
+<li data-i18n="step2">Проверить доступные документы и историю обслуживания.</li>
+<li data-i18n="step3">Провести разрешённый осмотр по утверждённой процедуре.</li>
+<li data-i18n="step4">Записать наблюдения и ссылки на документы.</li>
+<li data-i18n="step5">Передать замечания ответственному специалисту.</li>
+</ol>
+<h3 data-i18n="scope">Что хранится в журнале</h3>
+<ul>
+<li data-i18n="scope1">Идентификация факельной установки и её компонентов.</li>
+<li data-i18n="scope2">Дата осмотра, тип инспекции и наблюдаемое состояние.</li>
+<li data-i18n="scope3">История обслуживания, замечания и ссылки на отчёты.</li>
+</ul>
+<p class="muted" data-i18n="scopeNote">Статус записи — это административная отметка, а не заключение о технической безопасности установки.</p>
+<div class="actions">
+<button class="btn" id="exportCsv" type="button" data-i18n="exportCsv">Экспорт CSV</button>
+<button class="btn secondary" id="downloadReport" type="button" data-i18n="downloadReport">Скачать текстовый отчёт</button>
+<button class="btn secondary" id="printPage" type="button" data-i18n="print">Печать</button>
+</div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-i18n="records">Журнал инспекций</h2>
+<div class="toolbar">
+<input id="search" data-placeholder="searchPlaceholder" placeholder="Поиск по ID, объекту, компоненту...">
+<select id="filterStatus"><option value="" data-i18n="allStatuses">Все статусы</option><option value="Review">Review</option><option value="Recorded">Recorded</option><option value="Maintenance">Maintenance</option></select>
+<select id="filterType"><option value="" data-i18n="allTypes">Все типы систем</option><option>Elevated flare</option><option>Ground flare</option><option>Enclosed flare</option><option>Other / Unknown</option></select>
+</div>
+<div class="tablewrap">
+<table>
+<thead><tr>
+<th data-i18n="thId">ID</th><th data-i18n="thCountry">Страна</th><th data-i18n="thAsset">Объект</th>
+<th data-i18n="thType">Тип системы</th><th data-i18n="thComponent">Компонент</th><th data-i18n="thDate">Дата</th>
+<th data-i18n="thCondition">Состояние</th><th data-i18n="thStatus">Статус</th><th data-i18n="thReport">Отчёт</th><th data-i18n="thAction">Действие</th>
+</tr></thead>
+<tbody id="recordsBody"></tbody>
+</table>
+</div>
+<p class="muted" id="recordCount"></p>
+</section>
+
+<section class="card">
+<h2 data-i18n="limits">Ограничения и безопасность</h2>
+<ul>
+<li data-i18n="limit1">Не используйте эту страницу для решения о безопасном запуске, остановке или эксплуатации факельной системы.</li>
+<li data-i18n="limit2">Не обходите блокировки, сигнализацию, контроль пламени или процедуры разрешения работ.</li>
+<li data-i18n="limit3">Любые работы выполняются только уполномоченным персоналом по процедурам объекта и документации производителя.</li>
+<li data-i18n="limit4">При подозрении на опасную ситуацию соблюдайте план аварийного реагирования объекта.</li>
+</ul>
+<p class="muted" data-i18n="storageNote">Записи хранятся только в памяти страницы и исчезнут после перезагрузки. Для постоянного хранения потребуется сервер и база данных.</p>
+</section>
+</main>
+
+<footer>WORKER PRO · Section 289 · Flare System Inspection · F.S.</footer>
+
+<script>
+const translations={
+ru:{
+title:"№289 — Инспекция факельных систем",subtitle:"Журнал осмотра оборудования промышленных факельных установок",platform:"Глобальная промышленная платформа",demo:"Демонстрационный модуль",
+home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",orders:"Заказы",logistics:"Логистика",tracking:"Отслеживание",
+total:"Всего записей",reviewCount:"Требуют проверки",maintenanceCount:"Обслуживание",recordedCount:"Зафиксировано",
+warning:"Важно: это демонстрационный журнал. Он не подтверждает безопасную работу факельной установки, исправность оборудования или соответствие нормативам. Осмотры и технические решения выполняются квалифицированными специалистами по утверждённым процедурам.",
+newRecord:"Новая запись инспекции",recordId:"ID записи",country:"Страна",asset:"Объект / установка",flareType:"Тип факельной системы",component:"Компонент оборудования",manufacturer:"Производитель / модель",serial:"Серийный номер / тег",inspectionDate:"Дата осмотра",inspector:"Инспектор / специалист",inspectionType:"Тип инспекции",condition:"Наблюдаемое состояние",pilotStatus:"Сведения о запальнике",monitoring:"Контроль пламени / приборы",maintenanceDate:"Дата последнего обслуживания",status:"Статус записи",report:"Номер отчёта / документа",observations:"Наблюдения / замечания",followup:"Необходимые последующие действия",add:"Добавить запись",clear:"Очистить форму",
+workflow:"Рабочий процесс",step1:"Определить объект, установку и компонент.",step2:"Проверить доступные документы и историю обслуживания.",step3:"Провести разрешённый осмотр по утверждённой процедуре.",step4:"Записать наблюдения и ссылки на документы.",step5:"Передать замечания ответственному специалисту.",
+scope:"Что хранится в журнале",scope1:"Идентификация факельной установки и её компонентов.",scope2:"Дата осмотра, тип инспекции и наблюдаемое состояние.",scope3:"История обслуживания, замечания и ссылки на отчёты.",scopeNote:"Статус записи — это административная отметка, а не заключение о технической безопасности установки.",
+exportCsv:"Экспорт CSV",downloadReport:"Скачать текстовый отчёт",print:"Печать",records:"Журнал инспекций",searchPlaceholder:"Поиск по ID, объекту, компоненту...",allStatuses:"Все статусы",allTypes:"Все типы систем",
+thId:"ID",thCountry:"Страна",thAsset:"Объект",thType:"Тип системы",thComponent:"Компонент",thDate:"Дата",thCondition:"Состояние",thStatus:"Статус",thReport:"Отчёт",thAction:"Действие",
+limits:"Ограничения и безопасность",limit1:"Не используйте эту страницу для решения о безопасном запуске, остановке или эксплуатации факельной системы.",limit2:"Не обходите блокировки, сигнализацию, контроль пламени или процедуры разрешения работ.",limit3:"Любые работы выполняются только уполномоченным персоналом по процедурам объекта и документации производителя.",limit4:"При подозрении на опасную ситуацию соблюдайте план аварийного реагирования объекта.",storageNote:"Записи хранятся только в памяти страницы и исчезнут после перезагрузки. Для постоянного хранения потребуется сервер и база данных.",
+noRecords:"Нет записей для отображения",delete:"Удалить",confirmDelete:"Удалить эту запись?",added:"Запись добавлена в демонстрационный журнал.",reportTitle:"WORKER PRO — Отчёт инспекции факельных систем",generated:"Создано",empty:"Не указано",statusReview:"Требует проверки",statusRecorded:"Зафиксировано",statusMaintenance:"Обслуживание"
+},
+en:{
+title:"#289 — Flare System Inspection",subtitle:"Industrial inspection log for flare system equipment",platform:"Global Industrial Platform",demo:"Demo module",
+home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",orders:"Orders",logistics:"Logistics",tracking:"Tracking",
+total:"Total records",reviewCount:"Needs review",maintenanceCount:"Maintenance",recordedCount:"Recorded",
+warning:"Important: this is a demonstration log. It does not certify flare system safety, equipment condition or regulatory compliance. Inspections and technical decisions must be made by qualified personnel using approved procedures.",
+newRecord:"New inspection record",recordId:"Record ID",country:"Country",asset:"Asset / unit",flareType:"Flare system type",component:"Equipment component",manufacturer:"Manufacturer / model",serial:"Serial number / tag",inspectionDate:"Inspection date",inspector:"Inspector / specialist",inspectionType:"Inspection type",condition:"Observed condition",pilotStatus:"Pilot system notes",monitoring:"Flame monitoring / instruments",maintenanceDate:"Last maintenance date",status:"Record status",report:"Report / document reference",observations:"Observations / notes",followup:"Required follow-up actions",add:"Add record",clear:"Clear form",
+workflow:"Workflow",step1:"Identify the asset, system and component.",step2:"Review available documents and maintenance history.",step3:"Perform an authorized inspection under an approved procedure.",step4:"Record observations and document references.",step5:"Forward findings to the responsible specialist.",
+scope:"What the log stores",scope1:"Flare system and component identification.",scope2:"Inspection date, inspection type and observed condition.",scope3:"Maintenance history, notes and report references.",scopeNote:"Record status is an administrative label, not a technical safety conclusion.",
+exportCsv:"Export CSV",downloadReport:"Download text report",print:"Print",records:"Inspection log",searchPlaceholder:"Search ID, asset, component...",allStatuses:"All statuses",allTypes:"All system types",
+thId:"ID",thCountry:"Country",thAsset:"Asset",thType:"System type",thComponent:"Component",thDate:"Date",thCondition:"Condition",thStatus:"Status",thReport:"Report",thAction:"Action",
+limits:"Limitations and safety",limit1:"Do not use this page to decide whether to start, stop or operate a flare system safely.",limit2:"Do not bypass interlocks, alarms, flame monitoring or work-permit procedures.",limit3:"Work must be performed only by authorized personnel under site procedures and manufacturer documentation.",limit4:"If a hazardous situation is suspected, follow the site's emergency response plan.",storageNote:"Records are stored only in page memory and disappear after reload. Persistent storage requires a server and database.",
+noRecords:"No records to display",delete:"Delete",confirmDelete:"Delete this record?",added:"Record added to the demo log.",reportTitle:"WORKER PRO — Flare System Inspection Report",generated:"Generated",empty:"Not provided",statusReview:"Review",statusRecorded:"Recorded",statusMaintenance:"Maintenance"
+},
+az:{
+title:"№289 — Məşəl sistemlərinin inspeksiyası",subtitle:"Sənaye məşəl qurğularının yoxlama jurnalı",platform:"Qlobal sənaye platforması",demo:"Demo modul",
+home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",orders:"Sifarişlər",logistics:"Logistika",tracking:"İzləmə",
+total:"Ümumi qeydlər",reviewCount:"Yoxlama tələb olunur",maintenanceCount:"Texniki xidmət",recordedCount:"Qeydə alınıb",
+warning:"Vacib: bu yalnız nümayiş jurnalidir. Məşəl sisteminin təhlükəsizliyini, avadanlığın vəziyyətini və ya standartlara uyğunluğunu təsdiqləmir. Yoxlamalar və texniki qərarlar təsdiqlənmiş prosedurlarla ixtisaslı mütəxəssislər tərəfindən aparılmalıdır.",
+newRecord:"Yeni inspeksiya qeydi",recordId:"Qeyd ID-si",country:"Ölkə",asset:"Obyekt / qurğu",flareType:"Məşəl sisteminin növü",component:"Avadanlıq komponenti",manufacturer:"İstehsalçı / model",serial:"Seriya nömrəsi / etiket",inspectionDate:"Yoxlama tarixi",inspector:"İnspektor / mütəxəssis",inspectionType:"Yoxlama növü",condition:"Müşahidə olunan vəziyyət",pilotStatus:"Alovlandırıcı barədə qeydlər",monitoring:"Alov nəzarəti / cihazlar",maintenanceDate:"Son texniki xidmət tarixi",status:"Qeyd statusu",report:"Hesabat / sənəd istinadı",observations:"Müşahidələr / qeydlər",followup:"Tələb olunan növbəti tədbirlər",add:"Qeyd əlavə et",clear:"Formanı təmizlə",
+workflow:"İş prosesi",step1:"Obyekti, sistemi və komponenti müəyyən edin.",step2:"Mövcud sənədləri və texniki xidmət tarixçəsini yoxlayın.",step3:"Təsdiqlənmiş prosedur üzrə icazəli yoxlama aparın.",step4:"Müşahidələri və sənəd istinadlarını qeyd edin.",step5:"Nəticələri məsul mütəxəssisə göndərin.",
+scope:"Jurnalda saxlanılan məlumatlar",scope1:"Məşəl sisteminin və komponentlərinin identifikasiyası.",scope2:"Yoxlama tarixi, növü və müşahidə olunan vəziyyət.",scope3:"Texniki xidmət tarixçəsi, qeydlər və hesabat istinadları.",scopeNote:"Qeyd statusu inzibati işarədir, texniki təhlükəsizlik rəyi deyil.",
+exportCsv:"CSV ixracı",downloadReport:"Mətn hesabatını endir",print:"Çap et",records:"İnspeksiya jurnalı",searchPlaceholder:"ID, obyekt, komponent üzrə axtar...",allStatuses:"Bütün statuslar",allTypes:"Bütün sistem növləri",
+thId:"ID",thCountry:"Ölkə",thAsset:"Obyekt",thType:"Sistem növü",thComponent:"Komponent",thDate:"Tarix",thCondition:"Vəziyyət",thStatus:"Status",thReport:"Hesabat",thAction:"Əməliyyat",
+limits:"Məhdudiyyətlər və təhlükəsizlik",limit1:"Məşəl sistemini işə salmaq, dayandırmaq və ya istismar etmək barədə qərar üçün bu səhifədən istifadə etməyin.",limit2:"Bloklamaları, siqnalları, alov nəzarətini və iş icazəsi prosedurlarını keçməyin.",limit3:"İşlər yalnız səlahiyyətli personal tərəfindən obyekt prosedurlarına və istehsalçı sənədlərinə uyğun görülməlidir.",limit4:"Təhlükəli vəziyyət şübhəsi olduqda obyektin fövqəladə reaksiya planına əməl edin.",storageNote:"Qeydlər yalnız səhifənin yaddaşında saxlanılır və yenilənmə zamanı silinir. Daimi saxlama üçün server və verilənlər bazası lazımdır.",
+noRecords:"Göstəriləcək qeyd yoxdur",delete:"Sil",confirmDelete:"Bu qeyd silinsin?",added:"Qeyd demo jurnalına əlavə edildi.",reportTitle:"WORKER PRO — Məşəl sistemi inspeksiya hesabatı",generated:"Yaradılıb",empty:"Göstərilməyib",statusReview:"Yoxlama tələb olunur",statusRecorded:"Qeydə alınıb",statusMaintenance:"Texniki xidmət"
+}
+};
+const fallback={
+tr:{title:"#289 — Flare Sistemi Denetimi",subtitle:"Endüstriyel flare ekipmanı denetim kaydı",home:"Ana Sayfa",production:"Üretim",testing:"Testler",quality:"Kalite",documents:"Belgeler",companies:"Şirketler",orders:"Siparişler",logistics:"Lojistik",tracking:"Takip",newRecord:"Yeni denetim kaydı",add:"Kayıt ekle",clear:"Formu temizle",workflow:"İş akışı",records:"Denetim kaydı",exportCsv:"CSV dışa aktar",downloadReport:"Metin raporunu indir",print:"Yazdır",country:"Ülke",asset:"Tesis / ünite",status:"Kayıt durumu",limits:"Sınırlamalar ve güvenlik",noRecords:"Gösterilecek kayıt yok",delete:"Sil",warning:"Bu sayfa yalnızca örnek kayıttır; flare sisteminin güvenliğini veya uygunluğunu onaylamaz."},
+de:{title:"#289 — Inspektion von Fackelsystemen",subtitle:"Industrielles Prüfprotokoll für Fackelanlagen",home:"Startseite",production:"Produktion",testing:"Prüfungen",quality:"Qualität",documents:"Dokumente",companies:"Unternehmen",orders:"Aufträge",logistics:"Logistik",tracking:"Sendungsverfolgung",newRecord:"Neuer Prüfeintrag",add:"Eintrag hinzufügen",clear:"Formular leeren",workflow:"Arbeitsablauf",records:"Prüfprotokoll",exportCsv:"CSV exportieren",downloadReport:"Textbericht herunterladen",print:"Drucken",country:"Land",asset:"Anlage / Einheit",status:"Eintragsstatus",limits:"Grenzen und Sicherheit",noRecords:"Keine Einträge vorhanden",delete:"Löschen",warning:"Dieses Demoprotokoll bestätigt weder die Sicherheit noch die Konformität der Fackelanlage."},
+ar:{title:"#289 — فحص أنظمة الشعلة",subtitle:"سجل فحص صناعي لمعدات أنظمة الشعلة",home:"الرئيسية",production:"الإنتاج",testing:"الاختبارات",quality:"الجودة",documents:"المستندات",companies:"الشركات",orders:"الطلبات",logistics:"الخدمات اللوجستية",tracking:"التتبع",newRecord:"سجل فحص جديد",add:"إضافة سجل",clear:"مسح النموذج",workflow:"سير العمل",records:"سجل الفحص",exportCsv:"تصدير CSV",downloadReport:"تنزيل التقرير النصي",print:"طباعة",country:"الدولة",asset:"المنشأة / الوحدة",status:"حالة السجل",limits:"القيود والسلامة",noRecords:"لا توجد سجلات",delete:"حذف",warning:"هذا سجل تجريبي فقط ولا يؤكد سلامة نظام الشعلة أو مطابقته."},
+es:{title:"#289 — Inspección de sistemas de antorcha",subtitle:"Registro industrial de inspección de equipos de antorcha",home:"Inicio",production:"Producción",testing:"Pruebas",quality:"Calidad",documents:"Documentos",companies:"Empresas",orders:"Pedidos",logistics:"Logística",tracking:"Seguimiento",newRecord:"Nuevo registro",add:"Añadir registro",clear:"Limpiar formulario",workflow:"Flujo de trabajo",records:"Registro de inspección",exportCsv:"Exportar CSV",downloadReport:"Descargar informe de texto",print:"Imprimir",country:"País",asset:"Instalación / unidad",status:"Estado del registro",limits:"Limitaciones y seguridad",noRecords:"No hay registros",delete:"Eliminar",warning:"Este registro de demostración no confirma la seguridad ni la conformidad del sistema de antorcha."},
+fr:{title:"#289 — Inspection des systèmes de torche",subtitle:"Registre industriel d'inspection des équipements de torche",home:"Accueil",production:"Production",testing:"Essais",quality:"Qualité",documents:"Documents",companies:"Entreprises",orders:"Commandes",logistics:"Logistique",tracking:"Suivi",newRecord:"Nouvel enregistrement",add:"Ajouter",clear:"Effacer le formulaire",workflow:"Processus",records:"Registre d'inspection",exportCsv:"Exporter CSV",downloadReport:"Télécharger le rapport texte",print:"Imprimer",country:"Pays",asset:"Installation / unité",status:"Statut",limits:"Limites et sécurité",noRecords:"Aucun enregistrement",delete:"Supprimer",warning:"Ce registre de démonstration ne confirme ni la sécurité ni la conformité du système de torche."},
+it:{title:"#289 — Ispezione dei sistemi di torcia",subtitle:"Registro industriale di ispezione delle apparecchiature di torcia",home:"Home",production:"Produzione",testing:"Test",quality:"Qualità",documents:"Documenti",companies:"Aziende",orders:"Ordini",logistics:"Logistica",tracking:"Tracciamento",newRecord:"Nuova registrazione",add:"Aggiungi registrazione",clear:"Pulisci modulo",workflow:"Procedura",records:"Registro delle ispezioni",exportCsv:"Esporta CSV",downloadReport:"Scarica rapporto di testo",print:"Stampa",country:"Paese",asset:"Impianto / unità",status:"Stato",limits:"Limiti e sicurezza",noRecords:"Nessun record da mostrare",delete:"Elimina",warning:"Questo registro dimostrativo non conferma la sicurezza o la conformità del sistema di torcia."}
+};
+
+const $=id=>document.getElementById(id);
+$("inspectionDate").value=new Date().toISOString().slice(0,10);
+let currentLang="ru";
+let records=[
+{recordId:"FLR-289-001",country:"Azerbaijan",asset:"Demo Refinery Unit A",flareType:"Elevated flare",component:"Flare tip / burner",manufacturer:"Example model A",serial:"DEMO-FLR-001",inspectionDate:"2026-09-18",inspector:"Demo inspector",inspectionType:"Visual inspection",condition:"Observation recorded",pilotStatus:"Not assessed",monitoring:"Not assessed",maintenanceDate:"",status:"Review",report:"DEMO-REPORT-289-001",observations:"Illustrative entry only; no real inspection.",followup:"Review through approved site process."},
+{recordId:"FLR-289-002",country:"Turkey",asset:"Demo Gas Plant B",flareType:"Ground flare",component:"Pilot / ignition system",manufacturer:"Example model B",serial:"DEMO-FLR-002",inspectionDate:"2026-09-20",inspector:"Demo technician",inspectionType:"Document review",condition:"Further review required",pilotStatus:"Record available",monitoring:"Record reviewed",maintenanceDate:"2026-08-15",status:"Maintenance",report:"DEMO-REPORT-289-002",observations:"Example maintenance note only.",followup:"See the site's authorized maintenance plan."},
+{recordId:"FLR-289-003",country:"Germany",asset:"Demo Process Unit C",flareType:"Enclosed flare",component:"Flame monitoring",manufacturer:"Example model C",serial:"DEMO-FLR-003",inspectionDate:"2026-09-22",inspector:"Demo inspector",inspectionType:"Instrument inspection",condition:"Not assessed",pilotStatus:"Not assessed",monitoring:"Observation noted",maintenanceDate:"",status:"Recorded",report:"DEMO-REPORT-289-003",observations:"Demo record; not evidence of safe operation.",followup:"No operational conclusion is generated."}
+];
+
+function t(key){return translations[currentLang]?.[key]||fallback[currentLang]?.[key]||translations.en[key]||translations.ru[key]||key}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function statusLabel(s){return t(({Review:"statusReview",Recorded:"statusRecorded",Maintenance:"statusMaintenance"})[s]||s)}
+function setLanguage(lang){
+ currentLang=lang;document.documentElement.lang=lang;document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+ document.querySelectorAll("[data-i18n]").forEach(el=>{el.textContent=t(el.dataset.i18n)});
+ document.querySelectorAll("[data-placeholder]").forEach(el=>{el.placeholder=t(el.dataset.placeholder)});
+ document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===lang));
+ render();
+}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>setLanguage(b.dataset.lang)));
+
+function render(){
+ const q=$("search").value.trim().toLowerCase(), sf=$("filterStatus").value, tf=$("filterType").value;
+ const filtered=records.filter(r=>(!q||Object.values(r).join(" ").toLowerCase().includes(q))&&(!sf||r.status===sf)&&(!tf||r.flareType===tf));
+ $("recordsBody").innerHTML=filtered.map(r=>`<tr>
+ <td>${esc(r.recordId)}</td><td>${esc(r.country)}</td><td>${esc(r.asset)}</td>
+ <td>${esc(r.flareType)}</td><td>${esc(r.component)}</td><td>${esc(r.inspectionDate)}</td>
+ <td>${esc(r.condition)}</td><td><span class="pill ${r.status.toLowerCase()}">${esc(statusLabel(r.status))}</span></td>
+ <td>${esc(r.report||"—")}</td><td><button class="btn secondary delete-record" data-id="${esc(r.recordId)}">${esc(t("delete"))}</button></td>
+ </tr>`).join("");
+ if(!filtered.length)$("recordsBody").innerHTML=`<tr><td colspan="10">${esc(t("noRecords"))}</td></tr>`;
+ $("recordCount").textContent=`${filtered.length} / ${records.length}`;
+ $("statTotal").textContent=records.length;
+ $("statReview").textContent=records.filter(r=>r.status==="Review").length;
+ $("statMaintenance").textContent=records.filter(r=>r.status==="Maintenance").length;
+ $("statRecorded").textContent=records.filter(r=>r.status==="Recorded").length;
+ document.querySelectorAll(".delete-record").forEach(b=>b.addEventListener("click",()=>{
+  if(confirm(t("confirmDelete"))){records=records.filter(r=>r.recordId!==b.dataset.id);render()}
+ }));
+}
+["search","filterStatus","filterType"].forEach(id=>{ $(id).addEventListener("input",render);$(id).addEventListener("change",render)});
+
+$("recordForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const ids=["recordId","country","asset","flareType","component","manufacturer","serial","inspectionDate","inspector","inspectionType","condition","pilotStatus","monitoring","maintenanceDate","status","report","observations","followup"];
+ const r={};ids.forEach(id=>r[id]=$(id).value.trim());
+ if(records.some(x=>x.recordId.toLowerCase()===r.recordId.toLowerCase())){alert("Record ID already exists / Такой ID уже существует");return}
+ records.unshift(r);$("recordForm").reset();$("inspectionDate").value=new Date().toISOString().slice(0,10);render();alert(t("added"));
+});
+
+function csvEscape(v){return '"'+String(v??"").replace(/"/g,'""')+'"'}
+function downloadFile(name,content,mime){
+ const blob=new Blob(["\uFEFF",content],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+const fields=["recordId","country","asset","flareType","component","manufacturer","serial","inspectionDate","inspector","inspectionType","condition","pilotStatus","monitoring","maintenanceDate","status","report","observations","followup"];
+$("exportCsv").addEventListener("click",()=>{
+ const rows=[fields,...records.map(r=>fields.map(f=>r[f]??""))];
+ downloadFile("worker-pro-flare-inspection-289.csv",rows.map(row=>row.map(csvEscape).join(",")).join("\r\n"),"text/csv;charset=utf-8");
+});
+$("downloadReport").addEventListener("click",()=>{
+ const lines=[t("reportTitle"),`${t("generated")}: ${new Date().toLocaleString()}`,"",...records.map((r,i)=>`${i+1}. ${fields.map(f=>`${f}: ${r[f]||t("empty")}`).join("\n")}`), "",t("warning")];
+ downloadFile("worker-pro-flare-inspection-289.txt",lines.join("\n\n"),"text/plain;charset=utf-8");
+});
+$("printPage").addEventListener("click",()=>window.print());
+setLanguage("ru");
+</script>
+</body>
+</html>
