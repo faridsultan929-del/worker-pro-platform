@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Oilfield Metering System Verification</title>
+<style>
+:root{--dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;--bg:#f4f7f5;--line:#dce7df;--text:#173528}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.languages{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;padding:11px;background:var(--dark)}
+.languages button{padding:8px 12px;border:1px solid #ffffff55;border-radius:8px;background:#ffffff12;color:white;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:var(--lime);color:var(--dark)}
+header{padding:28px 14px;text-align:center;color:white;background:linear-gradient(135deg,var(--dark),var(--green));border-bottom:5px solid var(--lime)}
+.logo{display:inline-block;padding:9px 15px;border:2px solid var(--lime);border-radius:10px;color:var(--lime);font-size:25px;font-weight:900}
+header h1{font-size:clamp(23px,4vw,35px);margin:18px auto 10px}
+header p{max-width:850px;margin:auto;line-height:1.6}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:13px;background:white;border-bottom:1px solid var(--line)}
+nav a{padding:9px 11px;border-radius:7px;background:#edf5ef;color:var(--green);font-weight:bold;font-size:13px;text-decoration:none}
+nav a:hover{background:var(--lime)}
+main{max-width:1250px;margin:auto;padding:20px 14px 38px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:22px}
+.card{min-width:0;padding:18px;background:white;border:1px solid var(--line);border-radius:14px;box-shadow:0 3px 12px #1231}
+.stat-label{font-size:13px;color:#587263}
+.stat-value{margin-top:8px;font-size:28px;font-weight:bold;color:var(--green)}
+h2{margin:0 0 15px;color:var(--dark)}
+h3{margin:0 0 12px;color:var(--green)}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px}
+.field{min-width:0}
+label{display:block;margin-bottom:5px;font-size:13px;font-weight:bold}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbd9cf;border-radius:8px;background:white;color:var(--text);font:inherit}
+textarea{min-height:82px;resize:vertical}
+.full{grid-column:1/-1}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.btn{padding:11px 15px;border:0;border-radius:8px;background:var(--green);color:white;font-weight:bold;cursor:pointer}
+.btn.secondary{background:#e8f1eb;color:var(--dark);border:1px solid var(--line)}
+.btn.danger{background:#9e3030}
+.toolbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:14px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+table{width:100%;min-width:1450px;border-collapse:collapse;background:white}
+th,td{padding:11px;text-align:left;border-bottom:1px solid #e5ece7;font-size:13px}
+th{background:var(--dark);color:white;white-space:nowrap}
+tr:hover td{background:#f5faf6}
+.pill{display:inline-block;padding:5px 8px;border-radius:20px;background:#fff0d6;color:#785000;font-size:12px;font-weight:bold}
+.pill.reviewed{background:#dff4e5;color:#176338}
+.pill.follow{background:#fce4e4;color:#922d2d}
+.notice{padding:15px;background:#fff9e8;border-left:5px solid #e1ae2f;border-radius:8px;line-height:1.6}
+.small{font-size:12px;color:#63776b}
+footer{padding:22px;text-align:center;background:var(--dark);color:white;line-height:1.7}
+@media(max-width:600px){main{padding:14px 10px 28px}.card{padding:14px}.languages{gap:5px;padding:9px}.languages button{padding:7px 9px}}
+@media print{.languages,nav,form,.toolbar,.actions,footer{display:none!important}body{background:white}.card{box-shadow:none}main{max-width:none}}
+</style>
+</head>
+<body>
+<div class="languages">
+<button data-lang="az">AZ</button><button data-lang="ru" class="active">RU</button>
+<button data-lang="en">EN</button><button data-lang="tr">TR</button>
+<button data-lang="de">DE</button><button data-lang="ar">AR</button>
+<button data-lang="es">ES</button><button data-lang="fr">FR</button><button data-lang="it">IT</button>
+</div>
+
+<header>
+<div class="logo">WORKER PRO</div>
+<h1 data-i18n="title">№299 — Проверка измерительных систем нефтегазовых объектов</h1>
+<p data-i18n="subtitle">Учёт расходомеров нефти и газа, показаний, единиц измерения, сведений о калибровке и результатов проверки.</p>
+</header>
+
+<nav>
+<a href="../index.html" data-i18n="home">Главная</a>
+<a href="../production/index.html" data-i18n="production">Производство</a>
+<a href="../testing/index.html" data-i18n="testing">Испытания</a>
+<a href="../quality/index.html" data-i18n="quality">Качество</a>
+<a href="../documents/index.html" data-i18n="documents">Документы</a>
+<a href="../companies/index.html" data-i18n="companies">Компании</a>
+<a href="../suppliers/index.html" data-i18n="suppliers">Поставщики</a>
+<a href="../orders/index.html" data-i18n="orders">Заказы</a>
+<a href="../logistics/index.html" data-i18n="logistics">Логистика</a>
+<a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+
+<main>
+<section class="grid">
+<div class="card"><div class="stat-label" data-i18n="total">Всего записей</div><div class="stat-value" id="total">0</div></div>
+<div class="card"><div class="stat-label" data-i18n="reviewedCount">Рассмотрено</div><div class="stat-value" id="reviewedCount">0</div></div>
+<div class="card"><div class="stat-label" data-i18n="followCount">Требуются действия</div><div class="stat-value" id="followCount">0</div></div>
+<div class="card"><div class="stat-label" data-i18n="pendingCount">Ожидает рассмотрения</div><div class="stat-value" id="pendingCount">0</div></div>
+</section>
+
+<section class="card" style="margin-bottom:22px">
+<h2 data-i18n="formTitle">Новая запись проверки</h2>
+<form id="form">
+<div class="form-grid">
+<div class="field"><label for="recordId" data-i18n="recordId">Номер записи *</label><input id="recordId" required maxlength="70" placeholder="OMV-299-001"></div>
+<div class="field"><label for="country" data-i18n="country">Страна</label><input id="country" maxlength="100"></div>
+<div class="field"><label for="site" data-i18n="site">Месторождение / объект</label><input id="site" maxlength="150"></div>
+<div class="field"><label for="meterTag" data-i18n="meterTag">Тег измерительного прибора *</label><input id="meterTag" required maxlength="120"></div>
+<div class="field"><label for="meterType" data-i18n="meterType">Тип расходомера *</label>
+<select id="meterType" required>
+<option value="" data-i18n="selectType">Выберите тип</option>
+<option value="Ultrasonic">Ultrasonic — ультразвуковой</option>
+<option value="Coriolis">Coriolis — кориолисовый</option>
+<option value="Turbine">Turbine — турбинный</option>
+<option value="Orifice">Orifice plate — диафрагменный</option>
+<option value="Differential pressure">Differential pressure — перепад давления</option>
+<option value="Positive displacement">Positive displacement — объёмный</option>
+<option value="Multiphase">Multiphase — многофазный</option>
+<option value="Other">Other — другой</option>
+</select></div>
+<div class="field"><label for="service" data-i18n="service">Измеряемая среда</label>
+<select id="service"><option value="Crude oil">Crude oil — сырая нефть</option><option value="Natural gas">Natural gas — природный газ</option><option value="Condensate">Condensate — конденсат</option><option value="Water">Water — вода</option><option value="Multiphase flow">Multiphase flow — многофазный поток</option><option value="Other">Other — другое</option></select></div>
+<div class="field"><label for="manufacturer" data-i18n="manufacturer">Производитель</label><input id="manufacturer" maxlength="120"></div>
+<div class="field"><label for="model" data-i18n="model">Модель</label><input id="model" maxlength="120"></div>
+<div class="field"><label for="serial" data-i18n="serial">Серийный / инвентарный номер</label><input id="serial" maxlength="120"></div>
+<div class="field"><label for="location" data-i18n="location">Место установки</label><input id="location" maxlength="150"></div>
+<div class="field"><label for="checkDate" data-i18n="checkDate">Дата проверки *</label><input id="checkDate" type="date" required></div>
+<div class="field"><label for="inspector" data-i18n="inspector">Инспектор / ответственный</label><input id="inspector" maxlength="120"></div>
+<div class="field"><label for="method" data-i18n="method">Метод / процедура проверки</label><input id="method" maxlength="180"></div>
+<div class="field"><label for="reading" data-i18n="reading">Записанное показание</label><input id="reading" type="number" step="any"></div>
+<div class="field"><label for="readingUnit" data-i18n="readingUnit">Единица показания</label><input id="readingUnit" maxlength="40" placeholder="m³/h, kg/h, bbl/day"></div>
+<div class="field"><label for="reference" data-i18n="reference">Эталонное / сравниваемое значение</label><input id="reference" type="number" step="any"></div>
+<div class="field"><label for="referenceUnit" data-i18n="referenceUnit">Единица эталонного значения</label><input id="referenceUnit" maxlength="40"></div>
+<div class="field"><label for="calibrationDate" data-i18n="calibrationDate">Дата последней калибровки</label><input id="calibrationDate" type="date"></div>
+<div class="field"><label for="calibrationRef" data-i18n="calibrationRef">Номер сертификата калибровки</label><input id="calibrationRef" maxlength="180"></div>
+<div class="field"><label for="pressure" data-i18n="pressure">Записанное давление</label><input id="pressure" type="number" step="any"></div>
+<div class="field"><label for="pressureUnit" data-i18n="pressureUnit">Единица давления</label><select id="pressureUnit"><option>bar</option><option>kPa</option><option>MPa</option><option>psi</option></select></div>
+<div class="field"><label for="temperature" data-i18n="temperature">Записанная температура, °C</label><input id="temperature" type="number" step="any"></div>
+<div class="field"><label for="status" data-i18n="status">Статус записи *</label>
+<select id="status" required>
+<option value="Pending" data-i18n="pending">Ожидает рассмотрения</option>
+<option value="Reviewed" data-i18n="reviewed">Рассмотрено</option>
+<option value="Follow-up" data-i18n="follow">Требуются действия</option>
+</select></div>
+<div class="field"><label for="report" data-i18n="report">Номер отчёта</label><input id="report" maxlength="180"></div>
+<div class="field"><label for="nextDate" data-i18n="nextDate">Следующая проверка</label><input id="nextDate" type="date"></div>
+<div class="field full"><label for="observations" data-i18n="observations">Наблюдения и результаты</label><textarea id="observations" maxlength="2000"></textarea></div>
+<div class="field full"><label for="action" data-i18n="action">Последующие действия / ответственный</label><textarea id="action" maxlength="1500"></textarea></div>
+<div class="field full"><label for="notes" data-i18n="notes">Дополнительные примечания</label><textarea id="notes" maxlength="1500"></textarea></div>
+</div>
+<div class="actions">
+<button class="btn" type="submit" data-i18n="save">Сохранить запись</button>
+<button class="btn secondary" type="reset" data-i18n="clear">Очистить форму</button>
+</div>
+</form>
+</section>
+
+<section class="card" style="margin-bottom:22px">
+<h2 data-i18n="recordsTitle">Журнал проверок</h2>
+<div class="toolbar">
+<input id="search" data-i18n-placeholder="searchPlaceholder" placeholder="Поиск по номеру, прибору, объекту...">
+<select id="statusFilter">
+<option value="" data-i18n="allStatuses">Все статусы</option>
+<option value="Pending" data-i18n="pending">Ожидает рассмотрения</option>
+<option value="Reviewed" data-i18n="reviewed">Рассмотрено</option>
+<option value="Follow-up" data-i18n="follow">Требуются действия</option>
+</select>
+<select id="typeFilter">
+<option value="" data-i18n="allTypes">Все типы расходомеров</option>
+<option value="Ultrasonic">Ultrasonic</option>
+<option value="Coriolis">Coriolis</option>
+<option value="Turbine">Turbine</option>
+<option value="Orifice">Orifice plate</option>
+<option value="Differential pressure">Differential pressure</option>
+<option value="Positive displacement">Positive displacement</option>
+<option value="Multiphase">Multiphase</option>
+<option value="Other">Other</option>
+</select>
+</div>
+<div class="actions">
+<button class="btn" id="csv" type="button" data-i18n="csv">Экспорт CSV</button>
+<button class="btn secondary" id="reportBtn" type="button" data-i18n="reportBtn">Текстовый отчёт</button>
+<button class="btn secondary" id="printBtn" type="button" data-i18n="print">Печать</button>
+<button class="btn danger" id="deleteAll" type="button" data-i18n="deleteAll">Удалить все записи</button>
+</div>
+<div class="table-wrap" style="margin-top:14px">
+<table>
+<thead><tr>
+<th data-i18n="recordId">Номер записи</th><th data-i18n="meterTag">Тег прибора</th>
+<th data-i18n="meterType">Тип расходомера</th><th data-i18n="service">Среда</th>
+<th data-i18n="checkDate">Дата проверки</th><th data-i18n="reading">Показание</th>
+<th data-i18n="reference">Эталонное значение</th><th data-i18n="status">Статус</th>
+<th data-i18n="report">Отчёт</th><th data-i18n="actions">Действия</th>
+</tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+<p class="small" data-i18n="storage">Данные существуют только в памяти страницы и исчезнут после перезагрузки.</p>
+</section>
+
+<section class="grid">
+<div class="card"><h3 data-i18n="workflowTitle">Рабочий процесс</h3><p data-i18n="workflow">1. Зарегистрируйте прибор. 2. Запишите измерения и единицы. 3. Укажите метод и сведения о калибровке. 4. Зафиксируйте наблюдения. 5. Сформируйте отчёт.</p></div>
+<div class="card"><h3 data-i18n="scopeTitle">Область учёта</h3><p data-i18n="scope">Журнал систематизирует записи о проверке измерительных систем на нефтегазовых объектах.</p></div>
+</section>
+
+<div class="notice"><strong data-i18n="warningTitle">Важное предупреждение</strong><p data-i18n="warning">Это демонстрационный журнал, а не метрологический сертификат. Значения не проверяются автоматически и не подтверждают точность измерений, пригодность прибора к коммерческому учёту или соответствие нормативным требованиям. Для оценки необходимы утверждённые методики, прослеживаемая калибровка, подходящие условия измерения и квалифицированные специалисты. Не смешивайте показания с разными единицами измерения.</p></div>
+</main>
+
+<footer><strong>WORKER PRO</strong><br><span data-i18n="footer">Глобальная промышленная платформа</span><br>F.S. © 2026</footer>
+
+<script>
+const dict={
+ru:{
+title:"№299 — Проверка измерительных систем нефтегазовых объектов",subtitle:"Учёт расходомеров нефти и газа, показаний, единиц измерения, сведений о калибровке и результатов проверки.",home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",suppliers:"Поставщики",orders:"Заказы",logistics:"Логистика",tracking:"Отслеживание",
+total:"Всего записей",reviewedCount:"Рассмотрено",followCount:"Требуются действия",pendingCount:"Ожидает рассмотрения",formTitle:"Новая запись проверки",recordId:"Номер записи",country:"Страна",site:"Месторождение / объект",meterTag:"Тег измерительного прибора",meterType:"Тип расходомера",selectType:"Выберите тип",service:"Измеряемая среда",manufacturer:"Производитель",model:"Модель",serial:"Серийный / инвентарный номер",location:"Место установки",checkDate:"Дата проверки",inspector:"Инспектор / ответственный",method:"Метод / процедура проверки",reading:"Записанное показание",readingUnit:"Единица показания",reference:"Эталонное / сравниваемое значение",referenceUnit:"Единица эталонного значения",calibrationDate:"Дата последней калибровки",calibrationRef:"Номер сертификата калибровки",pressure:"Записанное давление",pressureUnit:"Единица давления",temperature:"Записанная температура, °C",status:"Статус записи",pending:"Ожидает рассмотрения",reviewed:"Рассмотрено",follow:"Требуются действия",report:"Номер отчёта",nextDate:"Следующая проверка",observations:"Наблюдения и результаты",action:"Последующие действия / ответственный",notes:"Дополнительные примечания",save:"Сохранить запись",clear:"Очистить форму",recordsTitle:"Журнал проверок",searchPlaceholder:"Поиск по номеру, прибору, объекту...",allStatuses:"Все статусы",allTypes:"Все типы расходомеров",csv:"Экспорт CSV",reportBtn:"Текстовый отчёт",print:"Печать",deleteAll:"Удалить все записи",actions:"Действия",storage:"Данные существуют только в памяти страницы и исчезнут после перезагрузки.",workflowTitle:"Рабочий процесс",workflow:"1. Зарегистрируйте прибор. 2. Запишите измерения и единицы. 3. Укажите метод и сведения о калибровке. 4. Зафиксируйте наблюдения. 5. Сформируйте отчёт.",scopeTitle:"Область учёта",scope:"Журнал систематизирует записи о проверке измерительных систем на нефтегазовых объектах.",warningTitle:"Важное предупреждение",warning:"Это демонстрационный журнал, а не метрологический сертификат. Значения не проверяются автоматически и не подтверждают точность измерений, пригодность прибора к коммерческому учёту или соответствие нормативным требованиям. Для оценки необходимы утверждённые методики, прослеживаемая калибровка, подходящие условия измерения и квалифицированные специалисты. Не смешивайте показания с разными единицами измерения.",footer:"Глобальная промышленная платформа",delete:"Удалить",empty:"Записей пока нет.",confirmDelete:"Удалить эту запись?",confirmAll:"Удалить все записи?",saved:"Запись сохранена.",required:"Заполните обязательные поля."
+},
+en:{
+title:"#299 — Oilfield Metering System Verification",subtitle:"Register oil and gas meters, readings, measurement units, calibration references and verification records.",home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",suppliers:"Suppliers",orders:"Orders",logistics:"Logistics",tracking:"Tracking",
+total:"Total records",reviewedCount:"Reviewed",followCount:"Follow-up required",pendingCount:"Pending review",formTitle:"New verification record",recordId:"Record ID",country:"Country",site:"Field / site",meterTag:"Meter tag",meterType:"Meter type",selectType:"Select type",service:"Measured fluid",manufacturer:"Manufacturer",model:"Model",serial:"Serial / asset number",location:"Installation location",checkDate:"Verification date",inspector:"Inspector / responsible person",method:"Verification method / procedure",reading:"Recorded reading",readingUnit:"Reading unit",reference:"Reference / comparison value",referenceUnit:"Reference value unit",calibrationDate:"Last calibration date",calibrationRef:"Calibration certificate reference",pressure:"Recorded pressure",pressureUnit:"Pressure unit",temperature:"Recorded temperature, °C",status:"Record status",pending:"Pending review",reviewed:"Reviewed",follow:"Follow-up required",report:"Report reference",nextDate:"Next verification date",observations:"Observations and results",action:"Follow-up action / responsible person",notes:"Additional notes",save:"Save record",clear:"Clear form",recordsTitle:"Verification register",searchPlaceholder:"Search record, meter or site...",allStatuses:"All statuses",allTypes:"All meter types",csv:"Export CSV",reportBtn:"Text report",print:"Print",deleteAll:"Delete all records",actions:"Actions",storage:"Records are stored only in page memory and disappear after reload.",workflowTitle:"Workflow",workflow:"1. Register the meter. 2. Record measurements and units. 3. Enter the method and calibration references. 4. Record observations. 5. Generate a report.",scopeTitle:"Register scope",scope:"This register organizes metering system verification records at oil and gas facilities.",warningTitle:"Important notice",warning:"This is a demonstration register, not a metrology certificate. Values are not automatically validated and do not establish measurement accuracy, suitability for custody transfer or regulatory compliance. Assessment requires approved methods, traceable calibration, suitable measurement conditions and qualified personnel. Do not mix readings expressed in different units.",footer:"Global Industrial Platform",delete:"Delete",empty:"No records yet.",confirmDelete:"Delete this record?",confirmAll:"Delete all records?",saved:"Record saved.",required:"Complete all required fields."
+},
+az:{
+title:"№299 — Neft-qaz ölçmə sistemlərinin yoxlanması",subtitle:"Neft və qaz sərfölçənlərinin, ölçmə vahidlərinin, kalibrləmə məlumatlarının və yoxlama qeydlərinin uçotu.",home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",logistics:"Logistika",tracking:"İzləmə",
+total:"Ümumi qeydlər",reviewedCount:"Nəzərdən keçirilib",followCount:"Əlavə tədbir tələb olunur",pendingCount:"Baxılma gözləyir",formTitle:"Yeni yoxlama qeydi",recordId:"Qeyd nömrəsi",country:"Ölkə",site:"Mədən / obyekt",meterTag:"Ölçmə cihazının kodu",meterType:"Sərfölçənin növü",selectType:"Növü seçin",service:"Ölçülən mühit",manufacturer:"İstehsalçı",model:"Model",serial:"Seriya / inventar nömrəsi",location:"Quraşdırılma yeri",checkDate:"Yoxlama tarixi",inspector:"Müfəttiş / məsul şəxs",method:"Yoxlama metodu / proseduru",reading:"Qeydə alınmış göstərici",readingUnit:"Göstəricinin vahidi",reference:"Etalon / müqayisə dəyəri",referenceUnit:"Etalon dəyərinin vahidi",calibrationDate:"Son kalibrləmə tarixi",calibrationRef:"Kalibrləmə sertifikatının nömrəsi",pressure:"Qeydə alınmış təzyiq",pressureUnit:"Təzyiq vahidi",temperature:"Qeydə alınmış temperatur, °C",status:"Qeyd statusu",pending:"Baxılma gözləyir",reviewed:"Nəzərdən keçirilib",follow:"Əlavə tədbir tələb olunur",report:"Hesabat nömrəsi",nextDate:"Növbəti yoxlama",observations:"Müşahidələr və nəticələr",action:"Sonrakı tədbir / məsul şəxs",notes:"Əlavə qeydlər",save:"Qeydi saxla",clear:"Formanı təmizlə",recordsTitle:"Yoxlama jurnalı",searchPlaceholder:"Qeyd, cihaz və ya obyekt üzrə axtar...",allStatuses:"Bütün statuslar",allTypes:"Bütün sərfölçən növləri",csv:"CSV ixracı",reportBtn:"Mətn hesabatı",print:"Çap et",deleteAll:"Bütün qeydləri sil",actions:"Əməliyyatlar",storage:"Qeydlər yalnız səhifənin müvəqqəti yaddaşında saxlanılır və yenilənəndə silinir.",workflowTitle:"İş prosesi",workflow:"1. Cihazı qeydiyyata alın. 2. Ölçmələri və vahidləri yazın. 3. Metodu və kalibrləmə məlumatlarını göstərin. 4. Müşahidələri qeyd edin. 5. Hesabat yaradın.",scopeTitle:"Qeydiyyat sahəsi",scope:"Jurnal neft-qaz obyektlərində ölçmə sistemlərinin yoxlama qeydlərini sistemləşdirir.",warningTitle:"Vacib xəbərdarlıq",warning:"Bu nümayiş məqsədli jurnaldır, metrologiya sertifikatı deyil. Dəyərlər avtomatik yoxlanılmır və ölçmə dəqiqliyini, kommersiya uçotuna uyğunluğu və ya normativ tələblərə cavab verməni təsdiqləmir. Qiymətləndirmə təsdiqlənmiş metodlar, izlənə bilən kalibrləmə və ixtisaslı mütəxəssislər tələb edir. Müxtəlif ölçü vahidlərində olan göstəriciləri qarışdırmayın.",footer:"Qlobal Sənaye Platforması",delete:"Sil",empty:"Hələ qeyd yoxdur.",confirmDelete:"Bu qeyd silinsin?",confirmAll:"Bütün qeydlər silinsin?",saved:"Qeyd saxlanıldı.",required:"Məcburi sahələri doldurun."
+}
+};
+const otherTitles={
+tr:["№299 — Petrol sahası ölçüm sistemi doğrulaması","Petrol ve gaz ölçerleri, ölçüm değerleri, kalibrasyon bilgileri ve doğrulama kayıtları."],
+de:["Nr. 299 — Überprüfung von Messsystemen in Ölfeldern","Erfassung von Öl- und Gasmessgeräten, Messwerten und Kalibrierungsangaben."],
+ar:["299 — التحقق من أنظمة القياس في حقول النفط","تسجيل عدادات النفط والغاز والقراءات ووحدات القياس ومعلومات المعايرة."],
+es:["N.º 299 — Verificación de sistemas de medición petrolíferos","Registro de medidores, lecturas, unidades y referencias de calibración."],
+fr:["N° 299 — Vérification des systèmes de comptage pétroliers","Suivi des compteurs, relevés, unités de mesure et références d’étalonnage."],
+it:["N. 299 — Verifica dei sistemi di misura nei giacimenti","Registro di misuratori, letture, unità di misura e riferimenti di taratura."]
+};
+const keys=["recordId","country","site","meterTag","meterType","service","manufacturer","model","serial","location","checkDate","inspector","method","reading","readingUnit","reference","referenceUnit","calibrationDate","calibrationRef","pressure","pressureUnit","temperature","status","report","nextDate","observations","action","notes"];
+let lang="ru",records=[];
+const $=id=>document.getElementById(id);
+function T(k){return (dict[lang]||dict.en)[k]||dict.en[k]||k}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function setLang(l){
+lang=l;document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";
+const d=dict[l]||dict.en;
+document.querySelectorAll("[data-i18n]").forEach(el=>{
+const k=el.dataset.i18n;
+el.textContent=d[k]||(otherTitles[l]&&k==="title"?otherTitles[l][0]:otherTitles[l]&&k==="subtitle"?otherTitles[l][1]:dict.en[k]||k);
+});
+document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>el.placeholder=(d[el.dataset.i18nPlaceholder]||dict.en[el.dataset.i18nPlaceholder]||""));
+document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
+render();
+}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+function readForm(){const r={};keys.forEach(k=>r[k]=$(k).value.trim());return r}
+function render(){
+const q=$("search").value.toLowerCase().trim(),s=$("statusFilter").value,t=$("typeFilter").value;
+const filtered=records.filter(r=>(!q||keys.map(k=>r[k]).join(" ").toLowerCase().includes(q))&&(!s||r.status===s)&&(!t||r.meterType===t));
+$("total").textContent=records.length;
+$("reviewedCount").textContent=records.filter(r=>r.status==="Reviewed").length;
+$("followCount").textContent=records.filter(r=>r.status==="Follow-up").length;
+$("pendingCount").textContent=records.filter(r=>r.status==="Pending").length;
+const body=$("tbody");
+if(!filtered.length){body.innerHTML=`<tr><td colspan="10">${esc(T("empty"))}</td></tr>`;return}
+body.innerHTML=filtered.map(r=>{
+const idx=records.indexOf(r),cls=r.status==="Reviewed"?"reviewed":r.status==="Follow-up"?"follow":"";
+const st=r.status==="Reviewed"?T("reviewed"):r.status==="Follow-up"?T("follow"):T("pending");
+return `<tr><td>${esc(r.recordId)}</td><td>${esc(r.meterTag)}</td><td>${esc(r.meterType)}</td><td>${esc(r.service)}</td><td>${esc(r.checkDate)}</td><td>${esc(r.reading)} ${esc(r.readingUnit)}</td><td>${esc(r.reference)} ${esc(r.referenceUnit)}</td><td><span class="pill ${cls}">${esc(st)}</span></td><td>${esc(r.report)}</td><td><button class="btn danger" data-del="${idx}" type="button">${esc(T("delete"))}</button></td></tr>`;
+}).join("");
+body.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>{
+if(confirm(T("confirmDelete"))){records.splice(Number(b.dataset.del),1);render()}
+}));
+}
+$("form").addEventListener("submit",e=>{
+e.preventDefault();const r=readForm();
+if(!r.recordId||!r.meterTag||!r.meterType||!r.checkDate){alert(T("required"));return}
+if(records.some(x=>x.recordId.toLowerCase()===r.recordId.toLowerCase())){alert("Record ID already exists.");return}
+records.unshift(r);$("form").reset();render();alert(T("saved"));
+});
+["search","statusFilter","typeFilter"].forEach(id=>{ $(id).addEventListener("input",render);$(id).addEventListener("change",render) });
+function download(name,content,type){
+const blob=new Blob(["\ufeff",content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function csvCell(v){return '"'+String(v??"").replace(/"/g,'""')+'"'}
+$("csv").addEventListener("click",()=>{
+const rows=[[...keys.map(T)],...records.map(r=>keys.map(k=>r[k]))];
+download("worker-pro-oilfield-metering-verification.csv",rows.map(r=>r.map(csvCell).join(",")).join("\r\n"),"text/csv;charset=utf-8");
+});
+$("reportBtn").addEventListener("click",()=>{
+const out=["WORKER PRO — #299 Oilfield Metering System Verification","Generated: "+new Date().toLocaleString(),"Total records: "+records.length,"","DEMONSTRATION REGISTER — NOT A METROLOGY CERTIFICATE",""];
+records.forEach((r,i)=>{out.push("Record "+(i+1));keys.forEach(k=>out.push(T(k)+": "+(r[k]||"-")));out.push("----------------------------------------")});
+out.push("Values are not independently validated and do not certify measurement accuracy or regulatory compliance.");
+download("worker-pro-oilfield-metering-report.txt",out.join("\r\n"),"text/plain;charset=utf-8");
+});
+$("printBtn").addEventListener("click",()=>window.print());
+$("deleteAll").addEventListener("click",()=>{if(confirm(T("confirmAll"))){records=[];render()}});
+$("checkDate").value=new Date().toISOString().slice(0,10);
+setLang("ru");
+</script>
+</body>
+</html>
