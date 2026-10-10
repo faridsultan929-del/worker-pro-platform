@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Gas Sweetening Performance Testing</title>
+<style>
+:root{
+  --dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;
+  --bg:#f4f7f5;--white:#fff;--text:#183328;
+  --muted:#65776d;--border:#dce6df;--red:#a12c2c;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:var(--text)}
+.languages{position:sticky;top:0;z-index:20;background:var(--dark);padding:10px;display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.languages button{border:1px solid #648675;background:transparent;color:white;padding:8px 12px;border-radius:7px;cursor:pointer;font-weight:bold}
+.languages button.active,.languages button:hover{background:var(--lime);color:var(--dark);border-color:var(--lime)}
+header{background:linear-gradient(125deg,var(--dark),var(--green));color:white;padding:25px 18px}
+.wrap{max-width:1250px;margin:auto}
+.brand{font-size:28px;font-weight:900;letter-spacing:1px}
+.brand span{color:var(--lime)}
+.subtitle{margin-top:7px;color:#d9eee1}
+.section-tag{display:inline-block;margin-top:18px;background:var(--lime);color:var(--dark);padding:7px 11px;border-radius:6px;font-weight:bold}
+h1{font-size:clamp(24px,4vw,36px);margin:17px 0 9px}
+header p{line-height:1.6;max-width:900px}
+nav{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+nav a{color:white;text-decoration:none;border:1px solid #719582;border-radius:7px;padding:9px 11px;font-size:14px}
+nav a:hover{background:#ffffff20}
+main{max-width:1250px;margin:22px auto;padding:0 14px 35px}
+.notice{padding:14px 16px;border-left:5px solid #d8a52d;background:#fff8e6;border-radius:8px;line-height:1.5;margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.stat,.panel{background:white;border:1px solid var(--border);border-radius:12px;padding:17px;box-shadow:0 3px 12px #18332808}
+.stat small{display:block;color:var(--muted);margin-bottom:9px}
+.stat strong{font-size:27px;color:var(--green)}
+.panel{margin-bottom:18px}
+h2{margin:0 0 15px;color:var(--dark);font-size:21px}
+h3{margin:18px 0 10px;color:var(--green);font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+label{font-size:13px;font-weight:bold;color:#42594c}
+input,select,textarea{width:100%;min-width:0;border:1px solid #cbd8cf;border-radius:7px;padding:11px;font:inherit;background:white;color:var(--text)}
+input:focus,select:focus,textarea:focus{outline:2px solid #9fdc7b;border-color:var(--green)}
+textarea{min-height:80px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.btn{border:0;border-radius:7px;background:var(--green);color:white;padding:11px 15px;font-weight:bold;cursor:pointer}
+.btn:hover{filter:brightness(1.08)}
+.btn.secondary{background:#e7efe9;color:var(--dark);border:1px solid var(--border)}
+.btn.dark{background:var(--dark)}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.toolbar input{flex:1;min-width:180px}
+.toolbar select{width:auto;min-width:150px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:1000px}
+th,td{padding:11px;border-bottom:1px solid var(--border);text-align:left;font-size:13px;vertical-align:top}
+th{background:#edf4ef;color:var(--dark);white-space:nowrap}
+tbody tr:hover{background:#f7faf8}
+.badge{display:inline-block;border-radius:20px;padding:5px 9px;background:#e8f0eb;color:#325742;font-size:12px;font-weight:bold}
+.badge.review{background:#fff0ce;color:#805800}
+.badge.hold{background:#fbe5e5;color:#9c2929}
+.empty{text-align:center;color:var(--muted);padding:25px}
+.workflow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.step{background:#edf5ef;border:1px solid var(--border);padding:13px;border-radius:9px}
+.step b{display:block;color:var(--green);margin-bottom:6px}
+footer{background:var(--dark);color:#dce9e0;padding:23px 15px;text-align:center;line-height:1.6}
+footer strong{color:var(--lime)}
+[dir="rtl"]{text-align:right}
+[dir="rtl"] .notice{border-left:0;border-right:5px solid #d8a52d}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.workflow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.grid{grid-template-columns:1fr}.brand{font-size:24px}.stat{padding:13px}.stat strong{font-size:23px}.panel{padding:13px}.workflow{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="languages" aria-label="Language selector">
+  <button data-lang="az">AZ</button>
+  <button data-lang="ru" class="active">RU</button>
+  <button data-lang="en">EN</button>
+  <button data-lang="tr">TR</button>
+  <button data-lang="de">DE</button>
+  <button data-lang="ar">AR</button>
+  <button data-lang="es">ES</button>
+  <button data-lang="fr">FR</button>
+  <button data-lang="it">IT</button>
+</div>
+
+<header>
+  <div class="wrap">
+    <div class="brand">WORKER <span>PRO</span></div>
+    <div class="subtitle" data-i18n="subtitle">Глобальная промышленная платформа</div>
+    <div class="section-tag">№286 · OIL &amp; GAS</div>
+    <h1 data-i18n="title">Испытания эффективности очистки газа</h1>
+    <p data-i18n="intro">Учёт лабораторных и производственных данных систем удаления сероводорода (H₂S) и углекислого газа (CO₂) из природного газа.</p>
+    <nav>
+      <a href="../index.html" data-i18n="navHome">Главная</a>
+      <a href="../production/index.html" data-i18n="navProduction">Производство</a>
+      <a href="../testing/index.html" data-i18n="navTesting">Испытания</a>
+      <a href="../quality/index.html" data-i18n="navQuality">Качество</a>
+      <a href="../documents/index.html" data-i18n="navDocuments">Документы</a>
+      <a href="../suppliers/index.html" data-i18n="navSuppliers">Поставщики</a>
+      <a href="../orders/index.html" data-i18n="navOrders">Заказы</a>
+      <a href="../logistics/index.html" data-i18n="navLogistics">Логистика</a>
+      <a href="../tracking/index.html" data-i18n="navTracking">Отслеживание</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="notice">
+    <strong data-i18n="demoTitle">Демонстрационный модуль.</strong>
+    <span data-i18n="disclaimer">Пример для учёта данных. Он не подтверждает безопасность газа, соответствие спецификации или исправность оборудования. Решения принимают квалифицированные специалисты по утверждённым методам и требованиям проекта.</span>
+  </div>
+
+  <section class="stats">
+    <div class="stat"><small data-i18n="statTotal">Всего записей</small><strong id="statTotal">0</strong></div>
+    <div class="stat"><small data-i18n="statReview">На проверке</small><strong id="statReview">0</strong></div>
+    <div class="stat"><small data-i18n="statComplete">Заполнено</small><strong id="statComplete">0</strong></div>
+    <div class="stat"><small data-i18n="statHold">Требуют внимания</small><strong id="statHold">0</strong></div>
+  </section>
+
+  <section class="panel">
+    <h2 data-i18n="workflowTitle">Рабочий процесс</h2>
+    <div class="workflow">
+      <div class="step"><b>01</b><span data-i18n="step1">Регистрация образца и объекта</span></div>
+      <div class="step"><b>02</b><span data-i18n="step2">Фиксация условий измерения</span></div>
+      <div class="step"><b>03</b><span data-i18n="step3">Запись результатов H₂S и CO₂</span></div>
+      <div class="step"><b>04</b><span data-i18n="step4">Проверка данных специалистом</span></div>
+      <div class="step"><b>05</b><span data-i18n="step5">Формирование отчёта</span></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2 data-i18n="formTitle">Добавить запись испытания</h2>
+    <form id="testForm">
+      <div class="grid">
+        <div class="field"><label for="sampleId" data-i18n="sampleId">ID образца / записи *</label><input id="sampleId" required placeholder="GS-286-004"></div>
+        <div class="field"><label for="country" data-i18n="country">Страна</label><input id="country" placeholder="Azerbaijan"></div>
+        <div class="field"><label for="asset" data-i18n="asset">Объект / месторождение</label><input id="asset"></div>
+
+        <div class="field"><label for="process" data-i18n="process">Тип процесса</label>
+          <select id="process">
+            <option value="Amine">Аминовая очистка</option>
+            <option value="Physical solvent">Физический растворитель</option>
+            <option value="Membrane">Мембранная система</option>
+            <option value="Other">Другое</option>
+          </select>
+        </div>
+        <div class="field"><label for="solvent" data-i18n="solvent">Раствор / сорбент</label><input id="solvent" placeholder="Например, тип амина"></div>
+        <div class="field"><label for="date" data-i18n="date">Дата измерения *</label><input id="date" type="date" required></div>
+
+        <div class="field"><label for="h2sin" data-i18n="h2sin">H₂S на входе (единица обязательна)</label><input id="h2sin" placeholder="Значение и единица, например ppmv"></div>
+        <div class="field"><label for="h2sout" data-i18n="h2sout">H₂S на выходе</label><input id="h2sout" placeholder="Значение и единица"></div>
+        <div class="field"><label for="co2in" data-i18n="co2in">CO₂ на входе</label><input id="co2in" placeholder="Значение и единица"></div>
+
+        <div class="field"><label for="co2out" data-i18n="co2out">CO₂ на выходе</label><input id="co2out" placeholder="Значение и единица"></div>
+        <div class="field"><label for="pressure" data-i18n="pressure">Давление — с единицей</label><input id="pressure" placeholder="Например, 40 bar"></div>
+        <div class="field"><label for="temperature" data-i18n="temperature">Температура — с единицей</label><input id="temperature" placeholder="Например, 35 °C"></div>
+
+        <div class="field"><label for="flow" data-i18n="flow">Расход газа — с единицей</label><input id="flow" placeholder="Значение и единица"></div>
+        <div class="field"><label for="method" data-i18n="method">Метод измерения</label><input id="method" placeholder="Метод / стандарт лаборатории"></div>
+        <div class="field"><label for="lab" data-i18n="lab">Лаборатория / специалист</label><input id="lab"></div>
+
+        <div class="field"><label for="status" data-i18n="status">Статус записи</label>
+          <select id="status">
+            <option value="Review" data-i18n="statusReview">На проверке</option>
+            <option value="Complete" data-i18n="statusComplete">Заполнено</option>
+            <option value="Attention" data-i18n="statusAttention">Требует внимания</option>
+          </select>
+        </div>
+        <div class="field"><label for="maintenance" data-i18n="maintenance">Обслуживание / событие</label><input id="maintenance"></div>
+        <div class="field"><label for="reportRef" data-i18n="reportRef">Ссылка / номер отчёта</label><input id="reportRef"></div>
+
+        <div class="field" style="grid-column:1/-1"><label for="notes" data-i18n="notes">Наблюдения и примечания</label><textarea id="notes"></textarea></div>
+      </div>
+      <div class="actions">
+        <button class="btn" type="submit" data-i18n="addBtn">Добавить запись</button>
+        <button class="btn secondary" type="reset" data-i18n="clearBtn">Очистить форму</button>
+      </div>
+    </form>
+  </section>
+
+  <section class="panel">
+    <h2 data-i18n="recordsTitle">Журнал испытаний</h2>
+    <div class="toolbar">
+      <input id="search" type="search" data-placeholder="searchPlaceholder" placeholder="Поиск по ID, объекту, процессу, стране...">
+      <select id="filterStatus">
+        <option value="" data-i18n="allStatuses">Все статусы</option>
+        <option value="Review" data-i18n="statusReview">На проверке</option>
+        <option value="Complete" data-i18n="statusComplete">Заполнено</option>
+        <option value="Attention" data-i18n="statusAttention">Требует внимания</option>
+      </select>
+      <select id="filterProcess">
+        <option value="" data-i18n="allProcesses">Все процессы</option>
+        <option value="Amine">Amine</option>
+        <option value="Physical solvent">Physical solvent</option>
+        <option value="Membrane">Membrane</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+    <div class="actions" style="margin:0 0 14px">
+      <button class="btn" id="exportCsv" type="button" data-i18n="exportBtn">Экспорт CSV</button>
+      <button class="btn dark" id="reportBtn" type="button" data-i18n="reportBtn">Сформировать текстовый отчёт</button>
+      <button class="btn secondary" id="printBtn" type="button" data-i18n="printBtn">Печать</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr>
+          <th data-i18n="thId">ID</th><th data-i18n="thDate">Дата</th>
+          <th data-i18n="thCountry">Страна / объект</th><th data-i18n="thProcess">Процесс</th>
+          <th>H₂S in</th><th>H₂S out</th><th>CO₂ in</th><th>CO₂ out</th>
+          <th data-i18n="thStatus">Статус</th><th data-i18n="thActions">Действия</th>
+        </tr></thead>
+        <tbody id="recordsBody"></tbody>
+      </table>
+    </div>
+    <div id="emptyState" class="empty" hidden data-i18n="empty">Записей пока нет.</div>
+  </section>
+
+  <section class="panel">
+    <h2 data-i18n="importantTitle">Важная техническая информация</h2>
+    <p data-i18n="importantText">Для сравнения результатов фиксируйте единицы измерения, состав пробы, место отбора, условия измерения, метод анализа и сведения о приборе. Значения на входе и выходе сами по себе не являются заключением о качестве или безопасности газа.</p>
+    <p data-i18n="storageText">Записи этого демонстрационного модуля хранятся только в памяти открытой страницы. После перезагрузки страницы добавленные записи исчезнут. Для реального промышленного использования необходимы серверная база данных, права доступа, резервное копирование и аудит изменений.</p>
+  </section>
+</main>
+
+<footer>
+  <strong>WORKER PRO</strong><br>
+  <span data-i18n="footer">Глобальная промышленная платформа · Модуль №286 · Демонстрационная версия</span>
+</footer>
+
+<script>
+const translations={
+ru:{
+subtitle:"Глобальная промышленная платформа",title:"Испытания эффективности очистки газа",
+intro:"Учёт лабораторных и производственных данных систем удаления сероводорода (H₂S) и углекислого газа (CO₂) из природного газа.",
+navHome:"Главная",navProduction:"Производство",navTesting:"Испытания",navQuality:"Качество",navDocuments:"Документы",navSuppliers:"Поставщики",navOrders:"Заказы",navLogistics:"Логистика",navTracking:"Отслеживание",
+demoTitle:"Демонстрационный модуль.",disclaimer:"Пример для учёта данных. Он не подтверждает безопасность газа, соответствие спецификации или исправность оборудования. Решения принимают квалифицированные специалисты по утверждённым методам и требованиям проекта.",
+statTotal:"Всего записей",statReview:"На проверке",statComplete:"Заполнено",statHold:"Требуют внимания",workflowTitle:"Рабочий процесс",step1:"Регистрация образца и объекта",step2:"Фиксация условий измерения",step3:"Запись результатов H₂S и CO₂",step4:"Проверка данных специалистом",step5:"Формирование отчёта",
+formTitle:"Добавить запись испытания",sampleId:"ID образца / записи *",country:"Страна",asset:"Объект / месторождение",process:"Тип процесса",solvent:"Раствор / сорбент",date:"Дата измерения *",h2sin:"H₂S на входе (единица обязательна)",h2sout:"H₂S на выходе",co2in:"CO₂ на входе",co2out:"CO₂ на выходе",pressure:"Давление — с единицей",temperature:"Температура — с единицей",flow:"Расход газа — с единицей",method:"Метод измерения",lab:"Лаборатория / специалист",status:"Статус записи",statusReview:"На проверке",statusComplete:"Заполнено",statusAttention:"Требует внимания",maintenance:"Обслуживание / событие",reportRef:"Ссылка / номер отчёта",notes:"Наблюдения и примечания",addBtn:"Добавить запись",clearBtn:"Очистить форму",recordsTitle:"Журнал испытаний",searchPlaceholder:"Поиск по ID, объекту, процессу, стране...",allStatuses:"Все статусы",allProcesses:"Все процессы",exportBtn:"Экспорт CSV",reportBtn:"Сформировать текстовый отчёт",printBtn:"Печать",thId:"ID",thDate:"Дата",thCountry:"Страна / объект",thProcess:"Процесс",thStatus:"Статус",thActions:"Действия",empty:"Записей пока нет.",importantTitle:"Важная техническая информация",importantText:"Для сравнения результатов фиксируйте единицы измерения, состав пробы, место отбора, условия измерения, метод анализа и сведения о приборе. Значения на входе и выходе сами по себе не являются заключением о качестве или безопасности газа.",storageText:"Записи этого демонстрационного модуля хранятся только в памяти открытой страницы. После перезагрузки страницы добавленные записи исчезнут. Для реального промышленного использования необходимы серверная база данных, права доступа, резервное копирование и аудит изменений.",footer:"Глобальная промышленная платформа · Модуль №286 · Демонстрационная версия",delete:"Удалить",confirmDelete:"Удалить эту запись?",added:"Запись добавлена.",noRecords:"Нет записей для отчёта.",reportHeading:"WORKER PRO — Отчёт по испытаниям очистки газа",reportGenerated:"Отчёт сформирован",reportWarning:"Демонстрационный отчёт. Не является сертификатом или заключением о безопасности.",processAmine:"Аминовая очистка",processPhysical:"Физический растворитель",processMembrane:"Мембранная система",processOther:"Другое",unitNote:"Единицы измерения указываются пользователем."
+},
+en:{
+subtitle:"Global Industrial Platform",title:"Gas Sweetening Performance Testing",intro:"Record laboratory and operational data for natural-gas systems that remove hydrogen sulfide (H₂S) and carbon dioxide (CO₂).",
+navHome:"Home",navProduction:"Production",navTesting:"Testing",navQuality:"Quality",navDocuments:"Documents",navSuppliers:"Suppliers",navOrders:"Orders",navLogistics:"Logistics",navTracking:"Tracking",
+demoTitle:"Demonstration module.",disclaimer:"This is a data-recording example. It does not confirm gas safety, specification compliance, or equipment fitness. Decisions must be made by qualified personnel using approved methods and project requirements.",
+statTotal:"Total records",statReview:"Under review",statComplete:"Completed",statHold:"Needs attention",workflowTitle:"Workflow",step1:"Register sample and asset",step2:"Record measurement conditions",step3:"Enter H₂S and CO₂ results",step4:"Specialist data review",step5:"Generate report",
+formTitle:"Add test record",sampleId:"Sample / record ID *",country:"Country",asset:"Asset / field",process:"Process type",solvent:"Solvent / sorbent",date:"Measurement date *",h2sin:"Inlet H₂S (include unit)",h2sout:"Outlet H₂S",co2in:"Inlet CO₂",co2out:"Outlet CO₂",pressure:"Pressure — include unit",temperature:"Temperature — include unit",flow:"Gas flow — include unit",method:"Measurement method",lab:"Laboratory / specialist",status:"Record status",statusReview:"Under review",statusComplete:"Completed",statusAttention:"Needs attention",maintenance:"Maintenance / event",reportRef:"Report reference",notes:"Observations and notes",addBtn:"Add record",clearBtn:"Clear form",recordsTitle:"Test register",searchPlaceholder:"Search ID, asset, process, country...",allStatuses:"All statuses",allProcesses:"All processes",exportBtn:"Export CSV",reportBtn:"Generate text report",printBtn:"Print",thId:"ID",thDate:"Date",thCountry:"Country / asset",thProcess:"Process",thStatus:"Status",thActions:"Actions",empty:"No records yet.",importantTitle:"Important technical information",importantText:"For meaningful comparison, record units, sample composition, sampling point, measurement conditions, analytical method, and instrument details. Inlet and outlet values alone do not establish gas quality or safety.",storageText:"This demo stores records only in the current page memory. Added records are lost when the page reloads. Real industrial use requires a server database, access controls, backups, and change auditing.",footer:"Global Industrial Platform · Module #286 · Demonstration version",delete:"Delete",confirmDelete:"Delete this record?",added:"Record added.",noRecords:"No records to report.",reportHeading:"WORKER PRO — Gas Sweetening Test Report",reportGenerated:"Report generated",reportWarning:"Demonstration report. Not a certificate or safety assessment.",processAmine:"Amine treatment",processPhysical:"Physical solvent",processMembrane:"Membrane system",processOther:"Other",unitNote:"Units are entered by the user."
+},
+az:{
+subtitle:"Qlobal Sənaye Platforması",title:"Qazın təmizlənmə səmərəliliyinin sınağı",intro:"Təbii qazdan H₂S və CO₂ çıxaran sistemlərin laboratoriya və istehsalat məlumatlarının qeydiyyatı.",
+navHome:"Ana səhifə",navProduction:"İstehsalat",navTesting:"Sınaqlar",navQuality:"Keyfiyyət",navDocuments:"Sənədlər",navSuppliers:"Təchizatçılar",navOrders:"Sifarişlər",navLogistics:"Logistika",navTracking:"İzləmə",
+demoTitle:"Demo modul.",disclaimer:"Bu, məlumat qeydiyyatı nümunəsidir. Qazın təhlükəsizliyini, spesifikasiyaya uyğunluğunu və ya avadanlığın yararlılığını təsdiqləmir. Qərarları təsdiqlənmiş metodlarla ixtisaslı mütəxəssislər verməlidir.",
+statTotal:"Ümumi qeydlər",statReview:"Yoxlanılır",statComplete:"Tamamlanıb",statHold:"Diqqət tələb edir",workflowTitle:"İş prosesi",step1:"Nümunə və obyekt qeydiyyatı",step2:"Ölçmə şəraitinin qeyd edilməsi",step3:"H₂S və CO₂ nəticələrinin daxil edilməsi",step4:"Mütəxəssis yoxlaması",step5:"Hesabatın hazırlanması",
+formTitle:"Sınaq qeydi əlavə et",sampleId:"Nümunə / qeyd ID-si *",country:"Ölkə",asset:"Obyekt / yataq",process:"Proses növü",solvent:"Məhlul / sorbent",date:"Ölçmə tarixi *",h2sin:"Giriş H₂S (vahidi yazın)",h2sout:"Çıxış H₂S",co2in:"Giriş CO₂",co2out:"Çıxış CO₂",pressure:"Təzyiq — vahidlə",temperature:"Temperatur — vahidlə",flow:"Qaz sərfi — vahidlə",method:"Ölçmə metodu",lab:"Laboratoriya / mütəxəssis",status:"Qeydin statusu",statusReview:"Yoxlanılır",statusComplete:"Tamamlanıb",statusAttention:"Diqqət tələb edir",maintenance:"Texniki xidmət / hadisə",reportRef:"Hesabat nömrəsi",notes:"Müşahidələr və qeydlər",addBtn:"Qeyd əlavə et",clearBtn:"Formanı təmizlə",recordsTitle:"Sınaq jurnalı",searchPlaceholder:"ID, obyekt, proses və ölkə üzrə axtar...",allStatuses:"Bütün statuslar",allProcesses:"Bütün proseslər",exportBtn:"CSV ixracı",reportBtn:"Mətn hesabatı yarat",printBtn:"Çap et",thId:"ID",thDate:"Tarix",thCountry:"Ölkə / obyekt",thProcess:"Proses",thStatus:"Status",thActions:"Əməliyyatlar",empty:"Hələ qeyd yoxdur.",importantTitle:"Vacib texniki məlumat",importantText:"Nəticələri müqayisə etmək üçün ölçü vahidlərini, nümunənin tərkibini, götürülmə yerini, ölçmə şəraitini, analiz metodunu və cihaz məlumatlarını qeyd edin. Giriş və çıxış göstəriciləri təkbaşına qazın keyfiyyətini və təhlükəsizliyini müəyyən etmir.",storageText:"Demo qeydləri yalnız açıq səhifənin yaddaşında saxlanılır və səhifə yenilənəndə silinir. Real istifadə üçün server bazası, giriş hüquqları, ehtiyat nüsxə və dəyişiklik auditi lazımdır.",footer:"Qlobal Sənaye Platforması · Modul №286 · Demo versiya",delete:"Sil",confirmDelete:"Bu qeydi silmək istəyirsiniz?",added:"Qeyd əlavə edildi.",noRecords:"Hesabat üçün qeyd yoxdur.",reportHeading:"WORKER PRO — Qazın təmizlənməsi üzrə hesabat",reportGenerated:"Hesabat yaradıldı",reportWarning:"Demo hesabatdır. Sertifikat və ya təhlükəsizlik rəyi deyil.",processAmine:"Amin təmizlənməsi",processPhysical:"Fiziki həlledici",processMembrane:"Membran sistemi",processOther:"Digər",unitNote:"Ölçü vahidləri istifadəçi tərəfindən daxil edilir."
+}
+};
+const fallback={
+tr:{subtitle:"Küresel Endüstri Platformu",title:"Gaz Arıtma Performans Testi",intro:"Doğal gazdan H₂S ve CO₂ gideren sistemlerin test kayıtları.",formTitle:"Test kaydı ekle",recordsTitle:"Test kayıtları",addBtn:"Kayıt ekle",clearBtn:"Formu temizle",exportBtn:"CSV dışa aktar",reportBtn:"Metin raporu oluştur",printBtn:"Yazdır",searchPlaceholder:"Kayıt, tesis veya süreç ara...",footer:"Küresel Endüstri Platformu · Modül #286 · Demo",demoTitle:"Demo modülü.",statusReview:"İncelemede",statusComplete:"Tamamlandı",statusAttention:"Dikkat gerekli"},
+de:{subtitle:"Globale Industrieplattform",title:"Leistungsprüfung der Gasentschwefelung",intro:"Erfassung von Prüfdaten für Systeme zur Entfernung von H₂S und CO₂ aus Erdgas.",formTitle:"Prüfeintrag hinzufügen",recordsTitle:"Prüfregister",addBtn:"Eintrag hinzufügen",clearBtn:"Formular leeren",exportBtn:"CSV exportieren",reportBtn:"Textbericht erstellen",printBtn:"Drucken",searchPlaceholder:"Nach ID, Anlage oder Prozess suchen...",footer:"Globale Industrieplattform · Modul #286 · Demo",demoTitle:"Demomodul.",statusReview:"In Prüfung",statusComplete:"Abgeschlossen",statusAttention:"Aufmerksamkeit erforderlich"},
+ar:{subtitle:"منصة صناعية عالمية",title:"اختبار أداء تحلية الغاز",intro:"تسجيل بيانات اختبارات إزالة H₂S وCO₂ من الغاز الطبيعي.",formTitle:"إضافة سجل اختبار",recordsTitle:"سجل الاختبارات",addBtn:"إضافة سجل",clearBtn:"مسح النموذج",exportBtn:"تصدير CSV",reportBtn:"إنشاء تقرير نصي",printBtn:"طباعة",searchPlaceholder:"البحث في السجلات...",footer:"منصة صناعية عالمية · الوحدة 286 · نسخة تجريبية",demoTitle:"وحدة تجريبية."},
+es:{subtitle:"Plataforma Industrial Global",title:"Pruebas de rendimiento de endulzamiento de gas",intro:"Registro de datos de sistemas que eliminan H₂S y CO₂ del gas natural.",formTitle:"Añadir registro de prueba",recordsTitle:"Registro de pruebas",addBtn:"Añadir registro",clearBtn:"Limpiar formulario",exportBtn:"Exportar CSV",reportBtn:"Generar informe de texto",printBtn:"Imprimir",searchPlaceholder:"Buscar ID, instalación o proceso...",footer:"Plataforma Industrial Global · Módulo 286 · Demo",demoTitle:"Módulo de demostración."},
+fr:{subtitle:"Plateforme industrielle mondiale",title:"Essais de performance de l’épuration du gaz",intro:"Enregistrement des données des systèmes d’élimination du H₂S et du CO₂ du gaz naturel.",formTitle:"Ajouter un enregistrement",recordsTitle:"Registre des essais",addBtn:"Ajouter",clearBtn:"Effacer le formulaire",exportBtn:"Exporter CSV",reportBtn:"Générer un rapport texte",printBtn:"Imprimer",searchPlaceholder:"Rechercher par ID, site ou procédé...",footer:"Plateforme industrielle mondiale · Module 286 · Démo",demoTitle:"Module de démonstration."},
+it:{subtitle:"Piattaforma industriale globale",title:"Prove di prestazione del trattamento del gas",intro:"Registrazione dei dati dei sistemi che rimuovono H₂S e CO₂ dal gas naturale.",formTitle:"Aggiungi registrazione",recordsTitle:"Registro delle prove",addBtn:"Aggiungi",clearBtn:"Svuota modulo",exportBtn:"Esporta CSV",reportBtn:"Genera rapporto testuale",printBtn:"Stampa",searchPlaceholder:"Cerca ID, impianto o processo...",footer:"Piattaforma industriale globale · Modulo 286 · Demo",demoTitle:"Modulo dimostrativo."}
+};
+let lang="ru";
+let records=[
+ {sampleId:"GS-286-001",country:"Azerbaijan",asset:"Demo Gas Plant A",process:"Amine",solvent:"Example solvent",date:"2026-10-02",h2sin:"Demo value",h2sout:"Demo value",co2in:"Demo value",co2out:"Demo value",pressure:"Demo",temperature:"Demo",flow:"Demo",method:"Demo method",lab:"Demo lab",status:"Review",maintenance:"Routine review",reportRef:"DEMO-286-01",notes:"Illustrative data only."},
+ {sampleId:"GS-286-002",country:"Türkiye",asset:"Demo Processing Unit B",process:"Membrane",solvent:"Not specified",date:"2026-10-04",h2sin:"Not recorded",h2sout:"Not recorded",co2in:"Not recorded",co2out:"Not recorded",pressure:"Not recorded",temperature:"Not recorded",flow:"Not recorded",method:"Pending",lab:"Not assigned",status:"Attention",maintenance:"Record requires review",reportRef:"",notes:"No performance conclusion."}
+];
+const $=id=>document.getElementById(id);
+function tr(key){return (translations[lang]&&translations[lang][key])||(fallback[lang]&&fallback[lang][key])||(translations.en[key])||key}
+function applyLanguage(code){
+ lang=code;
+ document.documentElement.lang=code;
+ document.documentElement.dir=code==="ar"?"rtl":"ltr";
+ document.querySelectorAll("[data-i18n]").forEach(el=>{el.textContent=tr(el.dataset.i18n)});
+ document.querySelectorAll("[data-placeholder]").forEach(el=>{el.placeholder=tr(el.dataset.placeholder)});
+ document.querySelectorAll(".languages button").forEach(b=>b.classList.toggle("active",b.dataset.lang===code));
+ render();
+}
+document.querySelectorAll(".languages button").forEach(b=>b.addEventListener("click",()=>applyLanguage(b.dataset.lang)));
+function escapeHtml(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function statusLabel(status){
+ return status==="Complete"?tr("statusComplete"):status==="Attention"?tr("statusAttention"):tr("statusReview");
+}
+function processLabel(process){
+ const k={"Amine":"processAmine","Physical solvent":"processPhysical","Membrane":"processMembrane","Other":"processOther"}[process];
+ return k?tr(k):process;
+}
+function render(){
+ const q=$("search").value.trim().toLowerCase();
+ const sf=$("filterStatus").value,pf=$("filterProcess").value;
+ const shown=records.filter(r=>{
+   const all=Object.values(r).join(" ").toLowerCase();
+   return (!q||all.includes(q))&&(!sf||r.status===sf)&&(!pf||r.process===pf);
+ });
+ $("recordsBody").innerHTML=shown.map(r=>{
+   const index=records.indexOf(r);
+   const badge=r.status==="Attention"?"hold":r.status==="Review"?"review":"";
+   return `<tr>
+    <td>${escapeHtml(r.sampleId)}</td><td>${escapeHtml(r.date)}</td>
+    <td>${escapeHtml(r.country)}<br>${escapeHtml(r.asset)}</td>
+    <td>${escapeHtml(processLabel(r.process))}</td>
+    <td>${escapeHtml(r.h2sin)}</td><td>${escapeHtml(r.h2sout)}</td>
+    <td>${escapeHtml(r.co2in)}</td><td>${escapeHtml(r.co2out)}</td>
+    <td><span class="badge ${badge}">${escapeHtml(statusLabel(r.status))}</span></td>
+    <td><button class="btn secondary delete-btn" data-index="${index}" type="button">${escapeHtml(tr("delete"))}</button></td>
+   </tr>`;
+ }).join("");
+ $("emptyState").hidden=shown.length!==0;
+ $("statTotal").textContent=records.length;
+ $("statReview").textContent=records.filter(r=>r.status==="Review").length;
+ $("statComplete").textContent=records.filter(r=>r.status==="Complete").length;
+ $("statHold").textContent=records.filter(r=>r.status==="Attention").length;
+ document.querySelectorAll(".delete-btn").forEach(btn=>btn.addEventListener("click",()=>{
+   const i=Number(btn.dataset.index);
+   if(Number.isInteger(i)&&i>=0&&i<records.length&&confirm(tr("confirmDelete"))){records.splice(i,1);render();}
+ }));
+}
+$("testForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const record={};
+ ["sampleId","country","asset","process","solvent","date","h2sin","h2sout","co2in","co2out","pressure","temperature","flow","method","lab","status","maintenance","reportRef","notes"].forEach(id=>record[id]=$(id).value.trim());
+ if(records.some(r=>r.sampleId.toLowerCase()===record.sampleId.toLowerCase())){
+   alert(lang==="ru"?"Такой ID уже существует. Укажите уникальный ID.":"This record ID already exists. Enter a unique ID.");
+   $("sampleId").focus();return;
+ }
+ records.unshift(record);
+ $("testForm").reset();
+ render();
+ alert(tr("added"));
+});
+["search","filterStatus","filterProcess"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+function csvCell(value){return '"'+String(value??"").replace(/"/g,'""')+'"'}
+$("exportCsv").addEventListener("click",()=>{
+ const keys=["sampleId","country","asset","process","solvent","date","h2sin","h2sout","co2in","co2out","pressure","temperature","flow","method","lab","status","maintenance","reportRef","notes"];
+ const rows=[keys,...records.map(r=>keys.map(k=>r[k]??""))];
+ const csv="\uFEFF"+rows.map(row=>row.map(csvCell).join(",")).join("\r\n");
+ const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="worker-pro-gas-sweetening-286.csv";a.click();URL.revokeObjectURL(url);
+});
+$("reportBtn").addEventListener("click",()=>{
+ if(!records.length){alert(tr("noRecords"));return;}
+ const lines=[tr("reportHeading"),tr("reportGenerated")+": "+new Date().toLocaleString(),tr("reportWarning"),""];
+ records.forEach((r,i)=>{
+   lines.push("----- "+(i+1)+" -----");
+   Object.entries(r).forEach(([k,v])=>lines.push(k+": "+(k==="process"?processLabel(v):k==="status"?statusLabel(v):v)));
+   lines.push("");
+ });
+ const blob=new Blob(["\uFEFF"+lines.join("\r\n")],{type:"text/plain;charset=utf-8"});
+ const url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download="worker-pro-gas-sweetening-report.txt";a.click();URL.revokeObjectURL(url);
+});
+$("printBtn").addEventListener("click",()=>window.print());
+applyLanguage("ru");
+</script>
+</body>
+</html>
