@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Hydrocarbon Sampling & Chain of Custody</title>
+<style>
+:root{--dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;--bg:#f4f7f5;--line:#dce7df;--text:#173528}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.languages{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;padding:11px;background:var(--dark)}
+.languages button{padding:8px 12px;border:1px solid #ffffff55;border-radius:8px;background:#ffffff12;color:white;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:var(--lime);color:var(--dark)}
+header{padding:28px 14px;text-align:center;color:white;background:linear-gradient(135deg,var(--dark),var(--green));border-bottom:5px solid var(--lime)}
+.logo{display:inline-block;padding:9px 15px;border:2px solid var(--lime);border-radius:10px;color:var(--lime);font-size:25px;font-weight:900}
+header h1{font-size:clamp(23px,4vw,35px);margin:18px auto 10px}
+header p{max-width:900px;margin:auto;line-height:1.6}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:13px;background:white;border-bottom:1px solid var(--line)}
+nav a{padding:9px 11px;border-radius:7px;background:#edf5ef;color:var(--green);font-weight:bold;font-size:13px;text-decoration:none}
+nav a:hover{background:var(--lime)}
+main{max-width:1300px;margin:auto;padding:20px 14px 38px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:22px}
+.card{min-width:0;padding:18px;background:white;border:1px solid var(--line);border-radius:14px;box-shadow:0 3px 12px #1231}
+.stat-label{font-size:13px;color:#587263}
+.stat-value{margin-top:8px;font-size:28px;font-weight:bold;color:var(--green)}
+h2{margin:0 0 15px;color:var(--dark)}
+h3{margin:0 0 12px;color:var(--green)}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px}
+.field{min-width:0}
+label{display:block;margin-bottom:5px;font-size:13px;font-weight:bold}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbd9cf;border-radius:8px;background:white;color:var(--text);font:inherit}
+textarea{min-height:82px;resize:vertical}
+.full{grid-column:1/-1}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.btn{padding:11px 15px;border:0;border-radius:8px;background:var(--green);color:white;font-weight:bold;cursor:pointer}
+.btn.secondary{background:#e8f1eb;color:var(--dark);border:1px solid var(--line)}
+.btn.danger{background:#9e3030}
+.toolbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:14px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+table{width:100%;min-width:1450px;border-collapse:collapse;background:white}
+th,td{padding:11px;text-align:left;border-bottom:1px solid #e5ece7;font-size:13px}
+th{background:var(--dark);color:white;white-space:nowrap}
+tr:hover td{background:#f5faf6}
+.pill{display:inline-block;padding:5px 8px;border-radius:20px;background:#fff0d6;color:#785000;font-size:12px;font-weight:bold}
+.pill.received{background:#dff4e5;color:#176338}
+.pill.issue{background:#fce4e4;color:#922d2d}
+.notice{padding:15px;background:#fff9e8;border-left:5px solid #e1ae2f;border-radius:8px;line-height:1.6}
+.small{font-size:12px;color:#63776b}
+footer{padding:22px;text-align:center;background:var(--dark);color:white;line-height:1.7}
+@media(max-width:600px){main{padding:14px 10px 28px}.card{padding:14px}.languages{gap:5px;padding:9px}.languages button{padding:7px 9px}}
+@media print{.languages,nav,form,.toolbar,.actions,footer{display:none!important}body{background:white}.card{box-shadow:none}main{max-width:none}}
+</style>
+</head>
+<body>
+<div class="languages">
+<button data-lang="az">AZ</button><button data-lang="ru" class="active">RU</button>
+<button data-lang="en">EN</button><button data-lang="tr">TR</button>
+<button data-lang="de">DE</button><button data-lang="ar">AR</button>
+<button data-lang="es">ES</button><button data-lang="fr">FR</button><button data-lang="it">IT</button>
+</div>
+
+<header>
+<div class="logo">WORKER PRO</div>
+<h1 data-i18n="title">№300 — Отбор проб углеводородов и цепочка передачи</h1>
+<p data-i18n="subtitle">Регистрация проб нефти, природного газа и конденсата, ответственных лиц, передачи между объектами и лабораториями.</p>
+</header>
+
+<nav>
+<a href="../index.html" data-i18n="home">Главная</a>
+<a href="../production/index.html" data-i18n="production">Производство</a>
+<a href="../testing/index.html" data-i18n="testing">Испытания</a>
+<a href="../quality/index.html" data-i18n="quality">Качество</a>
+<a href="../documents/index.html" data-i18n="documents">Документы</a>
+<a href="../companies/index.html" data-i18n="companies">Компании</a>
+<a href="../suppliers/index.html" data-i18n="suppliers">Поставщики</a>
+<a href="../orders/index.html" data-i18n="orders">Заказы</a>
+<a href="../logistics/index.html" data-i18n="logistics">Логистика</a>
+<a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+
+<main>
+<section class="grid">
+<div class="card"><div class="stat-label" data-i18n="total">Всего проб</div><div class="stat-value" id="total">0</div></div>
+<div class="card"><div class="stat-label" data-i18n="receivedCount">Передача зарегистрирована</div><div class="stat-value" id="receivedCount">0</div></div>
+<div class="card"><div class="stat-label" data-i18n="pendingCount">В пути / ожидает</div><div class="stat-value" id="pendingCount">0</div></div>
+<div class="card"><div class="stat-label" data-i18n="issueCount">Требуется уточнение</div><div class="stat-value" id="issueCount">0</div></div>
+</section>
+
+<section class="card" style="margin-bottom:22px">
+<h2 data-i18n="formTitle">Новая запись о пробе</h2>
+<form id="form">
+<div class="form-grid">
+<div class="field"><label for="sampleId" data-i18n="sampleId">Уникальный номер пробы *</label><input id="sampleId" required maxlength="100" placeholder="SAMPLE-300-001"></div>
+<div class="field"><label for="country" data-i18n="country">Страна</label><input id="country" maxlength="100"></div>
+<div class="field"><label for="site" data-i18n="site">Объект / месторождение</label><input id="site" maxlength="150"></div>
+<div class="field"><label for="source" data-i18n="source">Точка / источник отбора *</label><input id="source" required maxlength="180"></div>
+<div class="field"><label for="sampleType" data-i18n="sampleType">Тип пробы *</label>
+<select id="sampleType" required>
+<option value="Crude oil">Crude oil — сырая нефть</option>
+<option value="Natural gas">Natural gas — природный газ</option>
+<option value="Condensate">Condensate — конденсат</option>
+<option value="LPG">LPG — сжиженный нефтяной газ</option>
+<option value="Refined product">Refined product — нефтепродукт</option>
+<option value="Produced water">Produced water — пластовая вода</option>
+<option value="Other">Other — другое</option>
+</select></div>
+<div class="field"><label for="container" data-i18n="container">Контейнер / пломба</label><input id="container" maxlength="150"></div>
+<div class="field"><label for="sampleDate" data-i18n="sampleDate">Дата отбора *</label><input id="sampleDate" type="date" required></div>
+<div class="field"><label for="sampleTime" data-i18n="sampleTime">Время отбора</label><input id="sampleTime" type="time"></div>
+<div class="field"><label for="sampler" data-i18n="sampler">Кто отобрал пробу</label><input id="sampler" maxlength="120"></div>
+<div class="field"><label for="samplingMethod" data-i18n="samplingMethod">Метод / процедура отбора</label><input id="samplingMethod" maxlength="180"></div>
+<div class="field"><label for="quantity" data-i18n="quantity">Количество пробы</label><input id="quantity" type="number" step="any" min="0"></div>
+<div class="field"><label for="quantityUnit" data-i18n="quantityUnit">Единица количества</label><select id="quantityUnit"><option value="mL">mL</option><option value="L">L</option><option value="g">g</option><option value="kg">kg</option><option value="other">Other</option></select></div>
+<div class="field"><label for="condition" data-i18n="condition">Состояние упаковки</label><select id="condition"><option value="Intact">Intact — без видимых повреждений</option><option value="Seal issue">Seal issue — проблема с пломбой</option><option value="Package issue">Package issue — проблема с упаковкой</option><option value="Unknown">Unknown — неизвестно</option></select></div>
+<div class="field"><label for="preservation" data-i18n="preservation">Условия хранения / сохранения</label><input id="preservation" maxlength="180"></div>
+<div class="field"><label for="fromPerson" data-i18n="fromPerson">Передал</label><input id="fromPerson" maxlength="120"></div>
+<div class="field"><label for="toPerson" data-i18n="toPerson">Принял</label><input id="toPerson" maxlength="120"></div>
+<div class="field"><label for="transferDate" data-i18n="transferDate">Дата передачи</label><input id="transferDate" type="date"></div>
+<div class="field"><label for="transferTime" data-i18n="transferTime">Время передачи</label><input id="transferTime" type="time"></div>
+<div class="field"><label for="destination" data-i18n="destination">Куда направлена проба</label><input id="destination" maxlength="180" placeholder="Лаборатория / подразделение"></div>
+<div class="field"><label for="receiverRef" data-i18n="receiverRef">Подтверждение приёма / документ</label><input id="receiverRef" maxlength="180"></div>
+<div class="field"><label for="labRef" data-i18n="labRef">Номер лабораторного задания</label><input id="labRef" maxlength="180"></div>
+<div class="field"><label for="status" data-i18n="status">Статус пробы *</label>
+<select id="status" required>
+<option value="Pending" data-i18n="pending">В пути / ожидает</option>
+<option value="Received" data-i18n="received">Передача зарегистрирована</option>
+<option value="Issue" data-i18n="issue">Требуется уточнение</option>
+<option value="Archived" data-i18n="archived">Архив</option>
+</select></div>
+<div class="field"><label for="report" data-i18n="report">Номер отчёта / документа</label><input id="report" maxlength="180"></div>
+<div class="field full"><label for="observations" data-i18n="observations">Наблюдения при отборе и передаче</label><textarea id="observations" maxlength="2000"></textarea></div>
+<div class="field full"><label for="actions" data-i18n="actionsField">Последующие действия</label><textarea id="actions" maxlength="1500"></textarea></div>
+<div class="field full"><label for="notes" data-i18n="notes">Дополнительные примечания</label><textarea id="notes" maxlength="1500"></textarea></div>
+</div>
+<div class="actions">
+<button class="btn" type="submit" data-i18n="save">Сохранить пробу</button>
+<button class="btn secondary" type="reset" data-i18n="clear">Очистить форму</button>
+</div>
+</form>
+</section>
+
+<section class="card" style="margin-bottom:22px">
+<h2 data-i18n="recordsTitle">Реестр проб и передачи</h2>
+<div class="toolbar">
+<input id="search" data-i18n-placeholder="searchPlaceholder" placeholder="Поиск по номеру, объекту, лаборатории...">
+<select id="statusFilter">
+<option value="" data-i18n="allStatuses">Все статусы</option>
+<option value="Pending" data-i18n="pending">В пути / ожидает</option>
+<option value="Received" data-i18n="received">Передача зарегистрирована</option>
+<option value="Issue" data-i18n="issue">Требуется уточнение</option>
+<option value="Archived" data-i18n="archived">Архив</option>
+</select>
+<select id="typeFilter">
+<option value="" data-i18n="allTypes">Все типы проб</option>
+<option value="Crude oil">Crude oil</option><option value="Natural gas">Natural gas</option>
+<option value="Condensate">Condensate</option><option value="LPG">LPG</option>
+<option value="Refined product">Refined product</option><option value="Produced water">Produced water</option><option value="Other">Other</option>
+</select>
+</div>
+<div class="actions">
+<button class="btn" id="csv" type="button" data-i18n="csv">Экспорт CSV</button>
+<button class="btn secondary" id="reportBtn" type="button" data-i18n="reportBtn">Текстовый отчёт</button>
+<button class="btn secondary" id="printBtn" type="button" data-i18n="print">Печать</button>
+<button class="btn danger" id="deleteAll" type="button" data-i18n="deleteAll">Удалить все записи</button>
+</div>
+<div class="table-wrap" style="margin-top:14px">
+<table>
+<thead><tr>
+<th data-i18n="sampleId">Номер пробы</th><th data-i18n="sampleType">Тип пробы</th>
+<th data-i18n="source">Источник</th><th data-i18n="sampleDate">Дата отбора</th>
+<th data-i18n="fromPerson">Передал</th><th data-i18n="toPerson">Принял</th>
+<th data-i18n="destination">Назначение</th><th data-i18n="status">Статус</th>
+<th data-i18n="report">Документ</th><th data-i18n="actions">Действия</th>
+</tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+<p class="small" data-i18n="storage">Данные существуют только в памяти страницы и исчезнут после перезагрузки.</p>
+</section>
+
+<section class="grid">
+<div class="card"><h3 data-i18n="workflowTitle">Цепочка передачи</h3><p data-i18n="workflow">1. Присвойте пробе уникальный номер. 2. Запишите источник и время отбора. 3. Зафиксируйте контейнер и пломбу. 4. Регистрируйте каждую передачу. 5. Сохраните подтверждения и отчёты.</p></div>
+<div class="card"><h3 data-i18n="scopeTitle">Область учёта</h3><p data-i18n="scope">Реестр помогает вести историю проб от точки отбора до лаборатории и документировать ответственных лиц.</p></div>
+</section>
+
+<div class="notice"><strong data-i18n="warningTitle">Важное предупреждение</strong><p data-i18n="warning">Это демонстрационный журнал, а не лабораторная информационная система. Записи в браузере не подтверждают подлинность образца, сохранность его свойств, правильность отбора или соблюдение официальной цепочки передачи. Используйте утверждённые процедуры, подходящие контейнеры, требования к сохранению проб и фактические подписи/подтверждения ответственных лиц. Реальные требования зависят от типа образца, метода анализа и применимых правил. Данные не сохраняются на сервере.</p></div>
+</main>
+
+<footer><strong>WORKER PRO</strong><br><span data-i18n="footer">Глобальная промышленная платформа</span><br>F.S. © 2026</footer>
+
+<script>
+const dict={
+ru:{
+title:"№300 — Отбор проб углеводородов и цепочка передачи",subtitle:"Регистрация проб нефти, природного газа и конденсата, ответственных лиц, передачи между объектами и лабораториями.",home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",suppliers:"Поставщики",orders:"Заказы",logistics:"Логистика",tracking:"Отслеживание",
+total:"Всего проб",receivedCount:"Передача зарегистрирована",pendingCount:"В пути / ожидает",issueCount:"Требуется уточнение",formTitle:"Новая запись о пробе",sampleId:"Уникальный номер пробы",country:"Страна",site:"Объект / месторождение",source:"Точка / источник отбора",sampleType:"Тип пробы",container:"Контейнер / пломба",sampleDate:"Дата отбора",sampleTime:"Время отбора",sampler:"Кто отобрал пробу",samplingMethod:"Метод / процедура отбора",quantity:"Количество пробы",quantityUnit:"Единица количества",condition:"Состояние упаковки",preservation:"Условия хранения / сохранения",fromPerson:"Передал",toPerson:"Принял",transferDate:"Дата передачи",transferTime:"Время передачи",destination:"Куда направлена проба",receiverRef:"Подтверждение приёма / документ",labRef:"Номер лабораторного задания",status:"Статус пробы",pending:"В пути / ожидает",received:"Передача зарегистрирована",issue:"Требуется уточнение",archived:"Архив",report:"Номер отчёта / документа",observations:"Наблюдения при отборе и передаче",actionsField:"Последующие действия",notes:"Дополнительные примечания",save:"Сохранить пробу",clear:"Очистить форму",recordsTitle:"Реестр проб и передачи",searchPlaceholder:"Поиск по номеру, объекту, лаборатории...",allStatuses:"Все статусы",allTypes:"Все типы проб",csv:"Экспорт CSV",reportBtn:"Текстовый отчёт",print:"Печать",deleteAll:"Удалить все записи",actions:"Действия",storage:"Данные существуют только в памяти страницы и исчезнут после перезагрузки.",workflowTitle:"Цепочка передачи",workflow:"1. Присвойте пробе уникальный номер. 2. Запишите источник и время отбора. 3. Зафиксируйте контейнер и пломбу. 4. Регистрируйте каждую передачу. 5. Сохраните подтверждения и отчёты.",scopeTitle:"Область учёта",scope:"Реестр помогает вести историю проб от точки отбора до лаборатории и документировать ответственных лиц.",warningTitle:"Важное предупреждение",warning:"Это демонстрационный журнал, а не лабораторная информационная система. Записи в браузере не подтверждают подлинность образца, сохранность его свойств, правильность отбора или соблюдение официальной цепочки передачи. Используйте утверждённые процедуры, подходящие контейнеры, требования к сохранению проб и фактические подписи/подтверждения ответственных лиц. Реальные требования зависят от типа образца, метода анализа и применимых правил. Данные не сохраняются на сервере.",footer:"Глобальная промышленная платформа",delete:"Удалить",empty:"Проб пока нет.",confirmDelete:"Удалить эту запись?",confirmAll:"Удалить все записи?",saved:"Запись сохранена.",required:"Заполните обязательные поля."
+},
+en:{
+title:"#300 — Hydrocarbon Sampling & Chain of Custody",subtitle:"Register crude oil, natural gas and condensate samples, responsible people and transfers between sites and laboratories.",home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",suppliers:"Suppliers",orders:"Orders",logistics:"Logistics",tracking:"Tracking",
+total:"Total samples",receivedCount:"Transfer recorded",pendingCount:"In transit / pending",issueCount:"Clarification required",formTitle:"New sample record",sampleId:"Unique sample ID",country:"Country",site:"Field / site",source:"Sampling point / source",sampleType:"Sample type",container:"Container / seal",sampleDate:"Sampling date",sampleTime:"Sampling time",sampler:"Sampled by",samplingMethod:"Sampling method / procedure",quantity:"Sample quantity",quantityUnit:"Quantity unit",condition:"Package condition",preservation:"Storage / preservation conditions",fromPerson:"Transferred by",toPerson:"Received by",transferDate:"Transfer date",transferTime:"Transfer time",destination:"Sample destination",receiverRef:"Receipt confirmation / document",labRef:"Laboratory job reference",status:"Sample status",pending:"In transit / pending",received:"Transfer recorded",issue:"Clarification required",archived:"Archived",report:"Report / document reference",observations:"Sampling and transfer observations",actionsField:"Follow-up actions",notes:"Additional notes",save:"Save sample",clear:"Clear form",recordsTitle:"Sample and custody register",searchPlaceholder:"Search ID, site or laboratory...",allStatuses:"All statuses",allTypes:"All sample types",csv:"Export CSV",reportBtn:"Text report",print:"Print",deleteAll:"Delete all records",actions:"Actions",storage:"Records are stored only in page memory and disappear after reload.",workflowTitle:"Chain of custody",workflow:"1. Assign a unique sample ID. 2. Record source and sampling time. 3. Document the container and seal. 4. Record each transfer. 5. Retain acknowledgements and reports.",scopeTitle:"Register scope",scope:"This register helps track samples from collection point to laboratory and document responsible persons.",warningTitle:"Important notice",warning:"This is a demonstration register, not a laboratory information management system. Browser records do not verify sample authenticity, preservation, correct sampling or compliance with an official chain of custody. Follow approved procedures, suitable containers, preservation requirements and actual signatures or acknowledgements. Requirements depend on sample type, analysis method and applicable rules. Data is not saved to a server.",footer:"Global Industrial Platform",delete:"Delete",empty:"No samples yet.",confirmDelete:"Delete this record?",confirmAll:"Delete all records?",saved:"Record saved.",required:"Complete all required fields."
+},
+az:{
+title:"№300 — Karbohidrogen nümunələrinin götürülməsi və təhvil zənciri",subtitle:"Neft, təbii qaz və kondensat nümunələrinin, məsul şəxslərin və laboratoriyaya ötürülmələrin qeydiyyatı.",home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",logistics:"Logistika",tracking:"İzləmə",
+total:"Ümumi nümunələr",receivedCount:"Təhvil qeydə alınıb",pendingCount:"Yoldadır / gözləyir",issueCount:"Dəqiqləşdirmə tələb olunur",formTitle:"Yeni nümunə qeydi",sampleId:"Unikal nümunə nömrəsi",country:"Ölkə",site:"Mədən / obyekt",source:"Nümunə götürmə nöqtəsi",sampleType:"Nümunə növü",container:"Konteyner / möhür",sampleDate:"Götürülmə tarixi",sampleTime:"Götürülmə vaxtı",sampler:"Nümunəni götürən",samplingMethod:"Götürmə metodu / proseduru",quantity:"Nümunənin miqdarı",quantityUnit:"Miqdar vahidi",condition:"Qablaşdırmanın vəziyyəti",preservation:"Saxlanma şərtləri",fromPerson:"Təhvil verən",toPerson:"Qəbul edən",transferDate:"Təhvil tarixi",transferTime:"Təhvil vaxtı",destination:"Nümunənin təyinatı",receiverRef:"Qəbul təsdiqi / sənəd",labRef:"Laboratoriya tapşırıq nömrəsi",status:"Nümunənin statusu",pending:"Yoldadır / gözləyir",received:"Təhvil qeydə alınıb",issue:"Dəqiqləşdirmə tələb olunur",archived:"Arxiv",report:"Hesabat / sənəd nömrəsi",observations:"Götürmə və təhvil müşahidələri",actionsField:"Sonrakı tədbirlər",notes:"Əlavə qeydlər",save:"Nümunəni saxla",clear:"Formanı təmizlə",recordsTitle:"Nümunə və təhvil jurnalı",searchPlaceholder:"Nömrə, obyekt və ya laboratoriya üzrə axtar...",allStatuses:"Bütün statuslar",allTypes:"Bütün nümunə növləri",csv:"CSV ixracı",reportBtn:"Mətn hesabatı",print:"Çap et",deleteAll:"Bütün qeydləri sil",actions:"Əməliyyatlar",storage:"Qeydlər yalnız səhifənin müvəqqəti yaddaşında saxlanılır və yenilənəndə silinir.",workflowTitle:"Təhvil zənciri",workflow:"1. Unikal nömrə verin. 2. Mənbəni və vaxtı qeyd edin. 3. Konteyneri və möhürü yazın. 4. Hər təhvili qeydə alın. 5. Təsdiqləri və hesabatları saxlayın.",scopeTitle:"Qeydiyyat sahəsi",scope:"Jurnal nümunənin götürülmə nöqtəsindən laboratoriyaya qədər izlənməsinə və məsul şəxslərin qeydinə kömək edir.",warningTitle:"Vacib xəbərdarlıq",warning:"Bu nümayiş məqsədli jurnaldır, laboratoriya informasiya sistemi deyil. Brauzer qeydləri nümunənin həqiqiliyini, qorunmasını və rəsmi təhvil zəncirinə uyğunluğunu təsdiqləmir. Təsdiqlənmiş prosedurlardan, uyğun qablardan və faktiki imza/qəbul təsdiqlərindən istifadə edin. Tələblər nümunə növündən və analiz metodundan asılıdır. Məlumat serverdə saxlanılmır.",footer:"Qlobal Sənaye Platforması",delete:"Sil",empty:"Hələ nümunə yoxdur.",confirmDelete:"Bu qeyd silinsin?",confirmAll:"Bütün qeydlər silinsin?",saved:"Qeyd saxlanıldı.",required:"Məcburi sahələri doldurun."
+}
+};
+const otherTitles={
+tr:["№300 — Hidrokarbon numune alma ve teslim zinciri","Petrol, doğal gaz ve kondensat numunelerinin ve laboratuvara teslimlerin kaydı."],
+de:["Nr. 300 — Kohlenwasserstoff-Probenahme und Nachweiskette","Erfassung von Proben, Verantwortlichen und Übergaben an Labore."],
+ar:["300 — أخذ عينات الهيدروكربونات وسلسلة الحيازة","تسجيل عينات النفط والغاز والمكثفات وعمليات التسليم إلى المختبرات."],
+es:["N.º 300 — Muestreo de hidrocarburos y cadena de custodia","Registro de muestras, responsables y transferencias a laboratorios."],
+fr:["N° 300 — Échantillonnage des hydrocarbures et chaîne de traçabilité","Suivi des échantillons et des transferts vers les laboratoires."],
+it:["N. 300 — Campionamento degli idrocarburi e catena di custodia","Registro dei campioni e dei trasferimenti ai laboratori."]
+};
+const keys=["sampleId","country","site","source","sampleType","container","sampleDate","sampleTime","sampler","samplingMethod","quantity","quantityUnit","condition","preservation","fromPerson","toPerson","transferDate","transferTime","destination","receiverRef","labRef","status","report","observations","actions","notes"];
+let lang="ru",records=[];
+const $=id=>document.getElementById(id);
+function T(k){return (dict[lang]||dict.en)[k]||dict.en[k]||k}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function setLang(l){
+lang=l;document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";
+const d=dict[l]||dict.en;
+document.querySelectorAll("[data-i18n]").forEach(el=>{
+const k=el.dataset.i18n;
+el.textContent=d[k]||(otherTitles[l]&&k==="title"?otherTitles[l][0]:otherTitles[l]&&k==="subtitle"?otherTitles[l][1]:dict.en[k]||k);
+});
+document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>el.placeholder=(d[el.dataset.i18nPlaceholder]||dict.en[el.dataset.i18nPlaceholder]||""));
+document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
+render();
+}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+function readForm(){const r={};keys.forEach(k=>r[k]=$(k).value.trim());return r}
+function render(){
+const q=$("search").value.toLowerCase().trim(),s=$("statusFilter").value,t=$("typeFilter").value;
+const filtered=records.filter(r=>(!q||keys.map(k=>r[k]).join(" ").toLowerCase().includes(q))&&(!s||r.status===s)&&(!t||r.sampleType===t));
+$("total").textContent=records.length;
+$("receivedCount").textContent=records.filter(r=>r.status==="Received").length;
+$("pendingCount").textContent=records.filter(r=>r.status==="Pending").length;
+$("issueCount").textContent=records.filter(r=>r.status==="Issue").length;
+const body=$("tbody");
+if(!filtered.length){body.innerHTML=`<tr><td colspan="10">${esc(T("empty"))}</td></tr>`;return}
+body.innerHTML=filtered.map(r=>{
+const idx=records.indexOf(r),cls=r.status==="Received"?"received":r.status==="Issue"?"issue":"";
+const st=({Pending:T("pending"),Received:T("received"),Issue:T("issue"),Archived:T("archived")})[r.status]||r.status;
+return `<tr><td>${esc(r.sampleId)}</td><td>${esc(r.sampleType)}</td><td>${esc(r.source)}</td><td>${esc(r.sampleDate)}</td><td>${esc(r.fromPerson)}</td><td>${esc(r.toPerson)}</td><td>${esc(r.destination)}</td><td><span class="pill ${cls}">${esc(st)}</span></td><td>${esc(r.report)}</td><td><button class="btn danger" data-del="${idx}" type="button">${esc(T("delete"))}</button></td></tr>`;
+}).join("");
+body.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>{
+if(confirm(T("confirmDelete"))){records.splice(Number(b.dataset.del),1);render()}
+}));
+}
+$("form").addEventListener("submit",e=>{
+e.preventDefault();const r=readForm();
+if(!r.sampleId||!r.source||!r.sampleType||!r.sampleDate){alert(T("required"));return}
+if(records.some(x=>x.sampleId.toLowerCase()===r.sampleId.toLowerCase())){alert("Sample ID already exists.");return}
+records.unshift(r);$("form").reset();$("sampleDate").value=new Date().toISOString().slice(0,10);render();alert(T("saved"));
+});
+["search","statusFilter","typeFilter"].forEach(id=>{ $(id).addEventListener("input",render);$(id).addEventListener("change",render) });
+function download(name,content,type){
+const blob=new Blob(["\ufeff",content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function csvCell(v){return '"'+String(v??"").replace(/"/g,'""')+'"'}
+$("csv").addEventListener("click",()=>{
+const rows=[[...keys.map(T)],...records.map(r=>keys.map(k=>r[k]))];
+download("worker-pro-hydrocarbon-sampling-custody.csv",rows.map(r=>r.map(csvCell).join(",")).join("\r\n"),"text/csv;charset=utf-8");
+});
+$("reportBtn").addEventListener("click",()=>{
+const out=["WORKER PRO — #300 Hydrocarbon Sampling & Chain of Custody","Generated: "+new Date().toLocaleString(),"Total samples: "+records.length,"","DEMONSTRATION REGISTER — NOT AN OFFICIAL CUSTODY CERTIFICATE",""];
+records.forEach((r,i)=>{out.push("Sample "+(i+1));keys.forEach(k=>out.push(T(k)+": "+(r[k]||"-")));out.push("----------------------------------------")});
+out.push("Browser records do not independently verify sample authenticity, preservation or official chain of custody.");
+download("worker-pro-hydrocarbon-sampling-report.txt",out.join("\r\n"),"text/plain;charset=utf-8");
+});
+$("printBtn").addEventListener("click",()=>window.print());
+$("deleteAll").addEventListener("click",()=>{if(confirm(T("confirmAll"))){records=[];render()}});
+$("sampleDate").value=new Date().toISOString().slice(0,10);
+setLang("ru");
+</script>
+</body>
+</html>
