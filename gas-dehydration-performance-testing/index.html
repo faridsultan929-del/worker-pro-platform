@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Gas Dehydration Performance Testing</title>
+<style>
+:root{--dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;--bg:#f4f7f5;--border:#dce7df;--text:#18352a}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.languages{position:sticky;top:0;z-index:10;background:var(--dark);display:flex;justify-content:center;gap:7px;flex-wrap:wrap;padding:10px}
+.languages button{background:transparent;color:white;border:1px solid #789886;padding:8px 11px;border-radius:7px;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:var(--lime);color:var(--dark)}
+header{background:linear-gradient(130deg,var(--dark),var(--green));color:white;text-align:center;padding:24px 12px}
+.logo{font-size:29px;font-weight:900;letter-spacing:1px}.logo span{color:var(--lime)}
+header p{color:#e3f2e8}.tag{display:inline-block;background:var(--lime);color:var(--dark);padding:7px 12px;border-radius:20px;font-weight:bold}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:7px;background:white;padding:12px;border-bottom:1px solid var(--border)}
+nav a{color:var(--green);font-weight:bold;text-decoration:none;font-size:13px;padding:7px}
+nav a:hover{background:#e9f4ec;border-radius:6px}
+main{max-width:1250px;margin:auto;padding:18px}
+h1{font-size:26px;color:var(--dark)}h2{font-size:19px;color:var(--dark);margin-top:0}
+.intro{line-height:1.6;color:#53685b}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}
+.stat,.panel{background:white;border:1px solid var(--border);border-radius:12px;padding:15px;box-shadow:0 2px 8px #063d250a}
+.stat small{display:block;color:#64776d;margin-bottom:8px}.stat strong{font-size:26px;color:var(--green)}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:15px;margin-top:15px}
+label{display:block;font-size:13px;font-weight:bold;margin-bottom:5px;color:#345342}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cbd9cf;border-radius:7px;font:inherit;background:white;color:var(--text)}
+textarea{min-height:72px;resize:vertical}.field{margin-bottom:12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.action{border:0;border-radius:7px;background:var(--green);color:white;padding:10px 13px;font-weight:bold;cursor:pointer;margin:3px 3px 3px 0}
+.action:hover{background:var(--dark)}.secondary{background:#e6f1e9;color:var(--dark);border:1px solid var(--border)}
+.danger{background:#a83232}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:8px;margin:12px 0}
+.toolbar{display:flex;flex-wrap:wrap;gap:5px;margin:12px 0}
+.workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.step{border:1px solid var(--border);border-radius:9px;padding:12px;background:#f8fbf8}
+.step b{display:block;color:var(--green);margin-bottom:6px}
+.table-wrap{overflow-x:auto;margin-top:12px}
+table{width:100%;border-collapse:collapse;min-width:850px;background:white}
+th,td{text-align:left;padding:10px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:top}
+th{background:#e9f3ec;color:var(--dark)}
+.status{display:inline-block;padding:5px 8px;border-radius:20px;background:#fff0d5;color:#80551b;font-size:11px;font-weight:bold}
+.status.complete{background:#dff5e5;color:#176339}.status.draft{background:#e9edf0;color:#4b5c64}
+.note{background:#fff7df;border-left:4px solid #d6a32e;padding:13px;border-radius:5px;line-height:1.5;font-size:13px;margin:16px 0}
+.muted{font-size:12px;color:#64776d}.empty{text-align:center;padding:20px;color:#64776d}
+footer{margin-top:25px;text-align:center;background:var(--dark);color:white;padding:20px}
+[dir="rtl"]{text-align:right}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}.workflow{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){main{padding:11px}h1{font-size:22px}.grid2,.filters{grid-template-columns:1fr}.stat{padding:12px}.stat strong{font-size:22px}}
+</style>
+</head>
+<body>
+<div class="languages">
+<button data-lang="RU" class="active">RU</button><button data-lang="AZ">AZ</button>
+<button data-lang="EN">EN</button><button data-lang="TR">TR</button>
+<button data-lang="DE">DE</button><button data-lang="AR">AR</button>
+<button data-lang="ES">ES</button><button data-lang="FR">FR</button>
+<button data-lang="IT">IT</button>
+</div>
+
+<header>
+<div class="logo">WORKER <span>PRO</span></div>
+<p data-i="subtitle">Глобальная промышленная платформа</p>
+<div class="tag">№285 · GAS DEHYDRATION PERFORMANCE TESTING</div>
+</header>
+
+<nav>
+<a href="../index.html" data-i="home">Главная</a>
+<a href="../production/index.html" data-i="production">Производство</a>
+<a href="../testing/index.html" data-i="testing">Испытания</a>
+<a href="../quality/index.html" data-i="quality">Качество</a>
+<a href="../documents/index.html" data-i="documents">Документы</a>
+<a href="../companies/index.html" data-i="companies">Компании</a>
+<a href="../orders/index.html" data-i="orders">Заказы</a>
+<a href="../logistics/index.html" data-i="logistics">Логистика</a>
+<a href="../tracking/index.html" data-i="tracking">Отслеживание</a>
+</nav>
+
+<main>
+<h1 data-i="title">Испытания систем осушки природного газа</h1>
+<p class="intro" data-i="intro">Журнал для регистрации данных систем осушки газа: типа установки, точки росы, влажности, температуры, давления, расхода газа, данных по гликолю и технических наблюдений. Числовые значения фиксируются вместе с единицами измерения и источником данных.</p>
+
+<div class="stats">
+<div class="stat"><small data-i="total">Всего записей</small><strong id="total">0</strong></div>
+<div class="stat"><small data-i="review">На проверке</small><strong id="review">0</strong></div>
+<div class="stat"><small data-i="complete">Завершено</small><strong id="complete">0</strong></div>
+<div class="stat"><small data-i="types">Типы систем</small><strong id="types">0</strong></div>
+</div>
+
+<section class="panel">
+<h2 data-i="workflow">Рабочий процесс</h2>
+<div class="workflow">
+<div class="step"><b>01</b><span data-i="step1">Регистрация установки и объекта</span></div>
+<div class="step"><b>02</b><span data-i="step2">Запись условий и параметров</span></div>
+<div class="step"><b>03</b><span data-i="step3">Проверка исходных данных</span></div>
+<div class="step"><b>04</b><span data-i="step4">Экспорт и формирование отчёта</span></div>
+</div>
+</section>
+
+<div class="layout">
+<section class="panel">
+<h2 data-i="formTitle">Новая запись испытания</h2>
+<form id="form">
+<div class="grid2">
+<div class="field"><label for="recordId" data-i="recordId">ID записи</label><input id="recordId" required placeholder="GD-285-004"></div>
+<div class="field"><label for="country" data-i="country">Страна</label><input id="country" required></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="asset" data-i="asset">Объект / месторождение</label><input id="asset" required></div>
+<div class="field"><label for="systemType" data-i="systemType">Тип системы осушки</label>
+<select id="systemType">
+<option value="Glycol / TEG">Гликоль / TEG</option>
+<option value="Molecular sieve">Молекулярные сита</option>
+<option value="Solid desiccant">Твёрдый адсорбент</option>
+<option value="Membrane">Мембранная система</option>
+<option value="Other">Другая система</option>
+</select></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="manufacturer" data-i="manufacturer">Производитель</label><input id="manufacturer"></div>
+<div class="field"><label for="model" data-i="model">Модель / серийный номер</label><input id="model"></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="testDate" data-i="date">Дата испытания</label><input id="testDate" type="date" required></div>
+<div class="field"><label for="operator" data-i="operator">Лаборатория / специалист</label><input id="operator"></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="inletPressure" data-i="inletPressure">Входное давление (единицы)</label><input id="inletPressure" placeholder="например, 50 bar"></div>
+<div class="field"><label for="outletPressure" data-i="outletPressure">Выходное давление (единицы)</label><input id="outletPressure" placeholder="например, 48 bar"></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="temperature" data-i="temperature">Температура (единицы)</label><input id="temperature" placeholder="например, 25 °C"></div>
+<div class="field"><label for="gasFlow" data-i="gasFlow">Расход газа (единицы)</label><input id="gasFlow" placeholder="например, 1000 m³/h"></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="inletMoisture" data-i="inletMoisture">Влажность газа на входе</label><input id="inletMoisture" placeholder="значение и единицы"></div>
+<div class="field"><label for="outletMoisture" data-i="outletMoisture">Влажность газа на выходе</label><input id="outletMoisture" placeholder="значение и единицы"></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="inletDewPoint" data-i="inletDewPoint">Точка росы на входе</label><input id="inletDewPoint" placeholder="значение и условия измерения"></div>
+<div class="field"><label for="outletDewPoint" data-i="outletDewPoint">Точка росы на выходе</label><input id="outletDewPoint" placeholder="значение и условия измерения"></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="glycolType" data-i="glycolType">Тип осушающего агента</label><input id="glycolType" placeholder="например, TEG / не применяется"></div>
+<div class="field"><label for="glycolConcentration" data-i="glycolConcentration">Концентрация агента</label><input id="glycolConcentration" placeholder="значение и единицы"></div>
+</div>
+<div class="grid2">
+<div class="field"><label for="method" data-i="method">Метод / стандарт</label><input id="method"></div>
+<div class="field"><label for="status" data-i="status">Статус записи</label>
+<select id="status"><option value="Review">Review / На проверке</option><option value="Draft">Draft / Черновик</option><option value="Complete">Complete / Завершено</option></select></div>
+</div>
+<div class="field"><label for="maintenance" data-i="maintenance">Техническое обслуживание / замечания</label><textarea id="maintenance"></textarea></div>
+<div class="field"><label for="observations" data-i="observations">Наблюдения и ограничения измерений</label><textarea id="observations"></textarea></div>
+<div class="grid2">
+<div class="field"><label for="reportRef" data-i="reportRef">Ссылка на отчёт</label><input id="reportRef"></div>
+<div class="field"><label for="notes" data-i="notes">Примечания</label><input id="notes"></div>
+</div>
+<button class="action" type="submit" data-i="save">Сохранить запись</button>
+<button class="action secondary" type="reset" data-i="clear">Очистить форму</button>
+</form>
+</section>
+
+<section class="panel">
+<h2 data-i="recordsTitle">Журнал испытаний</h2>
+<div class="filters">
+<input id="search" data-ph="searchPlaceholder" placeholder="Поиск по ID, объекту, типу системы...">
+<select id="statusFilter"><option value="" data-i="allStatuses">Все статусы</option><option value="Review">Review</option><option value="Draft">Draft</option><option value="Complete">Complete</option></select>
+<select id="typeFilter"><option value="" data-i="allTypes">Все типы систем</option><option value="Glycol / TEG">Glycol / TEG</option><option value="Molecular sieve">Molecular sieve</option><option value="Solid desiccant">Solid desiccant</option><option value="Membrane">Membrane</option><option value="Other">Other</option></select>
+</div>
+<div class="toolbar">
+<button class="action" id="csv" type="button" data-i="exportCsv">Экспорт CSV</button>
+<button class="action" id="report" type="button" data-i="makeReport">Сформировать отчёт</button>
+<button class="action secondary" id="restore" type="button" data-i="restore">Восстановить демо-данные</button>
+</div>
+<p class="muted" data-i="demoHint">Примеры демонстрационные. Не используйте их как инженерные результаты.</p>
+<div class="table-wrap">
+<table>
+<thead><tr>
+<th data-i="thId">ID / дата</th><th data-i="thAsset">Объект / система</th>
+<th data-i="thEquipment">Оборудование</th><th data-i="thConditions">Параметры</th>
+<th data-i="thStatus">Статус</th><th data-i="thActions">Действия</th>
+</tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+<p id="empty" class="empty" hidden data-i="noRecords">Записи не найдены.</p>
+</section>
+</div>
+
+<div class="note">
+<strong data-i="disclaimerTitle">Важное уведомление</strong><br>
+<span data-i="disclaimer">Демонстрационный журнал не является сертифицированной системой испытаний. Он не подтверждает качество осушки, соответствие спецификации газа, безопасность или пригодность оборудования к эксплуатации. Точка росы зависит от условий измерения и метода. Реальные выводы должны основываться на применимых стандартах, утверждённых процедурах и оценке квалифицированных специалистов. Не используйте эти записи для управления технологическим процессом.</span>
+</div>
+</main>
+
+<footer>WORKER PRO · Gas Dehydration Performance Testing · №285
+<div class="muted" style="color:#d5e7db;margin-top:7px">F.S. · Demo version</div>
+</footer>
+
+<script>
+const dict={
+RU:{
+subtitle:"Глобальная промышленная платформа",home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",orders:"Заказы",logistics:"Логистика",tracking:"Отслеживание",
+title:"Испытания систем осушки природного газа",
+intro:"Журнал для регистрации данных систем осушки газа: типа установки, точки росы, влажности, температуры, давления, расхода газа, данных по гликолю и технических наблюдений. Числовые значения фиксируются вместе с единицами измерения и источником данных.",
+total:"Всего записей",review:"На проверке",complete:"Завершено",types:"Типы систем",workflow:"Рабочий процесс",step1:"Регистрация установки и объекта",step2:"Запись условий и параметров",step3:"Проверка исходных данных",step4:"Экспорт и формирование отчёта",
+formTitle:"Новая запись испытания",recordId:"ID записи",country:"Страна",asset:"Объект / месторождение",systemType:"Тип системы осушки",manufacturer:"Производитель",model:"Модель / серийный номер",date:"Дата испытания",operator:"Лаборатория / специалист",inletPressure:"Входное давление (единицы)",outletPressure:"Выходное давление (единицы)",temperature:"Температура (единицы)",gasFlow:"Расход газа (единицы)",inletMoisture:"Влажность газа на входе",outletMoisture:"Влажность газа на выходе",inletDewPoint:"Точка росы на входе",outletDewPoint:"Точка росы на выходе",glycolType:"Тип осушающего агента",glycolConcentration:"Концентрация агента",method:"Метод / стандарт",status:"Статус записи",maintenance:"Техническое обслуживание / замечания",observations:"Наблюдения и ограничения измерений",reportRef:"Ссылка на отчёт",notes:"Примечания",save:"Сохранить запись",clear:"Очистить форму",recordsTitle:"Журнал испытаний",searchPlaceholder:"Поиск по ID, объекту, типу системы...",allStatuses:"Все статусы",allTypes:"Все типы систем",exportCsv:"Экспорт CSV",makeReport:"Сформировать отчёт",restore:"Восстановить демо-данные",demoHint:"Примеры демонстрационные. Не используйте их как инженерные результаты.",thId:"ID / дата",thAsset:"Объект / система",thEquipment:"Оборудование",thConditions:"Параметры",thStatus:"Статус",thActions:"Действия",noRecords:"Записи не найдены.",disclaimerTitle:"Важное уведомление",disclaimer:"Демонстрационный журнал не является сертифицированной системой испытаний. Он не подтверждает качество осушки, соответствие спецификации газа, безопасность или пригодность оборудования к эксплуатации. Точка росы зависит от условий измерения и метода. Реальные выводы должны основываться на применимых стандартах, утверждённых процедурах и оценке квалифицированных специалистов. Не используйте эти записи для управления технологическим процессом.",delete:"Удалить",load:"Загрузить",confirmDelete:"Удалить эту запись?",saved:"Запись сохранена в журнале.",noRecordsExport:"Нет записей для экспорта.",exported:"Файл подготовлен.",restored:"Демо-данные восстановлены."},
+EN:{
+subtitle:"Global Industrial Platform",home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",orders:"Orders",logistics:"Logistics",tracking:"Tracking",
+title:"Natural Gas Dehydration Performance Testing",intro:"Register gas dehydration system data, including equipment type, dew point, moisture, temperature, pressure, gas flow, desiccant or glycol information and technical observations. Record measurement units and data sources.",
+total:"Total records",review:"Under review",complete:"Completed",types:"System types",workflow:"Workflow",step1:"Register system and asset",step2:"Enter test conditions and parameters",step3:"Review source data",step4:"Export data and report",
+formTitle:"New test record",recordId:"Record ID",country:"Country",asset:"Asset / field",systemType:"Dehydration system type",manufacturer:"Manufacturer",model:"Model / serial number",date:"Test date",operator:"Lab / specialist",inletPressure:"Inlet pressure (units)",outletPressure:"Outlet pressure (units)",temperature:"Temperature (units)",gasFlow:"Gas flow (units)",inletMoisture:"Inlet gas moisture",outletMoisture:"Outlet gas moisture",inletDewPoint:"Inlet dew point",outletDewPoint:"Outlet dew point",glycolType:"Desiccant type",glycolConcentration:"Desiccant concentration",method:"Method / standard",status:"Record status",maintenance:"Maintenance / remarks",observations:"Observations and measurement limitations",reportRef:"Report reference",notes:"Notes",save:"Save record",clear:"Clear form",recordsTitle:"Test register",searchPlaceholder:"Search ID, asset, system type...",allStatuses:"All statuses",allTypes:"All system types",exportCsv:"Export CSV",makeReport:"Generate report",restore:"Restore demo data",demoHint:"Examples are for demonstration only. Do not use them as engineering results.",thId:"ID / date",thAsset:"Asset / system",thEquipment:"Equipment",thConditions:"Parameters",thStatus:"Status",thActions:"Actions",noRecords:"No records found.",disclaimerTitle:"Important notice",disclaimer:"This demonstration register is not a certified testing system. It does not certify dehydration performance, gas specification compliance, safety or equipment fitness for service. Dew point depends on measurement conditions and method. Real conclusions must rely on applicable standards, approved procedures and qualified professionals. Do not use these records to operate a process.",delete:"Delete",load:"Load",confirmDelete:"Delete this record?",saved:"Record saved.",noRecordsExport:"No records to export.",exported:"File prepared.",restored:"Demo data restored."},
+AZ:{
+subtitle:"Qlobal Sənaye Platforması",home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",orders:"Sifarişlər",logistics:"Logistika",tracking:"İzləmə",
+title:"Təbii qazın qurudulması sistemlərinin sınağı",intro:"Qazın qurudulması sistemlərinin növü, şeh nöqtəsi, rütubət, temperatur, təzyiq, qaz sərfi, qlikol və texniki müşahidələr barədə məlumatları qeyd edin. Ölçü vahidlərini və məlumat mənbəyini göstərin.",
+total:"Bütün qeydlər",review:"Yoxlamada",complete:"Tamamlanıb",types:"Sistem növləri",workflow:"İş prosesi",step1:"Sistem və obyektin qeydiyyatı",step2:"Sınaq parametrlərinin daxil edilməsi",step3:"Mənbə məlumatlarının yoxlanması",step4:"Məlumatların ixracı və hesabat",
+formTitle:"Yeni sınaq qeydi",recordId:"Qeyd ID-si",country:"Ölkə",asset:"Obyekt / yataq",systemType:"Qurutma sisteminin növü",manufacturer:"İstehsalçı",model:"Model / seriya nömrəsi",date:"Sınaq tarixi",operator:"Laboratoriya / mütəxəssis",inletPressure:"Giriş təzyiqi (vahid)",outletPressure:"Çıxış təzyiqi (vahid)",temperature:"Temperatur (vahid)",gasFlow:"Qaz sərfi (vahid)",inletMoisture:"Giriş qazının rütubəti",outletMoisture:"Çıxış qazının rütubəti",inletDewPoint:"Giriş şeh nöqtəsi",outletDewPoint:"Çıxış şeh nöqtəsi",glycolType:"Quruducu maddənin növü",glycolConcentration:"Quruducu maddənin konsentrasiyası",method:"Metod / standart",status:"Qeydin statusu",maintenance:"Texniki xidmət / qeydlər",observations:"Müşahidələr və ölçmə məhdudiyyətləri",reportRef:"Hesabata istinad",notes:"Əlavə qeydlər",save:"Qeydi saxla",clear:"Formanı təmizlə",recordsTitle:"Sınaq jurnalı",searchPlaceholder:"ID, obyekt və sistem növü üzrə axtarış...",allStatuses:"Bütün statuslar",allTypes:"Bütün sistem növləri",exportCsv:"CSV ixracı",makeReport:"Hesabat yarat",restore:"Demo məlumatlarını bərpa et",demoHint:"Nümunələr yalnız nümayiş üçündür; mühəndis nəticəsi kimi istifadə etməyin.",thId:"ID / tarix",thAsset:"Obyekt / sistem",thEquipment:"Avadanlıq",thConditions:"Parametrlər",thStatus:"Status",thActions:"Əməliyyatlar",noRecords:"Qeyd tapılmadı.",disclaimerTitle:"Vacib bildiriş",disclaimer:"Bu nümayiş jurnalı sertifikatlaşdırılmış sınaq sistemi deyil. Qurutma göstəricilərini, qaz spesifikasiyasına uyğunluğu, təhlükəsizliyi və ya avadanlığın istismara yararlılığını təsdiqləmir. Şeh nöqtəsi ölçmə şəraitindən və metodundan asılıdır. Real nəticələr tətbiq olunan standartlara, təsdiqlənmiş prosedurlara və ixtisaslı mütəxəssislərə əsaslanmalıdır. Bu qeydlərlə texnoloji prosesi idarə etməyin.",delete:"Sil",load:"Yüklə",confirmDelete:"Bu qeyd silinsin?",saved:"Qeyd saxlanıldı.",noRecordsExport:"İxrac üçün qeyd yoxdur.",exported:"Fayl hazırdır.",restored:"Demo məlumatları bərpa edildi."}
+};
+
+const keys=["recordId","country","asset","systemType","manufacturer","model","testDate","operator","inletPressure","outletPressure","temperature","gasFlow","inletMoisture","outletMoisture","inletDewPoint","outletDewPoint","glycolType","glycolConcentration","method","status","maintenance","observations","reportRef","notes"];
+let lang="RU",records=[];
+
+const demos=[
+{recordId:"GD-285-001",country:"Azerbaijan",asset:"Demo Gas Plant A",systemType:"Glycol / TEG",manufacturer:"Demo Manufacturer",model:"TEG-100",testDate:"2026-09-20",operator:"Demo Lab",inletPressure:"50 bar",outletPressure:"48 bar",temperature:"25 °C",gasFlow:"1000 m³/h",inletMoisture:"Recorded in demo units",outletMoisture:"Recorded in demo units",inletDewPoint:"Value not independently verified",outletDewPoint:"Value not independently verified",glycolType:"TEG",glycolConcentration:"Demo value",method:"Project procedure reference",status:"Review",maintenance:"Example maintenance note",observations:"Illustrative record only",reportRef:"DEMO-GD-001",notes:"Not an engineering result"},
+{recordId:"GD-285-002",country:"Turkey",asset:"Demo Processing Unit B",systemType:"Molecular sieve",manufacturer:"Example Equipment",model:"MS-200",testDate:"2026-09-21",operator:"Example Team",inletPressure:"42 bar",outletPressure:"40 bar",temperature:"30 °C",gasFlow:"800 m³/h",inletMoisture:"Sample value",outletMoisture:"Sample value",inletDewPoint:"Sample value",outletDewPoint:"Sample value",glycolType:"Not applicable",glycolConcentration:"Not applicable",method:"Method to be verified",status:"Draft",maintenance:"Inspection details pending",observations:"Check original measurement records",reportRef:"",notes:"Illustrative record"},
+{recordId:"GD-285-003",country:"Italy",asset:"Demo Test Facility C",systemType:"Membrane",manufacturer:"Sample Systems",model:"MB-30",testDate:"2026-09-22",operator:"Demo Test Team",inletPressure:"35 bar",outletPressure:"33 bar",temperature:"22 °C",gasFlow:"500 m³/h",inletMoisture:"Demo entry",outletMoisture:"Demo entry",inletDewPoint:"Demo entry",outletDewPoint:"Demo entry",glycolType:"Not applicable",glycolConcentration:"Not applicable",method:"Specified project method",status:"Complete",maintenance:"Example service entry",observations:"No technical acceptance conclusion",reportRef:"DEMO-GD-003",notes:"Demo only"}
+];
+
+function tr(k){
+ return (dict[lang]&&dict[lang][k]) || (dict.EN&&dict.EN[k]) || k;
+}
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function applyLang(l){
+ lang=l;
+ document.documentElement.lang=l.toLowerCase();
+ document.documentElement.dir=l==="AR"?"rtl":"ltr";
+ document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
+ document.querySelectorAll("[data-i]").forEach(el=>{el.textContent=tr(el.dataset.i)});
+ document.querySelectorAll("[data-ph]").forEach(el=>{el.placeholder=tr(el.dataset.ph)});
+ render();
+}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>applyLang(b.dataset.lang)));
+
+function render(){
+ const q=document.getElementById("search").value.toLowerCase().trim();
+ const sf=document.getElementById("statusFilter").value;
+ const tf=document.getElementById("typeFilter").value;
+ const shown=records.filter(r=>{
+  const hay=keys.map(k=>r[k]||"").join(" ").toLowerCase();
+  return (!q||hay.includes(q))&&(!sf||r.status===sf)&&(!tf||r.systemType===tf);
+ });
+ document.getElementById("total").textContent=records.length;
+ document.getElementById("review").textContent=records.filter(r=>r.status==="Review").length;
+ document.getElementById("complete").textContent=records.filter(r=>r.status==="Complete").length;
+ document.getElementById("types").textContent=new Set(records.map(r=>r.systemType)).size;
+ const tbody=document.getElementById("tbody");tbody.innerHTML="";
+ shown.forEach(r=>{
+  const i=records.indexOf(r),cl=r.status==="Complete"?"complete":r.status==="Draft"?"draft":"";
+  const statusName=r.status==="Complete"?tr("complete"):r.status==="Draft"?"Draft":tr("review");
+  const row=document.createElement("tr");
+  row.innerHTML=`<td><b>${esc(r.recordId)}</b><br>${esc(r.testDate)}</td>
+  <td>${esc(r.asset)}<br><span class="muted">${esc(r.systemType)}</span></td>
+  <td>${esc(r.manufacturer)}<br><span class="muted">${esc(r.model)}</span></td>
+  <td>${esc(r.inletPressure)} → ${esc(r.outletPressure)}<br>
+  T: ${esc(r.temperature)}<br>Gas: ${esc(r.gasFlow)}<br>
+  Dew point out: ${esc(r.outletDewPoint)}</td>
+  <td><span class="status ${cl}">${esc(statusName)}</span></td>
+  <td><button class="action secondary" type="button" data-load="${i}">${esc(tr("load"))}</button>
+  <button class="action danger" type="button" data-delete="${i}">${esc(tr("delete"))}</button></td>`;
+  tbody.appendChild(row);
+ });
+ document.getElementById("empty").hidden=shown.length!==0;
+}
+function download(name,content,type){
+ const blob=new Blob(["\uFEFF",content],{type});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");a.href=url;a.download=name;
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function csv(v){return '"'+String(v??"").replace(/"/g,'""')+'"';}
+
+document.getElementById("form").addEventListener("submit",e=>{
+ e.preventDefault();
+ const item={};keys.forEach(k=>item[k]=document.getElementById(k).value.trim());
+ if(!item.recordId){alert(tr("recordId"));return;}
+ const old=records.findIndex(r=>r.recordId===item.recordId);
+ if(old>=0)records[old]=item;else records.unshift(item);
+ render();e.target.reset();
+ document.getElementById("testDate").value=new Date().toISOString().slice(0,10);
+ alert(tr("saved"));
+});
+
+document.getElementById("tbody").addEventListener("click",e=>{
+ const load=e.target.closest("[data-load]");
+ const del=e.target.closest("[data-delete]");
+ if(load){
+  const r=records[Number(load.dataset.load)];if(!r)return;
+  keys.forEach(k=>{const el=document.getElementById(k);if(el)el.value=r[k]||""});
+  document.getElementById("form").scrollIntoView({behavior:"smooth",block:"start"});
+ }
+ if(del){
+  const i=Number(del.dataset.delete);if(!records[i])return;
+  if(confirm(tr("confirmDelete"))){records.splice(i,1);render();}
+ }
+});
+
+["search","statusFilter","typeFilter"].forEach(id=>{
+ document.getElementById(id).addEventListener("input",render);
+ document.getElementById(id).addEventListener("change",render);
+});
+
+document.getElementById("csv").addEventListener("click",()=>{
+ if(!records.length){alert(tr("noRecordsExport"));return;}
+ const rows=[keys.map(csv).join(","),...records.map(r=>keys.map(k=>csv(r[k])).join(","))];
+ download("worker-pro-gas-dehydration.csv",rows.join("\r\n"),"text/csv;charset=utf-8");
+ alert(tr("exported"));
+});
+document.getElementById("report").addEventListener("click",()=>{
+ if(!records.length){alert(tr("noRecordsExport"));return;}
+ const lines=["WORKER PRO — Gas Dehydration Performance Testing","Section 285","Generated: "+new Date().toISOString(),"DEMO REGISTER — NOT A CERTIFICATION OR SAFETY ASSESSMENT",""];
+ records.forEach((r,i)=>{
+  lines.push("RECORD "+(i+1));
+  keys.forEach(k=>lines.push(k+": "+(r[k]||"")));
+  lines.push("--------------------------------");
+ });
+ download("worker-pro-gas-dehydration-report.txt",lines.join("\r\n"),"text/plain;charset=utf-8");
+ alert(tr("exported"));
+});
+document.getElementById("restore").addEventListener("click",()=>{
+ records=demos.map(r=>({...r}));render();alert(tr("restored"));
+});
+
+records=demos.map(r=>({...r}));
+document.getElementById("testDate").value=new Date().toISOString().slice(0,10);
+applyLang("RU");
+</script>
+</body>
+</html>
