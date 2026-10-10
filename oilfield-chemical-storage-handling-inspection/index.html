@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Oilfield Chemical Storage & Handling Inspection</title>
+<style>
+:root{
+  --dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;
+  --bg:#f4f7f5;--white:#fff;--border:#dce7df;--text:#193329;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.languages{position:sticky;top:0;z-index:20;background:var(--dark);padding:10px;display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.languages button{border:1px solid #527563;border-radius:7px;background:#fff;color:var(--dark);padding:8px 11px;font-weight:bold;cursor:pointer}
+.languages button.active{background:var(--lime);border-color:var(--lime)}
+header{background:linear-gradient(120deg,var(--dark),var(--green));color:white;padding:25px 16px}
+.header-inner,main,nav{max-width:1250px;margin:auto}
+.brand{font-size:28px;font-weight:900;letter-spacing:1px}
+.brand span{color:var(--lime)}
+.subtitle{margin-top:5px;color:#d7ebdf}
+.section-no{display:inline-block;background:var(--lime);color:var(--dark);padding:6px 10px;border-radius:6px;font-weight:bold;margin:18px 0 8px}
+h1{font-size:clamp(23px,4vw,34px);margin:4px 0 10px}
+header p{line-height:1.6;max-width:850px}
+nav{display:flex;gap:8px;flex-wrap:wrap;padding:13px 16px}
+nav a{background:#fff;border:1px solid var(--border);padding:9px 12px;border-radius:8px;color:var(--dark);text-decoration:none;font-size:13px;font-weight:bold}
+main{padding:8px 16px 35px}
+.notice{background:#fffbe8;border:1px solid #eadb9b;padding:14px;border-radius:10px;line-height:1.6;margin:8px 0 18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:15px 0}
+.stat,.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;box-shadow:0 3px 12px #063d2508}
+.stat strong{display:block;font-size:25px;color:var(--green);margin-top:7px}
+.stat span{font-size:13px;color:#5c7065}
+.card{margin:14px 0}
+h2{font-size:20px;color:var(--dark);margin:0 0 14px}
+h3{color:var(--dark)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+label{font-size:13px;font-weight:bold;display:block;margin-bottom:5px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbd9cf;border-radius:7px;background:white;font:inherit;color:var(--text)}
+textarea{min-height:80px;resize:vertical}
+.field{min-width:0}
+.full{grid-column:1/-1}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+button.action{border:0;border-radius:8px;padding:11px 15px;background:var(--green);color:white;font-weight:bold;cursor:pointer}
+button.secondary{background:#e8f1eb;color:var(--dark);border:1px solid #cbd9cf}
+button.danger{background:#8b3025}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:13px}
+.table-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:1050px;background:white}
+th,td{padding:10px;border-bottom:1px solid #e4ece6;text-align:left;font-size:13px;vertical-align:top}
+th{background:#eaf3ed;color:var(--dark)}
+.status{display:inline-block;border-radius:20px;background:#e7f2e9;padding:5px 8px;font-weight:bold;font-size:12px}
+.status.review{background:#fff1d4;color:#795000}
+.status.action{background:#fbe4e1;color:#8b3025}
+.small{font-size:12px;color:#63766a;line-height:1.6}
+.workflow{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.step{background:#edf5ef;border-radius:9px;padding:12px;font-weight:bold;color:var(--dark)}
+footer{text-align:center;background:var(--dark);color:#d8e8de;padding:22px;font-size:13px}
+[dir="rtl"]{text-align:right}
+@media(max-width:800px){
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .workflow{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:520px){
+ .grid,.filters{grid-template-columns:1fr}
+ .brand{font-size:25px}
+ .stat{padding:12px}
+ .stat strong{font-size:22px}
+}
+</style>
+</head>
+<body>
+<div class="languages" aria-label="Language selector">
+<button data-lang="az">AZ</button>
+<button data-lang="ru">RU</button>
+<button data-lang="en" class="active">EN</button>
+<button data-lang="tr">TR</button>
+<button data-lang="de">DE</button>
+<button data-lang="ar">AR</button>
+<button data-lang="es">ES</button>
+<button data-lang="fr">FR</button>
+<button data-lang="it">IT</button>
+</div>
+
+<header>
+<div class="header-inner">
+<div class="brand">WORKER <span>PRO</span></div>
+<div class="subtitle" data-i18n="subtitle">Global Industrial Platform</div>
+<div class="section-no">SECTION №291</div>
+<h1 data-i18n="title">Oilfield Chemical Storage & Handling Inspection</h1>
+<p data-i18n="intro">A structured demonstration log for recording inspections of chemical storage areas, containers, labels and related documents at oilfield facilities.</p>
+</div>
+</header>
+
+<nav>
+<a href="../index.html" data-i18n="home">Home</a>
+<a href="../production/index.html" data-i18n="production">Production</a>
+<a href="../quality/index.html" data-i18n="quality">Quality</a>
+<a href="../documents/index.html" data-i18n="documents">Documents</a>
+<a href="../suppliers/index.html" data-i18n="suppliers">Suppliers</a>
+<a href="../orders/index.html" data-i18n="orders">Orders</a>
+<a href="../logistics/index.html" data-i18n="logistics">Logistics</a>
+<a href="../tracking/index.html" data-i18n="tracking">Tracking</a>
+</nav>
+
+<main>
+<div class="notice">
+<strong data-i18n="demoTitle">Important — demonstration module</strong><br>
+<span data-i18n="demoText">This page records observations only. It does not replace chemical safety data sheets (SDS), approved site procedures, legal requirements or assessment by qualified personnel. Do not use this demo to decide whether a chemical or storage area is safe.</span>
+</div>
+
+<section class="stats">
+<div class="stat"><span data-i18n="total">Total records</span><strong id="totalCount">0</strong></div>
+<div class="stat"><span data-i18n="open">Open reviews</span><strong id="reviewCount">0</strong></div>
+<div class="stat"><span data-i18n="actionNeeded">Follow-up recorded</span><strong id="actionCount">0</strong></div>
+<div class="stat"><span data-i18n="areas">Storage areas</span><strong id="areaCount">0</strong></div>
+</section>
+
+<section class="card">
+<h2 data-i18n="workflowTitle">Inspection record workflow</h2>
+<div class="workflow">
+<div class="step" data-i18n="step1">1. Identify location</div>
+<div class="step" data-i18n="step2">2. Record observations</div>
+<div class="step" data-i18n="step3">3. Attach document references</div>
+<div class="step" data-i18n="step4">4. Review and follow up</div>
+</div>
+<p class="small" data-i18n="workflowNote">Record actual observations and follow your facility's approved procedures. Do not invent acceptance limits or infer safety from this page.</p>
+</section>
+
+<section class="card">
+<h2 data-i18n="formTitle">New inspection record</h2>
+<form id="inspectionForm">
+<div class="grid">
+<div class="field"><label for="recordId" data-i18n="recordId">Record ID *</label><input id="recordId" required placeholder="CHEM-291-001"></div>
+<div class="field"><label for="country" data-i18n="country">Country *</label><input id="country" required placeholder="Azerbaijan"></div>
+<div class="field"><label for="site" data-i18n="site">Site / oilfield *</label><input id="site" required></div>
+
+<div class="field"><label for="area" data-i18n="area">Storage area / warehouse *</label><input id="area" required></div>
+<div class="field"><label for="container" data-i18n="container">Container / tank ID</label><input id="container"></div>
+<div class="field"><label for="chemical" data-i18n="chemical">Chemical / product name *</label><input id="chemical" required></div>
+
+<div class="field"><label for="category" data-i18n="category">Chemical category</label>
+<select id="category">
+<option value="Corrosion inhibitor">Corrosion inhibitor</option>
+<option value="Scale inhibitor">Scale inhibitor</option>
+<option value="Demulsifier">Demulsifier</option>
+<option value="Biocide">Biocide</option>
+<option value="Solvent / cleaner">Solvent / cleaner</option>
+<option value="Drilling fluid additive">Drilling fluid additive</option>
+<option value="Other">Other</option>
+</select></div>
+<div class="field"><label for="manufacturer" data-i18n="manufacturer">Manufacturer / supplier</label><input id="manufacturer"></div>
+<div class="field"><label for="inspectionDate" data-i18n="date">Inspection date *</label><input id="inspectionDate" type="date" required></div>
+
+<div class="field"><label for="inspector" data-i18n="inspector">Inspector / responsible person</label><input id="inspector"></div>
+<div class="field"><label for="labelStatus" data-i18n="labelStatus">Label / identification observation</label>
+<select id="labelStatus">
+<option value="Recorded">Recorded</option>
+<option value="Unreadable or missing">Unreadable or missing</option>
+<option value="Not checked">Not checked</option>
+<option value="Other observation">Other observation</option>
+</select></div>
+<div class="field"><label for="packaging" data-i18n="packaging">Container / packaging observation</label>
+<select id="packaging">
+<option value="No issue observed">No issue observed</option>
+<option value="Visible damage">Visible damage</option>
+<option value="Possible leakage observed">Possible leakage observed</option>
+<option value="Not checked">Not checked</option>
+<option value="Other observation">Other observation</option>
+</select></div>
+
+<div class="field"><label for="sds" data-i18n="sds">SDS / document reference</label><input id="sds" placeholder="Document number or reference"></div>
+<div class="field"><label for="storageNotes" data-i18n="storageNotes">Storage condition notes</label><input id="storageNotes" placeholder="Record observed conditions"></div>
+<div class="field"><label for="reviewDate" data-i18n="reviewDate">Next review date</label><input id="reviewDate" type="date"></div>
+
+<div class="field"><label for="status" data-i18n="status">Record status</label>
+<select id="status">
+<option value="Review">Review</option>
+<option value="Follow-up">Follow-up</option>
+<option value="Recorded">Recorded</option>
+<option value="Closed">Closed</option>
+</select></div>
+<div class="field"><label for="followup" data-i18n="followup">Follow-up reference / action</label><input id="followup"></div>
+<div class="field"><label for="report" data-i18n="report">Report / attachment reference</label><input id="report"></div>
+
+<div class="field full"><label for="observations" data-i18n="observations">Observations *</label><textarea id="observations" required placeholder="Describe what was observed, without making unsupported safety conclusions."></textarea></div>
+<div class="field full"><label for="notes" data-i18n="notes">Additional notes</label><textarea id="notes"></textarea></div>
+</div>
+<div class="actions">
+<button class="action" type="submit" data-i18n="save">Save record</button>
+<button class="action secondary" type="reset" data-i18n="clear">Clear form</button>
+</div>
+</form>
+</section>
+
+<section class="card">
+<h2 data-i18n="recordsTitle">Inspection records</h2>
+<div class="filters">
+<input id="search" data-placeholder="searchPlaceholder" placeholder="Search ID, site, chemical, area...">
+<select id="statusFilter">
+<option value="" data-i18n="allStatuses">All statuses</option>
+<option value="Review">Review</option>
+<option value="Follow-up">Follow-up</option>
+<option value="Recorded">Recorded</option>
+<option value="Closed">Closed</option>
+</select>
+<select id="categoryFilter">
+<option value="" data-i18n="allCategories">All categories</option>
+<option value="Corrosion inhibitor">Corrosion inhibitor</option>
+<option value="Scale inhibitor">Scale inhibitor</option>
+<option value="Demulsifier">Demulsifier</option>
+<option value="Biocide">Biocide</option>
+<option value="Solvent / cleaner">Solvent / cleaner</option>
+<option value="Drilling fluid additive">Drilling fluid additive</option>
+<option value="Other">Other</option>
+</select>
+</div>
+<div class="actions" style="margin-bottom:14px">
+<button class="action" id="exportCsv" type="button" data-i18n="csv">Export CSV</button>
+<button class="action secondary" id="downloadReport" type="button" data-i18n="textReport">Download text report</button>
+<button class="action secondary" id="print" type="button" data-i18n="print">Print</button>
+<button class="action danger" id="clearRecords" type="button" data-i18n="clearRecords">Clear all records</button>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr>
+<th data-i18n="thId">Record ID</th>
+<th data-i18n="thSite">Site / country</th>
+<th data-i18n="thChemical">Chemical</th>
+<th data-i18n="thArea">Storage area / container</th>
+<th data-i18n="thDate">Inspection date</th>
+<th data-i18n="thLabel">Label observation</th>
+<th data-i18n="thPackaging">Packaging observation</th>
+<th data-i18n="thStatus">Status</th>
+<th data-i18n="thAction">Follow-up</th>
+<th data-i18n="thDelete">Action</th>
+</tr></thead>
+<tbody id="recordsBody"></tbody>
+</table>
+</div>
+<p class="small" id="emptyMessage" data-i18n="empty">No records match the selected filters.</p>
+<p class="small" data-i18n="storageWarning">Records are stored only in this page's temporary browser memory. Refreshing or closing the page clears them. This is not a shared database.</p>
+</section>
+
+<section class="card">
+<h2 data-i18n="scopeTitle">Scope and limitations</h2>
+<ul>
+<li data-i18n="scope1">This module provides an inspection log, not a chemical safety certification.</li>
+<li data-i18n="scope2">Consult the current SDS, site rules and applicable regulations for actual handling and storage requirements.</li>
+<li data-i18n="scope3">Record visible leakage or damage as an observation and follow the site's emergency and reporting procedures.</li>
+<li data-i18n="scope4">No automatic pass/fail decision or safety threshold is generated by this page.</li>
+</ul>
+</section>
+</main>
+
+<footer>
+<strong>WORKER PRO</strong> — <span data-i18n="footer">Global Industrial Platform</span><br>
+<span>Section №291 · Oil & Gas Industry · Demo Module</span>
+</footer>
+
+<script>
+const translations = {
+en:{
+subtitle:"Global Industrial Platform",title:"Oilfield Chemical Storage & Handling Inspection",
+intro:"A structured demonstration log for recording inspections of chemical storage areas, containers, labels and related documents at oilfield facilities.",
+home:"Home",production:"Production",quality:"Quality",documents:"Documents",suppliers:"Suppliers",orders:"Orders",logistics:"Logistics",tracking:"Tracking",
+demoTitle:"Important — demonstration module",demoText:"This page records observations only. It does not replace chemical safety data sheets (SDS), approved site procedures, legal requirements or assessment by qualified personnel. Do not use this demo to decide whether a chemical or storage area is safe.",
+total:"Total records",open:"Open reviews",actionNeeded:"Follow-up recorded",areas:"Storage areas",workflowTitle:"Inspection record workflow",
+step1:"1. Identify location",step2:"2. Record observations",step3:"3. Attach document references",step4:"4. Review and follow up",
+workflowNote:"Record actual observations and follow your facility's approved procedures. Do not invent acceptance limits or infer safety from this page.",
+formTitle:"New inspection record",recordId:"Record ID *",country:"Country *",site:"Site / oilfield *",area:"Storage area / warehouse *",container:"Container / tank ID",
+chemical:"Chemical / product name *",category:"Chemical category",manufacturer:"Manufacturer / supplier",date:"Inspection date *",inspector:"Inspector / responsible person",
+labelStatus:"Label / identification observation",packaging:"Container / packaging observation",sds:"SDS / document reference",storageNotes:"Storage condition notes",reviewDate:"Next review date",
+status:"Record status",followup:"Follow-up reference / action",report:"Report / attachment reference",observations:"Observations *",notes:"Additional notes",
+save:"Save record",clear:"Clear form",recordsTitle:"Inspection records",searchPlaceholder:"Search ID, site, chemical, area...",allStatuses:"All statuses",allCategories:"All categories",
+csv:"Export CSV",textReport:"Download text report",print:"Print",clearRecords:"Clear all records",thId:"Record ID",thSite:"Site / country",thChemical:"Chemical",
+thArea:"Storage area / container",thDate:"Inspection date",thLabel:"Label observation",thPackaging:"Packaging observation",thStatus:"Status",thAction:"Follow-up",thDelete:"Action",
+empty:"No records match the selected filters.",storageWarning:"Records are stored only in this page's temporary browser memory. Refreshing or closing the page clears them. This is not a shared database.",
+scopeTitle:"Scope and limitations",scope1:"This module provides an inspection log, not a chemical safety certification.",
+scope2:"Consult the current SDS, site rules and applicable regulations for actual handling and storage requirements.",
+scope3:"Record visible leakage or damage as an observation and follow the site's emergency and reporting procedures.",
+scope4:"No automatic pass/fail decision or safety threshold is generated by this page.",footer:"Global Industrial Platform",delete:"Delete",confirmClear:"Delete all records from this page?",confirmDelete:"Delete this record?"
+},
+ru:{
+subtitle:"Глобальная промышленная платформа",title:"Проверка хранения и обращения с нефтепромысловыми химикатами",
+intro:"Демонстрационный журнал проверок зон хранения, ёмкостей, маркировки и сопроводительных документов на нефтепромыслах.",
+home:"Главная",production:"Производство",quality:"Качество",documents:"Документы",suppliers:"Поставщики",orders:"Заказы",logistics:"Логистика",tracking:"Отслеживание",
+demoTitle:"Важно — демонстрационный модуль",demoText:"Страница предназначена только для записи наблюдений. Она не заменяет паспорта безопасности химической продукции (SDS), утверждённые процедуры предприятия, требования законодательства или оценку квалифицированных специалистов. Не используйте этот пример для определения безопасности химиката или зоны хранения.",
+total:"Всего записей",open:"На рассмотрении",actionNeeded:"Требуют действий",areas:"Зоны хранения",workflowTitle:"Порядок ведения журнала",
+step1:"1. Указать место",step2:"2. Записать наблюдения",step3:"3. Добавить ссылки на документы",step4:"4. Рассмотреть и выполнить действия",
+workflowNote:"Записывайте фактические наблюдения и соблюдайте утверждённые процедуры предприятия. Не придумывайте пределы допуска и не делайте выводы о безопасности по этой странице.",
+formTitle:"Новая запись проверки",recordId:"ID записи *",country:"Страна *",site:"Объект / нефтепромысел *",area:"Зона хранения / склад *",container:"ID ёмкости / резервуара",
+chemical:"Название химиката / продукта *",category:"Категория химиката",manufacturer:"Производитель / поставщик",date:"Дата проверки *",inspector:"Инспектор / ответственное лицо",
+labelStatus:"Наблюдение по маркировке",packaging:"Состояние тары / упаковки",sds:"SDS / ссылка на документ",storageNotes:"Примечания об условиях хранения",reviewDate:"Дата следующей проверки",
+status:"Статус записи",followup:"Последующее действие / ссылка",report:"Отчёт / вложение",observations:"Наблюдения *",notes:"Дополнительные примечания",
+save:"Сохранить запись",clear:"Очистить форму",recordsTitle:"Журнал проверок",searchPlaceholder:"Поиск по ID, объекту, химикату, зоне...",allStatuses:"Все статусы",allCategories:"Все категории",
+csv:"Экспорт CSV",textReport:"Скачать текстовый отчёт",print:"Печать",clearRecords:"Удалить все записи",thId:"ID записи",thSite:"Объект / страна",thChemical:"Химикат",
+thArea:"Зона хранения / ёмкость",thDate:"Дата проверки",thLabel:"Маркировка",thPackaging:"Упаковка",thStatus:"Статус",thAction:"Дальнейшие действия",thDelete:"Действие",
+empty:"По выбранным фильтрам записей нет.",storageWarning:"Записи хранятся только во временной памяти страницы. После обновления или закрытия страницы они исчезнут. Это не общая база данных.",
+scopeTitle:"Область применения и ограничения",scope1:"Модуль представляет собой журнал проверок, а не сертификат химической безопасности.",
+scope2:"Для реальных требований к хранению и обращению используйте актуальный SDS, правила объекта и применимые нормы.",
+scope3:"Видимую утечку или повреждение фиксируйте как наблюдение и соблюдайте аварийные и отчётные процедуры объекта.",
+scope4:"Страница не формирует автоматическое решение «годен/не годен» и не задаёт пороги безопасности.",footer:"Глобальная промышленная платформа",delete:"Удалить",confirmClear:"Удалить все записи на этой странице?",confirmDelete:"Удалить эту запись?"
+},
+az:{
+subtitle:"Qlobal Sənaye Platforması",title:"Neft Mədənlərində Kimyəvi Maddələrin Saxlanması və İdarə Edilməsinin Yoxlanması",
+intro:"Neft obyektlərində kimyəvi maddələrin saxlama sahələri, qablar, etiketlər və sənədlər üzrə müşahidələrin qeydiyyatı üçün nümayiş jurnalı.",
+home:"Ana səhifə",production:"İstehsalat",quality:"Keyfiyyət",documents:"Sənədlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",logistics:"Logistika",tracking:"İzləmə",
+demoTitle:"Vacib — nümayiş modulu",demoText:"Bu səhifə yalnız müşahidələri qeydə alır. SDS sənədlərini, təsdiqlənmiş obyekt prosedurlarını, qanuni tələbləri və ixtisaslı mütəxəssis qiymətləndirməsini əvəz etmir. Təhlükəsizlik barədə qərar vermək üçün istifadə etməyin.",
+total:"Ümumi qeydlər",open:"Baxışda",actionNeeded:"Əlavə tədbirlər",areas:"Saxlama sahələri",workflowTitle:"Yoxlama qeydiyyat prosesi",
+step1:"1. Məkanı müəyyən et",step2:"2. Müşahidələri qeyd et",step3:"3. Sənəd istinadlarını əlavə et",step4:"4. Baxış və tədbirlər",
+workflowNote:"Faktiki müşahidələri qeyd edin və obyektin təsdiqlənmiş prosedurlarına əməl edin. Özünüzdən qəbul limitləri yaratmayın.",
+formTitle:"Yeni yoxlama qeydi",recordId:"Qeyd ID-si *",country:"Ölkə *",site:"Obyekt / neft mədəni *",area:"Saxlama sahəsi / anbar *",container:"Qab / çən ID-si",
+chemical:"Kimyəvi maddənin adı *",category:"Kimyəvi maddənin kateqoriyası",manufacturer:"İstehsalçı / təchizatçı",date:"Yoxlama tarixi *",inspector:"Yoxlayan / məsul şəxs",
+labelStatus:"Etiket müşahidəsi",packaging:"Qablaşdırmanın vəziyyəti",sds:"SDS / sənəd istinadı",storageNotes:"Saxlama şəraiti barədə qeydlər",reviewDate:"Növbəti baxış tarixi",
+status:"Qeyd statusu",followup:"Əlavə tədbir / istinad",report:"Hesabat / əlavə istinadı",observations:"Müşahidələr *",notes:"Əlavə qeydlər",
+save:"Qeydi saxla",clear:"Formanı təmizlə",recordsTitle:"Yoxlama qeydləri",searchPlaceholder:"ID, obyekt, kimyəvi maddə və ya sahə üzrə axtar...",allStatuses:"Bütün statuslar",allCategories:"Bütün kateqoriyalar",
+csv:"CSV ixracı",textReport:"Mətn hesabatını yüklə",print:"Çap et",clearRecords:"Bütün qeydləri sil",thId:"Qeyd ID-si",thSite:"Obyekt / ölkə",thChemical:"Kimyəvi maddə",
+thArea:"Saxlama sahəsi / qab",thDate:"Yoxlama tarixi",thLabel:"Etiket",thPackaging:"Qablaşdırma",thStatus:"Status",thAction:"Əlavə tədbir",thDelete:"Əməliyyat",
+empty:"Seçilmiş filtrlərə uyğun qeyd yoxdur.",storageWarning:"Qeydlər yalnız səhifənin müvəqqəti yaddaşında saxlanılır; səhifə yenilənsə və ya bağlansa silinəcək.",
+scopeTitle:"Əhatə dairəsi və məhdudiyyətlər",scope1:"Bu modul yoxlama jurnalıdır, kimyəvi təhlükəsizlik sertifikatı deyil.",
+scope2:"Real tələblər üçün aktual SDS, obyekt qaydaları və tətbiq olunan normalara müraciət edin.",
+scope3:"Görünən sızma və ya zədələnməni qeyd edin və obyektin müvafiq prosedurlarına əməl edin.",
+scope4:"Səhifə avtomatik uyğunluq qərarı və ya təhlükəsizlik həddi yaratmır.",footer:"Qlobal Sənaye Platforması",delete:"Sil",confirmClear:"Bu səhifədəki bütün qeydlər silinsin?",confirmDelete:"Bu qeyd silinsin?"
+}
+};
+
+const fallback = {
+tr:{subtitle:"Küresel Endüstriyel Platform",title:"Petrol Sahası Kimyasal Depolama ve Elleçleme Denetimi",formTitle:"Yeni denetim kaydı",save:"Kaydı kaydet"},
+de:{subtitle:"Globale Industrieplattform",title:"Inspektion der Lagerung und Handhabung von Ölfeldchemikalien",formTitle:"Neuer Inspektionseintrag",save:"Eintrag speichern"},
+ar:{subtitle:"منصة صناعية عالمية",title:"فحص تخزين المواد الكيميائية في حقول النفط",formTitle:"سجل فحص جديد",save:"حفظ السجل"},
+es:{subtitle:"Plataforma Industrial Global",title:"Inspección del almacenamiento y manejo de productos químicos petroleros",formTitle:"Nuevo registro de inspección",save:"Guardar registro"},
+fr:{subtitle:"Plateforme industrielle mondiale",title:"Inspection du stockage et de la manipulation des produits chimiques pétroliers",formTitle:"Nouvel enregistrement d'inspection",save:"Enregistrer"},
+it:{subtitle:"Piattaforma industriale globale",title:"Ispezione dello stoccaggio e della manipolazione di prodotti chimici petroliferi",formTitle:"Nuovo registro di ispezione",save:"Salva registro"}
+};
+
+let records = [];
+let lang = "en";
+const $ = id => document.getElementById(id);
+const val = id => $(id).value.trim();
+const text = (id,key) => { if($(id)) $(id).textContent = translations[lang]?.[key] || fallback[lang]?.[key] || translations.en[key] || key; };
+
+function applyLanguage(code){
+ lang = code;
+ document.documentElement.lang = code;
+ document.documentElement.dir = code === "ar" ? "rtl" : "ltr";
+ document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===code));
+ document.querySelectorAll("[data-i18n]").forEach(el=>{
+   const key=el.dataset.i18n;
+   el.textContent=translations[code]?.[key] || fallback[code]?.[key] || translations.en[key] || el.textContent;
+ });
+ document.querySelectorAll("[data-placeholder]").forEach(el=>{
+   const key=el.dataset.placeholder;
+   el.placeholder=translations[code]?.[key] || fallback[code]?.[key] || translations.en[key] || "";
+ });
+ render();
+}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>applyLanguage(b.dataset.lang)));
+
+function escapeHtml(value){
+ return String(value ?? "").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function statusClass(status){
+ if(status==="Follow-up") return "action";
+ if(status==="Review") return "review";
+ return "";
+}
+function updateStats(){
+ $("totalCount").textContent=records.length;
+ $("reviewCount").textContent=records.filter(r=>r.status==="Review").length;
+ $("actionCount").textContent=records.filter(r=>r.status==="Follow-up").length;
+ $("areaCount").textContent=new Set(records.map(r=>r.area).filter(Boolean)).size;
+}
+function render(){
+ const q=$("search").value.toLowerCase();
+ const sf=$("statusFilter").value;
+ const cf=$("categoryFilter").value;
+ const filtered=records.filter(r=>{
+  const searchable=Object.values(r).join(" ").toLowerCase();
+  return searchable.includes(q)&&(!sf||r.status===sf)&&(!cf||r.category===cf);
+ });
+ $("recordsBody").innerHTML=filtered.map(r=>`
+ <tr>
+ <td>${escapeHtml(r.recordId)}</td>
+ <td>${escapeHtml(r.site)}<br>${escapeHtml(r.country)}</td>
+ <td>${escapeHtml(r.chemical)}<br><span class="small">${escapeHtml(r.category)}</span></td>
+ <td>${escapeHtml(r.area)}<br>${escapeHtml(r.container)}</td>
+ <td>${escapeHtml(r.inspectionDate)}</td>
+ <td>${escapeHtml(r.labelStatus)}</td>
+ <td>${escapeHtml(r.packaging)}</td>
+ <td><span class="status ${statusClass(r.status)}">${escapeHtml(r.status)}</span></td>
+ <td>${escapeHtml(r.followup)}</td>
+ <td><button class="action danger delete-one" type="button" data-id="${escapeHtml(r.recordId)}">${escapeHtml(translations[lang]?.delete || translations.en.delete)}</button></td>
+ </tr>`).join("");
+ $("emptyMessage").style.display=filtered.length?"none":"block";
+ updateStats();
+}
+$("inspectionDate").value=new Date().toISOString().slice(0,10);
+
+$("inspectionForm").addEventListener("submit",e=>{
+ e.preventDefault();
+ const recordId=val("recordId");
+ if(records.some(r=>r.recordId.toLowerCase()===recordId.toLowerCase())){
+  alert("A record with this ID already exists on this page.");
+  return;
+ }
+ const record={
+  recordId,country:val("country"),site:val("site"),area:val("area"),container:val("container"),
+  chemical:val("chemical"),category:val("category"),manufacturer:val("manufacturer"),
+  inspectionDate:val("inspectionDate"),inspector:val("inspector"),labelStatus:val("labelStatus"),
+  packaging:val("packaging"),sds:val("sds"),storageNotes:val("storageNotes"),reviewDate:val("reviewDate"),
+  status:val("status"),followup:val("followup"),report:val("report"),observations:val("observations"),notes:val("notes")
+ };
+ records.unshift(record);
+ $("inspectionForm").reset();
+ $("inspectionDate").value=new Date().toISOString().slice(0,10);
+ render();
+ alert("Inspection record added to this page's temporary memory.");
+});
+["search","statusFilter","categoryFilter"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+
+$("recordsBody").addEventListener("click",e=>{
+ const btn=e.target.closest(".delete-one");
+ if(!btn)return;
+ const id=btn.dataset.id;
+ if(confirm(translations[lang]?.confirmDelete||translations.en.confirmDelete)){
+  records=records.filter(r=>r.recordId!==id);
+  render();
+ }
+});
+$("clearRecords").addEventListener("click",()=>{
+ if(confirm(translations[lang]?.confirmClear||translations.en.confirmClear)){
+  records=[];render();
+ }
+});
+function csvEscape(v){return '"'+String(v??"").replace(/"/g,'""')+'"';}
+function downloadFile(name,content,type){
+ const blob=new Blob(["\ufeff",content],{type});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download=name;a.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+const columns=[
+ ["recordId","Record ID"],["country","Country"],["site","Site"],["area","Storage area"],
+ ["container","Container ID"],["chemical","Chemical"],["category","Category"],["manufacturer","Manufacturer"],
+ ["inspectionDate","Inspection date"],["inspector","Inspector"],["labelStatus","Label observation"],
+ ["packaging","Packaging observation"],["sds","SDS reference"],["storageNotes","Storage notes"],
+ ["reviewDate","Next review date"],["status","Status"],["followup","Follow-up"],
+ ["report","Report reference"],["observations","Observations"],["notes","Additional notes"]
+];
+$("exportCsv").addEventListener("click",()=>{
+ const rows=[columns.map(c=>c[1]),...records.map(r=>columns.map(c=>r[c[0]]))];
+ downloadFile("worker-pro-section-291-inspections.csv",rows.map(row=>row.map(csvEscape).join(",")).join("\r\n"),"text/csv;charset=utf-8");
+});
+$("downloadReport").addEventListener("click",()=>{
+ const lines=[
+ "WORKER PRO — SECTION 291",
+ "Oilfield Chemical Storage & Handling Inspection",
+ "DEMONSTRATION REPORT — NOT A SAFETY CERTIFICATION",
+ "Generated: "+new Date().toLocaleString(),
+ "Records: "+records.length,
+ "--------------------------------------------------",
+ ...records.map((r,i)=>[
+  `${i+1}. Record ID: ${r.recordId}`,
+  `Country / site: ${r.country} / ${r.site}`,
+  `Area / container: ${r.area} / ${r.container}`,
+  `Chemical / category: ${r.chemical} / ${r.category}`,
+  `Manufacturer: ${r.manufacturer}`,
+  `Inspection date: ${r.inspectionDate}; next review: ${r.reviewDate}`,
+  `Inspector: ${r.inspector}`,
+  `Label observation: ${r.labelStatus}`,
+  `Packaging observation: ${r.packaging}`,
+  `SDS / document: ${r.sds}`,
+  `Storage notes: ${r.storageNotes}`,
+  `Status: ${r.status}`,
+  `Follow-up: ${r.followup}`,
+  `Report reference: ${r.report}`,
+  `Observations: ${r.observations}`,
+  `Notes: ${r.notes}`,
+  "--------------------------------------------------"
+ ].join("\n")),
+ "This report records entered observations only. Consult current SDS, site procedures and qualified personnel."
+ ];
+ downloadFile("worker-pro-section-291-report.txt",lines.join("\n"),"text/plain;charset=utf-8");
+});
+$("print").addEventListener("click",()=>window.print());
+
+applyLanguage("en");
+</script>
+</body>
+</html>
