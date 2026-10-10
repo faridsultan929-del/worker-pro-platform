@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Artificial Lift System Inspection</title>
+<style>
+:root{--dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;--bg:#f4f7f5;--line:#dce7df;--text:#173528}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--text)}
+.languages{position:sticky;top:0;z-index:10;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;padding:11px;background:var(--dark)}
+.languages button{padding:8px 12px;border:1px solid #ffffff55;border-radius:8px;background:#ffffff12;color:white;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:var(--lime);color:var(--dark)}
+header{padding:28px 14px;text-align:center;color:white;background:linear-gradient(135deg,var(--dark),var(--green));border-bottom:5px solid var(--lime)}
+.logo{display:inline-block;padding:9px 15px;border:2px solid var(--lime);border-radius:10px;color:var(--lime);font-size:25px;font-weight:900}
+header h1{font-size:clamp(23px,4vw,35px);margin:18px auto 10px}
+header p{max-width:850px;margin:auto;line-height:1.6}
+nav{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;padding:13px;background:white;border-bottom:1px solid var(--line)}
+nav a{padding:9px 11px;border-radius:7px;background:#edf5ef;color:var(--green);font-weight:bold;font-size:13px;text-decoration:none}
+nav a:hover{background:var(--lime)}
+main{max-width:1250px;margin:auto;padding:20px 14px 38px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:22px}
+.card{min-width:0;padding:18px;background:white;border:1px solid var(--line);border-radius:14px;box-shadow:0 3px 12px #1231}
+.stat-label{font-size:13px;color:#587263}
+.stat-value{margin-top:8px;font-size:28px;font-weight:bold;color:var(--green)}
+h2{margin:0 0 15px;color:var(--dark)}
+h3{margin:0 0 12px;color:var(--green)}
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:12px}
+.field{min-width:0}
+label{display:block;margin-bottom:5px;font-size:13px;font-weight:bold}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbd9cf;border-radius:8px;background:white;color:var(--text);font:inherit}
+textarea{min-height:82px;resize:vertical}
+.full{grid-column:1/-1}
+.actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:15px}
+.btn{padding:11px 15px;border:0;border-radius:8px;background:var(--green);color:white;font-weight:bold;cursor:pointer}
+.btn.secondary{background:#e8f1eb;color:var(--dark);border:1px solid var(--line)}
+.btn.danger{background:#9e3030}
+.toolbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-bottom:14px}
+.table-wrap{overflow:auto;border:1px solid var(--line);border-radius:10px}
+table{width:100%;min-width:1300px;border-collapse:collapse;background:white}
+th,td{padding:11px;text-align:left;border-bottom:1px solid #e5ece7;font-size:13px}
+th{background:var(--dark);color:white;white-space:nowrap}
+tr:hover td{background:#f5faf6}
+.pill{display:inline-block;padding:5px 8px;border-radius:20px;background:#fff0d6;color:#785000;font-size:12px;font-weight:bold}
+.pill.reviewed{background:#dff4e5;color:#176338}
+.pill.follow{background:#fce4e4;color:#922d2d}
+.notice{padding:15px;background:#fff9e8;border-left:5px solid #e1ae2f;border-radius:8px;line-height:1.6}
+.small{font-size:12px;color:#63776b}
+footer{padding:22px;text-align:center;background:var(--dark);color:white;line-height:1.7}
+@media(max-width:600px){main{padding:14px 10px 28px}.card{padding:14px}.languages{gap:5px;padding:9px}.languages button{padding:7px 9px}}
+@media print{.languages,nav,form,.toolbar,.actions,footer{display:none!important}body{background:white}.card{box-shadow:none}main{max-width:none}}
+</style>
+</head>
+<body>
+<div class="languages">
+<button data-lang="az">AZ</button><button data-lang="ru" class="active">RU</button>
+<button data-lang="en">EN</button><button data-lang="tr">TR</button>
+<button data-lang="de">DE</button><button data-lang="ar">AR</button>
+<button data-lang="es">ES</button><button data-lang="fr">FR</button><button data-lang="it">IT</button>
+</div>
+
+<header>
+<div class="logo">WORKER PRO</div>
+<h1 data-i18n="title">№297 — Осмотр систем механизированной добычи нефти</h1>
+<p data-i18n="subtitle">Учёт насосных систем, оборудования скважин, результатов осмотра, технического обслуживания и последующих действий.</p>
+</header>
+
+<nav>
+<a href="../index.html" data-i18n="home">Главная</a>
+<a href="../production/index.html" data-i18n="production">Производство</a>
+<a href="../testing/index.html" data-i18n="testing">Испытания</a>
+<a href="../quality/index.html" data-i18n="quality">Качество</a>
+<a href="../documents/index.html" data-i18n="documents">Документы</a>
+<a href="../companies/index.html" data-i18n="companies">Компании</a>
+<a href="../suppliers/index.html" data-i18n="suppliers">Поставщики</a>
+<a href="../orders/index.html" data-i18n="orders">Заказы</a>
+<a href="../logistics/index.html" data-i18n="logistics">Логистика</a>
+<a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+
+<main>
+<section class="grid">
+<div class="card"><div class="stat-label" data-i18n="total">Всего записей</div><div class="stat-value" id="total">0</div></div>
+<div class="card"><div class="stat-label" data-i18n="reviewedCount">Рассмотрено</div><div class="stat-value" id="reviewedCount">0</div></div>
+<div class="card"><div class="stat-label" data-i18n="followCount">Требуются действия</div><div class="stat-value" id="followCount">0</div></div>
+<div class="card"><div class="stat-label" data-i18n="pendingCount">Ожидает рассмотрения</div><div class="stat-value" id="pendingCount">0</div></div>
+</section>
+
+<section class="card" style="margin-bottom:22px">
+<h2 data-i18n="formTitle">Новая запись осмотра</h2>
+<form id="form">
+<div class="form-grid">
+<div class="field"><label for="recordId" data-i18n="recordId">Номер записи *</label><input id="recordId" required maxlength="70" placeholder="ALS-297-001"></div>
+<div class="field"><label for="country" data-i18n="country">Страна</label><input id="country" maxlength="100"></div>
+<div class="field"><label for="site" data-i18n="site">Месторождение / объект</label><input id="site" maxlength="150"></div>
+<div class="field"><label for="well" data-i18n="well">Номер скважины *</label><input id="well" required maxlength="100"></div>
+<div class="field"><label for="systemType" data-i18n="systemType">Тип системы *</label>
+<select id="systemType" required>
+<option value="" data-i18n="selectType">Выберите тип</option>
+<option value="Electric submersible pump (ESP)">Electric submersible pump (ESP) — ЭЦН</option>
+<option value="Rod pump">Rod pump — штанговый насос</option>
+<option value="Gas lift">Gas lift — газлифт</option>
+<option value="Progressing cavity pump">Progressing cavity pump — винтовой насос</option>
+<option value="Hydraulic lift">Hydraulic lift — гидравлический подъём</option>
+<option value="Plunger lift">Plunger lift — плунжерный лифт</option>
+<option value="Other">Other — другое</option>
+</select></div>
+<div class="field"><label for="equipmentTag" data-i18n="equipmentTag">Тег оборудования *</label><input id="equipmentTag" required maxlength="120"></div>
+<div class="field"><label for="manufacturer" data-i18n="manufacturer">Производитель</label><input id="manufacturer" maxlength="120"></div>
+<div class="field"><label for="model" data-i18n="model">Модель</label><input id="model" maxlength="120"></div>
+<div class="field"><label for="serial" data-i18n="serial">Серийный / инвентарный номер</label><input id="serial" maxlength="120"></div>
+<div class="field"><label for="inspectionDate" data-i18n="inspectionDate">Дата осмотра *</label><input id="inspectionDate" type="date" required></div>
+<div class="field"><label for="inspector" data-i18n="inspector">Инспектор / ответственный</label><input id="inspector" maxlength="120"></div>
+<div class="field"><label for="method" data-i18n="method">Метод / процедура осмотра</label><input id="method" maxlength="180"></div>
+<div class="field"><label for="operatingHours" data-i18n="operatingHours">Наработка, часы</label><input id="operatingHours" type="number" min="0" step="any"></div>
+<div class="field"><label for="maintenanceDate" data-i18n="maintenanceDate">Последнее ТО</label><input id="maintenanceDate" type="date"></div>
+<div class="field"><label for="condition" data-i18n="condition">Наблюдаемое состояние *</label>
+<select id="condition" required>
+<option value="" data-i18n="selectCondition">Выберите состояние</option>
+<option value="No issue recorded" data-i18n="condition1">Замечаний не записано</option>
+<option value="Observation recorded" data-i18n="condition2">Зафиксировано замечание</option>
+<option value="Service required" data-i18n="condition3">Требуется обслуживание</option>
+<option value="Not assessed" data-i18n="condition4">Не оценивалось</option>
+</select></div>
+<div class="field"><label for="status" data-i18n="status">Статус записи *</label>
+<select id="status" required>
+<option value="Pending" data-i18n="pending">Ожидает рассмотрения</option>
+<option value="Reviewed" data-i18n="reviewed">Рассмотрено</option>
+<option value="Follow-up" data-i18n="follow">Требуются действия</option>
+</select></div>
+<div class="field"><label for="report" data-i18n="report">Номер отчёта</label><input id="report" maxlength="180"></div>
+<div class="field"><label for="nextDate" data-i18n="nextDate">Следующая дата осмотра</label><input id="nextDate" type="date"></div>
+<div class="field full"><label for="observations" data-i18n="observations">Наблюдения и замечания</label><textarea id="observations" maxlength="2000"></textarea></div>
+<div class="field full"><label for="action" data-i18n="action">Последующие действия / ответственный</label><textarea id="action" maxlength="1500"></textarea></div>
+<div class="field full"><label for="notes" data-i18n="notes">Дополнительные примечания</label><textarea id="notes" maxlength="1500"></textarea></div>
+</div>
+<div class="actions">
+<button class="btn" type="submit" data-i18n="save">Сохранить запись</button>
+<button class="btn secondary" type="reset" data-i18n="clear">Очистить форму</button>
+</div>
+</form>
+</section>
+
+<section class="card" style="margin-bottom:22px">
+<h2 data-i18n="recordsTitle">Журнал осмотров</h2>
+<div class="toolbar">
+<input id="search" data-i18n-placeholder="searchPlaceholder" placeholder="Поиск по номеру, скважине, тегу...">
+<select id="statusFilter">
+<option value="" data-i18n="allStatuses">Все статусы</option>
+<option value="Pending" data-i18n="pending">Ожидает рассмотрения</option>
+<option value="Reviewed" data-i18n="reviewed">Рассмотрено</option>
+<option value="Follow-up" data-i18n="follow">Требуются действия</option>
+</select>
+<select id="typeFilter">
+<option value="" data-i18n="allTypes">Все типы систем</option>
+<option value="Electric submersible pump (ESP)">ESP / ЭЦН</option>
+<option value="Rod pump">Rod pump</option>
+<option value="Gas lift">Gas lift</option>
+<option value="Progressing cavity pump">Progressing cavity pump</option>
+<option value="Hydraulic lift">Hydraulic lift</option>
+<option value="Plunger lift">Plunger lift</option>
+<option value="Other">Other</option>
+</select>
+</div>
+<div class="actions">
+<button class="btn" id="csv" type="button" data-i18n="csv">Экспорт CSV</button>
+<button class="btn secondary" id="reportBtn" type="button" data-i18n="reportBtn">Текстовый отчёт</button>
+<button class="btn secondary" id="printBtn" type="button" data-i18n="print">Печать</button>
+<button class="btn danger" id="deleteAll" type="button" data-i18n="deleteAll">Удалить все записи</button>
+</div>
+<div class="table-wrap" style="margin-top:14px">
+<table>
+<thead><tr>
+<th data-i18n="recordId">Номер записи</th><th data-i18n="well">Скважина</th>
+<th data-i18n="systemType">Тип системы</th><th data-i18n="equipmentTag">Тег оборудования</th>
+<th data-i18n="inspectionDate">Дата осмотра</th><th data-i18n="condition">Состояние</th>
+<th data-i18n="status">Статус</th><th data-i18n="report">Отчёт</th><th data-i18n="actions">Действия</th>
+</tr></thead>
+<tbody id="tbody"></tbody>
+</table>
+</div>
+<p class="small" data-i18n="storage">Данные существуют только в памяти страницы и исчезнут после перезагрузки.</p>
+</section>
+
+<section class="grid">
+<div class="card"><h3 data-i18n="workflowTitle">Рабочий процесс</h3><p data-i18n="workflow">1. Зарегистрируйте систему и скважину. 2. Укажите оборудование. 3. Запишите наблюдения и ТО. 4. Назначьте дальнейшие действия. 5. Сформируйте отчёт.</p></div>
+<div class="card"><h3 data-i18n="scopeTitle">Область учёта</h3><p data-i18n="scope">Журнал предназначен для систематизации записей по осмотрам оборудования механизированной добычи.</p></div>
+</section>
+
+<div class="notice"><strong data-i18n="warningTitle">Важное предупреждение</strong><p data-i18n="warning">Это демонстрационный журнал, а не система управления техническим обслуживанием или сертификат. Он не подтверждает производительность насосов, целостность оборудования, пригодность к эксплуатации или безопасность скважины. Не используйте его для выбора рабочих режимов. Проверки и оценку должны выполнять квалифицированные специалисты по документации производителя, утверждённым процедурам объекта и применимым требованиям.</p></div>
+</main>
+
+<footer><strong>WORKER PRO</strong><br><span data-i18n="footer">Глобальная промышленная платформа</span><br>F.S. © 2026</footer>
+
+<script>
+const dict={
+ru:{
+title:"№297 — Осмотр систем механизированной добычи нефти",subtitle:"Учёт насосных систем, оборудования скважин, результатов осмотра, технического обслуживания и последующих действий.",home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",suppliers:"Поставщики",orders:"Заказы",logistics:"Логистика",tracking:"Отслеживание",
+total:"Всего записей",reviewedCount:"Рассмотрено",followCount:"Требуются действия",pendingCount:"Ожидает рассмотрения",formTitle:"Новая запись осмотра",recordId:"Номер записи",country:"Страна",site:"Месторождение / объект",well:"Номер скважины",systemType:"Тип системы",selectType:"Выберите тип",equipmentTag:"Тег оборудования",manufacturer:"Производитель",model:"Модель",serial:"Серийный / инвентарный номер",inspectionDate:"Дата осмотра",inspector:"Инспектор / ответственный",method:"Метод / процедура осмотра",operatingHours:"Наработка, часы",maintenanceDate:"Последнее ТО",condition:"Наблюдаемое состояние",selectCondition:"Выберите состояние",condition1:"Замечаний не записано",condition2:"Зафиксировано замечание",condition3:"Требуется обслуживание",condition4:"Не оценивалось",status:"Статус записи",pending:"Ожидает рассмотрения",reviewed:"Рассмотрено",follow:"Требуются действия",report:"Номер отчёта",nextDate:"Следующая дата осмотра",observations:"Наблюдения и замечания",action:"Последующие действия / ответственный",notes:"Дополнительные примечания",save:"Сохранить запись",clear:"Очистить форму",recordsTitle:"Журнал осмотров",searchPlaceholder:"Поиск по номеру, скважине, тегу...",allStatuses:"Все статусы",allTypes:"Все типы систем",csv:"Экспорт CSV",reportBtn:"Текстовый отчёт",print:"Печать",deleteAll:"Удалить все записи",actions:"Действия",storage:"Данные существуют только в памяти страницы и исчезнут после перезагрузки.",workflowTitle:"Рабочий процесс",workflow:"1. Зарегистрируйте систему и скважину. 2. Укажите оборудование. 3. Запишите наблюдения и ТО. 4. Назначьте дальнейшие действия. 5. Сформируйте отчёт.",scopeTitle:"Область учёта",scope:"Журнал предназначен для систематизации записей по осмотрам оборудования механизированной добычи.",warningTitle:"Важное предупреждение",warning:"Это демонстрационный журнал, а не система управления техническим обслуживанием или сертификат. Он не подтверждает производительность насосов, целостность оборудования, пригодность к эксплуатации или безопасность скважины. Не используйте его для выбора рабочих режимов. Проверки и оценку должны выполнять квалифицированные специалисты по документации производителя, утверждённым процедурам объекта и применимым требованиям.",footer:"Глобальная промышленная платформа",delete:"Удалить",empty:"Записей пока нет.",confirmDelete:"Удалить эту запись?",confirmAll:"Удалить все записи?",saved:"Запись сохранена.",required:"Заполните обязательные поля."
+},
+en:{
+title:"#297 — Artificial Lift System Inspection",subtitle:"Track artificial lift equipment, well assets, inspection observations, maintenance records and follow-up actions.",home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",suppliers:"Suppliers",orders:"Orders",logistics:"Logistics",tracking:"Tracking",
+total:"Total records",reviewedCount:"Reviewed",followCount:"Follow-up required",pendingCount:"Pending review",formTitle:"New inspection record",recordId:"Record ID",country:"Country",site:"Field / site",well:"Well ID",systemType:"System type",selectType:"Select type",equipmentTag:"Equipment tag",manufacturer:"Manufacturer",model:"Model",serial:"Serial / asset number",inspectionDate:"Inspection date",inspector:"Inspector / responsible person",method:"Inspection method / procedure",operatingHours:"Operating hours",maintenanceDate:"Last maintenance",condition:"Observed condition",selectCondition:"Select condition",condition1:"No issue recorded",condition2:"Observation recorded",condition3:"Service required",condition4:"Not assessed",status:"Record status",pending:"Pending review",reviewed:"Reviewed",follow:"Follow-up required",report:"Report reference",nextDate:"Next inspection date",observations:"Observations and findings",action:"Follow-up action / responsible person",notes:"Additional notes",save:"Save record",clear:"Clear form",recordsTitle:"Inspection register",searchPlaceholder:"Search record, well or equipment tag...",allStatuses:"All statuses",allTypes:"All system types",csv:"Export CSV",reportBtn:"Text report",print:"Print",deleteAll:"Delete all records",actions:"Actions",storage:"Records are stored only in page memory and disappear after reload.",workflowTitle:"Workflow",workflow:"1. Register the system and well. 2. Identify the equipment. 3. Record observations and maintenance. 4. Assign follow-up actions. 5. Generate a report.",scopeTitle:"Register scope",scope:"This register organizes inspection records for artificial lift equipment.",warningTitle:"Important notice",warning:"This is a demonstration register, not a maintenance management system or certificate. It does not certify pump performance, equipment integrity, fitness for service or well safety. Do not use it to select operating settings. Qualified personnel must assess equipment using manufacturer documentation, approved site procedures and applicable requirements.",footer:"Global Industrial Platform",delete:"Delete",empty:"No records yet.",confirmDelete:"Delete this record?",confirmAll:"Delete all records?",saved:"Record saved.",required:"Complete all required fields."
+},
+az:{
+title:"№297 — Mexanikləşdirilmiş neft hasilatı sistemlərinin yoxlanması",subtitle:"Nasos sistemlərinin, quyu avadanlığının, baxış qeydlərinin, texniki xidmətin və sonrakı tədbirlərin uçotu.",home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",logistics:"Logistika",tracking:"İzləmə",
+total:"Ümumi qeydlər",reviewedCount:"Nəzərdən keçirilib",followCount:"Əlavə tədbir tələb olunur",pendingCount:"Baxılma gözləyir",formTitle:"Yeni yoxlama qeydi",recordId:"Qeyd nömrəsi",country:"Ölkə",site:"Mədən / obyekt",well:"Quyunun nömrəsi",systemType:"Sistemin növü",selectType:"Növü seçin",equipmentTag:"Avadanlıq kodu",manufacturer:"İstehsalçı",model:"Model",serial:"Seriya / inventar nömrəsi",inspectionDate:"Baxış tarixi",inspector:"Müfəttiş / məsul şəxs",method:"Baxış metodu / proseduru",operatingHours:"İş saatları",maintenanceDate:"Son texniki xidmət",condition:"Müşahidə olunan vəziyyət",selectCondition:"Vəziyyəti seçin",condition1:"Problem qeydə alınmayıb",condition2:"Müşahidə qeydə alınıb",condition3:"Texniki xidmət tələb olunur",condition4:"Qiymətləndirilməyib",status:"Qeyd statusu",pending:"Baxılma gözləyir",reviewed:"Nəzərdən keçirilib",follow:"Əlavə tədbir tələb olunur",report:"Hesabat nömrəsi",nextDate:"Növbəti baxış tarixi",observations:"Müşahidələr və qeydlər",action:"Sonrakı tədbir / məsul şəxs",notes:"Əlavə qeydlər",save:"Qeydi saxla",clear:"Formanı təmizlə",recordsTitle:"Baxış jurnalı",searchPlaceholder:"Qeyd, quyu və ya avadanlıq kodu üzrə axtar...",allStatuses:"Bütün statuslar",allTypes:"Bütün sistem növləri",csv:"CSV ixracı",reportBtn:"Mətn hesabatı",print:"Çap et",deleteAll:"Bütün qeydləri sil",actions:"Əməliyyatlar",storage:"Qeydlər yalnız səhifənin müvəqqəti yaddaşında saxlanılır və yenilənəndə silinir.",workflowTitle:"İş prosesi",workflow:"1. Sistemi və quyunu qeydiyyata alın. 2. Avadanlığı göstərin. 3. Müşahidələri və texniki xidməti qeyd edin. 4. Sonrakı tədbirləri təyin edin. 5. Hesabat yaradın.",scopeTitle:"Qeydiyyat sahəsi",scope:"Jurnal mexanikləşdirilmiş hasilat avadanlıqlarının baxış qeydlərini sistemləşdirir.",warningTitle:"Vacib xəbərdarlıq",warning:"Bu nümayiş məqsədli jurnaldır, texniki xidmət idarəetmə sistemi və ya sertifikat deyil. Nasosun məhsuldarlığını, avadanlığın bütövlüyünü və ya quyunun təhlükəsizliyini təsdiqləmir. İş rejimini seçmək üçün istifadə etməyin. Qiymətləndirmə istehsalçı sənədləri, təsdiqlənmiş obyekt prosedurları və tətbiq olunan tələblər əsasında ixtisaslı şəxslər tərəfindən aparılmalıdır.",footer:"Qlobal Sənaye Platforması",delete:"Sil",empty:"Hələ qeyd yoxdur.",confirmDelete:"Bu qeyd silinsin?",confirmAll:"Bütün qeydlər silinsin?",saved:"Qeyd saxlanıldı.",required:"Məcburi sahələri doldurun."
+}
+};
+const otherTitles={
+tr:["№297 — Yapay kaldırma sistemi denetimi","Pompa sistemleri, kuyu ekipmanları, bakım kayıtları ve takip işlemleri."],
+de:["Nr. 297 — Inspektion künstlicher Fördersysteme","Erfassung von Pumpanlagen, Bohrlochausrüstung, Wartung und Folgemaßnahmen."],
+ar:["297 — فحص أنظمة الرفع الاصطناعي","تسجيل معدات الضخ والآبار وملاحظات الفحص والصيانة وإجراءات المتابعة."],
+es:["N.º 297 — Inspección de sistemas de levantamiento artificial","Registro de bombas, equipos de pozo, mantenimiento y acciones de seguimiento."],
+fr:["N° 297 — Inspection des systèmes de levage artificiel","Suivi des pompes, équipements de puits, opérations de maintenance et actions."],
+it:["N. 297 — Ispezione dei sistemi di sollevamento artificiale","Registro di pompe, attrezzature di pozzo, manutenzione e azioni successive."]
+};
+let lang="ru",records=[];
+const $=id=>document.getElementById(id);
+const keys=["recordId","country","site","well","systemType","equipmentTag","manufacturer","model","serial","inspectionDate","inspector","method","operatingHours","maintenanceDate","condition","status","report","nextDate","observations","action","notes"];
+function T(k){return (dict[lang]||dict.en)[k]||dict.en[k]||k}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function setLang(l){
+lang=l;document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";
+const d=dict[l]||dict.en;
+document.querySelectorAll("[data-i18n]").forEach(el=>{
+const k=el.dataset.i18n;
+el.textContent=d[k]||(otherTitles[l]&&k==="title"?otherTitles[l][0]:otherTitles[l]&&k==="subtitle"?otherTitles[l][1]:dict.en[k]||k);
+});
+document.querySelectorAll("[data-i18n-placeholder]").forEach(el=>el.placeholder=d[el.dataset.i18nPlaceholder]||dict.en[el.dataset.i18nPlaceholder]||"");
+document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===l));
+render();
+}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>setLang(b.dataset.lang)));
+function readForm(){const r={};keys.forEach(k=>r[k]=$(k).value.trim());return r}
+function render(){
+const q=$("search").value.toLowerCase().trim(),s=$("statusFilter").value,typ=$("typeFilter").value;
+const filtered=records.filter(r=>(!q||keys.map(k=>r[k]).join(" ").toLowerCase().includes(q))&&(!s||r.status===s)&&(!typ||r.systemType===typ));
+$("total").textContent=records.length;
+$("reviewedCount").textContent=records.filter(r=>r.status==="Reviewed").length;
+$("followCount").textContent=records.filter(r=>r.status==="Follow-up").length;
+$("pendingCount").textContent=records.filter(r=>r.status==="Pending").length;
+const body=$("tbody");
+if(!filtered.length){body.innerHTML=`<tr><td colspan="9">${esc(T("empty"))}</td></tr>`;return}
+body.innerHTML=filtered.map(r=>{
+const idx=records.indexOf(r),cls=r.status==="Reviewed"?"reviewed":r.status==="Follow-up"?"follow":"";
+const st=r.status==="Reviewed"?T("reviewed"):r.status==="Follow-up"?T("follow"):T("pending");
+return `<tr><td>${esc(r.recordId)}</td><td>${esc(r.well)}</td><td>${esc(r.systemType)}</td><td>${esc(r.equipmentTag)}</td><td>${esc(r.inspectionDate)}</td><td>${esc(r.condition)}</td><td><span class="pill ${cls}">${esc(st)}</span></td><td>${esc(r.report)}</td><td><button class="btn danger" data-del="${idx}" type="button">${esc(T("delete"))}</button></td></tr>`;
+}).join("");
+body.querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>{
+if(confirm(T("confirmDelete"))){records.splice(Number(b.dataset.del),1);render()}
+}));
+}
+$("form").addEventListener("submit",e=>{
+e.preventDefault();const r=readForm();
+if(!r.recordId||!r.well||!r.systemType||!r.equipmentTag||!r.inspectionDate||!r.condition){alert(T("required"));return}
+if(records.some(x=>x.recordId.toLowerCase()===r.recordId.toLowerCase())){alert("Record ID already exists.");return}
+records.unshift(r);$("form").reset();render();alert(T("saved"));
+});
+["search","statusFilter","typeFilter"].forEach(id=>{ $(id).addEventListener("input",render);$(id).addEventListener("change",render) });
+function download(name,content,type){
+const blob=new Blob(["\ufeff",content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function csvCell(v){return '"'+String(v??"").replace(/"/g,'""')+'"'}
+$("csv").addEventListener("click",()=>{
+const rows=[[...keys.map(T)],...records.map(r=>keys.map(k=>r[k]))];
+download("worker-pro-artificial-lift-inspection.csv",rows.map(r=>r.map(csvCell).join(",")).join("\r\n"),"text/csv;charset=utf-8");
+});
+$("reportBtn").addEventListener("click",()=>{
+const out=["WORKER PRO — #297 Artificial Lift System Inspection","Generated: "+new Date().toLocaleString(),"Total records: "+records.length,"","DEMONSTRATION REGISTER — NOT AN EQUIPMENT CERTIFICATE",""];
+records.forEach((r,i)=>{out.push("Record "+(i+1));keys.forEach(k=>out.push(T(k)+": "+(r[k]||"-")));out.push("----------------------------------------")});
+out.push("This report does not certify equipment integrity, pump performance or well safety.");
+download("worker-pro-artificial-lift-report.txt",out.join("\r\n"),"text/plain;charset=utf-8");
+});
+$("printBtn").addEventListener("click",()=>window.print());
+$("deleteAll").addEventListener("click",()=>{if(confirm(T("confirmAll"))){records=[];render()}});
+$("inspectionDate").value=new Date().toISOString().slice(0,10);
+setLang("ru");
+</script>
+</body>
+</html>
