@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Oilfield Pump Performance Testing</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#17352a}
+.languages{position:sticky;top:0;z-index:10;background:#063d25;padding:10px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.languages button{border:1px solid #b7ff35;background:#0b6b3d;color:#fff;padding:8px 10px;border-radius:7px;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:#b7ff35;color:#063d25}
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;padding:25px 16px}
+header h1{font-size:27px;margin:12px 0}
+header p{margin:7px 0}
+.badge{display:inline-block;background:#b7ff35;color:#063d25;border-radius:20px;padding:6px 12px;font-weight:bold}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+nav a{color:white;text-decoration:none;background:#ffffff18;border:1px solid #ffffff45;padding:8px 10px;border-radius:7px}
+main{max-width:1200px;margin:auto;padding:16px}
+.card{background:white;border:1px solid #dce7df;border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 3px 12px #063d250b}
+h2{color:#075b34;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.stat{background:#eaf5ed;border-radius:10px;padding:14px}
+.stat strong{display:block;font-size:24px;color:#075b34;margin-bottom:5px}
+.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{font-weight:bold;font-size:13px;display:block;margin-bottom:5px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cbd9cf;border-radius:7px;background:white;font:inherit}
+textarea{min-height:75px;resize:vertical}
+button.action{background:#0b6b3d;color:white;border:0;border-radius:8px;padding:11px 15px;font-weight:bold;cursor:pointer;margin:5px 5px 5px 0}
+button.secondary{background:#e4efe7;color:#063d25}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:1150px}
+th,td{padding:10px;border-bottom:1px solid #e1e9e3;text-align:left;font-size:13px;vertical-align:top}
+th{background:#eaf5ed;color:#063d25}
+.status{display:inline-block;padding:4px 8px;border-radius:12px;background:#fff2d9;color:#795400}
+.small{font-size:13px;color:#53675c;line-height:1.5}
+.notice{background:#fff6df;border-left:5px solid #e4ae34;padding:13px;border-radius:7px;line-height:1.5}
+footer{text-align:center;background:#063d25;color:white;padding:20px;margin-top:25px}
+[dir="rtl"]{text-align:right}
+@media(max-width:600px){header h1{font-size:22px}.card{padding:13px}main{padding:10px}}
+</style>
+</head>
+<body>
+<div class="languages">
+<button class="active" onclick="setLang('ru')">RU</button>
+<button onclick="setLang('az')">AZ</button>
+<button onclick="setLang('en')">EN</button>
+<button onclick="setLang('tr')">TR</button>
+<button onclick="setLang('de')">DE</button>
+<button onclick="setLang('ar')">AR</button>
+<button onclick="setLang('es')">ES</button>
+<button onclick="setLang('fr')">FR</button>
+<button onclick="setLang('it')">IT</button>
+</div>
+
+<header>
+<span class="badge">SECTION №283</span>
+<h1 data-i18n="title">Oilfield Pump Performance Testing</h1>
+<p data-i18n="subtitle">Учёт испытаний рабочих характеристик нефтепромысловых насосов</p>
+<p>WORKER PRO — <span data-i18n="platform">Глобальная промышленная платформа</span></p>
+<nav>
+<a href="../index.html" data-i18n="home">Главная</a>
+<a href="../production/index.html" data-i18n="production">Производство</a>
+<a href="../testing/index.html" data-i18n="testing">Испытания</a>
+<a href="../quality/index.html" data-i18n="quality">Качество</a>
+<a href="../documents/index.html" data-i18n="documents">Документы</a>
+<a href="../companies/index.html" data-i18n="companies">Компании</a>
+<a href="../suppliers/index.html" data-i18n="suppliers">Поставщики</a>
+<a href="../orders/index.html" data-i18n="orders">Заказы</a>
+<a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+</header>
+
+<main>
+<section class="card">
+<h2 data-i18n="overview">Обзор раздела</h2>
+<p data-i18n="intro">Раздел предназначен для регистрации испытаний нефтепромысловых насосов. Он помогает вести записи о расходе, напоре, давлении, мощности, вибрации, температуре и условиях испытаний. Фактические результаты должны проверяться квалифицированными специалистами.</p>
+<div class="grid">
+<div class="stat"><strong id="totalCount">0</strong><span data-i18n="total">Всего записей</span></div>
+<div class="stat"><strong id="reviewCount">0</strong><span data-i18n="review">Требуют проверки</span></div>
+<div class="stat"><strong id="completeCount">0</strong><span data-i18n="complete">Завершено</span></div>
+<div class="stat"><strong id="flagCount">0</strong><span data-i18n="flagged">Есть замечания</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-i18n="parameters">Основные параметры испытаний</h2>
+<div class="grid">
+<div><b data-i18n="flow">Расход</b><p class="small" data-i18n="flowdesc">Фактически измеренный объёмный или массовый расход с единицами измерения.</p></div>
+<div><b data-i18n="head">Напор</b><p class="small" data-i18n="headdesc">Запись рассчитанного или измеренного напора по принятой методике.</p></div>
+<div><b data-i18n="pressure">Давление</b><p class="small" data-i18n="pressuredesc">Давление на входе и выходе насоса, если предусмотрено программой.</p></div>
+<div><b data-i18n="power">Мощность</b><p class="small" data-i18n="powerdesc">Потребляемая мощность и сведения об используемых измерительных приборах.</p></div>
+<div><b data-i18n="vibration">Вибрация и температура</b><p class="small" data-i18n="vibrationdesc">Регистрация показаний, точки измерения и времени наблюдения.</p></div>
+<div><b data-i18n="conditions">Условия испытания</b><p class="small" data-i18n="conditionsdesc">Рабочая жидкость, скорость вращения, дата, метод и исполнитель.</p></div>
+</div>
+<p class="small" data-i18n="methodnote">Критерии оценки зависят от типа насоса, спецификации изготовителя, применимого стандарта и утверждённой программы испытаний.</p>
+</section>
+
+<section class="card">
+<h2 data-i18n="workflow">Рабочий процесс</h2>
+<div class="grid">
+<div class="stat">1. <span data-i18n="step1">Идентифицировать насос</span></div>
+<div class="stat">2. <span data-i18n="step2">Записать условия испытания</span></div>
+<div class="stat">3. <span data-i18n="step3">Внести измеренные показатели</span></div>
+<div class="stat">4. <span data-i18n="step4">Проверить данные и замечания</span></div>
+<div class="stat">5. <span data-i18n="step5">Подготовить отчёт</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-i18n="newrecord">Добавить запись испытания</h2>
+<form id="testForm">
+<div class="formgrid">
+<div><label data-i18n="recordid">ID записи *</label><input id="recordId" required placeholder="PP-283-001"></div>
+<div><label data-i18n="country">Страна</label><input id="country" placeholder="Azerbaijan"></div>
+<div><label data-i18n="asset">Месторождение / объект *</label><input id="asset" required placeholder="Oilfield / plant"></div>
+<div><label data-i18n="pumpType">Тип насоса *</label>
+<select id="pumpType" required>
+<option value="Centrifugal">Centrifugal / Центробежный</option>
+<option value="Positive displacement">Positive displacement / Объёмный</option>
+<option value="Submersible">Submersible / Погружной</option>
+<option value="Multiphase">Multiphase / Многофазный</option>
+<option value="Transfer">Transfer / Перекачивающий</option>
+<option value="Other">Other / Другой</option>
+</select></div>
+<div><label data-i18n="manufacturer">Производитель</label><input id="manufacturer"></div>
+<div><label data-i18n="serial">Модель / серийный номер</label><input id="serial"></div>
+<div><label data-i18n="date">Дата испытания</label><input id="date" type="date"></div>
+<div><label data-i18n="tester">Испытатель / лаборатория</label><input id="tester"></div>
+<div><label data-i18n="fluid">Рабочая жидкость</label><input id="fluid" placeholder="As specified in procedure"></div>
+<div><label data-i18n="flowfield">Расход</label><input id="flowVal" placeholder="Value + unit"></div>
+<div><label data-i18n="headfield">Напор</label><input id="headVal" placeholder="Value + unit"></div>
+<div><label data-i18n="suction">Давление на входе</label><input id="suctionPressure" placeholder="Value + unit"></div>
+<div><label data-i18n="discharge">Давление на выходе</label><input id="dischargePressure" placeholder="Value + unit"></div>
+<div><label data-i18n="speed">Скорость вращения</label><input id="speedVal" placeholder="Value + unit"></div>
+<div><label data-i18n="powerfield">Мощность</label><input id="powerVal" placeholder="Value + unit"></div>
+<div><label data-i18n="vibrationfield">Вибрация</label><input id="vibrationVal" placeholder="Value + unit / not measured"></div>
+<div><label data-i18n="temperaturefield">Температура</label><input id="temperatureVal" placeholder="Value + unit"></div>
+<div><label data-i18n="method">Метод / стандарт</label><input id="method" placeholder="Procedure / reference"></div>
+<div><label data-i18n="status">Статус записи</label>
+<select id="status"><option value="Review">Review / На проверке</option><option value="Draft">Draft / Черновик</option><option value="Complete">Complete / Завершено</option></select></div>
+<div><label data-i18n="remarks">Замечания</label>
+<select id="remarks"><option value="None recorded">None recorded / Не указаны</option><option value="Observation recorded">Observation recorded / Есть наблюдения</option><option value="Follow-up required">Follow-up required / Требуется проверка</option></select></div>
+<div><label data-i18n="reportref">Номер отчёта / документа</label><input id="reportRef"></div>
+</div>
+<div style="margin-top:12px"><label data-i18n="notes">Дополнительные наблюдения и примечания</label><textarea id="notes" placeholder="Test conditions, instrument references, observations..."></textarea></div>
+<button class="action" type="submit" data-i18n="save">Сохранить запись</button>
+<button class="action secondary" type="reset" data-i18n="clear">Очистить форму</button>
+</form>
+</section>
+
+<section class="card">
+<h2 data-i18n="register">Журнал испытаний насосов</h2>
+<div class="formgrid">
+<div><label data-i18n="search">Поиск</label><input id="searchBox" placeholder="ID, объект, насос, модель..."></div>
+<div><label data-i18n="filterstatus">Фильтр статуса</label>
+<select id="statusFilter"><option value="">All / Все</option><option value="Review">Review</option><option value="Draft">Draft</option><option value="Complete">Complete</option></select></div>
+<div><label data-i18n="filterremarks">Фильтр замечаний</label>
+<select id="remarksFilter"><option value="">All / Все</option><option value="None recorded">None recorded</option><option value="Observation recorded">Observation recorded</option><option value="Follow-up required">Follow-up required</option></select></div>
+</div>
+<div style="margin:12px 0">
+<button class="action" onclick="exportCSV()" data-i18n="csv">Экспорт CSV</button>
+<button class="action" onclick="makeReport()" data-i18n="report">Создать отчёт</button>
+</div>
+<div class="tablewrap">
+<table>
+<thead><tr>
+<th>ID</th><th data-i18n="thasset">Объект</th><th data-i18n="thtype">Тип насоса</th><th data-i18n="thserial">Модель / серийный номер</th><th data-i18n="thflow">Расход</th><th data-i18n="thhead">Напор</th><th data-i18n="thpressure">Давление на выходе</th><th data-i18n="thdate">Дата</th><th data-i18n="thstatus">Статус</th>
+</tr></thead>
+<tbody id="recordsBody"></tbody>
+</table>
+</div>
+<p class="small" data-i18n="demodata">Начальные записи демонстрационные. Новые записи хранятся в памяти страницы до перезагрузки.</p>
+</section>
+
+<section class="card">
+<h2 data-i18n="limitations">Важные ограничения</h2>
+<div class="notice" data-i18n="warning">Это демонстрационный журнал, а не система инженерной сертификации. Он не подтверждает производительность, исправность или безопасность насоса. Испытания и интерпретация результатов должны выполняться квалифицированным персоналом по утверждённым процедурам.</div>
+</section>
+</main>
+
+<footer>WORKER PRO © 2026 · F.S. · Section 283</footer>
+
+<script>
+const base={
+title:"Oilfield Pump Performance Testing",subtitle:"Учёт испытаний рабочих характеристик нефтепромысловых насосов",platform:"Глобальная промышленная платформа",home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",suppliers:"Поставщики",orders:"Заказы",tracking:"Отслеживание",overview:"Обзор раздела",intro:"Раздел предназначен для регистрации испытаний нефтепромысловых насосов. Он помогает вести записи о расходе, напоре, давлении, мощности, вибрации, температуре и условиях испытаний. Фактические результаты должны проверяться квалифицированными специалистами.",total:"Всего записей",review:"Требуют проверки",complete:"Завершено",flagged:"Есть замечания",parameters:"Основные параметры испытаний",flow:"Расход",flowdesc:"Фактически измеренный объёмный или массовый расход с единицами измерения.",head:"Напор",headdesc:"Запись рассчитанного или измеренного напора по принятой методике.",pressure:"Давление",pressuredesc:"Давление на входе и выходе насоса, если предусмотрено программой.",power:"Мощность",powerdesc:"Потребляемая мощность и сведения об используемых измерительных приборах.",vibration:"Вибрация и температура",vibrationdesc:"Регистрация показаний, точки измерения и времени наблюдения.",conditions:"Условия испытания",conditionsdesc:"Рабочая жидкость, скорость вращения, дата, метод и исполнитель.",methodnote:"Критерии оценки зависят от типа насоса, спецификации изготовителя, применимого стандарта и утверждённой программы испытаний.",workflow:"Рабочий процесс",step1:"Идентифицировать насос",step2:"Записать условия испытания",step3:"Внести измеренные показатели",step4:"Проверить данные и замечания",step5:"Подготовить отчёт",newrecord:"Добавить запись испытания",recordid:"ID записи *",country:"Страна",asset:"Месторождение / объект *",pumpType:"Тип насоса *",manufacturer:"Производитель",serial:"Модель / серийный номер",date:"Дата испытания",tester:"Испытатель / лаборатория",fluid:"Рабочая жидкость",flowfield:"Расход",headfield:"Напор",suction:"Давление на входе",discharge:"Давление на выходе",speed:"Скорость вращения",powerfield:"Мощность",vibrationfield:"Вибрация",temperaturefield:"Температура",method:"Метод / стандарт",status:"Статус записи",remarks:"Замечания",reportref:"Номер отчёта / документа",notes:"Дополнительные наблюдения и примечания",save:"Сохранить запись",clear:"Очистить форму",register:"Журнал испытаний насосов",search:"Поиск",filterstatus:"Фильтр статуса",filterremarks:"Фильтр замечаний",csv:"Экспорт CSV",report:"Создать отчёт",thasset:"Объект",thtype:"Тип насоса",thserial:"Модель / серийный номер",thflow:"Расход",thhead:"Напор",thpressure:"Давление на выходе",thdate:"Дата",thstatus:"Статус",demodata:"Начальные записи демонстрационные. Новые записи хранятся в памяти страницы до перезагрузки.",limitations:"Важные ограничения",warning:"Это демонстрационный журнал, а не система инженерной сертификации. Он не подтверждает производительность, исправность или безопасность насоса. Испытания и интерпретация результатов должны выполняться квалифицированным персоналом по утверждённым процедурам.",added:"Запись добавлена.",duplicate:"Такой ID уже существует.",reporttitle:"WORKER PRO — ОТЧЁТ ИСПЫТАНИЯ НАСОСА"
+};
+const english={...base,title:"Oilfield Pump Performance Testing",subtitle:"Oilfield pump performance test register",platform:"Global Industrial Platform",home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",suppliers:"Suppliers",orders:"Orders",tracking:"Tracking",overview:"Section overview",intro:"Register oilfield pump tests and record flow, head, pressure, power, vibration, temperature and test conditions. Actual results should be reviewed by qualified personnel.",total:"Total records",review:"Needs review",complete:"Completed",flagged:"Records with remarks",parameters:"Main test parameters",flow:"Flow rate",flowdesc:"Record measured volumetric or mass flow with units.",head:"Pump head",headdesc:"Record calculated or measured head using the selected method.",pressure:"Pressure",pressuredesc:"Record suction and discharge pressure where required by the test plan.",power:"Power",powerdesc:"Record power consumption and relevant instrument references.",vibration:"Vibration and temperature",vibrationdesc:"Record readings, measurement points and observation time.",conditions:"Test conditions",conditionsdesc:"Working fluid, rotational speed, date, method and tester.",methodnote:"Evaluation criteria depend on pump type, manufacturer specification, applicable standard and approved test plan.",workflow:"Workflow",step1:"Identify the pump",step2:"Record test conditions",step3:"Enter measured readings",step4:"Review data and remarks",step5:"Prepare a report",newrecord:"Add test record",recordid:"Record ID *",country:"Country",asset:"Oilfield / asset *",pumpType:"Pump type *",manufacturer:"Manufacturer",serial:"Model / serial number",date:"Test date",tester:"Tester / laboratory",fluid:"Working fluid",flowfield:"Flow rate",headfield:"Pump head",suction:"Suction pressure",discharge:"Discharge pressure",speed:"Rotational speed",powerfield:"Power",vibrationfield:"Vibration",temperaturefield:"Temperature",method:"Method / standard",status:"Record status",remarks:"Remarks",reportref:"Report / document reference",notes:"Additional observations and notes",save:"Save record",clear:"Clear form",register:"Pump test register",search:"Search",filterstatus:"Status filter",filterremarks:"Remarks filter",csv:"Export CSV",report:"Create report",thasset:"Asset",thtype:"Pump type",thserial:"Model / serial number",thflow:"Flow rate",thhead:"Head",thpressure:"Discharge pressure",thdate:"Date",thstatus:"Status",demodata:"Initial entries are demo data. New entries remain in page memory until reload.",limitations:"Important limitations",warning:"This is a demonstration log, not an engineering certification system. It does not certify pump performance, condition or safety. Testing and interpretation must be performed by qualified personnel under approved procedures.",added:"Record added.",duplicate:"That ID already exists.",reporttitle:"WORKER PRO — PUMP PERFORMANCE TEST REPORT"};
+const partial={
+az:{platform:"Qlobal sənaye platforması",home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",tracking:"İzləmə",overview:"Bölməyə ümumi baxış",newrecord:"Sınaq qeydi əlavə et",save:"Qeydi saxla",clear:"Formanı təmizlə",register:"Nasos sınaqları jurnalı",search:"Axtarış",csv:"CSV ixracı",report:"Hesabat yarat",limitations:"Vacib məhdudiyyətlər",warning:"Bu nümayiş jurnalidir və nasosun təhlükəsizliyini və ya göstəricilərini təsdiqləmir."},
+tr:{platform:"Küresel Endüstriyel Platform",home:"Ana Sayfa",production:"Üretim",testing:"Testler",quality:"Kalite",documents:"Belgeler",companies:"Şirketler",suppliers:"Tedarikçiler",orders:"Siparişler",tracking:"Takip",overview:"Bölüm özeti",newrecord:"Test kaydı ekle",save:"Kaydı kaydet",clear:"Formu temizle",register:"Pompa test kayıtları",search:"Ara",csv:"CSV dışa aktar",report:"Rapor oluştur",limitations:"Önemli sınırlamalar",warning:"Bu demo kaydıdır; pompanın performansını veya güvenliğini onaylamaz."},
+de:{platform:"Globale Industrieplattform",home:"Startseite",production:"Produktion",testing:"Prüfungen",quality:"Qualität",documents:"Dokumente",companies:"Unternehmen",suppliers:"Lieferanten",orders:"Bestellungen",tracking:"Sendungsverfolgung",overview:"Abschnittsübersicht",newrecord:"Prüfdatensatz hinzufügen",save:"Datensatz speichern",clear:"Formular leeren",register:"Pumpenprüfregister",search:"Suche",csv:"CSV exportieren",report:"Bericht erstellen",limitations:"Wichtige Einschränkungen",warning:"Dies ist ein Demo-Protokoll und zertifiziert weder Pumpenleistung noch Sicherheit."},
+ar:{platform:"منصة صناعية عالمية",home:"الرئيسية",production:"الإنتاج",testing:"الاختبارات",quality:"الجودة",documents:"المستندات",companies:"الشركات",suppliers:"الموردون",orders:"الطلبات",tracking:"التتبع",overview:"نظرة عامة",newrecord:"إضافة سجل اختبار",save:"حفظ السجل",clear:"مسح النموذج",register:"سجل اختبار المضخات",search:"بحث",csv:"تصدير CSV",report:"إنشاء تقرير",limitations:"قيود مهمة",warning:"هذا سجل تجريبي ولا يثبت أداء المضخة أو سلامتها."},
+es:{platform:"Plataforma industrial global",home:"Inicio",production:"Producción",testing:"Ensayos",quality:"Calidad",documents:"Documentos",companies:"Empresas",suppliers:"Proveedores",orders:"Pedidos",tracking:"Seguimiento",overview:"Resumen",newrecord:"Añadir ensayo",save:"Guardar registro",clear:"Limpiar formulario",register:"Registro de ensayos de bombas",search:"Buscar",csv:"Exportar CSV",report:"Crear informe",limitations:"Limitaciones importantes",warning:"Este registro de demostración no certifica el rendimiento ni la seguridad de la bomba."},
+fr:{platform:"Plateforme industrielle mondiale",home:"Accueil",production:"Production",testing:"Essais",quality:"Qualité",documents:"Documents",companies:"Entreprises",suppliers:"Fournisseurs",orders:"Commandes",tracking:"Suivi",overview:"Présentation",newrecord:"Ajouter un essai",save:"Enregistrer",clear:"Effacer le formulaire",register:"Registre d’essais des pompes",search:"Rechercher",csv:"Exporter CSV",report:"Créer un rapport",limitations:"Limites importantes",warning:"Ce registre de démonstration ne certifie ni les performances ni la sécurité de la pompe."},
+it:{platform:"Piattaforma industriale globale",home:"Home",production:"Produzione",testing:"Prove",quality:"Qualità",documents:"Documenti",companies:"Aziende",suppliers:"Fornitori",orders:"Ordini",tracking:"Tracciamento",overview:"Panoramica",newrecord:"Aggiungi prova",save:"Salva record",clear:"Cancella modulo",register:"Registro prove pompe",search:"Cerca",csv:"Esporta CSV",report:"Crea rapporto",limitations:"Limitazioni importanti",warning:"Questo registro dimostrativo non certifica le prestazioni o la sicurezza della pompa."}
+};
+const translations={ru:base,en:english,az:{...english,...partial.az},tr:{...english,...partial.tr},de:{...english,...partial.de},ar:{...english,...partial.ar},es:{...english,...partial.es},fr:{...english,...partial.fr},it:{...english,...partial.it}};
+let lang="ru";
+let records=[
+{recordId:"PP-DEMO-001",country:"Azerbaijan",asset:"Demo Oilfield A",pumpType:"Centrifugal",manufacturer:"Example manufacturer",serial:"DEMO-P001",date:"2026-10-01",tester:"Demo team",fluid:"Not recorded",flowVal:"Not recorded",headVal:"Not recorded",suctionPressure:"Not recorded",dischargePressure:"Not recorded",speedVal:"Not recorded",powerVal:"Not recorded",vibrationVal:"Not recorded",temperatureVal:"Not recorded",method:"Approved procedure required",status:"Review",remarks:"Follow-up required",reportRef:"DEMO-REPORT-001",notes:"Illustrative record only; no acceptance decision."},
+{recordId:"PP-DEMO-002",country:"Turkey",asset:"Demo Oilfield B",pumpType:"Submersible",manufacturer:"Example manufacturer",serial:"DEMO-P002",date:"2026-10-03",tester:"Demo team",fluid:"Not recorded",flowVal:"Not recorded",headVal:"Not recorded",suctionPressure:"Not recorded",dischargePressure:"Not recorded",speedVal:"Not recorded",powerVal:"Not recorded",vibrationVal:"Not recorded",temperatureVal:"Not recorded",method:"Approved procedure required",status:"Draft",remarks:"None recorded",reportRef:"DEMO-REPORT-002",notes:"Illustrative record only."}
+];
+function setLang(l){
+lang=l;document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";
+document.querySelectorAll(".languages button").forEach(b=>b.classList.toggle("active",b.textContent.toLowerCase()===l));
+document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(translations[l]?.[k])el.textContent=translations[l][k];});
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function render(){
+const q=document.getElementById("searchBox").value.toLowerCase(),s=document.getElementById("statusFilter").value,rm=document.getElementById("remarksFilter").value;
+const list=records.filter(r=>(!s||r.status===s)&&(!rm||r.remarks===rm)&&Object.values(r).join(" ").toLowerCase().includes(q));
+document.getElementById("recordsBody").innerHTML=list.map(r=>`<tr><td>${esc(r.recordId)}</td><td>${esc(r.asset)}</td><td>${esc(r.pumpType)}</td><td>${esc(r.serial||"—")}</td><td>${esc(r.flowVal||"—")}</td><td>${esc(r.headVal||"—")}</td><td>${esc(r.dischargePressure||"—")}</td><td>${esc(r.date||"—")}</td><td><span class="status">${esc(r.status)}</span></td></tr>`).join("");
+document.getElementById("totalCount").textContent=records.length;
+document.getElementById("reviewCount").textContent=records.filter(r=>r.status==="Review").length;
+document.getElementById("completeCount").textContent=records.filter(r=>r.status==="Complete").length;
+document.getElementById("flagCount").textContent=records.filter(r=>r.remarks!=="None recorded").length;
+}
+document.getElementById("testForm").addEventListener("submit",e=>{
+e.preventDefault();
+const ids=["recordId","country","asset","pumpType","manufacturer","serial","date","tester","fluid","flowVal","headVal","suctionPressure","dischargePressure","speedVal","powerVal","vibrationVal","temperatureVal","method","status","remarks","reportRef","notes"];
+const r={};ids.forEach(id=>r[id]=document.getElementById(id).value.trim());
+if(records.some(x=>x.recordId.toLowerCase()===r.recordId.toLowerCase())){alert(translations[lang].duplicate);return;}
+records.unshift(r);e.target.reset();render();alert(translations[lang].added);
+});
+["searchBox","statusFilter","remarksFilter"].forEach(id=>document.getElementById(id).addEventListener(id==="searchBox"?"input":"change",render));
+function download(name,content,type){
+const blob=new Blob(["\ufeff"+content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function exportCSV(){
+const keys=["recordId","country","asset","pumpType","manufacturer","serial","date","tester","fluid","flowVal","headVal","suctionPressure","dischargePressure","speedVal","powerVal","vibrationVal","temperatureVal","method","status","remarks","reportRef","notes"];
+const content=[keys.join(","),...records.map(r=>keys.map(k=>'"'+String(r[k]??"").replace(/"/g,'""')+'"').join(","))].join("\r\n");
+download("worker-pro-oilfield-pump-records.csv",content,"text/csv;charset=utf-8");
+}
+function makeReport(){
+let out=(translations[lang].reporttitle||"WORKER PRO — PUMP PERFORMANCE TEST REPORT")+"\nGenerated: "+new Date().toLocaleString()+"\nTotal records: "+records.length+"\n\n";
+records.forEach((r,i)=>{out+=`${i+1}. Record ID: ${r.recordId}\nCountry: ${r.country}\nAsset: ${r.asset}\nPump type: ${r.pumpType}\nManufacturer: ${r.manufacturer}\nModel / serial: ${r.serial}\nDate: ${r.date}\nTester: ${r.tester}\nWorking fluid: ${r.fluid}\nFlow: ${r.flowVal}\nHead: ${r.headVal}\nSuction pressure: ${r.suctionPressure}\nDischarge pressure: ${r.dischargePressure}\nRotational speed: ${r.speedVal}\nPower: ${r.powerVal}\nVibration: ${r.vibrationVal}\nTemperature: ${r.temperatureVal}\nMethod: ${r.method}\nStatus: ${r.status}\nRemarks: ${r.remarks}\nReport reference: ${r.reportRef}\nNotes: ${r.notes}\n\n`;});
+out+="DEMO ONLY. This report does not certify pump performance, condition or safety.";
+download("worker-pro-oilfield-pump-report.txt",out,"text/plain;charset=utf-8");
+}
+render();
+</script>
+</body>
+</html>
