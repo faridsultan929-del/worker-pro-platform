@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Section 292</title>
+<style>
+:root{--dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;--bg:#f4f7f5;--line:#dce7df}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:#193329}
+.languages{position:sticky;top:0;z-index:10;background:var(--dark);padding:10px;display:flex;gap:7px;justify-content:center;flex-wrap:wrap}
+.languages button{border:0;border-radius:6px;padding:8px 11px;font-weight:bold;cursor:pointer}
+.languages button.active{background:var(--lime);color:var(--dark)}
+header{background:linear-gradient(120deg,var(--dark),var(--green));color:white;padding:24px 16px}
+.header-inner,main,nav{max-width:1200px;margin:auto}
+.brand{font-size:28px;font-weight:900}.brand span{color:var(--lime)}
+.subtitle{margin-top:5px;color:#d7ebdf}
+.badge{display:inline-block;margin-top:17px;padding:6px 10px;background:var(--lime);color:var(--dark);border-radius:5px;font-weight:bold}
+h1{font-size:clamp(23px,4vw,34px);margin:12px 0}
+header p{line-height:1.6;max-width:850px}
+nav{padding:12px 16px;display:flex;gap:8px;flex-wrap:wrap}
+nav a{background:white;border:1px solid var(--line);border-radius:7px;padding:9px 11px;text-decoration:none;color:var(--dark);font-weight:bold;font-size:13px}
+main{padding:8px 16px 35px}
+.notice{background:#fff8df;border:1px solid #e7dba7;border-radius:10px;padding:14px;line-height:1.6;margin:8px 0 18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:14px 0}
+.stat,.card{background:white;border:1px solid var(--line);border-radius:12px;padding:16px;box-shadow:0 3px 12px #063d2508}
+.stat span{display:block;color:#607267;font-size:13px}.stat strong{display:block;color:var(--green);font-size:26px;margin-top:7px}
+.card{margin:14px 0}
+h2{font-size:20px;color:var(--dark);margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.field{min-width:0}.full{grid-column:1/-1}
+label{display:block;font-size:13px;font-weight:bold;margin-bottom:5px}
+input,select,textarea{width:100%;padding:11px;border:1px solid #cbd9cf;border-radius:7px;background:white;font:inherit;color:#193329}
+textarea{min-height:80px;resize:vertical}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.btn{border:0;border-radius:8px;padding:11px 15px;background:var(--green);color:white;font-weight:bold;cursor:pointer}
+.btn.secondary{background:#e8f1eb;color:var(--dark);border:1px solid #cbd9cf}
+.btn.danger{background:#8b3025}
+.filters{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:13px}
+.table-wrap{overflow-x:auto}
+table{width:100%;min-width:1100px;border-collapse:collapse;background:white}
+th,td{padding:10px;border-bottom:1px solid #e4ece6;text-align:left;vertical-align:top;font-size:13px}
+th{background:#eaf3ed;color:var(--dark)}
+.status{display:inline-block;border-radius:20px;padding:5px 8px;background:#e7f2e9;font-weight:bold;font-size:12px}
+.status.review{background:#fff1d4;color:#795000}.status.action{background:#fbe4e1;color:#8b3025}
+.small{font-size:12px;color:#63766a;line-height:1.6}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.step{padding:12px;border-radius:8px;background:#edf5ef;color:var(--dark);font-weight:bold}
+footer{text-align:center;background:var(--dark);color:#d8e8de;padding:22px;font-size:13px}
+[dir="rtl"]{text-align:right}
+@media(max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.grid,.filters{grid-template-columns:1fr}.brand{font-size:25px}}
+</style>
+</head>
+<body>
+<div class="languages">
+<button data-lang="az">AZ</button><button data-lang="ru">RU</button>
+<button data-lang="en" class="active">EN</button><button data-lang="tr">TR</button>
+<button data-lang="de">DE</button><button data-lang="ar">AR</button>
+<button data-lang="es">ES</button><button data-lang="fr">FR</button><button data-lang="it">IT</button>
+</div>
+
+<header><div class="header-inner">
+<div class="brand">WORKER <span>PRO</span></div>
+<div class="subtitle" data-t="subtitle">Global Industrial Platform</div>
+<div class="badge">SECTION №292</div>
+<h1 data-t="title">Oilfield Chemical Transfer System Inspection</h1>
+<p data-t="intro">A demonstration log for recording observations on chemical transfer pumps, hoses, pipework, connections and related documents at oilfield facilities.</p>
+</div></header>
+
+<nav>
+<a href="../index.html" data-t="home">Home</a>
+<a href="../production/index.html" data-t="production">Production</a>
+<a href="../quality/index.html" data-t="quality">Quality</a>
+<a href="../documents/index.html" data-t="documents">Documents</a>
+<a href="../suppliers/index.html" data-t="suppliers">Suppliers</a>
+<a href="../orders/index.html" data-t="orders">Orders</a>
+<a href="../logistics/index.html" data-t="logistics">Logistics</a>
+<a href="../tracking/index.html" data-t="tracking">Tracking</a>
+</nav>
+
+<main>
+<div class="notice"><strong data-t="warningTitle">Demonstration module — important</strong><br>
+<span data-t="warning">This page records observations only. It does not certify equipment integrity, chemical compatibility, pressure rating or safe operation. Follow approved site procedures and use qualified personnel.</span></div>
+
+<section class="stats">
+<div class="stat"><span data-t="total">Total records</span><strong id="total">0</strong></div>
+<div class="stat"><span data-t="review">Under review</span><strong id="review">0</strong></div>
+<div class="stat"><span data-t="followup">Follow-up records</span><strong id="followupCount">0</strong></div>
+<div class="stat"><span data-t="systems">Transfer systems</span><strong id="systems">0</strong></div>
+</section>
+
+<section class="card">
+<h2 data-t="workflowTitle">Record workflow</h2>
+<div class="steps">
+<div class="step" data-t="step1">1. Identify the system</div>
+<div class="step" data-t="step2">2. Record observations</div>
+<div class="step" data-t="step3">3. Reference documents</div>
+<div class="step" data-t="step4">4. Assign follow-up</div>
+</div>
+<p class="small" data-t="workflowNote">Use the facility's approved inspection and reporting procedures. This page does not provide operating instructions or acceptance limits.</p>
+</section>
+
+<section class="card">
+<h2 data-t="formTitle">New transfer system inspection</h2>
+<form id="form"><div class="grid">
+<div class="field"><label for="id" data-t="id">Record ID *</label><input id="id" required placeholder="TRANSFER-292-001"></div>
+<div class="field"><label for="country" data-t="country">Country *</label><input id="country" required placeholder="Azerbaijan"></div>
+<div class="field"><label for="site" data-t="site">Site / oilfield *</label><input id="site" required></div>
+
+<div class="field"><label for="system" data-t="system">System / equipment tag *</label><input id="system" required placeholder="System tag"></div>
+<div class="field"><label for="type" data-t="type">Equipment type</label>
+<select id="type">
+<option>Transfer pump</option><option>Flexible hose</option><option>Pipework</option>
+<option>Coupling / connection</option><option>Valve</option><option>Metering unit</option>
+<option>Storage-to-process line</option><option>Other</option>
+</select></div>
+<div class="field"><label for="chemical" data-t="chemical">Chemical / fluid name</label><input id="chemical"></div>
+
+<div class="field"><label for="manufacturer" data-t="manufacturer">Manufacturer / model</label><input id="manufacturer"></div>
+<div class="field"><label for="serial" data-t="serial">Serial / asset number</label><input id="serial"></div>
+<div class="field"><label for="date" data-t="date">Inspection date *</label><input id="date" type="date" required></div>
+
+<div class="field"><label for="inspector" data-t="inspector">Inspector / responsible person</label><input id="inspector"></div>
+<div class="field"><label for="method" data-t="method">Inspection method / procedure reference</label><input id="method"></div>
+<div class="field"><label for="condition" data-t="condition">Observed condition</label>
+<select id="condition">
+<option>No visible issue recorded</option><option>Visible damage</option>
+<option>Possible leakage observed</option><option>Corrosion observed</option>
+<option>Connection / seal concern</option><option>Not inspected</option><option>Other observation</option>
+</select></div>
+
+<div class="field"><label for="hose" data-t="hose">Hose / pipe identification</label><input id="hose"></div>
+<div class="field"><label for="connection" data-t="connection">Connection / coupling reference</label><input id="connection"></div>
+<div class="field"><label for="instrument" data-t="instrument">Instrument / calibration reference</label><input id="instrument"></div>
+
+<div class="field"><label for="pressure" data-t="pressure">Recorded pressure (value / unit)</label><input id="pressure" placeholder="Enter observed or documented value"></div>
+<div class="field"><label for="flow" data-t="flow">Recorded flow (value / unit)</label><input id="flow" placeholder="Enter observed or documented value"></div>
+<div class="field"><label for="status" data-t="status">Record status</label>
+<select id="status"><option>Review</option><option>Follow-up</option><option>Recorded</option><option>Closed</option></select></div>
+
+<div class="field"><label for="report" data-t="report">Report / document reference</label><input id="report"></div>
+<div class="field"><label for="action" data-t="action">Follow-up action / reference</label><input id="action"></div>
+<div class="field"><label for="nextDate" data-t="nextDate">Next review date</label><input id="nextDate" type="date"></div>
+
+<div class="field full"><label for="observations" data-t="observations">Inspection observations *</label><textarea id="observations" required placeholder="Record factual observations, locations and document references."></textarea></div>
+<div class="field full"><label for="notes" data-t="notes">Additional notes</label><textarea id="notes"></textarea></div>
+</div>
+<div class="actions"><button class="btn" type="submit" data-t="save">Save record</button>
+<button class="btn secondary" type="reset" data-t="clear">Clear form</button></div>
+</form>
+</section>
+
+<section class="card">
+<h2 data-t="recordsTitle">Transfer system inspection records</h2>
+<div class="filters">
+<input id="search" data-ph="searchPlaceholder" placeholder="Search ID, site, system, equipment...">
+<select id="statusFilter"><option value="" data-t="allStatuses">All statuses</option><option>Review</option><option>Follow-up</option><option>Recorded</option><option>Closed</option></select>
+<select id="typeFilter"><option value="" data-t="allTypes">All equipment types</option><option>Transfer pump</option><option>Flexible hose</option><option>Pipework</option><option>Coupling / connection</option><option>Valve</option><option>Metering unit</option><option>Storage-to-process line</option><option>Other</option></select>
+</div>
+<div class="actions" style="margin-bottom:14px">
+<button class="btn" id="csv" type="button" data-t="csv">Export CSV</button>
+<button class="btn secondary" id="reportBtn" type="button" data-t="textReport">Download text report</button>
+<button class="btn secondary" id="print" type="button" data-t="print">Print</button>
+<button class="btn danger" id="clearAll" type="button" data-t="clearAll">Clear all records</button>
+</div>
+<div class="table-wrap"><table><thead><tr>
+<th data-t="thId">Record ID</th><th data-t="thSite">Site / country</th>
+<th data-t="thSystem">System / equipment</th><th data-t="thType">Type</th>
+<th data-t="thChemical">Chemical / fluid</th><th data-t="thDate">Date</th>
+<th data-t="thCondition">Observed condition</th><th data-t="thStatus">Status</th>
+<th data-t="thAction">Follow-up</th><th data-t="thDelete">Action</th>
+</tr></thead><tbody id="body"></tbody></table></div>
+<p class="small" id="empty" data-t="empty">No records match the selected filters.</p>
+<p class="small" data-t="memory">Records are held only in this page's temporary memory. Refreshing or closing the page clears them. This is not a shared database.</p>
+</section>
+
+<section class="card"><h2 data-t="scopeTitle">Scope and limitations</h2>
+<ul>
+<li data-t="scope1">This module is a recordkeeping aid, not an engineering inspection certificate.</li>
+<li data-t="scope2">Any leak, damage or suspected equipment defect must be handled under approved site procedures.</li>
+<li data-t="scope3">Recorded pressure and flow values are not checked against design limits.</li>
+<li data-t="scope4">No automatic pass/fail decision or safe-to-operate recommendation is generated.</li>
+</ul></section>
+</main>
+<footer><strong>WORKER PRO</strong> — <span data-t="footer">Global Industrial Platform</span><br>Section №292 · Oil & Gas · Demo Module</footer>
+
+<script>
+const dict={
+en:{
+subtitle:"Global Industrial Platform",title:"Oilfield Chemical Transfer System Inspection",
+intro:"A demonstration log for recording observations on chemical transfer pumps, hoses, pipework, connections and related documents at oilfield facilities.",
+home:"Home",production:"Production",quality:"Quality",documents:"Documents",suppliers:"Suppliers",orders:"Orders",logistics:"Logistics",tracking:"Tracking",
+warningTitle:"Demonstration module — important",warning:"This page records observations only. It does not certify equipment integrity, chemical compatibility, pressure rating or safe operation. Follow approved site procedures and use qualified personnel.",
+total:"Total records",review:"Under review",followup:"Follow-up records",systems:"Transfer systems",workflowTitle:"Record workflow",step1:"1. Identify the system",step2:"2. Record observations",step3:"3. Reference documents",step4:"4. Assign follow-up",
+workflowNote:"Use the facility's approved inspection and reporting procedures. This page does not provide operating instructions or acceptance limits.",
+formTitle:"New transfer system inspection",id:"Record ID *",country:"Country *",site:"Site / oilfield *",system:"System / equipment tag *",type:"Equipment type",chemical:"Chemical / fluid name",manufacturer:"Manufacturer / model",serial:"Serial / asset number",date:"Inspection date *",inspector:"Inspector / responsible person",method:"Inspection method / procedure reference",condition:"Observed condition",hose:"Hose / pipe identification",connection:"Connection / coupling reference",instrument:"Instrument / calibration reference",pressure:"Recorded pressure (value / unit)",flow:"Recorded flow (value / unit)",status:"Record status",report:"Report / document reference",action:"Follow-up action / reference",nextDate:"Next review date",observations:"Inspection observations *",notes:"Additional notes",save:"Save record",clear:"Clear form",recordsTitle:"Transfer system inspection records",searchPlaceholder:"Search ID, site, system, equipment...",allStatuses:"All statuses",allTypes:"All equipment types",csv:"Export CSV",textReport:"Download text report",print:"Print",clearAll:"Clear all records",thId:"Record ID",thSite:"Site / country",thSystem:"System / equipment",thType:"Type",thChemical:"Chemical / fluid",thDate:"Date",thCondition:"Observed condition",thStatus:"Status",thAction:"Follow-up",thDelete:"Action",empty:"No records match the selected filters.",memory:"Records are held only in this page's temporary memory. Refreshing or closing the page clears them. This is not a shared database.",scopeTitle:"Scope and limitations",scope1:"This module is a recordkeeping aid, not an engineering inspection certificate.",scope2:"Any leak, damage or suspected equipment defect must be handled under approved site procedures.",scope3:"Recorded pressure and flow values are not checked against design limits.",scope4:"No automatic pass/fail decision or safe-to-operate recommendation is generated.",footer:"Global Industrial Platform",delete:"Delete",confirmDelete:"Delete this record?",confirmClear:"Delete all records from this page?"
+},
+ru:{
+subtitle:"Глобальная промышленная платформа",title:"Проверка системы перекачки нефтепромысловых химикатов",
+intro:"Демонстрационный журнал наблюдений за насосами, шлангами, трубопроводами, соединениями и документами систем перекачки химикатов на нефтепромыслах.",
+home:"Главная",production:"Производство",quality:"Качество",documents:"Документы",suppliers:"Поставщики",orders:"Заказы",logistics:"Логистика",tracking:"Отслеживание",
+warningTitle:"Важно — демонстрационный модуль",warning:"Страница предназначена только для регистрации наблюдений. Она не подтверждает целостность оборудования, совместимость химикатов, допустимое давление или безопасность эксплуатации. Соблюдайте утверждённые процедуры объекта и привлекайте квалифицированный персонал.",
+total:"Всего записей",review:"На рассмотрении",followup:"Требуют действий",systems:"Системы перекачки",workflowTitle:"Порядок ведения записей",step1:"1. Определить систему",step2:"2. Записать наблюдения",step3:"3. Указать документы",step4:"4. Назначить действия",
+workflowNote:"Используйте утверждённые процедуры осмотра и отчётности предприятия. Страница не содержит инструкций по эксплуатации или пределов допуска.",
+formTitle:"Новая проверка системы перекачки",id:"ID записи *",country:"Страна *",site:"Объект / нефтепромысел *",system:"Система / тег оборудования *",type:"Тип оборудования",chemical:"Химикат / жидкость",manufacturer:"Производитель / модель",serial:"Серийный / инвентарный номер",date:"Дата проверки *",inspector:"Инспектор / ответственное лицо",method:"Метод проверки / ссылка на процедуру",condition:"Наблюдаемое состояние",hose:"Идентификатор шланга / трубы",connection:"Ссылка на соединение / муфту",instrument:"Прибор / калибровка",pressure:"Зафиксированное давление (значение / единица)",flow:"Зафиксированный расход (значение / единица)",status:"Статус записи",report:"Ссылка на отчёт / документ",action:"Дальнейшее действие / ссылка",nextDate:"Дата следующего рассмотрения",observations:"Наблюдения при проверке *",notes:"Дополнительные примечания",save:"Сохранить запись",clear:"Очистить форму",recordsTitle:"Записи проверок систем перекачки",searchPlaceholder:"Поиск по ID, объекту, системе, оборудованию...",allStatuses:"Все статусы",allTypes:"Все типы оборудования",csv:"Экспорт CSV",textReport:"Скачать текстовый отчёт",print:"Печать",clearAll:"Удалить все записи",thId:"ID записи",thSite:"Объект / страна",thSystem:"Система / оборудование",thType:"Тип",thChemical:"Химикат / жидкость",thDate:"Дата",thCondition:"Состояние по наблюдениям",thStatus:"Статус",thAction:"Дальнейшие действия",thDelete:"Действие",empty:"По выбранным фильтрам записей нет.",memory:"Записи хранятся только во временной памяти страницы и исчезнут после обновления или закрытия. Это не общая база данных.",scopeTitle:"Область применения и ограничения",scope1:"Это журнал записей, а не инженерный сертификат проверки.",scope2:"Утечки, повреждения и подозрения на дефекты обрабатывайте по утверждённым процедурам объекта.",scope3:"Зафиксированные значения давления и расхода не сравниваются с проектными пределами.",scope4:"Автоматическое решение «годен/не годен» и рекомендация безопасной эксплуатации не формируются.",footer:"Глобальная промышленная платформа",delete:"Удалить",confirmDelete:"Удалить эту запись?",confirmClear:"Удалить все записи на этой странице?"
+},
+az:{
+subtitle:"Qlobal Sənaye Platforması",title:"Neft Mədəni Kimyəvi Maddələrinin Ötürülmə Sisteminin Yoxlanması",
+intro:"Neft obyektlərində kimyəvi maddələrin ötürülmə nasosları, şlanqları, boruları, birləşmələri və sənədləri üzrə müşahidələrin nümayiş jurnalı.",
+home:"Ana səhifə",production:"İstehsalat",quality:"Keyfiyyət",documents:"Sənədlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",logistics:"Logistika",tracking:"İzləmə",
+warningTitle:"Vacib — nümayiş modulu",warning:"Bu səhifə yalnız müşahidələri qeydə alır. Avadanlığın bütövlüyünü, kimyəvi uyğunluğu, təzyiq reytinqini və ya təhlükəsiz istismarı təsdiqləmir. Obyektin təsdiqlənmiş prosedurlarına əməl edin.",
+total:"Ümumi qeydlər",review:"Baxışda",followup:"Əlavə tədbirlər",systems:"Ötürülmə sistemləri",workflowTitle:"Qeydiyyat prosesi",step1:"1. Sistemi müəyyən et",step2:"2. Müşahidələri qeyd et",step3:"3. Sənədləri göstər",step4:"4. Tədbir təyin et",
+workflowNote:"Obyektin təsdiqlənmiş yoxlama və hesabat prosedurlarından istifadə edin. Bu səhifə istismar təlimatı və ya qəbul hədləri vermir.",
+formTitle:"Yeni sistem yoxlama qeydi",id:"Qeyd ID-si *",country:"Ölkə *",site:"Obyekt / neft mədəni *",system:"Sistem / avadanlıq etiketi *",type:"Avadanlıq növü",chemical:"Kimyəvi maddə / maye",manufacturer:"İstehsalçı / model",serial:"Seriya / aktiv nömrəsi",date:"Yoxlama tarixi *",inspector:"Yoxlayan / məsul şəxs",method:"Yoxlama metodu / prosedur istinadı",condition:"Müşahidə olunan vəziyyət",hose:"Şlanq / boru identifikasiyası",connection:"Birləşmə / mufta istinadı",instrument:"Cihaz / kalibrləmə istinadı",pressure:"Qeydə alınmış təzyiq (qiymət / vahid)",flow:"Qeydə alınmış sərf (qiymət / vahid)",status:"Qeyd statusu",report:"Hesabat / sənəd istinadı",action:"Əlavə tədbir / istinad",nextDate:"Növbəti baxış tarixi",observations:"Yoxlama müşahidələri *",notes:"Əlavə qeydlər",save:"Qeydi saxla",clear:"Formanı təmizlə",recordsTitle:"Sistem yoxlama qeydləri",searchPlaceholder:"ID, obyekt, sistem və ya avadanlıq üzrə axtar...",allStatuses:"Bütün statuslar",allTypes:"Bütün avadanlıq növləri",csv:"CSV ixracı",textReport:"Mətn hesabatını yüklə",print:"Çap et",clearAll:"Bütün qeydləri sil",thId:"Qeyd ID-si",thSite:"Obyekt / ölkə",thSystem:"Sistem / avadanlıq",thType:"Növ",thChemical:"Kimyəvi maddə / maye",thDate:"Tarix",thCondition:"Müşahidə olunan vəziyyət",thStatus:"Status",thAction:"Əlavə tədbir",thDelete:"Əməliyyat",empty:"Seçilmiş filtrlərə uyğun qeyd yoxdur.",memory:"Qeydlər yalnız səhifənin müvəqqəti yaddaşında saxlanılır və səhifə yenilənsə silinəcək.",scopeTitle:"Əhatə dairəsi və məhdudiyyətlər",scope1:"Bu modul qeydiyyat vasitəsidir, mühəndis yoxlama sertifikatı deyil.",scope2:"Sızma və zədələr üçün obyektin təsdiqlənmiş prosedurlarına əməl edin.",scope3:"Təzyiq və sərf göstəriciləri layihə limitləri ilə müqayisə edilmir.",scope4:"Avtomatik uyğunluq və təhlükəsiz istismar qərarı yaradılmır.",footer:"Qlobal Sənaye Platforması",delete:"Sil",confirmDelete:"Bu qeyd silinsin?",confirmClear:"Bu səhifədəki bütün qeydlər silinsin?"
+}};
+const extras={
+tr:{title:"Petrol Sahası Kimyasal Transfer Sistemi Denetimi",subtitle:"Küresel Endüstriyel Platform"},
+de:{title:"Inspektion von Chemikalientransfersystemen auf Ölfeldern",subtitle:"Globale Industrieplattform"},
+ar:{title:"فحص أنظمة نقل المواد الكيميائية في حقول النفط",subtitle:"منصة صناعية عالمية"},
+es:{title:"Inspección de sistemas de transferencia química en campos petrolíferos",subtitle:"Plataforma Industrial Global"},
+fr:{title:"Inspection des systèmes de transfert de produits chimiques pétroliers",subtitle:"Plateforme industrielle mondiale"},
+it:{title:"Ispezione dei sistemi di trasferimento di prodotti chimici petroliferi",subtitle:"Piattaforma industriale globale"}
+};
+let lang="en",records=[];
+const $=id=>document.getElementById(id),v=id=>$(id).value.trim();
+function t(key){return dict[lang]?.[key]||extras[lang]?.[key]||dict.en[key]||key}
+function applyLanguage(code){
+ lang=code;document.documentElement.lang=code;document.documentElement.dir=code==="ar"?"rtl":"ltr";
+ document.querySelectorAll("[data-lang]").forEach(b=>b.classList.toggle("active",b.dataset.lang===code));
+ document.querySelectorAll("[data-t]").forEach(el=>el.textContent=t(el.dataset.t));
+ document.querySelectorAll("[data-ph]").forEach(el=>el.placeholder=t(el.dataset.ph));
+ render();
+}
+document.querySelectorAll("[data-lang]").forEach(b=>b.addEventListener("click",()=>applyLanguage(b.dataset.lang)));
+function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function render(){
+ const q=$("search").value.toLowerCase(),sf=$("statusFilter").value,tf=$("typeFilter").value;
+ const list=records.filter(r=>Object.values(r).join(" ").toLowerCase().includes(q)&&(!sf||r.status===sf)&&(!tf||r.type===tf));
+ $("body").innerHTML=list.map(r=>`<tr>
+ <td>${esc(r.id)}</td><td>${esc(r.site)}<br>${esc(r.country)}</td>
+ <td>${esc(r.system)}<br><span class="small">${esc(r.serial)}</span></td>
+ <td>${esc(r.type)}</td><td>${esc(r.chemical)}</td><td>${esc(r.date)}</td>
+ <td>${esc(r.condition)}</td><td><span class="status ${r.status==="Follow-up"?"action":r.status==="Review"?"review":""}">${esc(r.status)}</span></td>
+ <td>${esc(r.action)}</td><td><button class="btn danger delete" data-id="${esc(r.id)}">${esc(t("delete"))}</button></td></tr>`).join("");
+ $("empty").style.display=list.length?"none":"block";
+ $("total").textContent=records.length;
+ $("review").textContent=records.filter(r=>r.status==="Review").length;
+ $("followupCount").textContent=records.filter(r=>r.status==="Follow-up").length;
+ $("systems").textContent=new Set(records.map(r=>r.system).filter(Boolean)).size;
+}
+$("date").value=new Date().toISOString().slice(0,10);
+$("form").addEventListener("submit",e=>{
+ e.preventDefault();
+ const id=v("id");
+ if(records.some(r=>r.id.toLowerCase()===id.toLowerCase())){alert("This record ID already exists.");return}
+ records.unshift({
+ id,country:v("country"),site:v("site"),system:v("system"),type:v("type"),chemical:v("chemical"),
+ manufacturer:v("manufacturer"),serial:v("serial"),date:v("date"),inspector:v("inspector"),
+ method:v("method"),condition:v("condition"),hose:v("hose"),connection:v("connection"),
+ instrument:v("instrument"),pressure:v("pressure"),flow:v("flow"),status:v("status"),
+ report:v("report"),action:v("action"),nextDate:v("nextDate"),observations:v("observations"),notes:v("notes")
+ });
+ $("form").reset();$("date").value=new Date().toISOString().slice(0,10);render();
+ alert("Record added to temporary page memory.");
+});
+["search","statusFilter","typeFilter"].forEach(id=>$(id).addEventListener(id==="search"?"input":"change",render));
+$("body").addEventListener("click",e=>{
+ const b=e.target.closest(".delete");if(!b)return;
+ if(confirm(t("confirmDelete"))){records=records.filter(r=>r.id!==b.dataset.id);render()}
+});
+$("clearAll").addEventListener("click",()=>{if(confirm(t("confirmClear"))){records=[];render()}});
+const cols=[
+ ["id","Record ID"],["country","Country"],["site","Site"],["system","System"],["type","Equipment type"],
+ ["chemical","Chemical / fluid"],["manufacturer","Manufacturer"],["serial","Serial"],["date","Inspection date"],
+ ["inspector","Inspector"],["method","Method"],["condition","Observed condition"],["hose","Hose / pipe ID"],
+ ["connection","Connection reference"],["instrument","Instrument reference"],["pressure","Recorded pressure"],
+ ["flow","Recorded flow"],["status","Status"],["report","Report reference"],["action","Follow-up"],
+ ["nextDate","Next review"],["observations","Observations"],["notes","Notes"]
+];
+function download(name,content,mime){
+ const blob=new Blob(["\ufeff",content],{type:mime}),url=URL.createObjectURL(blob),a=document.createElement("a");
+ a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),1000)
+}
+$("csv").addEventListener("click",()=>{
+ const q=$("search").value.toLowerCase(),sf=$("statusFilter").value,tf=$("typeFilter").value;
+ const list=records.filter(r=>Object.values(r).join(" ").toLowerCase().includes(q)&&(!sf||r.status===sf)&&(!tf||r.type===tf));
+ const quote=x=>'"'+String(x??"").replace(/"/g,'""')+'"';
+ download("worker-pro-section-292.csv",[cols.map(c=>quote(c[1])).join(","),...list.map(r=>cols.map(c=>quote(r[c[0]])).join(","))].join("\r\n"),"text/csv;charset=utf-8")
+});
+$("reportBtn").addEventListener("click",()=>{
+ const lines=["WORKER PRO — SECTION 292","Oilfield Chemical Transfer System Inspection","DEMONSTRATION REPORT — NOT AN ENGINEERING CERTIFICATE","Generated: "+new Date().toLocaleString(),"Records: "+records.length,""];
+ records.forEach((r,i)=>{lines.push(`Record ${i+1}`);cols.forEach(c=>lines.push(c[1]+": "+(r[c[0]]||"")));lines.push("----------------------------------------")});
+ lines.push("This report contains entered observations only. It does not certify safe operation.");
+ download("worker-pro-section-292-report.txt",lines.join("\n"),"text/plain;charset=utf-8")
+});
+$("print").addEventListener("click",()=>window.print());
+applyLanguage("en");
+</script>
+</body>
+</html>
