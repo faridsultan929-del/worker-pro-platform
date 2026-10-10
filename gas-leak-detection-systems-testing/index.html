@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Gas Leak Detection Systems Testing</title>
+<style>
+:root{
+  --dark:#063d25;
+  --green:#0b6b3d;
+  --lime:#b7ff35;
+  --bg:#f4f7f5;
+  --white:#fff;
+  --border:#d9e5dd;
+  --muted:#607168;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,sans-serif;background:var(--bg);
+  color:#173528;line-height:1.5
+}
+.languages{
+  position:sticky;top:0;z-index:10;background:var(--dark);
+  padding:10px;display:flex;gap:7px;justify-content:center;
+  flex-wrap:wrap;box-shadow:0 2px 8px #0002
+}
+.languages button{
+  border:1px solid #ffffff55;background:#ffffff12;color:white;
+  border-radius:7px;padding:8px 11px;font-weight:bold;cursor:pointer
+}
+.languages button.active,.languages button:hover{
+  background:var(--lime);color:var(--dark)
+}
+header{
+  background:linear-gradient(130deg,var(--dark),var(--green));
+  color:white;padding:28px 16px;text-align:center
+}
+.logo{
+  display:inline-block;background:var(--lime);color:var(--dark);
+  padding:6px 12px;border-radius:7px;font-weight:900;letter-spacing:1px
+}
+header h1{margin:14px 0 6px;font-size:clamp(24px,5vw,38px)}
+header p{margin:6px auto;max-width:850px}
+main{max-width:1200px;margin:auto;padding:18px}
+nav{
+  display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px
+}
+nav a{
+  color:var(--green);background:white;border:1px solid var(--border);
+  padding:8px 11px;border-radius:8px;text-decoration:none;font-weight:bold;
+  font-size:14px
+}
+nav a:hover{background:var(--lime);color:var(--dark)}
+.stats{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;margin-bottom:18px
+}
+.stat,.card{
+  background:white;border:1px solid var(--border);
+  border-radius:13px;padding:17px;box-shadow:0 3px 12px #063d2508
+}
+.stat span{display:block;color:var(--muted);font-size:13px}
+.stat strong{font-size:27px;color:var(--green)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{margin-bottom:16px}
+.card h2{margin:0 0 14px;color:var(--dark);font-size:21px}
+.card h3{color:var(--green)}
+label{display:block;font-weight:bold;font-size:13px;margin-bottom:5px}
+input,select,textarea{
+  width:100%;padding:10px;border:1px solid #cbd9d0;border-radius:8px;
+  background:#fff;color:#173528;font:inherit;min-width:0
+}
+textarea{min-height:80px;resize:vertical}
+input:focus,select:focus,textarea:focus{
+  outline:2px solid #b7ff3577;border-color:var(--green)
+}
+.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{min-width:0}
+.full{grid-column:1/-1}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn{
+  border:0;border-radius:8px;background:var(--green);color:white;
+  padding:10px 14px;font-weight:bold;cursor:pointer
+}
+.btn:hover{filter:brightness(1.1)}
+.btn.secondary{background:#e9f2ec;color:var(--dark);border:1px solid var(--border)}
+.btn.lime{background:var(--lime);color:var(--dark)}
+.toolbar{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:9px}
+table{width:100%;border-collapse:collapse;min-width:1000px;background:white}
+th,td{padding:10px;border-bottom:1px solid #e5ece7;text-align:left;font-size:13px}
+th{background:#eaf3ed;color:var(--dark);white-space:nowrap}
+tbody tr:hover{background:#f6faf7}
+.pill{display:inline-block;border-radius:20px;padding:4px 8px;font-size:12px;font-weight:bold;background:#edf1ee}
+.pill.review{background:#fff1ce;color:#795500}
+.pill.recorded{background:#dff4e5;color:#145b30}
+.pill.maintenance{background:#fbe2df;color:#8a2e24}
+.notice{
+  padding:13px;border-radius:9px;background:#fff7df;
+  border:1px solid #ead79a;color:#624d16;font-size:13px
+}
+.muted{color:var(--muted);font-size:13px}
+footer{text-align:center;padding:25px;color:var(--muted);font-size:13px}
+[dir="rtl"]{text-align:right}
+[dir="rtl"] .languages,[dir="rtl"] .actions{direction:rtl}
+@media(max-width:760px){
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .grid{grid-template-columns:1fr}
+  .toolbar{grid-template-columns:1fr}
+  main{padding:12px}
+}
+@media(max-width:440px){
+  .formgrid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+  .stat{padding:12px}
+  .stat strong{font-size:23px}
+}
+</style>
+</head>
+<body>
+<div class="languages" aria-label="Language selection">
+  <button data-lang="az">AZ</button>
+  <button data-lang="ru" class="active">RU</button>
+  <button data-lang="en">EN</button>
+  <button data-lang="tr">TR</button>
+  <button data-lang="de">DE</button>
+  <button data-lang="ar">AR</button>
+  <button data-lang="es">ES</button>
+  <button data-lang="fr">FR</button>
+  <button data-lang="it">IT</button>
+</div>
+
+<header>
+  <div class="logo">WORKER PRO</div>
+  <h1 data-i18n="title">№288 — Проверка систем обнаружения утечки газа</h1>
+  <p data-i18n="subtitle">Промышленный журнал проверок газовых детекторов и систем обнаружения</p>
+  <p><span data-i18n="platform">Глобальная промышленная платформа</span> · <span data-i18n="demo">Демонстрационный модуль</span></p>
+</header>
+
+<main>
+<nav>
+  <a href="../index.html" data-i18n="home">Главная</a>
+  <a href="../production/index.html" data-i18n="production">Производство</a>
+  <a href="../testing/index.html" data-i18n="testing">Испытания</a>
+  <a href="../quality/index.html" data-i18n="quality">Качество</a>
+  <a href="../documents/index.html" data-i18n="documents">Документы</a>
+  <a href="../companies/index.html" data-i18n="companies">Компании</a>
+  <a href="../orders/index.html" data-i18n="orders">Заказы</a>
+  <a href="../logistics/index.html" data-i18n="logistics">Логистика</a>
+  <a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+
+<section class="stats">
+  <div class="stat"><span data-i18n="total">Всего записей</span><strong id="statTotal">0</strong></div>
+  <div class="stat"><span data-i18n="reviewCount">Требуют проверки</span><strong id="statReview">0</strong></div>
+  <div class="stat"><span data-i18n="maintenanceCount">Обслуживание</span><strong id="statMaintenance">0</strong></div>
+  <div class="stat"><span data-i18n="recordedCount">Зафиксировано</span><strong id="statRecorded">0</strong></div>
+</section>
+
+<div class="notice" data-i18n="warning">
+  Важно: эта страница — только демонстрационный журнал. Она не подтверждает исправность газового детектора, безопасность объекта или соответствие нормативам. Реальные проверки выполняются квалифицированными специалистами по утверждённым процедурам и документации производителя.
+</div>
+
+<section class="grid" style="margin-top:16px">
+  <div class="card">
+    <h2 data-i18n="newRecord">Новая запись проверки</h2>
+    <form id="recordForm">
+      <div class="formgrid">
+        <div class="field">
+          <label for="recordId" data-i18n="recordId">ID записи</label>
+          <input id="recordId" required placeholder="GLD-288-001">
+        </div>
+        <div class="field">
+          <label for="country" data-i18n="country">Страна</label>
+          <select id="country">
+            <option>Azerbaijan</option><option>Turkey</option><option>Germany</option>
+            <option>Italy</option><option>China</option><option>USA</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="asset" data-i18n="asset">Объект / установка</label>
+          <input id="asset" required placeholder="Plant / Unit">
+        </div>
+        <div class="field">
+          <label for="location" data-i18n="location">Место установки</label>
+          <input id="location" placeholder="Area / Building">
+        </div>
+        <div class="field">
+          <label for="detectorType" data-i18n="detectorType">Тип детектора</label>
+          <select id="detectorType">
+            <option value="Fixed">Fixed / Стационарный</option>
+            <option value="Portable">Portable / Переносной</option>
+            <option value="Open-path">Open-path / Открытый путь</option>
+            <option value="Other">Other / Другой</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="gasType" data-i18n="gasType">Тип газа</label>
+          <select id="gasType">
+            <option>Methane (CH4)</option>
+            <option>Hydrogen sulfide (H2S)</option>
+            <option>Carbon monoxide (CO)</option>
+            <option>Oxygen (O2)</option>
+            <option>Hydrogen (H2)</option>
+            <option>Multi-gas</option>
+            <option>Other / Unknown</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="manufacturer" data-i18n="manufacturer">Производитель / модель</label>
+          <input id="manufacturer" placeholder="Manufacturer / Model">
+        </div>
+        <div class="field">
+          <label for="serial" data-i18n="serial">Серийный номер</label>
+          <input id="serial">
+        </div>
+        <div class="field">
+          <label for="testDate" data-i18n="testDate">Дата проверки</label>
+          <input id="testDate" type="date" required>
+        </div>
+        <div class="field">
+          <label for="inspector" data-i18n="inspector">Специалист</label>
+          <input id="inspector" placeholder="Inspector / Technician">
+        </div>
+        <div class="field">
+          <label for="method" data-i18n="method">Метод проверки</label>
+          <select id="method">
+            <option value="Functional test">Functional test</option>
+            <option value="Calibration verification">Calibration verification</option>
+            <option value="Manufacturer procedure">Manufacturer procedure</option>
+            <option value="Visual inspection">Visual inspection</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="calibrationDate" data-i18n="calibrationDate">Дата последней калибровки</label>
+          <input id="calibrationDate" type="date">
+        </div>
+        <div class="field">
+          <label for="reading" data-i18n="reading">Показание / результат</label>
+          <input id="reading" placeholder="Введите результат">
+        </div>
+        <div class="field">
+          <label for="unit" data-i18n="unit">Единица измерения</label>
+          <select id="unit">
+            <option>ppm</option><option>%LEL</option><option>%vol</option>
+            <option>mg/m³</option><option>Other</option><option>Not recorded</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="status" data-i18n="status">Статус записи</label>
+          <select id="status">
+            <option value="Review">Review / Требует проверки</option>
+            <option value="Recorded">Recorded / Зафиксировано</option>
+            <option value="Maintenance">Maintenance / Обслуживание</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="report" data-i18n="report">Ссылка на отчёт / документ</label>
+          <input id="report" placeholder="Report reference">
+        </div>
+        <div class="field full">
+          <label for="observations" data-i18n="observations">Наблюдения / замечания</label>
+          <textarea id="observations" placeholder="Запишите наблюдения, без автоматического вывода о безопасности"></textarea>
+        </div>
+      </div>
+      <div class="actions">
+        <button class="btn lime" type="submit" data-i18n="add">Добавить запись</button>
+        <button class="btn secondary" type="reset" data-i18n="clear">Очистить форму</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2 data-i18n="workflow">Рабочий процесс</h2>
+    <ol>
+      <li data-i18n="step1">Идентифицировать оборудование и место установки.</li>
+      <li data-i18n="step2">Проверить документы и требования производителя.</li>
+      <li data-i18n="step3">Уполномоченный специалист выполняет утверждённую процедуру.</li>
+      <li data-i18n="step4">Записать фактические показания, единицы и наблюдения.</li>
+      <li data-i18n="step5">Прикрепить отчёт и передать результаты ответственному лицу.</li>
+    </ol>
+    <h3 data-i18n="scope">Что хранится в журнале</h3>
+    <ul>
+      <li data-i18n="scope1">Идентификация детектора и контролируемого газа.</li>
+      <li data-i18n="scope2">Дата, метод, сведения о калибровке и измерениях.</li>
+      <li data-i18n="scope3">Статус записи, замечания и ссылка на отчёт.</li>
+    </ul>
+    <p class="muted" data-i18n="scopeNote">Форма не задаёт пороги тревоги и не выдаёт автоматическое заключение о пригодности оборудования.</p>
+    <div class="actions">
+      <button class="btn" id="exportCsv" type="button" data-i18n="exportCsv">Экспорт CSV</button>
+      <button class="btn secondary" id="downloadReport" type="button" data-i18n="downloadReport">Скачать текстовый отчёт</button>
+      <button class="btn secondary" id="printPage" type="button" data-i18n="print">Печать</button>
+    </div>
+  </div>
+</section>
+
+<section class="card">
+  <h2 data-i18n="records">Журнал проверок</h2>
+  <div class="toolbar">
+    <input id="search" data-placeholder="searchPlaceholder" placeholder="Поиск по ID, объекту, газу, модели...">
+    <select id="filterStatus">
+      <option value="" data-i18n="allStatuses">Все статусы</option>
+      <option value="Review">Review</option>
+      <option value="Recorded">Recorded</option>
+      <option value="Maintenance">Maintenance</option>
+    </select>
+    <select id="filterType">
+      <option value="" data-i18n="allTypes">Все типы детекторов</option>
+      <option value="Fixed">Fixed</option>
+      <option value="Portable">Portable</option>
+      <option value="Open-path">Open-path</option>
+      <option value="Other">Other</option>
+    </select>
+  </div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <th data-i18n="thId">ID</th><th data-i18n="thCountry">Страна</th>
+        <th data-i18n="thAsset">Объект</th><th data-i18n="thType">Детектор</th>
+        <th data-i18n="thGas">Газ</th><th data-i18n="thDate">Дата</th>
+        <th data-i18n="thReading">Показание</th><th data-i18n="thStatus">Статус</th>
+        <th data-i18n="thReport">Отчёт</th><th data-i18n="thAction">Действие</th>
+      </tr></thead>
+      <tbody id="recordsBody"></tbody>
+    </table>
+  </div>
+  <p class="muted" id="recordCount"></p>
+</section>
+
+<section class="card">
+  <h2 data-i18n="limits">Ограничения и безопасность</h2>
+  <ul>
+    <li data-i18n="limit1">Не используйте эту страницу для принятия решения о безопасном входе в опасную зону или продолжении работ.</li>
+    <li data-i18n="limit2">Проверки, функциональные испытания и калибровку проводят компетентные специалисты по инструкциям производителя и утверждённым процедурам.</li>
+    <li data-i18n="limit3">Показания и единицы должны быть записаны точно; разные газы и методы измерения нельзя напрямую сравнивать без соответствующей методики.</li>
+    <li data-i18n="limit4">При подозрении на утечку действуйте по плану аварийного реагирования объекта и указаниям ответственного персонала.</li>
+  </ul>
+  <p class="muted" data-i18n="storageNote">Демонстрационные записи и новые строки хранятся только в памяти страницы. После перезагрузки добавленные записи исчезнут. Для постоянного хранения потребуется сервер и база данных.</p>
+</section>
+</main>
+
+<footer>
+  WORKER PRO · Section 288 · Gas Leak Detection Systems Testing · F.S.
+</footer>
+
+<script>
+const translations = {
+ru:{
+ title:"№288 — Проверка систем обнаружения утечки газа",
+ subtitle:"Промышленный журнал проверок газовых детекторов и систем обнаружения",
+ platform:"Глобальная промышленная платформа",demo:"Демонстрационный модуль",
+ home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",
+ documents:"Документы",companies:"Компании",orders:"Заказы",logistics:"Логистика",tracking:"Отслеживание",
+ total:"Всего записей",reviewCount:"Требуют проверки",maintenanceCount:"Обслуживание",recordedCount:"Зафиксировано",
+ warning:"Важно: эта страница — только демонстрационный журнал. Она не подтверждает исправность газового детектора, безопасность объекта или соответствие нормативам. Реальные проверки выполняются квалифицированными специалистами по утверждённым процедурам и документации производителя.",
+ newRecord:"Новая запись проверки",recordId:"ID записи",country:"Страна",asset:"Объект / установка",location:"Место установки",
+ detectorType:"Тип детектора",gasType:"Тип газа",manufacturer:"Производитель / модель",serial:"Серийный номер",
+ testDate:"Дата проверки",inspector:"Специалист",method:"Метод проверки",calibrationDate:"Дата последней калибровки",
+ reading:"Показание / результат",unit:"Единица измерения",status:"Статус записи",report:"Ссылка на отчёт / документ",
+ observations:"Наблюдения / замечания",add:"Добавить запись",clear:"Очистить форму",
+ workflow:"Рабочий процесс",step1:"Идентифицировать оборудование и место установки.",step2:"Проверить документы и требования производителя.",
+ step3:"Уполномоченный специалист выполняет утверждённую процедуру.",step4:"Записать фактические показания, единицы и наблюдения.",
+ step5:"Прикрепить отчёт и передать результаты ответственному лицу.",
+ scope:"Что хранится в журнале",scope1:"Идентификация детектора и контролируемого газа.",
+ scope2:"Дата, метод, сведения о калибровке и измерениях.",scope3:"Статус записи, замечания и ссылка на отчёт.",
+ scopeNote:"Форма не задаёт пороги тревоги и не выдаёт автоматическое заключение о пригодности оборудования.",
+ exportCsv:"Экспорт CSV",downloadReport:"Скачать текстовый отчёт",print:"Печать",records:"Журнал проверок",
+ searchPlaceholder:"Поиск по ID, объекту, газу, модели...",allStatuses:"Все статусы",allTypes:"Все типы детекторов",
+ thId:"ID",thCountry:"Страна",thAsset:"Объект",thType:"Детектор",thGas:"Газ",thDate:"Дата",
+ thReading:"Показание",thStatus:"Статус",thReport:"Отчёт",thAction:"Действие",
+ limits:"Ограничения и безопасность",
+ limit1:"Не используйте эту страницу для принятия решения о безопасном входе в опасную зону или продолжении работ.",
+ limit2:"Проверки, функциональные испытания и калибровку проводят компетентные специалисты по инструкциям производителя и утверждённым процедурам.",
+ limit3:"Показания и единицы должны быть записаны точно; разные газы и методы измерения нельзя напрямую сравнивать без соответствующей методики.",
+ limit4:"При подозрении на утечку действуйте по плану аварийного реагирования объекта и указаниям ответственного персонала.",
+ storageNote:"Демонстрационные записи и новые строки хранятся только в памяти страницы. После перезагрузки добавленные записи исчезнут. Для постоянного хранения потребуется сервер и база данных.",
+ noRecords:"Нет записей для отображения",delete:"Удалить",confirmDelete:"Удалить эту запись?",added:"Запись добавлена в демонстрационный журнал.",
+ exported:"CSV-файл подготовлен.",reportReady:"Текстовый отчёт скачан.",reportTitle:"Отчёт WORKER PRO — журнал проверки газовых детекторов",
+ date:"Дата",generated:"Создано",empty:"Не указано",statusReview:"Требует проверки",statusRecorded:"Зафиксировано",statusMaintenance:"Обслуживание"
+},
+en:{
+ title:"#288 — Gas Leak Detection Systems Testing",subtitle:"Industrial inspection log for gas detectors and detection systems",
+ platform:"Global Industrial Platform",demo:"Demo module",home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",orders:"Orders",logistics:"Logistics",tracking:"Tracking",
+ total:"Total records",reviewCount:"Needs review",maintenanceCount:"Maintenance",recordedCount:"Recorded",
+ warning:"Important: this is a demonstration log only. It does not confirm detector functionality, site safety, or regulatory compliance. Real inspections must be performed by qualified personnel using approved procedures and manufacturer documentation.",
+ newRecord:"New inspection record",recordId:"Record ID",country:"Country",asset:"Asset / unit",location:"Installation location",detectorType:"Detector type",gasType:"Gas type",manufacturer:"Manufacturer / model",serial:"Serial number",testDate:"Inspection date",inspector:"Inspector",method:"Inspection method",calibrationDate:"Last calibration date",reading:"Reading / result",unit:"Measurement unit",status:"Record status",report:"Report / document reference",observations:"Observations / notes",add:"Add record",clear:"Clear form",
+ workflow:"Workflow",step1:"Identify the equipment and installation location.",step2:"Review documentation and manufacturer requirements.",step3:"An authorized specialist performs the approved procedure.",step4:"Record actual readings, units, and observations.",step5:"Attach the report and send results to the responsible person.",scope:"What the log stores",scope1:"Detector and monitored gas identification.",scope2:"Date, method, calibration and measurement details.",scope3:"Record status, notes and report reference.",scopeNote:"The form does not set alarm thresholds or automatically determine equipment fitness.",
+ exportCsv:"Export CSV",downloadReport:"Download text report",print:"Print",records:"Inspection log",searchPlaceholder:"Search ID, asset, gas, model...",allStatuses:"All statuses",allTypes:"All detector types",
+ thId:"ID",thCountry:"Country",thAsset:"Asset",thType:"Detector",thGas:"Gas",thDate:"Date",thReading:"Reading",thStatus:"Status",thReport:"Report",thAction:"Action",
+ limits:"Limitations and safety",limit1:"Do not use this page to decide whether entry into a hazardous area or work continuation is safe.",limit2:"Inspections, functional tests and calibration must be performed by competent personnel under manufacturer instructions and approved procedures.",limit3:"Record readings and units accurately; different gases and measurement methods must not be compared directly without an appropriate method.",limit4:"If a leak is suspected, follow the site's emergency response plan and instructions from responsible personnel.",storageNote:"Demo records and new entries are stored only in page memory. Added records disappear after reload. Persistent storage requires a server and database.",
+ noRecords:"No records to display",delete:"Delete",confirmDelete:"Delete this record?",added:"Record added to the demo log.",exported:"CSV file prepared.",reportReady:"Text report downloaded.",reportTitle:"WORKER PRO Report — Gas Detector Inspection Log",date:"Date",generated:"Generated",empty:"Not provided",statusReview:"Review",statusRecorded:"Recorded",statusMaintenance:"Maintenance"
+},
+az:{
+ title:"№288 — Qaz sızmasının aşkarlanması sistemlərinin yoxlanması",subtitle:"Qaz detektorları və aşkarlama sistemləri üçün sənaye yoxlama jurnalı",
+ platform:"Qlobal sənaye platforması",demo:"Demo modul",home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",orders:"Sifarişlər",logistics:"Logistika",tracking:"İzləmə",
+ total:"Ümumi qeydlər",reviewCount:"Yoxlama tələb olunur",maintenanceCount:"Texniki xidmət",recordedCount:"Qeydə alınıb",
+ warning:"Vacib: bu yalnız nümayiş jurnalidir. Detektorun işləkliyini, obyektin təhlükəsizliyini və ya standartlara uyğunluğu təsdiqləmir. Real yoxlamalar təsdiqlənmiş prosedurlar və istehsalçı sənədləri əsasında ixtisaslı mütəxəssislər tərəfindən aparılmalıdır.",
+ newRecord:"Yeni yoxlama qeydi",recordId:"Qeyd ID-si",country:"Ölkə",asset:"Obyekt / qurğu",location:"Quraşdırılma yeri",detectorType:"Detektor növü",gasType:"Qaz növü",manufacturer:"İstehsalçı / model",serial:"Seriya nömrəsi",testDate:"Yoxlama tarixi",inspector:"Mütəxəssis",method:"Yoxlama üsulu",calibrationDate:"Son kalibrləmə tarixi",reading:"Göstərici / nəticə",unit:"Ölçü vahidi",status:"Qeyd statusu",report:"Hesabat / sənəd istinadı",observations:"Müşahidələr / qeydlər",add:"Qeyd əlavə et",clear:"Formanı təmizlə",
+ workflow:"İş prosesi",step1:"Avadanlığı və quraşdırılma yerini müəyyən edin.",step2:"Sənədləri və istehsalçı tələblərini yoxlayın.",step3:"Səlahiyyətli mütəxəssis təsdiqlənmiş proseduru yerinə yetirir.",step4:"Faktiki göstəriciləri, vahidləri və müşahidələri qeyd edin.",step5:"Hesabatı əlavə edin və nəticələri məsul şəxsə göndərin.",scope:"Jurnalda saxlanılan məlumatlar",scope1:"Detektorun və izlənən qazın identifikasiyası.",scope2:"Tarix, üsul, kalibrləmə və ölçmə məlumatları.",scope3:"Qeyd statusu, qeydlər və hesabat istinadı.",scopeNote:"Forma həyəcan hədlərini təyin etmir və avadanlığın yararlılığı barədə avtomatik qərar vermir.",
+ exportCsv:"CSV ixracı",downloadReport:"Mətn hesabatını endir",print:"Çap et",records:"Yoxlama jurnalı",searchPlaceholder:"ID, obyekt, qaz, model üzrə axtar...",allStatuses:"Bütün statuslar",allTypes:"Bütün detektor növləri",
+ thId:"ID",thCountry:"Ölkə",thAsset:"Obyekt",thType:"Detektor",thGas:"Qaz",thDate:"Tarix",thReading:"Göstərici",thStatus:"Status",thReport:"Hesabat",thAction:"Əməliyyat",
+ limits:"Məhdudiyyətlər və təhlükəsizlik",limit1:"Təhlükəli zonaya giriş və ya işin davamı barədə qərar üçün bu səhifədən istifadə etməyin.",limit2:"Yoxlamalar, funksional sınaqlar və kalibrləmə istehsalçı təlimatları və təsdiqlənmiş prosedurlar üzrə səlahiyyətli şəxslər tərəfindən aparılmalıdır.",limit3:"Göstəriciləri və vahidləri dəqiq qeyd edin; uyğun metod olmadan fərqli qazları və ölçmə üsullarını birbaşa müqayisə etməyin.",limit4:"Sızma şübhəsi olduqda obyektin fövqəladə reaksiya planına və məsul personalın göstərişlərinə əməl edin.",storageNote:"Demo qeydləri və yeni sətirlər yalnız səhifənin yaddaşında saxlanılır. Səhifə yeniləndikdə əlavə edilmiş qeydlər silinir. Daimi saxlama üçün server və verilənlər bazası lazımdır.",
+ noRecords:"Göstəriləcək qeyd yoxdur",delete:"Sil",confirmDelete:"Bu qeyd silinsin?",added:"Qeyd demo jurnalına əlavə edildi.",exported:"CSV faylı hazırlandı.",reportReady:"Mətn hesabatı endirildi.",reportTitle:"WORKER PRO hesabatı — Qaz detektorlarının yoxlama jurnalı",date:"Tarix",generated:"Yaradılıb",empty:"Göstərilməyib",statusReview:"Yoxlama tələb olunur",statusRecorded:"Qeydə alınıb",statusMaintenance:"Texniki xidmət"
+}
+};
+
+const fallback = {
+tr:{
+ title:"#288 — Gaz Kaçağı Algılama Sistemleri Testi",subtitle:"Gaz dedektörleri ve algılama sistemleri için endüstriyel kontrol kaydı",
+ home:"Ana Sayfa",production:"Üretim",testing:"Testler",quality:"Kalite",documents:"Belgeler",companies:"Şirketler",orders:"Siparişler",logistics:"Lojistik",tracking:"Takip",newRecord:"Yeni kontrol kaydı",add:"Kayıt ekle",clear:"Formu temizle",workflow:"İş akışı",records:"Kontrol kaydı",exportCsv:"CSV dışa aktar",downloadReport:"Metin raporunu indir",print:"Yazdır",country:"Ülke",asset:"Tesis / ünite",status:"Kayıt durumu",reading:"Ölçüm / sonuç",limits:"Sınırlamalar ve güvenlik",noRecords:"Gösterilecek kayıt yok",delete:"Sil",warning:"Bu sayfa yalnızca örnek bir kayıttır. Dedektörün çalıştığını veya tesisin güvenli olduğunu doğrulamaz. Gerçek kontroller yetkili personel tarafından onaylı prosedürlerle yapılmalıdır."
+},
+de:{
+ title:"#288 — Prüfung von Gasleck-Erkennungssystemen",subtitle:"Industrielles Prüfprotokoll für Gasdetektoren und Erkennungssysteme",
+ home:"Startseite",production:"Produktion",testing:"Prüfungen",quality:"Qualität",documents:"Dokumente",companies:"Unternehmen",orders:"Aufträge",logistics:"Logistik",tracking:"Sendungsverfolgung",newRecord:"Neuer Prüfeintrag",add:"Eintrag hinzufügen",clear:"Formular leeren",workflow:"Arbeitsablauf",records:"Prüfprotokoll",exportCsv:"CSV exportieren",downloadReport:"Textbericht herunterladen",print:"Drucken",country:"Land",asset:"Anlage / Einheit",status:"Eintragsstatus",reading:"Messwert / Ergebnis",limits:"Grenzen und Sicherheit",noRecords:"Keine Einträge vorhanden",delete:"Löschen",warning:"Diese Seite ist nur ein Demoprotokoll. Sie bestätigt weder die Funktion des Detektors noch die Sicherheit der Anlage. Reale Prüfungen müssen von qualifiziertem Personal nach freigegebenen Verfahren durchgeführt werden."
+},
+ar:{
+ title:"#288 — اختبار أنظمة كشف تسرب الغاز",subtitle:"سجل فحص صناعي لكاشفات الغاز وأنظمة الكشف",
+ home:"الرئيسية",production:"الإنتاج",testing:"الاختبارات",quality:"الجودة",documents:"المستندات",companies:"الشركات",orders:"الطلبات",logistics:"الخدمات اللوجستية",tracking:"التتبع",newRecord:"سجل فحص جديد",add:"إضافة سجل",clear:"مسح النموذج",workflow:"سير العمل",records:"سجل الفحص",exportCsv:"تصدير CSV",downloadReport:"تنزيل التقرير النصي",print:"طباعة",country:"الدولة",asset:"المنشأة / الوحدة",status:"حالة السجل",reading:"القراءة / النتيجة",limits:"القيود والسلامة",noRecords:"لا توجد سجلات",delete:"حذف",warning:"هذه الصفحة سجل تجريبي فقط. لا تؤكد عمل الكاشف أو سلامة الموقع. يجب أن ينفذ الفحص الحقيقي مختصون مؤهلون وفق إجراءات معتمدة."
+},
+es:{
+ title:"#288 — Pruebas de sistemas de detección de fugas de gas",subtitle:"Registro industrial de inspección de detectores y sistemas de detección",
+ home:"Inicio",production:"Producción",testing:"Pruebas",quality:"Calidad",documents:"Documentos",companies:"Empresas",orders:"Pedidos",logistics:"Logística",tracking:"Seguimiento",newRecord:"Nuevo registro",add:"Añadir registro",clear:"Limpiar formulario",workflow:"Flujo de trabajo",records:"Registro de inspección",exportCsv:"Exportar CSV",downloadReport:"Descargar informe de texto",print:"Imprimir",country:"País",asset:"Instalación / unidad",status:"Estado del registro",reading:"Lectura / resultado",limits:"Limitaciones y seguridad",noRecords:"No hay registros",delete:"Eliminar",warning:"Esta página es solo un registro de demostración. No confirma el funcionamiento del detector ni la seguridad de la instalación. Las inspecciones reales deben ser realizadas por personal cualificado con procedimientos aprobados."
+},
+fr:{
+ title:"#288 — Essais des systèmes de détection de fuites de gaz",subtitle:"Registre industriel d'inspection des détecteurs et systèmes de détection",
+ home:"Accueil",production:"Production",testing:"Essais",quality:"Qualité",documents:"Documents",companies:"Entreprises",orders:"Commandes",logistics:"Logistique",tracking:"Suivi",newRecord:"Nouvel enregistrement",add:"Ajouter",clear:"Effacer le formulaire",workflow:"Processus",records:"Registre d'inspection",exportCsv:"Exporter CSV",downloadReport:"Télécharger le rapport texte",print:"Imprimer",country:"Pays",asset:"Installation / unité",status:"Statut",reading:"Mesure / résultat",limits:"Limites et sécurité",noRecords:"Aucun enregistrement",delete:"Supprimer",warning:"Cette page est un registre de démonstration. Elle ne confirme ni le fonctionnement du détecteur ni la sécurité du site. Les inspections réelles doivent être réalisées par du personnel qualifié selon des procédures approuvées."
+},
+it:{
+ title:"#288 — Test dei sistemi di rilevamento fughe di gas",subtitle:"Registro industriale di ispezione dei rilevatori e dei sistemi di rilevamento",
+ home:"Home",production:"Produzione",testing:"Test",quality:"Qualità",documents:"Documenti",companies:"Aziende",orders:"Ordini",logistics:"Logistica",tracking:"Tracciamento",newRecord:"Nuova registrazione",add:"Aggiungi registrazione",clear:"Pulisci modulo",workflow:"Procedura",records:"Registro delle ispezioni",exportCsv:"Esporta CSV",downloadReport:"Scarica rapporto di testo",print:"Stampa",country:"Paese",asset:"Impianto / unità",status:"Stato",reading:"Lettura / risultato",limits:"Limiti e sicurezza",noRecords:"Nessun record da mostrare",delete:"Elimina",warning:"Questa pagina è solo un registro dimostrativo. Non conferma il funzionamento del rilevatore né la sicurezza dell'impianto. Le ispezioni reali devono essere svolte da personale qualificato secondo procedure approvate."
+}
+};
+
+const $ = id => document.getElementById(id);
+const today = new Date();
+$("testDate").value = today.toISOString().slice(0,10);
+
+let currentLang = "ru";
+let records = [
+ {
+  recordId:"GLD-288-001",country:"Azerbaijan",asset:"Demo Gas Unit A",location:"Area A",
+  detectorType:"Fixed",gasType:"Methane (CH4)",manufacturer:"Example model A",serial:"DEMO-1001",
+  testDate:"2026-09-18",inspector:"Demo inspector",method:"Manufacturer procedure",
+  calibrationDate:"2026-08-01",reading:"Illustrative only",unit:"Not recorded",
+  status:"Review",report:"DEMO-REPORT-001",observations:"Illustrative record; not a real test."
+ },
+ {
+  recordId:"GLD-288-002",country:"Turkey",asset:"Demo Compressor Station",location:"Area B",
+  detectorType:"Portable",gasType:"Hydrogen sulfide (H2S)",manufacturer:"Example model B",serial:"DEMO-1002",
+  testDate:"2026-09-20",inspector:"Demo technician",method:"Visual inspection",
+  calibrationDate:"",reading:"Not recorded",unit:"Not recorded",
+  status:"Maintenance",report:"DEMO-REPORT-002",observations:"Example maintenance note only."
+ },
+ {
+  recordId:"GLD-288-003",country:"Germany",asset:"Demo Processing Unit",location:"Area C",
+  detectorType:"Open-path",gasType:"Multi-gas",manufacturer:"Example model C",serial:"DEMO-1003",
+  testDate:"2026-09-22",inspector:"Demo inspector",method:"Functional test",
+  calibrationDate:"2026-09-01",reading:"Illustrative only",unit:"Not recorded",
+  status:"Recorded",report:"DEMO-REPORT-003",observations:"Demo entry; not evidence of safe operation."
+ }
+];
+
+function t(key){
+ return (translations[currentLang] && translations[currentLang][key])
+  || (fallback[currentLang] && fallback[currentLang][key])
+  || translations.en[key] || translations.ru[key] || key;
+}
+function escapeHtml(value){
+ return String(value ?? "").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+function statusLabel(status){
+ const keys={Review:"statusReview",Recorded:"statusRecorded",Maintenance:"statusMaintenance"};
+ return t(keys[status]||status);
+}
+function setLanguage(lang){
+ currentLang=lang;
+ document.documentElement.lang=lang;
+ document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+ document.querySelectorAll("[data-i18n]").forEach(el=>{
+   const key=el.dataset.i18n;
+   if(t(key)!==key) el.textContent=t(key);
+ });
+ document.querySelectorAll("[data-placeholder]").forEach(el=>{
+   el.placeholder=t(el.dataset.placeholder);
+ });
+ document.querySelectorAll("[data-lang]").forEach(btn=>{
+   btn.classList.toggle("active",btn.dataset.lang===lang);
+ });
+ render();
+}
+document.querySelectorAll("[data-lang]").forEach(btn=>{
+ btn.addEventListener("click",()=>setLanguage(btn.dataset.lang));
+});
+
+function render(){
+ const query=$("search").value.trim().toLowerCase();
+ const statusFilter=$("filterStatus").value;
+ const typeFilter=$("filterType").value;
+ const filtered=records.filter(r=>{
+  const haystack=Object.values(r).join(" ").toLowerCase();
+  return (!query||haystack.includes(query))
+   &&(!statusFilter||r.status===statusFilter)
+   &&(!typeFilter||r.detectorType===typeFilter);
+ });
+ $("recordsBody").innerHTML=filtered.map(r=>`
+ <tr>
+  <td>${escapeHtml(r.recordId)}</td>
+  <td>${escapeHtml(r.country)}</td>
+  <td>${escapeHtml(r.asset)}</td>
+  <td>${escapeHtml(r.detectorType)}</td>
+  <td>${escapeHtml(r.gasType)}</td>
+  <td>${escapeHtml(r.testDate)}</td>
+  <td>${escapeHtml(r.reading)} ${escapeHtml(r.unit)}</td>
+  <td><span class="pill ${r.status.toLowerCase()}">${escapeHtml(statusLabel(r.status))}</span></td>
+  <td>${escapeHtml(r.report||"—")}</td>
+  <td><button class="btn secondary delete-record" data-id="${escapeHtml(r.recordId)}">${escapeHtml(t("delete"))}</button></td>
+ </tr>`).join("");
+ $("recordCount").textContent=`${filtered.length} / ${records.length}`;
+ $("statTotal").textContent=records.length;
+ $("statReview").textContent=records.filter(r=>r.status==="Review").length;
+ $("statMaintenance").textContent=records.filter(r=>r.status==="Maintenance").length;
+ $("statRecorded").textContent=records.filter(r=>r.status==="Recorded").length;
+ document.querySelectorAll(".delete-record").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+   if(confirm(t("confirmDelete"))){
+    records=records.filter(r=>r.recordId!==btn.dataset.id);
+    render();
+   }
+  });
+ });
+ if(!filtered.length){
+  $("recordsBody").innerHTML=`<tr><td colspan="10">${escapeHtml(t("noRecords"))}</td></tr>`;
+ }
+}
+["search","filterStatus","filterType"].forEach(id=>{
+ $(id).addEventListener("input",render);
+ $(id).addEventListener("change",render);
+});
+
+$("recordForm").addEventListener("submit",event=>{
+ event.preventDefault();
+ const record={
+  recordId:$("recordId").value.trim(),
+  country:$("country").value,
+  asset:$("asset").value.trim(),
+  location:$("location").value.trim(),
+  detectorType:$("detectorType").value,
+  gasType:$("gasType").value,
+  manufacturer:$("manufacturer").value.trim(),
+  serial:$("serial").value.trim(),
+  testDate:$("testDate").value,
+  inspector:$("inspector").value.trim(),
+  method:$("method").value,
+  calibrationDate:$("calibrationDate").value,
+  reading:$("reading").value.trim()||"Not recorded",
+  unit:$("unit").value,
+  status:$("status").value,
+  report:$("report").value.trim(),
+  observations:$("observations").value.trim()
+ };
+ if(records.some(r=>r.recordId.toLowerCase()===record.recordId.toLowerCase())){
+  alert("This Record ID already exists. / Такой ID уже существует.");
+  return;
+ }
+ records.unshift(record);
+ $("recordForm").reset();
+ $("testDate").value=new Date().toISOString().slice(0,10);
+ render();
+ alert(t("added"));
+});
+
+function csvEscape(value){
+ return '"'+String(value??"").replace(/"/g,'""')+'"';
+}
+function downloadFile(filename,content,mime){
+ const blob=new Blob(["\uFEFF",content],{type:mime});
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download=filename;
+ document.body.appendChild(a);a.click();a.remove();
+ URL.revokeObjectURL(url);
+}
+$("exportCsv").addEventListener("click",()=>{
+ const headers=[
+  "recordId","country","asset","location","detectorType","gasType","manufacturer",
+  "serial","testDate","inspector","method","calibrationDate","reading","unit",
+  "status","report","observations"
+ ];
+ const rows=[headers,...records.map(r=>headers.map(h=>r[h]??""))];
+ downloadFile("worker-pro-gas-detection-288.csv",
+  rows.map(row=>row.map(csvEscape).join(",")).join("\r\n"),
+  "text/csv;charset=utf-8");
+});
+$("downloadReport").addEventListener("click",()=>{
+ const lines=[
+  t("reportTitle"),
+  `${t("generated")}: ${new Date().toLocaleString()}`,
+  `Records: ${records.length}`,
+  "",
+  ...records.map((r,i)=>[
+   `${i+1}. ${r.recordId}`,
+   `Country: ${r.country}`,
+   `Asset: ${r.asset}`,
+   `Location: ${r.location||t("empty")}`,
+   `Detector: ${r.detectorType}`,
+   `Gas: ${r.gasType}`,
+   `Manufacturer/model: ${r.manufacturer||t("empty")}`,
+   `Serial: ${r.serial||t("empty")}`,
+   `${t("date")}: ${r.testDate}`,
+   `Inspector: ${r.inspector||t("empty")}`,
+   `Method: ${r.method}`,
+   `Last calibration: ${r.calibrationDate||t("empty")}`,
+   `Reading: ${r.reading} ${r.unit}`,
+   `Status: ${statusLabel(r.status)}`,
+   `Report: ${r.report||t("empty")}`,
+   `Observations: ${r.observations||t("empty")}`,
+   ""
+  ].join("\n")),
+  "",
+  t("warning")
+ ];
+ downloadFile("worker-pro-gas-detection-288.txt",lines.join("\n"),"text/plain;charset=utf-8");
+});
+$("printPage").addEventListener("click",()=>window.print());
+
+setLanguage("ru");
+</script>
+</body>
+</html>
