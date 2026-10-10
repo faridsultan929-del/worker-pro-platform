@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Wellhead Equipment Inspection</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#17352a}
+.languages{position:sticky;top:0;z-index:10;background:#063d25;padding:10px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.languages button{border:1px solid #b7ff35;background:#0b6b3d;color:white;padding:8px 10px;border-radius:7px;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:#b7ff35;color:#063d25}
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;padding:25px 16px}
+header h1{font-size:27px;margin:12px 0}
+header p{margin:7px 0}
+.badge{display:inline-block;background:#b7ff35;color:#063d25;border-radius:20px;padding:6px 12px;font-weight:bold}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+nav a{color:white;text-decoration:none;background:#ffffff18;border:1px solid #ffffff45;padding:8px 10px;border-radius:7px}
+main{max-width:1200px;margin:auto;padding:16px}
+.card{background:white;border:1px solid #dce7df;border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 3px 12px #063d250b}
+h2{color:#075b34;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.stat{background:#eaf5ed;border-radius:10px;padding:14px}
+.stat strong{display:block;font-size:24px;color:#075b34;margin-bottom:5px}
+.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{font-weight:bold;font-size:13px;display:block;margin-bottom:5px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cbd9cf;border-radius:7px;background:white;font:inherit}
+textarea{min-height:75px;resize:vertical}
+button.action{background:#0b6b3d;color:white;border:0;border-radius:8px;padding:11px 15px;font-weight:bold;cursor:pointer;margin:5px 5px 5px 0}
+button.secondary{background:#e4efe7;color:#063d25}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:1000px}
+th,td{padding:10px;border-bottom:1px solid #e1e9e3;text-align:left;font-size:13px;vertical-align:top}
+th{background:#eaf5ed;color:#063d25}
+.status{display:inline-block;padding:4px 8px;border-radius:12px;background:#fff2d9;color:#795400}
+.notice{background:#fff6df;border-left:5px solid #e4ae34;padding:13px;border-radius:7px;line-height:1.5}
+.small{font-size:13px;color:#53675c;line-height:1.5}
+footer{text-align:center;background:#063d25;color:white;padding:20px;margin-top:25px}
+[dir="rtl"]{text-align:right}
+@media(max-width:600px){header h1{font-size:22px}.card{padding:13px}main{padding:10px}}
+</style>
+</head>
+<body>
+
+<div class="languages">
+<button class="active" onclick="setLang('ru')">RU</button>
+<button onclick="setLang('az')">AZ</button>
+<button onclick="setLang('en')">EN</button>
+<button onclick="setLang('tr')">TR</button>
+<button onclick="setLang('de')">DE</button>
+<button onclick="setLang('ar')">AR</button>
+<button onclick="setLang('es')">ES</button>
+<button onclick="setLang('fr')">FR</button>
+<button onclick="setLang('it')">IT</button>
+</div>
+
+<header>
+<span class="badge">SECTION №281</span>
+<h1 data-i18n="title">Wellhead Equipment Inspection</h1>
+<p data-i18n="subtitle">Учёт инспекций устьевого оборудования нефтегазовых скважин</p>
+<p>WORKER PRO — <span data-i18n="platform">Глобальная промышленная платформа</span></p>
+<nav>
+<a href="../index.html" data-i18n="home">Главная</a>
+<a href="../production/index.html" data-i18n="production">Производство</a>
+<a href="../testing/index.html" data-i18n="testing">Испытания</a>
+<a href="../quality/index.html" data-i18n="quality">Качество</a>
+<a href="../documents/index.html" data-i18n="documents">Документы</a>
+<a href="../companies/index.html" data-i18n="companies">Компании</a>
+<a href="../suppliers/index.html" data-i18n="suppliers">Поставщики</a>
+<a href="../orders/index.html" data-i18n="orders">Заказы</a>
+<a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+</header>
+
+<main>
+<section class="card">
+<h2 data-i18n="overview">Обзор раздела</h2>
+<p data-i18n="intro">Раздел предназначен для ведения журнала осмотров устьевого оборудования: идентификации компонентов, регистрации видимых повреждений, замечаний, документов и последующих действий. Он не заменяет инженерную проверку или утверждённую программу инспекции.</p>
+<div class="grid">
+<div class="stat"><strong id="totalCount">0</strong><span data-i18n="total">Всего записей</span></div>
+<div class="stat"><strong id="reviewCount">0</strong><span data-i18n="review">Требуют проверки</span></div>
+<div class="stat"><strong id="completeCount">0</strong><span data-i18n="complete">Записи завершены</span></div>
+<div class="stat"><strong id="defectCount">0</strong><span data-i18n="defects">Записи с замечаниями</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-i18n="components">Оборудование и компоненты</h2>
+<div class="grid">
+<div><b data-i18n="wellhead">Устьевая арматура</b><p class="small" data-i18n="wellheaddesc">Идентификация оборудования и регистрация состояния.</p></div>
+<div><b data-i18n="valves">Клапаны и задвижки</b><p class="small" data-i18n="valvesdesc">Учёт маркировки, доступных записей и замечаний осмотра.</p></div>
+<div><b data-i18n="flanges">Фланцы и соединения</b><p class="small" data-i18n="flangesdesc">Регистрация видимых повреждений и сведений о соединениях.</p></div>
+<div><b data-i18n="seals">Уплотнения</b><p class="small" data-i18n="sealsdesc">Запись состояния и ссылки на документацию производителя.</p></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-i18n="workflow">Рабочий процесс</h2>
+<div class="grid">
+<div class="stat">1. <span data-i18n="step1">Определить объект и компонент</span></div>
+<div class="stat">2. <span data-i18n="step2">Записать данные маркировки</span></div>
+<div class="stat">3. <span data-i18n="step3">Внести результаты осмотра</span></div>
+<div class="stat">4. <span data-i18n="step4">Зарегистрировать замечания</span></div>
+<div class="stat">5. <span data-i18n="step5">Передать запись на проверку</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-i18n="newrecord">Добавить запись инспекции</h2>
+<form id="inspectionForm">
+<div class="formgrid">
+<div><label data-i18n="recordid">ID записи *</label><input id="recordId" required placeholder="WH-281-001"></div>
+<div><label data-i18n="country">Страна</label><input id="country" placeholder="Azerbaijan"></div>
+<div><label data-i18n="asset">Скважина / объект *</label><input id="asset" required placeholder="Well / asset"></div>
+<div><label data-i18n="component">Тип компонента *</label>
+<select id="component" required>
+<option value="Wellhead assembly">Wellhead assembly</option>
+<option value="Valve / gate">Valve / gate</option>
+<option value="Flange / connection">Flange / connection</option>
+<option value="Seal / gasket">Seal / gasket</option>
+<option value="Casing head">Casing head</option>
+<option value="Tubing head">Tubing head</option>
+<option value="Other / review">Other / review</option>
+</select></div>
+<div><label data-i18n="manufacturer">Производитель</label><input id="manufacturer"></div>
+<div><label data-i18n="serial">Серийный номер / маркировка</label><input id="serial"></div>
+<div><label data-i18n="date">Дата осмотра</label><input id="date" type="date"></div>
+<div><label data-i18n="inspector">Инспектор / организация</label><input id="inspector"></div>
+<div><label data-i18n="method">Метод / процедура осмотра</label><input id="method" placeholder="Procedure / reference"></div>
+<div><label data-i18n="visual">Визуальное состояние</label>
+<select id="visual">
+<option value="Not assessed">Not assessed / Не оценено</option>
+<option value="No visible issue recorded">No visible issue recorded</option>
+<option value="Observation recorded">Observation recorded</option>
+<option value="Further assessment needed">Further assessment needed</option>
+</select></div>
+<div><label data-i18n="docs">Документы / номер отчёта</label><input id="docs"></div>
+<div><label data-i18n="status">Статус записи</label>
+<select id="status">
+<option value="Review">Review / На проверке</option>
+<option value="Draft">Draft / Черновик</option>
+<option value="Complete">Complete / Завершено</option>
+</select></div>
+<div><label data-i18n="defect">Есть замечания?</label>
+<select id="defect">
+<option value="Not specified">Not specified / Не указано</option>
+<option value="Yes">Yes / Да</option>
+<option value="No">No / Нет</option>
+</select></div>
+<div><label data-i18n="action">Последующее действие</label><input id="actionText" placeholder="Follow-up action"></div>
+</div>
+<div style="margin-top:12px">
+<label data-i18n="notes">Наблюдения и примечания</label>
+<textarea id="notes" placeholder="Observations, visible condition, reference documents..."></textarea>
+</div>
+<button class="action" type="submit" data-i18n="save">Сохранить запись</button>
+<button class="action secondary" type="reset" data-i18n="clear">Очистить форму</button>
+</form>
+</section>
+
+<section class="card">
+<h2 data-i18n="register">Журнал инспекций</h2>
+<div class="formgrid">
+<div><label data-i18n="search">Поиск</label><input id="searchBox" placeholder="ID, объект, серийный номер..."></div>
+<div><label data-i18n="filterstatus">Фильтр статуса</label>
+<select id="statusFilter">
+<option value="">All / Все</option><option value="Review">Review</option><option value="Draft">Draft</option><option value="Complete">Complete</option>
+</select></div>
+<div><label data-i18n="filterdefect">Фильтр замечаний</label>
+<select id="defectFilter">
+<option value="">All / Все</option><option value="Yes">Yes / Да</option><option value="No">No / Нет</option><option value="Not specified">Not specified</option>
+</select></div>
+</div>
+<div style="margin:12px 0">
+<button class="action" onclick="exportCSV()" data-i18n="csv">Экспорт CSV</button>
+<button class="action" onclick="makeReport()" data-i18n="report">Создать отчёт</button>
+</div>
+<div class="tablewrap">
+<table>
+<thead><tr>
+<th>ID</th>
+<th data-i18n="thasset">Объект</th>
+<th data-i18n="thcomponent">Компонент</th>
+<th data-i18n="thserial">Серийный номер</th>
+<th data-i18n="thdate">Дата</th>
+<th data-i18n="thvisual">Состояние</th>
+<th data-i18n="thdefect">Замечания</th>
+<th data-i18n="thstatus">Статус</th>
+</tr></thead>
+<tbody id="recordsBody"></tbody>
+</table>
+</div>
+<p class="small" data-i18n="demodata">Начальные записи демонстрационные. Новые записи хранятся в памяти страницы до перезагрузки.</p>
+</section>
+
+<section class="card">
+<h2 data-i18n="limitations">Важные ограничения</h2>
+<div class="notice" data-i18n="warning">Это демонстрационный журнал, а не система сертификации или инженерной оценки. Записи не подтверждают безопасное состояние, рабочее давление, пригодность к эксплуатации или целостность скважины. Все проверки и решения должны выполняться квалифицированными специалистами по утверждённым процедурам и документации производителя.</div>
+</section>
+</main>
+
+<footer>WORKER PRO © 2026 · F.S. · Section 281</footer>
+
+<script>
+const base={
+ru:{
+title:"Wellhead Equipment Inspection",subtitle:"Учёт инспекций устьевого оборудования нефтегазовых скважин",platform:"Глобальная промышленная платформа",home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",suppliers:"Поставщики",orders:"Заказы",tracking:"Отслеживание",overview:"Обзор раздела",intro:"Раздел предназначен для ведения журнала осмотров устьевого оборудования: идентификации компонентов, регистрации видимых повреждений, замечаний, документов и последующих действий. Он не заменяет инженерную проверку или утверждённую программу инспекции.",total:"Всего записей",review:"Требуют проверки",complete:"Записи завершены",defects:"Записи с замечаниями",components:"Оборудование и компоненты",wellhead:"Устьевая арматура",wellheaddesc:"Идентификация оборудования и регистрация состояния.",valves:"Клапаны и задвижки",valvesdesc:"Учёт маркировки, доступных записей и замечаний осмотра.",flanges:"Фланцы и соединения",flangesdesc:"Регистрация видимых повреждений и сведений о соединениях.",seals:"Уплотнения",sealsdesc:"Запись состояния и ссылки на документацию производителя.",workflow:"Рабочий процесс",step1:"Определить объект и компонент",step2:"Записать данные маркировки",step3:"Внести результаты осмотра",step4:"Зарегистрировать замечания",step5:"Передать запись на проверку",newrecord:"Добавить запись инспекции",recordid:"ID записи *",country:"Страна",asset:"Скважина / объект *",component:"Тип компонента *",manufacturer:"Производитель",serial:"Серийный номер / маркировка",date:"Дата осмотра",inspector:"Инспектор / организация",method:"Метод / процедура осмотра",visual:"Визуальное состояние",docs:"Документы / номер отчёта",status:"Статус записи",defect:"Есть замечания?",action:"Последующее действие",notes:"Наблюдения и примечания",save:"Сохранить запись",clear:"Очистить форму",register:"Журнал инспекций",search:"Поиск",filterstatus:"Фильтр статуса",filterdefect:"Фильтр замечаний",csv:"Экспорт CSV",report:"Создать отчёт",thasset:"Объект",thcomponent:"Компонент",thserial:"Серийный номер",thdate:"Дата",thvisual:"Состояние",thdefect:"Замечания",thstatus:"Статус",demodata:"Начальные записи демонстрационные. Новые записи хранятся в памяти страницы до перезагрузки.",limitations:"Важные ограничения",warning:"Это демонстрационный журнал, а не система сертификации или инженерной оценки. Записи не подтверждают безопасное состояние, рабочее давление, пригодность к эксплуатации или целостность скважины. Все проверки и решения должны выполняться квалифицированными специалистами по утверждённым процедурам и документации производителя.",added:"Запись добавлена.",duplicate:"Такой ID уже существует.",reporttitle:"WORKER PRO — ОТЧЁТ ИНСПЕКЦИИ УСТЬЕВОГО ОБОРУДОВАНИЯ"
+},
+en:{
+title:"Wellhead Equipment Inspection",subtitle:"Inspection register for oil and gas wellhead equipment",platform:"Global Industrial Platform",home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",suppliers:"Suppliers",orders:"Orders",tracking:"Tracking",overview:"Section overview",intro:"Maintain inspection records for wellhead equipment, including component identification, visible observations, documents and follow-up actions. This page does not replace an approved inspection program or engineering review.",total:"Total records",review:"Needs review",complete:"Completed records",defects:"Records with observations",components:"Equipment and components",wellhead:"Wellhead assembly",wellheaddesc:"Identify equipment and record its observed condition.",valves:"Valves and gates",valvesdesc:"Record markings and inspection observations.",flanges:"Flanges and connections",flangesdesc:"Record visible observations and connection details.",seals:"Seals and gaskets",sealsdesc:"Record observations and manufacturer-document references.",workflow:"Workflow",step1:"Identify asset and component",step2:"Record equipment markings",step3:"Enter inspection observations",step4:"Record findings",step5:"Submit record for review",newrecord:"Add inspection record",recordid:"Record ID *",country:"Country",asset:"Well / asset *",component:"Component type *",manufacturer:"Manufacturer",serial:"Serial number / marking",date:"Inspection date",inspector:"Inspector / organization",method:"Inspection method / procedure",visual:"Visual condition",docs:"Documents / report reference",status:"Record status",defect:"Observation recorded?",action:"Follow-up action",notes:"Observations and notes",save:"Save record",clear:"Clear form",register:"Inspection register",search:"Search",filterstatus:"Status filter",filterdefect:"Observation filter",csv:"Export CSV",report:"Create report",thasset:"Asset",thcomponent:"Component",thserial:"Serial number",thdate:"Date",thvisual:"Condition",thdefect:"Observations",thstatus:"Status",demodata:"Initial entries are demo data. New entries remain in page memory until reload.",limitations:"Important limitations",warning:"This is a demonstration log, not a certification or engineering assessment system. Records do not establish safe condition, operating pressure, fitness for service or well integrity. Qualified personnel must conduct inspections and decisions under approved procedures and manufacturer documentation.",added:"Record added.",duplicate:"That ID already exists.",reporttitle:"WORKER PRO — WELLHEAD EQUIPMENT INSPECTION REPORT"
+}
+};
+const extra={
+az:{platform:"Qlobal sənaye platforması",home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",tracking:"İzləmə",overview:"Bölməyə ümumi baxış",newrecord:"Yoxlama qeydi əlavə et",save:"Qeydi saxla",clear:"Formanı təmizlə",register:"Yoxlama jurnalı",search:"Axtarış",csv:"CSV ixracı",report:"Hesabat yarat",limitations:"Vacib məhdudiyyətlər",warning:"Bu nümayiş jurnalidir, sertifikatlaşdırma və ya mühəndis qiymətləndirməsi sistemi deyil."},
+tr:{platform:"Küresel Endüstriyel Platform",home:"Ana Sayfa",production:"Üretim",testing:"Testler",quality:"Kalite",documents:"Belgeler",companies:"Şirketler",suppliers:"Tedarikçiler",orders:"Siparişler",tracking:"Takip",overview:"Bölüm özeti",newrecord:"Denetim kaydı ekle",save:"Kaydı kaydet",clear:"Formu temizle",register:"Denetim kayıtları",search:"Ara",csv:"CSV dışa aktar",report:"Rapor oluştur",limitations:"Önemli sınırlamalar",warning:"Bu bir demo kaydıdır; sertifikasyon veya mühendislik değerlendirme sistemi değildir."},
+de:{platform:"Globale Industrieplattform",home:"Startseite",production:"Produktion",testing:"Prüfungen",quality:"Qualität",documents:"Dokumente",companies:"Unternehmen",suppliers:"Lieferanten",orders:"Bestellungen",tracking:"Sendungsverfolgung",overview:"Abschnittsübersicht",newrecord:"Inspektionsdatensatz hinzufügen",save:"Datensatz speichern",clear:"Formular leeren",register:"Inspektionsregister",search:"Suche",csv:"CSV exportieren",report:"Bericht erstellen",limitations:"Wichtige Einschränkungen",warning:"Dies ist ein Demo-Protokoll, kein Zertifizierungs- oder technisches Bewertungssystem."},
+ar:{platform:"منصة صناعية عالمية",home:"الرئيسية",production:"الإنتاج",testing:"الاختبارات",quality:"الجودة",documents:"المستندات",companies:"الشركات",suppliers:"الموردون",orders:"الطلبات",tracking:"التتبع",overview:"نظرة عامة",newrecord:"إضافة سجل فحص",save:"حفظ السجل",clear:"مسح النموذج",register:"سجل الفحص",search:"بحث",csv:"تصدير CSV",report:"إنشاء تقرير",limitations:"قيود مهمة",warning:"هذا سجل تجريبي وليس نظام اعتماد أو تقييم هندسي."},
+es:{platform:"Plataforma industrial global",home:"Inicio",production:"Producción",testing:"Ensayos",quality:"Calidad",documents:"Documentos",companies:"Empresas",suppliers:"Proveedores",orders:"Pedidos",tracking:"Seguimiento",overview:"Resumen",newrecord:"Añadir inspección",save:"Guardar registro",clear:"Limpiar formulario",register:"Registro de inspecciones",search:"Buscar",csv:"Exportar CSV",report:"Crear informe",limitations:"Limitaciones importantes",warning:"Este registro de demostración no es un sistema de certificación ni de evaluación de ingeniería."},
+fr:{platform:"Plateforme industrielle mondiale",home:"Accueil",production:"Production",testing:"Essais",quality:"Qualité",documents:"Documents",companies:"Entreprises",suppliers:"Fournisseurs",orders:"Commandes",tracking:"Suivi",overview:"Présentation",newrecord:"Ajouter une inspection",save:"Enregistrer",clear:"Effacer le formulaire",register:"Registre des inspections",search:"Rechercher",csv:"Exporter CSV",report:"Créer un rapport",limitations:"Limites importantes",warning:"Ce registre de démonstration n'est pas un système de certification ou d'évaluation technique."},
+it:{platform:"Piattaforma industriale globale",home:"Home",production:"Produzione",testing:"Prove",quality:"Qualità",documents:"Documenti",companies:"Aziende",suppliers:"Fornitori",orders:"Ordini",tracking:"Tracciamento",overview:"Panoramica",newrecord:"Aggiungi ispezione",save:"Salva record",clear:"Cancella modulo",register:"Registro ispezioni",search:"Cerca",csv:"Esporta CSV",report:"Crea rapporto",limitations:"Limitazioni importanti",warning:"Questo registro dimostrativo non è un sistema di certificazione o valutazione ingegneristica."}
+};
+Object.keys(extra).forEach(l=>base[l]=Object.assign({},base.en,extra[l]));
+let lang="ru";
+let records=[
+{recordId:"WH-DEMO-001",country:"Azerbaijan",asset:"Demo Well A",component:"Wellhead assembly",manufacturer:"Example manufacturer",serial:"DEMO-001",date:"2026-10-01",inspector:"Demo team",method:"Document review / visual log",visual:"Not assessed",docs:"DEMO-REPORT-001",status:"Review",defect:"Not specified",actionText:"Qualified inspection review required",notes:"Illustrative sample record only."},
+{recordId:"WH-DEMO-002",country:"Turkey",asset:"Demo Well B",component:"Valve / gate",manufacturer:"Example manufacturer",serial:"DEMO-002",date:"2026-10-03",inspector:"Demo team",method:"Record review",visual:"Observation recorded",docs:"DEMO-REPORT-002",status:"Draft",defect:"Yes",actionText:"Refer to approved inspection process",notes:"Illustrative observation; no safety conclusion."}
+];
+const $=id=>document.getElementById(id);
+function setLang(l){
+lang=l;document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";
+document.querySelectorAll(".languages button").forEach(b=>b.classList.toggle("active",b.textContent.toLowerCase()===l));
+document.querySelectorAll("[data-i18n]").forEach(el=>{let k=el.dataset.i18n;if(base[l]&&base[l][k])el.textContent=base[l][k];});
+render();
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function render(){
+let q=$("searchBox").value.toLowerCase(),s=$("statusFilter").value,d=$("defectFilter").value;
+let list=records.filter(r=>(!s||r.status===s)&&(!d||r.defect===d)&&Object.values(r).join(" ").toLowerCase().includes(q));
+$("recordsBody").innerHTML=list.map(r=>`<tr><td>${esc(r.recordId)}</td><td>${esc(r.asset)}</td><td>${esc(r.component)}</td><td>${esc(r.serial||"—")}</td><td>${esc(r.date||"—")}</td><td>${esc(r.visual)}</td><td>${esc(r.defect)}</td><td><span class="status">${esc(r.status)}</span></td></tr>`).join("");
+$("totalCount").textContent=records.length;
+$("reviewCount").textContent=records.filter(r=>r.status==="Review").length;
+$("completeCount").textContent=records.filter(r=>r.status==="Complete").length;
+$("defectCount").textContent=records.filter(r=>r.defect==="Yes").length;
+}
+$("inspectionForm").addEventListener("submit",e=>{
+e.preventDefault();
+const r={
+recordId:$("recordId").value.trim(),country:$("country").value.trim(),asset:$("asset").value.trim(),component:$("component").value,
+manufacturer:$("manufacturer").value.trim(),serial:$("serial").value.trim(),date:$("date").value,
+inspector:$("inspector").value.trim(),method:$("method").value.trim(),visual:$("visual").value,
+docs:$("docs").value.trim(),status:$("status").value,defect:$("defect").value,
+actionText:$("actionText").value.trim(),notes:$("notes").value.trim()
+};
+if(records.some(x=>x.recordId.toLowerCase()===r.recordId.toLowerCase())){alert(base[lang].duplicate||"That ID already exists.");return;}
+records.unshift(r);e.target.reset();render();alert(base[lang].added||"Record added.");
+});
+$("searchBox").addEventListener("input",render);
+$("statusFilter").addEventListener("change",render);
+$("defectFilter").addEventListener("change",render);
+function download(name,text,type){
+const blob=new Blob(["\ufeff"+text],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function exportCSV(){
+const keys=["recordId","country","asset","component","manufacturer","serial","date","inspector","method","visual","docs","status","defect","actionText","notes"];
+const content=[keys.join(","),...records.map(r=>keys.map(k=>'"'+String(r[k]??"").replace(/"/g,'""')+'"').join(","))].join("\r\n");
+download("worker-pro-wellhead-inspections.csv",content,"text/csv;charset=utf-8");
+}
+function makeReport(){
+let out=(base[lang].reporttitle||"WORKER PRO — WELLHEAD EQUIPMENT INSPECTION REPORT")+"\n";
+out+="Generated: "+new Date().toLocaleString()+"\nRecords: "+records.length+"\n\n";
+records.forEach((r,i)=>{out+=`${i+1}. Record ID: ${r.recordId}\nCountry: ${r.country}\nAsset: ${r.asset}\nComponent: ${r.component}\nManufacturer: ${r.manufacturer}\nSerial: ${r.serial}\nInspection date: ${r.date}\nInspector: ${r.inspector}\nMethod: ${r.method}\nVisual condition: ${r.visual}\nDocuments: ${r.docs}\nStatus: ${r.status}\nObservation: ${r.defect}\nFollow-up: ${r.actionText}\nNotes: ${r.notes}\n\n`;});
+out+="DEMO ONLY. This report does not certify equipment safety, operating pressure or well integrity.";
+download("worker-pro-wellhead-inspection-report.txt",out,"text/plain;charset=utf-8");
+}
+render();
+</script>
+</body>
+</html>
