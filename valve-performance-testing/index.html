@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Valve Performance Testing</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7f5;color:#17352a}
+.languages{position:sticky;top:0;z-index:10;background:#063d25;padding:10px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.languages button{border:1px solid #b7ff35;background:#0b6b3d;color:#fff;padding:8px 10px;border-radius:7px;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:#b7ff35;color:#063d25}
+header{background:linear-gradient(135deg,#063d25,#0b6b3d);color:white;padding:25px 16px}
+header h1{font-size:27px;margin:12px 0}
+header p{margin:7px 0}
+.badge{display:inline-block;background:#b7ff35;color:#063d25;border-radius:20px;padding:6px 12px;font-weight:bold}
+nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+nav a{color:white;text-decoration:none;background:#ffffff18;border:1px solid #ffffff45;padding:8px 10px;border-radius:7px}
+main{max-width:1200px;margin:auto;padding:16px}
+.card{background:white;border:1px solid #dce7df;border-radius:14px;padding:18px;margin:14px 0;box-shadow:0 3px 12px #063d250b}
+h2{color:#075b34;margin-top:0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.stat{background:#eaf5ed;border-radius:10px;padding:14px}
+.stat strong{display:block;font-size:24px;color:#075b34;margin-bottom:5px}
+.formgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+label{font-weight:bold;font-size:13px;display:block;margin-bottom:5px}
+input,select,textarea{width:100%;padding:10px;border:1px solid #cbd9cf;border-radius:7px;background:white;font:inherit}
+textarea{min-height:75px;resize:vertical}
+button.action{background:#0b6b3d;color:white;border:0;border-radius:8px;padding:11px 15px;font-weight:bold;cursor:pointer;margin:5px 5px 5px 0}
+button.secondary{background:#e4efe7;color:#063d25}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:1050px}
+th,td{padding:10px;border-bottom:1px solid #e1e9e3;text-align:left;font-size:13px;vertical-align:top}
+th{background:#eaf5ed;color:#063d25}
+.status{display:inline-block;padding:4px 8px;border-radius:12px;background:#fff2d9;color:#795400}
+.notice{background:#fff6df;border-left:5px solid #e4ae34;padding:13px;border-radius:7px;line-height:1.5}
+.small{font-size:13px;color:#53675c;line-height:1.5}
+footer{text-align:center;background:#063d25;color:white;padding:20px;margin-top:25px}
+[dir="rtl"]{text-align:right}
+@media(max-width:600px){header h1{font-size:22px}.card{padding:13px}main{padding:10px}}
+</style>
+</head>
+<body>
+<div class="languages">
+<button class="active" onclick="setLang('ru')">RU</button>
+<button onclick="setLang('az')">AZ</button>
+<button onclick="setLang('en')">EN</button>
+<button onclick="setLang('tr')">TR</button>
+<button onclick="setLang('de')">DE</button>
+<button onclick="setLang('ar')">AR</button>
+<button onclick="setLang('es')">ES</button>
+<button onclick="setLang('fr')">FR</button>
+<button onclick="setLang('it')">IT</button>
+</div>
+
+<header>
+<span class="badge">SECTION №282</span>
+<h1 data-i18n="title">Valve Performance Testing</h1>
+<p data-i18n="subtitle">Учёт испытаний рабочих характеристик промышленных клапанов</p>
+<p>WORKER PRO — <span data-i18n="platform">Глобальная промышленная платформа</span></p>
+<nav>
+<a href="../index.html" data-i18n="home">Главная</a>
+<a href="../production/index.html" data-i18n="production">Производство</a>
+<a href="../testing/index.html" data-i18n="testing">Испытания</a>
+<a href="../quality/index.html" data-i18n="quality">Качество</a>
+<a href="../documents/index.html" data-i18n="documents">Документы</a>
+<a href="../companies/index.html" data-i18n="companies">Компании</a>
+<a href="../suppliers/index.html" data-i18n="suppliers">Поставщики</a>
+<a href="../orders/index.html" data-i18n="orders">Заказы</a>
+<a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+</header>
+
+<main>
+<section class="card">
+<h2 data-i18n="overview">Обзор раздела</h2>
+<p data-i18n="intro">Раздел предназначен для регистрации испытаний промышленных клапанов: идентификации оборудования, условий испытаний, наблюдений по герметичности, времени срабатывания и циклическим проверкам. Записи помогают организовать данные для последующего рассмотрения специалистом.</p>
+<div class="grid">
+<div class="stat"><strong id="totalCount">0</strong><span data-i18n="total">Всего записей</span></div>
+<div class="stat"><strong id="reviewCount">0</strong><span data-i18n="review">Требуют проверки</span></div>
+<div class="stat"><strong id="completeCount">0</strong><span data-i18n="complete">Завершено</span></div>
+<div class="stat"><strong id="leakCount">0</strong><span data-i18n="leaks">Записи с утечкой</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-i18n="parameters">Основные параметры</h2>
+<div class="grid">
+<div><b data-i18n="identity">Идентификация клапана</b><p class="small" data-i18n="identitydesc">Тип, производитель, модель и серийный номер.</p></div>
+<div><b data-i18n="pressure">Условия давления</b><p class="small" data-i18n="pressuredesc">Запись испытательного давления, среды и температуры.</p></div>
+<div><b data-i18n="leaktitle">Герметичность и утечка</b><p class="small" data-i18n="leakdesc">Фиксация наблюдений и результатов измерения по назначенной методике.</p></div>
+<div><b data-i18n="actuation">Срабатывание</b><p class="small" data-i18n="actuationdesc">Запись времени открытия и закрытия, если это предусмотрено программой.</p></div>
+<div><b data-i18n="cycles">Циклическая проверка</b><p class="small" data-i18n="cyclesdesc">Число выполненных циклов и замечания по результатам.</p></div>
+<div><b data-i18n="documentation">Документация</b><p class="small" data-i18n="documentationdesc">Номер процедуры, отчёта и связанные документы.</p></div>
+</div>
+<p class="small" data-i18n="methodnote">Методики, испытательные условия и критерии приемки должны определяться применимыми стандартами, спецификацией оборудования и утверждённой процедурой.</p>
+</section>
+
+<section class="card">
+<h2 data-i18n="workflow">Рабочий процесс</h2>
+<div class="grid">
+<div class="stat">1. <span data-i18n="step1">Идентифицировать клапан</span></div>
+<div class="stat">2. <span data-i18n="step2">Записать условия испытания</span></div>
+<div class="stat">3. <span data-i18n="step3">Зафиксировать наблюдения и измерения</span></div>
+<div class="stat">4. <span data-i18n="step4">Проверить записи и документы</span></div>
+<div class="stat">5. <span data-i18n="step5">Передать отчёт на рассмотрение</span></div>
+</div>
+</section>
+
+<section class="card">
+<h2 data-i18n="newrecord">Добавить запись испытания</h2>
+<form id="testForm">
+<div class="formgrid">
+<div><label data-i18n="recordid">ID записи *</label><input id="recordId" required placeholder="VP-282-001"></div>
+<div><label data-i18n="country">Страна</label><input id="country" placeholder="Azerbaijan"></div>
+<div><label data-i18n="asset">Объект / оборудование *</label><input id="asset" required placeholder="Plant / pipeline / well"></div>
+<div><label data-i18n="valvetype">Тип клапана *</label>
+<select id="valveType" required>
+<option value="Gate valve">Gate valve</option>
+<option value="Ball valve">Ball valve</option>
+<option value="Globe valve">Globe valve</option>
+<option value="Check valve">Check valve</option>
+<option value="Butterfly valve">Butterfly valve</option>
+<option value="Control valve">Control valve</option>
+<option value="Safety valve">Safety valve</option>
+<option value="Other">Other / review</option>
+</select></div>
+<div><label data-i18n="manufacturer">Производитель</label><input id="manufacturer"></div>
+<div><label data-i18n="serial">Модель / серийный номер</label><input id="serial"></div>
+<div><label data-i18n="date">Дата испытания</label><input id="date" type="date"></div>
+<div><label data-i18n="tester">Испытатель / лаборатория</label><input id="tester"></div>
+<div><label data-i18n="medium">Испытательная среда</label><input id="medium" placeholder="As specified by procedure"></div>
+<div><label data-i18n="pressurefield">Испытательное давление</label><input id="pressureVal" placeholder="Value + unit"></div>
+<div><label data-i18n="temperature">Температура</label><input id="temperatureVal" placeholder="Value + unit"></div>
+<div><label data-i18n="leakage">Наблюдение по утечке</label>
+<select id="leakage">
+<option value="Not recorded">Not recorded / Не записано</option>
+<option value="No leakage observed">No leakage observed</option>
+<option value="Leakage observed">Leakage observed</option>
+<option value="Measurement recorded">Measurement recorded</option>
+</select></div>
+<div><label data-i18n="leakrate">Измеренная утечка (если применимо)</label><input id="leakRate" placeholder="Value + unit + method"></div>
+<div><label data-i18n="opening">Время открытия</label><input id="openingTime" placeholder="Value + unit"></div>
+<div><label data-i18n="closing">Время закрытия</label><input id="closingTime" placeholder="Value + unit"></div>
+<div><label data-i18n="cyclesfield">Выполненные циклы</label><input id="cycleCount" type="number" min="0" step="1" placeholder="Count"></div>
+<div><label data-i18n="method">Метод / стандарт</label><input id="method" placeholder="Procedure / reference"></div>
+<div><label data-i18n="status">Статус записи</label>
+<select id="status"><option value="Review">Review / На проверке</option><option value="Draft">Draft / Черновик</option><option value="Complete">Complete / Завершено</option></select></div>
+<div><label data-i18n="reportref">Номер отчёта / документа</label><input id="reportRef"></div>
+</div>
+<div style="margin-top:12px"><label data-i18n="notes">Наблюдения и примечания</label><textarea id="notes" placeholder="Test observations, method details, follow-up..."></textarea></div>
+<button class="action" type="submit" data-i18n="save">Сохранить запись</button>
+<button class="action secondary" type="reset" data-i18n="clear">Очистить форму</button>
+</form>
+</section>
+
+<section class="card">
+<h2 data-i18n="register">Журнал испытаний клапанов</h2>
+<div class="formgrid">
+<div><label data-i18n="search">Поиск</label><input id="searchBox" placeholder="ID, объект, модель, клапан..."></div>
+<div><label data-i18n="filterstatus">Фильтр статуса</label>
+<select id="statusFilter"><option value="">All / Все</option><option value="Review">Review</option><option value="Draft">Draft</option><option value="Complete">Complete</option></select></div>
+<div><label data-i18n="filterleak">Фильтр утечки</label>
+<select id="leakFilter"><option value="">All / Все</option><option value="Leakage observed">Leakage observed</option><option value="No leakage observed">No leakage observed</option><option value="Measurement recorded">Measurement recorded</option><option value="Not recorded">Not recorded</option></select></div>
+</div>
+<div style="margin:12px 0">
+<button class="action" onclick="exportCSV()" data-i18n="csv">Экспорт CSV</button>
+<button class="action" onclick="makeReport()" data-i18n="report">Создать отчёт</button>
+</div>
+<div class="tablewrap">
+<table>
+<thead><tr>
+<th>ID</th><th data-i18n="thasset">Объект</th><th data-i18n="thtype">Тип клапана</th><th data-i18n="thserial">Модель / серийный номер</th><th data-i18n="thpressure">Давление</th><th data-i18n="thleak">Утечка</th><th data-i18n="thdate">Дата</th><th data-i18n="thstatus">Статус</th>
+</tr></thead>
+<tbody id="recordsBody"></tbody>
+</table>
+</div>
+<p class="small" data-i18n="demodata">Начальные записи демонстрационные. Новые записи хранятся в памяти страницы до перезагрузки.</p>
+</section>
+
+<section class="card">
+<h2 data-i18n="limitations">Важные ограничения</h2>
+<div class="notice" data-i18n="warning">Это демонстрационный журнал, а не система сертификации или инженерной оценки. Он не подтверждает герметичность, допустимое давление, соответствие стандарту или безопасность клапана. Испытания должны выполняться квалифицированным персоналом по утверждённым процедурам с подходящим оборудованием и защитными мерами.</div>
+</section>
+</main>
+
+<footer>WORKER PRO © 2026 · F.S. · Section 282</footer>
+
+<script>
+const en={
+title:"Valve Performance Testing",subtitle:"Industrial valve performance testing register",platform:"Global Industrial Platform",home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",companies:"Companies",suppliers:"Suppliers",orders:"Orders",tracking:"Tracking",overview:"Section overview",intro:"Register industrial valve tests, including equipment identification, test conditions, leakage observations, actuation time and cycle checks. Records help organize information for qualified review.",total:"Total records",review:"Needs review",complete:"Completed records",leaks:"Records with leakage",parameters:"Main test parameters",identity:"Valve identification",identitydesc:"Type, manufacturer, model and serial number.",pressure:"Pressure conditions",pressuredesc:"Record test pressure, medium and temperature.",leaktitle:"Sealing and leakage",leakdesc:"Record observations and measured results under the selected method.",actuation:"Actuation",actuationdesc:"Record opening and closing times when required by the test plan.",cycles:"Cycle testing",cyclesdesc:"Record completed cycles and observations.",documentation:"Documentation",documentationdesc:"Procedure, report reference and related documents.",methodnote:"Test methods, conditions and acceptance criteria must come from applicable standards, equipment specifications and approved procedures.",workflow:"Workflow",step1:"Identify the valve",step2:"Record test conditions",step3:"Record observations and measurements",step4:"Review records and documents",step5:"Submit report for review",newrecord:"Add test record",recordid:"Record ID *",country:"Country",asset:"Asset / equipment *",valvetype:"Valve type *",manufacturer:"Manufacturer",serial:"Model / serial number",date:"Test date",tester:"Tester / laboratory",medium:"Test medium",pressurefield:"Test pressure",temperature:"Temperature",leakage:"Leakage observation",leakrate:"Measured leakage (if applicable)",opening:"Opening time",closing:"Closing time",cyclesfield:"Completed cycles",method:"Method / standard",status:"Record status",reportref:"Report / document reference",notes:"Observations and notes",save:"Save record",clear:"Clear form",register:"Valve test register",search:"Search",filterstatus:"Status filter",filterleak:"Leakage filter",csv:"Export CSV",report:"Create report",thasset:"Asset",thtype:"Valve type",thserial:"Model / serial number",thpressure:"Pressure",thleak:"Leakage",thdate:"Date",thstatus:"Status",demodata:"Initial entries are demo data. New entries remain in page memory until reload.",limitations:"Important limitations",warning:"This is a demonstration log, not a certification or engineering assessment system. It does not establish sealing performance, allowable pressure, standards compliance or valve safety. Testing must be performed by qualified personnel using approved procedures, suitable equipment and safeguards.",added:"Record added.",duplicate:"That ID already exists.",reporttitle:"WORKER PRO — VALVE PERFORMANCE TEST REPORT"
+};
+const ru={
+...en,title:"Valve Performance Testing",subtitle:"Учёт испытаний рабочих характеристик промышленных клапанов",platform:"Глобальная промышленная платформа",home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",companies:"Компании",suppliers:"Поставщики",orders:"Заказы",tracking:"Отслеживание",overview:"Обзор раздела",intro:"Раздел предназначен для регистрации испытаний промышленных клапанов: идентификации оборудования, условий испытаний, наблюдений по герметичности, времени срабатывания и циклическим проверкам. Записи помогают организовать данные для последующего рассмотрения специалистом.",total:"Всего записей",review:"Требуют проверки",complete:"Завершено",leaks:"Записи с утечкой",parameters:"Основные параметры",identity:"Идентификация клапана",identitydesc:"Тип, производитель, модель и серийный номер.",pressure:"Условия давления",pressuredesc:"Запись испытательного давления, среды и температуры.",leaktitle:"Герметичность и утечка",leakdesc:"Фиксация наблюдений и результатов измерения по назначенной методике.",actuation:"Срабатывание",actuationdesc:"Запись времени открытия и закрытия, если это предусмотрено программой.",cycles:"Циклическая проверка",cyclesdesc:"Число выполненных циклов и замечания по результатам.",documentation:"Документация",documentationdesc:"Номер процедуры, отчёта и связанные документы.",methodnote:"Методики, испытательные условия и критерии приемки должны определяться применимыми стандартами, спецификацией оборудования и утверждённой процедурой.",workflow:"Рабочий процесс",step1:"Идентифицировать клапан",step2:"Записать условия испытания",step3:"Зафиксировать наблюдения и измерения",step4:"Проверить записи и документы",step5:"Передать отчёт на рассмотрение",newrecord:"Добавить запись испытания",recordid:"ID записи *",country:"Страна",asset:"Объект / оборудование *",valvetype:"Тип клапана *",manufacturer:"Производитель",serial:"Модель / серийный номер",date:"Дата испытания",tester:"Испытатель / лаборатория",medium:"Испытательная среда",pressurefield:"Испытательное давление",temperature:"Температура",leakage:"Наблюдение по утечке",leakrate:"Измеренная утечка (если применимо)",opening:"Время открытия",closing:"Время закрытия",cyclesfield:"Выполненные циклы",method:"Метод / стандарт",status:"Статус записи",reportref:"Номер отчёта / документа",notes:"Наблюдения и примечания",save:"Сохранить запись",clear:"Очистить форму",register:"Журнал испытаний клапанов",search:"Поиск",filterstatus:"Фильтр статуса",filterleak:"Фильтр утечки",csv:"Экспорт CSV",report:"Создать отчёт",thasset:"Объект",thtype:"Тип клапана",thserial:"Модель / серийный номер",thpressure:"Давление",thleak:"Утечка",thdate:"Дата",thstatus:"Статус",demodata:"Начальные записи демонстрационные. Новые записи хранятся в памяти страницы до перезагрузки.",limitations:"Важные ограничения",warning:"Это демонстрационный журнал, а не система сертификации или инженерной оценки. Он не подтверждает герметичность, допустимое давление, соответствие стандарту или безопасность клапана. Испытания должны выполняться квалифицированным персоналом по утверждённым процедурам с подходящим оборудованием и защитными мерами.",added:"Запись добавлена.",duplicate:"Такой ID уже существует.",reporttitle:"WORKER PRO — ОТЧЁТ ИСПЫТАНИЯ КЛАПАНА"
+};
+const extra={
+az:{platform:"Qlobal sənaye platforması",home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",companies:"Şirkətlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",tracking:"İzləmə",overview:"Bölməyə ümumi baxış",newrecord:"Sınaq qeydi əlavə et",save:"Qeydi saxla",clear:"Formanı təmizlə",register:"Klapan sınaqları jurnalı",search:"Axtarış",csv:"CSV ixracı",report:"Hesabat yarat",limitations:"Vacib məhdudiyyətlər",warning:"Bu nümayiş jurnalidir; klapanın təhlükəsizliyini və ya uyğunluğunu təsdiqləmir."},
+tr:{platform:"Küresel Endüstriyel Platform",home:"Ana Sayfa",production:"Üretim",testing:"Testler",quality:"Kalite",documents:"Belgeler",companies:"Şirketler",suppliers:"Tedarikçiler",orders:"Siparişler",tracking:"Takip",overview:"Bölüm özeti",newrecord:"Test kaydı ekle",save:"Kaydı kaydet",clear:"Formu temizle",register:"Vana test kayıtları",search:"Ara",csv:"CSV dışa aktar",report:"Rapor oluştur",limitations:"Önemli sınırlamalar",warning:"Bu demo kaydıdır; vananın güvenliğini veya uygunluğunu onaylamaz."},
+de:{platform:"Globale Industrieplattform",home:"Startseite",production:"Produktion",testing:"Prüfungen",quality:"Qualität",documents:"Dokumente",companies:"Unternehmen",suppliers:"Lieferanten",orders:"Bestellungen",tracking:"Sendungsverfolgung",overview:"Abschnittsübersicht",newrecord:"Prüfdatensatz hinzufügen",save:"Datensatz speichern",clear:"Formular leeren",register:"Ventilprüfregister",search:"Suche",csv:"CSV exportieren",report:"Bericht erstellen",limitations:"Wichtige Einschränkungen",warning:"Dies ist ein Demo-Protokoll und bestätigt weder die Sicherheit noch die Konformität des Ventils."},
+ar:{platform:"منصة صناعية عالمية",home:"الرئيسية",production:"الإنتاج",testing:"الاختبارات",quality:"الجودة",documents:"المستندات",companies:"الشركات",suppliers:"الموردون",orders:"الطلبات",tracking:"التتبع",overview:"نظرة عامة",newrecord:"إضافة سجل اختبار",save:"حفظ السجل",clear:"مسح النموذج",register:"سجل اختبار الصمامات",search:"بحث",csv:"تصدير CSV",report:"إنشاء تقرير",limitations:"قيود مهمة",warning:"هذا سجل تجريبي ولا يثبت سلامة الصمام أو مطابقته."},
+es:{platform:"Plataforma industrial global",home:"Inicio",production:"Producción",testing:"Ensayos",quality:"Calidad",documents:"Documentos",companies:"Empresas",suppliers:"Proveedores",orders:"Pedidos",tracking:"Seguimiento",overview:"Resumen",newrecord:"Añadir ensayo",save:"Guardar registro",clear:"Limpiar formulario",register:"Registro de ensayos de válvulas",search:"Buscar",csv:"Exportar CSV",report:"Crear informe",limitations:"Limitaciones importantes",warning:"Este registro de demostración no certifica la seguridad ni la conformidad de la válvula."},
+fr:{platform:"Plateforme industrielle mondiale",home:"Accueil",production:"Production",testing:"Essais",quality:"Qualité",documents:"Documents",companies:"Entreprises",suppliers:"Fournisseurs",orders:"Commandes",tracking:"Suivi",overview:"Présentation",newrecord:"Ajouter un essai",save:"Enregistrer",clear:"Effacer le formulaire",register:"Registre d’essais des vannes",search:"Rechercher",csv:"Exporter CSV",report:"Créer un rapport",limitations:"Limites importantes",warning:"Ce registre de démonstration ne certifie ni la sécurité ni la conformité de la vanne."},
+it:{platform:"Piattaforma industriale globale",home:"Home",production:"Produzione",testing:"Prove",quality:"Qualità",documents:"Documenti",companies:"Aziende",suppliers:"Fornitori",orders:"Ordini",tracking:"Tracciamento",overview:"Panoramica",newrecord:"Aggiungi prova",save:"Salva record",clear:"Cancella modulo",register:"Registro prove valvole",search:"Cerca",csv:"Esporta CSV",report:"Crea rapporto",limitations:"Limitazioni importanti",warning:"Questo registro dimostrativo non certifica la sicurezza o la conformità della valvola."}
+};
+const translations={ru,en,az:{...en,...extra.az},tr:{...en,...extra.tr},de:{...en,...extra.de},ar:{...en,...extra.ar},es:{...en,...extra.es},fr:{...en,...extra.fr},it:{...en,...extra.it}};
+let lang="ru";
+let records=[
+{recordId:"VP-DEMO-001",country:"Azerbaijan",asset:"Demo pipeline A",valveType:"Gate valve",manufacturer:"Example manufacturer",serial:"DEMO-V001",date:"2026-10-01",tester:"Demo team",medium:"See approved procedure",pressureVal:"Not recorded",temperatureVal:"Not recorded",leakage:"Not recorded",leakRate:"",openingTime:"",closingTime:"",cycleCount:"",method:"Reference procedure required",status:"Review",reportRef:"DEMO-REPORT-001",notes:"Illustrative record only."},
+{recordId:"VP-DEMO-002",country:"Turkey",asset:"Demo plant B",valveType:"Ball valve",manufacturer:"Example manufacturer",serial:"DEMO-V002",date:"2026-10-03",tester:"Demo team",medium:"See approved procedure",pressureVal:"Not recorded",temperatureVal:"Not recorded",leakage:"Measurement recorded",leakRate:"See report",openingTime:"Not recorded",closingTime:"Not recorded",cycleCount:"Not recorded",method:"Reference procedure required",status:"Draft",reportRef:"DEMO-REPORT-002",notes:"Illustrative record; no acceptance decision."}
+];
+const $=id=>document.getElementById(id);
+function setLang(l){
+lang=l;document.documentElement.lang=l;document.documentElement.dir=l==="ar"?"rtl":"ltr";
+document.querySelectorAll(".languages button").forEach(b=>b.classList.toggle("active",b.textContent.toLowerCase()===l));
+document.querySelectorAll("[data-i18n]").forEach(el=>{const k=el.dataset.i18n;if(translations[l]?.[k])el.textContent=translations[l][k];});
+}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function render(){
+const q=$("searchBox").value.toLowerCase(),s=$("statusFilter").value,l=$("leakFilter").value;
+const list=records.filter(r=>(!s||r.status===s)&&(!l||r.leakage===l)&&Object.values(r).join(" ").toLowerCase().includes(q));
+$("recordsBody").innerHTML=list.map(r=>`<tr><td>${esc(r.recordId)}</td><td>${esc(r.asset)}</td><td>${esc(r.valveType)}</td><td>${esc(r.serial||"—")}</td><td>${esc(r.pressureVal||"—")}</td><td>${esc(r.leakage)}</td><td>${esc(r.date||"—")}</td><td><span class="status">${esc(r.status)}</span></td></tr>`).join("");
+$("totalCount").textContent=records.length;
+$("reviewCount").textContent=records.filter(r=>r.status==="Review").length;
+$("completeCount").textContent=records.filter(r=>r.status==="Complete").length;
+$("leakCount").textContent=records.filter(r=>r.leakage==="Leakage observed").length;
+}
+$("testForm").addEventListener("submit",e=>{
+e.preventDefault();
+const r={
+recordId:$("recordId").value.trim(),country:$("country").value.trim(),asset:$("asset").value.trim(),valveType:$("valveType").value,
+manufacturer:$("manufacturer").value.trim(),serial:$("serial").value.trim(),date:$("date").value,tester:$("tester").value.trim(),
+medium:$("medium").value.trim(),pressureVal:$("pressureVal").value.trim(),temperatureVal:$("temperatureVal").value.trim(),
+leakage:$("leakage").value,leakRate:$("leakRate").value.trim(),openingTime:$("openingTime").value.trim(),
+closingTime:$("closingTime").value.trim(),cycleCount:$("cycleCount").value,method:$("method").value.trim(),
+status:$("status").value,reportRef:$("reportRef").value.trim(),notes:$("notes").value.trim()
+};
+if(records.some(x=>x.recordId.toLowerCase()===r.recordId.toLowerCase())){alert(translations[lang].duplicate||"That ID already exists.");return;}
+records.unshift(r);e.target.reset();render();alert(translations[lang].added||"Record added.");
+});
+$("searchBox").addEventListener("input",render);
+$("statusFilter").addEventListener("change",render);
+$("leakFilter").addEventListener("change",render);
+function download(name,content,type){
+const blob=new Blob(["\ufeff"+content],{type}),url=URL.createObjectURL(blob),a=document.createElement("a");
+a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function exportCSV(){
+const keys=["recordId","country","asset","valveType","manufacturer","serial","date","tester","medium","pressureVal","temperatureVal","leakage","leakRate","openingTime","closingTime","cycleCount","method","status","reportRef","notes"];
+const content=[keys.join(","),...records.map(r=>keys.map(k=>'"'+String(r[k]??"").replace(/"/g,'""')+'"').join(","))].join("\r\n");
+download("worker-pro-valve-performance-records.csv",content,"text/csv;charset=utf-8");
+}
+function makeReport(){
+let out=(translations[lang].reporttitle||"WORKER PRO — VALVE PERFORMANCE TEST REPORT")+"\n";
+out+="Generated: "+new Date().toLocaleString()+"\nTotal records: "+records.length+"\n\n";
+records.forEach((r,i)=>{out+=`${i+1}. Record ID: ${r.recordId}\nCountry: ${r.country}\nAsset: ${r.asset}\nValve type: ${r.valveType}\nManufacturer: ${r.manufacturer}\nModel / serial: ${r.serial}\nDate: ${r.date}\nTester: ${r.tester}\nTest medium: ${r.medium}\nPressure: ${r.pressureVal}\nTemperature: ${r.temperatureVal}\nLeakage observation: ${r.leakage}\nMeasured leakage: ${r.leakRate}\nOpening time: ${r.openingTime}\nClosing time: ${r.closingTime}\nCycles: ${r.cycleCount}\nMethod: ${r.method}\nStatus: ${r.status}\nReport reference: ${r.reportRef}\nNotes: ${r.notes}\n\n`;});
+out+="DEMO ONLY. This report does not certify valve safety, sealing performance or allowable pressure.";
+download("worker-pro-valve-performance-report.txt",out,"text/plain;charset=utf-8");
+}
+render();
+</script>
+</body>
+</html>
