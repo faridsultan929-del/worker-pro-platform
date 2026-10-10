@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WORKER PRO — Crude Oil Desalting Performance</title>
+<style>
+:root{--dark:#063d25;--green:#0b6b3d;--lime:#b7ff35;--bg:#f4f7f5;--text:#183328;--muted:#65776d;--border:#dce6df}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Arial,sans-serif;color:var(--text)}
+.languages{position:sticky;top:0;z-index:20;background:var(--dark);padding:10px;display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.languages button{background:transparent;border:1px solid #648675;color:white;border-radius:7px;padding:8px 12px;font-weight:bold;cursor:pointer}
+.languages button.active,.languages button:hover{background:var(--lime);color:var(--dark)}
+header{background:linear-gradient(125deg,var(--dark),var(--green));color:white;padding:25px 18px}
+.wrap{max-width:1250px;margin:auto}
+.brand{font-size:28px;font-weight:900;letter-spacing:1px}
+.brand span{color:var(--lime)}
+.subtitle{margin-top:7px;color:#d9eee1}
+.tag{display:inline-block;margin-top:18px;background:var(--lime);color:var(--dark);padding:7px 11px;border-radius:6px;font-weight:bold}
+h1{font-size:clamp(24px,4vw,36px);margin:17px 0 9px}
+header p{line-height:1.6;max-width:900px}
+nav{display:flex;gap:9px;flex-wrap:wrap;margin-top:18px}
+nav a{color:white;text-decoration:none;border:1px solid #719582;border-radius:7px;padding:9px 11px;font-size:14px}
+main{max-width:1250px;margin:22px auto;padding:0 14px 35px}
+.notice{padding:14px 16px;border-left:5px solid #d8a52d;background:#fff8e6;border-radius:8px;line-height:1.5;margin-bottom:18px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:18px}
+.stat,.panel{background:white;border:1px solid var(--border);border-radius:12px;padding:17px;box-shadow:0 3px 12px #18332808}
+.stat small{display:block;color:var(--muted);margin-bottom:9px}
+.stat strong{font-size:27px;color:var(--green)}
+.panel{margin-bottom:18px}
+h2{margin:0 0 15px;color:var(--dark);font-size:21px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+label{font-size:13px;font-weight:bold;color:#42594c}
+input,select,textarea{width:100%;min-width:0;border:1px solid #cbd8cf;border-radius:7px;padding:11px;font:inherit;background:white;color:var(--text)}
+textarea{min-height:80px;resize:vertical}
+.actions,.toolbar{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+.btn{border:0;border-radius:7px;background:var(--green);color:white;padding:11px 15px;font-weight:bold;cursor:pointer}
+.btn.secondary{background:#e7efe9;color:var(--dark);border:1px solid var(--border)}
+.btn.dark{background:var(--dark)}
+.toolbar{margin:0 0 14px}
+.toolbar input{flex:1;min-width:180px}
+.toolbar select{width:auto;min-width:150px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:1000px}
+th,td{padding:11px;border-bottom:1px solid var(--border);text-align:left;font-size:13px;vertical-align:top}
+th{background:#edf4ef;color:var(--dark);white-space:nowrap}
+tbody tr:hover{background:#f7faf8}
+.badge{display:inline-block;border-radius:20px;padding:5px 9px;background:#e8f0eb;color:#325742;font-size:12px;font-weight:bold}
+.badge.review{background:#fff0ce;color:#805800}
+.badge.attention{background:#fbe5e5;color:#9c2929}
+.empty{text-align:center;color:var(--muted);padding:25px}
+.workflow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.step{background:#edf5ef;border:1px solid var(--border);padding:13px;border-radius:9px}
+.step b{display:block;color:var(--green);margin-bottom:6px}
+footer{background:var(--dark);color:#dce9e0;padding:23px 15px;text-align:center;line-height:1.6}
+footer strong{color:var(--lime)}
+[dir="rtl"]{text-align:right}
+[dir="rtl"] .notice{border-left:0;border-right:5px solid #d8a52d}
+@media(max-width:800px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.workflow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.grid,.workflow{grid-template-columns:1fr}.brand{font-size:24px}.panel{padding:13px}}
+@media print{.languages,nav,.actions,.toolbar,.notice{display:none!important}body{background:white}.panel,.stat{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="languages">
+<button data-lang="az">AZ</button><button data-lang="ru" class="active">RU</button>
+<button data-lang="en">EN</button><button data-lang="tr">TR</button>
+<button data-lang="de">DE</button><button data-lang="ar">AR</button>
+<button data-lang="es">ES</button><button data-lang="fr">FR</button><button data-lang="it">IT</button>
+</div>
+
+<header>
+<div class="wrap">
+<div class="brand">WORKER <span>PRO</span></div>
+<div class="subtitle" data-i18n="subtitle">Глобальная промышленная платформа</div>
+<div class="tag">№287 · OIL &amp; GAS</div>
+<h1 data-i18n="title">Испытания эффективности обессоливания сырой нефти</h1>
+<p data-i18n="intro">Регистрация лабораторных и технологических данных процесса удаления солей и связанных примесей из сырой нефти перед дальнейшей переработкой.</p>
+<nav>
+<a href="../index.html" data-i18n="home">Главная</a>
+<a href="../production/index.html" data-i18n="production">Производство</a>
+<a href="../testing/index.html" data-i18n="testing">Испытания</a>
+<a href="../quality/index.html" data-i18n="quality">Качество</a>
+<a href="../documents/index.html" data-i18n="documents">Документы</a>
+<a href="../suppliers/index.html" data-i18n="suppliers">Поставщики</a>
+<a href="../orders/index.html" data-i18n="orders">Заказы</a>
+<a href="../logistics/index.html" data-i18n="logistics">Логистика</a>
+<a href="../tracking/index.html" data-i18n="tracking">Отслеживание</a>
+</nav>
+</div>
+</header>
+
+<main>
+<div class="notice"><strong data-i18n="demo">Демонстрационный модуль.</strong> <span data-i18n="disclaimer">Данные предназначены для примера. Модуль не подтверждает качество нефти, эффективность установки или безопасность эксплуатации. Оценка проводится по утверждённым методам, спецификации продукта и требованиям конкретного проекта.</span></div>
+
+<section class="stats">
+<div class="stat"><small data-i18n="total">Всего записей</small><strong id="total">0</strong></div>
+<div class="stat"><small data-i18n="review">На проверке</small><strong id="review">0</strong></div>
+<div class="stat"><small data-i18n="complete">Заполнено</small><strong id="complete">0</strong></div>
+<div class="stat"><small data-i18n="attention">Требуют внимания</small><strong id="attention">0</strong></div>
+</section>
+
+<section class="panel">
+<h2 data-i18n="workflowTitle">Рабочий процесс</h2>
+<div class="workflow">
+<div class="step"><b>01</b><span data-i18n="step1">Регистрация образца и установки</span></div>
+<div class="step"><b>02</b><span data-i18n="step2">Измерения до обработки</span></div>
+<div class="step"><b>03</b><span data-i18n="step3">Измерения после обработки</span></div>
+<div class="step"><b>04</b><span data-i18n="step4">Проверка единиц и метода</span></div>
+<div class="step"><b>05</b><span data-i18n="step5">Подготовка отчёта</span></div>
+</div>
+</section>
+
+<section class="panel">
+<h2 data-i18n="formTitle">Добавить запись испытания</h2>
+<form id="form">
+<div class="grid">
+<div class="field"><label for="sampleId" data-i18n="sampleId">ID образца *</label><input id="sampleId" required placeholder="CD-287-003"></div>
+<div class="field"><label for="country" data-i18n="country">Страна</label><input id="country"></div>
+<div class="field"><label for="asset" data-i18n="asset">Установка / месторождение</label><input id="asset"></div>
+<div class="field"><label for="crude" data-i18n="crude">Тип сырой нефти</label><input id="crude" placeholder="Марка / источник"></div>
+<div class="field"><label for="date" data-i18n="date">Дата отбора / испытания *</label><input id="date" type="date" required></div>
+<div class="field"><label for="lab" data-i18n="lab">Лаборатория / специалист</label><input id="lab"></div>
+
+<div class="field"><label for="saltIn" data-i18n="saltIn">Соль до обработки — значение и единица</label><input id="saltIn" placeholder="Укажите результат и единицу"></div>
+<div class="field"><label for="saltOut" data-i18n="saltOut">Соль после обработки — значение и единица</label><input id="saltOut" placeholder="Укажите результат и единицу"></div>
+<div class="field"><label for="waterIn" data-i18n="waterIn">Вода до обработки — значение и единица</label><input id="waterIn" placeholder="Укажите результат и единицу"></div>
+
+<div class="field"><label for="waterOut" data-i18n="waterOut">Вода после обработки — значение и единица</label><input id="waterOut" placeholder="Укажите результат и единицу"></div>
+<div class="field"><label for="temp" data-i18n="temp">Температура — с единицей</label><input id="temp" placeholder="Например, 120 °C"></div>
+<div class="field"><label for="flow" data-i18n="flow">Расход сырой нефти — с единицей</label><input id="flow" placeholder="Значение и единица"></div>
+
+<div class="field"><label for="washWater" data-i18n="washWater">Промывочная вода — с единицей</label><input id="washWater" placeholder="Значение и единица"></div>
+<div class="field"><label for="pressure" data-i18n="pressure">Давление — с единицей</label><input id="pressure" placeholder="Значение и единица"></div>
+<div class="field"><label for="method" data-i18n="method">Метод испытания</label><input id="method" placeholder="Метод / стандарт лаборатории"></div>
+
+<div class="field"><label for="status" data-i18n="status">Статус записи</label>
+<select id="status"><option value="Review" data-i18n="statusReview">На проверке</option><option value="Complete" data-i18n="statusComplete">Заполнено</option><option value="Attention" data-i18n="statusAttention">Требует внимания</option></select>
+</div>
+<div class="field"><label for="reportRef" data-i18n="reportRef">Номер отчёта</label><input id="reportRef"></div>
+<div class="field"><label for="equipment" data-i18n="equipment">Оборудование / пробоотборник</label><input id="equipment"></div>
+<div class="field" style="grid-column:1/-1"><label for="notes" data-i18n="notes">Наблюдения и примечания</label><textarea id="notes"></textarea></div>
+</div>
+<div class="actions">
+<button class="btn" type="submit" data-i18n="add">Добавить запись</button>
+<button class="btn secondary" type="reset" data-i18n="clear">Очистить форму</button>
+</div>
+</form>
+</section>
+
+<section class="panel">
+<h2 data-i18n="recordsTitle">Журнал испытаний</h2>
+<div class="toolbar">
+<input id="search" type="search" data-placeholder="searchPlaceholder" placeholder="Поиск по ID, стране, установке...">
+<select id="statusFilter">
+<option value="" data-i18n="allStatuses">Все статусы</option>
+<option value="Review" data-i18n="statusReview">На проверке</option>
+<option value="Complete" data-i18n="statusComplete">Заполнено</option>
+<option value="Attention" data-i18n="statusAttention">Требует внимания</option>
+</select>
+</div>
+<div class="actions" style="margin:0 0 14px">
+<button class="btn" id="csv" type="button" data-i18n="export">Экспорт CSV</button>
+<button class="btn dark" id="report" type="button" data-i18n="report">Сформировать отчёт</button>
+<button class="btn secondary" id="print" type="button" data-i18n="print">Печать</button>
+</div>
+<div class="table-wrap">
+<table>
+<thead><tr>
+<th>ID</th><th data-i18n="dateHead">Дата</th><th data-i18n="assetHead">Страна / установка</th>
+<th data-i18n="crudeHead">Тип нефти</th><th data-i18n="saltInShort">Соль до</th>
+<th data-i18n="saltOutShort">Соль после</th><th data-i18n="waterShort">Вода до / после</th>
+<th data-i18n="status">Статус</th><th data-i18n="actions">Действия</th>
+</tr></thead>
+<tbody id="body"></tbody>
+</table>
+</div>
+<div id="empty" class="empty" hidden data-i18n="empty">Записей пока нет.</div>
+</section>
+
+<section class="panel">
+<h2 data-i18n="importantTitle">Важная техническая информация</h2>
+<p data-i18n="importantText">Для корректного сравнения фиксируйте метод анализа, единицы измерения, место отбора и условия проведения испытания. Не смешивайте результаты, выраженные в разных единицах. Измерения до и после обработки сами по себе не являются подтверждением соответствия продукта требованиям.</p>
+<p data-i18n="storage">Данные этого демонстрационного модуля находятся только в памяти открытой страницы. После перезагрузки новые записи исчезнут. Для промышленного применения необходимы серверная база данных, управление доступом, резервное копирование и аудит изменений.</p>
+</section>
+</main>
+
+<footer><strong>WORKER PRO</strong><br><span data-i18n="footer">Глобальная промышленная платформа · Модуль №287 · Демонстрационная версия</span></footer>
+
+<script>
+const T={
+ru:{
+subtitle:"Глобальная промышленная платформа",title:"Испытания эффективности обессоливания сырой нефти",intro:"Регистрация лабораторных и технологических данных процесса удаления солей и связанных примесей из сырой нефти перед дальнейшей переработкой.",
+home:"Главная",production:"Производство",testing:"Испытания",quality:"Качество",documents:"Документы",suppliers:"Поставщики",orders:"Заказы",logistics:"Логистика",tracking:"Отслеживание",
+demo:"Демонстрационный модуль.",disclaimer:"Данные предназначены для примера. Модуль не подтверждает качество нефти, эффективность установки или безопасность эксплуатации. Оценка проводится по утверждённым методам, спецификации продукта и требованиям конкретного проекта.",
+total:"Всего записей",review:"На проверке",complete:"Заполнено",attention:"Требуют внимания",workflowTitle:"Рабочий процесс",step1:"Регистрация образца и установки",step2:"Измерения до обработки",step3:"Измерения после обработки",step4:"Проверка единиц и метода",step5:"Подготовка отчёта",
+formTitle:"Добавить запись испытания",sampleId:"ID образца *",country:"Страна",asset:"Установка / месторождение",crude:"Тип сырой нефти",date:"Дата отбора / испытания *",lab:"Лаборатория / специалист",saltIn:"Соль до обработки — значение и единица",saltOut:"Соль после обработки — значение и единица",waterIn:"Вода до обработки — значение и единица",waterOut:"Вода после обработки — значение и единица",temp:"Температура — с единицей",flow:"Расход сырой нефти — с единицей",washWater:"Промывочная вода — с единицей",pressure:"Давление — с единицей",method:"Метод испытания",status:"Статус записи",statusReview:"На проверке",statusComplete:"Заполнено",statusAttention:"Требует внимания",reportRef:"Номер отчёта",equipment:"Оборудование / пробоотборник",notes:"Наблюдения и примечания",add:"Добавить запись",clear:"Очистить форму",recordsTitle:"Журнал испытаний",searchPlaceholder:"Поиск по ID, стране, установке...",allStatuses:"Все статусы",export:"Экспорт CSV",report:"Сформировать отчёт",print:"Печать",dateHead:"Дата",assetHead:"Страна / установка",crudeHead:"Тип нефти",saltInShort:"Соль до",saltOutShort:"Соль после",waterShort:"Вода до / после",actions:"Действия",empty:"Записей пока нет.",importantTitle:"Важная техническая информация",importantText:"Для корректного сравнения фиксируйте метод анализа, единицы измерения, место отбора и условия проведения испытания. Не смешивайте результаты, выраженные в разных единицах. Измерения до и после обработки сами по себе не являются подтверждением соответствия продукта требованиям.",storage:"Данные этого демонстрационного модуля находятся только в памяти открытой страницы. После перезагрузки новые записи исчезнут. Для промышленного применения необходимы серверная база данных, управление доступом, резервное копирование и аудит изменений.",footer:"Глобальная промышленная платформа · Модуль №287 · Демонстрационная версия",delete:"Удалить",confirm:"Удалить эту запись?",added:"Запись добавлена.",reportTitle:"WORKER PRO — Отчёт об испытаниях обессоливания сырой нефти",generated:"Дата формирования",warning:"Демонстрационный отчёт. Не является сертификатом или заключением о качестве.",noRecords:"Нет записей для отчёта."
+},
+en:{
+subtitle:"Global Industrial Platform",title:"Crude Oil Desalting Performance",intro:"Record laboratory and process data for removing salts and related impurities from crude oil before further processing.",
+home:"Home",production:"Production",testing:"Testing",quality:"Quality",documents:"Documents",suppliers:"Suppliers",orders:"Orders",logistics:"Logistics",tracking:"Tracking",
+demo:"Demonstration module.",disclaimer:"Illustrative data only. This module does not certify crude quality, unit performance, or operational safety. Evaluation must follow approved methods, product specifications, and project requirements.",
+total:"Total records",review:"Under review",complete:"Completed",attention:"Needs attention",workflowTitle:"Workflow",step1:"Register sample and unit",step2:"Measurements before treatment",step3:"Measurements after treatment",step4:"Check units and method",step5:"Prepare report",
+formTitle:"Add test record",sampleId:"Sample ID *",country:"Country",asset:"Unit / field",crude:"Crude oil type",date:"Sampling / test date *",lab:"Laboratory / specialist",saltIn:"Salt before treatment — value and unit",saltOut:"Salt after treatment — value and unit",waterIn:"Water before treatment — value and unit",waterOut:"Water after treatment — value and unit",temp:"Temperature — include unit",flow:"Crude oil flow — include unit",washWater:"Wash water — include unit",pressure:"Pressure — include unit",method:"Test method",status:"Record status",statusReview:"Under review",statusComplete:"Completed",statusAttention:"Needs attention",reportRef:"Report reference",equipment:"Equipment / sampler",notes:"Observations and notes",add:"Add record",clear:"Clear form",recordsTitle:"Test register",searchPlaceholder:"Search by ID, country, unit...",allStatuses:"All statuses",export:"Export CSV",report:"Generate report",print:"Print",dateHead:"Date",assetHead:"Country / unit",crudeHead:"Crude type",saltInShort:"Salt before",saltOutShort:"Salt after",waterShort:"Water before / after",actions:"Actions",empty:"No records yet.",importantTitle:"Important technical information",importantText:"For meaningful comparisons, record the analytical method, units, sampling point, and test conditions. Do not combine results expressed in different units. Before-and-after measurements alone do not prove product compliance.",storage:"This demo stores records only in the current page memory. New records disappear after reload. Industrial use requires a server database, access control, backups, and change auditing.",footer:"Global Industrial Platform · Module #287 · Demonstration version",delete:"Delete",confirm:"Delete this record?",added:"Record added.",reportTitle:"WORKER PRO — Crude Oil Desalting Test Report",generated:"Generated on",warning:"Demonstration report. Not a certificate or quality determination.",noRecords:"No records to report."
+},
+az:{
+subtitle:"Qlobal Sənaye Platforması",title:"Xam neftin duzsuzlaşdırılması sınaqları",intro:"Sonrakı emaldan əvvəl xam neftdən duzların və əlaqəli qarışıqların çıxarılması prosesinə dair laboratoriya və texnoloji məlumatların qeydiyyatı.",
+home:"Ana səhifə",production:"İstehsalat",testing:"Sınaqlar",quality:"Keyfiyyət",documents:"Sənədlər",suppliers:"Təchizatçılar",orders:"Sifarişlər",logistics:"Logistika",tracking:"İzləmə",
+demo:"Demo modul.",disclaimer:"Məlumatlar nümunə üçündür. Modul neftin keyfiyyətini, qurğunun səmərəliliyini və ya istismar təhlükəsizliyini təsdiqləmir. Qiymətləndirmə təsdiqlənmiş metodlara, məhsul spesifikasiyasına və layihə tələblərinə əsaslanmalıdır.",
+total:"Ümumi qeydlər",review:"Yoxlanılır",complete:"Tamamlanıb",attention:"Diqqət tələb edir",workflowTitle:"İş prosesi",step1:"Nümunə və qurğunun qeydiyyatı",step2:"Emaldan əvvəl ölçmələr",step3:"Emaldan sonra ölçmələr",step4:"Vahid və metodun yoxlanması",step5:"Hesabatın hazırlanması",
+formTitle:"Sınaq qeydi əlavə et",sampleId:"Nümunə ID-si *",country:"Ölkə",asset:"Qurğu / yataq",crude:"Xam neftin növü",date:"Nümunə / sınaq tarixi *",lab:"Laboratoriya / mütəxəssis",saltIn:"Emaldan əvvəl duz — nəticə və vahid",saltOut:"Emaldan sonra duz — nəticə və vahid",waterIn:"Emaldan əvvəl su — nəticə və vahid",waterOut:"Emaldan sonra su — nəticə və vahid",temp:"Temperatur — vahidlə",flow:"Xam neft sərfi — vahidlə",washWater:"Yuma suyu — vahidlə",pressure:"Təzyiq — vahidlə",method:"Sınaq metodu",status:"Qeyd statusu",statusReview:"Yoxlanılır",statusComplete:"Tamamlanıb",statusAttention:"Diqqət tələb edir",reportRef:"Hesabat nömrəsi",equipment:"Avadanlıq / nümunə götürücü",notes:"Müşahidələr və qeydlər",add:"Qeyd əlavə et",clear:"Formanı təmizlə",recordsTitle:"Sınaq jurnalı",searchPlaceholder:"ID, ölkə və qurğu üzrə axtar...",allStatuses:"Bütün statuslar",export:"CSV ixracı",report:"Hesabat yarat",print:"Çap et",dateHead:"Tarix",assetHead:"Ölkə / qurğu",crudeHead:"Neft növü",saltInShort:"Əvvəl duz",saltOutShort:"Sonra duz",waterShort:"Su əvvəl / sonra",actions:"Əməliyyatlar",empty:"Hələ qeyd yoxdur.",importantTitle:"Vacib texniki məlumat",importantText:"Nəticələri müqayisə etmək üçün analiz metodunu, ölçü vahidlərini, nümunə götürülən yeri və sınaq şəraitini qeyd edin. Fərqli vahidlərdə verilmiş nəticələri qarışdırmayın. Əvvəl və sonra ölçmələr təkbaşına uyğunluğu sübut etmir.",storage:"Demo məlumatları yalnız açıq səhifənin yaddaşında saxlanılır və səhifə yenilənəndə silinir. Sənaye istifadəsi üçün server bazası, girişə nəzarət, ehtiyat nüsxələr və dəyişiklik auditi tələb olunur.",footer:"Qlobal Sənaye Platforması · Modul №287 · Demo versiya",delete:"Sil",confirm:"Bu qeydi silmək istəyirsiniz?",added:"Qeyd əlavə edildi.",reportTitle:"WORKER PRO — Xam neftin duzsuzlaşdırılması hesabatı",generated:"Yaradılma tarixi",warning:"Demo hesabatıdır. Sertifikat və ya keyfiyyət rəyi deyil.",noRecords:"Hesabat üçün qeyd yoxdur."
+}
+};
+const F={
+tr:{subtitle:"Küresel Endüstri Platformu",title:"Ham Petrol Tuz Giderme Performansı",intro:"Ham petrolden tuzların giderilmesine ilişkin test kayıtları.",formTitle:"Test kaydı ekle",recordsTitle:"Test kayıtları",add:"Kayıt ekle",clear:"Formu temizle",export:"CSV dışa aktar",report:"Rapor oluştur",print:"Yazdır",searchPlaceholder:"ID, ülke veya tesis ara...",footer:"Küresel Endüstri Platformu · Modül 287",demo:"Demo modülü."},
+de:{subtitle:"Globale Industrieplattform",title:"Leistungsprüfung der Rohölentsalzung",intro:"Erfassung von Prüfdaten zur Entfernung von Salzen aus Rohöl.",formTitle:"Prüfeintrag hinzufügen",recordsTitle:"Prüfregister",add:"Eintrag hinzufügen",clear:"Formular leeren",export:"CSV exportieren",report:"Bericht erstellen",print:"Drucken",searchPlaceholder:"Nach ID, Land oder Anlage suchen...",footer:"Globale Industrieplattform · Modul 287",demo:"Demomodul."},
+ar:{subtitle:"منصة صناعية عالمية",title:"اختبار أداء إزالة الأملاح من النفط الخام",intro:"تسجيل بيانات اختبارات إزالة الأملاح من النفط الخام.",formTitle:"إضافة سجل اختبار",recordsTitle:"سجل الاختبارات",add:"إضافة سجل",clear:"مسح النموذج",export:"تصدير CSV",report:"إنشاء تقرير",print:"طباعة",searchPlaceholder:"البحث حسب المعرّف أو الموقع...",footer:"منصة صناعية عالمية · الوحدة 287",demo:"وحدة تجريبية."},
+es:{subtitle:"Plataforma Industrial Global",title:"Rendimiento de desalinización de crudo",intro:"Registro de pruebas de eliminación de sales del petróleo crudo.",formTitle:"Añadir registro de prueba",recordsTitle:"Registro de pruebas",add:"Añadir registro",clear:"Limpiar formulario",export:"Exportar CSV",report:"Generar informe",print:"Imprimir",searchPlaceholder:"Buscar ID, país o instalación...",footer:"Plataforma Industrial Global · Módulo 287",demo:"Módulo de demostración."},
+fr:{subtitle:"Plateforme industrielle mondiale",title:"Performance du dessalage du pétrole brut",intro:"Enregistrement des essais d’élimination des sels du pétrole brut.",formTitle:"Ajouter un essai",recordsTitle:"Registre des essais",add:"Ajouter",clear:"Effacer le formulaire",export:"Exporter CSV",report:"Générer un rapport",print:"Imprimer",searchPlaceholder:"Rechercher ID, pays ou installation...",footer:"Plateforme industrielle mondiale · Module 287",demo:"Module de démonstration."},
+it:{subtitle:"Piattaforma industriale globale",title:"Prestazioni di dissalazione del greggio",intro:"Registrazione delle prove di rimozione dei sali dal petrolio greggio.",formTitle:"Aggiungi prova",recordsTitle:"Registro delle prove",add:"Aggiungi",clear:"Svuota modulo",export:"Esporta CSV",report:"Genera rapporto",print:"Stampa",searchPlaceholder:"Cerca ID, paese o impianto...",footer:"Piattaforma industriale globale · Modulo 287",demo:"Modulo dimostrativo."}
+};
+let lang="ru";
+let records=[
+{sampleId:"CD-287-001",country:"Azerbaijan",asset:"Demo Refinery A",crude:"Demo crude",date:"2026-10-03",lab:"Demo lab",saltIn:"Illustrative only",saltOut:"Illustrative only",waterIn:"Not recorded",waterOut:"Not recorded",temp:"Not recorded",flow:"Not recorded",washWater:"Not recorded",pressure:"Not recorded",method:"Demo method",status:"Review",reportRef:"DEMO-CD-01",equipment:"Demo sampler",notes:"Illustrative record only."},
+{sampleId:"CD-287-002",country:"Türkiye",asset:"Demo Unit B",crude:"Demo crude blend",date:"2026-10-05",lab:"Pending",saltIn:"Not recorded",saltOut:"Not recorded",waterIn:"Not recorded",waterOut:"Not recorded",temp:"Not recorded",flow:"Not recorded",washWater:"Not recorded",pressure:"Not recorded",method:"Pending",status:"Attention",reportRef:"",equipment:"Not recorded",notes:"Awaiting verified measurements."}
+];
+const $=id=>document.getElementById(id);
+function t(k){return T[lang]?.[k]||F[lang]?.[k]||T.en[k]||k}
+function esc(v){return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function statusName(s){return s==="Complete"?t("statusComplete"):s==="Attention"?t("statusAttention"):t("statusReview")}
+function applyLang(code){
+lang=code;document.documentElement.lang=code;document.documentElement.dir=code==="ar"?"rtl":"ltr";
+document.querySelectorAll("[data-i18n]").forEach(el=>el.textContent=t(el.dataset.i18n));
+document.querySelectorAll("[data-placeholder]").forEach(el=>el.placeholder=t(el.dataset.placeholder));
+document.querySelectorAll(".languages button").forEach(b=>b.classList.toggle("active",b.dataset.lang===code));
+render();
+}
+document.querySelectorAll(".languages button").forEach(b=>b.addEventListener("click",()=>applyLang(b.dataset.lang)));
+function render(){
+const q=$("search").value.trim().toLowerCase(),sf=$("statusFilter").value;
+const shown=records.filter(r=>(!q||Object.values(r).join(" ").toLowerCase().includes(q))&&(!sf||r.status===sf));
+$("body").innerHTML=shown.map(r=>{
+const i=records.indexOf(r),badge=r.status==="Attention"?"attention":r.status==="Review"?"review":"";
+return `<tr><td>${esc(r.sampleId)}</td><td>${esc(r.date)}</td><td>${esc(r.country)}<br>${esc(r.asset)}</td><td>${esc(r.crude)}</td><td>${esc(r.saltIn)}</td><td>${esc(r.saltOut)}</td><td>${esc(r.waterIn)} / ${esc(r.waterOut)}</td><td><span class="badge ${badge}">${esc(statusName(r.status))}</span></td><td><button class="btn secondary del" type="button" data-i="${i}">${esc(t("delete"))}</button></td></tr>`;
+}).join("");
+$("empty").hidden=shown.length!==0;
+$("total").textContent=records.length;
+$("review").textContent=records.filter(r=>r.status==="Review").length;
+$("complete").textContent=records.filter(r=>r.status==="Complete").length;
+$("attention").textContent=records.filter(r=>r.status==="Attention").length;
+document.querySelectorAll(".del").forEach(b=>b.addEventListener("click",()=>{
+const i=Number(b.dataset.i);
+if(Number.isInteger(i)&&i>=0&&i<records.length&&confirm(t("confirm"))){records.splice(i,1);render()}
+}));
+}
+$("form").addEventListener("submit",e=>{
+e.preventDefault();
+const keys=["sampleId","country","asset","crude","date","lab","saltIn","saltOut","waterIn","waterOut","temp","flow","washWater","pressure","method","status","reportRef","equipment","notes"];
+const r={};keys.forEach(k=>r[k]=$(k).value.trim());
+if(records.some(x=>x.sampleId.toLowerCase()===r.sampleId.toLowerCase())){
+alert(lang==="ru"?"Такой ID уже существует. Введите уникальный ID.":"This sample ID already exists. Enter a unique ID.");$("sampleId").focus();return;
+}
+records.unshift(r);$("form").reset();render();alert(t("added"));
+});
+$("search").addEventListener("input",render);$("statusFilter").addEventListener("change",render);
+function csvCell(v){return '"'+String(v??"").replace(/"/g,'""')+'"'}
+$("csv").addEventListener("click",()=>{
+const keys=["sampleId","country","asset","crude","date","lab","saltIn","saltOut","waterIn","waterOut","temp","flow","washWater","pressure","method","status","reportRef","equipment","notes"];
+const content="\uFEFF"+[keys,...records.map(r=>keys.map(k=>r[k]??""))].map(row=>row.map(csvCell).join(",")).join("\r\n");
+const url=URL.createObjectURL(new Blob([content],{type:"text/csv;charset=utf-8"}));
+const a=document.createElement("a");a.href=url;a.download="worker-pro-crude-oil-desalting-287.csv";a.click();URL.revokeObjectURL(url);
+});
+$("report").addEventListener("click",()=>{
+if(!records.length){alert(t("noRecords"));return}
+const lines=[t("reportTitle"),t("generated")+": "+new Date().toLocaleString(),t("warning"),""];
+records.forEach((r,i)=>{lines.push("----- "+(i+1)+" -----");Object.entries(r).forEach(([k,v])=>lines.push(k+": "+v));lines.push("")});
+const url=URL.createObjectURL(new Blob(["\uFEFF"+lines.join("\r\n")],{type:"text/plain;charset=utf-8"}));
+const a=document.createElement("a");a.href=url;a.download="worker-pro-crude-oil-desalting-report.txt";a.click();URL.revokeObjectURL(url);
+});
+$("print").addEventListener("click",()=>window.print());
+applyLang("ru");
+</script>
+</body>
+</html>
